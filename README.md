@@ -1,5 +1,31 @@
 # My macOS build
 
+-   常用指令紀錄
+
+    ```fish
+    # 重置launchpad
+    defaults write com.apple.dock ResetLaunchPad -bool true
+    killall Dock
+
+    # 防止AdobeCreativeCloud開機啟動
+    sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
+
+    # SSD開啟trimforce
+    sudo trimforce enable
+
+    # 禁用Chrome本機快取
+    defaults write com.google.Chrome DiskCacheDir -string /dev/null
+
+    # 下載舊版macOS
+    curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
+    sudo python installinstallmacos.py
+
+    # 製作git.io縮網址
+    curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
+    ```
+
+-   [git commit rules](git-commit-rules.md)
+
 -   hubmle tab config
 
     ```text
