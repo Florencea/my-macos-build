@@ -24,6 +24,8 @@
     curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
     ```
 
+-   [常用 Ubuntu 指令紀錄](ubuntu-1804-cmd.md)
+
 -   [git commit rules](git-commit-rules.md)
 
 -   hubmle tab config
