@@ -3,14 +3,14 @@
 ## ssh免密碼登入控制
 
 ```shell-script
-ssh-keygen
-ssh-copy-id -i ~/.ssh/id_rsa.pub <user>@<host>
+ssh-keygen -t ed25519
+ssh-copy-id <user>@<host>
 ```
 
 ```shell-script
-ssh-keygen
+ssh-keygen -t ed25519
 ssh <user>@<host> "mkdir ~/.ssh/"
-cat ~/.ssh/id_rsa.pub | ssh <user>@<host> "cat >> ~/.ssh/authorized_keys"
+cat ~/.ssh/id_ed25519.pub | ssh <user>@<host> "cat >> ~/.ssh/authorized_keys"
 ```
 
 ## 更改apt-mirror
