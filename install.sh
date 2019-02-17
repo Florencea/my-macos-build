@@ -66,6 +66,7 @@ brew install node
 brew install python
 brew install python@2
 brew install redis
+brew install shellcheck
 brew install wget
 brew install youtube-dl
 # brew install cask apps
@@ -73,8 +74,8 @@ print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install ezip
-brew cask install google-chrome-canary
-brew cask install firefox-nightly
+brew cask install google-chrome
+brew cask install firefox
 brew cask install gpg-suite
 brew cask install horndis
 brew cask install iina
