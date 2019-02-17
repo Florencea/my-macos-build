@@ -48,7 +48,7 @@
     curl -L https://git.io/florencea-macos-build-doh | sh
     ```
 
-    -   安裝完成後會自動將Wi-Fi介面的DNS變為`127.0.0.1`
+    -   安裝完成後請將系統DNS改為`127.0.0.1`
 
 -   取得ublock備份
 
