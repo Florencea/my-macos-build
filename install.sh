@@ -59,6 +59,7 @@ brew install clang-format
 brew install ffmpeg
 brew install gcc
 brew install git
+brew install git-lfs
 brew install nano
 brew install mkcert
 brew install mongodb
@@ -113,6 +114,7 @@ print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
+(set -x; git lfs install)
 # disable eyecandy
 print_step "disable eyecandy"
 (set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
