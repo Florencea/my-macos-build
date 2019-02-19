@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1549976925368,
+  "timeStamp": 1550586415499,
   "version": "1.18.4",
   "userSettings": {
     "advancedUserEnabled": false,
@@ -28,6 +28,7 @@
     "CHN-0",
     "CHN-1",
     "plowe-0",
+    "mvps-0",
     "hphosts",
     "dpollock-0",
     "fanboy-social",
