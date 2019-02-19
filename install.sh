@@ -75,15 +75,12 @@ print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install ezip
-brew cask install google-chrome
 brew cask install firefox
 brew cask install gpg-suite
 brew cask install horndis
 brew cask install iina
 brew cask install istat-menus
 brew cask install kite
-brew cask install mamp
-brew cask install scroll-reverser
 brew cask install skype
 brew cask install transmission
 # brew install cask fonts
