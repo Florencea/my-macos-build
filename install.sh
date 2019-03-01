@@ -56,7 +56,6 @@ mkdir -p ~/.config/fish
 # brew install commend line tools
 print_step "brew install commend line tools"
 brew install clang-format
-brew install ffmpeg
 brew install gcc
 brew install git
 brew install git-lfs
@@ -75,12 +74,11 @@ print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install ezip
-brew cask install firefox
+brew cask install google-chrome-beta
 brew cask install gpg-suite
 brew cask install horndis
 brew cask install iina
 brew cask install istat-menus
-brew cask install kite
 brew cask install skype
 brew cask install transmission
 # brew install cask fonts
@@ -88,7 +86,6 @@ print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
 brew cask install font-fira-code
 brew cask install font-fira-mono
-brew cask install font-fira-sans
 brew cask install font-noto-sans-cjk
 brew cask install font-noto-serif-cjk
 # npm install global packages
