@@ -75,9 +75,9 @@ brew cask install gpg-suite
 brew cask install horndis
 brew cask install iina
 brew cask install istat-menus
+brew cask install qbittorrent
 brew cask install scroll-reverser
 brew cask install skype
-brew cask install transmission
 # brew install cask fonts
 print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
