@@ -83,8 +83,6 @@ print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
 brew cask install font-fira-code
 brew cask install font-fira-mono
-brew cask install font-noto-sans-cjk
-brew cask install font-noto-serif-cjk
 # npm install global packages
 print_step "npm install global packages"
 npm install -g npm
