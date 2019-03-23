@@ -74,6 +74,7 @@ brew cask install horndis
 brew cask install iina
 brew cask install istat-menus
 brew cask install keka
+brew cask install kekadefaultapp
 brew cask install qbittorrent
 brew cask install scroll-reverser
 brew cask install skype
