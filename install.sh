@@ -73,7 +73,7 @@ brew install youtube-dl
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install google-chrome
+brew cask install google-chrome-dev
 brew cask install firefox
 brew cask install gpg-suite
 brew cask install horndis
