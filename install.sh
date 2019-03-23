@@ -58,23 +58,30 @@ print_step "brew install commend line tools"
 brew install clang-format
 brew install gcc
 brew install git
+brew install git-lfs
 brew install nano
 brew install mkcert
+brew install mongodb
 brew install node
 brew install python
 brew install python@2
+brew install redis
 brew install shellcheck
 brew install wget
+brew install youtube-dl
 # brew install cask apps
 print_step "brew install cask apps"
+brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install google-chrome
+brew cask install firefox
 brew cask install gpg-suite
 brew cask install horndis
 brew cask install iina
 brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
+brew cask install mamp
 brew cask install qbittorrent
 brew cask install scroll-reverser
 brew cask install skype
@@ -83,6 +90,9 @@ print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
 brew cask install font-fira-code
 brew cask install font-fira-mono
+brew cask install font-fira-sans
+brew cask install font-noto-sans-cjk
+brew cask install font-noto-serif-cjk
 # npm install global packages
 print_step "npm install global packages"
 npm install -g npm
@@ -95,15 +105,15 @@ pip3 install flake8
 pip3 install isort
 pip3 install numpy
 # mongodb configuations
-# print_step "mongodb configuations"
-# (set -x; sudo mkdir -p /data/db)
-# (set -x; sudo chown "$(whoami)":staff /data/db)
+print_step "mongodb configuations"
+(set -x; sudo mkdir -p /data/db)
+(set -x; sudo chown "$(whoami)":staff /data/db)
 # git configuations
 print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
-# (set -x; git lfs install)
+(set -x; git lfs install)
 # disable eyecandy
 print_step "disable eyecandy"
 (set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
