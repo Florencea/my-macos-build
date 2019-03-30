@@ -83,8 +83,8 @@ brew cask install keka
 brew cask install kekadefaultapp
 # brew cask install mamp
 brew cask install qbittorrent
-brew cask install scroll-reverser
-brew cask install skype
+# brew cask install scroll-reverser
+# brew cask install skype
 # brew install cask fonts
 # print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
