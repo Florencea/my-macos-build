@@ -13,7 +13,6 @@ mkdir -p ~/.config/fish
 { printf "set -g -x PATH /usr/local/bin \$PATH\n"; printf "set -g -x fish_greeting %s\n" "$shell_greeting"; } >> ~/.config/fish/config.fish
 # brew install commend line tools
 brew install clang-format
-brew install ffmpeg
 brew install gcc
 brew install git
 brew install git-lfs
@@ -26,13 +25,10 @@ brew install python@2
 brew install redis
 brew install shellcheck
 brew install wget
-brew install youtube-dl
 # brew install cask apps
-brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install google-chrome
 brew cask install gpg-suite
-brew cask install horndis
 brew cask install iina
 brew cask install istat-menus
 brew cask install keka
@@ -43,9 +39,6 @@ brew cask install scroll-reverser
 brew tap homebrew/cask-fonts
 brew cask install font-fira-code
 brew cask install font-fira-mono
-brew cask install font-fira-sans
-brew cask install font-noto-sans-cjk
-brew cask install font-noto-serif-cjk
 # npm install global packages
 npm install -g npm
 npm install -g http-server
