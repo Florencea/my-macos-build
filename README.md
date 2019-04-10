@@ -70,6 +70,12 @@
     curl -L https://git.io/florencea-macos-build-ublock -o ublock.txt
     ```
 
+-   取得ublock-adv備份
+
+    ```bash
+    curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
+    ```
+
 -   設置gpg (詳見 [gpg.md](gpg.md))
 
     -   安裝 [GPG Suite](https://gpgtools.org/)
