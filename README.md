@@ -44,17 +44,19 @@
 
 -   安裝環境自動安裝腳本
 
+    -   精簡版(僅安裝必要軟體)
+
     ```bash
     curl -L https://git.io/florencea-macos-build-install -o tempsh;sh tempsh
     ```
 
-    -   完整版
+    -   完整版(包含所有可能用到的軟體)
+    -   完整版腳本開頭會詢問輸入github使用者名稱、github信箱、git系統預設文字編輯器、fish shell的問候語
+
 
     ```bash
     curl -L https://git.io/florencea-macos-build-install-full -o tempsh;sh tempsh
     ```
-
-    -   完整版腳本開頭會詢問輸入github使用者名稱、github信箱、git系統預設文字編輯器、fish shell的問候語
 
 -   DNS-over-HTTPS自動安裝腳本(可以新建一個網路設定檔之後再執行)
 
@@ -62,15 +64,19 @@
     curl -L https://git.io/florencea-macos-build-doh | sh
     ```
 
-    -   安裝完成後請將系統DNS改為`127.0.0.1`
+    -   安裝完成後請將系統DNS改為`127.0.0.1`與`::1`
 
 -   取得ublock備份
+
+    -   此規則集不阻擋第三方腳本與框架，相當於訂閱了多個規則集的ABP，但裝後不理，網站比較不會出問題
 
     ```bash
     curl -L https://git.io/florencea-macos-build-ublock -o ublock.txt
     ```
 
 -   取得ublock-adv備份
+
+    -   此規則集啟用進階動態過濾，以及大量自訂規則，建議手機用戶使用，能夠有效減少請求數量，但網站較有可能出問題
 
     ```bash
     curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
@@ -81,13 +87,13 @@
     -   安裝 [GPG Suite](https://gpgtools.org/)
 
         ```fish
-        ~> brew cask install gpg-suite
+        brew cask install gpg-suite
         ```
 
     -   建立 GPG key
 
         ```fish
-        ~> gpg --full-generate-key
+        gpg --full-generate-key
 
         # 請選擇你要使用的金鑰種類:
         #   (1) RSA 和 RSA (預設)
@@ -125,7 +131,7 @@
     -   輸出 GPG key
 
         ```fish
-        ~> gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+        gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
         ```
 
     -   複製完整 public key 至 github 或 gitlab
@@ -133,7 +139,7 @@
     -   在 git 中使用 GPG key
 
         ```fish
-        ~> git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
-        ~> git config --global commit.gpgsign true
-        ~> git config --global gpg.program gpg
+        git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+        git config --global commit.gpgsign true
+        git config --global gpg.program gpg
         ```
