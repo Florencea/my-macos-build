@@ -4,6 +4,7 @@
 
 ```shell-script
 ssh-keygen -t ed25519
+ssh-keyscan <host> >> .ssh/known_hosts
 ssh-copy-id <user>@<host>
 ```
 
