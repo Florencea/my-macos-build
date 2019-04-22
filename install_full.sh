@@ -20,28 +20,28 @@ github_editor=$default_github_editor
 shell_greeting=$default_shell_greeting
 unset user_prompt
 while [[ $user_prompt != "y" ]]; do
-    printf "\E[1;30m"
-    read -rp "Please enter github username(dafault: $default_github_username): " github_username
-    read -rp "Please enter github email(dafault: $default_github_email): " github_email
-    read -rp "Please enter github editor(dafault: $default_github_editor): " github_editor
-    read -erp "Please enter shell greeting(dafault: $default_shell_greeting): " shell_greeting
-    printf "\E[0m"
-    [ -z "$github_username" ] && github_username=$default_github_username
-    [ -z "$github_email" ] && github_email=$default_github_email
-    [ -z "$github_editor" ] && github_editor=$default_github_editor
-    [ -z "$shell_greeting" ] && shell_greeting=$default_shell_greeting
-    printf "\E[0;34m"
-    printf "\n"
-    printf "github username: %s\n" "$github_username"
-    printf "github email: %s\n" "$github_email"
-    printf "github editor: %s\n" "$github_editor"
-    printf "shell greeting: %s\n" "$shell_greeting"
-    printf "\n"
-    printf "\E[0m"
-    printf "\E[1;31m"
-    read -rp "are these correct?(y/n): " user_prompt
-    printf "\n"
-    printf "\E[0m"
+  printf "\E[1;30m"
+  read -rp "Please enter github username(dafault: $default_github_username): " github_username
+  read -rp "Please enter github email(dafault: $default_github_email): " github_email
+  read -rp "Please enter github editor(dafault: $default_github_editor): " github_editor
+  read -erp "Please enter shell greeting(dafault: $default_shell_greeting): " shell_greeting
+  printf "\E[0m"
+  [ -z "$github_username" ] && github_username=$default_github_username
+  [ -z "$github_email" ] && github_email=$default_github_email
+  [ -z "$github_editor" ] && github_editor=$default_github_editor
+  [ -z "$shell_greeting" ] && shell_greeting=$default_shell_greeting
+  printf "\E[0;34m"
+  printf "\n"
+  printf "github username: %s\n" "$github_username"
+  printf "github email: %s\n" "$github_email"
+  printf "github editor: %s\n" "$github_editor"
+  printf "shell greeting: %s\n" "$shell_greeting"
+  printf "\n"
+  printf "\E[0m"
+  printf "\E[1;31m"
+  read -rp "are these correct?(y/n): " user_prompt
+  printf "\n"
+  printf "\E[0m"
 done
 
 # install homebrew
@@ -112,6 +112,7 @@ pip3 install flake8
 pip3 install isort
 pip3 install numpy
 pip3 install 'python-language-server[all]'
+pip3 install beautysh
 
 # mongodb configuations
 print_step "mongodb configuations"
