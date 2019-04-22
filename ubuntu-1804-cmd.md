@@ -1,6 +1,6 @@
-# 常用Ubuntu操作(18.04)
+# 常用 Ubuntu 操作(18.04)
 
-## ssh免密碼登入控制
+## ssh 免密碼登入控制
 
 ```shell-script
 ssh-keygen -t ed25519
@@ -14,7 +14,7 @@ ssh <user>@<host> "mkdir ~/.ssh/"
 cat ~/.ssh/id_ed25519.pub | ssh <user>@<host> "cat >> ~/.ssh/authorized_keys"
 ```
 
-## 更改apt-mirror
+## 更改 apt-mirror
 
 ```shell-script
 # for ubuntu 18.04
@@ -73,7 +73,7 @@ sudo adduser <user>
 sudo deluser <user>
 ```
 
-## 開機port號自動轉傳
+## 開機 port 號自動轉傳
 
 ```shell-script
 sudo nano /etc/rc.local
@@ -89,9 +89,9 @@ iptables -t nat -A PREROUTING -i <interface> -p tcp --dport <from port> -j REDIR
 sudo netfilter-persistent save
 ```
 
-## Certbot憑證
+## Certbot 憑證
 
--   首先，先確認放在網站資源根目錄`<webroot>`裡的檔案可以被外部http請求拿到
+- 首先，先確認放在網站資源根目錄`<webroot>`裡的檔案可以被外部 http 請求拿到
 
 ```shell-script
 sudo add-apt-repository ppa:certbot/certbot
@@ -102,9 +102,9 @@ sudo cp /etc/letsencrypt/live/<domain_name>/fullchain.pem <cert_dir>/fullchain.p
 sudo cp /etc/letsencrypt/live/<domain_name>/privkey.pem <cert_dir>/privkey.pem
 ```
 
-## acme.sh憑證
+## acme.sh 憑證
 
--   首先，先確認放在網站資源根目錄`<webroot>`裡的檔案可以被外部http請求拿到
+- 首先，先確認放在網站資源根目錄`<webroot>`裡的檔案可以被外部 http 請求拿到
 
 ```shell-script
 curl https://get.acme.sh | sh
@@ -112,9 +112,9 @@ acme.sh --issue -d <domain_name> -w <webroot>
 acme.sh --install-cert -d <domain_name> --key-file <cert_dir>/privkey.pem --fullchain-file <cert_dir>/fullchain.pem
 ```
 
-## pm2開機自動重啟
+## pm2 開機自動重啟
 
--   確定node進程正常啟動後
+- 確定 node 進程正常啟動後
 
 ```shell-script
 # enable
@@ -125,7 +125,7 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 unstartup systemd
 
 ## 開機自動掛載外接裝置
 
--   假設外接磁區已是ext4檔案系統
+- 假設外接磁區已是 ext4 檔案系統
 
 ```shell-script
 sudo blkid
@@ -137,7 +137,7 @@ UUID=<UUID> <dir_to_be_mounted> ext4 defaults 0
 sudo mount <dir_to_be_mounted>
 ```
 
-## mongodb備份與還原
+## mongodb 備份與還原
 
 ```shell-script
 mongodump --db <db_name> --out <backup_dir>
