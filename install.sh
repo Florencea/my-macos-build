@@ -23,7 +23,6 @@ brew install node
 brew install python
 brew install python@2
 brew install redis
-brew install shellcheck
 brew install wget
 # brew install cask apps
 brew cask install atom

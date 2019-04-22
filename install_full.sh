@@ -70,7 +70,6 @@ brew install node
 brew install python
 brew install python@2
 brew install redis
-brew install shellcheck
 brew install wget
 brew install youtube-dl
 
@@ -104,6 +103,7 @@ print_step "npm install global packages"
 npm install -g npm
 npm install -g http-server
 npm install -g eslint
+npm install -g bash-language-server
 
 # python3 install global packages
 print_step "python3 install global packages"
@@ -111,6 +111,7 @@ pip3 install autopep8
 pip3 install flake8
 pip3 install isort
 pip3 install numpy
+pip3 install 'python-language-server[all]'
 
 # mongodb configuations
 print_step "mongodb configuations"
