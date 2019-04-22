@@ -41,6 +41,7 @@ brew cask install font-fira-mono
 npm install -g npm
 npm install -g http-server
 npm install -g eslint
+npm install -g bash-language-server
 # python3 install global packages
 pip3 install autopep8
 pip3 install flake8
