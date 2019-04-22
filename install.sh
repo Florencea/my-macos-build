@@ -47,6 +47,7 @@ pip3 install flake8
 pip3 install isort
 pip3 install numpy
 pip3 install 'python-language-server[all]'
+pip3 install beautysh
 # mongodb configuations
 (set -x; sudo mkdir -p /data/db)
 (set -x; sudo chown "$(whoami)":staff /data/db)
