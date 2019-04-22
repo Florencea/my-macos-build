@@ -6,7 +6,7 @@
 
 ### type
 
--   用於說明commit的類別，只允許使用下面7個標識。
+- 用於說明 commit 的類別，只允許使用下面 7 個標識。
 
 ```text
 feat：新功能（feature）
@@ -20,30 +20,30 @@ chore：構建過程或輔助工具的變動
 
 ### scope
 
--   用於說明commit影響的範圍，比如數據層、控制層、視圖層等等，視項目不同而不同。
+- 用於說明 commit 影響的範圍，比如數據層、控制層、視圖層等等，視項目不同而不同。
 
 ### subject
 
--   是commit目的的簡短描述，不超過50個字符。
--   以動詞開頭，使用第一人稱現在時，比如change，而不是changed或changes
--   第一個字母小寫
--   結尾不加句號（.）
+- 是 commit 目的的簡短描述，不超過 50 個字符。
+- 以動詞開頭，使用第一人稱現在時，比如 change，而不是 changed 或 changes
+- 第一個字母小寫
+- 結尾不加句號（.）
 
 ## 範例
 
--   更新翻譯專案的進度
+- 更新翻譯專案的進度
 
 ```text
 docs(translation): update translations to p013
 ```
 
--   增加上傳api
+- 增加上傳 api
 
 ```text
 feat(api): add uploading api
 ```
 
--   修正資料庫崩潰的bug
+- 修正資料庫崩潰的 bug
 
 ```text
 fix(database): fix app crash while initialysing user data
