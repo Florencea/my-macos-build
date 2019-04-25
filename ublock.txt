@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1556176568681,
+  "timeStamp": 1556183537033,
   "version": "1.18.16",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -60,9 +60,9 @@
     "suspendTabsUntilReady": "unset",
     "userResourcesLocation": "unset"
   },
-  "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
+  "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nncue.edu.tw\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* facebook.com * block\n* facebook.net * block\n* fbcdn.net * block\nfacebook.com facebook.com * noop\nfacebook.com facebook.net * noop\nfacebook.com fbcdn.net * noop",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-scripting: behind-the-scene false",
-  "userFilters": "www.ithome.com.tw###block-block-91\nwww.playpcesor.com###ztb-slide-box-widget\n"
+  "userFilters": "pdfviewer.softgateon.net##td:nth-of-type(1)\nshare.dmhy.org##^script:has-text(_hmt)\nwww.ithome.com.tw###block-block-91\nwww.playpcesor.com###ztb-slide-box-widget\nwww.thenewslens.com##^.ad-btm\n"
 }
