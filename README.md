@@ -28,10 +28,10 @@
   # 參考數據 i7-8850H, h264軟編約 5x, hevc硬編約 12x, h264硬編約 19x
 
   # ffmpeg h264 macos 硬體加速編碼
-  ffmpeg -i <輸入檔案> -c:v h264_videotoolbox -profile:v <欲套用之profile(main, high, baseline)> -b:v <視訊流位元率(256k)> -b:a <音訊流位元率(128k)> <輸出檔案>
+  ffmpeg -i <輸入檔案> -c:v h264_videotoolbox -profile:v <欲套用之profile(main, high, baseline)> -b:v <視訊流位元率(256k)> -b:a <音訊流位元率(128k)> -vf "subtitles=filename='<同一目錄下的字幕檔名>'" <輸出檔案>
 
   # ffmpeg hevc macos 硬體加速編碼
-  ffmpeg -i <輸入檔案> -c:v hevc_videotoolbox -profile:v <欲套用之profile(main, high)> -b:v <視訊流位元率(256k)> -b:a <音訊流位元率(128k)> <輸出檔案>
+  ffmpeg -i <輸入檔案> -c:v hevc_videotoolbox -profile:v <欲套用之profile(main, high)> -b:v <視訊流位元率(256k)> -b:a <音訊流位元率(128k)> -vf "subtitles=filename='<同一目錄下的字幕檔名>'" <輸出檔案>
   ```
 
 - [常用 Ubuntu 指令紀錄](ubuntu-1804-cmd.md)
