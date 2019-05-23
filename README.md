@@ -25,6 +25,27 @@
   ```
 
   ```fish
+  # 好用macOS工具紀錄
+
+  # google drive 命令列控制工具
+  brew install gdrive
+  gdrive download <雲端硬碟檔案ID>
+  gdrive download -r <雲端硬碟資料夾ID>
+
+  # mega 命令列控制工具
+  brew install megatools
+  megadl <mega網址>
+
+  # youtube 下載工具
+  brew install youtube-dl
+  youtube-dl -F <影片ID>
+  youtube-dl -f <格式碼> <影片ID>
+
+  # 萬用音訊轉檔app
+  brew cask install mediahuman-audio-converter
+  ```
+
+  ```fish
   # 參考數據 i7-8850H, h264軟編約 5x, hevc硬編約 12x, h264硬編約 19x
   # 參考 https://magiclen.org/vcodec/
 
