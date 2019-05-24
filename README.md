@@ -139,13 +139,11 @@
   curl -L https://git.io/florencea-macos-build-install -o tempsh;sh tempsh
   ```
 
-  - 完整版(包含所有可能用到的軟體)
   - 完整版腳本開頭會詢問輸入 github 使用者名稱、github 信箱、git 系統預設文字編輯器、fish shell 的問候語
 
-
-    ```bash
-    curl -L https://git.io/florencea-macos-build-install-full -o tempsh;sh tempsh
-    ```
+  ```bash
+  curl -L https://git.io/florencea-macos-build-install-full -o tempsh;sh tempsh
+  ```
 
 - DNS-over-HTTPS 自動安裝腳本(可以新建一個網路設定檔之後再執行)
 
