@@ -31,6 +31,16 @@ killall Dock
 # 防止AdobeCreativeCloud開機啟動
 sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 
+# 使用TouchID驗證sudo
+sudo nano /etc/pam.d/sudo
+# 在第二行加入
+auth       sufficient     pam_tid.so
+
+# fish shell別名
+nano ~/.config/fish/config.fish
+alias ledger="atom ~/Documents/workspace_florencea/ledger"
+alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
+
 # SSD開啟trimforce
 sudo trimforce enable
 
