@@ -73,31 +73,56 @@ curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | gre
 
 - 精簡版
 
-```bash
+```fish
 curl -L https://git.io/florencea-macos-build-install -o tempsh;sh tempsh
 ```
 
 - 完整版腳本開頭會詢問輸入 github 使用者名稱、github 信箱、git 系統預設文字編輯器、fish shell 的問候語
 
-```bash
+```fish
 curl -L https://git.io/florencea-macos-build-install-full -o tempsh;sh tempsh
 ```
 
 - DNS-over-HTTPS 自動安裝腳本(可以新建一個網路設定檔之後再執行)
 
-```bash
+```fish
 curl -L https://git.io/florencea-macos-build-doh | sh
 # 安裝完成後請將系統 DNS 改為 127.0.0.1 與 ::1
 ```
 
 - 取得 ublock 備份(不阻擋第三方腳本與框架，相當於訂閱了多個規則集的 ABP，裝後不理，網站比較不會出問題)
 
-```bash
+```fish
 curl -L https://git.io/florencea-macos-build-ublock -o ublock.txt
 ```
 
 - 取得 ublock-adv 備份(啟用進階動態過濾，大量自訂規則，建議手機使用，有效減少請求數量，網站較有可能出問題)
 
-```bash
+```fish
 curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
+```
+
+## 重灌基本流程(適用 SSD 機種與高速網路環境)
+
+```fish
+[系統安裝]
+  ├──[install.sh]
+  │      ├──[istatMenus設定]
+  │      ├──[終端機設定]
+  │      └──[App Store安裝]
+  │               ├──[Chrome設定]
+  │               │       ├──[SSH設定]
+  │               │       │     └──[GPG設定]
+  │               │       │           └──[其餘App設定]
+  │               │       └──[DNS設定]
+  │               └──[GarageBand安裝]
+  │                         └──[資料拷貝(Patches)]
+  ├──[iTunes設定]
+  │       └──[資料拷貝(Music)]
+  │               ├──[資料拷貝(文件)]
+  │               ├──[資料拷貝(影片)]
+  │               ├──[資料拷貝(下載項目)]
+  │               └──[資料拷貝(Patches)至桌面]
+  ├──[系統設定]
+  └──[Finder設定]
 ```
