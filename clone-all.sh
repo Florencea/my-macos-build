@@ -4,3 +4,4 @@ for repo in $repo_list
 do
   git clone $repo
 done
+rm $0
