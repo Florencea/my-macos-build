@@ -69,15 +69,15 @@ sudo python installinstallmacos.py
 curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
 ```
 
-## 安裝環境自動安裝腳本
+## 自動腳本
 
-- 精簡版
+- 開發環境安裝
 
 ```fish
 curl -L https://git.io/florencea-macos-build-install -o tempsh;sh tempsh
 ```
 
-- 完整版腳本開頭會詢問輸入 github 使用者名稱、github 信箱、git 系統預設文字編輯器、fish shell 的問候語
+- 開發環境安裝客制版，腳本開頭會詢問輸入 github 使用者名稱、github 信箱、git 系統預設文字編輯器、fish shell 的問候語
 
 ```fish
 curl -L https://git.io/florencea-macos-build-install-full -o tempsh;sh tempsh
@@ -100,6 +100,12 @@ curl -L https://git.io/florencea-macos-build-ublock -o ublock.txt
 
 ```fish
 curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
+```
+
+- 取得所有 github repo，包含 private
+
+```fish
+curl -L https://git.io/florencea-macos-build-clone-all -o tempsh;sh tempsh <GITHUB_ACCESS_TOKEN>
 ```
 
 ## 重灌基本流程(適用 SSD 機種與高速網路環境)
