@@ -96,7 +96,7 @@ curl -L https://git.io/florencea-macos-build-doh | sh
 curl -L https://git.io/florencea-macos-build-ublock -o ublock.txt
 ```
 
-- 取得 ublock-adv 備份(啟用進階動態過濾，大量自訂規則，建議手機使用，能夠有效減少請求數量，網站較有可能出問題)
+- 取得 ublock-adv 備份(啟用進階動態過濾，大量自訂規則，建議手機使用，有效減少請求數量，網站較有可能出問題)
 
 ```bash
 curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
