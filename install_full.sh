@@ -62,6 +62,7 @@ brew install clang-format
 brew install gcc
 brew install git
 brew install git-lfs
+brew install jq
 brew install nano
 brew install mkcert
 brew install mongodb
