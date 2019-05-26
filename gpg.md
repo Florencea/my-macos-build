@@ -1,15 +1,27 @@
 # Use GPG in Github
 
+## Commends
+
+```fish
+gpg --full-generate-key
+gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+git config --global commit.gpgsign true
+git config --global gpg.program gpg
+```
+
+## Details
+
 - Install [GPG Suite](https://gpgtools.org/).
 
   ```fish
-  ~> brew cask install gpg-suite
+  brew cask install gpg-suite
   ```
 
 - Create GPG Key
 
   ```fish
-  ~> gpg --full-generate-key
+  gpg --full-generate-key
 
   # 請選擇你要使用的金鑰種類:
   #   (1) RSA 和 RSA (預設)
@@ -47,7 +59,7 @@
 - Export key
 
   ```fish
-  ~> gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+  gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
   ```
 
 - Copy full public key to github or gitlab
@@ -55,7 +67,7 @@
 - Use GPG key in git
 
   ```fish
-  ~> git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
-  ~> git config --global commit.gpgsign true
-  ~> git config --global gpg.program gpg
+  git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+  git config --global commit.gpgsign true
+  git config --global gpg.program gpg
   ```
