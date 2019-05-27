@@ -1,3 +1,13 @@
+# git commit rules
+
+```fish
+# 先建立一個.gitmessage.txt
+# 在專案內使用 commit-template
+git config commit.template .gitmessage.txt
+# 在全系統使用 commit-template
+git config --global commit.template ~/.gitmessage.txt
+```
+
 ## 結構
 
 ```text
