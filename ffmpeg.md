@@ -73,6 +73,7 @@ ffmpeg
 
 # ffmpeg 製作 gif
 ffmpeg
+  -hide_banner
   -ss <開始位置(61.0)>
   -t <持續秒數(2.5)>
   -i <輸入檔案>
