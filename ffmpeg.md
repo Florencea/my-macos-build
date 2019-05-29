@@ -70,4 +70,12 @@ ffmpeg
   -vf "subtitles=filename='<同一目錄下的字幕檔名>'"
   -tag:v hvc1
   <輸出檔案>
+
+# ffmpeg 製作 gif
+ffmpeg
+  -ss <開始位置(61.0)>
+  -t <持續秒數(2.5)>
+  -i <輸入檔案>
+  -filter_complex "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"
+  <輸出檔案.gif>
 ```
