@@ -118,6 +118,13 @@ curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
 curl -L https://git.io/florencea-macos-build-clone-all -o tempsh;sh tempsh <GITHUB_ACCESS_TOKEN>
 ```
 
+- 製作 gif，需安裝`fish`與`ffmpeg`
+
+```fish
+curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
+# example: curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh "1.mp4" 01:11:21 6.0
+```
+
 ## 重灌基本流程(適用 SSD 機種與高速網路環境)
 
 ```fish
