@@ -143,6 +143,7 @@ curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <in
   ├──[iTunes設定]
   │       └──[資料拷貝(Music)]
   │               ├──[資料拷貝(文件)]
+  │               │       └──[fish別名]
   │               ├──[資料拷貝(影片)]
   │               ├──[資料拷貝(下載項目)]
   │               └──[資料拷貝(Patches)至桌面]
