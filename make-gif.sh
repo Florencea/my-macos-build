@@ -1,7 +1,10 @@
 #! /bin/bash
 # nano ~/.config/fish/config.fish
 # alias mkgif="bash ~/Documents/workspace_florencea/my-macos-build/make-gif.sh"
-echo "usage: mkgif <input_file> <from(sec)> <during(sec)>"
+if [[ $# -eq 0 ]] ; then
+  echo "usage: mkgif <input_file> <from(sec)> <during(sec)>"
+  exit 1
+fi
 echo "making gif for $1 ..."
 echo "from: $2 sec"
 echo "during: $3 sec"
