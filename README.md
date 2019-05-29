@@ -149,3 +149,11 @@ curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <in
   ├──[系統設定]
   └──[Finder設定]
 ```
+
+```fish
+# 常用fish別名
+nano ~/.config/fish/config.fish
+alias ledger="atom ~/Documents/workspace_florencea/ledger"
+alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
+alias mkgif="fish ~/Documents/workspace_florencea/my-macos-build/make-gif.sh"
+```
