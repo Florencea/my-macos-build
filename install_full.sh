@@ -66,7 +66,7 @@ brew install jq
 brew install nano
 brew install mkcert
 brew install mongodb
-brew install node
+brew install node@10
 brew install python
 brew install python@2
 brew install redis
@@ -82,7 +82,6 @@ brew cask install iina
 brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
-brew cask install kite
 brew cask install scroll-reverser
 
 # brew install cask fonts
