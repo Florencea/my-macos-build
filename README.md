@@ -38,8 +38,7 @@ auth       sufficient     pam_tid.so
 
 # fish shell別名
 nano ~/.config/fish/config.fish
-alias ledger="atom ~/Documents/workspace_florencea/ledger"
-alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
+alias alias="commends"
 
 # SSD開啟trimforce
 sudo trimforce enable
