@@ -27,6 +27,7 @@ brew install redis
 brew install wget
 # brew install cask apps
 brew cask install atom
+brew cask install firefox
 brew cask install google-chrome
 brew cask install gpg-suite
 brew cask install iina
