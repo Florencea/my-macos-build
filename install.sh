@@ -13,6 +13,7 @@ mkdir -p ~/.config/fish
 { printf "set -g -x PATH /usr/local/bin \$PATH\n"; printf "set -g -x fish_greeting %s\n" "$shell_greeting"; } >> ~/.config/fish/config.fish
 # brew install commend line tools
 brew install clang-format
+brew install ccls
 brew install gcc
 brew install git
 brew install git-lfs
