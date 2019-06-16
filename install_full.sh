@@ -59,7 +59,6 @@ mkdir -p ~/.config/fish
 # brew install commend line tools
 print_step "brew install commend line tools"
 brew install clang-format
-brew install ccls
 brew install gcc
 brew install git
 brew install git-lfs
