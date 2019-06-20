@@ -45,6 +45,9 @@ sudo trimforce enable
 
 # 禁用Chrome本機快取
 defaults write com.google.Chrome DiskCacheDir -string /dev/null
+
+# 移除macOS檔案擴展屬性(-r是遞迴的意思)
+xattr -r -c <file or directory>
 ```
 
 ## macOS 工具紀錄
