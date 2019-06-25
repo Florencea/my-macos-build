@@ -23,6 +23,7 @@ brew install nano
 brew install mkcert
 brew install mongodb
 brew install node@10
+brew install nss
 brew install python
 brew install python@2
 brew install redis
