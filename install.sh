@@ -14,6 +14,7 @@ mkdir -p ~/.config/fish
 # brew install commend line tools
 brew install clang-format
 brew install ccls
+brew install ffmpeg
 brew install gcc
 brew install git
 brew install git-lfs
