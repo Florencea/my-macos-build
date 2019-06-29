@@ -48,6 +48,9 @@ defaults write com.google.Chrome DiskCacheDir -string /dev/null
 
 # 移除macOS檔案擴展屬性(-r是遞迴的意思)
 xattr -r -c <file or directory>
+
+# 刪除touch bar資料(需使用還原磁區之終端機執行，且執行後需重開機再蟲灌，否則會錯誤)
+xartutil --erase-all
 ```
 
 ## macOS 工具紀錄
