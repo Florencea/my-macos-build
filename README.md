@@ -133,6 +133,7 @@ curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <in
 ## 重灌基本流程(適用 SSD 機種與高速網路環境)
 
 ```fish
+[清除touchbar資料]
 [系統安裝]
   ├──[install.sh]
   │      ├──[istatMenus設定]
