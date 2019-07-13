@@ -18,6 +18,7 @@ brew install ffmpeg
 brew install gcc
 brew install git
 brew install git-lfs
+brew install id3v2
 brew install jq
 brew install nano
 brew install mkcert
