@@ -135,7 +135,7 @@ curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <in
 ```fish
 [清除touchbar資料]
 [系統安裝]
-  ├──[install.sh, 安裝Rust]
+  ├──[install.sh, 安裝Rust, fish alias]
   │      ├──[istatMenus設定]
   │      ├──[終端機設定]
   │      └──[App Store安裝]
