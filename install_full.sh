@@ -61,6 +61,7 @@ print_step "brew install commend line tools"
 brew install clang-format
 brew install ccls
 brew install ffmpeg
+brew install flow
 brew install gcc
 brew install git
 brew install git-lfs
