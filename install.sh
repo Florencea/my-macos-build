@@ -24,16 +24,17 @@ brew install nano
 brew install mkcert
 brew install mongodb
 brew install node@10
-{ printf "set -g fish_user_paths \"/usr/local/opt/node@10/bin\" $fish_user_paths\n" } >> ~/.config/fish/config.fish
+{ printf "set -g fish_user_paths /usr/local/opt/node@10/bin $fish_user_paths\n" } >> ~/.config/fish/config.fish
 brew install nss
 brew install python
 brew install python@2
 brew install redis
 brew install wget
 # brew install cask apps
+brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox
-brew cask install google-chrome
+brew cask install firefox-nightly
+brew cask install google-chrome-dev
 brew cask install gpg-suite
 brew cask install iina
 brew cask install istat-menus
