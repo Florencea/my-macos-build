@@ -70,7 +70,7 @@ brew install nano
 brew install mkcert
 brew install mongodb
 brew install node@10
-{ printf "set -g fish_user_paths \"/usr/local/opt/node@10/bin\" $fish_user_paths\n" } >> ~/.config/fish/config.fish
+echo 'set -g fish_user_paths "/usr/local/opt/node@10/bin" $fish_user_paths' >> ~/.config/fish/config.fish
 brew install nss
 brew install python
 brew install python@2
