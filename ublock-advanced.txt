@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1563765822700,
-  "version": "1.20.2",
+  "timeStamp": 1564232802925,
+  "version": "1.21.2",
   "userSettings": {
     "advancedUserEnabled": true,
     "alwaysDetachLogger": true,
@@ -46,11 +46,13 @@
     "autoUpdateAssetFetchPeriod": 120,
     "autoUpdateDelayAfterLaunch": 180,
     "autoUpdatePeriod": 7,
+    "blockingProfiles": "11101 00001",
     "cacheStorageAPI": "unset",
     "cacheStorageCompression": true,
     "cacheControlForFirefox1376932": "no-cache, no-store, must-revalidate",
     "consoleLogLevel": "unset",
     "debugScriptlets": false,
+    "debugScriptletInjector": false,
     "disableWebAssembly": false,
     "ignoreRedirectFilters": false,
     "ignoreScriptInjectFilters": false,
@@ -62,8 +64,17 @@
     "suspendTabsUntilReady": "unset",
     "userResourcesLocation": "unset"
   },
+  "whitelist": [
+    "about-scheme",
+    "chrome-extension-scheme",
+    "chrome-scheme",
+    "moz-extension-scheme",
+    "opera-scheme",
+    "vivaldi-scheme",
+    "wyciwyg-scheme"
+  ],
   "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
-  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* * 3p-script block\n* * 3p-frame block\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\njuejin.im xitu.io * noop\nmanhuaren.com cdndm5.com * noop\nncue.edu.tw ncue.edu.tw * allow\npchome.com.tw * 3p-script noop\npchome.com.tw * 3p-frame noop\npixiv.net pximg.net * noop\ntwitter.com twimg.com * noop\nmicrosoftonline.com * 3p-script noop\nmicrosoftonline.com * 3p-frame noop\noffice.com * 3p-script noop\noffice.com * 3p-frame noop\nlive.com * 3p-script noop\nlive.com * 3p-frame noop\nmicrosoft.com * 3p-script noop\nmicrosoft.com * 3p-frame noop\nsharepoint.com * 3p-script noop\nsharepoint.com * 3p-frame noop\npixnet.net pixfs.net * noop\nturnitin.com * 3p-script noop\nturnitin.com * 3p-frame noop\nyoujizz.com * 3p-script noop\nbooks.com.tw book.com.tw * noop\n* ajax.aspnetcdn.com * noop\n* ajax.microsoft.com * noop\n* ajax.proxy.ustclug.org * noop\n* apps.bdimg.com * noop\n* cdn.bootcss.com * noop\n* cdn.jsdelivr.net * noop\n* lib.sinaapp.com * noop\n* libs.baidu.com * noop\n* sdn.geekzu.org * noop\n* upcdn.b0.upaiyun.com * noop\n* yandex.st * noop\n* yastatic.net * noop\napple.com cdn-apple.com * noop\ncool3c.com cool3c.info * noop\nreddit.com redditstatic.com * noop\nanime1.me animeone.me * noop\nrailway.gov.tw * 3p-script noop\nrailway.gov.tw * 3p-frame noop\ntranslate.google.com * 3p-frame noop\ngoogle.com gstatic.com * noop\n* ajax.googleapis.com * noop\n* code.jquery.com * noop\n* ajax.cloudflare.com * noop\n* cdnjs.cloudflare.com * noop\nfandom.com nocookie.net * noop\nnetmag.tw wp.com * noop\nsogi.com.tw cloudfront.net * noop\n* youtube.com * noop",
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* * 3p-script block\n* * 3p-frame block\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\njuejin.im xitu.io * noop\npchome.com.tw * 3p-script noop\npchome.com.tw * 3p-frame noop\npixiv.net pximg.net * noop\ntwitter.com twimg.com * noop\nmicrosoftonline.com * 3p-script noop\nmicrosoftonline.com * 3p-frame noop\noffice.com * 3p-script noop\noffice.com * 3p-frame noop\nlive.com * 3p-script noop\nlive.com * 3p-frame noop\nmicrosoft.com * 3p-script noop\nmicrosoft.com * 3p-frame noop\nsharepoint.com * 3p-script noop\nsharepoint.com * 3p-frame noop\npixnet.net pixfs.net * noop\nyoujizz.com * 3p-script noop\nbooks.com.tw book.com.tw * noop\n* ajax.aspnetcdn.com * noop\n* ajax.microsoft.com * noop\n* ajax.proxy.ustclug.org * noop\n* apps.bdimg.com * noop\n* cdn.bootcss.com * noop\n* cdn.jsdelivr.net * noop\n* lib.sinaapp.com * noop\n* libs.baidu.com * noop\n* sdn.geekzu.org * noop\n* upcdn.b0.upaiyun.com * noop\n* yandex.st * noop\n* yastatic.net * noop\napple.com cdn-apple.com * noop\ncool3c.com cool3c.info * noop\nreddit.com redditstatic.com * noop\nanime1.me animeone.me * noop\nrailway.gov.tw * 3p-script noop\nrailway.gov.tw * 3p-frame noop\ntranslate.google.com * 3p-frame noop\ngoogle.com gstatic.com * noop\n* ajax.googleapis.com * noop\n* code.jquery.com * noop\n* ajax.cloudflare.com * noop\n* cdnjs.cloudflare.com * noop\nfandom.com nocookie.net * noop\nsogi.com.tw cloudfront.net * noop\n* youtube.com * noop",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false",
   "userFilters": "anime1.me##^#aTQNPZLh\nanime1.me##^#execphp-6\nanime1.me##^#execphp-8\nanime1.me##^.kiwi-ad-wrapper-728x90\nanime1.me##^#text-6\nfacebook.com##.home_right_column\nfacebook.com###pagelet_ego_contextual_group\ninside.com.tw##^.post_list_item-ad\nshare.dmhy.org##^script:has-text(_hmt)\nshare.dmhy.org##^.announce\nwww.cool3c.com##^.article-social\nwww.cool3c.com##^.comments\nwww.cool3c.com##body > [src=\"/assets/img/img-failed.jpg\"]\nwww.ithome.com.tw##^#block-block-23\nwww.ithome.com.tw##^#block-block-45\nwww.ithome.com.tw##^#block-block-74\nwww.ithome.com.tw##^#block-block-91\nwww.playpcesor.com##^#ztb-slide-box-widget\nwww.thenewslens.com##^.ad-btm\n"
