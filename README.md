@@ -49,7 +49,7 @@ defaults write com.google.Chrome DiskCacheDir -string /dev/null
 # 移除macOS檔案擴展屬性(-r是遞迴的意思)
 xattr -r -c <file or directory>
 
-# 刪除touch bar資料(需使用還原磁區之終端機執行，且執行後需重開機再蟲灌，否則會錯誤)
+# 刪除touch bar資料(需使用還原磁區之終端機執行，且執行後需重開機再執行重灌，否則會錯誤)
 xartutil --erase-all
 ```
 
@@ -63,6 +63,11 @@ curl https://sh.rustup.rs -sSf | sh
 brew install gdrive
 gdrive download <雲端硬碟檔案ID>
 gdrive download -r <雲端硬碟資料夾ID>
+gdrive upload -p <雲端硬碟資料夾ID> <本機檔案路徑>
+
+# 備份星閃組
+gdrive upload -p '1O0hA96mldWaDNfEKif6E8bRXT7u-FUCc' <本機檔案路徑>
+gdrive list -q "parents in '1O0hA96mldWaDNfEKif6E8bRXT7u-FUCc'" --order "name"
 
 # mega 命令列控制工具
 brew install megatools
@@ -135,7 +140,7 @@ curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <in
 ```fish
 [清除touchbar資料]
 [系統安裝]
-  ├──[install.sh, 安裝Rust, fish alias]
+  ├──[install.sh, 安裝Rust]
   │      ├──[istatMenus設定]
   │      ├──[終端機設定]
   │      └──[App Store安裝]
