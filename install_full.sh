@@ -68,9 +68,7 @@ brew install id3v2
 brew install jq
 brew install nano
 brew install mkcert
-brew install mongodb
-brew install node@10
-echo 'set -g fish_user_paths "/usr/local/opt/node@10/bin" $fish_user_paths' >> ~/.config/fish/config.fish
+brew install node
 brew install nss
 brew install python
 brew install python@2
@@ -100,7 +98,6 @@ print_step "npm install global packages"
 npm install -g npm
 npm install -g http-server
 npm install -g eslint
-npm install -g bash-language-server
 
 # python3 install global packages
 print_step "python3 install global packages"
@@ -109,10 +106,11 @@ pip3 install flake8
 pip3 install isort
 pip3 install numpy
 pip3 install 'python-language-server[all]'
-pip3 install beautysh
 
-# mongodb configuations
-print_step "mongodb configuations"
+# mongodb install and configuations
+print_step "mongodb install and configuations"
+brew tap mongodb/brew
+brew install mongodb-community
 (set -x; sudo mkdir -p /data/db)
 (set -x; sudo chown "$(whoami)":staff /data/db)
 
