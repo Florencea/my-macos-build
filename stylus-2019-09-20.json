@@ -1,0 +1,46 @@
+[
+	{
+		"enabled": true,
+		"updateUrl": "https://userstyles.org/styles/chrome/173382.json",
+		"md5Url": "https://update.userstyles.org/173382.md5",
+		"url": "http://userstyles.org/styles/173382",
+		"originalMd5": "0cca8dbeee59de616deb51e17e983934",
+		"installDate": 1568551432351,
+		"sections": [
+			{
+				"urls": [],
+				"urlPrefixes": [],
+				"domains": [
+					"translate.google.com"
+				],
+				"regexps": [],
+				"code": "#wtgbr,\r\n#gt-c {\r\n    display: none !important;\r\n}\r\n\r\n#contentframe {\r\n    top: 0 !important;\r\n}"
+			}
+		],
+		"name": "Google Translate Sites Clear",
+		"originalDigest": "96140a656162cc7263cd2aaca0dddcc36bb352db",
+		"id": 1
+	},
+	{
+		"enabled": true,
+		"updateUrl": "https://userstyles.org/styles/chrome/129031.json",
+		"md5Url": "https://update.userstyles.org/129031.md5",
+		"url": "http://userstyles.org/styles/129031",
+		"originalMd5": "db121c3719f7d93906520ab1366aff97",
+		"installDate": 1568551435918,
+		"sections": [
+			{
+				"urls": [],
+				"urlPrefixes": [],
+				"domains": [
+					"ithome.com.tw"
+				],
+				"regexps": [],
+				"code": "aside[role=\"complementary\"],\r\ndiv.side-extra,\r\ndiv.content-summary,\r\ndiv.field-name-field-photo-source,\r\ndiv.socail-btns-on-top,\r\ndiv.social-btn-set,\r\ndiv.view-display-id-article_category,\r\n#headerbar,\r\ndiv#hpad930up,\r\n#cyber,\r\n.ad-banner-text,\r\n.today-featured{\r\ndisplay:none !important;\r\n}\r\n.view-id-latest_news{\r\npadding-top:30px !important;\r\n}\r\n.img-wrapper,\r\nsection#block-views-view-news-custom-submitted{\r\npadding-left:30%;\r\n}\r\nh1.page-header{\r\nfont-size: 2em !important;\r\ntext-align:center;\r\npadding-top: 45px;\r\n}\r\nbody{\r\nfont-family: PingFangTC-Regular, \"Ubuntu\", \"微軟正黑體\", Verdana, sans-serif;\r\n}\r\n.main-container {\r\n    margin-top: 0;\r\n}\r\n.avatar{\r\n    position: relative;\r\n}\r\n@media (max-width: 979px){\r\n    .img-wrapper{\r\n        padding-left: 0;\r\n    }\r\n}"
+			}
+		],
+		"name": "iThome clear",
+		"originalDigest": "83d3cc6ae9a642854a7e1e4f4b84027f227fa818",
+		"id": 2
+	}
+]
