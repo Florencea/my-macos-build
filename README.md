@@ -168,4 +168,5 @@ nano ~/.config/fish/config.fish
 alias ledger="atom ~/Documents/workspace_florencea/ledger"
 alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
 alias mkgif="fish ~/Documents/workspace_florencea/my-macos-build/make-gif.sh"
+alias ubk="fish ~/Documents/workspace_florencea/my-macos-build/ublock-backup.sh"
 ```
