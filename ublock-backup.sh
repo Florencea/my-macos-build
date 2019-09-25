@@ -10,6 +10,10 @@ else
   mv $file_to_backup ~/Documents/workspace_florencea/my-macos-build/ublock-advanced.txt
   cd ~/Documents/workspace_florencea/my-macos-build
   git add ublock-advanced.txt
-  git commit -m "feat: update ublock-adv rules by ubk"
-  git push
+  echo ""
+  printf 'Backup to github...'
+  git commit -q -m "feat: update ublock-adv rules by ubk"
+  git push -q
+  echo "done."
+  echo ""
 end
