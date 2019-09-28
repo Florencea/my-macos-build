@@ -104,12 +104,6 @@ curl -L https://git.io/florencea-macos-build-doh | sh
 # 安裝完成後請將系統 DNS 改為 127.0.0.1 與 ::1
 ```
 
-- 取得 ublock 備份(不阻擋第三方腳本與框架，相當於訂閱了多個規則集的 ABP，裝後不理，網站比較不會出問題)
-
-```fish
-curl -L https://git.io/florencea-macos-build-ublock -o ublock.txt
-```
-
 - 取得 ublock-adv 備份(啟用進階動態過濾，大量自訂規則，建議手機使用，有效減少請求數量，網站較有可能出問題)
 
 ```fish
