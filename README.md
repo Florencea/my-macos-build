@@ -97,12 +97,6 @@ curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | gre
 curl -L https://git.io/florencea-macos-build-install -o tempsh;sh tempsh
 ```
 
-- 開發環境安裝客制版，腳本開頭會詢問輸入 github 使用者名稱、github 信箱、git 系統預設文字編輯器、fish shell 的問候語
-
-```fish
-curl -L https://git.io/florencea-macos-build-install-full -o tempsh;sh tempsh
-```
-
 - DNS-over-HTTPS 自動安裝腳本(可以新建一個網路設定檔之後再執行)
 
 ```fish
