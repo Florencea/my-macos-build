@@ -1,24 +1,68 @@
 # My macOS build
 
-## 目錄連結
+## 其他目錄連結
 
 - [設置 gpg](gpg.md)
 - [常用 Ubuntu 指令紀錄](ubuntu-1804-cmd.md)
 - [git commit rules](git-commit-rules.md)
 - [ffmpeg 紀錄](ffmpeg.md)
 
-## humble tab config
+## 重灌基本流程(適用 SSD 機種與高速網路環境)
 
-- for light color
-
-```text
-{"options.show_top":"0","options.show_closed":"0","column.0.0":"1","column.1.0":"apps","options.auto_close":"1","open.closed":"true","options.hide_options":"1","options.show_recent":"0","options.shadow_color":"transparent","options.highlight_font_color":"#000","options.show_root":"0","options.show_devices":"0","apps.order":"[\"webstore\",\"pjkljhegncpnkpknbcohdijeoejaedia\",\"apdfllckaahabafndbhieahigkjlhalf\",\"pnhechapfaindjhompbnflcldabbghjo\",\"blpcfgokakmgnkcojhhkbfbldkacnbeo\",\"aohghmighlieiainnegkcijnfilokake\",\"aapocclcgogkmnckokdopfmhonfmgoek\",\"felcaaldnbdncclmgdcncolpebgiejap\"]","options.show_weather":"0","options.highlight_color":"#f1f1f1","options.width":"0.656","options.background_color":"#fafafa","options.font_color":"#333","options.lock":"1","options.css":"#main a{border-radius:1em;}","options.font_size":"20","options.show_apps":"1","options.show_2":"0"}
+```fish
+[清除touchbar資料]
+# 需使用還原磁區之終端機執行，且執行後需重開機再執行重灌，否則會錯誤
+xartutil --erase-all
+[系統安裝]
+  ├──[install.sh]
+curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
+  │      ├──[GarageBand安裝]
+  │      │        └──[資料拷貝(Patches)]
+  │      ├──[istatMenus設定]
+  │      ├──[終端機設定]
+  │      └──[Firefox與Chrome設定]
+  │               ├──[SSH設定]
+  │               │     └──[GPG設定]
+  │               │           └──[其餘App設定]
+  │               └──[DNS設定]
+  ├──[iTunes設定]
+  │       ├──[資料拷貝(Music)]
+  │       ├──[資料拷貝(Patches)至桌面]
+  │       ├──[資料拷貝(文件)]
+  │       ├──[資料拷貝(影片)]
+  │       └──[資料拷貝(下載項目)]
+  ├──[系統設定]
+  └──[Finder設定]
 ```
 
-- for dark color
+## 自動腳本
 
-```text
-{"apps.order":"[\"webstore\",\"pjkljhegncpnkpknbcohdijeoejaedia\",\"apdfllckaahabafndbhieahigkjlhalf\",\"pnhechapfaindjhompbnflcldabbghjo\",\"blpcfgokakmgnkcojhhkbfbldkacnbeo\",\"aohghmighlieiainnegkcijnfilokake\",\"aapocclcgogkmnckokdopfmhonfmgoek\",\"felcaaldnbdncclmgdcncolpebgiejap\"]","column.0.0":"1","column.1.0":"apps","open.closed":"true","options.auto_close":"1","options.background_color":"#202124","options.css":"#main a{border-radius:1em;}","options.font_color":"#bec1c5","options.font_size":"20","options.hide_options":"1","options.highlight_color":"#333639","options.highlight_font_color":"#eff1f2","options.lock":"1","options.shadow_color":"transparent","options.show_2":"0","options.show_apps":"1","options.show_closed":"0","options.show_devices":"0","options.show_recent":"0","options.show_root":"0","options.show_top":"0","options.show_weather":"0","options.width":"0.656"}
+```fish
+# DNS-over-HTTPS(安裝完成後請將系統 DNS 改為 127.0.0.1 與 ::1)
+curl -L https://git.io/florencea-macos-build-doh | sh
+
+# 取得 ublock-adv 備份
+curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
+
+# 製作 gif，需安裝fish與ffmpeg
+curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
+
+# 製作git.io縮網址
+curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
+
+# 下載舊版macOS
+curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
+sudo python installinstallmacos.py
+```
+
+## fish alias
+
+```fish
+nano ~/.config/fish/config.fish
+alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
+alias mkgif="fish ~/Documents/workspace_florencea/my-macos-build/make-gif.sh"
+alias ubk="fish ~/Documents/workspace_florencea/my-macos-build/ublock-backup.sh"
+alias al="fish ~/Documents/workspace_florencea/ledger/al/al.fish"
 ```
 
 ## macOS 指令紀錄
@@ -36,124 +80,22 @@ sudo nano /etc/pam.d/sudo
 # 在第二行加入
 auth       sufficient     pam_tid.so
 
-# fish shell別名
-nano ~/.config/fish/config.fish
-alias alias="commends"
-
 # SSD開啟trimforce
 sudo trimforce enable
 
-# 禁用Chrome本機快取
+# 禁用Chrome本機快取(硬碟機種適用)
 defaults write com.google.Chrome DiskCacheDir -string /dev/null
 
-# 移除macOS檔案擴展屬性(-r是遞迴的意思)
+# 移除macOS檔案擴展屬性(-r是遞迴的意思，為了在Safari Developer Preview移除後刪除殘餘檔案)
 xattr -r -c <file or directory>
-
-# 刪除touch bar資料(需使用還原磁區之終端機執行，且執行後需重開機再執行重灌，否則會錯誤)
-xartutil --erase-all
 ```
 
-## macOS 工具紀錄
+## humble tab config
 
-```fish
+```json
+# light theme
+{"options.show_top":"0","options.show_closed":"0","column.0.0":"1","column.1.0":"apps","options.auto_close":"1","open.closed":"true","options.hide_options":"1","options.show_recent":"0","options.shadow_color":"transparent","options.highlight_font_color":"#000","options.show_root":"0","options.show_devices":"0","apps.order":"[\"webstore\",\"pjkljhegncpnkpknbcohdijeoejaedia\",\"apdfllckaahabafndbhieahigkjlhalf\",\"pnhechapfaindjhompbnflcldabbghjo\",\"blpcfgokakmgnkcojhhkbfbldkacnbeo\",\"aohghmighlieiainnegkcijnfilokake\",\"aapocclcgogkmnckokdopfmhonfmgoek\",\"felcaaldnbdncclmgdcncolpebgiejap\"]","options.show_weather":"0","options.highlight_color":"#f1f1f1","options.width":"0.656","options.background_color":"#fafafa","options.font_color":"#333","options.lock":"1","options.css":"#main a{border-radius:1em;}","options.font_size":"20","options.show_apps":"1","options.show_2":"0"}
 
-# google drive 命令列控制工具
-brew install gdrive
-gdrive download <雲端硬碟檔案ID>
-gdrive download -r <雲端硬碟資料夾ID>
-gdrive upload -p <雲端硬碟資料夾ID> <本機檔案路徑>
-
-# 備份星閃組
-gdrive upload -p '1O0hA96mldWaDNfEKif6E8bRXT7u-FUCc' <本機檔案路徑>
-gdrive list -q "parents in '1O0hA96mldWaDNfEKif6E8bRXT7u-FUCc'" --order "name"
-
-# mega 命令列控制工具
-brew install megatools
-megadl <mega網址>
-
-# youtube 下載工具
-brew install youtube-dl
-youtube-dl -F <影片ID>
-youtube-dl -f <格式碼> <影片ID>
-
-# 萬用音訊轉檔app
-brew cask install mediahuman-audio-converter
-
-# 下載舊版macOS
-curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
-sudo python installinstallmacos.py
-
-# 製作git.io縮網址
-curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
-```
-
-## 自動腳本
-
-- 開發環境安裝
-
-```fish
-curl -L https://git.io/florencea-macos-build-install -o tempsh;sh tempsh
-```
-
-- DNS-over-HTTPS 自動安裝腳本(可以新建一個網路設定檔之後再執行)
-
-```fish
-curl -L https://git.io/florencea-macos-build-doh | sh
-# 安裝完成後請將系統 DNS 改為 127.0.0.1 與 ::1
-```
-
-- 取得 ublock-adv 備份(啟用進階動態過濾，大量自訂規則，建議手機使用，有效減少請求數量，網站較有可能出問題)
-
-```fish
-curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
-```
-
-- 取得所有 github repo，包含 private
-
-```fish
-curl -L https://git.io/florencea-macos-build-clone-all -o tempsh;sh tempsh <GITHUB_ACCESS_TOKEN>
-```
-
-- 製作 gif，需安裝`fish`與`ffmpeg`
-
-```fish
-curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
-# example: curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh "1.mp4" 01:11:21 6.0
-```
-
-## 重灌基本流程(適用 SSD 機種與高速網路環境)
-
-```fish
-[清除touchbar資料]
-[系統安裝]
-  ├──[install.sh]
-  │      ├──[istatMenus設定]
-  │      ├──[終端機設定]
-  │      └──[App Store安裝]
-  │               ├──[Firefox與Chrome設定]
-  │               │       ├──[SSH設定]
-  │               │       │     └──[GPG設定]
-  │               │       │           └──[其餘App設定]
-  │               │       └──[DNS設定]
-  │               └──[GarageBand安裝]
-  │                         └──[資料拷貝(Patches)]
-  ├──[iTunes設定]
-  │       └──[資料拷貝(Music)]
-  │               ├──[資料拷貝(文件)]
-  │               │       └──[fish別名]
-  │               ├──[資料拷貝(影片)]
-  │               ├──[資料拷貝(下載項目)]
-  │               └──[資料拷貝(Patches)至桌面]
-  ├──[系統設定]
-  └──[Finder設定]
-```
-
-```fish
-# 常用fish別名
-nano ~/.config/fish/config.fish
-alias ledger="atom ~/Documents/workspace_florencea/ledger"
-alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
-alias mkgif="fish ~/Documents/workspace_florencea/my-macos-build/make-gif.sh"
-alias ubk="fish ~/Documents/workspace_florencea/my-macos-build/ublock-backup.sh"
-alias al="fish ~/Documents/workspace_florencea/ledger/al/al.fish"
+# dark theme
+{"apps.order":"[\"webstore\",\"pjkljhegncpnkpknbcohdijeoejaedia\",\"apdfllckaahabafndbhieahigkjlhalf\",\"pnhechapfaindjhompbnflcldabbghjo\",\"blpcfgokakmgnkcojhhkbfbldkacnbeo\",\"aohghmighlieiainnegkcijnfilokake\",\"aapocclcgogkmnckokdopfmhonfmgoek\",\"felcaaldnbdncclmgdcncolpebgiejap\"]","column.0.0":"1","column.1.0":"apps","open.closed":"true","options.auto_close":"1","options.background_color":"#202124","options.css":"#main a{border-radius:1em;}","options.font_color":"#bec1c5","options.font_size":"20","options.hide_options":"1","options.highlight_color":"#333639","options.highlight_font_color":"#eff1f2","options.lock":"1","options.shadow_color":"transparent","options.show_2":"0","options.show_apps":"1","options.show_closed":"0","options.show_devices":"0","options.show_recent":"0","options.show_root":"0","options.show_top":"0","options.show_weather":"0","options.width":"0.656"}
 ```
