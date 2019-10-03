@@ -47,10 +47,10 @@ brew install wget
 brew install youtube-dl
 
 print_step "brew install cask apps"
-brew tap homebrew/cask-versions
+# brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox-nightly
-brew cask install google-chrome-canary
+# brew cask install firefox-nightly
+brew cask install google-chrome
 brew cask install gpg-suite
 brew cask install iina
 brew cask install istat-menus
