@@ -53,7 +53,6 @@ brew cask install gpg-suite
 brew cask install iina
 brew cask install keka
 brew cask install kekadefaultapp
-brew cask install scroll-reverser
 
 print_step "npm install global packages"
 npm install -g npm
