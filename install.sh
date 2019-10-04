@@ -48,6 +48,7 @@ brew install youtube-dl
 
 print_step "brew install cask apps"
 brew cask install atom
+brew cask install bitwarden
 brew cask install google-chrome
 brew cask install gpg-suite
 brew cask install iina
