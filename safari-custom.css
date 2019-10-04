@@ -1,18 +1,3 @@
-aside[role="complementary"],
-div.side-extra,
-div.content-summary,
-div.field-name-field-photo-source,
-div.socail-btns-on-top,
-div.social-btn-set,
-div.view-display-id-article_category,
-#headerbar,
-div#hpad930up,
-#cyber,
-.ad-banner-text,
-.today-featured {
-  display: none !important;
-}
-
 .view-id-latest_news {
   padding-top: 30px !important;
 }
