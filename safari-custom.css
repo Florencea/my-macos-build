@@ -1,31 +1,22 @@
-.view-id-latest_news {
+section#block-views-latest-news-slideshow > .view-id-latest_news {
   padding-top: 30px !important;
 }
 
-.img-wrapper,
+article.node-news > header > div.img-wrapper,
 section#block-views-view-news-custom-submitted {
   padding-left: 30%;
 }
 
-h1.page-header {
+body.page-node > div.main-container header#page-header > h1.page-header {
   font-size: 2em !important;
   text-align: center;
   padding-top: 45px;
 }
 
-body {
+body.page-node {
   font-family: PingFangTC-Regular, 'Ubuntu', '微軟正黑體', Verdana, sans-serif;
 }
 
-.main-container {
+body.page-node > .main-container {
   margin-top: 0;
-}
-
-.avatar {
-  position: relative;
-}
-@media (max-width: 979px) {
-  .img-wrapper {
-    padding-left: 0;
-  }
 }
