@@ -1,22 +1,11 @@
-section#block-views-latest-news-slideshow > .view-id-latest_news {
-  padding-top: 30px !important;
-}
-
-article.node-news > header > div.img-wrapper,
+/* for ithome.com.tw */
+article.node > header > div.img-wrapper,
 section#block-views-view-news-custom-submitted {
   padding-left: 30%;
 }
 
-body.page-node > div.main-container header#page-header > h1.page-header {
+body.page-node > div.main-container > header#page-header > h1.page-header {
   font-size: 2em !important;
   text-align: center;
   padding-top: 45px;
-}
-
-body.page-node {
-  font-family: PingFangTC-Regular, 'Ubuntu', '微軟正黑體', Verdana, sans-serif;
-}
-
-body.page-node > .main-container {
-  margin-top: 0;
 }
