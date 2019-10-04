@@ -47,9 +47,7 @@ brew install wget
 brew install youtube-dl
 
 print_step "brew install cask apps"
-# brew tap homebrew/cask-versions
 brew cask install atom
-# brew cask install firefox-nightly
 brew cask install google-chrome
 brew cask install gpg-suite
 brew cask install iina
@@ -57,11 +55,6 @@ brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install scroll-reverser
-
-# print_step "brew install cask fonts"
-# brew tap homebrew/cask-fonts
-# brew cask install font-fira-code
-# brew cask install font-fira-mono
 
 print_step "npm install global packages"
 npm install -g npm
