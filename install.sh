@@ -51,7 +51,6 @@ brew cask install atom
 brew cask install google-chrome
 brew cask install gpg-suite
 brew cask install iina
-brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install scroll-reverser
@@ -86,12 +85,6 @@ print_step "disable eyecandy"
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
 (set -x; killall Dock)
-
-print_step "istat-menus licence"
-printf "\E[0;31m"
-printf "982092332@qq.com\n"
-printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
-printf "\E[0m"
 
 print_step "clear scripts"
 (set -x; rm "$0")
