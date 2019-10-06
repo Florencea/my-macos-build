@@ -20,10 +20,10 @@ chsh -s /usr/local/bin/fish
 mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
 printf "set -g -x fish_greeting %s\n" "$shell_greeting" >> ~/.config/fish/config.fish
-printf "alias mmb=\"atom ~/Documents/workspace_florencea/my-macos-build\"\n" >> ~/.config/fish/config.fish
-printf "alias mkgif=\"fish ~/Documents/workspace_florencea/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias ubk=\"fish ~/Documents/workspace_florencea/my-macos-build/ublock-backup.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias al=\"fish ~/Documents/workspace_florencea/ledger/al/al.fish\"\n" >> ~/.config/fish/config.fish
+printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
+printf "alias mkgif=\"fish ~/GitHub/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
+printf "alias ubk=\"fish ~/GitHub/my-macos-build/ublock-backup.sh\"\n" >> ~/.config/fish/config.fish
+printf "alias al=\"fish ~/GitHub/ledger/al/al.fish\"\n" >> ~/.config/fish/config.fish
 
 print_step "brew install commend line tools"
 brew install clang-format
