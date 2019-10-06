@@ -54,6 +54,9 @@ brew cask install iina
 brew cask install keka
 brew cask install kekadefaultapp
 
+print_step "install SF-mono to Fonts"
+cp -R /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+
 print_step "npm install global packages"
 npm install -g npm
 npm install -g http-server
