@@ -78,8 +78,8 @@ print_step "git configuations"
 (set -x; git config --global core.editor "$github_editor")
 (set -x; git lfs install)
 
-print_step "disable eyecandy"
-(set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
+# print_step "disable eyecandy"
+# (set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
 
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
