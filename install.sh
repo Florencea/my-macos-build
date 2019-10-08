@@ -55,8 +55,9 @@ brew cask install iina
 brew cask install keka
 brew cask install kekadefaultapp
 
-print_step "install SF-mono to Fonts"
-cp -R /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+print_step "brew install cask fonts"
+brew tap homebrew/cask-fonts
+brew cask install font-fira-code
 
 print_step "npm install global packages"
 npm install -g npm
@@ -79,9 +80,6 @@ print_step "git configuations"
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
 (set -x; git lfs install)
-
-# print_step "disable eyecandy"
-# (set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
 
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
