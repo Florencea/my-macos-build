@@ -11,7 +11,8 @@ github_editor="nano"
 shell_greeting="Welcome, Princess Florencea."
 
 print_step "install homebrew"
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
 print_step "brew install fish"
 brew install fish
