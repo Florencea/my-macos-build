@@ -73,8 +73,6 @@ pip3 install 'python-language-server[all]'
 print_step "mongodb install and configuations"
 brew tap mongodb/brew
 brew install mongodb-community
-(set -x; sudo mkdir -p /data/db)
-(set -x; sudo chown "$(whoami)":staff /data/db)
 
 print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
