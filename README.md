@@ -58,10 +58,10 @@ sudo python installinstallmacos.py
 
 ```fish
 nano ~/.config/fish/config.fish
-alias mmb="atom ~/Documents/workspace_florencea/my-macos-build"
-alias mkgif="fish ~/Documents/workspace_florencea/my-macos-build/make-gif.sh"
-alias ubk="fish ~/Documents/workspace_florencea/my-macos-build/ublock-backup.sh"
-alias al="fish ~/Documents/workspace_florencea/ledger/al/al.fish"
+alias mmb="atom ~/GitHub/my-macos-build"
+alias mkgif="sh ~/GitHub/my-macos-build/make-gif.sh"
+alias ubk="sh ~/GitHub/my-macos-build/ublock-backup.sh"
+alias al="sh ~/GitHub/ledger/al/al.sh"
 ```
 
 ## macOS 指令紀錄
