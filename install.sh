@@ -54,6 +54,7 @@ brew cask install firefox-nightly
 brew cask install google-chrome-canary
 brew cask install gpg-suite
 brew cask install iina
+brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 
@@ -85,6 +86,9 @@ print_step "git configuations"
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
 (set -x; git lfs install)
+
+print_step "disable eyecandy"
+(set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
 
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
