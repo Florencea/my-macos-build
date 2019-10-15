@@ -95,6 +95,13 @@ cd /usr/
 sudo mount -uw /	# 根目錄掛載為可讀寫，否則無法在/usr/下建立文件，本修改重啟前有效。
 sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include include
 sudo DevToolsSecurity -enable # 將系統置於開發模式
+
+# 解決Clang-format錯誤
+atom .atom/packages/atom-beautify/src/beautifiers/clang-format.coffee
+# 將第84行的
+return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile) )
+# 改為
+return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile, ->) )
 ```
 
 ## humble tab config
