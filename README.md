@@ -87,6 +87,14 @@ defaults write com.google.Chrome DiskCacheDir -string /dev/null
 
 # 移除macOS檔案擴展屬性(-r是遞迴的意思，為了在Safari Developer Preview移除後刪除殘餘檔案)
 xattr -r -c <file or directory>
+
+# 解決macOS 10.15找不到C語言headers
+csrutil disable   # 需要在恢復模式下運行命令
+xcode-select --install    # 安裝常用開發工具，如：git等。
+cd /usr/
+sudo mount -uw /	# 根目錄掛載為可讀寫，否則無法在/usr/下建立文件，本修改重啟前有效。
+sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include include
+sudo DevToolsSecurity -enable # 將系統置於開發模式
 ```
 
 ## humble tab config
