@@ -35,9 +35,10 @@ brew install git
 brew install git-lfs
 brew install id3v2
 brew install jq
-brew install nano
+brew install llvm
 brew install megatools
 brew install mkcert
+brew install nano
 brew install node
 brew install nss
 brew install python
@@ -63,9 +64,11 @@ print_step "npm install global packages"
 npm install -g npm
 npm install -g http-server
 npm install -g eslint
+npm install -g bash-language-server
 
 print_step "python3 install global packages"
 pip3 install autopep8
+pip3 install beautysh==4.1
 pip3 install flake8
 pip3 install isort
 pip3 install numpy
