@@ -14,6 +14,10 @@
 # 需使用還原磁區之終端機執行，且執行後需重開機再執行重灌，否則會錯誤
 xartutil --erase-all
 [系統安裝]
+[用還原磁區重開機關掉SIP]
+csrutil disable
+[系統設定(記得給終端機完整磁碟存取權)]
+[Finder設定]
   ├──[install.sh]
 curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
   │      ├──[GarageBand安裝]
@@ -23,14 +27,12 @@ curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
   │      │              └──[Atom設定]
   │      └──[Atom以外App設定]
   │               └──[PS與PD安裝]
-  ├──[音樂設定]
-  │       ├──[資料拷貝(Music)至音樂App中]
-  │       ├──[資料拷貝(GarageBand)至音樂目錄]
-  │       ├──[資料拷貝(GitHub)至家目錄]
-  │       ├──[資料拷貝(Installations)至家目錄]
-  │       ├──[資料拷貝(Anime)至影片目錄]
-  ├──[系統設定(記得給終端機完整磁碟存取權)]
-  └──[Finder設定]
+  └──[音樂設定]
+          ├──[資料拷貝(Music)至音樂App中]
+          ├──[資料拷貝(GarageBand)至家目錄]
+          ├──[資料拷貝(GitHub)至家目錄]
+          ├──[資料拷貝(Installations)至家目錄]
+          └──[資料拷貝(Anime)至家目錄]
 ```
 
 ## 自動腳本
