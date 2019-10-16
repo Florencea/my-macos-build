@@ -54,9 +54,11 @@ brew cask install firefox-nightly
 brew cask install google-chrome-canary
 brew cask install gpg-suite
 brew cask install iina
+brew cask install intel-power-gadget
 brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
+brew cask install scroll-reverser
 
 print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
