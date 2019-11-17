@@ -29,7 +29,7 @@ curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
   │               └──[PS與PD安裝]
   └──[音樂設定]
           ├──[資料拷貝(Music)至音樂App中]
-          ├──[資料拷貝(GarageBand)至家目錄]
+          ├──[資料拷貝(GarageBand)至音樂目錄]
           ├──[資料拷貝(GitHub)至家目錄]
           ├──[資料拷貝(Installations)至家目錄]
           └──[資料拷貝(Anime)至家目錄]
