@@ -53,7 +53,6 @@ brew cask install atom
 brew cask install firefox-nightly
 brew cask install gpg-suite
 brew cask install iina
-brew cask install intel-power-gadget
 brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
