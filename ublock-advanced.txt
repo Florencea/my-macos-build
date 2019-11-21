@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1574235302781,
+  "timeStamp": 1574380666397,
   "version": "1.23.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -36,6 +36,7 @@
     "disconnect-malvertising",
     "malware-0",
     "malware-1",
+    "fanboy-social",
     "plowe-0",
     "CHN-1",
     "CHN-0"
