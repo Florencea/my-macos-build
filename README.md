@@ -37,6 +37,9 @@ curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
 ## 自動腳本
 
 ```fish
+# 使用命令列下載google drive公共單檔
+curl -L https://git.io/florencea-macos-build-gd -o gd.sh;sh gd.sh <檔案ID> <想儲存的檔名>
+
 # DNS-over-HTTPS(安裝完成後請將系統 DNS 改為 127.0.0.1 與 ::1)
 curl -L https://git.io/florencea-macos-build-doh | sh
 
