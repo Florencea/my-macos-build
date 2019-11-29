@@ -62,6 +62,7 @@ alias mmb="atom ~/GitHub/my-macos-build"
 alias mkgif="sh ~/GitHub/my-macos-build/make-gif.sh"
 alias ubk="sh ~/GitHub/my-macos-build/ublock-backup.sh"
 alias al="sh ~/GitHub/ledger/al/al.sh"
+alias gd="sh ~/GitHub/my-macos-build/gdrive-download.sh"
 ```
 
 ## macOS 指令紀錄
