@@ -24,6 +24,7 @@ printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.f
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias ubk=\"sh ~/GitHub/my-macos-build/ublock-backup.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias al=\"sh ~/GitHub/ledger/al/al.sh\"\n" >> ~/.config/fish/config.fish
+printf "alias gd=\"sh ~/GitHub/my-macos-build/gdrive-download.sh\"\n" >> ~/.config/fish/config.fish
 
 print_step "brew install commend line tools"
 brew install clang-format
