@@ -51,13 +51,14 @@ brew install youtube-dl
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox-nightly
+brew cask install firefox
 brew cask install gpg-suite
 brew cask install iina
 brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install scroll-reverser
+brew cask install transmission
 
 print_step "brew install cask fonts"
 brew tap homebrew/cask-fonts
