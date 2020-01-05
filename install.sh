@@ -31,7 +31,6 @@ brew install clang-format
 brew install ccls
 brew install ffmpeg
 brew install gcc
-brew install gdrive
 brew install git
 brew install git-lfs
 brew install id3v2
@@ -51,7 +50,7 @@ brew install youtube-dl
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox
+brew cask install firefox-nightly
 brew cask install gpg-suite
 brew cask install iina
 brew cask install istat-menus
@@ -66,7 +65,6 @@ brew cask install font-fira-code
 brew cask install font-fira-mono
 
 print_step "npm install global packages"
-npm install -g npm
 npm install -g http-server
 npm install -g eslint
 npm install -g bash-language-server
