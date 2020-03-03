@@ -19,12 +19,14 @@ echo '/usr/local/bin/fish' | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/fish
 mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
+printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g -x fish_greeting %s\n" "$shell_greeting" >> ~/.config/fish/config.fish
 printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias ubk=\"sh ~/GitHub/my-macos-build/ublock-backup.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias al=\"sh ~/GitHub/ledger/al/al.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias gd=\"sh ~/GitHub/my-macos-build/gdrive-download.sh\"\n" >> ~/.config/fish/config.fish
+printf "alias ua=\"sh ~/GitHub/my-macos-build/update-all.sh\"\n" >> ~/.config/fish/config.fish
 
 print_step "brew install commend line tools"
 brew install clang-format
