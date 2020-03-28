@@ -44,7 +44,6 @@ brew install nano
 brew install node
 brew install nss
 brew install python
-brew install python@2
 brew install redis
 brew install wget
 brew install youtube-dl
@@ -87,7 +86,6 @@ print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
-(set -x; git lfs install)
 
 print_step "disable eyecandy"
 (set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
