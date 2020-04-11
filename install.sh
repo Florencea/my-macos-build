@@ -51,7 +51,7 @@ brew install youtube-dl
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox-nightly
+brew cask install google-chrome
 brew cask install gpg-suite
 brew cask install iina
 brew cask install istat-menus
@@ -72,7 +72,7 @@ npm install -g bash-language-server
 
 print_step "python3 install global packages"
 pip3 install autopep8
-pip3 install beautysh==4.1
+pip3 install beautysh
 pip3 install flake8
 pip3 install isort
 pip3 install numpy
