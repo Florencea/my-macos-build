@@ -106,6 +106,17 @@ atom .atom/packages/atom-beautify/src/beautifiers/clang-format.coffee
 return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile) )
 # 改為
 return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile, ->) )
+
+# 解決beautysh錯誤
+atom .atom/packages/atom-beautify/src/beautifiers/beautysh.coffee
+# 將第35行的
+beautysh.run([ '-t', '-f', file ])
+# 改為
+beautysh.run([ '-t', file ])
+# 將第38行的
+beautysh.run([ '-i', options.indent_size, '-f', file ])
+# 改為
+beautysh.run([ '-i', options.indent_size, file ])
 ```
 
 ## humble tab config
