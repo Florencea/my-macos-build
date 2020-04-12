@@ -42,7 +42,6 @@ brew install megatools
 brew install nano
 brew install node
 brew install python
-brew install redis
 brew install wget
 brew install youtube-dl
 
