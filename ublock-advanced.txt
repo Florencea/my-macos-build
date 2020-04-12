@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1586655863204,
+  "timeStamp": 1586665427404,
   "version": "1.24.4",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -25,6 +25,7 @@
   "selectedFilterLists": [
     "user-filters",
     "ublock-filters",
+    "ublock-annoyances",
     "ublock-badware",
     "ublock-privacy",
     "ublock-abuse",
@@ -44,15 +45,14 @@
     "fanboy-cookiemonster",
     "fanboy-annoyance",
     "fanboy-social",
-    "ublock-annoyances",
     "dpollock-0",
     "mvps-0",
     "plowe-0",
     "CHN-1",
     "CHN-0",
     "JPN-1",
-    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt",
-    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/experimental.txt"
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/experimental.txt",
+    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt"
   ],
   "hiddenSettings": {
     "allowGenericProceduralFilters": false,
@@ -93,7 +93,7 @@
     "wyciwyg-scheme"
   ],
   "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
-  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* * 3p-script block\n* * 3p-frame block\n* cloudflare.com * noop\n* google.com * noop\n* googleapis.com * noop\n* gstatic.com * noop\n* jquery.com * noop\n* recaptcha.net * noop\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\njuejin.im xitu.io * noop\npixiv.net pximg.net * noop",
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* * 3p-script block\n* * 3p-frame block\n* cloudflare.com * noop\n* google.com * noop\n* googleapis.com * noop\n* gstatic.com * noop\n* jquery.com * noop\n* recaptcha.net * noop\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\njuejin.im xitu.io * noop\npixiv.net pximg.net * noop\ntwitter.com twimg.com * noop",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
   "userFilters": ""
