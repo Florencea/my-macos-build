@@ -22,7 +22,7 @@ csrutil disable
 curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
   │      ├──[GarageBand安裝]
   │      ├──[終端機設定]
-  │      ├──[Firefox設定]
+  │      ├──[chrome設定]
   │      │        └──[SSH與GPG設定]
   │      │              └──[Atom設定]
   │      └──[Atom以外App設定]
