@@ -31,25 +31,22 @@ printf "alias ua=\"sh ~/GitHub/my-macos-build/update-all.sh\"\n" >> ~/.config/fi
 print_step "brew install commend line tools"
 brew install clang-format
 brew install ccls
+brew install curl
 brew install ffmpeg
 brew install gcc
 brew install git
 brew install git-lfs
 brew install id3v2
 brew install jq
-brew install llvm
 brew install megatools
-brew install mkcert
 brew install nano
 brew install node
-brew install nss
 brew install python
 brew install redis
 brew install wget
 brew install youtube-dl
 
 print_step "brew install cask apps"
-brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install google-chrome
 brew cask install gpg-suite
@@ -77,10 +74,6 @@ pip3 install flake8
 pip3 install isort
 pip3 install numpy
 pip3 install 'python-language-server[all]'
-
-print_step "mongodb install and configuations"
-brew tap mongodb/brew
-brew install mongodb-community
 
 print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
