@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1586786196603,
-  "version": "1.26.1b7",
+  "timeStamp": 1586848185732,
+  "version": "1.26.1b9",
   "userSettings": {
     "advancedUserEnabled": true,
     "alwaysDetachLogger": true,
@@ -87,7 +87,7 @@
     "wyciwyg-scheme"
   ],
   "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nedge-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
-  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* * 3p-script block\n* * 3p-frame block\n* cloudflare.com * noop\n* google.com * noop\n* googleapis.com * noop\n* gstatic.com * noop\n* jquery.com * noop\n* recaptcha.net * noop\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\njuejin.im xitu.io * noop\npixiv.net pximg.net * noop\ntwitter.com twimg.com * noop",
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\n* * 3p-script block\n* * 3p-frame block\n* cloudflare.com * noop\n* google.com * noop\n* googleapis.com * noop\n* gstatic.com * noop\n* jquery.com * noop\n* recaptcha.net * noop\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\njuejin.im xitu.io * noop\npixiv.net pximg.net * noop\ntwitter.com twimg.com * noop\n* polyfill.io * noop\n* typekit.net * noop",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
   "userFilters": ""
