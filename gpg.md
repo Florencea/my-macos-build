@@ -1,6 +1,6 @@
 # Use GPG in Github
 
-## Commends(Using CLI)
+## Commands(Using CLI)
 
 ```fish
 gpg --full-generate-key
