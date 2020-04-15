@@ -1,16 +1,20 @@
 # Use GPG in Github
 
-## Commends
+## Commends(Using CLI)
 
 ```fish
 gpg --full-generate-key
-gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
+# gpg key is already in clipboard, directly paste to GitHub
 git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
 git config --global commit.gpgsign true
 git config --global gpg.program gpg
+printf "pinentry-program /usr/local/bin/pinentry-mac\n" >> .gnupg/gpg-agent.conf
+printf "no-tty\n" >> ~/.gnupg/gpg.conf
+killall gpg-agent
 ```
 
-## Details
+## Details(Using GPG Suite)
 
 - Install [GPG Suite](https://gpgtools.org/).
 
