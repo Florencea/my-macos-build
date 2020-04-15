@@ -42,6 +42,7 @@ brew install jq
 brew install megatools
 brew install nano
 brew install node
+brew install pinentry-mac
 brew install python
 brew install wget
 brew install youtube-dl
