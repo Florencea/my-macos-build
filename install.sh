@@ -57,11 +57,6 @@ brew cask install kekadefaultapp
 brew cask install scroll-reverser
 brew cask install transmission
 
-print_step "brew install cask fonts"
-brew tap homebrew/cask-fonts
-brew cask install font-fira-code
-brew cask install font-fira-mono
-
 print_step "npm install global packages"
 npm install -g http-server
 npm install -g eslint
@@ -74,6 +69,9 @@ pip3 install flake8
 pip3 install isort
 pip3 install numpy
 pip3 install 'python-language-server[all]'
+
+print_step "setup SF Mono Fonts"
+(set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
 
 print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
