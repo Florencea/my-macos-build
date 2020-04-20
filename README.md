@@ -95,6 +95,8 @@ xattr -r -c <file or directory>
 # 安裝rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+mkdir -p ~/.config/fish/completions
+rustup completions fish > ~/.config/fish/completions/rustup.fish
 
 # 解決macOS 10.15找不到C語言headers
 csrutil disable   # 需要在恢復模式下運行命令
