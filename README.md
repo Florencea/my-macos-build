@@ -92,6 +92,10 @@ defaults write com.google.Chrome DiskCacheDir -string /dev/null
 # 移除macOS檔案擴展屬性(-r是遞迴的意思，為了在Safari Developer Preview移除後刪除殘餘檔案)
 xattr -r -c <file or directory>
 
+# 安裝rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+
 # 解決macOS 10.15找不到C語言headers
 csrutil disable   # 需要在恢復模式下運行命令
 xcode-select --install    # 安裝常用開發工具，如：git等。
