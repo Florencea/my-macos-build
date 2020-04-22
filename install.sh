@@ -48,15 +48,13 @@ brew install wget
 brew install youtube-dl
 
 print_step "brew install cask apps"
-brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox-nightly
+brew cask install google-chrome
 brew cask install iina
 brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
-brew cask install scroll-reverser
 
 print_step "npm install global packages"
 npm install -g http-server
@@ -68,7 +66,6 @@ pip3 install autopep8
 pip3 install beautysh
 pip3 install flake8
 pip3 install isort
-pip3 install numpy
 pip3 install 'python-language-server[all]'
 
 print_step "setup SF Mono Fonts"
