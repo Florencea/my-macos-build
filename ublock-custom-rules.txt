@@ -1,0 +1,368 @@
+! Title: uBlock Custom Rules by Florencea
+! Expires: 4 days
+! Description: uBlock custom rules by Florencea Bear
+! Last updated: 2020-04-22
+!
+! style migrate from stylus
+translate.google.com##^#wtgbr
+translate.google.com###wtgbr
+translate.google.com##^#gt-c
+translate.google.com###gt-c
+translate.google.com###contentframe:style(top: 0 !important)
+ithome.com.tw##.view-id-latest_news:style(padding-top: 30px !important)
+ithome.com.tw##.img-wrapper:style(padding-left: 30%)
+ithome.com.tw##section#block-views-view-news-custom-submitted:style(padding-left: 30%)
+ithome.com.tw##h1.page-header:style(font-size: 2em !important; text-align: center; padding-top: 45px)
+ithome.com.tw##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif)
+ithome.com.tw##.main-container:style(margin-top: 0)
+ithome.com.tw##.avatar:style(position: relative)
+!#if env_mobile
+ithome.com.tw##.img-wrapper:style(padding-left: 0)
+!#endif
+! for desktop
+anime1.me##^#aTQNPZLh
+anime1.me###aTQNPZLh
+anime1.me##^#execphp-6
+anime1.me###execphp-6
+anime1.me##^#execphp-8
+anime1.me###execphp-8
+anime1.me##^.kiwi-ad-wrapper-728x90
+anime1.me##.kiwi-ad-wrapper-728x90
+anime1.me##^#text-6
+anime1.me###text-6
+anime1.me##^#anime-bottom
+anime1.me###anime-bottom
+facebook.com##.home_right_column
+facebook.com###pagelet_ego_contextual_group
+inside.com.tw##^.post_list_item-ad
+inside.com.tw##.post_list_item-ad
+macrumors.com##^#video-wrapper
+macrumors.com###video-wrapper
+pcadv.techbang.com##^.yt_playlist
+pcadv.techbang.com##.yt_playlist
+share.dmhy.org##^script:has-text(_hmt)
+share.dmhy.org##^.announce
+share.dmhy.org##.announce
+share.dmhy.org###\31 280_adv
+cool3c.com##^.article-social
+cool3c.com##.article-social
+cool3c.com##^.comments
+cool3c.com##.comments
+cool3c.com##^.board-new.board-BT_li_iL
+cool3c.com##.board-new.board-BT_li_iL
+cool3c.com##.board-innity-in-post
+cool3c.com##^.board-innity-in-post
+cool3c.com##^.board-BT_a_SB
+cool3c.com##.board-BT_a_SB
+cool3c.com##^.board-BT_a_SBS
+cool3c.com##.board-BT_a_SBS
+cool3c.com##^.board-BT_ar_iR_PaL
+cool3c.com##.board-BT_ar_iR_PaL
+cool3c.com##^.board-BT_ar_iR_PbL
+cool3c.com##.board-BT_ar_iR_PbL
+cool3c.com##^.board-BT_ar_O_11
+cool3c.com##.board-BT_ar_O_11
+cool3c.com##^[src="/assets/img/img-failed.jpg"]
+cool3c.com##[src="/assets/img/img-failed.jpg"]
+cool3c.com##^[src="/assets/img/img-failed.webp"]
+cool3c.com##[src="/assets/img/img-failed.webp"]
+cool3c.com##^.gtm-track.fa-2x.quick-button
+cool3c.com##.gtm-track.fa-2x.quick-button
+cool3c.com##^section.comment-area
+cool3c.com##section.comment-area
+cool3c.com##^div.social-bar
+cool3c.com##div.social-bar
+ithome.com.tw##^#block-block-7
+ithome.com.tw###block-block-7
+ithome.com.tw##^#block-block-23
+ithome.com.tw###block-block-23
+ithome.com.tw##^#block-block-45
+ithome.com.tw###block-block-45
+ithome.com.tw##^#block-block-74
+ithome.com.tw###block-block-74
+ithome.com.tw##^#block-block-91
+ithome.com.tw###block-block-91
+ithome.com.tw##^#skybanner
+ithome.com.tw###skybanner
+ithome.com.tw##^aside[role="complementary"]
+ithome.com.tw##aside[role="complementary"]
+ithome.com.tw##^.side-extra
+ithome.com.tw##.side-extra
+ithome.com.tw##^.content-summary
+ithome.com.tw##.content-summary
+ithome.com.tw##^.field-name-field-photo-source
+ithome.com.tw##.field-name-field-photo-source
+ithome.com.tw##^.socail-btns-on-top
+ithome.com.tw##.socail-btns-on-top
+ithome.com.tw##^.social-btn-set
+ithome.com.tw##.social-btn-set
+ithome.com.tw##^.view-display-id-article_category
+ithome.com.tw##.view-display-id-article_category
+ithome.com.tw##^#headerbar
+ithome.com.tw###headerbar
+ithome.com.tw##^#hpad930up
+ithome.com.tw###hpad930up
+ithome.com.tw##^#cyber
+ithome.com.tw###cyber
+ithome.com.tw##^.ad-banner-text
+ithome.com.tw##.ad-banner-text
+ithome.com.tw##^.today-featured
+ithome.com.tw##.today-featured
+macrumors.com##^#adplaceholder
+macrumors.com###adplaceholder
+macrumors.com##^#adplaceholder_side
+macrumors.com###adplaceholder_side
+macrumors.com##^.tertiary
+macrumors.com##.tertiary
+macrumors.com##^.glide--slider
+macrumors.com##.glide--slider
+macrumors.com##^#mrCarouselPrev:upward(div)
+macrumors.com##div#guide-products:style(margin: 0 !important)
+manhuaren.com##^.ad-top-info
+manhuaren.com##.ad-top-info
+manhuaren.com##^.index-bottom-ad
+manhuaren.com##.index-bottom-ad
+manhuaren.com##^.detail-ad-con
+manhuaren.com##.detail-ad-con
+manhuaren.com##^.view-bottom-bar
+manhuaren.com##.view-bottom-bar
+manhuaren.com##^.adform_2
+manhuaren.com##.adform_2
+manhuaren.com##^#lb-win
+manhuaren.com###lb-win
+manhuaren.com##^.guide
+manhuaren.com##.guide
+mobile01.com##^.ad-adblock
+mobile01.com##.ad-adblock
+onlyhgames.com##^div.widget_text.widget:nth-of-type(3)
+onlyhgames.com##div.widget_text.widget:nth-of-type(3)
+onlyhgames.com##^div.widget_text.widget:nth-of-type(5)
+onlyhgames.com##div.widget_text.widget:nth-of-type(5)
+||onlyhgames.com/balo.php$image
+playpcesor.com##^#HTML3
+playpcesor.com###HTML3
+playpcesor.com##^#ztb-slide-box-widget
+playpcesor.com###ztb-slide-box-widget
+techbang.com##^.fixed-top
+techbang.com##.fixed-top
+techbang.com##^.ad_grey_floor
+techbang.com##.ad_grey_floor
+techbang.com##^.post-side
+techbang.com##.post-side
+techbang.com##^section.fenced.section
+techbang.com##section.fenced.section
+thenewslens.com##^.ad-btm
+thenewslens.com##.ad-btm
+thenewslens.com##^.op-social
+thenewslens.com##.op-social
+fandom.com##^.banner-notifications-placeholder
+fandom.com##.banner-notifications-placeholder
+fandom.com##^#WikiaBar
+fandom.com###WikiaBar
+sogi.com.tw##^.well
+sogi.com.tw##.well
+sogi.com.tw##^.media-body > .btn-group
+sogi.com.tw##.media-body > .btn-group
+! for mobile
+18av.tv##^#ArticlesEx_box
+18av.tv###ArticlesEx_box
+18av.tv##^#container > a
+18av.tv###container > a
+18av.tv##^#container > h1.label
+8av.tv###container > h1.label
+18av.tv##^#container > span:not(#main)
+18av.tv###container > span:not(#main)
+18av.tv##^#friendLink
+18av.tv###friendLink
+18av.tv##^#menu1Content > .altto > ul
+18av.tv###menu1Content > .altto > ul
+18av.tv##^#partner
+18av.tv###partner
+18av.tv##^#rand_cg
+18av.tv###rand_cg
+18av.tv##^.exoc
+18av.tv##.exoc
+18av.tv##^.sub_list
+18av.tv##.sub_list
+18av.tv##^.TW_UTtoy
+18av.tv##.TW_UTtoy
+18av.tv##^.ut_ad_box
+18av.tv##.ut_ad_box
+18av.tv##^#BBshowBox
+18av.tv###BBshowBox
+18av.tv##^#CCshowBox
+18av.tv###CCshowBox
+18av.tv##^#mvcg_content_a
+18av.tv###mvcg_content_a
+18av.tv##^#mvcg_content_b
+18av.tv###mvcg_content_b
+18av.tv##^#Dfrom
+18av.tv###Dfrom
+18av.tv##^iframe
+18av.tv##^#container a.aRF:has(.aRF_Scg)
+18av.tv###container a.aRF:has(.aRF_Scg)
+18av.tv##^#container img.aRF_Scg
+18av.tv###container img.aRF_Scg
+18av.tv##^script:has-text(show_ut_review)
+18av.tv##^script:has-text(ad_idzone)
+18av.tv##^script:has-text(rand_cg)
+18av.tv##^script:has-text(friendLink)
+18av.tv##^script:has-text(mvcg_content_a)
+18av.tv##^script:has-text(BBshowBox)
+18av.tv##^script:has-text(CCshowBox)
+18av.tv##^#menu1Content a.c1
+18av.tv###menu1Content a.c1
+18av.tv##^#menu1Content div.HS
+18av.tv###menu1Content div.HS
+18av.tv##^[href="https://bit.ly/*"]
+18av.tv##[href="https://bit.ly/*"]
+imgscloud.com##^#cover_information
+imgscloud.com###cover_information
+imgscloud.com##^#suncover
+imgscloud.com###suncover
+imgscloud.com##^#coverclose_top
+imgscloud.com###coverclose_top
+imgscloud.com##^#coverclose_bottom
+imgscloud.com###coverclose_bottom
+# 18av.tv##^#main_mv > :not(.mobile_mv)
+# 18av.tv###main_mv > :not(.mobile_mv)
+18av.tv##^#main_mv > div.mobile_mv
+18av.tv###main_mv > div.mobile_mv
+18av.tv##^#main_mv > a
+18av.tv###main_mv > a
+18av.tv##^#main_mv > font > a > font
+18av.tv###main_mv > font > a > font
+18av.tv##^#main_mv > br
+18av.tv###main_mv > br
+18av.tv##^#main_mv > img
+18av.tv###main_mv > img
+18av.tv##^#main_mv > font:has-text(備用)
+18av.tv###main_mv > font:has-text(備用)
+18av.tv##^#main_mv > font:has-text(播放器)
+18av.tv###main_mv > font:has-text(播放器)
+18av.tv##^#main_mv > font:has-text(回報我們)
+18av.tv###main_mv > font:has-text(回報我們)
+18av.tv##^.mobile_mv > span
+18av.tv##.mobile_mv > span
+18av.tv##^.mobile_mv > font
+18av.tv##.mobile_mv > font
+18av.tv##^.mobile_mv > br
+18av.tv##.mobile_mv > br
+18av.tv##^#container > br
+18av.tv###container > br
+18av.tv##^span#main > br
+18av.tv##span#main > br
+18av.tv##^#container a.aRF > br
+18av.tv###container a.aRF > br
+18av.tv##^#menu1Content > br
+18av.tv##^#menu1Content div.altto  br
+18av.tv##^span.cs_mvwidth:has-text(影片放大)
+18av.tv##span.cs_mvwidth:has-text(影片放大)
+18av.tv##^span#main_mv > span:has-text(我是分隔線)
+18av.tv##span#main_mv > span:has-text(我是分隔線)
+18av.tv##body:style(background-color: #fafafa !important)
+18av.tv##body:style(margin: 0 !important)
+18av.tv##span#main:style(display: block !important)
+18av.tv##span#main:style(padding: 1rem !important)
+18av.tv###Main_content:style(background-color: #fafafa !important)
+18av.tv###Main_content:style(width: 100% !important)
+18av.tv###Main_content:style(display: flex !important)
+18av.tv###Main_content:style(flex-direction: column-reverse !important)
+18av.tv###container:style(background-image: none !important)
+18av.tv###container:style(background-color: #fafafa !important)
+18av.tv###container:style(width: 100% !important)
+18av.tv###container a.aRF:style(display: block !important)
+18av.tv###container a.aRF:style(border-radius: 0.25rem !important)
+18av.tv###container a.aRF:style(margin-bottom: 2rem !important)
+18av.tv###container a.aRF:style(text-align: left !important)
+18av.tv###container a.aRF:style(font-size: 1.25rem !important)
+18av.tv###container a.aRF:style(font-weight: 500 !important)
+18av.tv###container a.aRF:style(line-height: 1.5rem !important)
+18av.tv###container a.aRF img:style(margin-top: 1rem !important)
+18av.tv###container a.aRF img:style(width: 100% !important)
+18av.tv###container a.aRF img:style(max-width: 100% !important)
+18av.tv##span#main > h1:style(font-size: 0 !important)
+18av.tv##span.enlarge_jizcg:style(display: flex !important)
+18av.tv##span.enlarge_jizcg:style(flex-wrap: wrap !important)
+18av.tv##span.enlarge_jizcg:style(width: 100% !important)
+18av.tv##span.enlarge_jizcg img:style(width: 25% !important)
+18av.tv##span#main_mv:style(font-size: 0 !important)
+18av.tv##span#main_mv > font:style(font-size: 0 !important)
+18av.tv##span#main_mv > font > a:style(display: block !important)
+18av.tv##span#main_mv > font > a:style(font-size: 1.25rem !important)
+18av.tv##span#main_mv > font > a:style(font-weight: normal !important)
+18av.tv##span#main_mv > font > a:style(text-align: center !important)
+18av.tv##span#main_mv > font > a:style(text-decoration: none !important)
+18av.tv##span#main_mv > font > a:style(padding: 1rem !important)
+18av.tv##span#main_mv > font > a:style(margin: 1rem 0 !important)
+18av.tv##span#main_mv > font > a:style(color: #fff !important)
+18av.tv##span#main_mv > font > a:style(background-color: #0069d9 !important)
+18av.tv##span#main_mv > font > a::before:style(content: '影片播放連結 ' !important)
+18av.tv##span.cs_mvwidth:style(width: 100% !important)
+18av.tv##span.cs_mvwidth:style(display: block !important)
+18av.tv##span.cs_mvwidth > a:style(display: inline-block !important)
+18av.tv##span.cs_mvwidth > a:style(font-size: 1.25rem !important)
+18av.tv##span.cs_mvwidth > a:style(font-weight: normal !important)
+18av.tv##span.cs_mvwidth > a:style(text-align: center !important)
+18av.tv##span.cs_mvwidth > a:style(text-decoration: none !important)
+18av.tv##span.cs_mvwidth > a:style(padding: 1rem !important)
+18av.tv##span.cs_mvwidth > a:style(margin: 1rem 0 !important)
+18av.tv##span.cs_mvwidth > a:style(color: #fff !important)
+18av.tv##span.cs_mvwidth > a:style(background-color: #993300 !important)
+18av.tv##.mobile_mv:style(width: 100% !important)
+18av.tv##.mobile_mv > a:style(display: block !important)
+18av.tv##.mobile_mv > a:style(font-size: 1.25rem !important)
+18av.tv##.mobile_mv > a:style(font-weight: normal !important)
+18av.tv##.mobile_mv > a:style(text-align: center !important)
+18av.tv##.mobile_mv > a:style(text-decoration: none !important)
+18av.tv##.mobile_mv > a:style(padding: 1rem !important)
+18av.tv##.mobile_mv > a:style(margin: 1rem 0 !important)
+18av.tv##.mobile_mv > a:style(color: #fff !important)
+18av.tv##.mobile_mv > a:style(background-color: #0069d9 !important)
+18av.tv###menu1Content:style(background-image: none !important)
+18av.tv###menu1Content:style(float: none !important)
+18av.tv###menu1Content:style(width: 100% !important)
+18av.tv###menu1Content:style(display: flex !important)
+18av.tv###menu1Content:style(flex-direction: column-reverse !important)
+18av.tv###menu1Content div.altto:style(order: 2 !important)
+18av.tv###menu1Content div.altto:style(padding: 1rem !important)
+18av.tv###menu1Content div.altto input:style(font-size: 1.25rem !important)
+18av.tv###menu1Content div.altto input:style(display: block !important)
+18av.tv###menu1Content div.altto input:style(width: 100% !important)
+18av.tv###menu1Content div.altto input:style(height: 2.5rem !important)
+18av.tv###menu1Content div.altto input:style(margin-bottom: 1rem !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(-moz-appearance: none !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(background-color: #333 !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(color: #fff !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(padding: 1em !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(height: auto !important)
+18av.tv###menu1Content div.altto select:style(font-size: 1.25rem !important)
+18av.tv###menu1Content div.altto select:style(display: block !important)
+18av.tv###menu1Content div.altto select:style(width: 100% !important)
+18av.tv###menu1Content div.altto select:style(height: 2.5rem !important)
+18av.tv###menu1Content div.altto select:style(margin-bottom: 1rem !important)
+18av.tv##.PageBar:style(width: 100% !important)
+18av.tv##.PageBar:style(line-height: 3rem !important)
+18av.tv###Preview_Enlarge_aRF_Bcg_aButton:style(width: 100% !important)
+18av.tv###Preview_Enlarge_aRF_Bcg_aButton:style(margin-top: 4rem !important)
+18av.tv###Preview_Enlarge_aRF_Bcg_aButton:style(margin-bottom: 1rem !important)
+18h.mm-cg.com###container > a
+18h.mm-cg.com###container > h1.label
+18h.mm-cg.com###container > span:not(#main)
+18h.mm-cg.com###friendLink
+18h.mm-cg.com###menu1Content > .altto > ul
+18h.mm-cg.com###mobile_ArticlesEx_box
+18h.mm-cg.com##.aRF:has(.aRF_Scg)
+18h.mm-cg.com##.mobile_ut_ad_box
+18h.mm-cg.com##.rand_list
+18h.mm-cg.com##.TW_UTtoy_18h
+18h.mm-cg.com##center > center > a
+18h.mm-cg.com##center > span
+18h.mm-cg.com##span.sub_list
+||18av.tv/mmad.js$script
+||18h.mm-cg.com/mmad.js$script
+||ammcg.imgscloud.com
+||gahost3.imgscloud.com
+||gbhost3.imgscloud.com
+wnacg.org##^.SC_TBlock
+wnacg.org##.SC_TBlock
