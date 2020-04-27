@@ -43,6 +43,7 @@ pcadv.techbang.com##.yt_playlist
 share.dmhy.org##^script:has-text(_hmt)
 share.dmhy.org##^.announce
 share.dmhy.org##.announce
+share.dmhy.org##^#\31 280_ad > a
 share.dmhy.org###\31 280_ad > a
 cool3c.com##^.article-social
 cool3c.com##.article-social
