@@ -1,7 +1,7 @@
 ! Title: uBlock Custom Rules by Florencea
 ! Expires: 4 days
 ! Description: uBlock custom rules by Florencea Bear
-! Last updated: 2020-04-22
+! Last updated: 2020-04-27
 !
 ! style migrate from stylus
 translate.google.com##^#wtgbr
@@ -224,8 +224,8 @@ imgscloud.com##^#coverclose_top
 imgscloud.com###coverclose_top
 imgscloud.com##^#coverclose_bottom
 imgscloud.com###coverclose_bottom
-# 18av.tv##^#main_mv > :not(.mobile_mv)
-# 18av.tv###main_mv > :not(.mobile_mv)
+! 18av.tv##^#main_mv > :not(.mobile_mv)
+! 18av.tv###main_mv > :not(.mobile_mv)
 18av.tv##^#main_mv > div.mobile_mv
 18av.tv###main_mv > div.mobile_mv
 18av.tv##^#main_mv > a
@@ -359,6 +359,175 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com##center > center > a
 18h.mm-cg.com##center > span
 18h.mm-cg.com##span.sub_list
+18h.mm-cg.com##^#ArticlesEx_box
+18h.mm-cg.com###ArticlesEx_box
+18h.mm-cg.com##^#container > a
+18h.mm-cg.com###container > a
+18h.mm-cg.com##^#container > h1.label
+18h.mm-cg.com###container > h1.label
+18h.mm-cg.com##^#container > span:not(#main)
+18h.mm-cg.com###container > span:not(#main)
+18h.mm-cg.com##^#friendLink
+18h.mm-cg.com###friendLink
+18h.mm-cg.com##^#menu1Content > .altto > ul
+18h.mm-cg.com###menu1Content > .altto > ul
+18h.mm-cg.com##^#partner
+18h.mm-cg.com###partner
+18h.mm-cg.com##^#rand_cg
+18h.mm-cg.com###rand_cg
+18h.mm-cg.com##^.exoc
+18h.mm-cg.com##.exoc
+18h.mm-cg.com##^.sub_list
+18h.mm-cg.com##.sub_list
+18h.mm-cg.com##^.TW_UTtoy
+18h.mm-cg.com##.TW_UTtoy
+18h.mm-cg.com##^.ut_ad_box
+18h.mm-cg.com##.ut_ad_box
+18h.mm-cg.com##^#BBshowBox
+18h.mm-cg.com###BBshowBox
+18h.mm-cg.com##^#CCshowBox
+18h.mm-cg.com###CCshowBox
+18h.mm-cg.com##^#mvcg_content_a
+18h.mm-cg.com###mvcg_content_a
+18h.mm-cg.com##^#mvcg_content_b
+18h.mm-cg.com###mvcg_content_b
+18h.mm-cg.com##^#Dfrom
+18h.mm-cg.com###Dfrom
+18h.mm-cg.com##^iframe
+18h.mm-cg.com##^#container a.aRF:has(.aRF_Scg)
+18h.mm-cg.com###container a.aRF:has(.aRF_Scg)
+18h.mm-cg.com##^#container img.aRF_Scg
+18h.mm-cg.com###container img.aRF_Scg
+18h.mm-cg.com##^script:has-text(show_ut_review)
+18h.mm-cg.com##^script:has-text(ad_idzone)
+18h.mm-cg.com##^script:has-text(rand_cg)
+18h.mm-cg.com##^script:has-text(friendLink)
+18h.mm-cg.com##^script:has-text(mvcg_content_a)
+18h.mm-cg.com##^script:has-text(BBshowBox)
+18h.mm-cg.com##^script:has-text(CCshowBox)
+18h.mm-cg.com##^#menu1Content a.c1
+18h.mm-cg.com###menu1Content a.c1
+18h.mm-cg.com##^#menu1Content div.HS
+18h.mm-cg.com###menu1Content div.HS
+18h.mm-cg.com##^[href="https://bit.ly/*"]
+18h.mm-cg.com##[href="https://bit.ly/*"]
+imgscloud.com##^#cover_information
+imgscloud.com###cover_information
+imgscloud.com##^#suncover
+imgscloud.com###suncover
+imgscloud.com##^#coverclose_top
+imgscloud.com###coverclose_top
+imgscloud.com##^#coverclose_bottom
+imgscloud.com###coverclose_bottom
+18h.mm-cg.com##^#main_mv > div.mobile_mv
+18h.mm-cg.com###main_mv > div.mobile_mv
+18h.mm-cg.com##^#main_mv > a
+18h.mm-cg.com###main_mv > a
+18h.mm-cg.com##^#main_mv > font > a > font
+18h.mm-cg.com###main_mv > font > a > font
+18h.mm-cg.com##^#main_mv > br
+18h.mm-cg.com###main_mv > br
+18h.mm-cg.com##^#main_mv > img
+18h.mm-cg.com###main_mv > img
+18h.mm-cg.com##^.mobile_mv > span
+18h.mm-cg.com##.mobile_mv > span
+18h.mm-cg.com##^.mobile_mv > font
+18h.mm-cg.com##.mobile_mv > font
+18h.mm-cg.com##^.mobile_mv > br
+18h.mm-cg.com##.mobile_mv > br
+18h.mm-cg.com##^#container > br
+18h.mm-cg.com###container > br
+18h.mm-cg.com##^span#main > br
+18h.mm-cg.com##span#main > br
+18h.mm-cg.com##^#container a.aRF > br
+18h.mm-cg.com###container a.aRF > br
+18h.mm-cg.com##^#menu1Content > br
+18h.mm-cg.com##^#menu1Content div.altto  br
+18h.mm-cg.com##body:style(background-color: #fafafa !important)
+18h.mm-cg.com##body:style(margin: 0 !important)
+18h.mm-cg.com##span#main:style(display: block !important)
+18h.mm-cg.com##span#main:style(padding: 1rem !important)
+18h.mm-cg.com###Main_content:style(background-color: #fafafa !important)
+18h.mm-cg.com###Main_content:style(width: 100% !important)
+18h.mm-cg.com###Main_content:style(display: flex !important)
+18h.mm-cg.com###Main_content:style(flex-direction: column-reverse !important)
+18h.mm-cg.com###container:style(background-image: none !important)
+18h.mm-cg.com###container:style(background-color: #fafafa !important)
+18h.mm-cg.com###container:style(width: 100% !important)
+18h.mm-cg.com###container a.aRF:style(display: block !important)
+18h.mm-cg.com###container a.aRF:style(border-radius: 0.25rem !important)
+18h.mm-cg.com###container a.aRF:style(margin-bottom: 2rem !important)
+18h.mm-cg.com###container a.aRF:style(text-align: left !important)
+18h.mm-cg.com###container a.aRF:style(font-size: 1.25rem !important)
+18h.mm-cg.com###container a.aRF:style(font-weight: 500 !important)
+18h.mm-cg.com###container a.aRF:style(line-height: 1.5rem !important)
+18h.mm-cg.com###container a.aRF img:style(margin-top: 1rem !important)
+18h.mm-cg.com###container a.aRF img:style(width: 100% !important)
+18h.mm-cg.com###container a.aRF img:style(max-width: 100% !important)
+18h.mm-cg.com##span#main > h1:style(font-size: 0 !important)
+18h.mm-cg.com##span.enlarge_jizcg:style(display: flex !important)
+18h.mm-cg.com##span.enlarge_jizcg:style(flex-wrap: wrap !important)
+18h.mm-cg.com##span.enlarge_jizcg:style(width: 100% !important)
+18h.mm-cg.com##span.enlarge_jizcg img:style(width: 25% !important)
+18h.mm-cg.com##span#main_mv:style(font-size: 0 !important)
+18h.mm-cg.com##span#main_mv > font:style(font-size: 0 !important)
+18h.mm-cg.com##span#main_mv > font > a:style(display: block !important)
+18h.mm-cg.com##span#main_mv > font > a:style(font-size: 1.25rem !important)
+18h.mm-cg.com##span#main_mv > font > a:style(font-weight: normal !important)
+18h.mm-cg.com##span#main_mv > font > a:style(text-align: center !important)
+18h.mm-cg.com##span#main_mv > font > a:style(text-decoration: none !important)
+18h.mm-cg.com##span#main_mv > font > a:style(padding: 1rem !important)
+18h.mm-cg.com##span#main_mv > font > a:style(margin: 1rem 0 !important)
+18h.mm-cg.com##span#main_mv > font > a:style(color: #fff !important)
+18h.mm-cg.com##span#main_mv > font > a:style(background-color: #0069d9 !important)
+18h.mm-cg.com##span.cs_mvwidth:style(width: 100% !important)
+18h.mm-cg.com##span.cs_mvwidth:style(display: block !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(display: inline-block !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(font-size: 1.25rem !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(font-weight: normal !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(text-align: center !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(text-decoration: none !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(padding: 1rem !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(margin: 1rem 0 !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(color: #fff !important)
+18h.mm-cg.com##span.cs_mvwidth > a:style(background-color: #993300 !important)
+18h.mm-cg.com##.mobile_mv:style(width: 100% !important)
+18h.mm-cg.com##.mobile_mv > a:style(display: block !important)
+18h.mm-cg.com##.mobile_mv > a:style(font-size: 1.25rem !important)
+18h.mm-cg.com##.mobile_mv > a:style(font-weight: normal !important)
+18h.mm-cg.com##.mobile_mv > a:style(text-align: center !important)
+18h.mm-cg.com##.mobile_mv > a:style(text-decoration: none !important)
+18h.mm-cg.com##.mobile_mv > a:style(padding: 1rem !important)
+18h.mm-cg.com##.mobile_mv > a:style(margin: 1rem 0 !important)
+18h.mm-cg.com##.mobile_mv > a:style(color: #fff !important)
+18h.mm-cg.com##.mobile_mv > a:style(background-color: #0069d9 !important)
+18h.mm-cg.com###menu1Content:style(background-image: none !important)
+18h.mm-cg.com###menu1Content:style(float: none !important)
+18h.mm-cg.com###menu1Content:style(width: 100% !important)
+18h.mm-cg.com###menu1Content:style(display: flex !important)
+18h.mm-cg.com###menu1Content:style(flex-direction: column-reverse !important)
+18h.mm-cg.com###menu1Content div.altto:style(order: 2 !important)
+18h.mm-cg.com###menu1Content div.altto:style(padding: 1rem !important)
+18h.mm-cg.com###menu1Content div.altto input:style(font-size: 1.25rem !important)
+18h.mm-cg.com###menu1Content div.altto input:style(display: block !important)
+18h.mm-cg.com###menu1Content div.altto input:style(width: 100% !important)
+18h.mm-cg.com###menu1Content div.altto input:style(height: 2.5rem !important)
+18h.mm-cg.com###menu1Content div.altto input:style(margin-bottom: 1rem !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(-moz-appearance: none !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(background-color: #333 !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(color: #fff !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(padding: 1em !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(height: auto !important)
+18h.mm-cg.com###menu1Content div.altto select:style(font-size: 1.25rem !important)
+18h.mm-cg.com###menu1Content div.altto select:style(display: block !important)
+18h.mm-cg.com###menu1Content div.altto select:style(width: 100% !important)
+18h.mm-cg.com###menu1Content div.altto select:style(height: 2.5rem !important)
+18h.mm-cg.com###menu1Content div.altto select:style(margin-bottom: 1rem !important)
+18h.mm-cg.com##.PageBar:style(width: 100% !important)
+18h.mm-cg.com##.PageBar:style(line-height: 3rem !important)
+18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton:style(width: 100% !important)
+18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton:style(margin-top: 4rem !important)
+18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton:style(margin-bottom: 1rem !important)
 ||18av.tv/mmad.js$script
 ||18h.mm-cg.com/mmad.js$script
 ||ammcg.imgscloud.com
