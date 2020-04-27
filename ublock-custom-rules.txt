@@ -169,7 +169,7 @@ sogi.com.tw##.media-body > .btn-group
 18av.tv##^#container > a
 18av.tv###container > a
 18av.tv##^#container > h1.label
-8av.tv###container > h1.label
+18av.tv###container > h1.label
 18av.tv##^#container > span:not(#main)
 18av.tv###container > span:not(#main)
 18av.tv##^#friendLink
@@ -442,9 +442,15 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com##^#container a.aRF > br
 18h.mm-cg.com###container a.aRF > br
 18h.mm-cg.com##^#menu1Content > br
-18h.mm-cg.com##^#menu1Content div.altto  br
+18h.mm-cg.com##^#menu1Content div.altto br
+18h.mm-cg.com##^#div_mv_mp4cg
+18h.mm-cg.com###div_mv_mp4cg
+18h.mm-cg.com##^html body div center div:not(#show_cg_html)
+18h.mm-cg.com##html body div center div:not(#show_cg_html)
 18h.mm-cg.com##body:style(background-color: #fafafa !important)
 18h.mm-cg.com##body:style(margin: 0 !important)
+18h.mm-cg.com##body > div:style(width: 100% !important)
+18h.mm-cg.com##body div center div#show_cg_html center img:style(width: 100% !important)
 18h.mm-cg.com##span#main:style(display: block !important)
 18h.mm-cg.com##span#main:style(padding: 1rem !important)
 18h.mm-cg.com###Main_content:style(background-color: #fafafa !important)
