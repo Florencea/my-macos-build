@@ -122,7 +122,7 @@ ithome.com.tw##.today-featured
 ! style
 ithome.com.tw##.main-container > div.row-fluid:style(display: flex; justify-content: center; width: 100%)
 ithome.com.tw###page-header:style(display: flex !important; justify-content: center; width: 100%)
-ithome.com.tw##h1.page-header:style(font-size: 2rem !important; text-align: left; padding-top: 3rem)
+ithome.com.tw##h1.page-header:style(font-size: 1rem !important; text-align: left; padding-top: 3rem)
 ithome.com.tw##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif)
 ithome.com.tw##.content:style(padding-left: 0 !important; margin:0 1rem)
 ithome.com.tw##.img-wrapper > div:style(border: 1px solid #EDEDED)
