@@ -1,50 +1,13 @@
 ! Title: uBlock Custom Rules by Florencea
-! Expires: 4 days
 ! Description: uBlock custom rules by Florencea Bear
-! Last updated: 2020-04-27
+! Last updated: 2020-04-28
 !
-! style migrate from stylus
-translate.google.com##^#wtgbr
-translate.google.com###wtgbr
-translate.google.com##^#gt-c
-translate.google.com###gt-c
-translate.google.com###contentframe:style(top: 0 !important)
-ithome.com.tw##.view-id-latest_news:style(padding-top: 30px !important)
-ithome.com.tw##.img-wrapper:style(padding-left: 30%)
-ithome.com.tw##section#block-views-view-news-custom-submitted:style(padding-left: 30%)
-ithome.com.tw##h1.page-header:style(font-size: 2em !important; text-align: center; padding-top: 45px)
-ithome.com.tw##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif)
-ithome.com.tw##.main-container:style(margin-top: 0)
-ithome.com.tw##.avatar:style(position: relative)
-!#if env_mobile
-ithome.com.tw##.img-wrapper:style(padding-left: 0)
-!#endif
-! for desktop
-anime1.me##^#aTQNPZLh
-anime1.me###aTQNPZLh
-anime1.me##^#execphp-6
-anime1.me###execphp-6
-anime1.me##^#execphp-8
-anime1.me###execphp-8
-anime1.me##^.kiwi-ad-wrapper-728x90
-anime1.me##.kiwi-ad-wrapper-728x90
-anime1.me##^#text-6
-anime1.me###text-6
-anime1.me##^#anime-bottom
-anime1.me###anime-bottom
-facebook.com##.home_right_column
-facebook.com###pagelet_ego_contextual_group
-inside.com.tw##^.post_list_item-ad
-inside.com.tw##.post_list_item-ad
-macrumors.com##^#video-wrapper
-macrumors.com###video-wrapper
-pcadv.techbang.com##^.yt_playlist
-pcadv.techbang.com##.yt_playlist
-share.dmhy.org##^script:has-text(_hmt)
-share.dmhy.org##^.announce
-share.dmhy.org##.announce
-share.dmhy.org##^#\31 280_ad > a
-share.dmhy.org###\31 280_ad > a
+! cool3c.com
+! remove
+cool3c.com##^#fb-root
+cool3c.com###fb-root
+cool3c.com##^#header
+cool3c.com###header
 cool3c.com##^.article-social
 cool3c.com##.article-social
 cool3c.com##^.comments
@@ -63,6 +26,8 @@ cool3c.com##^.board-BT_ar_iR_PbL
 cool3c.com##.board-BT_ar_iR_PbL
 cool3c.com##^.board-BT_ar_O_11
 cool3c.com##.board-BT_ar_O_11
+cool3c.com##^.board-BT_li_iL
+cool3c.com##.board-BT_li_iL
 cool3c.com##^[src="/assets/img/img-failed.jpg"]
 cool3c.com##[src="/assets/img/img-failed.jpg"]
 cool3c.com##^[src="/assets/img/img-failed.webp"]
@@ -73,16 +38,61 @@ cool3c.com##^section.comment-area
 cool3c.com##section.comment-area
 cool3c.com##^div.social-bar
 cool3c.com##div.social-bar
+cool3c.com##^body > aside
+cool3c.com##body > aside
+cool3c.com##^.readmore
+cool3c.com##.readmore
+cool3c.com##^.article > .tag
+cool3c.com##.article > .tag
+cool3c.com##^.article > .related
+cool3c.com##.article > .related
+cool3c.com##^.article > .source
+cool3c.com##.article > .source
+! style
+cool3c.com###main:style(padding: 0 !important)
+cool3c.com##header:style(padding: 2rem !important)
+cool3c.com##.article:style(padding: 2rem !important)
+
+! dmhy.org
+! remove
+dmhy.org##^script:has-text(_hmt)
+dmhy.org##^.announce
+dmhy.org##.announce
+dmhy.org##^#\31 280_ad > a
+dmhy.org###\31 280_ad > a
+! style
+dmhy.org##.topic-main:style(text-align: left)
+
+! fandom.com
+! remove
+fandom.com##^.banner-notifications-placeholder
+fandom.com##.banner-notifications-placeholder
+fandom.com##^#WikiaBar
+fandom.com###WikiaBar
+
+! inside.com.tw
+! remove
+inside.com.tw##^.post_list_item-ad
+inside.com.tw##.post_list_item-ad
+
+! ithome.com.tw
+! remove
 ithome.com.tw##^#block-block-7
 ithome.com.tw###block-block-7
+ithome.com.tw##^#block-block-10
+ithome.com.tw###block-block-10
 ithome.com.tw##^#block-block-23
 ithome.com.tw###block-block-23
+ithome.com.tw##^#block-block-37
+ithome.com.tw###block-block-37
 ithome.com.tw##^#block-block-45
 ithome.com.tw###block-block-45
 ithome.com.tw##^#block-block-74
 ithome.com.tw###block-block-74
 ithome.com.tw##^#block-block-91
 ithome.com.tw###block-block-91
+ithome.com.tw##^#block-views-similarterms-block
+ithome.com.tw###block-views-similarterms-block
 ithome.com.tw##^#skybanner
 ithome.com.tw###skybanner
 ithome.com.tw##^aside[role="complementary"]
@@ -109,6 +119,18 @@ ithome.com.tw##^.ad-banner-text
 ithome.com.tw##.ad-banner-text
 ithome.com.tw##^.today-featured
 ithome.com.tw##.today-featured
+! style
+ithome.com.tw##.main-container > div.row-fluid:style(display: flex; justify-content: center; width: 100%)
+ithome.com.tw###page-header:style(display: flex !important; justify-content: center; width: 100%)
+ithome.com.tw##h1.page-header:style(font-size: 2rem !important; text-align: left; padding-top: 3rem)
+ithome.com.tw##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif)
+ithome.com.tw##.content:style(padding-left: 0 !important; margin:0 1rem)
+ithome.com.tw##.img-wrapper > div:style(border: 1px solid #EDEDED)
+
+! macrumors.com
+! remove
+macrumors.com##^#video-wrapper
+macrumors.com###video-wrapper
 macrumors.com##^#adplaceholder
 macrumors.com###adplaceholder
 macrumors.com##^#adplaceholder_side
@@ -118,11 +140,24 @@ macrumors.com##.tertiary
 macrumors.com##^.glide--slider
 macrumors.com##.glide--slider
 macrumors.com##^#mrCarouselPrev:upward(div)
+macrumors.com###mrCarouselPrev:upward(div)
+macrumors.com##^div[class^=social]
+macrumors.com##div[class^=social]
+! style
 macrumors.com##div#guide-products:style(margin: 0 !important)
+
+! manhuaren.com
+! remove
+manhuaren.com##^.ad-top
+manhuaren.com##.ad-top
 manhuaren.com##^.ad-top-info
 manhuaren.com##.ad-top-info
+manhuaren.com##^#index-ad
+manhuaren.com###index-ad
 manhuaren.com##^.index-bottom-ad
 manhuaren.com##.index-bottom-ad
+manhuaren.com##^.banner-bottom
+manhuaren.com##.banner-bottom
 manhuaren.com##^.detail-ad-con
 manhuaren.com##.detail-ad-con
 manhuaren.com##^.view-bottom-bar
@@ -133,17 +168,40 @@ manhuaren.com##^#lb-win
 manhuaren.com###lb-win
 manhuaren.com##^.guide
 manhuaren.com##.guide
+manhuaren.com##^body > a
+manhuaren.com##body > a
+manhuaren.com##^script:has-text(download-cross)
+manhuaren.com##^script:has-text(resizeLbWin)
+manhuaren.com##^script:has-text(ga.src)
+! style
+manhuaren.com###cp_img:style(padding-top: 60px !important)
+
+! mobile01.com
+! remove
 mobile01.com##^.ad-adblock
 mobile01.com##.ad-adblock
+
+! onlyhgames.com
+! remove
 onlyhgames.com##^div.widget_text.widget:nth-of-type(3)
 onlyhgames.com##div.widget_text.widget:nth-of-type(3)
 onlyhgames.com##^div.widget_text.widget:nth-of-type(5)
 onlyhgames.com##div.widget_text.widget:nth-of-type(5)
 ||onlyhgames.com/balo.php$image
+
+! playpcesor.com
+! remove
 playpcesor.com##^#HTML3
 playpcesor.com###HTML3
 playpcesor.com##^#ztb-slide-box-widget
 playpcesor.com###ztb-slide-box-widget
+
+! techbang.com
+! remove
+techbang.com##^#crazy_ad_small
+techbang.com###crazy_ad_small
+techbang.com##^.yt_playlist
+techbang.com##.yt_playlist
 techbang.com##^.fixed-top
 techbang.com##.fixed-top
 techbang.com##^.ad_grey_floor
@@ -152,19 +210,81 @@ techbang.com##^.post-side
 techbang.com##.post-side
 techbang.com##^section.fenced.section
 techbang.com##section.fenced.section
+techbang.com##^.news-feed
+techbang.com##.news-feed
+techbang.com##^.ad-section
+techbang.com##.ad-section
+techbang.com##^.ads-next-to-logo
+techbang.com##.ads-next-to-logo
+techbang.com##^.ad
+techbang.com##.ad
+techbang.com##^.advertise
+techbang.com##.advertise
+techbang.com##^#post-additional
+techbang.com###post-additional
+techbang.com##^.comments
+techbang.com##.comments
+techbang.com##^div[class^=ads_both_sides]
+techbang.com##div[class^=ads_both_sides]
+techbang.com##^#stickies
+techbang.com###stickies
+techbang.com##^#sidebar
+techbang.com###sidebar
+techbang.com##^#float-navigation
+techbang.com###float-navigation
+techbang.com##^.headline
+techbang.com##.headline
+! style
+techbang.com##.main-content:style(width: 100% !important; float: none !important)
+techbang.com##.inner-content:style(width: 100% !important; float: none !important; padding-top: 1rem !important)
+techbang.com##.article-large:style(width: 100% !important;)
+techbang.com##.article-large img:style(width: 100% !important;)
+techbang.com##.post-main:style(display: flex; justify-content: center; width: 100% !important; float: none !important; padding-top: 2rem !important;)
+techbang.com##.post-main > .article:style(max-width: 960px)
+techbang.com##.article > .content > h2:style(border: 0 !important)
+techbang.com##label.caption:style(border: 0 !important)
+
+! thenewslens.com
+! remove
 thenewslens.com##^.ad-btm
 thenewslens.com##.ad-btm
 thenewslens.com##^.op-social
 thenewslens.com##.op-social
-fandom.com##^.banner-notifications-placeholder
-fandom.com##.banner-notifications-placeholder
-fandom.com##^#WikiaBar
-fandom.com###WikiaBar
+thenewslens.com##^.function-box
+thenewslens.com##.function-box
+thenewslens.com##^.member-function
+thenewslens.com##.member-function
+thenewslens.com##^.alert-bubble
+thenewslens.com##.alert-bubble
+thenewslens.com##^.infinite-post-section
+thenewslens.com##.infinite-post-section
+thenewslens.com##^#infinite-article-recommend-section
+thenewslens.com###infinite-article-recommend-section
+thenewslens.com##^.fb-comment-box
+thenewslens.com##.fb-comment-box
+thenewslens.com##^.social-btns
+thenewslens.com##.social-btns
+
+! translate.google.com
+! remove
+translate.google.com##^#wtgbr
+translate.google.com###wtgbr
+translate.google.com##^#gt-c
+translate.google.com###gt-c
+! style
+translate.google.com###contentframe:style(top: 0 !important)
+
+! sogi.com.tw
+! remove
+sogi.com.tw##^#ad
+sogi.com.tw###ad
 sogi.com.tw##^.well
 sogi.com.tw##.well
 sogi.com.tw##^.media-body > .btn-group
 sogi.com.tw##.media-body > .btn-group
-! for mobile
+
+! 18av.tv
+! remove
 18av.tv##^#ArticlesEx_box
 18av.tv###ArticlesEx_box
 18av.tv##^#container > a
@@ -200,6 +320,7 @@ sogi.com.tw##.media-body > .btn-group
 18av.tv##^#Dfrom
 18av.tv###Dfrom
 18av.tv##^iframe
+18av.tv##iframe
 18av.tv##^#container a.aRF:has(.aRF_Scg)
 18av.tv###container a.aRF:has(.aRF_Scg)
 18av.tv##^#container img.aRF_Scg
@@ -211,22 +332,16 @@ sogi.com.tw##.media-body > .btn-group
 18av.tv##^script:has-text(mvcg_content_a)
 18av.tv##^script:has-text(BBshowBox)
 18av.tv##^script:has-text(CCshowBox)
+18av.tv##^script:has-text(cnzz)
+18av.tv##^script:has-text(gtag)
+18av.tv##^script:has-text(SpanadBox)
+18av.tv##^script:has-text(_Hasync)
 18av.tv##^#menu1Content a.c1
 18av.tv###menu1Content a.c1
 18av.tv##^#menu1Content div.HS
 18av.tv###menu1Content div.HS
 18av.tv##^[href="https://bit.ly/*"]
 18av.tv##[href="https://bit.ly/*"]
-imgscloud.com##^#cover_information
-imgscloud.com###cover_information
-imgscloud.com##^#suncover
-imgscloud.com###suncover
-imgscloud.com##^#coverclose_top
-imgscloud.com###coverclose_top
-imgscloud.com##^#coverclose_bottom
-imgscloud.com###coverclose_bottom
-! 18av.tv##^#main_mv > :not(.mobile_mv)
-! 18av.tv###main_mv > :not(.mobile_mv)
 18av.tv##^#main_mv > div.mobile_mv
 18av.tv###main_mv > div.mobile_mv
 18av.tv##^#main_mv > a
@@ -256,13 +371,31 @@ imgscloud.com###coverclose_bottom
 18av.tv##^#container a.aRF > br
 18av.tv###container a.aRF > br
 18av.tv##^#menu1Content > br
-18av.tv##^#menu1Content div.altto  br
+18av.tv###menu1Content > br
+18av.tv##^#menu1Content div.altto br
+18av.tv###menu1Content div.altto br
 18av.tv##^span.cs_mvwidth:has-text(影片放大)
 18av.tv##span.cs_mvwidth:has-text(影片放大)
 18av.tv##^span#main_mv > span:has-text(我是分隔線)
 18av.tv##span#main_mv > span:has-text(我是分隔線)
+18av.tv##^#Preview_Enlarge_aRF_Bcg_aButton
+18av.tv###Preview_Enlarge_aRF_Bcg_aButton
+18av.tv##^#SpanadBox
+18av.tv###SpanadBox
+18av.tv##^html > body > span#aRF_myVar_ct_buffer
+18av.tv##html > body > span#aRF_myVar_ct_buffer
+18av.tv##^html > body > span.enlarge_cg
+18av.tv##html > body > span.enlarge_cg
+18av.tv##^body > noscript
+18av.tv##body > noscript
+18av.tv##^html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF)
+18av.tv##html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF)
+18av.tv##^span#twcgUUU
+18av.tv##span#twcgUUU
+! style
 18av.tv##body:style(background-color: #fafafa !important)
 18av.tv##body:style(margin: 0 !important)
+18av.tv##body:style(font-size: 0)
 18av.tv##span#main:style(display: block !important)
 18av.tv##span#main:style(padding: 1rem !important)
 18av.tv###Main_content:style(background-color: #fafafa !important)
@@ -301,8 +434,9 @@ imgscloud.com###coverclose_bottom
 18av.tv##span#main_mv > font > a::before:style(content: '影片播放連結 ' !important)
 18av.tv##span.cs_mvwidth:style(width: 100% !important)
 18av.tv##span.cs_mvwidth:style(display: block !important)
-18av.tv##span.cs_mvwidth > a:style(display: inline-block !important)
-18av.tv##span.cs_mvwidth > a:style(font-size: 1.25rem !important)
+18av.tv##span.cs_mvwidth:style(font-size: 0 !important)
+18av.tv##span.cs_mvwidth > a:style(display: block !important)
+18av.tv##span.cs_mvwidth > a:style(font-size: 1rem !important)
 18av.tv##span.cs_mvwidth > a:style(font-weight: normal !important)
 18av.tv##span.cs_mvwidth > a:style(text-align: center !important)
 18av.tv##span.cs_mvwidth > a:style(text-decoration: none !important)
@@ -325,6 +459,8 @@ imgscloud.com###coverclose_bottom
 18av.tv###menu1Content:style(width: 100% !important)
 18av.tv###menu1Content:style(display: flex !important)
 18av.tv###menu1Content:style(flex-direction: column-reverse !important)
+18av.tv###menu1Content:style(font-size: 0 !important)
+18av.tv###menu1Content > h6:style(font-size: 1rem !important)
 18av.tv###menu1Content div.altto:style(order: 2 !important)
 18av.tv###menu1Content div.altto:style(padding: 1rem !important)
 18av.tv###menu1Content div.altto input:style(font-size: 1.25rem !important)
@@ -344,22 +480,22 @@ imgscloud.com###coverclose_bottom
 18av.tv###menu1Content div.altto select:style(margin-bottom: 1rem !important)
 18av.tv##.PageBar:style(width: 100% !important)
 18av.tv##.PageBar:style(line-height: 3rem !important)
-18av.tv###Preview_Enlarge_aRF_Bcg_aButton:style(width: 100% !important)
-18av.tv###Preview_Enlarge_aRF_Bcg_aButton:style(margin-top: 4rem !important)
-18av.tv###Preview_Enlarge_aRF_Bcg_aButton:style(margin-bottom: 1rem !important)
-18h.mm-cg.com###container > a
-18h.mm-cg.com###container > h1.label
-18h.mm-cg.com###container > span:not(#main)
-18h.mm-cg.com###friendLink
-18h.mm-cg.com###menu1Content > .altto > ul
-18h.mm-cg.com###mobile_ArticlesEx_box
-18h.mm-cg.com##.aRF:has(.aRF_Scg)
-18h.mm-cg.com##.mobile_ut_ad_box
-18h.mm-cg.com##.rand_list
-18h.mm-cg.com##.TW_UTtoy_18h
-18h.mm-cg.com##center > center > a
-18h.mm-cg.com##center > span
-18h.mm-cg.com##span.sub_list
+! others
+imgscloud.com##^#cover_information
+imgscloud.com###cover_information
+imgscloud.com##^#suncover
+imgscloud.com###suncover
+imgscloud.com##^#coverclose_top
+imgscloud.com###coverclose_top
+imgscloud.com##^#coverclose_bottom
+imgscloud.com###coverclose_bottom
+||18av.tv/mmad.js$script
+||ammcg.imgscloud.com
+||gahost3.imgscloud.com
+||gbhost3.imgscloud.com
+
+! 18h.mm-cg.com
+! remove
 18h.mm-cg.com##^#ArticlesEx_box
 18h.mm-cg.com###ArticlesEx_box
 18h.mm-cg.com##^#container > a
@@ -380,8 +516,8 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com##.exoc
 18h.mm-cg.com##^.sub_list
 18h.mm-cg.com##.sub_list
-18h.mm-cg.com##^.TW_UTtoy
-18h.mm-cg.com##.TW_UTtoy
+18h.mm-cg.com##^.TW_UTtoy_18h
+18h.mm-cg.com##.TW_UTtoy_18h
 18h.mm-cg.com##^.ut_ad_box
 18h.mm-cg.com##.ut_ad_box
 18h.mm-cg.com##^#BBshowBox
@@ -412,14 +548,6 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###menu1Content div.HS
 18h.mm-cg.com##^[href="https://bit.ly/*"]
 18h.mm-cg.com##[href="https://bit.ly/*"]
-imgscloud.com##^#cover_information
-imgscloud.com###cover_information
-imgscloud.com##^#suncover
-imgscloud.com###suncover
-imgscloud.com##^#coverclose_top
-imgscloud.com###coverclose_top
-imgscloud.com##^#coverclose_bottom
-imgscloud.com###coverclose_bottom
 18h.mm-cg.com##^#main_mv > div.mobile_mv
 18h.mm-cg.com###main_mv > div.mobile_mv
 18h.mm-cg.com##^#main_mv > a
@@ -448,6 +576,17 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###div_mv_mp4cg
 18h.mm-cg.com##^html body div center div:not(#show_cg_html)
 18h.mm-cg.com##html body div center div:not(#show_cg_html)
+18h.mm-cg.com##^#Preview_Enlarge_aRF_Bcg_aButton
+18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton
+18h.mm-cg.com##^body > div > center > span
+18h.mm-cg.com##body > div > center > span
+18h.mm-cg.com##^body > div > center > center > a
+18h.mm-cg.com##body > div > center > center > a
+18h.mm-cg.com##^html > body > div > center > div#show_cg_html > center > p
+18h.mm-cg.com##html > body > div > center > div#show_cg_html > center > p
+18h.mm-cg.com##^html > body > div > center > center > span.rand_list
+18h.mm-cg.com##html > body > div > center > center > span.rand_list
+! style
 18h.mm-cg.com##body:style(background-color: #fafafa !important)
 18h.mm-cg.com##body:style(margin: 0 !important)
 18h.mm-cg.com##body > div:style(width: 100% !important)
@@ -471,43 +610,6 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###container a.aRF img:style(margin-top: 1rem !important)
 18h.mm-cg.com###container a.aRF img:style(width: 100% !important)
 18h.mm-cg.com###container a.aRF img:style(max-width: 100% !important)
-18h.mm-cg.com##span#main > h1:style(font-size: 0 !important)
-18h.mm-cg.com##span.enlarge_jizcg:style(display: flex !important)
-18h.mm-cg.com##span.enlarge_jizcg:style(flex-wrap: wrap !important)
-18h.mm-cg.com##span.enlarge_jizcg:style(width: 100% !important)
-18h.mm-cg.com##span.enlarge_jizcg img:style(width: 25% !important)
-18h.mm-cg.com##span#main_mv:style(font-size: 0 !important)
-18h.mm-cg.com##span#main_mv > font:style(font-size: 0 !important)
-18h.mm-cg.com##span#main_mv > font > a:style(display: block !important)
-18h.mm-cg.com##span#main_mv > font > a:style(font-size: 1.25rem !important)
-18h.mm-cg.com##span#main_mv > font > a:style(font-weight: normal !important)
-18h.mm-cg.com##span#main_mv > font > a:style(text-align: center !important)
-18h.mm-cg.com##span#main_mv > font > a:style(text-decoration: none !important)
-18h.mm-cg.com##span#main_mv > font > a:style(padding: 1rem !important)
-18h.mm-cg.com##span#main_mv > font > a:style(margin: 1rem 0 !important)
-18h.mm-cg.com##span#main_mv > font > a:style(color: #fff !important)
-18h.mm-cg.com##span#main_mv > font > a:style(background-color: #0069d9 !important)
-18h.mm-cg.com##span.cs_mvwidth:style(width: 100% !important)
-18h.mm-cg.com##span.cs_mvwidth:style(display: block !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(display: inline-block !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(font-size: 1.25rem !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(font-weight: normal !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(text-align: center !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(text-decoration: none !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(padding: 1rem !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(margin: 1rem 0 !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(color: #fff !important)
-18h.mm-cg.com##span.cs_mvwidth > a:style(background-color: #993300 !important)
-18h.mm-cg.com##.mobile_mv:style(width: 100% !important)
-18h.mm-cg.com##.mobile_mv > a:style(display: block !important)
-18h.mm-cg.com##.mobile_mv > a:style(font-size: 1.25rem !important)
-18h.mm-cg.com##.mobile_mv > a:style(font-weight: normal !important)
-18h.mm-cg.com##.mobile_mv > a:style(text-align: center !important)
-18h.mm-cg.com##.mobile_mv > a:style(text-decoration: none !important)
-18h.mm-cg.com##.mobile_mv > a:style(padding: 1rem !important)
-18h.mm-cg.com##.mobile_mv > a:style(margin: 1rem 0 !important)
-18h.mm-cg.com##.mobile_mv > a:style(color: #fff !important)
-18h.mm-cg.com##.mobile_mv > a:style(background-color: #0069d9 !important)
 18h.mm-cg.com###menu1Content:style(background-image: none !important)
 18h.mm-cg.com###menu1Content:style(float: none !important)
 18h.mm-cg.com###menu1Content:style(width: 100% !important)
@@ -530,15 +632,10 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###menu1Content div.altto select:style(width: 100% !important)
 18h.mm-cg.com###menu1Content div.altto select:style(height: 2.5rem !important)
 18h.mm-cg.com###menu1Content div.altto select:style(margin-bottom: 1rem !important)
-18h.mm-cg.com##.PageBar:style(width: 100% !important)
-18h.mm-cg.com##.PageBar:style(line-height: 3rem !important)
-18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton:style(width: 100% !important)
-18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton:style(margin-top: 4rem !important)
-18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton:style(margin-bottom: 1rem !important)
-||18av.tv/mmad.js$script
+! others
 ||18h.mm-cg.com/mmad.js$script
-||ammcg.imgscloud.com
-||gahost3.imgscloud.com
-||gbhost3.imgscloud.com
+
+! wnacg.org
+! remove
 wnacg.org##^.SC_TBlock
 wnacg.org##.SC_TBlock
