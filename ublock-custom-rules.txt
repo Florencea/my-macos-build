@@ -74,6 +74,8 @@ fandom.com###WikiaBar
 ! remove
 inside.com.tw##^.post_list_item-ad
 inside.com.tw##.post_list_item-ad
+inside.com.tw##^.post_toolbox
+inside.com.tw##.post_toolbox
 
 ! ithome.com.tw
 ! remove
