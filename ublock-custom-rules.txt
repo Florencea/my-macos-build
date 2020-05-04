@@ -181,6 +181,7 @@ manhuaren.com##^.guide
 manhuaren.com##.guide
 manhuaren.com##^body > a
 manhuaren.com##body > a
+manhuaren.com##^div[style="display:none"]
 manhuaren.com##^script:has-text(download-cross)
 manhuaren.com##^script:has-text(resizeLbWin)
 manhuaren.com##^script:has-text(ga.src)
@@ -237,6 +238,8 @@ techbang.com##^.comments
 techbang.com##.comments
 techbang.com##^div[class^=ads_both_sides]
 techbang.com##div[class^=ads_both_sides]
+techbang.com##^div[id^=crazy_ad]
+techbang.com##div[id^=crazy_ad]
 techbang.com##^#stickies
 techbang.com###stickies
 techbang.com##^#sidebar
@@ -245,13 +248,30 @@ techbang.com##^#float-navigation
 techbang.com###float-navigation
 techbang.com##^.headline
 techbang.com##.headline
+techbang.com##^.carousel
+techbang.com##.carousel
+techbang.com##^noscript
+techbang.com##noscript
+techbang.com##^.google-dfp
+techbang.com##.google-dfp
+techbang.com##^.main-content > section
+techbang.com##.main-content > section
+techbang.com##^.techbang_i_down_ad
+techbang.com##.techbang_i_down_ad
+techbang.com##^#carousel-images-2
+techbang.com###carousel-images-2
+techbang.com##^#carousel-images-3
+techbang.com###carousel-images-3
+techbang.com##^script:has-text(fbAsyncInit)
+techbang.com##^script:has-text(check_fb_ready)
+techbang.com##^script:has-text(idle_popup)
 ! style
 techbang.com##.main-content:style(width: 100% !important; float: none !important)
 techbang.com##.inner-content:style(width: 100% !important; float: none !important; padding-top: 1rem !important)
 techbang.com##.article-large:style(width: 100% !important;)
 techbang.com##.article-large img:style(width: 100% !important;)
 techbang.com##.post-main:style(display: flex; justify-content: center; width: 100% !important; float: none !important; padding-top: 2rem !important;)
-techbang.com##.post-main > .article:style(max-width: 960px)
+techbang.com##.post-main > .article:style(max-width: 796px)
 techbang.com##.article > .content > h2:style(border: 0 !important)
 techbang.com##label.caption:style(border: 0 !important)
 
@@ -650,3 +670,12 @@ imgscloud.com###coverclose_bottom
 ! remove
 wnacg.org##^.SC_TBlock
 wnacg.org##.SC_TBlock
+wnacg.org##^div.UnderPage > div:not(#currentCache)
+wnacg.org##div.UnderPage > div:not(#currentCache)
+wnacg.org##^body > div:nth-of-type(2)
+wnacg.org##^script:has-text(chapterId)
+wnacg.org##^script:has-text(GoogleAnalytics)
+wnacg.org##^script:has-text(adsbyjuicy)
+wnacg.org##^script[data-cfasync=false]
+wnacg.org##^script[async=""]
+wnacg.org##^div[style="display:none"]
