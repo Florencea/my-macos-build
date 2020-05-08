@@ -6,7 +6,7 @@ function print_step(){
 }
 
 github_username="Florencea"
-github_email="bearflorencea@gmail.com"
+github_email="bearflorencea@pm.me"
 github_editor="nano"
 shell_greeting="Welcome, Princess Florencea."
 
