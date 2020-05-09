@@ -1,6 +1,6 @@
 ! Title: uBlock Custom Rules by Florencea
 ! Description: uBlock custom rules by Florencea Bear
-! Last updated: 2020-04-28
+! Last updated: 2020-05-09
 !
 ! cool3c.com
 ! remove
@@ -672,7 +672,15 @@ wnacg.org##^.SC_TBlock
 wnacg.org##.SC_TBlock
 wnacg.org##^div.UnderPage > div:not(#currentCache)
 wnacg.org##div.UnderPage > div:not(#currentCache)
-wnacg.org##^body > div:nth-of-type(2)
+wnacg.org##^#cite_vote
+wnacg.org###cite_vote
+wnacg.org##^#mask_panel
+wnacg.org###mask_panel
+wnacg.org##^#control_block
+wnacg.org###control_block
+wnacg.org##^#page_scale
+wnacg.org###page_scale
+wnacg.org##^script:has-text(write)
 wnacg.org##^script:has-text(chapterId)
 wnacg.org##^script:has-text(GoogleAnalytics)
 wnacg.org##^script:has-text(adsbyjuicy)
