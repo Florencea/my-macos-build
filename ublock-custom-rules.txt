@@ -687,3 +687,73 @@ wnacg.org##^script:has-text(adsbyjuicy)
 wnacg.org##^script[data-cfasync=false]
 wnacg.org##^script[async=""]
 wnacg.org##^div[style="display:none"]
+
+
+! xfastest.com
+! remove
+xfastest.com##^#vwspc-section-1
+xfastest.com###vwspc-section-1
+xfastest.com##^#vwspc-section-3
+xfastest.com###vwspc-section-3
+xfastest.com##^#vwspc-section-4
+xfastest.com###vwspc-section-4
+xfastest.com##^#vwspc-section-5
+xfastest.com###vwspc-section-5
+xfastest.com##^#vwspc-section-6
+xfastest.com###vwspc-section-6
+xfastest.com##^footer > .vw-site-footer-sidebars
+xfastest.com##footer > .vw-site-footer-sidebars
+xfastest.com##^#wpfront-scroll-top-container
+xfastest.com###wpfront-scroll-top-container
+xfastest.com##^#vw-post-shares-dialog
+xfastest.com###vw-post-shares-dialog
+xfastest.com##^.widget_vw_widget_social_counter
+xfastest.com##.widget_vw_widget_social_counter
+xfastest.com##^.vw-top-bar-breaking-social
+xfastest.com##.vw-top-bar-breaking-social
+xfastest.com##^#text-6
+xfastest.com###text-6
+xfastest.com##^#fb-root
+xfastest.com###fb-root
+xfastest.com##^.pace
+xfastest.com##.pace
+xfastest.com##^.vw-post-navigation
+xfastest.com##.vw-post-navigation
+xfastest.com##^.vw-about-author
+xfastest.com##.vw-about-author
+xfastest.com##^.vw-related-posts
+xfastest.com##.vw-related-posts
+xfastest.com##^.evo_lightboxes
+xfastest.com##.evo_lightboxes
+xfastest.com##^.vw-site-social-profile
+xfastest.com##.vw-site-social-profile
+xfastest.com##^noscript
+xfastest.com##noscript
+xfastest.com##^script:has-text(wpfront_scroll_top)
+xfastest.com##^script:has-text(fb)
+! style
+xfastest.com##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##cite:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h1:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h2:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h3:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h4:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h5:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h6:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-menu-location-main .main-menu-link:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-header-font:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-post-box.vw-post-format-link a:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-social-counter-count:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-page-navigation-pagination:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.page-numbers:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com###wp-calendar caption:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-accordion-header-text:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-tab-title:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-review-item-title:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-pagination-load-more:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-post-content:style(line-height: 3rem !important)
+xfastest.com##.entry-title:style(font-size: 3.5rem !important; line-height: 5rem !important)
+
+! addons: super preloader
+^div#sp-fw-container
+div#sp-fw-container
