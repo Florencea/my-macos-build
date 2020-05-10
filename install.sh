@@ -20,6 +20,7 @@ chsh -s /usr/local/bin/fish
 mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
+printf "set -g fish_user_paths /usr/local/opt/curl/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g -x fish_greeting %s\n" "$shell_greeting" >> ~/.config/fish/config.fish
 printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
@@ -56,11 +57,6 @@ brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
-
-print_step "brew install cask fonts"
-brew tap homebrew/cask-fonts
-brew cask install font-fira-mono
-brew cask install font-fira-code
 
 print_step "npm install global packages"
 npm install -g http-server
