@@ -6,7 +6,6 @@
 ! scripts
 *##^script:has-text(gtag)
 *##^script:has-text(adsbyjuicy)
-*##^script[src*='fb']
 *##^script[src*='adsbygoogle']
 *##^script[src*='googletagservices']
 *##^script[src*='googleTag']
