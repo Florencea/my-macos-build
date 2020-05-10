@@ -2,6 +2,19 @@
 ! Description: uBlock custom rules by Florencea Bear
 ! Last updated: 2020-05-10
 !
+! universal rules
+! scripts
+*##^script:has-text(gtag)
+*##^script:has-text(adsbyjuicy)
+*##^script[src*='fb']
+*##^script[src*='adsbygoogle']
+*##^script[src*='googletagservices']
+*##^script[src*='googleTag']
+*##^script[src*='googlesyndication']
+*##^script[src*='gtm-']
+*##^script[src*='cloudflareinsights']
+*##^script[src*='juicyads']
+!
 ! cool3c.com
 ! remove
 cool3c.com##^#fb-root
@@ -100,11 +113,7 @@ inside.com.tw##^script:has-text(amnet)
 inside.com.tw##^script:has-text(_smq)
 inside.com.tw##^script:has-text(GoogleAnalyticsObject)
 inside.com.tw##^script:has-text(googletagmanager)
-inside.com.tw##^script:has-text(_atrk_opts)
-inside.com.tw##^script[src*='fb']
-inside.com.tw##^script[src*='adsbygoogle']
-inside.com.tw##^script[src*='googletagservices']
-inside.com.tw##^script[src*='googleTag']
+inside.com.tw##^script:has-text(atrk)
 inside.com.tw##^script[src*='wp.com']
 inside.com.tw##^script[type="application/ld+json"]
 inside.com.tw##^script[type="application/json"]
@@ -297,6 +306,20 @@ techbang.com###carousel-images-3
 techbang.com##^script:has-text(fbAsyncInit)
 techbang.com##^script:has-text(check_fb_ready)
 techbang.com##^script:has-text(idle_popup)
+techbang.com##^script:has-text(google-analytics)
+techbang.com##^script:has-text(googletagmanager)
+techbang.com##^script:has-text(newrelic)
+techbang.com##^script:has-text(popin)
+techbang.com##^script:has-text(dable)
+techbang.com##^script:has-text(NREUM)
+techbang.com##^script:has-text(atrk)
+techbang.com##^script:has-text(jQuery)
+techbang.com##^script:has-text(guoshipartners)
+techbang.com##^script[src*='dable']
+techbang.com##^script[src*='login']
+techbang.com##^script[src*='trvdp']
+techbang.com##^script[src*='youtube']
+techbang.com##^script[type="application/ld+json"]
 ! style
 techbang.com##.main-content:style(width: 100% !important; float: none !important)
 techbang.com##.inner-content:style(width: 100% !important; float: none !important; padding-top: 1rem !important)
@@ -327,6 +350,20 @@ thenewslens.com##^.fb-comment-box
 thenewslens.com##.fb-comment-box
 thenewslens.com##^.social-btns
 thenewslens.com##.social-btns
+thenewslens.com##^noscript
+thenewslens.com##^img[src*='mookie']
+thenewslens.com##^img[src*='atrk']
+thenewslens.com##^script:has-text(googletag)
+thenewslens.com##^script:has-text(scorecardresearch)
+thenewslens.com##^script:has-text(atrk)
+thenewslens.com##^script[src*='appier']
+thenewslens.com##^script[src*='facebook']
+thenewslens.com##^script[src*='google']
+thenewslens.com##^script[src*='ad-block']
+thenewslens.com##^script[src*='piano']
+thenewslens.com##^script[src*='app-']
+thenewslens.com##^script[type="application/json"]
+thenewslens.com##^script[type="application/ld+json"]
 
 ! translate.google.com
 ! remove
@@ -399,6 +436,8 @@ sogi.com.tw##.media-body > .btn-group
 18av.tv##^script:has-text(gtag)
 18av.tv##^script:has-text(SpanadBox)
 18av.tv##^script:has-text(_Hasync)
+18av.tv##^script[src*='googletagmanager']
+18av.tv##^script[src*='mmad']
 18av.tv##^#menu1Content a.c1
 18av.tv###menu1Content a.c1
 18av.tv##^#menu1Content div.HS
@@ -605,6 +644,8 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com##^script:has-text(mvcg_content_a)
 18h.mm-cg.com##^script:has-text(BBshowBox)
 18h.mm-cg.com##^script:has-text(CCshowBox)
+18h.mm-cg.com##^script[src*='googletagmanager']
+18h.mm-cg.com##^script[src*='mmad']
 18h.mm-cg.com##^#menu1Content a.c1
 18h.mm-cg.com###menu1Content a.c1
 18h.mm-cg.com##^#menu1Content div.HS
@@ -714,8 +755,7 @@ wnacg.org##^#page_scale
 wnacg.org###page_scale
 wnacg.org##^script:has-text(write)
 wnacg.org##^script:has-text(chapterId)
-wnacg.org##^script:has-text(GoogleAnalytics)
-wnacg.org##^script:has-text(adsbyjuicy)
+wnacg.org##^script:has-text(google-analytics)
 wnacg.org##^script[data-cfasync=false]
 wnacg.org##^script[async=""]
 wnacg.org##^div[style="display:none"]
@@ -765,15 +805,13 @@ xfastest.com##^script:has-text(wpfront_scroll_top)
 xfastest.com##^script:has-text(fb)
 xfastest.com##^script:has-text(WebFontConfig)
 xfastest.com##^script:has-text(OneSignal)
-xfastest.com##^script:has-text(googletagmanager)
-xfastest.com##^script:has-text(gtag)
 xfastest.com##^script:has-text(gmapstyles)
-xfastest.com##^script[src*='googlesyndication']
-xfastest.com##^script[src*='gtm-']
+xfastest.com##^script:has-text(GoogleAnalyticsObject)
+xfastest.com##^script:has-text(googletagmanager)
+xfastest.com##^script:has-text(atrk)
 xfastest.com##^script[src*='maps.googleapis.com']
 xfastest.com##^script[src*='onesignal']
 xfastest.com##^script[src*='線上客服']
-xfastest.com##^script[src*='cloudflareinsights']
 xfastest.com##^link[rel="dns-prefetch"]
 ! style
 xfastest.com##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
