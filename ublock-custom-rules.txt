@@ -1,6 +1,6 @@
 ! Title: uBlock Custom Rules by Florencea
 ! Description: uBlock custom rules by Florencea Bear
-! Last updated: 2020-05-09
+! Last updated: 2020-05-10
 !
 ! cool3c.com
 ! remove
@@ -76,6 +76,38 @@ inside.com.tw##^.post_list_item-ad
 inside.com.tw##.post_list_item-ad
 inside.com.tw##^.post_toolbox
 inside.com.tw##.post_toolbox
+inside.com.tw##^.post_list_item:has(a.badge-color10)
+inside.com.tw##.post_list_item:has(a.badge-color10)
+inside.com.tw##^div[class^=adv]
+inside.com.tw##div[class^=adv]
+inside.com.tw##^div[class^=dfp_ad]
+inside.com.tw##div[class^=dfp_ad]
+inside.com.tw##^div.infinite
+inside.com.tw##div.infinite
+inside.com.tw##^div.content > div.post
+inside.com.tw##div.content > div.post
+inside.com.tw##^#fb-root
+inside.com.tw###fb-root
+inside.com.tw##^noscript
+inside.com.tw##noscript
+inside.com.tw##^body > img
+inside.com.tw##body > img
+inside.com.tw##^script:has-text(window.IS)
+inside.com.tw##^script:has-text(_comscore)
+inside.com.tw##^script:has-text(tnla_object)
+inside.com.tw##^script:has-text(ad-specs)
+inside.com.tw##^script:has-text(amnet)
+inside.com.tw##^script:has-text(_smq)
+inside.com.tw##^script:has-text(GoogleAnalyticsObject)
+inside.com.tw##^script:has-text(googletagmanager)
+inside.com.tw##^script:has-text(_atrk_opts)
+inside.com.tw##^script[src*='fb']
+inside.com.tw##^script[src*='adsbygoogle']
+inside.com.tw##^script[src*='googletagservices']
+inside.com.tw##^script[src*='googleTag']
+inside.com.tw##^script[src*='wp.com']
+inside.com.tw##^script[type="application/ld+json"]
+inside.com.tw##^script[type="application/json"]
 
 ! ithome.com.tw
 ! remove
@@ -731,6 +763,18 @@ xfastest.com##^noscript
 xfastest.com##noscript
 xfastest.com##^script:has-text(wpfront_scroll_top)
 xfastest.com##^script:has-text(fb)
+xfastest.com##^script:has-text(WebFontConfig)
+xfastest.com##^script:has-text(OneSignal)
+xfastest.com##^script:has-text(googletagmanager)
+xfastest.com##^script:has-text(gtag)
+xfastest.com##^script:has-text(gmapstyles)
+xfastest.com##^script[src*='googlesyndication']
+xfastest.com##^script[src*='gtm-']
+xfastest.com##^script[src*='maps.googleapis.com']
+xfastest.com##^script[src*='onesignal']
+xfastest.com##^script[src*='線上客服']
+xfastest.com##^script[src*='cloudflareinsights']
+xfastest.com##^link[rel="dns-prefetch"]
 ! style
 xfastest.com##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
 xfastest.com##cite:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
