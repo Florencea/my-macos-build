@@ -113,6 +113,7 @@ inside.com.tw##^script:has-text(_smq)
 inside.com.tw##^script:has-text(GoogleAnalyticsObject)
 inside.com.tw##^script:has-text(googletagmanager)
 inside.com.tw##^script:has-text(atrk)
+inside.com.tw##^script[src*='fb']
 inside.com.tw##^script[src*='wp.com']
 inside.com.tw##^script[type="application/ld+json"]
 inside.com.tw##^script[type="application/json"]
