@@ -72,8 +72,17 @@ dmhy.org##^.announce
 dmhy.org##.announce
 dmhy.org##^#\31 280_ad > a
 dmhy.org###\31 280_ad > a
+dmhy.org##^div.clear:has(a[href='/topics/add'])
+dmhy.org##div.clear:has(a[href='/topics/add'])
+dmhy.org##^script:has-text(longarray)
+dmhy.org##^script:has-text(jmd)
+dmhy.org##^script:has-text(1280_adv)
+dmhy.org##^script:has-text(histats)
+dmhy.org##^script[src*='kiwihk']
+dmhy.org##^style:has-text(.jmd)
 ! style
 dmhy.org##.topic-main:style(text-align: left)
+dmhy.org###🌐:style(font-size: 12px !important; margin-bottom: 20px !important;)
 
 ! fandom.com
 ! remove
