@@ -4,7 +4,8 @@
 !
 ! universal rules
 ! addons
-*###sp-fw-container:style(right: 0 !important; left: 38px !important;)
+*###sp-fw-container:style(opacity: 0.1 !important;)
+*###sp-fw-container:hover:style(opacity: 1 !important;)
 ! scripts
 *##^script:has-text(gtag)
 *##^script:has-text(adsbyjuicy)
