@@ -75,8 +75,6 @@ dmhy.org##^.announce
 dmhy.org##.announce
 dmhy.org##^#\31 280_ad > a
 dmhy.org###\31 280_ad > a
-dmhy.org##^div.clear:has(a[href='/topics/add'])
-dmhy.org##div.clear:has(a[href='/topics/add'])
 dmhy.org##^script:has-text(longarray)
 dmhy.org##^script:has-text(jmd)
 dmhy.org##^script:has-text(1280_adv)
