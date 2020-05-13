@@ -3,6 +3,8 @@
 ! Last updated: 2020-05-10
 !
 ! universal rules
+! addons
+*###sp-fw-container:style(left: 38px !important;)
 ! scripts
 *##^script:has-text(gtag)
 *##^script:has-text(adsbyjuicy)
