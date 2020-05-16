@@ -57,6 +57,7 @@ brew cask install istat-menus
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
+brew cask install scroll-reverser
 
 print_step "npm install global packages"
 npm install -g http-server
