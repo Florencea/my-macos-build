@@ -265,6 +265,18 @@ onlyhgames.com##^div.widget_text.widget:nth-of-type(5)
 onlyhgames.com##div.widget_text.widget:nth-of-type(5)
 ||onlyhgames.com/balo.php$image
 
+! pixiv.net
+! remove
+pixiv.net##div:has(> iframe[width="468"][height="60"])
+pixiv.net##div:has(> iframe[width="500"][height="520"])
+pixiv.net##div:has(> iframe[width="728"][height="90"])
+
+pixiv.net##li[size="2"]
+pixiv.net##a[href*='remove_ads']
+pixiv.net##^noscript
+pixiv.net##^script:has-text(googletagmanager)
+pixiv.net##^script[src*='doubleclick']
+
 ! playpcesor.com
 ! remove
 playpcesor.com##^#HTML3
