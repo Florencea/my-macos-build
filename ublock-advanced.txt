@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1589698203135,
+  "timeStamp": 1589698887589,
   "version": "1.27.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -31,11 +31,15 @@
     "ublock-abuse",
     "ublock-unbreak",
     "adguard-generic",
+    "adguard-mobile",
     "adguard-spyware",
     "easyprivacy",
     "fanboy-enhanced",
     "malware-0",
     "malware-1",
+    "spam404-0",
+    "adguard-annoyance",
+    "adguard-social",
     "ublock-annoyances",
     "plowe-0",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/master/ublock-custom-rules.txt"
