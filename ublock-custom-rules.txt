@@ -6,6 +6,8 @@
 ! addons
 *###sp-fw-container:style(opacity: 0.1 !important;)
 *###sp-fw-container:hover:style(opacity: 1 !important;)
+#$##sp-fw-container { opacity: 0.1 !important; }
+#$##sp-fw-container:hover { opacity: 1 !important; }
 ! scripts
 *##^script:has-text(gtag)
 *##^script:has-text(adsbyjuicy)
