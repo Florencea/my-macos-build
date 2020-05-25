@@ -59,6 +59,10 @@ brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
 brew cask install scroll-reverser
 
+print_step "brew install cask fonts"
+brew tap homebrew/cask-fonts
+brew cask install font-fira-code
+
 print_step "npm install global packages"
 npm install -g http-server
 npm install -g eslint
