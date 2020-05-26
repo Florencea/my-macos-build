@@ -1,28 +1,16 @@
-! Title: uBlock Custom Rules by Florencea
-! Description: uBlock custom rules by Florencea Bear
-! Last updated: 2020-05-10
-!
+! Title: Element Rules by Florencea
+! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard
+! Last updated: 2020-05-26
+
 ! universal rules
 ! addons
 *###sp-fw-container:style(opacity: 0.1 !important;)
 *###sp-fw-container:hover:style(opacity: 1 !important;)
 #$##sp-fw-container { opacity: 0.1 !important; }
 #$##sp-fw-container:hover { opacity: 1 !important; }
-! scripts
-*##^script:has-text(gtag)
-*##^script:has-text(adsbyjuicy)
-*##^script[src*='adsbygoogle']
-*##^script[src*='googletagservices']
-*##^script[src*='googleTag']
-*##^script[src*='googlesyndication']
-*##^script[src*='gtm-']
-*##^script[src*='cloudflareinsights']
-*##^script[src*='juicyads']
-!
+
 ! cool3c.com
 ! remove
-cool3c.com##^#fb-root
-cool3c.com###fb-root
 cool3c.com##^#header
 cool3c.com###header
 cool3c.com##^.article-social
@@ -45,8 +33,8 @@ cool3c.com##^.board-BT_ar_O_11
 cool3c.com##.board-BT_ar_O_11
 cool3c.com##^.board-BT_li_iL
 cool3c.com##.board-BT_li_iL
-cool3c.com##^[src="/assets/img/img-failed.jpg"]
-cool3c.com##[src="/assets/img/img-failed.jpg"]
+cool3c.com##^[src*="img-failed"]
+cool3c.com##[src*="img-failed"]
 cool3c.com##^[src="/assets/img/img-failed.webp"]
 cool3c.com##[src="/assets/img/img-failed.webp"]
 cool3c.com##^.gtm-track.fa-2x.quick-button
@@ -65,12 +53,8 @@ cool3c.com##^.article > .related
 cool3c.com##.article > .related
 cool3c.com##^.article > .source
 cool3c.com##.article > .source
-cool3c.com##^noscript
-cool3c.com##^link[rel='dns-prefetch']
-cool3c.com##^script[type='application/json']
-cool3c.com##^script[type='application/ld+json']
-cool3c.com##^script[src*='onesignal']
-cool3c.com##^script[src*='facebook']
+||trackjay.cool3c.com^$script
+||cool3c.com/*/img-failed*$image
 ! style
 cool3c.com###main:style(padding: 0 !important)
 cool3c.com##header:style(padding: 2rem !important)
@@ -78,17 +62,12 @@ cool3c.com##.article:style(padding: 2rem !important)
 
 ! dmhy.org
 ! remove
-dmhy.org##^script:has-text(_hmt)
 dmhy.org##^.announce
 dmhy.org##.announce
 dmhy.org##^#\31 280_ad > a
 dmhy.org###\31 280_ad > a
 dmhy.org##^div.clear:has(a[href='/topics/add'])
 dmhy.org##div.clear:has(a[href='/topics/add'])
-dmhy.org##^script:has-text(histats)
-dmhy.org##^script:has-text(bebi)
-dmhy.org##^script[src*='kiwihk']
-dmhy.org##^script[src*='tanx']
 ! style
 dmhy.org##.topic-main:style(text-align: left)
 
@@ -98,6 +77,10 @@ fandom.com##^.banner-notifications-placeholder
 fandom.com##.banner-notifications-placeholder
 fandom.com##^#WikiaBar
 fandom.com###WikiaBar
+fandom.com##^#WikiaTopAds
+fandom.com###WikiaTopAds
+fandom.com##^#top_boxad
+fandom.com###top_boxad
 
 ! inside.com.tw
 ! remove
@@ -115,26 +98,6 @@ inside.com.tw##^div.infinite
 inside.com.tw##div.infinite
 inside.com.tw##^div.content > div.post
 inside.com.tw##div.content > div.post
-inside.com.tw##^#fb-root
-inside.com.tw###fb-root
-inside.com.tw##^noscript
-inside.com.tw##noscript
-inside.com.tw##^body > img
-inside.com.tw##body > img
-inside.com.tw##^script:has-text(window.IS)
-inside.com.tw##^script:has-text(_comscore)
-inside.com.tw##^script:has-text(tnla_object)
-inside.com.tw##^script:has-text(ad-specs)
-inside.com.tw##^script:has-text(amnet)
-inside.com.tw##^script:has-text(_smq)
-inside.com.tw##^script:has-text(GoogleAnalyticsObject)
-inside.com.tw##^script:has-text(googletagmanager)
-inside.com.tw##^script:has-text(atrk)
-inside.com.tw##^script[src*='fb']
-inside.com.tw##^script[src*='wp.com']
-inside.com.tw##^script[src*='admanager']
-inside.com.tw##^script[type="application/ld+json"]
-inside.com.tw##^script[type="application/json"]
 
 ! ithome.com.tw
 ! remove
@@ -188,8 +151,6 @@ ithome.com.tw##^#skip-link
 ithome.com.tw###skip-link
 ithome.com.tw##^footer.footer
 ithome.com.tw##footer.footer
-ithome.com.tw##^script:has-text(facebook)
-ithome.com.tw##^script:has-text(Drupal)
 ! style
 ithome.com.tw##.main-container > div.row-fluid:style(display: flex; justify-content: center; width: 100%)
 ithome.com.tw###page-header:style(display: flex !important; justify-content: center; width: 100%)
@@ -198,30 +159,10 @@ ithome.com.tw##body:style(background-color: #f7f7f7 !important; font-family: Pin
 ithome.com.tw##.content:style(padding-left: 0 !important; margin:0 1rem)
 ithome.com.tw##.img-wrapper > div:style(border: 1px solid #EDEDED)
 
-! komica.org
-! remove
-komica.org##^script[src*='tracking']
-komica.org##^script[src*='analytics']
-komica.org##^script:has-text(google-analytics)
-
 ! macrumors.com
 ! remove
-macrumors.com##^#video-wrapper
-macrumors.com###video-wrapper
-macrumors.com##^#adplaceholder
-macrumors.com###adplaceholder
-macrumors.com##^#adplaceholder_side
-macrumors.com###adplaceholder_side
-macrumors.com##^.tertiary
-macrumors.com##.tertiary
-macrumors.com##^.glide--slider
-macrumors.com##.glide--slider
 macrumors.com##^#mrCarouselPrev:upward(div)
 macrumors.com###mrCarouselPrev:upward(div)
-macrumors.com##^div[class^=social]
-macrumors.com##div[class^=social]
-! style
-macrumors.com##div#guide-products:style(margin: 0 !important)
 
 ! manhuaren.com
 ! remove
@@ -247,44 +188,17 @@ manhuaren.com##^.guide
 manhuaren.com##.guide
 manhuaren.com##^body > a
 manhuaren.com##body > a
-manhuaren.com##^div[style="display:none"]
-manhuaren.com##^script:has-text(download-cross)
-manhuaren.com##^script:has-text(resizeLbWin)
-manhuaren.com##^script:has-text(ga.src)
 ! style
 manhuaren.com###cp_img:style(padding-top: 60px !important)
-
-! mobile01.com
-! remove
-mobile01.com##^.ad-adblock
-mobile01.com##.ad-adblock
-
-! onlyhgames.com
-! remove
-onlyhgames.com##^div.widget_text.widget:nth-of-type(3)
-onlyhgames.com##div.widget_text.widget:nth-of-type(3)
-onlyhgames.com##^div.widget_text.widget:nth-of-type(5)
-onlyhgames.com##div.widget_text.widget:nth-of-type(5)
-||onlyhgames.com/balo.php$image
 
 ! pixiv.net
 ! remove
 pixiv.net##div:has(> iframe[width="468"][height="60"])
 pixiv.net##div:has(> iframe[width="500"][height="520"])
 pixiv.net##div:has(> iframe[width="728"][height="90"])
-
 pixiv.net##li[size="2"]
 pixiv.net##a[href*='remove_ads']
-pixiv.net##^noscript
-pixiv.net##^script:has-text(googletagmanager)
-pixiv.net##^script[src*='doubleclick']
-
-! playpcesor.com
-! remove
-playpcesor.com##^#HTML3
-playpcesor.com###HTML3
-playpcesor.com##^#ztb-slide-box-widget
-playpcesor.com###ztb-slide-box-widget
+||ads-pixiv.net
 
 ! techbang.com
 ! remove
@@ -340,23 +254,6 @@ techbang.com##^#carousel-images-2
 techbang.com###carousel-images-2
 techbang.com##^#carousel-images-3
 techbang.com###carousel-images-3
-techbang.com##^script:has-text(fbAsyncInit)
-techbang.com##^script:has-text(check_fb_ready)
-techbang.com##^script:has-text(idle_popup)
-techbang.com##^script:has-text(google-analytics)
-techbang.com##^script:has-text(googletagmanager)
-techbang.com##^script:has-text(newrelic)
-techbang.com##^script:has-text(popin)
-techbang.com##^script:has-text(dable)
-techbang.com##^script:has-text(NREUM)
-techbang.com##^script:has-text(atrk)
-techbang.com##^script:has-text(jQuery)
-techbang.com##^script:has-text(guoshipartners)
-techbang.com##^script[src*='dable']
-techbang.com##^script[src*='login']
-techbang.com##^script[src*='trvdp']
-techbang.com##^script[src*='youtube']
-techbang.com##^script[type="application/ld+json"]
 ! style
 techbang.com##.main-content:style(width: 100% !important; float: none !important)
 techbang.com##.inner-content:style(width: 100% !important; float: none !important; padding-top: 1rem !important)
@@ -387,21 +284,6 @@ thenewslens.com##^.fb-comment-box
 thenewslens.com##.fb-comment-box
 thenewslens.com##^.social-btns
 thenewslens.com##.social-btns
-thenewslens.com##^noscript
-thenewslens.com##^img[src*='mookie']
-thenewslens.com##^img[src*='atrk']
-thenewslens.com##^script:has-text(googletag)
-thenewslens.com##^script:has-text(scorecardresearch)
-thenewslens.com##^script:has-text(atrk)
-thenewslens.com##^script[src*='appier']
-thenewslens.com##^script[src*='facebook']
-thenewslens.com##^script[src*='google']
-thenewslens.com##^script[src*='ad-block']
-thenewslens.com##^script[src*='piano']
-thenewslens.com##^script[src*='app-']
-thenewslens.com##^script[src*='admanager']
-thenewslens.com##^script[type="application/json"]
-thenewslens.com##^script[type="application/ld+json"]
 
 ! translate.google.com
 ! remove
@@ -412,14 +294,66 @@ translate.google.com###gt-c
 ! style
 translate.google.com###contentframe:style(top: 0 !important)
 
-! sogi.com.tw
+! xfastest.com
 ! remove
-sogi.com.tw##^#ad
-sogi.com.tw###ad
-sogi.com.tw##^.well
-sogi.com.tw##.well
-sogi.com.tw##^.media-body > .btn-group
-sogi.com.tw##.media-body > .btn-group
+xfastest.com##^#vwspc-section-1
+xfastest.com###vwspc-section-1
+xfastest.com##^#vwspc-section-3
+xfastest.com###vwspc-section-3
+xfastest.com##^#vwspc-section-4
+xfastest.com###vwspc-section-4
+xfastest.com##^#vwspc-section-5
+xfastest.com###vwspc-section-5
+xfastest.com##^#vwspc-section-6
+xfastest.com###vwspc-section-6
+xfastest.com##^footer > .vw-site-footer-sidebars
+xfastest.com##footer > .vw-site-footer-sidebars
+xfastest.com##^#wpfront-scroll-top-container
+xfastest.com###wpfront-scroll-top-container
+xfastest.com##^#vw-post-shares-dialog
+xfastest.com###vw-post-shares-dialog
+xfastest.com##^.widget_vw_widget_social_counter
+xfastest.com##.widget_vw_widget_social_counter
+xfastest.com##^.vw-top-bar-breaking-social
+xfastest.com##.vw-top-bar-breaking-social
+xfastest.com##^#text-6
+xfastest.com###text-6
+xfastest.com##^#fb-root
+xfastest.com###fb-root
+xfastest.com##^.pace
+xfastest.com##.pace
+xfastest.com##^.vw-post-navigation
+xfastest.com##.vw-post-navigation
+xfastest.com##^.vw-about-author
+xfastest.com##.vw-about-author
+xfastest.com##^.vw-related-posts
+xfastest.com##.vw-related-posts
+xfastest.com##^.evo_lightboxes
+xfastest.com##.evo_lightboxes
+xfastest.com##^.vw-site-social-profile
+xfastest.com##.vw-site-social-profile
+! style
+xfastest.com##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##cite:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h1:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h2:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h3:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h4:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h5:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##h6:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-menu-location-main .main-menu-link:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-header-font:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-post-box.vw-post-format-link a:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-social-counter-count:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-page-navigation-pagination:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.page-numbers:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com###wp-calendar caption:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-accordion-header-text:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-tab-title:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-review-item-title:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-pagination-load-more:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
+xfastest.com##.vw-post-content:style(line-height: 3rem !important)
+xfastest.com##.entry-title:style(font-size: 3.5rem !important; line-height: 5rem !important)
 
 ! 18av.tv
 ! remove
@@ -630,6 +564,8 @@ imgscloud.com###coverclose_top
 imgscloud.com##^#coverclose_bottom
 imgscloud.com###coverclose_bottom
 ||18av.tv/mmad.js$script
+||youjizz.com/videos/embed/$subdocument
+||fc.imgscloud.com/fcfluidplayer.php$subdocument
 ||ammcg.imgscloud.com
 ||gahost3.imgscloud.com
 ||gbhost3.imgscloud.com
@@ -776,104 +712,3 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###menu1Content div.altto select:style(margin-bottom: 1rem !important)
 ! others
 ||18h.mm-cg.com/mmad.js$script
-
-! wnacg.org
-! remove
-wnacg.org##^.SC_TBlock
-wnacg.org##.SC_TBlock
-wnacg.org##^div.UnderPage > div:not(#currentCache)
-wnacg.org##div.UnderPage > div:not(#currentCache)
-wnacg.org##^#cite_vote
-wnacg.org###cite_vote
-wnacg.org##^#mask_panel
-wnacg.org###mask_panel
-wnacg.org##^#control_block
-wnacg.org###control_block
-wnacg.org##^#page_scale
-wnacg.org###page_scale
-wnacg.org##^script:has-text(write)
-wnacg.org##^script:has-text(chapterId)
-wnacg.org##^script:has-text(google-analytics)
-wnacg.org##^script[data-cfasync=false]
-wnacg.org##^script[async=""]
-wnacg.org##^div[style="display:none"]
-
-
-! xfastest.com
-! remove
-xfastest.com##^#vwspc-section-1
-xfastest.com###vwspc-section-1
-xfastest.com##^#vwspc-section-3
-xfastest.com###vwspc-section-3
-xfastest.com##^#vwspc-section-4
-xfastest.com###vwspc-section-4
-xfastest.com##^#vwspc-section-5
-xfastest.com###vwspc-section-5
-xfastest.com##^#vwspc-section-6
-xfastest.com###vwspc-section-6
-xfastest.com##^footer > .vw-site-footer-sidebars
-xfastest.com##footer > .vw-site-footer-sidebars
-xfastest.com##^#wpfront-scroll-top-container
-xfastest.com###wpfront-scroll-top-container
-xfastest.com##^#vw-post-shares-dialog
-xfastest.com###vw-post-shares-dialog
-xfastest.com##^.widget_vw_widget_social_counter
-xfastest.com##.widget_vw_widget_social_counter
-xfastest.com##^.vw-top-bar-breaking-social
-xfastest.com##.vw-top-bar-breaking-social
-xfastest.com##^#text-6
-xfastest.com###text-6
-xfastest.com##^#fb-root
-xfastest.com###fb-root
-xfastest.com##^.pace
-xfastest.com##.pace
-xfastest.com##^.vw-post-navigation
-xfastest.com##.vw-post-navigation
-xfastest.com##^.vw-about-author
-xfastest.com##.vw-about-author
-xfastest.com##^.vw-related-posts
-xfastest.com##.vw-related-posts
-xfastest.com##^.evo_lightboxes
-xfastest.com##.evo_lightboxes
-xfastest.com##^.vw-site-social-profile
-xfastest.com##.vw-site-social-profile
-xfastest.com##^noscript
-xfastest.com##noscript
-xfastest.com##^script:has-text(wpfront_scroll_top)
-xfastest.com##^script:has-text(fb)
-xfastest.com##^script:has-text(WebFontConfig)
-xfastest.com##^script:has-text(OneSignal)
-xfastest.com##^script:has-text(gmapstyles)
-xfastest.com##^script:has-text(GoogleAnalyticsObject)
-xfastest.com##^script:has-text(googletagmanager)
-xfastest.com##^script:has-text(atrk)
-xfastest.com##^script[src*='maps.googleapis.com']
-xfastest.com##^script[src*='onesignal']
-xfastest.com##^script[src*='線上客服']
-xfastest.com##^link[rel="dns-prefetch"]
-! style
-xfastest.com##body:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##cite:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##h1:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##h2:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##h3:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##h4:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##h5:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##h6:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-menu-location-main .main-menu-link:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-header-font:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-post-box.vw-post-format-link a:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-social-counter-count:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-page-navigation-pagination:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.page-numbers:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com###wp-calendar caption:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-accordion-header-text:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-tab-title:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-review-item-title:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-pagination-load-more:style(font-family: PingFangTC-Regular, "Ubuntu", "微軟正黑體", Verdana, sans-serif !important)
-xfastest.com##.vw-post-content:style(line-height: 3rem !important)
-xfastest.com##.entry-title:style(font-size: 3.5rem !important; line-height: 5rem !important)
-
-! addons: super preloader
-^div#sp-fw-container
-div#sp-fw-container
