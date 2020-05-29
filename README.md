@@ -68,6 +68,32 @@ alias al="sh ~/GitHub/ledger/al/al.sh"
 alias gd="sh ~/GitHub/my-macos-build/gdrive-download.sh"
 ```
 
+## Firefox about:config
+
+```fish
+# enable fission
+fission.autostart true
+
+# disable ui animations
+ui.prefersReducedMotion 1
+xul.panel-animations.enabled false
+
+# enable webrender
+gfx.webrender.all true
+gfx.webrender.compositor true
+
+# enable trr
+network.trr.bootstrapAddress 104.16.248.249
+network.trr.mode 3
+
+# disable pockets
+extensions.pocket.enabled false
+
+# disable captivedetect
+captivedetect.canonicalURL empty
+network.captive-portal-service.enabled false
+```
+
 ## macOS 指令紀錄
 
 ```fish
