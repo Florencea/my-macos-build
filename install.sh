@@ -65,6 +65,13 @@ brew tap homebrew/cask-fonts
 brew cask install font-fira-code
 brew cask install font-fira-mono
 brew cask install font-inter
+brew cask install font-jf-open-huninn
+brew cask install font-genyomin
+brew cask install font-genryumin
+brew cask install font-genwanmin
+brew cask install font-genyogothic
+brew cask install font-gensekigothic
+brew cask install font-gensenrounded
 
 print_step "npm install global packages"
 npm install -g http-server
