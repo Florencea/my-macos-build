@@ -336,6 +336,10 @@ translate.google.com###gt-c
 ! style
 translate.google.com###contentframe:style(top: 0 !important)
 
+! twreporter.org
+! style
+twreporter.org##p:matches-css(font-weight: 300):style(font-weight: 400)
+
 ! xfastest.com
 ! remove
 xfastest.com##^#vwspc-section-1
