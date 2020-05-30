@@ -98,6 +98,8 @@ fandom.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "S
 ! style
 github.com##.text-mono:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
 github.com##.blob-code-inner:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
+github.com##.blob-code:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
+github.com##.blob-num:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
 github.com##.commit-tease-sha:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
 github.com##code:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
 github.com##pre:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace; !important)
