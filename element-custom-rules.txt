@@ -338,7 +338,7 @@ translate.google.com###contentframe:style(top: 0 !important;)
 
 ! twreporter.org
 ! style
-twreporter.org##p[class^="paragraph__"]:style(font-weight: 400 !important;)
+twreporter.org##.fPHxmz:style(font-weight: 400 !important;)
 
 ! xfastest.com
 ! remove
