@@ -110,6 +110,8 @@ inside.com.tw##^div.infinite
 inside.com.tw##div.infinite
 inside.com.tw##^div.content > div.post
 inside.com.tw##div.content > div.post
+! style
+inside.com.tw##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
 
 ! ithome.com.tw
 ! remove
