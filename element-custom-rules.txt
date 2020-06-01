@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard
-! Last updated: 2020-05-31
+! Last updated: 2020-06-01
 
 ! universal rules
 ! fonts
