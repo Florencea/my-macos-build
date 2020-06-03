@@ -70,6 +70,8 @@ alias gd="sh ~/GitHub/my-macos-build/gdrive-download.sh"
 
 ## Firefox about:config
 
+- 將 Firefox 改成 Chrome 外觀 [MaterialFox](https://github.com/muckSponge/MaterialFox)
+
 ```fish
 # enable fission
 fission.autostart true
