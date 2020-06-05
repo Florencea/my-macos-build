@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard
-! Last updated: 2020-06-01
+! Last updated: 2020-06-05
 
 ! universal rules
 ! fonts
@@ -225,7 +225,7 @@ ithome.com.tw##.img-wrapper > div:style(border: 1px solid #EDEDED)
 ! remove
 macrumors.com##^#mrCarouselPrev:upward(div)
 macrumors.com###mrCarouselPrev:upward(div)
-macrumors.com##^script:has-text(hideAdsCheck)
+macrumors.com##^script:has-text(sidebarblock)
 ! style
 macrumors.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
 
