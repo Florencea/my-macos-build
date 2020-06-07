@@ -103,6 +103,9 @@ network.captive-portal-service.enabled false
 defaults write com.apple.dock ResetLaunchPad -bool true
 killall Dock
 
+# 僅關閉視窗動畫效果
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+
 # 防止AdobeCreativeCloud開機啟動
 sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 
