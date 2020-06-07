@@ -93,9 +93,6 @@ print_step "git configuations"
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
 
-print_step "disable eyecandy"
-(set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
-
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
 (set -x; killall Dock)
