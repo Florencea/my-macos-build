@@ -367,6 +367,12 @@ twreporter.org##[class*='annotation']:style(font-weight: 400 !important;)
 twreporter.org##[class*='blockquote']:style(font-weight: 400 !important;)
 twreporter.org##[class*='list']:style(font-weight: 400 !important;)
 
+! wnacg.org
+! remove
+wnacg.org##^.sh
+wnacg.org##.sh
+wnacg.org##^script:has-text(GoogleAnalyticsObject)
+
 ! xfastest.com
 ! remove
 xfastest.com##^#vwspc-section-1
