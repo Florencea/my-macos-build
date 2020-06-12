@@ -85,6 +85,9 @@ pip3 install flake8
 pip3 install isort
 pip3 install 'python-language-server[all]'
 
+print_step "disable eyecandy"
+(set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
+
 print_step "setup SF Mono Fonts"
 (set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
 
