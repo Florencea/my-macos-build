@@ -5,5 +5,5 @@ cd ~
 set -x
 brew update
 brew upgrade
-apm update
+apm-nightly update
 npm update -g
