@@ -8,7 +8,6 @@ function print_step(){
 github_username="Florencea"
 github_email="bearflorencea@pm.me"
 github_editor="nano"
-shell_greeting="Welcome, Princess Florencea."
 
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -21,7 +20,6 @@ mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/opt/curl/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
-# printf "set -g -x fish_greeting %s\n" "$shell_greeting" >> ~/.config/fish/config.fish
 printf "set -g -x fish_greeting\n" >> ~/.config/fish/config.fish
 printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
