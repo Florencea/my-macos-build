@@ -138,14 +138,14 @@ sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include inclu
 sudo DevToolsSecurity -enable # 將系統置於開發模式
 
 # 解決Clang-format錯誤
-atom .atom/packages/atom-beautify/src/beautifiers/clang-format.coffee
+atom-nightly .atom/packages/atom-beautify/src/beautifiers/clang-format.coffee
 # 將第84行的
 return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile) )
 # 改為
 return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile, ->) )
 
 # 解決beautysh錯誤
-atom .atom/packages/atom-beautify/src/beautifiers/beautysh.coffee
+atom-nightly .atom/packages/atom-beautify/src/beautifiers/beautysh.coffee
 # 將第35行的
 beautysh.run([ '-t', '-f', file ])
 # 改為
