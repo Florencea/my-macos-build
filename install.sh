@@ -21,7 +21,8 @@ mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/opt/curl/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
-printf "set -g -x fish_greeting %s\n" "$shell_greeting" >> ~/.config/fish/config.fish
+# printf "set -g -x fish_greeting %s\n" "$shell_greeting" >> ~/.config/fish/config.fish
+printf "set -g -x fish_greeting\n" >> ~/.config/fish/config.fish
 printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/make-gif.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias ubk=\"sh ~/GitHub/my-macos-build/ublock-backup.sh\"\n" >> ~/.config/fish/config.fish
