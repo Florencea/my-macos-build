@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1592740107284,
+  "timeStamp": 1592743811272,
   "version": "1.27.11rc3",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -37,6 +37,8 @@
     "fanboy-enhanced",
     "malware-0",
     "malware-1",
+    "adguard-annoyance",
+    "adguard-social",
     "ublock-annoyances",
     "plowe-0",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/master/element-custom-rules.txt"
