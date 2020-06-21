@@ -227,6 +227,8 @@ macrumors.com##^#mrCarouselPrev:upward(div)
 macrumors.com###mrCarouselPrev:upward(div)
 macrumors.com##^.sidebarblock
 macrumors.com##.sidebarblock
+macrumors.com##^div[class^=social--]
+macrumors.com##div[class^=social--]
 macrumors.com##^script:has-text(sidebarblock)
 ! style
 macrumors.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
