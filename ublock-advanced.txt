@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1592139205681,
-  "version": "1.27.11b12",
+  "timeStamp": 1592734676455,
+  "version": "1.27.11rc3",
   "userSettings": {
     "advancedUserEnabled": true,
     "alwaysDetachLogger": true,
@@ -30,22 +30,14 @@
     "ublock-privacy",
     "ublock-abuse",
     "ublock-unbreak",
-    "adguard-generic",
-    "adguard-mobile",
     "easylist",
     "adguard-spyware",
     "easyprivacy",
     "fanboy-enhanced",
     "malware-0",
     "malware-1",
-    "spam404-0",
-    "adguard-annoyance",
-    "adguard-social",
-    "fanboy-thirdparty_social",
-    "fanboy-annoyance",
     "ublock-annoyances",
     "plowe-0",
-    "JPN-1",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/master/element-custom-rules.txt"
   ],
   "hiddenSettings": {
@@ -103,7 +95,7 @@
     "wyciwyg-scheme"
   ],
   "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nedge-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
-  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\ninfoq.cn geekbang.org * noop\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\ntwitter.com twimg.com * noop\ntwitter.com ecdns.net * noop\nmanhuaren.com cdnmanhua.net * noop\ngoogle.com gstatic.com * noop\ntranslate.google.com * 3p-script noop\ntranslate.google.com * 3p-frame noop\naccounts.pixiv.net google.com * noop\naccounts.pixiv.net gstatic.com * noop\naccounts.pixiv.net recaptcha.net * noop\npixiv.net pximg.net * noop\n* ajax.aspnetcdn.com * noop\n* ajax.googleapis.com * noop\n* ajax.microsoft.com * noop\n* ajax.proxy.ustclug.org * noop\n* apps.bdimg.com * noop\n* cdn.bootcss.com * noop\n* cdn.jsdelivr.net * noop\n* cdnjs.cloudflare.com * noop\n* code.jquery.com * noop\n* lib.sinaapp.com * noop\n* libs.baidu.com * noop\n* sdn.geekzu.org * noop\n* upcdn.b0.upaiyun.com * noop\n* yandex.st * noop\n* yastatic.net * noop\n* ajax.cloudflare.com * noop\n* * 3p-script block\n* * 3p-frame block\nimgscloud.com playercloudsfluid.com * noop\nreddit.com redditstatic.com * noop\nbooks.com.tw book.com.tw * noop",
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\ninfoq.cn geekbang.org * noop\nfacebook.com fbcdn.net * noop\ngithub.com githubassets.com * noop\ntwitter.com twimg.com * noop\ntwitter.com ecdns.net * noop\nmanhuaren.com cdnmanhua.net * noop\ngoogle.com gstatic.com * noop\ntranslate.google.com * 3p-script noop\ntranslate.google.com * 3p-frame noop\naccounts.pixiv.net google.com * noop\naccounts.pixiv.net gstatic.com * noop\naccounts.pixiv.net recaptcha.net * noop\npixiv.net pximg.net * noop\n* ajax.aspnetcdn.com * noop\n* ajax.googleapis.com * noop\n* ajax.microsoft.com * noop\n* ajax.proxy.ustclug.org * noop\n* apps.bdimg.com * noop\n* cdn.bootcss.com * noop\n* cdn.jsdelivr.net * noop\n* cdnjs.cloudflare.com * noop\n* code.jquery.com * noop\n* lib.sinaapp.com * noop\n* libs.baidu.com * noop\n* sdn.geekzu.org * noop\n* upcdn.b0.upaiyun.com * noop\n* yandex.st * noop\n* yastatic.net * noop\n* ajax.cloudflare.com * noop\n* * 3p-script block\n* * 3p-frame block\nimgscloud.com playercloudsfluid.com * noop\nreddit.com redditstatic.com * noop\nbooks.com.tw book.com.tw * noop\nzhihu.com dnsv1.com * noop",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
   "userFilters": ""
