@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1592735186143,
+  "timeStamp": 1592740107284,
   "version": "1.27.11rc3",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -30,7 +30,8 @@
     "ublock-privacy",
     "ublock-abuse",
     "ublock-unbreak",
-    "easylist",
+    "adguard-generic",
+    "adguard-mobile",
     "adguard-spyware",
     "easyprivacy",
     "fanboy-enhanced",
