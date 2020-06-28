@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1592743811272,
-  "version": "1.27.11rc3",
+  "timeStamp": 1593351045754,
+  "version": "1.27.10",
   "userSettings": {
     "advancedUserEnabled": true,
     "alwaysDetachLogger": true,
@@ -32,6 +32,7 @@
     "ublock-unbreak",
     "adguard-generic",
     "adguard-mobile",
+    "easylist",
     "adguard-spyware",
     "easyprivacy",
     "fanboy-enhanced",
@@ -41,6 +42,7 @@
     "adguard-social",
     "ublock-annoyances",
     "plowe-0",
+    "JPN-1",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/master/element-custom-rules.txt"
   ],
   "hiddenSettings": {
@@ -76,14 +78,12 @@
     "popupFontSize": "unset",
     "popupPanelDisabledSections": 0,
     "popupPanelLockedSections": 0,
-    "popupPanelHeightMode": 0,
     "requestJournalProcessPeriod": 1000,
     "selfieAfter": 3,
     "strictBlockingBypassDuration": 120,
     "suspendTabsUntilReady": "unset",
     "uiPopupConfig": "undocumented",
     "uiFlavor": "unset",
-    "uiStyles": "unset",
     "updateAssetBypassBrowserCache": false,
     "userResourcesLocation": "unset"
   },
