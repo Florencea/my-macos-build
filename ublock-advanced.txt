@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1593829354168,
-  "version": "1.28.1b0",
+  "timeStamp": 1594351093325,
+  "version": "1.28.1b6",
   "userSettings": {
     "advancedUserEnabled": true,
     "alwaysDetachLogger": true,
@@ -36,10 +36,11 @@
     "adguard-spyware",
     "easyprivacy",
     "fanboy-enhanced",
-    "malware-0",
-    "malware-1",
+    "urlhaus-1",
+    "spam404-0",
     "adguard-annoyance",
     "adguard-social",
+    "fanboy-thirdparty_social",
     "ublock-annoyances",
     "plowe-0",
     "JPN-1",
