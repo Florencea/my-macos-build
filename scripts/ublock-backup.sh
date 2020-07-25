@@ -4,7 +4,7 @@
 cd ~/Downloads
 FILE_TO_BACKUP=$(ls -t | grep my-ublock-backup | head -n1)
 FILE_NAME=ublock-advanced.txt
-PROJECT_DIR=~/GitHub/my-macos-build/scripts/
+PROJECT_DIR=~/GitHub/my-macos-build/configs/
 if [ -f "$FILE_TO_BACKUP" ]; then
   mv $FILE_TO_BACKUP $PROJECT_DIR$FILE_NAME
   cd $PROJECT_DIR
