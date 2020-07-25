@@ -46,7 +46,7 @@ curl -L https://git.io/florencea-ublock-advanced -o ublock-advanced.txt
 curl -L https://git.io/florencea-mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
 
 # Make git.io short URLs
-curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
+curl -i https://git.io -F "url=<target URL>" -F "code=<shorten URL>" | grep Location
 
 # Download old macOS system images
 curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
