@@ -96,6 +96,10 @@ network.captive-portal-service.enabled false
 ## macOS commends
 
 ```fish
+# SSH key generate
+ssh-keygen -t ed25519
+cat .ssh/id_ed25519.pub | pbcopy
+
 # Reset Launchpad
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 
