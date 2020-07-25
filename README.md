@@ -4,7 +4,7 @@
 
 - [設置 gpg](gpg.md)
 - [常用 Ubuntu 指令紀錄](ubuntu-1804-cmd.md)
-- [git commit rules](git-commit-rules.md)
+- [git commit rules](git.md)
 - [ffmpeg 紀錄](ffmpeg.md)
 
 ## 重灌基本流程(適用 SSD 機種與高速網路環境)
