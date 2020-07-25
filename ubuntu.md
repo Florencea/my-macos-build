@@ -1,6 +1,6 @@
-# 常用 Ubuntu 操作(18.04)
+# Ubuntu Note(for 18.04)
 
-## ssh 免密碼登入控制
+## SSH remote by key
 
 ```bash
 ssh-keygen -t ed25519
@@ -14,7 +14,7 @@ ssh <user>@<host> "mkdir ~/.ssh/"
 cat ~/.ssh/id_ed25519.pub | ssh <user>@<host> "cat >> ~/.ssh/authorized_keys"
 ```
 
-## 更改 apt-mirror
+## Change APT Server
 
 ```bash
 # for ubuntu 18.04
@@ -44,7 +44,7 @@ deb-src http://security.ubuntu.com/ubuntu bionic-security multiverse
 ########################################################
 ```
 
-## 設定系統時間自動對時
+## Setup ntp
 
 ```bash
 sudo apt install -y ntp
@@ -55,7 +55,7 @@ sudo ntpq -p
 timedatectl status
 ```
 
-## 配置防火牆
+## Setup ufw
 
 ```bash
 sudo ufw allow <process or port>
@@ -66,14 +66,14 @@ sudo ufw disable
 sudo ufw status numbered
 ```
 
-## 新增刪除使用者
+## Add/delete user
 
 ```bash
 sudo adduser <user>
 sudo deluser <user>
 ```
 
-## 開機 port 號自動轉傳
+## Forward routing on system boot
 
 ```bash
 sudo nano /etc/rc.local
@@ -84,14 +84,14 @@ iptables -t nat -A PREROUTING -i <interface> -p tcp --dport <from port> -j REDIR
 
 ```bash
 sudo apt install -y iptables-persistent
-# 安裝時都選No
+# 'No' in installation
 iptables -t nat -A PREROUTING -i <interface> -p tcp --dport <from port> -j REDIRECT --to-port <to port>
 sudo netfilter-persistent save
 ```
 
-## Certbot 憑證
+## HTTPS certification using Certbot
 
-- 首先，先確認放在網站資源根目錄`<webroot>`裡的檔案可以被外部 http 請求拿到
+- First, check files in `<webroot>` directory could be access by http GET.
 
 ```bash
 sudo add-apt-repository ppa:certbot/certbot
@@ -102,9 +102,9 @@ sudo cp /etc/letsencrypt/live/<domain_name>/fullchain.pem <cert_dir>/fullchain.p
 sudo cp /etc/letsencrypt/live/<domain_name>/privkey.pem <cert_dir>/privkey.pem
 ```
 
-## acme.sh 憑證
+## HTTPS certification using acme.sh
 
-- 首先，先確認放在網站資源根目錄`<webroot>`裡的檔案可以被外部 http 請求拿到
+- First, check files in `<webroot>` directory could be access by http GET.
 
 ```bash
 curl https://get.acme.sh | sh
@@ -112,9 +112,9 @@ acme.sh --issue -d <domain_name> -w <webroot>
 acme.sh --install-cert -d <domain_name> --key-file <cert_dir>/privkey.pem --fullchain-file <cert_dir>/fullchain.pem
 ```
 
-## pm2 開機自動重啟
+## pm2 auto startup when reboot
 
-- 確定 node 進程正常啟動後
+- Check if `node` process is running.
 
 ```bash
 # enable
@@ -123,13 +123,13 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 unstartup systemd -u <user> --hp /home/<user>
 ```
 
-## 開機自動掛載外接裝置
+## Mount external volumes on system boot
 
-- 假設外接磁區已是 ext4 檔案系統
+- External volume is formatted to `ext4`
 
 ```bash
 sudo blkid
-# 找到欲掛載磁區的UUID
+# find UUID to mount
 sudo nano /etc/fstab
 ####################
 UUID=<UUID> <dir_to_be_mounted> ext4 defaults 0
@@ -137,7 +137,7 @@ UUID=<UUID> <dir_to_be_mounted> ext4 defaults 0
 sudo mount <dir_to_be_mounted>
 ```
 
-## mongodb 備份與還原
+## MongoDB backup and restore
 
 ```bash
 mongodump --db <db_name> --out <backup_dir>
