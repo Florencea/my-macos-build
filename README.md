@@ -1,76 +1,73 @@
 # My macOS build
 
-## 其他目錄連結
-
-- [設置 gpg](gpg.md)
-- [常用 Ubuntu 指令紀錄](ubuntu-1804-cmd.md)
-- [git commit rules](git.md)
-- [ffmpeg 紀錄](ffmpeg.md)
-
-## 重灌基本流程(適用 SSD 機種與高速網路環境)
+## Reset macOS
 
 ```fish
-[清除touchbar資料]
-# 需使用還原磁區之終端機執行，且執行後需重開機再執行重灌，否則會錯誤
+[Clear T2 chip]
+# Boot from recovery, open Terminal.app excuting xartutil, and than clear PRROM & reboot from network recovery
 xartutil --erase-all
-[系統安裝]
-[用還原磁區重開機關掉SIP]
+[macOS system installation]
+[Disable SIP]
+# Boot from recovery
 csrutil disable
-[系統設定(記得給終端機完整磁碟存取權)]
-[Finder設定]
+[System Performances(Remember to give full persission to Terminal.app)]
+[Finder performances]
   ├──[install.sh]
-curl -L https://git.io/florencea-macos-build-install -o install.sh;sh install.sh
-  │      ├──[GarageBand安裝]
-  │      ├──[終端機設定]
-  │      ├──[瀏覽器設定]
-  │      │        └──[SSH與GPG設定]
-  │      │              └──[Atom設定]
-  │      └──[Atom以外App設定]
-  │               └──[PS與PD安裝]
-  └──[音樂設定]
-          ├──[資料拷貝(Music)至音樂App中]
-          ├──[資料拷貝(GarageBand)至音樂目錄]
-          ├──[資料拷貝(GitHub)至家目錄]
-          └──[資料拷貝(Installations)至家目錄]
+curl -L https://git.io/florencea-install -o install.sh;sh install.sh
+  │      ├──[GarageBand installation]
+  │      ├──[Terminal performances]
+  │      ├──[Browser performances]
+  │      │        └──[SSH&GPG setup]
+  │      │              └──[Atom setup]
+  │      └──[Apps performances]
+  │               └──[Photoshop & parallels installation]
+  └──[Music performances]
+          ├──[Data copy(Music) to Music.app]
+          ├──[Data copy(GarageBand) to ~/]
+          ├──[Data copy(GitHub) to ~/]
+          ├──[Data copy(Installations) to ~/]
+          ├──[Data copy(Photos) to ~/]
+          └──[Data copy(Repositories) to ~/]
 ```
 
-## 自動腳本
+## Scripts
 
 ```fish
-# 使用命令列下載google drive公共單檔
-curl -L https://git.io/florencea-macos-build-gd -o gd.sh;sh gd.sh <檔案ID> <想儲存的檔名>
+# Download Google Drive public single file
+curl -L https://git.io/florencea-gd -o gd.sh;sh gd.sh <ID> <downloaded file name>
 
-# DNS-over-HTTPS(安裝完成後請將系統 DNS 改為 127.0.0.1 與 ::1)
-curl -L https://git.io/florencea-macos-build-doh | sh
+# Setup DNS-over-HTTPS(change DNS to 127.0.0.1 and ::1 after installation)
+curl -L https://git.io/florencea-doh | sh
 
-# 取得 ublock-adv 備份
-curl -L https://git.io/florencea-macos-build-ublock-adv -o ublock-adv.txt
+# Get Ublock Origin configuations
+curl -L https://git.io/florencea-ublock-advanced -o ublock-advanced.txt
 
-# 製作 gif，需安裝fish與ffmpeg
-curl -L https://git.io/florencea-macos-build-mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
+# Make GIF, ffmpeg required
+curl -L https://git.io/florencea-mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
 
-# 製作git.io縮網址
+# Make git.io short URLs
 curl -i https://git.io -F "url=<目標網址>" -F "code=<自訂縮網址>" | grep Location
 
-# 下載舊版macOS
+# Download old macOS system images
 curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
 sudo python installinstallmacos.py
 ```
 
-## fish alias
+## fish shell alias
 
 ```fish
 nano ~/.config/fish/config.fish
 alias mmb="atom ~/GitHub/my-macos-build"
-alias mkgif="sh ~/GitHub/my-macos-build/make-gif.sh"
-alias ubk="sh ~/GitHub/my-macos-build/ublock-backup.sh"
+alias mkgif="sh ~/GitHub/my-macos-build/scripts/make-gif.sh"
+alias ubk="sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh"
 alias al="sh ~/GitHub/ledger/al/al.sh"
-alias gd="sh ~/GitHub/my-macos-build/gdrive-download.sh"
+alias gd="sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh"
+alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
 ```
 
 ## Firefox about:config
 
-- 將 Firefox 改成 Chrome 外觀 [MaterialFox](https://github.com/muckSponge/MaterialFox)
+- Chrome UI for Firefox: [MaterialFox](https://github.com/muckSponge/MaterialFox)
 
 ```fish
 # enable fission
@@ -96,63 +93,62 @@ captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
 ```
 
-## macOS 指令紀錄
+## macOS commends
 
 ```fish
-# 重置launchpad
-defaults write com.apple.dock ResetLaunchPad -bool true
-killall Dock
+# Reset Launchpad
+defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 
-# 僅關閉視窗動畫效果
+# Disable window open effects
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 
-# 防止AdobeCreativeCloud開機啟動
+# Disable AdobeCreativeCloud on system boot
 sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 
-# 使用TouchID驗證sudo
+# Use TouchID for sudo commends
 sudo nano /etc/pam.d/sudo
-# 在第二行加入
+# add this on line 2
 auth       sufficient     pam_tid.so
 
-# SSD開啟trimforce
+# Enable TRIM for non Apple SSDs
 sudo trimforce enable
 
-# 禁用Chrome本機快取(硬碟機種適用)
+# Disable Chrome local cache(recommend for hard disk machines)
 defaults write com.google.Chrome DiskCacheDir -string /dev/null
 
-# 移除macOS檔案擴展屬性(-r是遞迴的意思，為了在Safari Developer Preview移除後刪除殘餘檔案)
+# Remove macOS file extension attributes(-r means recursively, deal with delete files after Safari Technology Preview uninstallation)
 xattr -r -c <file or directory>
 
-# 安裝rust
+# Rust Installation
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 
-# 解決macOS 10.15找不到C語言headers
-csrutil disable   # 需要在恢復模式下運行命令
-xcode-select --install    # 安裝常用開發工具，如：git等。
+# CCLS header completions in macOS 10.15
+csrutil disable
+xcode-select --install
 cd /usr/
-sudo mount -uw /	# 根目錄掛載為可讀寫，否則無法在/usr/下建立文件，本修改重啟前有效。
+sudo mount -uw /
 sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include include
-sudo DevToolsSecurity -enable # 將系統置於開發模式
+sudo DevToolsSecurity -enable
 
-# 解決Clang-format錯誤
+# Solving error for Atom package clang-format
 atom .atom/packages/atom-beautify/src/beautifiers/clang-format.coffee
-# 將第84行的
+# find line 84
 return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile) )
-# 改為
+# change to
 return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile, ->) )
 
-# 解決beautysh錯誤
+# Solving error for Atom package beautysh
 atom .atom/packages/atom-beautify/src/beautifiers/beautysh.coffee
-# 將第35行的
+# find line 35
 beautysh.run([ '-t', '-f', file ])
-# 改為
+# change to
 beautysh.run([ '-t', file ])
-# 將第38行的
+# find line 38
 beautysh.run([ '-i', options.indent_size, '-f', file ])
-# 改為
+# change to
 beautysh.run([ '-i', options.indent_size, file ])
 ```
 
