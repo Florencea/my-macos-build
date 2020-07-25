@@ -1,82 +1,92 @@
-# ffmpeg 紀錄
+# ffmpeg Note
 
-- 硬體編碼使用 `videotoolbox`, 可用參數非常少
-- `videotoolbox` 使用 Intel 內顯，獨顯無用
-- 參考數據使用 i7-8850H, 720p h264 AVC 原始檔案
-  - av1 軟編約 `0.01x`
-  - hevc 軟編約 `0.1x`
-  - h264 軟編約 `5x`
-  - hevc 硬編約 `12x`
-  - h264 硬編約 `19x`
-- 軟編請使用 `crf` 與編碼速度，而非位元率來控制品質
-- 硬編的位元率計算並不單純，可以先使用軟編計算位元率，但同位元率下硬編畫質會略差軟編(編碼速度問題)
-- crf 設置部分，視覺無損`(h264/hevc/av1)`為`(18/20/20)`，一般網源為`(23/24/30)`，最低可看為`(30/31/41)`
-- 參考 [https://magiclen.org/vcodec/](https://magiclen.org/vcodec/)
+- Hardware encoding using `videotoolbox`, however the parameters could not be fully customized.
+  - It works only on Intel integrated graphics, not discreted GPUs.
+- Test using a h264 AVC 720p file, Intel i7-8850H on Macbook Pro 15" 2018.
+  - `av1` software encoding `0.01x`
+  - `hevc` software encoding `0.1x`
+  - `h264` software encoding `5x`
+  - `hevc` hardware encoding `12x`
+  - `h264` hardware encoding `19x`
+- For quality in software encoding, use `crf` and `-present` parameters, not bitrate.
+- For hardware encoding, appropriate bitrate could not be estimated easily.
+- You can try software encoding to find acceptable bitrate, but video encoded by `videotoolbox` may not look as good as the one from software encoding using same bitrate.
+- About `crf`
+  - Visually loseless
+    - `h264`: 18
+    - `hevc`: 20
+    - `av1`: 20
+  - Normal for online streaming
+    - `h264`: 23
+    - `hevc`: 24
+    - `av1`: 30
+  - Lowest quality acceptable for human eyes
+    - `h264`: 30
+    - `hevc`: 31
+    - `av1`: 41
+- Referenced from [https://magiclen.org/vcodec/](https://magiclen.org/vcodec/)
 
 ```fish
-# ffmpeg h264 軟體編碼
+# ffmpeg h264 software encoding
 ffmpeg
   -hide_banner
-  -i <輸入檔案>
+  -i <input file>
   -vcodec libx264
   -crf 18
   -preset veryslow
-  -vf "subtitles=filename='<同一目錄下的字幕檔名>'"
-  <輸出檔案>
+  -vf "subtitles=filename='<subtitle file in same directory>'"
+  <output file.mp4>
 
-# ffmpeg hevc 軟體編碼
+# ffmpeg hevc software encoding
 ffmpeg
   -hide_banner
-  -i <輸入檔案>
+  -i <input file>
   -vcodec libx265
   -crf 20
   -preset veryslow
-  -vf "subtitles=filename='<同一目錄下的字幕檔名>'"
-  <輸出檔案>
+  -vf "subtitles=filename='<subtitle file in same directory>'"
+  <output file.mp4>
 
-# ffmpeg av1 軟體編碼
-# 目前 av1 在 macOS 除了瀏覽器，就只有VLC能播，且無硬解，暫時不建議使用
-# ffmpeg 4.1.3 中 av1 依舊是實驗功能，故需加上 -strict -2
+# ffmpeg av1 software encoding
 ffmpeg
   -hide_banner
-  -i <輸入檔案>
+  -i <input file>
   -vcodec libaom-av1
   -b:v 0
   -crf 20
-  -strict -2
-  -vf "subtitles=filename='<同一目錄下的字幕檔名>'"
-  <輸出檔案>
+  -vf "subtitles=filename='<subtitle file in same directory>'"
+  <output file.mp4>
 
-# ffmpeg h264 macos 硬體加速編碼
+# ffmpeg h264 hardware encoding on macOS
 ffmpeg
   -hide_banner
-  -i <輸入檔案>
+  -i <input file>
   -c:v h264_videotoolbox
-  -profile:v <欲套用之profile(main, high, baseline)>
-  -b:v <視訊流平均位元率(400k)>
-  -b:a <音訊流平均位元率(128k)>
-  -vf "subtitles=filename='<同一目錄下的字幕檔名>'"
-  <輸出檔案>
+  -profile:v <prefered profile: main, high or baseline>
+  -b:v <video bitrate, default is 400k>
+  -b:a <audio bitrate, default is 128k>
+  -vf "subtitles=filename='<subtitle file in same directory>'"
+  <output file.mp4>
 
-# ffmpeg hevc macos 硬體加速編碼
-# 為了給 macOS 內建預覽程式識別，必須將影片標記為 hvc1
+# ffmpeg hevc hardware encoding on macOS
+# In order to mark video as hevc for Finder and Quicktime Player, add tag hvc1
 ffmpeg
   -hide_banner
-  -i <輸入檔案>
+  -i <input file>
   -c:v hevc_videotoolbox
-  -profile:v <欲套用之profile(main, high)>
-  -b:v <視訊流平均位元率(400k)>
-  -b:a <音訊流平均位元率(128k)>
-  -vf "subtitles=filename='<同一目錄下的字幕檔名>'"
+  -profile:v <prefered profile: main or highe>
+  -b:v <video bitrate, default is 400k>
+  -b:a <audio bitrate, default is 128k>
+  -vf "subtitles=filename='<subtitle file in same directory>'"
   -tag:v hvc1
-  <輸出檔案>
+  <output file.mp4>
 
-# ffmpeg 製作 gif
+# make GIF using ffmpeg
 ffmpeg
   -hide_banner
-  -ss <開始位置(61.0)>
-  -t <持續秒數(2.5)>
-  -i <輸入檔案>
+  -ss <start position(sec)>
+  -t <durination(sec)>
+  -i <input file>
   -filter_complex "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"
-  <輸出檔案.gif>
+  <output file.gif>
 ```

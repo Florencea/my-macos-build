@@ -1,40 +1,39 @@
-# git commit rules
+# Git Note
 
-```fish
-# 先建立一個.gitmessage.txt
-# 在專案內使用 commit-template
-git config commit.template .gitmessage.txt
-# 在全系統使用 commit-template
-git config --global commit.template ~/.gitmessage.txt
-```
+## Using commit template
 
-## 結構
+- Create `.gitmessage.txt`
+- Using commit template under project directory.
 
-```text
-<type>(<scope>): <subject>
-```
+  - `git config commit.template .gitmessage.txt`
 
-### type
+- Using commit template in system scope.
 
-- 用於說明 commit 的類別，只允許使用下面 7 個標識。
+  - `git config --global commit.template ~/.gitmessage.txt`
 
-```text
-feat：新功能（feature）
-fix：修補bug
-docs：文檔（documentation）
-style： 格式（不影響代碼運行的變動）
-refactor：重構（即不是新增功能，也不是修改bug的代碼變動）
-test：增加測試
-chore：構建過程或輔助工具的變動
-```
+## Using Git commit rules
 
-### scope
+- Structure
 
-- 用於說明 commit 影響的範圍，比如數據層、控制層、視圖層等等，視項目不同而不同。
+  - `<type>(<scope>): <subject>`
 
-### subject
+- `type`
 
-- 是 commit 目的的簡短描述，不超過 50 個字符。
-- 以動詞開頭，使用第一人稱現在時，比如 change，而不是 changed 或 changes
-- 第一個字母小寫
-- 結尾不加句號（.）
+  - Describe commit type, only 7 types below are allowed.
+    - `feat`: New features.
+    - `fix`: Bug fix.
+    - `docs`: Documentation.
+    - `style`: Code style(no functional change).
+    - `refactor`: Refactoring(no new feature, no functional change).
+    - `test`: Add tests.
+    - `chore`: Change for developing enviroment.
+
+- `scope`
+
+  - Scope affected by this commit, can be file or abstract layers.
+
+- `subject`
+
+  - What the commit do, less than 50 words.
+  - Start by a lowercased, first person present tense verb.
+  - No dot(.) at end.
