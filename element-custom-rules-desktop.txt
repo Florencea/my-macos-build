@@ -1,0 +1,357 @@
+! Title: Element Rules by Florencea for Desktop
+! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Desktop
+! Last updated: 2020-07-25
+
+! universal rules
+! addons
+*###sp-fw-container:style(opacity: 0.1 !important)
+*###sp-fw-container:hover:style(opacity: 1 !important)
+#$##sp-fw-container {opacity: 0.1 !important}
+#$##sp-fw-container:hover {opacity: 1 !important}
+
+! cool3c.com
+! remove
+cool3c.com##^#body > .row:has(> .col-12 > .index-sticky)
+cool3c.com###body > .row:has(> .col-12 > .index-sticky)
+cool3c.com##^#body > .row:has(> .col-12 > .board-BT_a_H)
+cool3c.com###body > .row:has(> .col-12 > .board-BT_a_H)
+cool3c.com##^#header
+cool3c.com###header
+cool3c.com##^.article-social
+cool3c.com##.article-social
+cool3c.com##^.comments
+cool3c.com##.comments
+cool3c.com##^.board-new.board-BT_li_iL
+cool3c.com##.board-new.board-BT_li_iL
+cool3c.com##.board-innity-in-post
+cool3c.com##^.board-innity-in-post
+cool3c.com##^.board-BT_a_SB
+cool3c.com##.board-BT_a_SB
+cool3c.com##^.board-BT_a_SBS
+cool3c.com##.board-BT_a_SBS
+cool3c.com##^.board-BT_ar_iR_PaL
+cool3c.com##.board-BT_ar_iR_PaL
+cool3c.com##^.board-BT_ar_iR_PbL
+cool3c.com##.board-BT_ar_iR_PbL
+cool3c.com##^.board-BT_ar_O_11
+cool3c.com##.board-BT_ar_O_11
+cool3c.com##^.board-BT_li_iL
+cool3c.com##.board-BT_li_iL
+cool3c.com##^[src*="img-failed"]
+cool3c.com##[src*="img-failed"]
+cool3c.com##^[src="/assets/img/img-failed.webp"]
+cool3c.com##[src="/assets/img/img-failed.webp"]
+cool3c.com##^[src="/assets/img/img-failed.jpg"]
+cool3c.com##[src="/assets/img/img-failed.jpg"]
+cool3c.com##^.gtm-track.fa-2x.quick-button
+cool3c.com##.gtm-track.fa-2x.quick-button
+cool3c.com##^section.comment-area
+cool3c.com##section.comment-area
+cool3c.com##^div.social-bar
+cool3c.com##div.social-bar
+cool3c.com##^body > aside
+cool3c.com##body > aside
+cool3c.com##^.readmore
+cool3c.com##.readmore
+cool3c.com##^.article > .tag
+cool3c.com##.article > .tag
+cool3c.com##^.article > .related
+cool3c.com##.article > .related
+cool3c.com##^.article > .source
+cool3c.com##.article > .source
+cool3c.com##^noscript
+cool3c.com##^#fb-root
+cool3c.com###fb-root
+cool3c.com##^.board-mobile
+cool3c.com##.board-mobile
+cool3c.com##^link[rel="dns-prefetch"]
+cool3c.com##^script[id*='track']
+cool3c.com##^script:has-text(admanager.scan)
+||trackjay.cool3c.com^$script
+||cool3c.com/*/img-failed*$image
+! style
+cool3c.com###main:style(padding: 0 !important)
+cool3c.com##header:style(padding: 2rem !important)
+cool3c.com##.article:style(padding: 2rem !important)
+
+! dmhy.org
+! remove
+dmhy.org##^.announce
+dmhy.org##.announce
+dmhy.org##^#\31 280_ad > a
+dmhy.org###\31 280_ad > a
+dmhy.org##^div.clear:has(a[href='/topics/add'])
+dmhy.org##div.clear:has(a[href='/topics/add'])
+! style
+dmhy.org##.topic-main:style(text-align: left)
+
+! fandom.com
+! remove
+fandom.com##^.banner-notifications-placeholder
+fandom.com##.banner-notifications-placeholder
+fandom.com##^#WikiaBar
+fandom.com###WikiaBar
+fandom.com##^#WikiaTopAds
+fandom.com###WikiaTopAds
+fandom.com##^#top_boxad
+fandom.com###top_boxad
+
+! inside.com.tw
+! remove
+inside.com.tw##^.post_list_item-ad
+inside.com.tw##.post_list_item-ad
+inside.com.tw##^.post_toolbox
+inside.com.tw##.post_toolbox
+inside.com.tw##^.post_list_item:has(a.badge-color10)
+inside.com.tw##.post_list_item:has(a.badge-color10)
+inside.com.tw##^div[class^=adv]
+inside.com.tw##div[class^=adv]
+inside.com.tw##^div[class^=dfp_ad]
+inside.com.tw##div[class^=dfp_ad]
+inside.com.tw##^div.infinite
+inside.com.tw##div.infinite
+inside.com.tw##^div.content > div.post
+inside.com.tw##div.content > div.post
+
+! ithome.com.tw
+! remove
+ithome.com.tw##^#block-block-7
+ithome.com.tw###block-block-7
+ithome.com.tw##^#block-block-10
+ithome.com.tw###block-block-10
+ithome.com.tw##^#block-block-23
+ithome.com.tw###block-block-23
+ithome.com.tw##^#block-block-24
+ithome.com.tw###block-block-24
+ithome.com.tw##^#block-block-37
+ithome.com.tw###block-block-37
+ithome.com.tw##^#block-block-45
+ithome.com.tw###block-block-45
+ithome.com.tw##^#block-block-74
+ithome.com.tw###block-block-74
+ithome.com.tw##^#block-block-91
+ithome.com.tw###block-block-91
+ithome.com.tw##^#block-views-similarterms-block
+ithome.com.tw###block-views-similarterms-block
+ithome.com.tw##^#skybanner
+ithome.com.tw###skybanner
+ithome.com.tw##^aside[role="complementary"]
+ithome.com.tw##aside[role="complementary"]
+ithome.com.tw##^.side-extra
+ithome.com.tw##.side-extra
+ithome.com.tw##^.content-summary
+ithome.com.tw##.content-summary
+ithome.com.tw##^.field-name-field-photo-source
+ithome.com.tw##.field-name-field-photo-source
+ithome.com.tw##^.socail-btns-on-top
+ithome.com.tw##.socail-btns-on-top
+ithome.com.tw##^.social-btn-set
+ithome.com.tw##.social-btn-set
+ithome.com.tw##^.view-display-id-article_category
+ithome.com.tw##.view-display-id-article_category
+ithome.com.tw##^#headerbar
+ithome.com.tw###headerbar
+ithome.com.tw##^#hpad930up
+ithome.com.tw###hpad930up
+ithome.com.tw##^#cyber
+ithome.com.tw###cyber
+ithome.com.tw##^.ad-banner-text
+ithome.com.tw##.ad-banner-text
+ithome.com.tw##^.today-featured
+ithome.com.tw##.today-featured
+ithome.com.tw##^#fb-root
+ithome.com.tw###fb-root
+ithome.com.tw##^#skip-link
+ithome.com.tw###skip-link
+ithome.com.tw##^footer.footer
+ithome.com.tw##footer.footer
+! style
+ithome.com.tw##body:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+ithome.com.tw##.main-container > div.row-fluid:style(display: flex; justify-content: center; width: 100%)
+ithome.com.tw###page-header:style(display: flex !important; justify-content: center; width: 100%)
+ithome.com.tw##h1.page-header:style(font-size: 1.5rem !important; text-align: left; padding-top: 3rem)
+ithome.com.tw##.content:style(padding-left: 0 !important; margin:0 1rem)
+ithome.com.tw##.img-wrapper > div:style(border: 1px solid #EDEDED)
+
+! macrumors.com
+! remove
+macrumors.com##^#mrCarouselPrev:upward(div)
+macrumors.com###mrCarouselPrev:upward(div)
+macrumors.com##^.sidebarblock
+macrumors.com##.sidebarblock
+macrumors.com##^div[class^=social--]
+macrumors.com##div[class^=social--]
+macrumors.com##^script:has-text(sidebarblock)
+
+! pixiv.net
+! remove
+pixiv.net##div:has(> iframe[width="468"][height="60"])
+pixiv.net##div:has(> iframe[width="500"][height="520"])
+pixiv.net##div:has(> iframe[width="728"][height="90"])
+pixiv.net##li[size="2"]
+pixiv.net##a[href*='remove_ads']
+||ads-pixiv.net
+
+! techbang.com
+! remove
+techbang.com##^#crazy_ad_small
+techbang.com###crazy_ad_small
+techbang.com##^.yt_playlist
+techbang.com##.yt_playlist
+techbang.com##^.fixed-top
+techbang.com##.fixed-top
+techbang.com##^.ad_grey_floor
+techbang.com##.ad_grey_floor
+techbang.com##^.post-side
+techbang.com##.post-side
+techbang.com##^section.fenced.section
+techbang.com##section.fenced.section
+techbang.com##^.news-feed
+techbang.com##.news-feed
+techbang.com##^.ad-section
+techbang.com##.ad-section
+techbang.com##^.ads-next-to-logo
+techbang.com##.ads-next-to-logo
+techbang.com##^.ad
+techbang.com##.ad
+techbang.com##^.advertise
+techbang.com##.advertise
+techbang.com##^#post-additional
+techbang.com###post-additional
+techbang.com##^.comments
+techbang.com##.comments
+techbang.com##^div[class^=ads_both_sides]
+techbang.com##div[class^=ads_both_sides]
+techbang.com##^div[id^=crazy_ad]
+techbang.com##div[id^=crazy_ad]
+techbang.com##^#stickies
+techbang.com###stickies
+techbang.com##^#sidebar
+techbang.com###sidebar
+techbang.com##^#float-navigation
+techbang.com###float-navigation
+techbang.com##^.headline
+techbang.com##.headline
+techbang.com##^.carousel
+techbang.com##.carousel
+techbang.com##^noscript
+techbang.com##noscript
+techbang.com##^.google-dfp
+techbang.com##.google-dfp
+techbang.com##^.main-content > section
+techbang.com##.main-content > section
+techbang.com##^.techbang_i_down_ad
+techbang.com##.techbang_i_down_ad
+techbang.com##^#carousel-images-2
+techbang.com###carousel-images-2
+techbang.com##^#carousel-images-3
+techbang.com###carousel-images-3
+! style
+techbang.com##body:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+techbang.com##.main-content:style(width: 100% !important; float: none !important)
+techbang.com##.inner-content:style(width: 100% !important; float: none !important; padding-top: 1rem !important)
+techbang.com##.small-articles ul li:style(max-width: calc( 50% - 5px ) !important)
+techbang.com##.article-large:style(width: 100% !important)
+techbang.com##.article-large img:style(width: 100% !important)
+techbang.com##.post-main:style(display: flex; justify-content: center; width: 100% !important; float: none !important; padding-top: 2rem !important)
+techbang.com##.post-main > .article:style(max-width: 796px !important)
+techbang.com##.article > .content > h2:style(border: 0 !important)
+techbang.com##label.caption:style(border: 0 !important)
+
+! thenewslens.com
+! remove
+thenewslens.com##^.ad-btm
+thenewslens.com##.ad-btm
+thenewslens.com##^.op-social
+thenewslens.com##.op-social
+thenewslens.com##^.function-box
+thenewslens.com##.function-box
+thenewslens.com##^.member-function
+thenewslens.com##.member-function
+thenewslens.com##^.alert-bubble
+thenewslens.com##.alert-bubble
+thenewslens.com##^.infinite-post-section
+thenewslens.com##.infinite-post-section
+thenewslens.com##^#infinite-article-recommend-section
+thenewslens.com###infinite-article-recommend-section
+thenewslens.com##^.fb-comment-box
+thenewslens.com##.fb-comment-box
+thenewslens.com##^.social-btns
+thenewslens.com##.social-btns
+
+! translate.google.com
+! remove
+translate.google.com##^#wtgbr
+translate.google.com###wtgbr
+translate.google.com##^#gt-c
+translate.google.com###gt-c
+! style
+translate.google.com###contentframe:style(top: 0 !important;)
+
+! twreporter.org
+! style
+twreporter.org##[class*='paragraph']:style(font-weight: 400 !important)
+twreporter.org##[class*='annotation']:style(font-weight: 400 !important)
+twreporter.org##[class*='blockquote']:style(font-weight: 400 !important)
+twreporter.org##[class*='list']:style(font-weight: 400 !important)
+
+! xfastest.com
+! remove
+xfastest.com##^#vwspc-section-1
+xfastest.com###vwspc-section-1
+xfastest.com##^#vwspc-section-3
+xfastest.com###vwspc-section-3
+xfastest.com##^#vwspc-section-4
+xfastest.com###vwspc-section-4
+xfastest.com##^#vwspc-section-5
+xfastest.com###vwspc-section-5
+xfastest.com##^#vwspc-section-6
+xfastest.com###vwspc-section-6
+xfastest.com##^footer > .vw-site-footer-sidebars
+xfastest.com##footer > .vw-site-footer-sidebars
+xfastest.com##^#wpfront-scroll-top-container
+xfastest.com###wpfront-scroll-top-container
+xfastest.com##^#vw-post-shares-dialog
+xfastest.com###vw-post-shares-dialog
+xfastest.com##^.widget_vw_widget_social_counter
+xfastest.com##.widget_vw_widget_social_counter
+xfastest.com##^.vw-top-bar-breaking-social
+xfastest.com##.vw-top-bar-breaking-social
+xfastest.com##^#text-6
+xfastest.com###text-6
+xfastest.com##^#fb-root
+xfastest.com###fb-root
+xfastest.com##^.pace
+xfastest.com##.pace
+xfastest.com##^.vw-post-navigation
+xfastest.com##.vw-post-navigation
+xfastest.com##^.vw-about-author
+xfastest.com##.vw-about-author
+xfastest.com##^.vw-related-posts
+xfastest.com##.vw-related-posts
+xfastest.com##^.evo_lightboxes
+xfastest.com##.evo_lightboxes
+xfastest.com##^.vw-site-social-profile
+xfastest.com##.vw-site-social-profile
+! style
+xfastest.com##body:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##cite:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h1:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h2:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h3:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h4:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h5:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h6:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-menu-location-main .main-menu-link:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-header-font:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-post-box.vw-post-format-link a:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-social-counter-count:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-page-navigation-pagination:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.page-numbers:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com###wp-calendar caption:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-accordion-header-text:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-tab-title:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-review-item-title:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-pagination-load-more:style(font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-post-content:style(line-height: 3rem !important)
+xfastest.com##.entry-title:style(font-size: 3.5rem !important; line-height: 5rem !important)
