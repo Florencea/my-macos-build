@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1595692641548,
+  "timeStamp": 1595701831602,
   "version": "1.28.5b5",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -10,7 +10,7 @@
     "colorBlindFriendly": false,
     "contextMenuEnabled": true,
     "dynamicFilteringEnabled": true,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/master/element-custom-rules-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/master/element-custom-rules-mobile.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-mobile.txt",
     "firewallPaneMinimized": true,
     "hyperlinkAuditingDisabled": true,
     "ignoreGenericCosmeticFilters": false,
@@ -42,8 +42,8 @@
     "fanboy-thirdparty_social",
     "ublock-annoyances",
     "plowe-0",
-    "https://github.com/Florencea/my-macos-build/raw/master/element-custom-rules-desktop.txt",
-    "https://github.com/Florencea/my-macos-build/raw/master/element-custom-rules-mobile.txt"
+    "https://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-desktop.txt",
+    "https://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-mobile.txt"
   ],
   "hiddenSettings": {
     "allowGenericProceduralFilters": false,
