@@ -1,0 +1,441 @@
+! Title: Element Rules by Florencea for Mobile
+! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
+! Last updated: 2020-07-25
+
+! manhuaren.com
+! remove
+manhuaren.com##^.ad-top
+manhuaren.com##.ad-top
+manhuaren.com##^.ad-top-info
+manhuaren.com##.ad-top-info
+manhuaren.com##^#index-ad
+manhuaren.com###index-ad
+manhuaren.com##^.index-bottom-ad
+manhuaren.com##.index-bottom-ad
+manhuaren.com##^.banner-bottom
+manhuaren.com##.banner-bottom
+manhuaren.com##^.detail-ad-con
+manhuaren.com##.detail-ad-con
+manhuaren.com##^.view-bottom-bar
+manhuaren.com##.view-bottom-bar
+manhuaren.com##^.adform_2
+manhuaren.com##.adform_2
+manhuaren.com##^#lb-win
+manhuaren.com###lb-win
+manhuaren.com##^.guide
+manhuaren.com##.guide
+manhuaren.com##^body > a
+manhuaren.com##body > a
+! style
+manhuaren.com###cp_img:style(padding-top: 60px !important)
+
+! wnacg.org
+! remove
+wnacg.org##^.sh
+wnacg.org##.sh
+wnacg.org##^script:has-text(GoogleAnalyticsObject)
+
+! 18av.tv
+! remove
+18av.tv##^#ArticlesEx_box
+18av.tv###ArticlesEx_box
+18av.tv##^#container > a
+18av.tv###container > a
+18av.tv##^#container > h1.label
+18av.tv###container > h1.label
+18av.tv##^#container > span:not(#main)
+18av.tv###container > span:not(#main)
+18av.tv##^#friendLink
+18av.tv###friendLink
+18av.tv##^#menu1Content > .altto > ul
+18av.tv###menu1Content > .altto > ul
+18av.tv##^#partner
+18av.tv###partner
+18av.tv##^#rand_cg
+18av.tv###rand_cg
+18av.tv##^.exoc
+18av.tv##.exoc
+18av.tv##^.sub_list
+18av.tv##.sub_list
+18av.tv##^.TW_UTtoy
+18av.tv##.TW_UTtoy
+18av.tv##^.ut_ad_box
+18av.tv##.ut_ad_box
+18av.tv##^#BBshowBox
+18av.tv###BBshowBox
+18av.tv##^#CCshowBox
+18av.tv###CCshowBox
+18av.tv##^#mvcg_content_a
+18av.tv###mvcg_content_a
+18av.tv##^#mvcg_content_b
+18av.tv###mvcg_content_b
+18av.tv##^#Dfrom
+18av.tv###Dfrom
+18av.tv##^iframe
+18av.tv##iframe
+18av.tv##^#container a.aRF:has(.aRF_Scg)
+18av.tv###container a.aRF:has(.aRF_Scg)
+18av.tv##^#container img.aRF_Scg
+18av.tv###container img.aRF_Scg
+18av.tv##^script:has-text(show_ut_review)
+18av.tv##^script:has-text(ad_idzone)
+18av.tv##^script:has-text(rand_cg)
+18av.tv##^script:has-text(friendLink)
+18av.tv##^script:has-text(mvcg_content_a)
+18av.tv##^script:has-text(BBshowBox)
+18av.tv##^script:has-text(CCshowBox)
+18av.tv##^script:has-text(cnzz)
+18av.tv##^script:has-text(gtag)
+18av.tv##^script:has-text(SpanadBox)
+18av.tv##^script:has-text(_Hasync)
+18av.tv##^script[src*='googletagmanager']
+18av.tv##^script[src*='mmad']
+18av.tv##^#menu1Content a.c1
+18av.tv###menu1Content a.c1
+18av.tv##^#menu1Content div.HS
+18av.tv###menu1Content div.HS
+18av.tv##^[href="https://bit.ly/*"]
+18av.tv##[href="https://bit.ly/*"]
+18av.tv##^#main_mv > div.mobile_mv
+18av.tv###main_mv > div.mobile_mv
+18av.tv##^#main_mv > a
+18av.tv###main_mv > a
+18av.tv##^#main_mv > font > a > font
+18av.tv###main_mv > font > a > font
+18av.tv##^#main_mv > br
+18av.tv###main_mv > br
+18av.tv##^#main_mv > img
+18av.tv###main_mv > img
+18av.tv##^#main_mv > font:has-text(備用)
+18av.tv###main_mv > font:has-text(備用)
+18av.tv##^#main_mv > font:has-text(播放器)
+18av.tv###main_mv > font:has-text(播放器)
+18av.tv##^#main_mv > font:has-text(回報我們)
+18av.tv###main_mv > font:has-text(回報我們)
+18av.tv##^.mobile_mv > span
+18av.tv##.mobile_mv > span
+18av.tv##^.mobile_mv > font
+18av.tv##.mobile_mv > font
+18av.tv##^.mobile_mv > br
+18av.tv##.mobile_mv > br
+18av.tv##^#container > br
+18av.tv###container > br
+18av.tv##^span#main > br
+18av.tv##span#main > br
+18av.tv##^#container a.aRF > br
+18av.tv###container a.aRF > br
+18av.tv##^#menu1Content > br
+18av.tv###menu1Content > br
+18av.tv##^#menu1Content div.altto br
+18av.tv###menu1Content div.altto br
+18av.tv##^span.cs_mvwidth:has-text(影片放大)
+18av.tv##span.cs_mvwidth:has-text(影片放大)
+18av.tv##^span#main_mv > span:has-text(我是分隔線)
+18av.tv##span#main_mv > span:has-text(我是分隔線)
+18av.tv##^#Preview_Enlarge_aRF_Bcg_aButton
+18av.tv###Preview_Enlarge_aRF_Bcg_aButton
+18av.tv##^#SpanadBox
+18av.tv###SpanadBox
+18av.tv##^html > body > span#aRF_myVar_ct_buffer
+18av.tv##html > body > span#aRF_myVar_ct_buffer
+18av.tv##^html > body > span.enlarge_cg
+18av.tv##html > body > span.enlarge_cg
+18av.tv##^body > noscript
+18av.tv##body > noscript
+18av.tv##^html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF)
+18av.tv##html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF)
+18av.tv##^span#twcgUUU
+18av.tv##span#twcgUUU
+! style
+18av.tv##body:style(background-color: #fafafa !important)
+18av.tv##body:style(margin: 0 !important)
+18av.tv##body:style(font-size: 0)
+18av.tv##span#main:style(display: block !important)
+18av.tv##span#main:style(padding: 1rem !important)
+18av.tv###Main_content:style(background-color: #fafafa !important)
+18av.tv###Main_content:style(width: 100% !important)
+18av.tv###Main_content:style(display: flex !important)
+18av.tv###Main_content:style(flex-direction: column-reverse !important)
+18av.tv###container:style(background-image: none !important)
+18av.tv###container:style(background-color: #fafafa !important)
+18av.tv###container:style(width: 100% !important)
+18av.tv###container a.aRF:style(display: block !important)
+18av.tv###container a.aRF:style(border-radius: 0.25rem !important)
+18av.tv###container a.aRF:style(margin-bottom: 2rem !important)
+18av.tv###container a.aRF:style(text-align: left !important)
+18av.tv###container a.aRF:style(font-size: 1.25rem !important)
+18av.tv###container a.aRF:style(font-weight: 500 !important)
+18av.tv###container a.aRF:style(line-height: 1.5rem !important)
+18av.tv###container a.aRF img:style(margin-top: 1rem !important)
+18av.tv###container a.aRF img:style(width: 100% !important)
+18av.tv###container a.aRF img:style(max-width: 100% !important)
+18av.tv##span#main > h1:style(font-size: 0 !important)
+18av.tv##span.enlarge_jizcg:style(display: flex !important)
+18av.tv##span.enlarge_jizcg:style(flex-wrap: wrap !important)
+18av.tv##span.enlarge_jizcg:style(width: 100% !important)
+18av.tv##span.enlarge_jizcg img:style(width: 25% !important)
+18av.tv##span#main_mv:style(font-size: 0 !important)
+18av.tv##span#main_mv > font:style(font-size: 0 !important)
+18av.tv##span#main_mv > font > a:style(display: none !important)
+18av.tv##span#main_mv > font > a:style(font-size: 0rem !important)
+18av.tv##span#main_mv > font > a[href*='fc']:style(display: block !important)
+18av.tv##span#main_mv > font > a:style(font-weight: normal !important)
+18av.tv##span#main_mv > font > a:style(text-align: center !important)
+18av.tv##span#main_mv > font > a:style(text-decoration: none !important)
+18av.tv##span#main_mv > font > a:style(padding: 6rem !important)
+18av.tv##span#main_mv > font > a:style(margin: 1rem 0 !important)
+18av.tv##span#main_mv > font > a:style(color: #fff !important)
+18av.tv##span#main_mv > font > a:style(background-color: #007bff !important)
+18av.tv##span#main_mv > font > a::before:style(font-size: 3rem !important)
+18av.tv##span#main_mv > font > a::before:style(content: '播放影片' !important)
+18av.tv##span.cs_mvwidth:style(width: 100% !important)
+18av.tv##span.cs_mvwidth:style(display: block !important)
+18av.tv##span.cs_mvwidth:style(font-size: 0 !important)
+18av.tv##span.cs_mvwidth > a:style(display: block !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(1)']:style(display: none !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(6)']:style(display: none !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(11)']::before:style(content: '取得播放連結' !important)
+18av.tv##span.cs_mvwidth > a:style(font-size: 0 !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(11)']::before:style(font-size: 3rem !important)
+18av.tv##span.cs_mvwidth > a:style(font-weight: normal !important)
+18av.tv##span.cs_mvwidth > a:style(text-align: center !important)
+18av.tv##span.cs_mvwidth > a:style(text-decoration: none !important)
+18av.tv##span.cs_mvwidth > a:style(padding: 6rem !important)
+18av.tv##span.cs_mvwidth > a:style(margin: 1rem 0 !important)
+18av.tv##span.cs_mvwidth > a:style(color: #fff !important)
+18av.tv##span.cs_mvwidth > a:style(background-color: #6c757d !important)
+18av.tv##span.cs_mvwidth > a.selected:style(display: none !important)
+18av.tv##span.cs_mvwidth > a.selected::after:style(font-size: 3rem !important)
+18av.tv##span.cs_mvwidth > a.selected::after:style(content: '已選取' !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(11)'].selected:style(font-size: 0 !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(11)'].selected::after:style(content: 'fc播放器 已選取' !important)
+18av.tv##span.cs_mvwidth > a[href*='mvBypass(11)'].selected::before:style(content: '' !important)
+18av.tv##.mobile_mv:style(width: 100% !important)
+18av.tv##.mobile_mv > a:style(display: block !important)
+18av.tv##.mobile_mv > a:style(font-size: 1.25rem !important)
+18av.tv##.mobile_mv > a:style(font-weight: normal !important)
+18av.tv##.mobile_mv > a:style(text-align: center !important)
+18av.tv##.mobile_mv > a:style(text-decoration: none !important)
+18av.tv##.mobile_mv > a:style(padding: 1rem !important)
+18av.tv##.mobile_mv > a:style(margin: 1rem 0 !important)
+18av.tv##.mobile_mv > a:style(color: #fff !important)
+18av.tv##.mobile_mv > a:style(background-color: #0069d9 !important)
+18av.tv###menu1Content:style(background-image: none !important)
+18av.tv###menu1Content:style(float: none !important)
+18av.tv###menu1Content:style(width: 100% !important)
+18av.tv###menu1Content:style(display: flex !important)
+18av.tv###menu1Content:style(flex-direction: column-reverse !important)
+18av.tv###menu1Content:style(font-size: 0 !important)
+18av.tv###menu1Content > h6:style(font-size: 1rem !important)
+18av.tv###menu1Content div.altto:style(order: 2 !important)
+18av.tv###menu1Content div.altto:style(padding: 1rem !important)
+18av.tv###menu1Content div.altto input:style(font-size: 1.25rem !important)
+18av.tv###menu1Content div.altto input:style(display: block !important)
+18av.tv###menu1Content div.altto input:style(width: 100% !important)
+18av.tv###menu1Content div.altto input:style(height: 2.5rem !important)
+18av.tv###menu1Content div.altto input:style(margin-bottom: 1rem !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(-moz-appearance: none !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(background-color: #333 !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(color: #fff !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(padding: 1em !important)
+18av.tv###menu1Content div.altto input[type="submit"]:style(height: auto !important)
+18av.tv###menu1Content div.altto select:style(font-size: 1.25rem !important)
+18av.tv###menu1Content div.altto select:style(display: block !important)
+18av.tv###menu1Content div.altto select:style(width: 100% !important)
+18av.tv###menu1Content div.altto select:style(height: 2.5rem !important)
+18av.tv###menu1Content div.altto select:style(margin-bottom: 1rem !important)
+18av.tv##.PageBar:style(width: 100% !important)
+18av.tv##.PageBar:style(line-height: 3rem !important)
+! others
+imgscloud.com##^#cover_information
+imgscloud.com###cover_information
+imgscloud.com##^#suncover
+imgscloud.com###suncover
+imgscloud.com##^#coverclose_top
+imgscloud.com###coverclose_top
+imgscloud.com##^#coverclose_bottom
+imgscloud.com###coverclose_bottom
+||18av.tv/mmad.js$script
+||youjizz.com/videos/embed/$subdocument
+||fc.imgscloud.com/fcfluidplayer.php$subdocument
+||ammcg.imgscloud.com
+||gahost3.imgscloud.com
+||gbhost3.imgscloud.com
+
+! 18h.mm-cg.com
+! remove
+18h.mm-cg.com##^#ArticlesEx_box
+18h.mm-cg.com###ArticlesEx_box
+18h.mm-cg.com##^#container > a
+18h.mm-cg.com###container > a
+18h.mm-cg.com##^#container > h1.label
+18h.mm-cg.com###container > h1.label
+18h.mm-cg.com##^#container > span:not(#main)
+18h.mm-cg.com###container > span:not(#main)
+18h.mm-cg.com##^#friendLink
+18h.mm-cg.com###friendLink
+18h.mm-cg.com##^#menu1Content > .altto > ul
+18h.mm-cg.com###menu1Content > .altto > ul
+18h.mm-cg.com##^#partner
+18h.mm-cg.com###partner
+18h.mm-cg.com##^#rand_cg
+18h.mm-cg.com###rand_cg
+18h.mm-cg.com##^.exoc
+18h.mm-cg.com##.exoc
+18h.mm-cg.com##^.sub_list
+18h.mm-cg.com##.sub_list
+18h.mm-cg.com##^.TW_UTtoy_18h
+18h.mm-cg.com##.TW_UTtoy_18h
+18h.mm-cg.com##^.ut_ad_box
+18h.mm-cg.com##.ut_ad_box
+18h.mm-cg.com##^#BBshowBox
+18h.mm-cg.com###BBshowBox
+18h.mm-cg.com##^#CCshowBox
+18h.mm-cg.com###CCshowBox
+18h.mm-cg.com##^#mvcg_content_a
+18h.mm-cg.com###mvcg_content_a
+18h.mm-cg.com##^#mvcg_content_b
+18h.mm-cg.com###mvcg_content_b
+18h.mm-cg.com##^#Dfrom
+18h.mm-cg.com###Dfrom
+18h.mm-cg.com##^iframe
+18h.mm-cg.com##^#container a.aRF:has(.aRF_Scg)
+18h.mm-cg.com###container a.aRF:has(.aRF_Scg)
+18h.mm-cg.com##^#container img.aRF_Scg
+18h.mm-cg.com###container img.aRF_Scg
+18h.mm-cg.com##^script:has-text(show_ut_review)
+18h.mm-cg.com##^script:has-text(ad_idzone)
+18h.mm-cg.com##^script:has-text(rand_cg)
+18h.mm-cg.com##^script:has-text(friendLink)
+18h.mm-cg.com##^script:has-text(mvcg_content_a)
+18h.mm-cg.com##^script:has-text(BBshowBox)
+18h.mm-cg.com##^script:has-text(CCshowBox)
+18h.mm-cg.com##^script[src*='googletagmanager']
+18h.mm-cg.com##^script[src*='mmad']
+18h.mm-cg.com##^#menu1Content a.c1
+18h.mm-cg.com###menu1Content a.c1
+18h.mm-cg.com##^#menu1Content div.HS
+18h.mm-cg.com###menu1Content div.HS
+18h.mm-cg.com##^[href="https://bit.ly/*"]
+18h.mm-cg.com##[href="https://bit.ly/*"]
+18h.mm-cg.com##^#main_mv > div.mobile_mv
+18h.mm-cg.com###main_mv > div.mobile_mv
+18h.mm-cg.com##^#main_mv > a
+18h.mm-cg.com###main_mv > a
+18h.mm-cg.com##^#main_mv > font > a > font
+18h.mm-cg.com###main_mv > font > a > font
+18h.mm-cg.com##^#main_mv > br
+18h.mm-cg.com###main_mv > br
+18h.mm-cg.com##^#main_mv > img
+18h.mm-cg.com###main_mv > img
+18h.mm-cg.com##^.mobile_mv > span
+18h.mm-cg.com##.mobile_mv > span
+18h.mm-cg.com##^.mobile_mv > font
+18h.mm-cg.com##.mobile_mv > font
+18h.mm-cg.com##^.mobile_mv > br
+18h.mm-cg.com##.mobile_mv > br
+18h.mm-cg.com##^#container > br
+18h.mm-cg.com###container > br
+18h.mm-cg.com##^span#main > br
+18h.mm-cg.com##span#main > br
+18h.mm-cg.com##^#container a.aRF > br
+18h.mm-cg.com###container a.aRF > br
+18h.mm-cg.com##^#menu1Content > br
+18h.mm-cg.com##^#menu1Content div.altto br
+18h.mm-cg.com##^#div_mv_mp4cg
+18h.mm-cg.com###div_mv_mp4cg
+18h.mm-cg.com##^html body div center div:not(#show_cg_html)
+18h.mm-cg.com##html body div center div:not(#show_cg_html)
+18h.mm-cg.com##^#Preview_Enlarge_aRF_Bcg_aButton
+18h.mm-cg.com###Preview_Enlarge_aRF_Bcg_aButton
+18h.mm-cg.com##^body > div > center > span
+18h.mm-cg.com##body > div > center > span
+18h.mm-cg.com##^body > div > center > center > a
+18h.mm-cg.com##body > div > center > center > a
+18h.mm-cg.com##^body > div > center > br
+18h.mm-cg.com##body > div > center > br
+18h.mm-cg.com##^body > div > center > center > br
+18h.mm-cg.com##body > div > center > center > br
+18h.mm-cg.com##^html > body > div > center > div#show_cg_html > center > p
+18h.mm-cg.com##html > body > div > center > div#show_cg_html > center > p
+18h.mm-cg.com##^html > body > div > center > center > span.rand_list
+18h.mm-cg.com##html > body > div > center > center > span.rand_list
+18h.mm-cg.com##^#show_cg_html > br
+18h.mm-cg.com###show_cg_html > br
+18h.mm-cg.com##^body > font
+18h.mm-cg.com##body > font
+! style
+18h.mm-cg.com##body:style(background-color: #efefef !important)
+18h.mm-cg.com##body:style(margin: 0 !important)
+18h.mm-cg.com##body > div:style(width: 100% !important)
+18h.mm-cg.com##body div center div#show_cg_html center img:style(width: 100% !important)
+18h.mm-cg.com##span#main:style(display: block !important)
+18h.mm-cg.com##span#main:style(padding: 1rem !important)
+18h.mm-cg.com###Main_content:style(background-color: #fafafa !important)
+18h.mm-cg.com###Main_content:style(width: 100% !important)
+18h.mm-cg.com###Main_content:style(display: flex !important)
+18h.mm-cg.com###Main_content:style(flex-direction: column-reverse !important)
+18h.mm-cg.com###container:style(background-image: none !important)
+18h.mm-cg.com###container:style(background-color: #fafafa !important)
+18h.mm-cg.com###container:style(width: 100% !important)
+18h.mm-cg.com###container a.aRF:style(display: block !important)
+18h.mm-cg.com###container a.aRF:style(border-radius: 0.25rem !important)
+18h.mm-cg.com###container a.aRF:style(margin-bottom: 2rem !important)
+18h.mm-cg.com###container a.aRF:style(text-align: left !important)
+18h.mm-cg.com###container a.aRF:style(font-size: 1.25rem !important)
+18h.mm-cg.com###container a.aRF:style(font-weight: 500 !important)
+18h.mm-cg.com###container a.aRF:style(line-height: 1.5rem !important)
+18h.mm-cg.com###container a.aRF img:style(margin-top: 1rem !important)
+18h.mm-cg.com###container a.aRF img:style(width: 100% !important)
+18h.mm-cg.com###container a.aRF img:style(max-width: 100% !important)
+18h.mm-cg.com###menu1Content:style(background-image: none !important)
+18h.mm-cg.com###menu1Content:style(float: none !important)
+18h.mm-cg.com###menu1Content:style(width: 100% !important)
+18h.mm-cg.com###menu1Content:style(display: flex !important)
+18h.mm-cg.com###menu1Content:style(flex-direction: column-reverse !important)
+18h.mm-cg.com###menu1Content div.altto:style(order: 2 !important)
+18h.mm-cg.com###menu1Content div.altto:style(padding: 1rem !important)
+18h.mm-cg.com###menu1Content div.altto input:style(font-size: 1.25rem !important)
+18h.mm-cg.com###menu1Content div.altto input:style(display: block !important)
+18h.mm-cg.com###menu1Content div.altto input:style(width: 100% !important)
+18h.mm-cg.com###menu1Content div.altto input:style(height: 2.5rem !important)
+18h.mm-cg.com###menu1Content div.altto input:style(margin-bottom: 1rem !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(-moz-appearance: none !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(background-color: #333 !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(color: #fff !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(padding: 1em !important)
+18h.mm-cg.com###menu1Content div.altto input[type="submit"]:style(height: auto !important)
+18h.mm-cg.com###menu1Content div.altto select:style(font-size: 1.25rem !important)
+18h.mm-cg.com###menu1Content div.altto select:style(display: block !important)
+18h.mm-cg.com###menu1Content div.altto select:style(width: 100% !important)
+18h.mm-cg.com###menu1Content div.altto select:style(height: 2.5rem !important)
+18h.mm-cg.com###menu1Content div.altto select:style(margin-bottom: 1rem !important)
+18h.mm-cg.com##center form #MainMenu_but:style(display: flex !important)
+18h.mm-cg.com##center form #MainMenu_but:style(flex-direction: column-reverse !important)
+18h.mm-cg.com##center form #MainMenu_but:style(text-align: center !important)
+18h.mm-cg.com##center form input.but_enlarge:style(-moz-appearance: none !important)
+18h.mm-cg.com##center form input.but_enlarge:style(display: block !important)
+18h.mm-cg.com##center form input.but_enlarge:style(width: 100% !important)
+18h.mm-cg.com##center form input.but_enlarge:style(height: auto !important)
+18h.mm-cg.com##center form input.but_enlarge:style(font-size: 3rem !important)
+18h.mm-cg.com##center form input.but_enlarge:style(padding: 6rem !important)
+18h.mm-cg.com##center form input.but_enlarge#but_Prev:style(font-size: 1rem !important)
+18h.mm-cg.com##center form input.but_enlarge#but_Prev:style(padding: 3rem !important)
+18h.mm-cg.com##center form input.but_enlarge:style(margin: 1rem 0 !important)
+18h.mm-cg.com##center form input.but_enlarge:style(color: #555 !important)
+18h.mm-cg.com##center form input.but_enlarge:style(background-color: #fff !important)
+18h.mm-cg.com##center form input.but_enlarge:style(border: 1px solid transparent !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(-moz-appearance: none !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(display: block !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(width: 100% !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(font-size: 1rem !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(padding: 3rem !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(height: auto !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(text-align: center !important)
+18h.mm-cg.com##center form select.sel_enlarge:style(border: 1px solid transparent !important)
+18h.mm-cg.com###but_Prev_02:style(display: none !important)
+18h.mm-cg.com###ReplacePage_select_02:style(display: none !important)
+18h.mm-cg.com###cg_width_select_02:style(display: none !important)
+18h.mm-cg.com###but_Next_02:style(display: none !important)
+! others
+||18h.mm-cg.com/mmad.js$script
