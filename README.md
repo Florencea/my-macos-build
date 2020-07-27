@@ -26,7 +26,6 @@ curl -L https://git.io/florencea-install -o install.sh;sh install.sh
           ├──[Data copy(GarageBand) to ~/]
           ├──[Data copy(GitHub) to ~/]
           ├──[Data copy(Installations) to ~/]
-          ├──[Data copy(Photos) to ~/]
           └──[Data copy(Repositories) to ~/]
 ```
 
