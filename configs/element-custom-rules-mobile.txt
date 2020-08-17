@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-07-25
+! Last updated: 2020-08-17
 
 ! manhuaren.com
 ! remove
@@ -33,7 +33,10 @@ manhuaren.com###cp_img:style(padding-top: 60px !important)
 ! remove
 wnacg.org##^.sh
 wnacg.org##.sh
+wnacg.org##div:matches-css(display: none):remove()
 wnacg.org##^script:has-text(GoogleAnalyticsObject)
+wnacg.org##^script:has-text(tips)
+wnacg.org##^script[src*='cnzz']
 
 ! 18av.tv
 ! remove
@@ -364,9 +367,12 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###show_cg_html > br
 18h.mm-cg.com##^body > font
 18h.mm-cg.com##body > font
+18h.mm-cg.com##^body > br
+18h.mm-cg.com##body > br
 ! style
 18h.mm-cg.com##body:style(background-color: #efefef !important)
 18h.mm-cg.com##body:style(margin: 0 !important)
+18h.mm-cg.com##body:style(font-size: 0)
 18h.mm-cg.com##body > div:style(width: 100% !important)
 18h.mm-cg.com##body div center div#show_cg_html center img:style(width: 100% !important)
 18h.mm-cg.com##span#main:style(display: block !important)
@@ -439,3 +445,13 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com###but_Next_02:style(display: none !important)
 ! others
 ||18h.mm-cg.com/mmad.js$script
+
+! external datalist
+! 18av.tv
+18av.tv##.altto form:after:style(font-size: 1.5em !important)
+18av.tv##.altto form:after:style(font-family: monospace !important)
+18av.tv##.altto form:after:style(line-height: 2em !important)
+18av.tv##.altto form:after:style(color: #555 !important)
+18av.tv##.altto form:after:style(display: block !important)
+18av.tv##.altto form:after:style(word-break: break-all !important)
+18av.tv##.altto form:after:style(content: '#19420|打著招聘 #19722|專業女學 #17939|０９５１ #00000|　　水木 #00000|　　夏目 #00000|　　美由 #00000|　　白戶 #00000|　　橫橋 #00000|　　結佳 #13709|愛原久美 #00000|北野麻美 #00000|遠山雪菜 #00000|　　浪川 #00000|　　宮本 #25630|１３３９' !important)
