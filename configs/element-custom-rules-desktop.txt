@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Desktop
-! Last updated: 2020-08-02
+! Last updated: 2020-08-19
 
 ! universal rules
 ! fonts
@@ -74,6 +74,11 @@ cool3c.com##.board-mobile
 cool3c.com##^link[rel="dns-prefetch"]
 cool3c.com##^script[id*='track']
 cool3c.com##^script:has-text(admanager.scan)
+!cool3c.com##^script:has-text(scorecardresearch)
+cool3c.com##^img[src*='scorecardresearch']
+cool3c.com##^script[src*='onesignal']
+cool3c.com##^script[src*='cooperation']
+cool3c.com##^script[src*='googlesyndication']
 ||trackjay.cool3c.com^$script
 ||cool3c.com/*/img-failed*$image
 ! style
@@ -90,6 +95,12 @@ dmhy.org##^#\31 280_ad > a
 dmhy.org###\31 280_ad > a
 dmhy.org##^div.clear:has(a[href='/topics/add'])
 dmhy.org##div.clear:has(a[href='/topics/add'])
+dmhy.org##^script[src*='kiwihk']
+dmhy.org##^script:has-text(baidu)
+dmhy.org##^script:has-text(bebi)
+dmhy.org##^script:has-text(histats)
+dmhy.org##^img[src*='histats']
+dmhy.org##^script[src*='tanx']
 ! style
 dmhy.org##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
 dmhy.org##.topic-main:style(text-align: left)
@@ -154,6 +165,10 @@ inside.com.tw##^div.infinite
 inside.com.tw##div.infinite
 inside.com.tw##^div.content > div.post
 inside.com.tw##div.content > div.post
+inside.com.tw##^div.hero
+inside.com.tw##div.hero
+inside.com.tw##^img[src*='atrk']
+inside.com.tw##^script[src*='rocket-loader']
 ! style
 inside.com.tw##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
 
@@ -209,6 +224,8 @@ ithome.com.tw##^#skip-link
 ithome.com.tw###skip-link
 ithome.com.tw##^footer.footer
 ithome.com.tw##footer.footer
+ithome.com.tw##^script[src*='ithome.com.tw/sites/default/files/js/js_']
+ithome.com.tw##^script:has-text(facebook)
 ! style
 ithome.com.tw##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important; background-color: #f7f7f7 !important;)
 ithome.com.tw##.main-container > div.row-fluid:style(display: flex; justify-content: center; width: 100%)
@@ -220,22 +237,35 @@ ithome.com.tw##.img-wrapper > div:style(border: 1px solid #EDEDED)
 ! macrumors.com
 ! remove
 macrumors.com##^#mrCarouselPrev:upward(div)
-macrumors.com###mrCarouselPrev:upward(div)
+macrumors.com###mrCarouselPrev:upward(div):remove()
 macrumors.com##^.sidebarblock
-macrumors.com##.sidebarblock
+macrumors.com##.sidebarblock:remove()
 macrumors.com##^div[class^=social--]
-macrumors.com##div[class^=social--]
+macrumors.com##div[class^=social--]:remove()
 macrumors.com##^script:has-text(sidebarblock)
+macrumors.com##^script[src*='platform.twitter.com']
+macrumors.com##^script[src*='geni.us']
+macrumors.com##^script[src*='skimresources']
+macrumors.com##^script:has-text(quantserve)
+macrumors.com##^script[src*='onthe']
+macrumors.com##^script[src*='scroll']
+macrumors.com##^script:has-text(googletagmanager)
 ! style
 macrumors.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
 
 ! pixiv.net
 ! remove
-pixiv.net##div:has(> iframe[width="468"][height="60"])
-pixiv.net##div:has(> iframe[width="500"][height="520"])
-pixiv.net##div:has(> iframe[width="728"][height="90"])
+pixiv.net##div:has(> iframe[width="468"][height="60"]):remove()
+pixiv.net##div:has(> iframe[width="500"][height="520"]):remove()
+pixiv.net##div:has(> iframe[width="728"][height="90"]):remove()
+pixiv.net##div:has(> iframe[width="50"][height="50"]):remove()
+pixiv.net##div:has(> iframe[width="300"][height="250"]):remove()
+pixiv.net##div:has(> iframe[width="1224"][height="288"]):remove()
 pixiv.net##li[size="2"]
 pixiv.net##a[href*='remove_ads']
+pixiv.net##^script[src*='doubleclick']
+pixiv.net##^script:has-text(_kiq)
+pixiv.net##^script:has-text(googletagmanager)
 ||ads-pixiv.net
 
 ! techbang.com
@@ -292,6 +322,15 @@ techbang.com##^#carousel-images-2
 techbang.com###carousel-images-2
 techbang.com##^#carousel-images-3
 techbang.com###carousel-images-3
+techbang.com##^script:has-text(googletagmanager)
+techbang.com##^script:has-text(popin)
+techbang.com##^script:has-text(atrk)
+techbang.com##^script:has-text(dable)
+!techbang.com##^script[src*='application']
+techbang.com##^script:has-text(newrelic)
+!techbang.com##^script:has-text(google-analytics)
+!techbang.com##^script:has-text(googletagservices)
+techbang.com##^script:has-text(facebook)
 ! style
 techbang.com##body:style(font-family: Inter, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 techbang.com##.main-content:style(width: 100% !important; float: none !important)
@@ -324,6 +363,17 @@ thenewslens.com##^.fb-comment-box
 thenewslens.com##.fb-comment-box
 thenewslens.com##^.social-btns
 thenewslens.com##.social-btns
+thenewslens.com##^script[src*='app-']
+thenewslens.com##^script[src*='appier']
+thenewslens.com##^img[src*='mookie1']
+thenewslens.com##^script[src*='admanager']
+thenewslens.com##^script:has-text(atrk)
+thenewslens.com##^img[src*='atrk']
+thenewslens.com##^script[src*='facebook']
+thenewslens.com##^script[src*='ad-block']
+thenewslens.com##^script[src*='_piano']
+thenewslens.com##^script[src*='googlesyndication']
+thenewslens.com##^script:has-text(scorecardresearch)
 
 ! translate.google.com
 ! remove
@@ -379,6 +429,19 @@ xfastest.com##^.evo_lightboxes
 xfastest.com##.evo_lightboxes
 xfastest.com##^.vw-site-social-profile
 xfastest.com##.vw-site-social-profile
+xfastest.com##^link[rel='dns-prefetch']
+xfastest.com##^script[src*='線上客服']
+xfastest.com##^script[src*='onesignal']
+xfastest.com##^script[src*='maps.google']
+xfastest.com##^script[src*='googlesyndication']
+xfastest.com##^script[src*='cloudflareinsights']
+xfastest.com##^script:has-text(googletagmanager)
+xfastest.com##^script[src*='googletagmanager']
+xfastest.com##^script:has-text(fjs)
+xfastest.com##^script[src*='facebook-tracking']
+xfastest.com##^script[src*='google-tracking']
+xfastest.com##^script[src*='gtm-']
+
 ! style
 xfastest.com##body:style(font-family: Inter, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##cite:style(font-family: Inter, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
