@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-08-17
+! Last updated: 2020-08-19
 
 ! manhuaren.com
 ! remove
@@ -26,6 +26,9 @@ manhuaren.com##^.guide
 manhuaren.com##.guide
 manhuaren.com##^body > a
 manhuaren.com##body > a
+manhuaren.com##^script:has-text(cnzz)
+manhuaren.com##^script:has-text(mhrsta)
+soman.com##^script:has-text(cnzz)
 ! style
 manhuaren.com###cp_img:style(padding-top: 60px !important)
 
@@ -33,10 +36,17 @@ manhuaren.com###cp_img:style(padding-top: 60px !important)
 ! remove
 wnacg.org##^.sh
 wnacg.org##.sh
-wnacg.org##div:matches-css(display: none):remove()
+wnacg.org##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show)
+wnacg.org##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):remove()
+wnacg.org##^.Introduct > :not(.subHeader):not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
+wnacg.org##.Introduct > :not(.subHeader):not(.Introduct_Sub):not(.txtDesc):not(.openBtn):remove()
+wnacg.org##^[href="/S1z"]
+wnacg.org##[href="/S1z"]:remove()
 wnacg.org##^script:has-text(GoogleAnalyticsObject)
 wnacg.org##^script:has-text(tips)
 wnacg.org##^script[src*='cnzz']
+! style
+wnacg.org##.Introduct .openBtn:style(background-image: none !important)
 
 ! 18av.tv
 ! remove
@@ -93,6 +103,7 @@ wnacg.org##^script[src*='cnzz']
 18av.tv##^script:has-text(_Hasync)
 18av.tv##^script[src*='googletagmanager']
 18av.tv##^script[src*='mmad']
+18av.tv##^script[src*='exosrv']
 18av.tv##^#menu1Content a.c1
 18av.tv###menu1Content a.c1
 18av.tv##^#menu1Content div.HS
@@ -313,8 +324,11 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com##^script:has-text(mvcg_content_a)
 18h.mm-cg.com##^script:has-text(BBshowBox)
 18h.mm-cg.com##^script:has-text(CCshowBox)
+18h.mm-cg.com##^script:has-text(cnzz)
+18h.mm-cg.com##^script:has-text(histats)
 18h.mm-cg.com##^script[src*='googletagmanager']
 18h.mm-cg.com##^script[src*='mmad']
+18h.mm-cg.com##^script[src*='tsyndicate']
 18h.mm-cg.com##^#menu1Content a.c1
 18h.mm-cg.com###menu1Content a.c1
 18h.mm-cg.com##^#menu1Content div.HS
@@ -369,6 +383,10 @@ imgscloud.com###coverclose_bottom
 18h.mm-cg.com##body > font
 18h.mm-cg.com##^body > br
 18h.mm-cg.com##body > br
+18h.mm-cg.com##^#SpanadBox
+18h.mm-cg.com###SpanadBox
+18h.mm-cg.com##^span#twcgUUU
+18h.mm-cg.com##span#twcgUUU
 ! style
 18h.mm-cg.com##body:style(background-color: #efefef !important)
 18h.mm-cg.com##body:style(margin: 0 !important)
