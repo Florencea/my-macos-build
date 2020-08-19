@@ -167,6 +167,10 @@ inside.com.tw##^div.content > div.post
 inside.com.tw##div.content > div.post
 inside.com.tw##^div.hero
 inside.com.tw##div.hero
+inside.com.tw##^.Independent_study
+inside.com.tw##.Independent_study
+inside.com.tw##^.Independent_study_down
+inside.com.tw##.Independent_study_down
 inside.com.tw##^img[src*='atrk']
 inside.com.tw##^script[src*='rocket-loader']
 ! style
