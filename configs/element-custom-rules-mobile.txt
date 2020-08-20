@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-08-19
+! Last updated: 2020-08-20
 
 ! manhuaren.com
 ! remove
@@ -36,17 +36,22 @@ manhuaren.com###cp_img:style(padding-top: 60px !important)
 ! remove
 wnacg.org##^.sh
 wnacg.org##.sh
-wnacg.org##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show)
-wnacg.org##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):remove()
+wnacg.org##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show)
+wnacg.org##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):remove()
 wnacg.org##^.Introduct > :not(.subHeader):not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
 wnacg.org##.Introduct > :not(.subHeader):not(.Introduct_Sub):not(.txtDesc):not(.openBtn):remove()
 wnacg.org##^[href="/S1z"]
 wnacg.org##[href="/S1z"]:remove()
+wnacg.org##^#Subscribe
+wnacg.org###Subscribe
 wnacg.org##^script:has-text(GoogleAnalyticsObject)
 wnacg.org##^script:has-text(tips)
 wnacg.org##^script[src*='cnzz']
 ! style
 wnacg.org##.Introduct .openBtn:style(background-image: none !important)
+wnacg.org##.block-pagination .prev:style(width: 13.5em !important)
+wnacg.org##.block-pagination .next:style(width: 13.5em !important)
+wnacg.org##.Introduct .sub_r .Btn:style(left: 90px !important; width: 170px !important; height: 135px !important; line-height: 135px !important; font-size: 18px !important;)
 
 ! 18av.tv
 ! remove
@@ -472,4 +477,4 @@ imgscloud.com###coverclose_bottom
 18av.tv##.altto form:after:style(color: #555 !important)
 18av.tv##.altto form:after:style(display: block !important)
 18av.tv##.altto form:after:style(overflow-wrap: normal !important)
-18av.tv##.altto form:after:style(content: '#19420|打著招聘 #19722|專業女學 #17939|0951 #00000|水木 #00000|夏目 #00000|美由 #00000|白戶 #00000|橫橋 #00000|結佳 #13709|愛原久美 #00000|北野麻美 #00000|遠山雪菜 #00000|浪川 #00000|宮本 #25630|1339' !important)
+18av.tv##.altto form:after:style(content: '#19420|打著招聘 #19722|專業女學 #17939|0951 #00000|水木 #00000|夏目 #00000|美由 #00000|白戶 #00000|橫橋 #00000|結佳 #13709|愛原久美 #12602|極萌 #00000|北野麻美 #00000|遠山雪菜 #00000|浪川 #00000|宮本 #25630|1339' !important)
