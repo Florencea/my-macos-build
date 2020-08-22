@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Desktop
-! Last updated: 2020-08-19
+! Last updated: 2020-08-22
 
 ! universal rules
 ! fonts
@@ -254,6 +254,7 @@ macrumors.com##^script:has-text(quantserve)
 macrumors.com##^script[src*='onthe']
 macrumors.com##^script[src*='scroll']
 macrumors.com##^script:has-text(googletagmanager)
+macrumors.com##^script[src*='gleamjs']
 ! style
 macrumors.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
 
@@ -326,15 +327,30 @@ techbang.com##^#carousel-images-2
 techbang.com###carousel-images-2
 techbang.com##^#carousel-images-3
 techbang.com###carousel-images-3
+techbang.com##^.large-content
+techbang.com##.large-content:remove()
+techbang.com##^.techbang_i_h_970x250
+techbang.com##.techbang_i_h_970x250
+techbang.com##^.techbang_i_d_970x250
+techbang.com##.techbang_i_d_970x250
+techbang.com##^.top-3-text
+techbang.com##.top-3-text
 techbang.com##^script:has-text(googletagmanager)
 techbang.com##^script:has-text(popin)
 techbang.com##^script:has-text(atrk)
 techbang.com##^script:has-text(dable)
-!techbang.com##^script[src*='application']
 techbang.com##^script:has-text(newrelic)
-!techbang.com##^script:has-text(google-analytics)
-!techbang.com##^script:has-text(googletagservices)
+techbang.com##^script:has-text(idle_popup)
+techbang.com##^script:has-text(check_fb_ready)
 techbang.com##^script:has-text(facebook)
+techbang.com##^script:has-text(NREUM)
+techbang.com##script:has-text(carousel-images):remove()
+techbang.com##^script[src*='trvdp.com']
+techbang.com##^script[src*='sync']
+techbang.com##^script:has-text(guoshipartners.com)
+!techbang.com##^script:has-text(google-analytics) for article infinity scroll
+!techbang.com##^script[src*='application'] for article infinity scroll
+!techbang.com##^script:has-text(googletag) for image lazyload
 ! style
 techbang.com##body:style(font-family: Inter, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 techbang.com##.main-content:style(width: 100% !important; float: none !important)
