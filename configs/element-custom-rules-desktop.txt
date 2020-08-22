@@ -468,3 +468,4 @@ xfastest.com##.vw-review-item-title:style(font-family: Inter, -apple-system, "Se
 xfastest.com##.vw-pagination-load-more:style(font-family: Inter, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##.vw-post-content:style(line-height: 3rem !important)
 xfastest.com##.entry-title:style(font-size: 3.5rem !important; line-height: 5rem !important)
+xfastest.com##a:focus:style(outline: none !important)
