@@ -95,6 +95,13 @@ print_step "git configuations"
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
 
+print_step "rust installation"
+(set -x; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
+(set -x; set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths)
+(set -x; mkdir -p ~/.config/fish/completions)
+(set -x; rustup completions fish > ~/.config/fish/completions/rustup.fish)
+(set -x; brew install rust-analyzer)
+
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
 (set -x; killall Dock)
