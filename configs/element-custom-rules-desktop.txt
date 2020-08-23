@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Desktop
-! Last updated: 2020-08-22
+! Last updated: 2020-08-23
 
 ! universal rules
 ! fonts
@@ -19,82 +19,96 @@
 ! cool3c.com
 ! remove
 cool3c.com##^#body > .row:has(> .col-12 > .index-sticky)
-cool3c.com###body > .row:has(> .col-12 > .index-sticky)
+cool3c.com###body > .row:has(> .col-12 > .index-sticky):remove()
 cool3c.com##^#body > .row:has(> .col-12 > .board-BT_a_H)
-cool3c.com###body > .row:has(> .col-12 > .board-BT_a_H)
+cool3c.com###body > .row:has(> .col-12 > .board-BT_a_H):remove()
 cool3c.com##^#header
-cool3c.com###header
+cool3c.com###header:remove()
 cool3c.com##^.article-social
-cool3c.com##.article-social
+cool3c.com##.article-social:remove()
 cool3c.com##^.comments
-cool3c.com##.comments
+cool3c.com##.comments:remove()
 cool3c.com##^.board-new.board-BT_li_iL
-cool3c.com##.board-new.board-BT_li_iL
-cool3c.com##.board-innity-in-post
+cool3c.com##.board-new.board-BT_li_iL:remove()
 cool3c.com##^.board-innity-in-post
+cool3c.com##.board-innity-in-post:remove()
 cool3c.com##^.board-BT_a_SB
-cool3c.com##.board-BT_a_SB
+cool3c.com##.board-BT_a_SB:remove()
 cool3c.com##^.board-BT_a_SBS
-cool3c.com##.board-BT_a_SBS
+cool3c.com##.board-BT_a_SBS:remove()
 cool3c.com##^.board-BT_ar_iR_PaL
-cool3c.com##.board-BT_ar_iR_PaL
+cool3c.com##.board-BT_ar_iR_PaL:remove()
 cool3c.com##^.board-BT_ar_iR_PbL
-cool3c.com##.board-BT_ar_iR_PbL
+cool3c.com##.board-BT_ar_iR_PbL:remove()
 cool3c.com##^.board-BT_ar_O_11
-cool3c.com##.board-BT_ar_O_11
+cool3c.com##.board-BT_ar_O_11:remove()
 cool3c.com##^.board-BT_li_iL
-cool3c.com##.board-BT_li_iL
+cool3c.com##.board-BT_li_iL:remove()
 cool3c.com##^[src*="img-failed"]
-cool3c.com##[src*="img-failed"]
+cool3c.com##[src*="img-failed"]:remove()
 cool3c.com##^[src="/assets/img/img-failed.webp"]
-cool3c.com##[src="/assets/img/img-failed.webp"]
+cool3c.com##[src="/assets/img/img-failed.webp"]:remove()
 cool3c.com##^[src="/assets/img/img-failed.jpg"]
-cool3c.com##[src="/assets/img/img-failed.jpg"]
+cool3c.com##[src="/assets/img/img-failed.jpg"]:remove()
 cool3c.com##^.gtm-track.fa-2x.quick-button
-cool3c.com##.gtm-track.fa-2x.quick-button
+cool3c.com##.gtm-track.fa-2x.quick-button:remove()
 cool3c.com##^section.comment-area
-cool3c.com##section.comment-area
+cool3c.com##section.comment-area:remove()
 cool3c.com##^div.social-bar
-cool3c.com##div.social-bar
+cool3c.com##div.social-bar:remove()
 cool3c.com##^body > aside
-cool3c.com##body > aside
+cool3c.com##body > aside:remove()
 cool3c.com##^.readmore
-cool3c.com##.readmore
+cool3c.com##.readmore:remove()
 cool3c.com##^.article > .tag
-cool3c.com##.article > .tag
+cool3c.com##.article > .tag:remove()
 cool3c.com##^.article > .related
-cool3c.com##.article > .related
+cool3c.com##.article > .related:remove()
 cool3c.com##^.article > .source
-cool3c.com##.article > .source
+cool3c.com##.article > .source:remove()
 cool3c.com##^noscript
 cool3c.com##^#fb-root
-cool3c.com###fb-root
+cool3c.com###fb-root:remove()
 cool3c.com##^.board-mobile
-cool3c.com##.board-mobile
+cool3c.com##.board-mobile:remove()
+cool3c.com##^.rewrite-article-infinite
+cool3c.com##.rewrite-article-infinite:remove()
+cool3c.com##^.board-c3c_all_top_video
+cool3c.com##.board-c3c_all_top_video:remove()
+cool3c.com##^.board-c3c_all_float_inner
+cool3c.com##.board-c3c_all_float_inner:remove()
+cool3c.com##^#body > .row:not(.side-sync)
+cool3c.com###body > .row:not(.side-sync):remove()
+cool3c.com##^.fixed-bottom
+cool3c.com##.fixed-bottom:remove()
 cool3c.com##^link[rel="dns-prefetch"]
 cool3c.com##^script[id*='track']
 cool3c.com##^script:has-text(admanager.scan)
-!cool3c.com##^script:has-text(scorecardresearch)
 cool3c.com##^img[src*='scorecardresearch']
 cool3c.com##^script[src*='onesignal']
 cool3c.com##^script[src*='cooperation']
 cool3c.com##^script[src*='googlesyndication']
+!cool3c.com##^script:has-text(scorecardresearch) for article css
 ||trackjay.cool3c.com^$script
 ||cool3c.com/*/img-failed*$image
 ! style
 cool3c.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
-cool3c.com###main:style(padding: 0 !important)
+cool3c.com###main:style(padding: 0 !important; transition: none !important)
 cool3c.com##header:style(padding: 2rem !important)
 cool3c.com##.article:style(padding: 2rem !important)
 
 ! dmhy.org
 ! remove
 dmhy.org##^.announce
-dmhy.org##.announce
+dmhy.org##.announce:remove()
 dmhy.org##^#\31 280_ad > a
-dmhy.org###\31 280_ad > a
+dmhy.org###\31 280_ad > a:remove()
 dmhy.org##^div.clear:has(a[href='/topics/add'])
-dmhy.org##div.clear:has(a[href='/topics/add'])
+dmhy.org##div.clear:has(a[href='/topics/add']):remove()
+dmhy.org##^#\31 280_adv
+dmhy.org###\31 280_adv:remove()
+dmhy.org##^.user-sidebar > div.ui-corner-all.box:nth-of-type(4)
+dmhy.org##.user-sidebar > div.ui-corner-all.box:nth-of-type(4):remove()
 dmhy.org##^script[src*='kiwihk']
 dmhy.org##^script:has-text(baidu)
 dmhy.org##^script:has-text(bebi)
@@ -111,21 +125,33 @@ e-hentai.org##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, 
 ! exhentai.org
 ! style
 exhentai.org##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
+exhentai.org##.gl4t:hover:style(max-height: none !important)
 
 ! fandom.com
 ! remove
 fandom.com##^.banner-notifications-placeholder
-fandom.com##.banner-notifications-placeholder
+fandom.com##.banner-notifications-placeholder:remove()
 fandom.com##^#WikiaBar
-fandom.com###WikiaBar
+fandom.com###WikiaBar:remove()
 fandom.com##^#WikiaTopAds
-fandom.com###WikiaTopAds
+fandom.com###WikiaTopAds:remove()
 fandom.com##^#top_boxad
-fandom.com###top_boxad
+fandom.com###top_boxad:remove()
+fandom.com##^#WikiaRailWrapper
+fandom.com###WikiaRailWrapper:remove()
+fandom.com##^script[src*='fastly-insights']
+fandom.com##^script[src*='tracker']
+fandom.com##^script[src*='tracking']
+fandom.com##^script[src*='google-analytics']
+fandom.com##^script:has-text(googletagmanager)
+fandom.com##^noscript
 ! style
 fandom.com##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;)
+fandom.com###WikiaMainContent:style(width: 100% !important; padding: 1em !important;)
 
 ! github.com
+! remove
+github.com##^script[src*='behaviors']
 ! style
 github.com##.text-mono:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important;)
 github.com##.blob-code-inner:style(font-family: Fira Code, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important;)
@@ -152,25 +178,25 @@ google.com##h1:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Seg
 ! inside.com.tw
 ! remove
 inside.com.tw##^.post_list_item-ad
-inside.com.tw##.post_list_item-ad
+inside.com.tw##.post_list_item-ad:remove()
 inside.com.tw##^.post_toolbox
-inside.com.tw##.post_toolbox
+inside.com.tw##.post_toolbox:remove()
 inside.com.tw##^.post_list_item:has(a.badge-color10)
-inside.com.tw##.post_list_item:has(a.badge-color10)
+inside.com.tw##.post_list_item:has(a.badge-color10):remove()
 inside.com.tw##^div[class^=adv]
-inside.com.tw##div[class^=adv]
+inside.com.tw##div[class^=adv]:remove()
 inside.com.tw##^div[class^=dfp_ad]
-inside.com.tw##div[class^=dfp_ad]
+inside.com.tw##div[class^=dfp_ad]:remove()
 inside.com.tw##^div.infinite
-inside.com.tw##div.infinite
+inside.com.tw##div.infinite:remove()
 inside.com.tw##^div.content > div.post
-inside.com.tw##div.content > div.post
+inside.com.tw##div.content > div.post:remove()
 inside.com.tw##^div.hero
-inside.com.tw##div.hero
+inside.com.tw##div.hero:remove()
 inside.com.tw##^.Independent_study
-inside.com.tw##.Independent_study
+inside.com.tw##.Independent_study:remove()
 inside.com.tw##^.Independent_study_down
-inside.com.tw##.Independent_study_down
+inside.com.tw##.Independent_study_down:remove()
 inside.com.tw##^img[src*='atrk']
 inside.com.tw##^script[src*='rocket-loader']
 ! style
@@ -179,56 +205,60 @@ inside.com.tw##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont,
 ! ithome.com.tw
 ! remove
 ithome.com.tw##^#block-block-7
-ithome.com.tw###block-block-7
+ithome.com.tw###block-block-7:remove()
 ithome.com.tw##^#block-block-10
-ithome.com.tw###block-block-10
+ithome.com.tw###block-block-10:remove()
 ithome.com.tw##^#block-block-23
-ithome.com.tw###block-block-23
+ithome.com.tw###block-block-23:remove()
 ithome.com.tw##^#block-block-24
-ithome.com.tw###block-block-24
+ithome.com.tw###block-block-24:remove()
 ithome.com.tw##^#block-block-37
-ithome.com.tw###block-block-37
+ithome.com.tw###block-block-37:remove()
 ithome.com.tw##^#block-block-45
-ithome.com.tw###block-block-45
+ithome.com.tw###block-block-45:remove()
 ithome.com.tw##^#block-block-74
-ithome.com.tw###block-block-74
+ithome.com.tw###block-block-74:remove()
 ithome.com.tw##^#block-block-91
-ithome.com.tw###block-block-91
+ithome.com.tw###block-block-91:remove()
 ithome.com.tw##^#block-views-similarterms-block
-ithome.com.tw###block-views-similarterms-block
+ithome.com.tw###block-views-similarterms-block:remove()
 ithome.com.tw##^#skybanner
-ithome.com.tw###skybanner
+ithome.com.tw###skybanner:remove()
 ithome.com.tw##^aside[role="complementary"]
-ithome.com.tw##aside[role="complementary"]
+ithome.com.tw##aside[role="complementary"]:remove()
 ithome.com.tw##^.side-extra
-ithome.com.tw##.side-extra
+ithome.com.tw##.side-extra:remove()
 ithome.com.tw##^.content-summary
-ithome.com.tw##.content-summary
+ithome.com.tw##.content-summary:remove()
 ithome.com.tw##^.field-name-field-photo-source
-ithome.com.tw##.field-name-field-photo-source
+ithome.com.tw##.field-name-field-photo-source:remove()
 ithome.com.tw##^.socail-btns-on-top
-ithome.com.tw##.socail-btns-on-top
+ithome.com.tw##.socail-btns-on-top:remove()
 ithome.com.tw##^.social-btn-set
-ithome.com.tw##.social-btn-set
+ithome.com.tw##.social-btn-set:remove()
 ithome.com.tw##^.view-display-id-article_category
-ithome.com.tw##.view-display-id-article_category
+ithome.com.tw##.view-display-id-article_category:remove()
 ithome.com.tw##^#headerbar
-ithome.com.tw###headerbar
+ithome.com.tw###headerbar:remove()
 ithome.com.tw##^#hpad930up
-ithome.com.tw###hpad930up
+ithome.com.tw###hpad930up:remove()
 ithome.com.tw##^#cyber
-ithome.com.tw###cyber
+ithome.com.tw###cyber:remove()
 ithome.com.tw##^.ad-banner-text
-ithome.com.tw##.ad-banner-text
+ithome.com.tw##.ad-banner-text:remove()
 ithome.com.tw##^.today-featured
-ithome.com.tw##.today-featured
+ithome.com.tw##.today-featured:remove()
 ithome.com.tw##^#fb-root
-ithome.com.tw###fb-root
+ithome.com.tw###fb-root:remove()
 ithome.com.tw##^#skip-link
-ithome.com.tw###skip-link
+ithome.com.tw###skip-link:remove()
 ithome.com.tw##^footer.footer
-ithome.com.tw##footer.footer
+ithome.com.tw##footer.footer:remove()
+ithome.com.tw##^#block-facebook-boxes-fb-like
+ithome.com.tw###block-facebook-boxes-fb-like:remove()
 ithome.com.tw##^script[src*='ithome.com.tw/sites/default/files/js/js_']
+ithome.com.tw##^script[src*='ads']
+ithome.com.tw##^script[src*='facebook']
 ithome.com.tw##^script:has-text(facebook)
 ! style
 ithome.com.tw##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important; background-color: #f7f7f7 !important;)
@@ -266,8 +296,8 @@ pixiv.net##div:has(> iframe[width="728"][height="90"]):remove()
 pixiv.net##div:has(> iframe[width="50"][height="50"]):remove()
 pixiv.net##div:has(> iframe[width="300"][height="250"]):remove()
 pixiv.net##div:has(> iframe[width="1224"][height="288"]):remove()
-pixiv.net##li[size="2"]
-pixiv.net##a[href*='remove_ads']
+pixiv.net##li[size="2"]:remove()
+pixiv.net##a[href*='remove_ads']:remove()
 pixiv.net##^script[src*='doubleclick']
 pixiv.net##^script:has-text(_kiq)
 pixiv.net##^script:has-text(googletagmanager)
@@ -276,65 +306,65 @@ pixiv.net##^script:has-text(googletagmanager)
 ! techbang.com
 ! remove
 techbang.com##^#crazy_ad_small
-techbang.com###crazy_ad_small
+techbang.com###crazy_ad_small:remove()
 techbang.com##^.yt_playlist
-techbang.com##.yt_playlist
+techbang.com##.yt_playlist:remove()
 techbang.com##^.fixed-top
-techbang.com##.fixed-top
+techbang.com##.fixed-top:remove()
 techbang.com##^.ad_grey_floor
-techbang.com##.ad_grey_floor
+techbang.com##.ad_grey_floor:remove()
 techbang.com##^.post-side
-techbang.com##.post-side
+techbang.com##.post-side:remove()
 techbang.com##^section.fenced.section
-techbang.com##section.fenced.section
+techbang.com##section.fenced.section:remove()
 techbang.com##^.news-feed
-techbang.com##.news-feed
+techbang.com##.news-feed:remove()
 techbang.com##^.ad-section
-techbang.com##.ad-section
+techbang.com##.ad-section:remove()
 techbang.com##^.ads-next-to-logo
-techbang.com##.ads-next-to-logo
+techbang.com##.ads-next-to-logo:remove()
 techbang.com##^.ad
-techbang.com##.ad
+techbang.com##.ad:remove()
 techbang.com##^.advertise
-techbang.com##.advertise
+techbang.com##.advertise:remove()
 techbang.com##^#post-additional
-techbang.com###post-additional
+techbang.com###post-additional:remove()
 techbang.com##^.comments
-techbang.com##.comments
+techbang.com##.comments:remove()
 techbang.com##^div[class^=ads_both_sides]
-techbang.com##div[class^=ads_both_sides]
+techbang.com##div[class^=ads_both_sides]:remove()
 techbang.com##^div[id^=crazy_ad]
-techbang.com##div[id^=crazy_ad]
+techbang.com##div[id^=crazy_ad]:remove()
 techbang.com##^#stickies
-techbang.com###stickies
+techbang.com###stickies:remove()
 techbang.com##^#sidebar
-techbang.com###sidebar
+techbang.com###sidebar:remove()
 techbang.com##^#float-navigation
-techbang.com###float-navigation
+techbang.com###float-navigation:remove()
 techbang.com##^.headline
-techbang.com##.headline
+techbang.com##.headline:remove()
 techbang.com##^.carousel
-techbang.com##.carousel
+techbang.com##.carousel:remove()
 techbang.com##^noscript
-techbang.com##noscript
+techbang.com##noscript:remove()
 techbang.com##^.google-dfp
-techbang.com##.google-dfp
+techbang.com##.google-dfp:remove()
 techbang.com##^.main-content > section
-techbang.com##.main-content > section
+techbang.com##.main-content > section:remove()
 techbang.com##^.techbang_i_down_ad
-techbang.com##.techbang_i_down_ad
+techbang.com##.techbang_i_down_ad:remove()
 techbang.com##^#carousel-images-2
-techbang.com###carousel-images-2
+techbang.com###carousel-images-2:remove()
 techbang.com##^#carousel-images-3
-techbang.com###carousel-images-3
+techbang.com###carousel-images-3:remove()
 techbang.com##^.large-content
 techbang.com##.large-content:remove()
 techbang.com##^.techbang_i_h_970x250
-techbang.com##.techbang_i_h_970x250
+techbang.com##.techbang_i_h_970x250:remove()
 techbang.com##^.techbang_i_d_970x250
-techbang.com##.techbang_i_d_970x250
+techbang.com##.techbang_i_d_970x250:remove()
 techbang.com##^.top-3-text
-techbang.com##.top-3-text
+techbang.com##.top-3-text:remove()
 techbang.com##^script:has-text(googletagmanager)
 techbang.com##^script:has-text(popin)
 techbang.com##^script:has-text(atrk)
@@ -366,23 +396,23 @@ techbang.com##label.caption:style(border: 0 !important)
 ! thenewslens.com
 ! remove
 thenewslens.com##^.ad-btm
-thenewslens.com##.ad-btm
+thenewslens.com##.ad-btm:remove()
 thenewslens.com##^.op-social
-thenewslens.com##.op-social
+thenewslens.com##.op-social:remove()
 thenewslens.com##^.function-box
-thenewslens.com##.function-box
+thenewslens.com##.function-box:remove()
 thenewslens.com##^.member-function
-thenewslens.com##.member-function
+thenewslens.com##.member-function:remove()
 thenewslens.com##^.alert-bubble
-thenewslens.com##.alert-bubble
+thenewslens.com##.alert-bubble:remove()
 thenewslens.com##^.infinite-post-section
-thenewslens.com##.infinite-post-section
+thenewslens.com##.infinite-post-section:remove()
 thenewslens.com##^#infinite-article-recommend-section
-thenewslens.com###infinite-article-recommend-section
+thenewslens.com###infinite-article-recommend-section:remove()
 thenewslens.com##^.fb-comment-box
-thenewslens.com##.fb-comment-box
+thenewslens.com##.fb-comment-box:remove()
 thenewslens.com##^.social-btns
-thenewslens.com##.social-btns
+thenewslens.com##.social-btns:remove()
 thenewslens.com##^script[src*='app-']
 thenewslens.com##^script[src*='appier']
 thenewslens.com##^img[src*='mookie1']
@@ -398,9 +428,9 @@ thenewslens.com##^script:has-text(scorecardresearch)
 ! translate.google.com
 ! remove
 translate.google.com##^#wtgbr
-translate.google.com###wtgbr
+translate.google.com###wtgbr:remove()
 translate.google.com##^#gt-c
-translate.google.com###gt-c
+translate.google.com###gt-c:remove()
 ! style
 translate.google.com###contentframe:style(top: 0 !important;)
 
@@ -414,41 +444,41 @@ twreporter.org##[class*='list']:style(font-weight: 400 !important)
 ! xfastest.com
 ! remove
 xfastest.com##^#vwspc-section-1
-xfastest.com###vwspc-section-1
+xfastest.com###vwspc-section-1:remove()
 xfastest.com##^#vwspc-section-3
-xfastest.com###vwspc-section-3
+xfastest.com###vwspc-section-3:remove()
 xfastest.com##^#vwspc-section-4
-xfastest.com###vwspc-section-4
+xfastest.com###vwspc-section-4:remove()
 xfastest.com##^#vwspc-section-5
-xfastest.com###vwspc-section-5
+xfastest.com###vwspc-section-5:remove()
 xfastest.com##^#vwspc-section-6
-xfastest.com###vwspc-section-6
+xfastest.com###vwspc-section-6:remove()
 xfastest.com##^footer > .vw-site-footer-sidebars
-xfastest.com##footer > .vw-site-footer-sidebars
+xfastest.com##footer > .vw-site-footer-sidebars:remove()
 xfastest.com##^#wpfront-scroll-top-container
-xfastest.com###wpfront-scroll-top-container
+xfastest.com###wpfront-scroll-top-container:remove()
 xfastest.com##^#vw-post-shares-dialog
-xfastest.com###vw-post-shares-dialog
+xfastest.com###vw-post-shares-dialog:remove()
 xfastest.com##^.widget_vw_widget_social_counter
-xfastest.com##.widget_vw_widget_social_counter
+xfastest.com##.widget_vw_widget_social_counter:remove()
 xfastest.com##^.vw-top-bar-breaking-social
-xfastest.com##.vw-top-bar-breaking-social
+xfastest.com##.vw-top-bar-breaking-social:remove()
 xfastest.com##^#text-6
-xfastest.com###text-6
+xfastest.com###text-6:remove()
 xfastest.com##^#fb-root
-xfastest.com###fb-root
+xfastest.com###fb-root:remove()
 xfastest.com##^.pace
-xfastest.com##.pace
+xfastest.com##.pace:remove()
 xfastest.com##^.vw-post-navigation
-xfastest.com##.vw-post-navigation
+xfastest.com##.vw-post-navigation:remove()
 xfastest.com##^.vw-about-author
-xfastest.com##.vw-about-author
+xfastest.com##.vw-about-author:remove()
 xfastest.com##^.vw-related-posts
-xfastest.com##.vw-related-posts
+xfastest.com##.vw-related-posts:remove()
 xfastest.com##^.evo_lightboxes
-xfastest.com##.evo_lightboxes
+xfastest.com##.evo_lightboxes:remove()
 xfastest.com##^.vw-site-social-profile
-xfastest.com##.vw-site-social-profile
+xfastest.com##.vw-site-social-profile:remove()
 xfastest.com##^link[rel='dns-prefetch']
 xfastest.com##^script[src*='線上客服']
 xfastest.com##^script[src*='onesignal']
