@@ -171,7 +171,7 @@ beautysh.run([ '-i', options.indent_size, file ])
 # name
 Nokia 7 plus
 # user agent
-Mozilla/5.0 (Android 10; Mobile; rv:81.0) Gecko/81.0 Firefox/81.0
+Mozilla/5.0 (Android 10; Mobile; rv:79.0) Gecko/79.0 Firefox/79.0
 # size
 414 x 828
 # DPR
