@@ -1,31 +1,31 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-08-20
+! Last updated: 2020-08-23
 
 ! manhuaren.com
 ! remove
 manhuaren.com##^.ad-top
-manhuaren.com##.ad-top
+manhuaren.com##.ad-top:remove()
 manhuaren.com##^.ad-top-info
-manhuaren.com##.ad-top-info
+manhuaren.com##.ad-top-info:remove()
 manhuaren.com##^#index-ad
-manhuaren.com###index-ad
+manhuaren.com###index-ad:remove()
 manhuaren.com##^.index-bottom-ad
-manhuaren.com##.index-bottom-ad
+manhuaren.com##.index-bottom-ad:remove()
 manhuaren.com##^.banner-bottom
-manhuaren.com##.banner-bottom
+manhuaren.com##.banner-bottom:remove()
 manhuaren.com##^.detail-ad-con
-manhuaren.com##.detail-ad-con
+manhuaren.com##.detail-ad-con:remove()
 manhuaren.com##^.view-bottom-bar
-manhuaren.com##.view-bottom-bar
+manhuaren.com##.view-bottom-bar:remove()
 manhuaren.com##^.adform_2
-manhuaren.com##.adform_2
+manhuaren.com##.adform_2:remove()
 manhuaren.com##^#lb-win
-manhuaren.com###lb-win
+manhuaren.com###lb-win:remove()
 manhuaren.com##^.guide
-manhuaren.com##.guide
+manhuaren.com##.guide:remove()
 manhuaren.com##^body > a
-manhuaren.com##body > a
+manhuaren.com##body > a:remove()
 manhuaren.com##^script:has-text(cnzz)
 manhuaren.com##^script:has-text(mhrsta)
 soman.com##^script:has-text(cnzz)
@@ -35,7 +35,7 @@ manhuaren.com###cp_img:style(padding-top: 60px !important)
 ! wnacg.org
 ! remove
 wnacg.org##^.sh
-wnacg.org##.sh
+wnacg.org##.sh:remove()
 wnacg.org##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show)
 wnacg.org##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):remove()
 wnacg.org##^.Introduct > :not(.subHeader):not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
@@ -43,15 +43,31 @@ wnacg.org##.Introduct > :not(.subHeader):not(.Introduct_Sub):not(.txtDesc):not(.
 wnacg.org##^[href="/S1z"]
 wnacg.org##[href="/S1z"]:remove()
 wnacg.org##^#Subscribe
-wnacg.org###Subscribe
+wnacg.org###Subscribe:remove()
+wnacg.org##^.nobor
+wnacg.org##.nobor:remove()
 wnacg.org##^script:has-text(GoogleAnalyticsObject)
 wnacg.org##^script:has-text(tips)
 wnacg.org##^script[src*='cnzz']
 ! style
+wnacg.org##body:style(font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+wnacg.org##body:style(background-color: #fff !important)
 wnacg.org##.Introduct .openBtn:style(background-image: none !important)
 wnacg.org##.block-pagination .prev:style(width: 13.5em !important)
 wnacg.org##.block-pagination .next:style(width: 13.5em !important)
-wnacg.org##.Introduct .sub_r .Btn:style(left: 90px !important; width: 170px !important; height: 135px !important; line-height: 135px !important; font-size: 18px !important;)
+wnacg.org##.Introduct .sub_r .Btn:style(left: 0 !important; display: block !important; position: relative !important; width: 260px !important; height: 54px !important; line-height: 54px !important; font-size: 16px !important; top: 16px !important; background-color: rgba(255, 255, 255, .1) !important;)
+wnacg.org##.Introduct .sub_r .Btn:hover:style(background-color: rgba(255, 255, 255, .1) !important; border: 1px solid #fff !important;)
+wnacg.org##.classBox .classopen li:style(width: 94% !important; height: 50px !important; line-height: 50px !important;)
+wnacg.org##.classBox .classopen li a:style(height: 50px !important;)
+wnacg.org##.nav li:style(padding-top: 0 !important; background: none !important; width: 25% !important; height: 50px !important;)
+wnacg.org##.nav li a:style(height: 50px !important; line-height: 50px !important;)
+wnacg.org##.nav li a.cur:style(background: none !important; border-bottom: 2px solid #09f !important;)
+wnacg.org##.classBox .OperaBar:style(height: 50px !important; line-height: 50px !important;)
+wnacg.org##.classBox .OperaBar li:style(height: 50px !important;)
+wnacg.org##.classBox .classopen ul:style(top: 50px !important;)
+wnacg.org##.show:style(top: 98px !important)
+wnacg.org###img_list:style(background-color: #444 !important)
+wnacg.org###img_load:style(position: relative !important; background-color: #444 !important; height: 100vh !important;)
 
 ! 18av.tv
 ! remove
