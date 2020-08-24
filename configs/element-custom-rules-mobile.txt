@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-08-23
+! Last updated: 2020-08-24
 
 ! manhuaren.com
 ! remove
