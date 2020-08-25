@@ -46,6 +46,8 @@ wnacg.org##^#Subscribe
 wnacg.org###Subscribe:remove()
 wnacg.org##^.nobor
 wnacg.org##.nobor:remove()
+wnacg.org##^.pageLine > img
+wnacg.org##.pageLine > img:remove()
 wnacg.org##^script:has-text(GoogleAnalyticsObject)
 wnacg.org##^script:has-text(tips)
 wnacg.org##^script[src*='cnzz']
@@ -61,6 +63,7 @@ wnacg.org##.classBox .classopen li:style(width: 94% !important; height: 50px !im
 wnacg.org##.classBox .classopen li a:style(height: 50px !important;)
 wnacg.org##.nav li:style(padding-top: 0 !important; background: none !important; width: 25% !important; height: 50px !important;)
 wnacg.org##.nav li a:style(height: 50px !important; line-height: 50px !important;)
+wnacg.org##.nav li a:hover:style(color: #09f !important;)
 wnacg.org##.nav li a.cur:style(background: none !important; border-bottom: 2px solid #09f !important;)
 wnacg.org##.classBox .OperaBar:style(height: 50px !important; line-height: 50px !important;)
 wnacg.org##.classBox .OperaBar li:style(height: 50px !important;)
@@ -68,6 +71,11 @@ wnacg.org##.classBox .classopen ul:style(top: 50px !important;)
 wnacg.org##.show:style(top: 98px !important)
 wnacg.org###img_list:style(background-color: #444 !important)
 wnacg.org###img_load:style(position: relative !important; background-color: #444 !important; height: 100vh !important;)
+wnacg.org##.Introduct_Sub:style(background: #555 none !important;)
+wnacg.org##.header:style(background: none !important;)
+wnacg.org##.subHeader:style(background: none !important;)
+wnacg.org##.pageLine:style(border-bottom: 1px solid #dcdcde !important;)
+wnacg.org##.classBox .OperaBar:style(border-bottom: none !important;)
 
 ! 18av.tv
 ! remove
@@ -111,20 +119,6 @@ wnacg.org###img_load:style(position: relative !important; background-color: #444
 18av.tv###container a.aRF:has(.aRF_Scg):remove()
 18av.tv##^#container img.aRF_Scg
 18av.tv###container img.aRF_Scg:remove()
-18av.tv##^script:has-text(show_ut_review)
-18av.tv##^script:has-text(ad_idzone)
-18av.tv##^script:has-text(rand_cg)
-18av.tv##^script:has-text(friendLink)
-18av.tv##^script:has-text(mvcg_content_a)
-18av.tv##^script:has-text(BBshowBox)
-18av.tv##^script:has-text(CCshowBox)
-18av.tv##^script:has-text(cnzz)
-18av.tv##^script:has-text(gtag)
-18av.tv##^script:has-text(SpanadBox)
-18av.tv##^script:has-text(_Hasync)
-18av.tv##^script[src*='googletagmanager']
-18av.tv##^script[src*='mmad']
-18av.tv##^script[src*='exosrv']
 18av.tv##^#menu1Content a.c1
 18av.tv###menu1Content a.c1:remove()
 18av.tv##^#menu1Content div.HS
@@ -177,10 +171,27 @@ wnacg.org###img_load:style(position: relative !important; background-color: #444
 18av.tv##html > body > span.enlarge_cg:remove()
 18av.tv##^body > noscript
 18av.tv##body > noscript:remove()
+18av.tv##^body > br
+18av.tv##body > br:remove()
 18av.tv##^html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF)
 18av.tv##html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF):remove()
 18av.tv##^span#twcgUUU
 18av.tv##span#twcgUUU:remove()
+18av.tv##^script:has-text(show_ut_review)
+18av.tv##^script:has-text(ad_idzone)
+18av.tv##^script:has-text(rand_cg)
+18av.tv##^script:has-text(friendLink)
+18av.tv##^script:has-text(mvcg_content_a)
+18av.tv##^script:has-text(BBshowBox)
+18av.tv##^script:has-text(CCshowBox)
+18av.tv##^script:has-text(cnzz)
+18av.tv##^script:has-text(gtag)
+18av.tv##^script:has-text(SpanadBox)
+18av.tv##^script:has-text(_Hasync)
+18av.tv##^script:has-text(serch_key)
+18av.tv##^script[src*='googletagmanager']
+18av.tv##^script[src*='mmad']
+18av.tv##^script[src*='exosrv']
 ! style
 18av.tv##body:style(background-color: #fafafa !important)
 18av.tv##body:style(margin: 0 !important)
@@ -342,18 +353,6 @@ imgscloud.com###coverclose_bottom:remove()
 18h.mm-cg.com###container a.aRF:has(.aRF_Scg):remove()
 18h.mm-cg.com##^#container img.aRF_Scg
 18h.mm-cg.com###container img.aRF_Scg:remove()
-18h.mm-cg.com##^script:has-text(show_ut_review)
-18h.mm-cg.com##^script:has-text(ad_idzone)
-18h.mm-cg.com##^script:has-text(rand_cg)
-18h.mm-cg.com##^script:has-text(friendLink)
-18h.mm-cg.com##^script:has-text(mvcg_content_a)
-18h.mm-cg.com##^script:has-text(BBshowBox)
-18h.mm-cg.com##^script:has-text(CCshowBox)
-18h.mm-cg.com##^script:has-text(cnzz)
-18h.mm-cg.com##^script:has-text(histats)
-18h.mm-cg.com##^script[src*='googletagmanager']
-18h.mm-cg.com##^script[src*='mmad']
-18h.mm-cg.com##^script[src*='tsyndicate']
 18h.mm-cg.com##^#menu1Content a.c1
 18h.mm-cg.com###menu1Content a.c1:remove()
 18h.mm-cg.com##^#menu1Content div.HS
@@ -412,6 +411,31 @@ imgscloud.com###coverclose_bottom:remove()
 18h.mm-cg.com###SpanadBox:remove()
 18h.mm-cg.com##^span#twcgUUU
 18h.mm-cg.com##span#twcgUUU:remove()
+18h.mm-cg.com##^#aRF_myVar_ct_buffer
+18h.mm-cg.com###aRF_myVar_ct_buffer:remove()
+18h.mm-cg.com##^.enlarge_cg
+18h.mm-cg.com##^.enlarge_cg:remove()
+18h.mm-cg.com##^noscript
+18h.mm-cg.com##noscript:remove()
+18h.mm-cg.com##^a[href*='avapp']
+18h.mm-cg.com##a[href*='avapp']:remove()
+18h.mm-cg.com##^script:has-text(show_ut_review)
+18h.mm-cg.com##^script:has-text(ad_idzone)
+18h.mm-cg.com##^script:has-text(rand_cg)
+18h.mm-cg.com##^script:has-text(friendLink)
+18h.mm-cg.com##^script:has-text(mvcg_content_a)
+18h.mm-cg.com##^script:has-text(BBshowBox)
+18h.mm-cg.com##^script:has-text(CCshowBox)
+18h.mm-cg.com##^script:has-text(cnzz)
+18h.mm-cg.com##^script:has-text(histats)
+18h.mm-cg.com##^script:has-text(gtag)
+18h.mm-cg.com##^script:has-text(Maskcg_showBox)
+18h.mm-cg.com##^script:has-text(SpanadBox)
+18h.mm-cg.com##^script:has-text(isad_url)
+18h.mm-cg.com##^script:has-text(serch_key)
+18h.mm-cg.com##^script[src*='googletagmanager']
+18h.mm-cg.com##^script[src*='mmad']
+18h.mm-cg.com##^script[src*='tsyndicate']
 ! style
 18h.mm-cg.com##body:style(background-color: #efefef !important)
 18h.mm-cg.com##body:style(margin: 0 !important)
