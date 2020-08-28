@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-08-27
+! Last updated: 2020-08-28
 
 ! manhuaren.com
 ! remove
@@ -187,8 +187,10 @@ wnacg.org##.classBox .OperaBar:style(border-bottom: none !important;)
 18av.tv##html > body > div#primary_content > div#Main_content > div#container > span#main > a:not(.aRF):remove()
 18av.tv##^span#twcgUUU
 18av.tv##span#twcgUUU:remove()
-18av.tv##^font:has-text(每日更新)
-18av.tv##font:has-text(每日更新):remove()
+18av.tv##^span.altto_list > ul:not(:has(#Detailed_Hmmcg))
+18av.tv##span.altto_list > ul:not(:has(#Detailed_Hmmcg)):remove()
+18av.tv##^span.altto_list > font
+18av.tv##span.altto_list > font:remove()
 18av.tv##^#page
 18av.tv###page:remove()
 18av.tv##^span.altto_list > ul:has(a[href='//18av.tv/ioshow.htm'])
@@ -437,6 +439,7 @@ wnacg.org##.classBox .OperaBar:style(border-bottom: none !important;)
 18av.tv##.PageBar a:style(margin: 0 2px !important)
 18av.tv##.PageBar a:style(padding: 1rem 0.8rem !important)
 18av.tv##.PageBar a:style(box-sizing: border-box !important)
+18av.tv##.PageBar a:style(height: 3rem !important)
 18av.tv##.PageBar a:style(border: none !important)
 18av.tv##.PageBar a:style(background-color: #666 !important)
 18av.tv##.PageBar a:style(font-size: 0.8em !important)
@@ -596,6 +599,7 @@ imgscloud.com###coverclose_bottom:remove()
 18h.mm-cg.com###menu1Content span.altto_list font:remove()
 18h.mm-cg.com##^#page
 18h.mm-cg.com###page:remove()
+18h.mm-cg.com##^span.altto_list > ul:not(:has(a[href*='18h.mm-cg.com']))
 18h.mm-cg.com##^script:has-text(show_ut_review)
 18h.mm-cg.com##^script:has-text(ad_idzone)
 18h.mm-cg.com##^script:has-text(rand_cg)
@@ -807,6 +811,7 @@ imgscloud.com###coverclose_bottom:remove()
 18h.mm-cg.com##.PageBar a:style(margin: 0 2px !important)
 18h.mm-cg.com##.PageBar a:style(padding: 1rem 0.8rem !important)
 18h.mm-cg.com##.PageBar a:style(box-sizing: border-box !important)
+18h.mm-cg.com##.PageBar a:style(height: 3rem !important)
 18h.mm-cg.com##.PageBar a:style(border: none !important)
 18h.mm-cg.com##.PageBar a:style(background-color: #666 !important)
 18h.mm-cg.com##.PageBar a:style(font-size: 0.8em !important)
@@ -838,6 +843,7 @@ imgscloud.com###coverclose_bottom:remove()
 ! 18av.tv
 18av.tv##.altto form:after:style(font-size: 0.8rem !important)
 18av.tv##.altto form:after:style(font-family: monospace !important)
+18av.tv##.altto form:after:style(text-align: center !important)
 18av.tv##.altto form:after:style(line-height: 1.5rem !important)
 18av.tv##.altto form:after:style(color: #555 !important)
 18av.tv##.altto form:after:style(display: block !important)
