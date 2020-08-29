@@ -27,6 +27,7 @@ printf "alias ubk=\"sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh\"\n" >> 
 printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >> ~/.config/fish/config.fish
+printf "alias urb=\"python3 ~/GitHub/my-macos-build/scripts/ublock-rule-combiner.py\"\n" >> ~/.config/fish/config.fish
 
 print_step "brew install commend line tools"
 brew install clang-format
