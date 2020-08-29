@@ -88,7 +88,6 @@ cool3c.com##^img[src*='scorecardresearch']
 cool3c.com##^script[src*='onesignal']
 cool3c.com##^script[src*='cooperation']
 cool3c.com##^script[src*='googlesyndication']
-!cool3c.com##^script:has-text(scorecardresearch) for article css
 ||trackjay.cool3c.com^$script
 ||cool3c.com/*/img-failed*$image
 ! style
@@ -378,9 +377,7 @@ techbang.com##script:has-text(carousel-images):remove()
 techbang.com##^script[src*='trvdp.com']
 techbang.com##^script[src*='sync']
 techbang.com##^script:has-text(guoshipartners.com)
-!techbang.com##^script:has-text(google-analytics) for article infinity scroll
-!techbang.com##^script[src*='application'] for article infinity scroll
-!techbang.com##^script:has-text(googletag) for image lazyload
+
 ! style
 techbang.com##body:style(font-family: Inter, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 techbang.com##.main-content:style(width: 100% !important; float: none !important)
