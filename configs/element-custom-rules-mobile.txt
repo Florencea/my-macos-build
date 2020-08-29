@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-08-28
+! Last updated: 2020-08-29
 
 ! manhuaren.com
 ! remove
@@ -97,7 +97,7 @@ wnacg.org##.imgBox:style(background-color: #333 !important)
 wnacg.org##.imgBox li .ImgA:style(background-color: #555 !important)
 wnacg.org##.imgBox li .ImgA:style(border-radius: 10px !important)
 wnacg.org##.imgBox li .ImgA:style(transition: filter .2s !important)
-wnacg.org##.imgBox li .ImgA:hover:style(filter: brightness(80%) !important)
+wnacg.org##.imgBox li .ImgA:hover:style(filter: brightness(120%) !important)
 wnacg.org##.imgBox li .ImgA img:style(border-radius: 10px !important)
 wnacg.org##.imgBox li .txtA:style(color: #fff !important)
 wnacg.org##.imgBox li .txtA:style(font-size: 1em !important)
