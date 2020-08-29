@@ -41,7 +41,10 @@ def combine_rules(file_name):
             else:
                 if '! ' in line:
                     if 'Description:' in line or 'Last updated:' in line or 'Title:' in line:
-                        output_data_list_meta.append(line.strip())
+                        if 'Title:' in line:
+                            output_data_list_meta.append(line.strip() + ' minified')
+                        else:
+                            output_data_list_meta.append(line.strip())
                 elif '||' in line:
                     output_data_list_host.append(line.strip())
                 else:
