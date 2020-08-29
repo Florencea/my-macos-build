@@ -62,7 +62,7 @@ alias ubk="sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh"
 alias al="sh ~/GitHub/ledger/al/al.sh"
 alias gd="sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh"
 alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
-alias urb="python3 ~/GitHub/my-macos-build/scripts/ublock-rule-combiner.py"
+alias urb="sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh"
 ```
 
 ## Firefox about:config
