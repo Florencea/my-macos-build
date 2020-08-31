@@ -9,9 +9,6 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
-print_step "install xcode developer tools"
-(set -x; xcode-select --install)
-
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
@@ -98,13 +95,6 @@ print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
 (set -x; git config --global user.email "$github_email")
 (set -x; git config --global core.editor "$github_editor")
-
-print_step "rust installation"
-(set -x; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
-(set -x; set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths)
-(set -x; mkdir -p ~/.config/fish/completions)
-(set -x; rustup completions fish > ~/.config/fish/completions/rustup.fish)
-(set -x; brew install rust-analyzer)
 
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
