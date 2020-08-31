@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # nano ~/.config/fish/config.fish
-# alias ubk="sh ~/GitHub/my-macos-build/ublock-backup.sh"
+# alias ubk="sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh"
 cd ~/Downloads
 FILE_TO_BACKUP=$(ls -t | grep my-ublock-backup | head -n1)
 FILE_NAME=ublock-advanced.txt
