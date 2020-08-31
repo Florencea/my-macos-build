@@ -63,6 +63,7 @@ alias al="sh ~/GitHub/ledger/al/al.sh"
 alias gd="sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh"
 alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
 alias urb="sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh"
+alias afx="sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh"
 ```
 
 ## Firefox about:config
@@ -84,6 +85,9 @@ gfx.webrender.compositor true
 # enable trr
 network.trr.bootstrapAddress 104.16.248.249
 network.trr.mode 3
+
+# enable http3
+network.http.http3.enabled true
 
 # disable pockets
 extensions.pocket.enabled false
@@ -129,31 +133,6 @@ set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 
-# CCLS header completions in macOS 10.15
-csrutil disable
-xcode-select --install
-cd /usr/
-sudo mount -uw /
-sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include include
-sudo DevToolsSecurity -enable
-
-# Solving error for Atom package clang-format
-atom .atom/packages/atom-beautify/src/beautifiers/clang-format.coffee
-# find line 84
-return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile) )
-# change to
-return @exe("clang-format").run([ @dumpToFile(dumpFile, text) ["--style=file"] ]).finally( -> fs.unlink(dumpFile, ->) )
-
-# Solving error for Atom package beautysh
-atom .atom/packages/atom-beautify/src/beautifiers/beautysh.coffee
-# find line 35
-beautysh.run([ '-t', '-f', file ])
-# change to
-beautysh.run([ '-t', file ])
-# find line 38
-beautysh.run([ '-i', options.indent_size, '-f', file ])
-# change to
-beautysh.run([ '-i', options.indent_size, file ])
 ```
 
 ## humble tab config

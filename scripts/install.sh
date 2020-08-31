@@ -35,7 +35,6 @@ printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" 
 
 print_step "brew install commend line tools"
 brew install clang-format
-brew install ccls
 brew install curl
 brew install ffmpeg
 brew install gcc
