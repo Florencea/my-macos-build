@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # require ffmpeg
 # nano ~/.config/fish/config.fish
-# alias mkgif="sh ~/GitHub/my-macos-build/make-gif.sh"
+# alias mkgif="sh ~/GitHub/my-macos-build/scripts/make-gif.sh"
 if [ "$#" -ne 3 ]; then
   echo "Usage: mkgif [input_file] [from(hh:mm:ss or sec)] [during(sec)]"
   echo "       mkgif \"input.mp4\" 01:02:08 11.0"
