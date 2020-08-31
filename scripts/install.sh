@@ -9,6 +9,9 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
+print_step "install xcode developer tools"
+(set -x; xcode-select --install)
+
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
