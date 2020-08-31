@@ -18,9 +18,3 @@ PROJECT_DIR=~/GitHub/my-macos-build/apm-fix/
 DISTINATION_DIR=~/.atom/packages/atom-beautify/src/beautifiers/
 FILE_NAME=clang-format.coffee
 (set -x; cp $PROJECT_DIR$FILE_NAME $DISTINATION_DIR$FILE_NAME)
-
-print_step "CCLS header completions in macOS 10.15"
-(set -x; cd /usr/)
-(set -x; sudo mount -uw /)
-(set -x; sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include include)
-(set -x; sudo DevToolsSecurity -enable)
