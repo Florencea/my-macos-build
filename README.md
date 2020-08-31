@@ -29,7 +29,7 @@ curl -L https://git.io/florencea-install -o install.sh;sh install.sh
           └──[Data copy(Repositories) to ~/]
 ```
 
-## Scripts
+## Online scripts
 
 ```fish
 # Download Google Drive public single file
