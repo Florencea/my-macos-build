@@ -30,24 +30,6 @@ printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >> ~/.c
 printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >> ~/.config/fish/config.fish
 
-print_step "brew install commend line tools"
-brew install clang-format
-brew install curl
-brew install ffmpeg
-brew install gcc
-brew install git
-brew install git-lfs
-brew install gnupg
-brew install id3v2
-brew install jq
-brew install megatools
-brew install nano
-brew install node
-brew install pinentry-mac
-brew install python@3.8
-brew install wget
-brew install youtube-dl
-
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
@@ -72,6 +54,24 @@ brew cask install font-genwanmin
 brew cask install font-genyogothic
 brew cask install font-gensekigothic
 brew cask install font-gensenrounded
+
+print_step "brew install commend line tools"
+brew install clang-format
+brew install curl
+brew install ffmpeg
+brew install gcc
+brew install git
+brew install git-lfs
+brew install gnupg
+brew install id3v2
+brew install jq
+brew install megatools
+brew install nano
+brew install node
+brew install pinentry-mac
+brew install python@3.8
+brew install wget
+brew install youtube-dl
 
 print_step "npm install global packages"
 npm install -g http-server
