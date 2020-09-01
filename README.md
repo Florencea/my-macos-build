@@ -132,6 +132,7 @@ xattr -r -c <file or directory>
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
+# open new shell
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 
 ```
