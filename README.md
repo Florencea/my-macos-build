@@ -87,6 +87,9 @@ gfx.webrender.compositor true
 network.trr.bootstrapAddress 104.16.248.249
 network.trr.mode 3
 
+# enable encryped SNI
+network.security.esni.enabled true
+
 # enable http3
 network.http.http3.enabled true
 
