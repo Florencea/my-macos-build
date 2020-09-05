@@ -75,7 +75,7 @@ wnacg.org##^script:has-text(tips)
 wnacg.org##^script[src*='cnzz']
 ! style
 wnacg.org##html:style(font-size: 12px)
-wnacg.org##body:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+wnacg.org##body:style(font-family: system-ui, -apple-system, Inter, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 wnacg.org##body:style(background-color: #333 !important)
 wnacg.org##body:style(color: #fafafa !important)
 wnacg.org##body:style(position: relative !important)
