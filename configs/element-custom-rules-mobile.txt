@@ -400,9 +400,11 @@ wnacg.org##.logo > a:after:style(content: '紳士漫畫::暗黑版' !important)
 18av.tv##^script:has-text(SpanadBox)
 18av.tv##^script:has-text(_Hasync)
 18av.tv##^script:has-text(serch_key)
+18av.tv##^script:has-text(exosrv)
 18av.tv##^script[src*='googletagmanager']
 18av.tv##^script[src*='mmad']
 18av.tv##^script[src*='exosrv']
+18av.tv##^script[src*='realsrv']
 ! style
 18av.tv##html:style(font-size: 32px)
 18av.tv##body:style(background-color: #1c1b21 !important)
