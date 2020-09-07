@@ -19,9 +19,9 @@ def combine_rules(file_name):
             if ':style(' in line:
                 line_list = line.split(':style(')
                 if line_list[0] in rule_dict:
-                    rule_dict[line_list[0]].append(line_list[1].replace(')\n', ';'))
+                    rule_dict[line_list[0]].append(line_list[1].replace(')\n', ''))
                 else:
-                    rule_dict[line_list[0]] = [line_list[1].replace(')\n', ';')]
+                    rule_dict[line_list[0]] = [line_list[1].replace(')\n', '')]
                 if repeat_temp_key != line_list[0]:
                     repeat_flag = False
                     output_line_key = repeat_temp_key
@@ -30,7 +30,7 @@ def combine_rules(file_name):
                     repeat_flag = True
                 if repeat_flag is False and output_line_key != '':
                     list.sort(rule_dict[output_line_key])
-                    output_line = output_line_key + ':style(' + ' '.join(rule_dict[output_line_key]) + ')'
+                    output_line = output_line_key + ':style(' + '; '.join(rule_dict[output_line_key]) + ')'
                     output_data_list_style.append(output_line)
             else:
                 if '! ' in line:
