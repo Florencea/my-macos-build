@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-09-08
+! Last updated: 2020-09-09
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -200,8 +200,8 @@ wnacg.org##.Introduct .sub_r .Btn:style(line-height: 112px !important)
 wnacg.org##.Introduct .sub_r .Btn:style(font-size: 1.25rem !important)
 wnacg.org##.Introduct .sub_r .Btn:style(top: 54px !important)
 wnacg.org##.Introduct .sub_r .Btn:style(border: none !important)
-wnacg.org##.Introduct .sub_r .Btn:style(border-radius: 1rem !important)
-wnacg.org##.Introduct .sub_r .Btn:style(background-color: #9059ff !important)
+wnacg.org##.Introduct .sub_r .Btn:style(border-radius: 0.8rem !important)
+wnacg.org##.Introduct .sub_r .Btn:style(background-color: #33313c !important)
 wnacg.org##.Introduct .txtDesc:style(background-color: #1c1b21 !important)
 wnacg.org##.Introduct .txtDesc:style(color: #fbfbfd !important)
 wnacg.org##.nav li:style(padding-top: 0 !important)
@@ -237,12 +237,12 @@ wnacg.org##.classBox .classopen li:style(width: 94% !important)
 wnacg.org##.classBox .classopen li:style(height: 45px !important)
 wnacg.org##.classBox .classopen li:style(line-height: 45px !important)
 wnacg.org##.classBox .classopen li:style(background-color: #33313c !important)
-wnacg.org##.classBox .classopen li:style(border-radius: 1rem !important)
+wnacg.org##.classBox .classopen li:style(border-radius: 0.8rem !important)
 wnacg.org##.classBox .classopen li a:style(height: 45px !important)
 wnacg.org##.classBox .classopen li a:style(background-color: #33313c !important)
 wnacg.org##.classBox .classopen li a:style(color: #fbfbfd !important)
 wnacg.org##.classBox .classopen li a:style(border: none !important)
-wnacg.org##.classBox .classopen li a:style(border-radius: 1rem !important)
+wnacg.org##.classBox .classopen li a:style(border-radius: 0.8rem !important)
 wnacg.org##.show:style(top: 64px !important)
 wnacg.org##.show:style(background: rgba(0 ,0, 0, .7) !important)
 wnacg.org###img_list:style(background-color: #1c1b21 !important)
@@ -421,6 +421,7 @@ wnacg.org##.logo > a:after:style(content: '紳士漫畫::行動裝置優化版' 
 18av.tv##^script[src*='mmad']
 18av.tv##^script[src*='exosrv']
 18av.tv##^script[src*='realsrv']
+18av.tv##^script[src*='fluidplayer']
 ! style
 18av.tv##html:style(font-size: 32px)
 18av.tv##body:style(background-color: #1c1b21 !important)
@@ -733,6 +734,7 @@ imgscloud.com###coverclose_bottom:remove()
 ||18av.tv/31M/background/NR.gif$image
 ||18av.tv/31M/background/NL.gif$image
 ||18av.tv/mmad.js$script
+||18av.tv/js/playercloudsfluid/fluidplayer.min.js$script
 ||youjizz.com/videos/embed/$subdocument
 ||fc.imgscloud.com/fcfluidplayer.php$subdocument
 ||ammcg.imgscloud.com
