@@ -30,10 +30,16 @@ printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >> ~/.c
 printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >> ~/.config/fish/config.fish
 
+print_step "brew install cask fonts essential"
+brew tap homebrew/cask-fonts
+brew cask install font-fira-code
+brew cask install font-fira-mono
+brew cask install font-inter
+
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox-nightly --language=zh-TW
+brew cask install firefox --language=zh-TW
 brew cask install iina
 brew cask install intel-power-gadget
 brew cask install istat-menus
@@ -41,19 +47,6 @@ brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
 brew cask install scroll-reverser
-
-print_step "brew install cask fonts"
-brew tap homebrew/cask-fonts
-brew cask install font-fira-code
-brew cask install font-fira-mono
-brew cask install font-inter
-brew cask install font-jf-open-huninn
-brew cask install font-genyomin
-brew cask install font-genryumin
-brew cask install font-genwanmin
-brew cask install font-genyogothic
-brew cask install font-gensekigothic
-brew cask install font-gensenrounded
 
 print_step "brew install commend line tools"
 brew install clang-format
@@ -72,6 +65,15 @@ brew install pinentry-mac
 brew install python@3.8
 brew install wget
 brew install youtube-dl
+
+print_step "brew install cask fonts"
+brew cask install font-jf-open-huninn
+brew cask install font-genyomin
+brew cask install font-genryumin
+brew cask install font-genwanmin
+brew cask install font-genyogothic
+brew cask install font-gensekigothic
+brew cask install font-gensenrounded
 
 print_step "npm install global packages"
 npm install -g http-server
