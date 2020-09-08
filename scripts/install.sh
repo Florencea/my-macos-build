@@ -33,7 +33,6 @@ printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" 
 print_step "brew install cask fonts essential"
 brew tap homebrew/cask-fonts
 brew cask install font-fira-code
-brew cask install font-fira-mono
 brew cask install font-inter
 
 print_step "brew install cask apps"
