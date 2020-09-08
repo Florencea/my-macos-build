@@ -188,6 +188,8 @@ inside.com.tw##^.post_list_item-ad
 inside.com.tw##.post_list_item-ad:remove()
 inside.com.tw##^.post_toolbox
 inside.com.tw##.post_toolbox:remove()
+inside.com.tw##^.post_list_item:has(a.badge-color9)
+inside.com.tw##.post_list_item:has(a.badge-color9):remove()
 inside.com.tw##^.post_list_item:has(a.badge-color10)
 inside.com.tw##.post_list_item:has(a.badge-color10):remove()
 inside.com.tw##^div[class^=adv]
