@@ -132,7 +132,7 @@ defaults write com.google.Chrome DiskCacheDir -string /dev/null
 xattr -r -c <file or directory>
 
 # Rust Installation
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl https://sh.rustup.rs | sh
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
 # open new shell
@@ -156,7 +156,7 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 # name
 Nokia 7 plus
 # user agent
-Mozilla/5.0 (Android 10; Mobile; rv:79.0) Gecko/79.0 Firefox/79.0
+Mozilla/5.0 (Android 10; Mobile; rv:81.0) Gecko/81.0 Firefox/81.0
 # size
 414 x 828
 # DPR
