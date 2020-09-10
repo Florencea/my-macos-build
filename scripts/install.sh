@@ -6,7 +6,7 @@ function print_step(){
 }
 
 github_username="Florencea"
-github_email="bearflorencea@gmail.com"
+github_email="florenceamail@pm.me"
 github_editor="nano"
 
 print_step "install homebrew"
