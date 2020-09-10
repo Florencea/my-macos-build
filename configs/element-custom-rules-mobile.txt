@@ -1,5 +1,5 @@
 ! Title: Element Rules by Florencea for Mobile
-! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
+! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
 ! Last updated: 2020-09-10
 
 ! Firefox Interface css color
