@@ -83,6 +83,10 @@ cool3c.com##^#body > .row:not(.side-sync)
 cool3c.com###body > .row:not(.side-sync):remove()
 cool3c.com##^.fixed-bottom
 cool3c.com##.fixed-bottom:remove()
+cool3c.com##^.gpt-new
+cool3c.com##.gpt-new:remove()
+cool3c.com##^.block.search
+cool3c.com##.block.search:remove()
 cool3c.com##^link[rel="dns-prefetch"]
 cool3c.com##^script[id*='track']
 cool3c.com##^script:has-text(admanager.scan)
@@ -303,7 +307,7 @@ iyouport.org###main > .post > .entry-content > :not(p):not(ul):not(h3):remove()
 iyouport.org##a:style(background-color: transparent !important)
 iyouport.org##a:style(box-shadow: none !important)
 iyouport.org##a:style(padding: 0 !important)
-iyouport.org##a:style(color: #2e39b3 !important)
+iyouport.org##a:style(color: #6f4915 !important)
 iyouport.org##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 iyouport.org##body:style(background-color: #f1f1f1 !important)
 iyouport.org##.entry-content:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
