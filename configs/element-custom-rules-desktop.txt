@@ -369,6 +369,24 @@ pixiv.net##^script:has-text(_kiq)
 pixiv.net##^script:has-text(googletagmanager)
 ||ads-pixiv.net
 
+! pts.org.tw
+! remove
+pts.org.tw##^.embed-responsive:has(iframe)
+pts.org.tw##.embed-responsive:has(iframe):remove()
+pts.org.tw##^.share-list
+pts.org.tw##.share-list:remove()
+pts.org.tw##^#message
+pts.org.tw###message:remove()
+pts.org.tw##^.break-news-container > .news-list > li > div > .tag-list
+pts.org.tw##.break-news-container > .news-list > li > div > .tag-list:remove()
+pts.org.tw##^.container > div > aside
+pts.org.tw##.container > div > aside:remove()
+! style
+pts.org.tw##.main-info:style(background: none !important)
+pts.org.tw##.post-article:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+pts.org.tw##.post-article:style(line-height: 2.11 !important)
+pts.org.tw##.post-article:style(letter-spacing: 0.6px !important)
+
 ! startpage.com
 ! style
 startpage.com##.w-gl:style(font-family: inherit !important)
