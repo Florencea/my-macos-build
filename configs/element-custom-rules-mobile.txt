@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin/AdGuard Mobile
-! Last updated: 2020-09-09
+! Last updated: 2020-09-10
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -486,7 +486,7 @@ wnacg.org##.logo > a:after:style(content: '紳士漫畫::行動裝置優化版' 
 18av.tv##span#main > .aButton_np_S:style(margin: 0 0.5rem !important)
 18av.tv##span#main > .aButton_np_S:style(padding: 0 !important)
 18av.tv##span#main > .aButton_np_S:style(background-color: #1c1b21 !important)
-18av.tv##span#main > .aButton_np_S:active:style(background-color: #33313c !important)
+18av.tv##span#main > .aButton_np_S:hover:style(background-color: #33313c !important)
 18av.tv##span#main > .aButton_np_S:style(border: none !important)
 18av.tv##span#main > .aButton_np_S:style(border-radius: 0.8rem !important)
 18av.tv##span#main > .aButton_np_S:style(color: #fbfbfd !important)
@@ -500,7 +500,7 @@ wnacg.org##.logo > a:after:style(content: '紳士漫畫::行動裝置優化版' 
 18av.tv##span#main > .aButton_np_L:style(margin: 1rem 0.5rem 1rem 0.5rem !important)
 18av.tv##span#main > .aButton_np_L:style(padding: 0 !important)
 18av.tv##span#main > .aButton_np_L:style(background-color: #1c1b21 !important)
-18av.tv##span#main > .aButton_np_L:active:style(background-color: #33313c !important)
+18av.tv##span#main > .aButton_np_L:hover:style(background-color: #33313c !important)
 18av.tv##span#main > .aButton_np_L:style(border: none !important)
 18av.tv##span#main > .aButton_np_L:style(border-radius: 0.8rem !important)
 18av.tv##span#main > .aButton_np_L:style(color: #fbfbfd !important)
@@ -636,7 +636,7 @@ wnacg.org##.logo > a:after:style(content: '紳士漫畫::行動裝置優化版' 
 18av.tv###menu1Content > span.altto_list a:style(font-weight: 400 !important)
 18av.tv###menu1Content > span.altto_list a:style(color: #fbfbfd !important)
 18av.tv###menu1Content > span.altto_list a:style(text-decoration: none !important)
-18av.tv###menu1Content > span.altto_list a:active:style(text-decoration: underline !important)
+18av.tv###menu1Content > span.altto_list a:hover:style(text-decoration: underline !important)
 18av.tv###menu1Content > span.altto_list a:style(display: inline-block !important)
 18av.tv###menu1Content > span.altto_list a:style(padding: 0.5rem !important)
 18av.tv###menu1Content > span.altto_list a:style(margin: 0.2rem !important)
@@ -716,7 +716,7 @@ wnacg.org##.logo > a:after:style(content: '紳士漫畫::行動裝置優化版' 
 18av.tv##span.d_category_list > ul > li > a:style(padding: 1rem !important)
 18av.tv##span.d_category_list > ul > li > a:style(font-size: 0.8rem !important)
 18av.tv##span.d_category_list > ul > li > a:style(color: #fbfbfd !important)
-18av.tv##span.d_category_list > ul > li > a:active:style(background-color: inherit !important)
+18av.tv##span.d_category_list > ul > li > a:hover:style(background-color: inherit !important)
 ! others
 imgscloud.com##^#cover_information
 imgscloud.com###cover_information:remove()
@@ -996,7 +996,7 @@ imgscloud.com###coverclose_bottom:remove()
 18h.mm-cg.com###menu1Content > span.altto_list a:style(display: inline-block !important)
 18h.mm-cg.com###menu1Content > span.altto_list a:style(padding: 0.5rem !important)
 18h.mm-cg.com###menu1Content > span.altto_list a:style(margin: 0.2rem !important)
-18h.mm-cg.com###menu1Content > span.altto_list a:active:style(text-decoration: underline !important)
+18h.mm-cg.com###menu1Content > span.altto_list a:hover:style(text-decoration: underline !important)
 18h.mm-cg.com###menu1Content > span.altto_list > span.altto:style(display: block !important)
 18h.mm-cg.com###menu1Content > span.altto_list > span.altto:style(font-size: 1rem !important)
 18h.mm-cg.com###menu1Content > span.altto_list > span.altto:style(margin-top: 1rem !important)
