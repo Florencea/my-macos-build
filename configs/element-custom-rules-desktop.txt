@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop
-! Last updated: 2020-09-10
+! Last updated: 2020-09-13
 
 ! universal rules
 ! outline
@@ -562,13 +562,6 @@ translate.google.com##^#gt-c
 translate.google.com###gt-c:remove()
 ! style
 translate.google.com###contentframe:style(top: 0 !important)
-
-! twreporter.org
-! style
-twreporter.org##[class*='paragraph']:style(font-weight: 400 !important)
-twreporter.org##[class*='annotation']:style(font-weight: 400 !important)
-twreporter.org##[class*='blockquote']:style(font-weight: 400 !important)
-twreporter.org##[class*='list']:style(font-weight: 400 !important)
 
 ! xfastest.com
 ! remove
