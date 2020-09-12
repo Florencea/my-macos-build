@@ -17,7 +17,7 @@ curl -L https://git.io/florencea-install -o install.sh;sh install.sh
   │      ├──[GarageBand installation]
   │      ├──[Terminal performances]
   │      │        └──[Rust setup]
-  │      ├──[Browser performances]
+  │      ├──[Browser setup]
   │      │        └──[SSH&GPG setup]
   │      │              └──[Atom setup]
   │      └──[Apps performances]
