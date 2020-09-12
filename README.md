@@ -90,7 +90,7 @@ network.trr.mode 3
 # enable encryped SNI
 network.security.esni.enabled true
 
-# enable http3
+# enable http3(warring: not stable)
 network.http.http3.enabled true
 
 # disable pockets
