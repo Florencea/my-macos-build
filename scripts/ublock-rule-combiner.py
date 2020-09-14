@@ -41,6 +41,9 @@ def combine_rules(file_name):
                             output_data_list_meta.append(line.strip())
                 elif '||' in line:
                     output_data_list_host.append(line.strip())
+                elif ':remove()' in line:
+                    output_data_list_remove.append(line.strip())
+                    output_data_list_remove.append(line.replace(':remove()', '').strip())
                 else:
                     output_data_list_remove.append(line.strip())
 
