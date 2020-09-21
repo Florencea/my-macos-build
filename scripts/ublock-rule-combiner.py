@@ -57,7 +57,7 @@ def get_style_rules(input_list):
     style_rule_list = []
     for line in input_list:
         if is_style_line(line):
-            style_rule_list.append(line)
+            style_rule_list.append(line + '|')
     return style_rule_list
 
 
@@ -66,7 +66,7 @@ def get_style_dict(style_rule_list):
     for rule in style_rule_list:
         rule_list = rule.split(':style(')
         style_key = rule_list[0]
-        style_value = rule_list[1].replace(')', '')
+        style_value = rule_list[1].replace(')|', '')
         if style_key in style_dict:
             style_dict[style_key].append(style_value)
         else:
