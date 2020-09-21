@@ -504,7 +504,6 @@ techbang.com##script:has-text(carousel-images):remove()
 techbang.com##^script[src*='trvdp.com']
 techbang.com##^script[src*='sync']
 techbang.com##^script:has-text(guoshipartners.com)
-
 ! style
 techbang.com##body:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 techbang.com##.main-content:style(width: 100% !important)
@@ -615,7 +614,6 @@ xfastest.com##^script:has-text(fjs)
 xfastest.com##^script[src*='facebook-tracking']
 xfastest.com##^script[src*='google-tracking']
 xfastest.com##^script[src*='gtm-']
-
 ! style
 xfastest.com##html:style(font-size: 18px)
 xfastest.com##body:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
