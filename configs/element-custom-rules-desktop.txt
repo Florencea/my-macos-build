@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop
-! Last updated: 2020-09-17
+! Last updated: 2020-09-21
 
 ! universal rules
 ! outline
@@ -16,7 +16,7 @@
 ! addons
 *##^.sp-separator
 *##.sp-separator:remove()
-*###sp-fw-container:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+*###sp-prefs-setup:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 *###sp-fw-container:style(opacity: 0.1 !important)
 *###sp-fw-container:hover:style(opacity: 1 !important)
 
@@ -617,6 +617,7 @@ xfastest.com##^script[src*='google-tracking']
 xfastest.com##^script[src*='gtm-']
 
 ! style
+xfastest.com##html:style(font-size: 18px !important)
 xfastest.com##body:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##cite:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##h1:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
@@ -636,6 +637,11 @@ xfastest.com##.vw-accordion-header-text:style(font-family: Inter, system-ui, -ap
 xfastest.com##.vw-tab-title:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##.vw-review-item-title:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##.vw-pagination-load-more:style(font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-xfastest.com##.vw-post-content:style(line-height: 3rem !important)
-xfastest.com##.entry-title:style(font-size: 3.5rem !important)
-xfastest.com##.entry-title:style(line-height: 5rem !important)
+xfastest.com##.vw-post-content > p:style(font-size: 1rem !important)
+xfastest.com##.vw-post-content > p:style(line-height: 2.11 !important)
+xfastest.com##.vw-post-content > p:style(margin: 40px auto !important)
+xfastest.com##.vw-post-content > p:style(color: #404040 !important)
+xfastest.com##.vw-post-content > p:style(letter-spacing: 0.6px !important)
+xfastest.com##.vw-post-content > p:style(white-space: pre-wrap !important)
+xfastest.com##.entry-title:style(font-size: 2.33rem !important)
+xfastest.com##.entry-title:style(line-height: 1.38 !important)
