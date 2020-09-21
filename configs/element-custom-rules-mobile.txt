@@ -1,30 +1,12 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2020-09-17
+! Last updated: 2020-09-21
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
 ! bg-input: #33313c
 ! text-normal: #fbfbfd
 ! purple-primary: #9059ff
-
-! universal rules
-! outline
-*##a:style(outline: none !important)
-*##input:style(outline: none !important)
-*##select:style(outline: none !important)
-*##button:style(outline: none !important)
-! fonts
-*##html:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
-*##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
-*##input:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
-*##select:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
-*##code:style(font-family: SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-*##kbd:style(font-family: SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-*##pre:style(font-family: SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-*##samp:style(font-family: SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-
-
 
 ! manhuaren.com
 ! remove
