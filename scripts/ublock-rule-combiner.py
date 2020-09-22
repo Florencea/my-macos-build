@@ -22,6 +22,10 @@ def is_style_line(line_str):
     return ':style(' in line_str
 
 
+def is_remove_function_line(line_str):
+    return ':remove()' in line_str
+
+
 def read_input_rule(file_name):
     with open(file_name, 'r') as rule_file:
         input_list = []
@@ -49,7 +53,11 @@ def get_remove_rules(input_list):
     remove_rule_list = []
     for line in input_list:
         if not_comment_line(line) and not_style_line(line):
-            remove_rule_list.append(line)
+            if is_remove_function_line(line):
+                remove_rule_list.append(line.replace(':remove()', ''))
+                remove_rule_list.append(line)
+            else:
+                remove_rule_list.append(line)
     return remove_rule_list
 
 
