@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop
-! Last updated: 2020-09-21
+! Last updated: 2020-09-24
 
 ! universal rules
 ! outline
@@ -425,6 +425,17 @@ pts.org.tw##.main-info:style(background: none !important)
 pts.org.tw##.post-article:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 pts.org.tw##.post-article:style(line-height: 2.11 !important)
 pts.org.tw##.post-article:style(letter-spacing: 0.6px !important)
+
+! sogi.com.tw
+! remove
+sogi.com.tw##^.container-fluid:has(> div.row > div > a > img[data-original*='cloudfront.net/www/ad'])
+sogi.com.tw##.container-fluid:has(> div.row > div > a > img[data-original*='cloudfront.net/www/ad']):remove()
+sogi.com.tw##^.container:has(#ad)
+sogi.com.tw##.container:has(#ad):remove()
+sogi.com.tw##^.fcellphone[data-sort-price='99999999']
+sogi.com.tw##.fcellphone[data-sort-price='99999999']:remove()
+! style
+sogi.com.tw###main:style(padding-top: 0 !important)
 
 ! startpage.com
 ! style
