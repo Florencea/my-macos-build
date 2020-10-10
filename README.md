@@ -83,6 +83,9 @@ xul.panel-animations.enabled false
 gfx.webrender.all true
 gfx.webrender.compositor true
 
+# enable warp builder
+javascript.options.warp true
+
 # enable trr
 network.trr.bootstrapAddress 104.16.248.249
 network.trr.mode 3
@@ -90,7 +93,7 @@ network.trr.mode 3
 # enable encryped SNI
 network.security.esni.enabled true
 
-# enable http3(warring: not stable)
+# enable http3(warning: not stable)
 network.http.http3.enabled true
 
 # disable pockets
