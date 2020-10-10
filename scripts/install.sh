@@ -38,7 +38,7 @@ brew cask install font-inter
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox --language=zh-TW
+brew cask install firefox-nightly --language=zh-TW
 brew cask install iina
 brew cask install intel-power-gadget
 brew cask install istat-menus
@@ -61,7 +61,7 @@ brew install megatools
 brew install nano
 brew install node
 brew install pinentry-mac
-brew install python@3.8
+brew install python@3.9
 brew install wget
 brew install youtube-dl
 
