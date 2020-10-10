@@ -3,7 +3,6 @@
 # alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
 cd ~
 set -x
-brew update
 brew upgrade
 apm update
 npm update -g
