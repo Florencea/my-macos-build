@@ -30,9 +30,11 @@ printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >> ~/.c
 printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >> ~/.config/fish/config.fish
 
+print_step "setup SF Mono Fonts"
+(set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
+
 print_step "brew install cask fonts essential"
 brew tap homebrew/cask-fonts
-brew cask install font-fira-code
 brew cask install font-inter
 
 print_step "brew install cask apps"
@@ -42,6 +44,10 @@ brew cask install firefox-nightly --language=zh-TW
 brew cask install iina
 brew cask install intel-power-gadget
 brew cask install istat-menus
+printf "\E[0;31m"
+printf "982092332@qq.com\n"
+printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
+printf "\E[0m"
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
@@ -66,6 +72,7 @@ brew install wget
 brew install youtube-dl
 
 print_step "brew install cask fonts"
+brew cask install font-fira-code
 brew cask install font-jf-open-huninn
 brew cask install font-genyomin
 brew cask install font-genryumin
@@ -89,9 +96,6 @@ pip3 install 'python-language-server[all]'
 print_step "disable eyecandy"
 (set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
 
-print_step "setup SF Mono Fonts"
-(set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
-
 print_step "git configuations"
 (set -x; git config --global user.name "$github_username")
 (set -x; git config --global user.email "$github_email")
@@ -101,12 +105,6 @@ print_step "git configuations"
 print_step "reset launchpad"
 (set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
 (set -x; killall Dock)
-
-print_step "istat-menus licence"
-printf "\E[0;31m"
-printf "982092332@qq.com\n"
-printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
-printf "\E[0m"
 
 print_step "clear scripts"
 (set -x; rm "$0")
