@@ -67,7 +67,7 @@ brew install megatools
 brew install nano
 brew install node
 brew install pinentry-mac
-brew install python@3.9
+brew install python3
 brew install wget
 brew install youtube-dl
 
