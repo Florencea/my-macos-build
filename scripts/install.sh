@@ -36,6 +36,7 @@ print_step "setup SF Mono Fonts"
 print_step "brew install cask fonts essential"
 brew tap homebrew/cask-fonts
 brew cask install font-inter
+brew cask install font-fira-code
 
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
@@ -72,7 +73,6 @@ brew install wget
 brew install youtube-dl
 
 print_step "brew install cask fonts"
-brew cask install font-fira-code
 brew cask install font-jf-open-huninn
 brew cask install font-genyomin
 brew cask install font-genryumin
