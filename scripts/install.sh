@@ -9,8 +9,16 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
+print_step "setup SF Mono Fonts"
+(set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
+
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+print_step "brew install cask fonts essential"
+brew tap homebrew/cask-fonts
+brew cask install font-inter
+brew cask install font-fira-code
 
 print_step "brew install fish"
 brew install fish
@@ -20,6 +28,7 @@ mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/opt/curl/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
+printf "set -g fish_user_paths /usr/local/opt/node@14/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g -x fish_greeting\n" >> ~/.config/fish/config.fish
 printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n" >> ~/.config/fish/config.fish
@@ -29,14 +38,6 @@ printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n" >>
 printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >> ~/.config/fish/config.fish
 printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >> ~/.config/fish/config.fish
-
-print_step "setup SF Mono Fonts"
-(set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
-
-print_step "brew install cask fonts essential"
-brew tap homebrew/cask-fonts
-brew cask install font-inter
-brew cask install font-fira-code
 
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
@@ -66,7 +67,7 @@ brew install id3v2
 brew install jq
 brew install megatools
 brew install nano
-brew install node
+brew install node@14
 brew install pinentry-mac
 brew install python3
 brew install wget
