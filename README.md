@@ -159,7 +159,7 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 # name
 Nokia 7 plus
 # user agent
-Mozilla/5.0 (Android 10; Mobile; rv:83.0) Gecko/83.0 Firefox/83.0
+Mozilla/5.0 (Android 10; Mobile; rv:84.0) Gecko/84.0 Firefox/84.0
 # size
 414 x 828
 # DPR
