@@ -12,13 +12,23 @@ github_editor="nano"
 print_step "setup SF Mono Fonts"
 (set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
 
+print_step "download New York Fonts"
+(set -x; curl -o ~/Downloads/NY-font.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY-Font.dmg')
+
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+print_step "brew install istat menus"
+brew cask install intel-power-gadget
+brew cask install istat-menus
+printf "\E[0;31m"
+printf "982092332@qq.com\n"
+printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
+printf "\E[0m"
 
 print_step "brew install cask fonts essential"
 brew tap homebrew/cask-fonts
 brew cask install font-inter
-#brew cask install font-fira-code
 
 print_step "brew install fish"
 brew install fish
@@ -27,8 +37,6 @@ chsh -s /usr/local/bin/fish
 mkdir -p ~/.config/fish
 printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
 printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
-printf "set -g fish_user_paths /usr/local/opt/curl/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
-printf "set -g fish_user_paths /usr/local/opt/node@14/bin \$fish_user_paths\n" >> ~/.config/fish/config.fish
 printf "set -g -x fish_greeting\n" >> ~/.config/fish/config.fish
 printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
 printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n" >> ~/.config/fish/config.fish
@@ -44,12 +52,6 @@ brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install firefox-nightly --language=zh-TW
 brew cask install iina
-brew cask install intel-power-gadget
-brew cask install istat-menus
-printf "\E[0;31m"
-printf "982092332@qq.com\n"
-printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
-printf "\E[0m"
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
@@ -57,7 +59,6 @@ brew cask install scroll-reverser
 
 print_step "brew install commend line tools"
 brew install clang-format
-brew install curl
 brew install ffmpeg
 brew install gcc
 brew install git
@@ -67,7 +68,7 @@ brew install id3v2
 brew install jq
 brew install megatools
 brew install nano
-brew install node@14
+brew install node
 brew install pinentry-mac
 brew install python3
 brew install wget
