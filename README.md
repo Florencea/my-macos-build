@@ -16,12 +16,10 @@ csrutil disable
 curl -L https://git.io/florencea-install -o install.sh;sh install.sh
   │      ├──[GarageBand installation]
   │      ├──[Terminal performances]
-  │      │        └──[Rust setup]
   │      ├──[Browser setup]
   │      │        └──[SSH&GPG setup]
   │      │              └──[Atom setup]
   │      └──[Apps performances]
-  │               └──[Photoshop & parallels installation]
   └──[Music performances]
           ├──[Data copy(Music) to Music.app]
           ├──[Data copy(GarageBand) to ~/]
@@ -156,8 +154,6 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 ## Firefox DevTools configuations
 
 ```fish
-# name
-Nokia 7 plus
 # user agent
 Mozilla/5.0 (Android 10; Mobile; rv:84.0) Gecko/84.0 Firefox/84.0
 # size
