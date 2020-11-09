@@ -4,5 +4,5 @@
 cd ~
 set -x
 brew upgrade
-apm update
+apm upgrade --confirm false
 npm update -g
