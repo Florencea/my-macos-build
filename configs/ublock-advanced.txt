@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1604905824972,
+  "timeStamp": 1604970987503,
   "version": "1.30.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -10,7 +10,7 @@
     "colorBlindFriendly": false,
     "contextMenuEnabled": true,
     "dynamicFilteringEnabled": true,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-mobile.combined.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
     "firewallPaneMinimized": true,
     "hyperlinkAuditingDisabled": true,
     "ignoreGenericCosmeticFilters": false,
@@ -45,8 +45,8 @@
     "dpollock-0",
     "mvps-0",
     "plowe-0",
-    "https://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-desktop.combined.txt",
-    "https://github.com/Florencea/my-macos-build/raw/master/configs/element-custom-rules-mobile.combined.txt"
+    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
+    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
   "hiddenSettings": {
     "allowGenericProceduralFilters": false,
