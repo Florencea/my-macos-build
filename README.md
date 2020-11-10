@@ -67,7 +67,7 @@ alias afx="sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh"
 
 ## Firefox about:config
 
-- Chrome UI for Firefox: [MaterialFox](https://github.com/muckSponge/MaterialFox)
+-   Chrome UI for Firefox: [MaterialFox](https://github.com/muckSponge/MaterialFox)
 
 ```fish
 # enable fission
@@ -138,7 +138,6 @@ set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
 # open new shell
 rustup completions fish > ~/.config/fish/completions/rustup.fish
-
 ```
 
 ## humble tab config
