@@ -29,6 +29,7 @@ printf "\E[0m"
 print_step "brew install cask fonts essential"
 brew tap homebrew/cask-fonts
 brew cask install font-inter
+brew cask install font-jetbrains-mono
 
 print_step "brew install fish"
 brew install fish
