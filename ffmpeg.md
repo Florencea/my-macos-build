@@ -1,30 +1,30 @@
 # ffmpeg Note
 
-- Hardware encoding using `videotoolbox`, however the parameters could not be fully customized.
-  - It works only on Intel integrated graphics, not discreted GPUs.
-- Test using a h264 AVC 720p file, Intel i7-8850H on Macbook Pro 15" 2018.
-  - `av1` software encoding `0.01x`
-  - `hevc` software encoding `0.1x`
-  - `h264` software encoding `5x`
-  - `hevc` hardware encoding `12x`
-  - `h264` hardware encoding `19x`
-- For quality in software encoding, use `crf` and `-present` parameters, not bitrate.
-- For hardware encoding, appropriate bitrate could not be estimated easily.
-- You can try software encoding to find acceptable bitrate, but video encoded by `videotoolbox` may not look as good as the one from software encoding using same bitrate.
-- About `crf`
-  - Visually loseless
-    - `h264`: 18
-    - `hevc`: 20
-    - `av1`: 20
-  - Normal for online streaming
-    - `h264`: 23
-    - `hevc`: 24
-    - `av1`: 30
-  - Lowest quality acceptable for human eyes
-    - `h264`: 30
-    - `hevc`: 31
-    - `av1`: 41
-- Referenced from [https://magiclen.org/vcodec/](https://magiclen.org/vcodec/)
+-   Hardware encoding using `videotoolbox`, however the parameters could not be fully customized.
+    -   It works only on Intel integrated graphics, not discreted GPUs.
+-   Test using a h264 AVC 720p file, Intel i7-8850H on Macbook Pro 15" 2018.
+    -   `av1` software encoding `0.01x`
+    -   `hevc` software encoding `0.1x`
+    -   `h264` software encoding `5x`
+    -   `hevc` hardware encoding `12x`
+    -   `h264` hardware encoding `19x`
+-   For quality in software encoding, use `crf` and `-present` parameters, not bitrate.
+-   For hardware encoding, appropriate bitrate could not be estimated easily.
+-   You can try software encoding to find acceptable bitrate, but video encoded by `videotoolbox` may not look as good as the one from software encoding using same bitrate.
+-   About `crf`
+    -   Visually loseless
+        -   `h264`: 18
+        -   `hevc`: 20
+        -   `av1`: 20
+    -   Normal for online streaming
+        -   `h264`: 23
+        -   `hevc`: 24
+        -   `av1`: 30
+    -   Lowest quality acceptable for human eyes
+        -   `h264`: 30
+        -   `hevc`: 31
+        -   `av1`: 41
+-   Referenced from <https://magiclen.org/vcodec/>
 
 ```fish
 # ffmpeg h264 software encoding
