@@ -52,11 +52,13 @@ print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
 brew cask install firefox-nightly --language=zh-TW
+brew cask install google-chrome
 brew cask install iina
 brew cask install keka
 brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
 brew cask install scroll-reverser
+brew cask install slack
 
 print_step "brew install commend line tools"
 brew install clang-format
