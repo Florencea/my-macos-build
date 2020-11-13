@@ -91,7 +91,7 @@ sudo netfilter-persistent save
 
 ## HTTPS certification using Certbot
 
--   First, check files in `<webroot>` directory could be access by http GET.
+- First, check files in `<webroot>` directory could be access by http GET.
 
 ```bash
 sudo add-apt-repository ppa:certbot/certbot
@@ -104,7 +104,7 @@ sudo cp /etc/letsencrypt/live/<domain_name>/privkey.pem <cert_dir>/privkey.pem
 
 ## HTTPS certification using acme.sh
 
--   First, check files in `<webroot>` directory could be access by http GET.
+- First, check files in `<webroot>` directory could be access by http GET.
 
 ```bash
 curl https://get.acme.sh | sh
@@ -114,7 +114,7 @@ acme.sh --install-cert -d <domain_name> --key-file <cert_dir>/privkey.pem --full
 
 ## pm2 auto startup when reboot
 
--   Check if `node` process is running.
+- Check if `node` process is running.
 
 ```bash
 # enable
@@ -125,7 +125,7 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 unstartup systemd
 
 ## Mount external volumes on system boot
 
--   External volume is formatted to `ext4`
+- External volume is formatted to `ext4`
 
 ```bash
 sudo blkid

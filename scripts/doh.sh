@@ -2,7 +2,7 @@
 brew tap cloudflare/cloudflare
 brew install cloudflared
 mkdir -p /usr/local/etc/cloudflared
-cat << EOF > /usr/local/etc/cloudflared/config.yml
+cat <<EOF >/usr/local/etc/cloudflared/config.yml
 proxy-dns: true
 proxy-dns-upstream:
  - https://1.1.1.1/dns-query

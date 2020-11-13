@@ -13,7 +13,7 @@ if [ -f "$INPUT_FILE" ]; then
   OUTPUT_ERROR=$(ffmpeg -hide_banner -loglevel error -ss $2 -t $3 -i "$1" -filter_complex "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1" "$OUTPUT_FILE" 2>&1)
   if [ -n "$OUTPUT_ERROR" ]; then
     echo $OUTPUT_ERROR
-    rm "$OUTPUT_FILE" > /dev/null 2>&1
+    rm "$OUTPUT_FILE" >/dev/null 2>&1
     exit 1
   else
     echo "done. see $OUTPUT_FILE"
