@@ -77,6 +77,7 @@ brew install gnupg
 brew install id3v2
 brew install jq
 brew install megatools
+brew install mtr
 brew install nano
 brew install node
 brew install pinentry-mac
