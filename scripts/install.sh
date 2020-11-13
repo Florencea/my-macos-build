@@ -65,6 +65,7 @@ brew cask install kekadefaultapp
 brew cask install c0re100-qbittorrent
 brew cask install scroll-reverser
 brew cask install slack
+brew cask install visual-studio-code
 
 print_step "brew install commend line tools"
 brew install clang-format
