@@ -1,5 +1,5 @@
 #! /bin/bash
-function print_step(){
+function print_step() {
   printf "\E[1;36m"
   printf "\n + %s\n\n" "$1"
   printf "\E[0m"
@@ -10,10 +10,16 @@ github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
 print_step "setup SF Mono Fonts"
-(set -x; cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/)
+(
+  set -x
+  cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+)
 
 print_step "download New York Fonts"
-(set -x; curl -o ~/Downloads/NY-font.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY-Font.dmg')
+(
+  set -x
+  curl -o ~/Downloads/NY-font.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY-Font.dmg'
+)
 
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -36,17 +42,17 @@ brew install fish
 echo '/usr/local/bin/fish' | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/fish
 mkdir -p ~/.config/fish
-printf "set -g -x PATH /usr/local/bin \$PATH\n" >> ~/.config/fish/config.fish
-printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >> ~/.config/fish/config.fish
-printf "set -g -x fish_greeting\n" >> ~/.config/fish/config.fish
-printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >> ~/.config/fish/config.fish
-printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias ubk=\"sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >> ~/.config/fish/config.fish
-printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >> ~/.config/fish/config.fish
+printf "set -g -x PATH /usr/local/bin \$PATH\n" >>~/.config/fish/config.fish
+printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >>~/.config/fish/config.fish
+printf "set -g -x fish_greeting\n" >>~/.config/fish/config.fish
+printf "alias mmb=\"atom ~/GitHub/my-macos-build\"\n" >>~/.config/fish/config.fish
+printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n" >>~/.config/fish/config.fish
+printf "alias ubk=\"sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh\"\n" >>~/.config/fish/config.fish
+printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n" >>~/.config/fish/config.fish
+printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n" >>~/.config/fish/config.fish
+printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >>~/.config/fish/config.fish
+printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >>~/.config/fish/config.fish
+printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
@@ -74,6 +80,7 @@ brew install nano
 brew install node
 brew install pinentry-mac
 brew install python3
+brew install shfmt
 brew install wget
 brew install youtube-dl
 
@@ -99,17 +106,41 @@ pip3 install isort
 pip3 install 'python-language-server[all]'
 
 print_step "disable eyecandy"
-(set -x; defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO)
+(
+  set -x
+  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+)
 
 print_step "git configuations"
-(set -x; git config --global user.name "$github_username")
-(set -x; git config --global user.email "$github_email")
-(set -x; git config --global core.editor "$github_editor")
-(set -x; git config --global pull.rebase false)
+(
+  set -x
+  git config --global user.name "$github_username"
+)
+(
+  set -x
+  git config --global user.email "$github_email"
+)
+(
+  set -x
+  git config --global core.editor "$github_editor"
+)
+(
+  set -x
+  git config --global pull.rebase false
+)
 
 print_step "reset launchpad"
-(set -x; defaults write com.apple.dock ResetLaunchPad -bool true)
-(set -x; killall Dock)
+(
+  set -x
+  defaults write com.apple.dock ResetLaunchPad -bool true
+)
+(
+  set -x
+  killall Dock
+)
 
 print_step "clear scripts"
-(set -x; rm "$0")
+(
+  set -x
+  rm "$0"
+)

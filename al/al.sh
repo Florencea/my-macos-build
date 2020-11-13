@@ -247,15 +247,15 @@ update_month() {
     initialize_other_month
   fi
   case $TYPE in
-    -f | --food)
-      write_food_month $PRICE
-      ;;
-    -n | --necessary)
-      write_necessary_month $PRICE
-      ;;
-    -o | --other)
-      write_other_month $PRICE
-      ;;
+  -f | --food)
+    write_food_month $PRICE
+    ;;
+  -n | --necessary)
+    write_necessary_month $PRICE
+    ;;
+  -o | --other)
+    write_other_month $PRICE
+    ;;
   esac
 }
 
@@ -270,18 +270,18 @@ ledger() {
     DATE_TODAY=$(date +"%Y%m%d")
     update_month $TYPE $PRICE
     case $TYPE in
-      -f | --food)
-        write_csv "$DATE_TODAY",食物,"$SHOP","$CONTENT","$PRICE"
-        update_today 食物 $SHOP $CONTENT $PRICE
-        ;;
-      -n | --necessary)
-        write_csv "$DATE_TODAY",必須,"$SHOP","$CONTENT","$PRICE"
-        update_today 必須 $SHOP $CONTENT $PRICE
-        ;;
-      -o | --other)
-        write_csv "$DATE_TODAY",其他,"$SHOP","$CONTENT","$PRICE"
-        update_today 其他 $SHOP $CONTENT $PRICE
-        ;;
+    -f | --food)
+      write_csv "$DATE_TODAY",食物,"$SHOP","$CONTENT","$PRICE"
+      update_today 食物 $SHOP $CONTENT $PRICE
+      ;;
+    -n | --necessary)
+      write_csv "$DATE_TODAY",必須,"$SHOP","$CONTENT","$PRICE"
+      update_today 必須 $SHOP $CONTENT $PRICE
+      ;;
+    -o | --other)
+      write_csv "$DATE_TODAY",其他,"$SHOP","$CONTENT","$PRICE"
+      update_today 其他 $SHOP $CONTENT $PRICE
+      ;;
     esac
   fi
 }
@@ -294,24 +294,24 @@ else
   CONTENT=$3
   PRICE=$4
   case $ARG in
-    -f | --food | -n | --necessary | -o | --other)
-      if [[ $# -eq 4 ]]; then
-        ledger $ARG $SHOP $CONTENT $PRICE
-      else
-        print_error "參數數量錯誤，請使用 al -h 觀看範例"
-      fi
-      ;;
-    -t | --today)
-      print_today
-      ;;
-    -m | --month)
-      print_month
-      ;;
-    -h | --help)
-      print_help
-      ;;
-    *)
-      print_help
-      ;;
+  -f | --food | -n | --necessary | -o | --other)
+    if [[ $# -eq 4 ]]; then
+      ledger $ARG $SHOP $CONTENT $PRICE
+    else
+      print_error "參數數量錯誤，請使用 al -h 觀看範例"
+    fi
+    ;;
+  -t | --today)
+    print_today
+    ;;
+  -m | --month)
+    print_month
+    ;;
+  -h | --help)
+    print_help
+    ;;
+  *)
+    print_help
+    ;;
   esac
 fi

@@ -67,7 +67,7 @@ alias afx="sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh"
 
 ## Firefox about:config
 
--   Chrome UI for Firefox: [MaterialFox](https://github.com/muckSponge/MaterialFox)
+- Chrome UI for Firefox: [MaterialFox](https://github.com/muckSponge/MaterialFox)
 
 ```fish
 # enable fission
