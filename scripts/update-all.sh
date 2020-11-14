@@ -4,5 +4,3 @@
 cd ~
 set -x
 brew upgrade
-apm upgrade --confirm false
-npm update -g
