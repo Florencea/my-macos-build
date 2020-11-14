@@ -32,19 +32,16 @@ curl -L https://git.io/florencea-install -o install.sh;sh install.sh
 
 ```fish
 # Download Google Drive public single file
-curl -L https://git.io/florencea/gd -o gd.sh;sh gd.sh <ID> <downloaded file name>
+curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/gdrive-download.sh -o gd.sh;sh gd.sh <ID> <downloaded file name>
 
 # Setup DNS-over-HTTPS(change DNS to 127.0.0.1 and ::1 after installation)
-curl -L https://git.io/florencea/doh | sh
+curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/doh.sh | sh
 
 # Get Ublock Origin configuations
-curl -L https://git.io/florencea/ublock-advanced -o ublock-advanced.txt
+curl -L https://github.com/Florencea/my-macos-build/raw/main/configs/ublock-advanced.txt -o ublock-advanced.txt
 
 # Make GIF, ffmpeg required
-curl -L https://git.io/florencea/mkgif -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
-
-# Make git.io short URLs
-curl -i https://git.io -F "url=<target URL>" -F "code=<shorten URL>" | grep Location
+curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/make-gif.sh -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
 
 # Download old macOS system images
 curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
