@@ -57,7 +57,6 @@ printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" 
 print_step "brew install cask apps"
 brew tap homebrew/cask-versions
 brew cask install atom
-brew cask install firefox-nightly --language=zh-TW
 brew cask install google-chrome
 brew cask install iina
 brew cask install keka
