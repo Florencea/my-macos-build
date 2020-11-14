@@ -33,7 +33,6 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install cask fonts essential"
-brew tap homebrew/cask-fonts
 brew cask install font-inter
 brew cask install font-jetbrains-mono
 
@@ -52,11 +51,8 @@ printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n" >>~/.config/fish/con
 printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n" >>~/.config/fish/config.fish
 printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >>~/.config/fish/config.fish
 printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >>~/.config/fish/config.fish
-printf "alias afx=\"sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh\"\n" >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
-brew tap homebrew/cask-versions
-brew cask install atom
 brew cask install google-chrome
 brew cask install iina
 brew cask install keka
@@ -67,7 +63,6 @@ brew cask install slack
 brew cask install visual-studio-code
 
 print_step "brew install commend line tools"
-brew install clang-format
 brew install ffmpeg
 brew install gcc
 brew install git
@@ -81,67 +76,23 @@ brew install nano
 brew install node
 brew install pinentry-mac
 brew install python3
-brew install shfmt
 brew install wget
 brew install youtube-dl
-
-print_step "brew install cask fonts"
-brew cask install font-jf-open-huninn
-brew cask install font-genyomin
-brew cask install font-genryumin
-brew cask install font-genwanmin
-brew cask install font-genyogothic
-brew cask install font-gensekigothic
-brew cask install font-gensenrounded
-
-print_step "npm install global packages"
-npm install -g http-server
-npm install -g eslint
-npm install -g bash-language-server
-
-print_step "python3 install global packages"
-pip3 install autopep8
-pip3 install beautysh
-pip3 install flake8
-pip3 install isort
-pip3 install 'python-language-server[all]'
-
-print_step "disable eyecandy"
-(
-  set -x
-  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
-)
 
 print_step "git configuations"
 (
   set -x
   git config --global user.name "$github_username"
-)
-(
-  set -x
   git config --global user.email "$github_email"
-)
-(
-  set -x
   git config --global core.editor "$github_editor"
-)
-(
-  set -x
   git config --global pull.rebase false
 )
 
-print_step "reset launchpad"
+print_step "disable eyecandy, reset launchpad & clear scripts"
 (
   set -x
+  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
   defaults write com.apple.dock ResetLaunchPad -bool true
-)
-(
-  set -x
   killall Dock
-)
-
-print_step "clear scripts"
-(
-  set -x
   rm "$0"
 )
