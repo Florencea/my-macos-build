@@ -7,18 +7,15 @@
 # Boot from recovery, open Terminal.app excuting xartutil, and than clear PRROM & reboot from network recovery
 xartutil --erase-all
 [macOS system installation]
-[Disable SIP]
-# Boot from recovery
-csrutil disable
-[System Performances(Remember to give full persission to Terminal.app)]
+[System Performances]
 [Finder performances]
   ├──[install.sh]
-curl -L https://git.io/florencea-install -o install.sh;sh install.sh
+curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/install.sh -o install.sh;sh install.sh
   │      ├──[GarageBand installation]
   │      ├──[Terminal performances]
   │      ├──[Browser setup]
   │      │        └──[SSH&GPG setup]
-  │      │              └──[Atom setup]
+  │      │              └──[VSCode setup]
   │      └──[Apps performances]
   └──[Music performances]
           ├──[Data copy(Music) to Music.app]
@@ -52,7 +49,7 @@ sudo python installinstallmacos.py
 
 ```fish
 nano ~/.config/fish/config.fish
-alias mmb="atom ~/GitHub/my-macos-build"
+alias mmb="code ~/GitHub/my-macos-build"
 alias mkgif="sh ~/GitHub/my-macos-build/scripts/make-gif.sh"
 alias ubk="sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh"
 alias al="sh ~/GitHub/ledger/al/al.sh"
