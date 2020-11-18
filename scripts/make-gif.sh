@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#! /bin/bash
 # require ffmpeg
 # nano ~/.config/fish/config.fish
 # alias mkgif="sh ~/GitHub/my-macos-build/scripts/make-gif.sh"
@@ -10,9 +10,9 @@ fi
 INPUT_FILE=$1
 OUTPUT_FILE="mkgif_$(date +"%Y%m%d%H%M%S").gif"
 if [ -f "$INPUT_FILE" ]; then
-  OUTPUT_ERROR=$(ffmpeg -hide_banner -loglevel error -ss $2 -t $3 -i "$1" -filter_complex "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1" "$OUTPUT_FILE" 2>&1)
+  OUTPUT_ERROR=$(ffmpeg -hide_banner -loglevel error -ss "$2" -t "$3" -i "$1" -filter_complex "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1" "$OUTPUT_FILE" 2>&1)
   if [ -n "$OUTPUT_ERROR" ]; then
-    echo $OUTPUT_ERROR
+    echo "$OUTPUT_ERROR"
     rm "$OUTPUT_FILE" >/dev/null 2>&1
     exit 1
   else

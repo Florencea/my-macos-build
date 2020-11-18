@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#! /bin/bash
 # nano ~/.config/fish/config.fish
 # alias afx="sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh"
 function print_step() {
