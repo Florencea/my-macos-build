@@ -25,7 +25,6 @@ print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 print_step "brew install istat menus"
-brew cask install intel-power-gadget
 brew cask install istat-menus
 printf "\E[0;31m"
 printf "982092332@qq.com\n"
@@ -41,16 +40,18 @@ brew install fish
 echo '/usr/local/bin/fish' | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/fish
 mkdir -p ~/.config/fish
-printf "set -g -x PATH /usr/local/bin \$PATH\n" >>~/.config/fish/config.fish
-printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n" >>~/.config/fish/config.fish
-printf "set -g -x fish_greeting\n" >>~/.config/fish/config.fish
-printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n" >>~/.config/fish/config.fish
-printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n" >>~/.config/fish/config.fish
-printf "alias ubk=\"sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh\"\n" >>~/.config/fish/config.fish
-printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n" >>~/.config/fish/config.fish
-printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n" >>~/.config/fish/config.fish
-printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n" >>~/.config/fish/config.fish
-printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n" >>~/.config/fish/config.fish
+{
+  printf "set -g -x PATH /usr/local/bin \$PATH\n"
+  printf "set -g fish_user_paths /usr/local/sbin \$fish_user_paths\n"
+  printf "set -g -x fish_greeting\n"
+  printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
+  printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
+  printf "alias ubk=\"sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh\"\n"
+  printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n"
+  printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n"
+  printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
+  printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
+} >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
 brew cask install google-chrome
