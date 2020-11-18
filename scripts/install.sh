@@ -57,8 +57,8 @@ brew cask install google-chrome
 brew cask install iina
 brew cask install keka
 brew cask install kekadefaultapp
+brew cask install mos
 brew cask install c0re100-qbittorrent
-brew cask install scroll-reverser
 brew cask install slack
 brew cask install visual-studio-code
 
