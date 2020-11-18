@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#! /bin/bash
 # nano ~/.config/fish/config.fish
 # alias al="sh ~/GitHub/my-macos-build/al/al.sh"
 
@@ -6,35 +6,35 @@ CODA=250
 
 # utility functions
 set_output_path() {
-  OUTPUT_DIR=$(dirname $0)
+  OUTPUT_DIR=$(dirname "$0")
   OUTPUT_FILE_NAME=$1
   OUTPUT_PATH="$OUTPUT_DIR/$OUTPUT_FILE_NAME"
-  echo $OUTPUT_PATH
+  echo "$OUTPUT_PATH"
 }
 
 # output functions
 write_food_month() {
   OUTPUT_FILE_FOOD_MONTH=$(set_output_path "temp/food_$(date +"%Y%m").month")
   PRICE=$1
-  SUM_FOOD_MONTH=$(cat $OUTPUT_FILE_FOOD_MONTH)
-  SUM_FOOD_MONTH=$(expr $SUM_FOOD_MONTH + $PRICE)
-  echo $SUM_FOOD_MONTH >$OUTPUT_FILE_FOOD_MONTH
+  SUM_FOOD_MONTH=$(cat "$OUTPUT_FILE_FOOD_MONTH")
+  SUM_FOOD_MONTH=$((SUM_FOOD_MONTH + PRICE))
+  echo "$SUM_FOOD_MONTH" >"$OUTPUT_FILE_FOOD_MONTH"
 }
 
 write_necessary_month() {
   OUTPUT_FILE_NECESSARY_MONTH=$(set_output_path "temp/necessary_$(date +"%Y%m").month")
   PRICE=$1
-  SUM_NECESSARY_MONTH=$(cat $OUTPUT_FILE_NECESSARY_MONTH)
-  SUM_NECESSARY_MONTH=$(expr $SUM_NECESSARY_MONTH + $PRICE)
-  echo $SUM_NECESSARY_MONTH >$OUTPUT_FILE_NECESSARY_MONTH
+  SUM_NECESSARY_MONTH=$(cat "$OUTPUT_FILE_NECESSARY_MONTH")
+  SUM_NECESSARY_MONTH=$((SUM_NECESSARY_MONTH + PRICE))
+  echo "$SUM_NECESSARY_MONTH" >"$OUTPUT_FILE_NECESSARY_MONTH"
 }
 
 write_other_month() {
   OUTPUT_FILE_OTHER_MONTH=$(set_output_path "temp/other_$(date +"%Y%m").month")
   PRICE=$1
-  SUM_OTHER_MONTH=$(cat $OUTPUT_FILE_OTHER_MONTH)
-  SUM_OTHER_MONTH=$(expr $SUM_OTHER_MONTH + $PRICE)
-  echo $SUM_OTHER_MONTH >$OUTPUT_FILE_OTHER_MONTH
+  SUM_OTHER_MONTH=$(cat "$OUTPUT_FILE_OTHER_MONTH")
+  SUM_OTHER_MONTH=$((SUM_OTHER_MONTH + PRICE))
+  echo "$SUM_OTHER_MONTH" >"$OUTPUT_FILE_OTHER_MONTH"
 }
 
 write_today() {
@@ -45,10 +45,10 @@ write_today() {
   CONTENT=$3
   PRICE=$4
   if [[ ! -f $OUTPUT_FILE_TODAY ]]; then
-    rm $OUTPUT_FILE_YESTERDAY
-    echo 類別,店家,品項,價格 >$OUTPUT_FILE_TODAY
+    rm "$OUTPUT_FILE_YESTERDAY"
+    echo 類別,店家,品項,價格 >"$OUTPUT_FILE_TODAY"
   fi
-  echo "$TYPE","$SHOP","$CONTENT","$PRICE" >>$OUTPUT_FILE_TODAY
+  echo "$TYPE","$SHOP","$CONTENT","$PRICE" >>"$OUTPUT_FILE_TODAY"
 }
 
 write_csv() {
@@ -56,13 +56,13 @@ write_csv() {
   OUTPUT_FILE_TEMP=$OUTPUT_FILE".temp"
   DATA_ROW=$1
   if [[ ! -f $OUTPUT_FILE ]]; then
-    echo 日期,類別,店家,品項,價格 >$OUTPUT_FILE
+    echo 日期,類別,店家,品項,價格 >"$OUTPUT_FILE"
   fi
-  echo $DATA_ROW >>$OUTPUT_FILE
-  mv $OUTPUT_FILE $OUTPUT_FILE_TEMP
-  head -1 $OUTPUT_FILE_TEMP >$OUTPUT_FILE
-  tail -n +2 $OUTPUT_FILE_TEMP | sort >>$OUTPUT_FILE
-  rm $OUTPUT_FILE_TEMP
+  echo "$DATA_ROW" >>"$OUTPUT_FILE"
+  mv "$OUTPUT_FILE" "$OUTPUT_FILE_TEMP"
+  head -1 "$OUTPUT_FILE_TEMP" >"$OUTPUT_FILE"
+  tail -n +2 "$OUTPUT_FILE_TEMP" | sort >>"$OUTPUT_FILE"
+  rm "$OUTPUT_FILE_TEMP"
 }
 
 print_month() {
@@ -80,14 +80,14 @@ print_month() {
   OUTPUT_FILE_FOOD_MONTH=$(set_output_path "temp/food_$(date +"%Y%m").month")
   OUTPUT_FILE_NECESSARY_MONTH=$(set_output_path "temp/necessary_$(date +"%Y%m").month")
   OUTPUT_FILE_OTHER_MONTH=$(set_output_path "temp/other_$(date +"%Y%m").month")
-  FOOD_MONTH=$(cat $OUTPUT_FILE_FOOD_MONTH)
-  NECESSARY_MONTH=$(cat $OUTPUT_FILE_NECESSARY_MONTH)
-  OTHER_MONTH=$(cat $OUTPUT_FILE_OTHER_MONTH)
-  SUM_MONTH=$(expr $FOOD_MONTH + $NECESSARY_MONTH + $OTHER_MONTH)
+  FOOD_MONTH=$(cat "$OUTPUT_FILE_FOOD_MONTH")
+  NECESSARY_MONTH=$(cat "$OUTPUT_FILE_NECESSARY_MONTH")
+  OTHER_MONTH=$(cat "$OUTPUT_FILE_OTHER_MONTH")
+  SUM_MONTH=$((FOOD_MONTH + NECESSARY_MONTH + OTHER_MONTH))
   echo ""
   echo "${COLOR_CYAN}$OUTPUT_TITLE${COLOR_NORMAL}"
   echo ""
-  cat $OUTPUT_FILE_MONTH | column -t -s ,
+  column -t -s , <"$OUTPUT_FILE_MONTH"
   echo ""
   echo "食物花費： $FOOD_MONTH, 必須花費： $NECESSARY_MONTH, 其他花費： $OTHER_MONTH"
   echo "本月總花費： $SUM_MONTH"
@@ -108,12 +108,12 @@ print_today() {
   fi
   OUTPUT_FILE_CODA_TODAY=$(set_output_path "temp/coda.today")
   OUTPUT_FILE_SUM_TODAY=$(set_output_path "temp/sum.today")
-  CODA_TODAY=$(cat $OUTPUT_FILE_CODA_TODAY)
-  SUM_TODAY=$(cat $OUTPUT_FILE_SUM_TODAY)
+  CODA_TODAY=$(cat "$OUTPUT_FILE_CODA_TODAY")
+  SUM_TODAY=$(cat "$OUTPUT_FILE_SUM_TODAY")
   echo ""
   echo "${COLOR_CYAN}$OUTPUT_TITLE${COLOR_NORMAL}"
   echo ""
-  cat $OUTPUT_FILE_TODAY | column -t -s ,
+  column -t -s , <"$OUTPUT_FILE_TODAY"
   echo ""
   echo "本日剩餘食費： $CODA_TODAY, 本日總和： $SUM_TODAY"
   echo ""
@@ -158,59 +158,59 @@ is_not_valid_integer() {
 initialize_coda_today() {
   OUTPUT_FILE_CODA_TODAY=$(set_output_path "temp/coda.today")
   if [[ -f $OUTPUT_FILE_CODA_TODAY ]]; then
-    CODA_YESTERDAY=$(cat $OUTPUT_FILE_CODA_TODAY)
-    CODA_TODAY=$(expr $CODA_YESTERDAY + $CODA)
-    echo $CODA_TODAY >$OUTPUT_FILE_CODA_TODAY
+    CODA_YESTERDAY=$(cat "$OUTPUT_FILE_CODA_TODAY")
+    CODA_TODAY=$((CODA_YESTERDAY + CODA))
+    echo $CODA_TODAY >"$OUTPUT_FILE_CODA_TODAY"
   else
-    echo $CODA >$OUTPUT_FILE_CODA_TODAY
+    echo $CODA >"$OUTPUT_FILE_CODA_TODAY"
   fi
 }
 
 initialize_sum_today() {
   OUTPUT_FILE_SUM_TODAY=$(set_output_path "temp/sum.today")
-  echo 0 >$OUTPUT_FILE_SUM_TODAY
+  echo 0 >"$OUTPUT_FILE_SUM_TODAY"
 }
 
 initialize_food_month() {
   OUTPUT_FILE_FOOD_MONTH=$(set_output_path "temp/food_$(date +"%Y%m").month")
-  echo 0 >$OUTPUT_FILE_FOOD_MONTH
+  echo 0 >"$OUTPUT_FILE_FOOD_MONTH"
   OUTPUT_FILE_CODA_TODAY=$(set_output_path "temp/coda.today")
-  CODA_TODAY=$(cat $OUTPUT_FILE_CODA_TODAY)
-  if [[ $CODA_TODAY != $CODA ]]; then
-    echo $CODA >$OUTPUT_FILE_CODA_TODAY
+  CODA_TODAY=$(cat "$OUTPUT_FILE_CODA_TODAY")
+  if [[ $CODA_TODAY != "$CODA" ]]; then
+    echo $CODA >"$OUTPUT_FILE_CODA_TODAY"
   fi
 }
 
 initialize_necessary_month() {
   OUTPUT_FILE_NECESSARY_MONTH=$(set_output_path "temp/necessary_$(date +"%Y%m").month")
-  echo 0 >$OUTPUT_FILE_NECESSARY_MONTH
+  echo 0 >"$OUTPUT_FILE_NECESSARY_MONTH"
 }
 
 initialize_other_month() {
   OUTPUT_FILE_OTHER_MONTH=$(set_output_path "temp/other_$(date +"%Y%m").month")
-  echo 0 >$OUTPUT_FILE_OTHER_MONTH
+  echo 0 >"$OUTPUT_FILE_OTHER_MONTH"
 }
 
 update_coda() {
   OUTPUT_FILE_CODA_TODAY=$(set_output_path "temp/coda.today")
   PRICE=$1
   if [[ ! -f $OUTPUT_FILE_CODA_TODAY ]]; then
-    echo $CODA >$OUTPUT_FILE_CODA_TODAY
+    echo $CODA >"$OUTPUT_FILE_CODA_TODAY"
   fi
-  CODA_TODAY=$(cat $OUTPUT_FILE_CODA_TODAY)
-  CODA_TODAY=$(expr $CODA_TODAY - $PRICE)
-  echo $CODA_TODAY >$OUTPUT_FILE_CODA_TODAY
+  CODA_TODAY=$(cat "$OUTPUT_FILE_CODA_TODAY")
+  CODA_TODAY=$((CODA_TODAY - PRICE))
+  echo $CODA_TODAY >"$OUTPUT_FILE_CODA_TODAY"
 }
 
 update_sum() {
   OUTPUT_FILE_SUM_TODAY=$(set_output_path "temp/sum.today")
   PRICE=$1
   if [[ ! -f $OUTPUT_FILE_SUM_TODAY ]]; then
-    echo 0 >$OUTPUT_FILE_SUM_TODAY
+    echo 0 >"$OUTPUT_FILE_SUM_TODAY"
   fi
-  SUM_TODAY=$(cat $OUTPUT_FILE_SUM_TODAY)
-  SUM_TODAY=$(expr $SUM_TODAY + $PRICE)
-  echo $SUM_TODAY >$OUTPUT_FILE_SUM_TODAY
+  SUM_TODAY=$(cat "$OUTPUT_FILE_SUM_TODAY")
+  SUM_TODAY=$((SUM_TODAY + PRICE))
+  echo $SUM_TODAY >"$OUTPUT_FILE_SUM_TODAY"
 }
 
 update_today() {
@@ -223,11 +223,11 @@ update_today() {
     initialize_coda_today
     initialize_sum_today
   fi
-  write_today $TYPE $SHOP $CONTENT $PRICE
+  write_today "$TYPE" "$SHOP" "$CONTENT" "$PRICE"
   if [ "$TYPE" == "食物" ]; then
-    update_coda $PRICE
+    update_coda "$PRICE"
   fi
-  update_sum $PRICE
+  update_sum "$PRICE"
   print_today
 }
 
@@ -248,13 +248,13 @@ update_month() {
   fi
   case $TYPE in
   -f | --food)
-    write_food_month $PRICE
+    write_food_month "$PRICE"
     ;;
   -n | --necessary)
-    write_necessary_month $PRICE
+    write_necessary_month "$PRICE"
     ;;
   -o | --other)
-    write_other_month $PRICE
+    write_other_month "$PRICE"
     ;;
   esac
 }
@@ -268,19 +268,19 @@ ledger() {
     print_error "價格不是合法整數"
   else
     DATE_TODAY=$(date +"%Y%m%d")
-    update_month $TYPE $PRICE
+    update_month "$TYPE" "$PRICE"
     case $TYPE in
     -f | --food)
       write_csv "$DATE_TODAY",食物,"$SHOP","$CONTENT","$PRICE"
-      update_today 食物 $SHOP $CONTENT $PRICE
+      update_today 食物 "$SHOP" "$CONTENT" "$PRICE"
       ;;
     -n | --necessary)
       write_csv "$DATE_TODAY",必須,"$SHOP","$CONTENT","$PRICE"
-      update_today 必須 $SHOP $CONTENT $PRICE
+      update_today 必須 "$SHOP" "$CONTENT" "$PRICE"
       ;;
     -o | --other)
       write_csv "$DATE_TODAY",其他,"$SHOP","$CONTENT","$PRICE"
-      update_today 其他 $SHOP $CONTENT $PRICE
+      update_today 其他 "$SHOP" "$CONTENT" "$PRICE"
       ;;
     esac
   fi
@@ -296,7 +296,7 @@ else
   case $ARG in
   -f | --food | -n | --necessary | -o | --other)
     if [[ $# -eq 4 ]]; then
-      ledger $ARG $SHOP $CONTENT $PRICE
+      ledger "$ARG" "$SHOP" "$CONTENT" "$PRICE"
     else
       print_error "參數數量錯誤，請使用 al -h 觀看範例"
     fi
