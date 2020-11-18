@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1605688790775,
+  "timeStamp": 1605689546153,
   "version": "1.30.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -30,7 +30,9 @@
     "ublock-privacy",
     "ublock-abuse",
     "ublock-unbreak",
+    "adguard-generic",
     "easylist",
+    "adguard-spyware",
     "easyprivacy",
     "urlhaus-1",
     "adguard-annoyance",
