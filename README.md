@@ -78,9 +78,14 @@ gfx.webrender.compositor true
 # enable warp builder
 javascript.options.warp true
 
-# enable trr
+# enable cloudflare trr
 network.trr.bootstrapAddress 104.16.248.249
 network.trr.mode 3
+
+# enable twnic trr
+network.trr.custom_uri https://dns.twnic.tw/dns-query
+network.trr.uri https://dns.twnic.tw/dns-query
+network.trr.bootstrapAddress 210.17.9.228
 
 # enable encryped SNI
 network.security.esni.enabled true
