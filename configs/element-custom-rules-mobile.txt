@@ -24,7 +24,6 @@ beforweb.com##^.article-links
 beforweb.com##.article-links:remove()
 beforweb.com##^.article-entry + p
 beforweb.com##.article-entry + p:remove()
-
 ! style
 beforweb.com##html:style(font-size: 16px)
 beforweb.com##html:style(width: 100%)
@@ -138,6 +137,47 @@ manhuaren.com##^script:has-text(mhrsta)
 soman.com##^script:has-text(cnzz)
 ! style
 manhuaren.com###cp_img:style(padding-top: 60px !important)
+
+! mashdigi.com
+! remove
+mashdigi.com##^body > :not(#page)
+mashdigi.com##body > :not(#page):remove()
+mashdigi.com##^#page > :not(#content)
+mashdigi.com###page > :not(#content):remove()
+mashdigi.com##^#content > :not(.teg-container)
+mashdigi.com###content > :not(.teg-container):remove()
+mashdigi.com##^.teg-container > :not(#primary)
+mashdigi.com##.teg-container > :not(#primary):remove()
+mashdigi.com##^#main > :not(article.post)
+mashdigi.com###main > :not(article.post):remove()
+mashdigi.com##^.entry-content > amp-iframe
+mashdigi.com##.entry-content > amp-iframe:remove()
+mashdigi.com##^.entry-content > div
+mashdigi.com##.entry-content > div:remove()
+mashdigi.com##^.post-cat-list
+mashdigi.com##.post-cat-list:remove()
+mashdigi.com##^.sub-title-primary
+mashdigi.com##.sub-title-primary:remove()
+mashdigi.com##^.entry-footer
+mashdigi.com##.entry-footer:remove()
+mashdigi.com##^.entry-content > p:nth-child(2)
+mashdigi.com##^.entry-content > p:nth-child(3)
+mashdigi.com##^.entry-content > p:nth-child(4)
+mashdigi.com##^.entry-content > p:nth-child(5)
+mashdigi.com##^.entry-content > p:has([id*=more])
+mashdigi.com##^.entry-content > a
+! style
+mashdigi.com##html:style(font-size: 16px !important)
+mashdigi.com##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+mashdigi.com##article.post:style(padding: 0 2rem)
+mashdigi.com##.entry-title:style(font-size: 1.8rem !important)
+mashdigi.com##.entry-title:style(line-height: 1.4 !important)
+mashdigi.com##.entry-title:style(letter-spacing: 0.1rem !important)
+mashdigi.com##.entry-title:style(margin-top: 2rem !important)
+mashdigi.com##.entry-content:style(font-size: 1.2rem !important)
+mashdigi.com##.entry-content:style(line-height: 2.1 !important)
+mashdigi.com##.entry-content:style(letter-spacing: 0.05rem !important)
+mashdigi.com##.entry-content p:style(padding-bottom: 1rem !important)
 
 ! wnacg.org
 ! remove
