@@ -51,6 +51,7 @@ mkdir -p ~/.config/fish
   printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n"
   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
+  printf "set -g fish_user_paths \"/usr/local/opt/node@14/bin\" \$fish_user_paths\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
@@ -58,9 +59,7 @@ brew cask install google-chrome
 brew cask install iina
 brew cask install keka
 brew cask install kekadefaultapp
-brew cask install mos
 brew cask install c0re100-qbittorrent
-brew cask install slack
 brew cask install visual-studio-code
 
 print_step "brew install commend line tools"
@@ -74,7 +73,9 @@ brew install jq
 brew install megatools
 brew install mtr
 brew install nano
-brew install node
+brew install node@14
+set -gx LDFLAGS "-L/usr/local/opt/node@14/lib"
+set -gx CPPFLAGS "-I/usr/local/opt/node@14/include"
 brew install pinentry-mac
 brew install python3
 brew install wget
