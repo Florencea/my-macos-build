@@ -5,7 +5,8 @@
 ```fish
 npx create-react-app app-name --template typescript
 cd app-name
-npm install bootstrap reactstrap node-sass@4.14.1
+npm install bootstrap node-sass@4.14.1
+npm install reactstrap --legacy-peer-deps
 npm install eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise --save-dev
 npx gts init
 ```
