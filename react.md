@@ -5,8 +5,10 @@
 ```fish
 npx create-react-app app-name --template typescript
 cd app-name
-npm install bootstrap node-sass@4.14.1
+npm install bootstrap @fortawesome/fontawesome-free
 npm install reactstrap --legacy-peer-deps
+# need to compile, may take a while
+npm install node-sass@4.14.1
 npm install eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise --save-dev
 npx gts init
 ```
@@ -97,10 +99,17 @@ npm install typescript @types/node
 }
 ```
 
-- Add `bootstrap-custom.scss` to `src/` and import in App.tsx.
+- Add `bootstrap-custom.scss` to `src/`
 
   ```fish
   printf "\$theme-colors: (\n  \"custom-color\": #900,\n);\n\n@import \"../node_modules/bootstrap/scss/bootstrap\";\n" >> src/bootstrap-custom.scss
+  ```
+
+- Import `fontawesome` and `bootstrap` in `src/App.tsx`
+
+  ```typescript
+  import "@fortawesome/fontawesome-free/css/all.min.css";
+  import "./bootstrap-custom.scss";
   ```
 
 - Replace `reportWebVitals.ts` with content below
