@@ -9,6 +9,8 @@ npm install bootstrap reactstrap node-sass@4.14.1
 npx gts init
 ```
 
+- Remove `typescript` and `@types/node` devDependencies. (important!)
+
 - Add `custom.scss` to `src/` and import bootstrap css at last line.
 
   ```css
