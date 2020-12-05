@@ -25,15 +25,15 @@ print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 print_step "brew install istat menus"
-brew cask install istat-menus
+brew install istat-menus
 printf "\E[0;31m"
 printf "982092332@qq.com\n"
 printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
 printf "\E[0m"
 
 print_step "brew install cask fonts essential"
-brew cask install font-inter
-brew cask install font-jetbrains-mono
+brew install font-inter
+brew install font-jetbrains-mono
 
 print_step "brew install fish"
 brew install fish
@@ -54,12 +54,12 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
-brew cask install google-chrome
-brew cask install iina
-brew cask install keka
-brew cask install kekadefaultapp
-brew cask install c0re100-qbittorrent
-brew cask install visual-studio-code
+brew install google-chrome
+brew install iina
+brew install keka
+brew install kekadefaultapp
+brew install c0re100-qbittorrent
+brew install visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
@@ -73,8 +73,6 @@ brew install megatools
 brew install mtr
 brew install nano
 brew install node
-set -gx LDFLAGS "-L/usr/local/opt/node@14/lib"
-set -gx CPPFLAGS "-I/usr/local/opt/node@14/include"
 brew install pinentry-mac
 brew install python3
 brew install wget
