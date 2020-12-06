@@ -11,7 +11,7 @@
 npx create-react-app app-name --template typescript
 cd app-name
 npm install bootstrap
-npm install react-bootstrap
+npm install react-bootstrap --legacy-peer-deps
 npm install react-bootstrap-icons --legacy-peer-deps
 # need to compile, may take a while
 npm install node-sass@4.14.1
