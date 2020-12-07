@@ -56,7 +56,7 @@ alias al="sh ~/GitHub/ledger/al/al.sh"
 alias gd="sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh"
 alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
 alias urb="sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh"
-alias afx="sh ~/GitHub/my-macos-build/scripts/atom-package-fix.sh"
+alias cra="sh ~/GitHub/my-macos-build/scripts/create-react-app.sh"
 ```
 
 ## Firefox about:config
