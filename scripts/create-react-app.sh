@@ -98,7 +98,7 @@ if [[ $# -eq 1 ]]; then
   print_step "All done. Open VSCode for $APP_NAME"
   (
     set -x
-    code .
+    code ./App.tsx
   )
 else
   print_help
