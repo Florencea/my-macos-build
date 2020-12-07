@@ -89,6 +89,12 @@ if [[ $# -eq 1 ]]; then
     set -x
     npm run fix
   )
+  print_step "Add commit for modefied files"
+  (
+    set -x
+    git add ./*
+    git commit -m "init: Initialize project using customized Create React App script"
+  )
   print_step "All done. Open VSCode for $APP_NAME"
   (
     set -x
