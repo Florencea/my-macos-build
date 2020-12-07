@@ -57,6 +57,7 @@ alias gd="sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh"
 alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
 alias urb="sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh"
 alias cra="sh ~/GitHub/my-macos-build/scripts/create-react-app.sh"
+alias crat="sh ~/GitHub/my-macos-build/scripts/create-react-app-tailwind.sh"
 ```
 
 ## Firefox about:config
