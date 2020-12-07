@@ -67,7 +67,6 @@ if [[ $# -eq 1 ]]; then
     echo '{"extends":["./node_modules/gts/","plugin:react/recommended","plugin:jsx-a11y/recommended","plugin:import/errors","plugin:import/warnings","plugin:import/typescript","plugin:promise/recommended"],"env":{"browser":true,"jest":true},"plugins":["react","jsx-a11y","import","promise"],"settings":{"react":{"version":"detect"}}}' >.eslintrc2.json
     rm .eslintrc.json
     mv .eslintrc2.json .eslintrc.json
-    print_step "Add src/bootstrap-custom.scss"
   )
   print_step "Add src/bootstrap-custom.css and import to src/App.tsx"
   (
@@ -93,12 +92,13 @@ if [[ $# -eq 1 ]]; then
   (
     set -x
     git add ./*
+    git add ./.*
     git commit -m "init: Initialize project using customized Create React App script"
   )
   print_step "All done. Open VSCode for $APP_NAME"
   (
     set -x
-    code ./App.tsx
+    code ./src/App.tsx
   )
 else
   print_help
