@@ -18,12 +18,11 @@ if [[ $# -eq 1 ]]; then
     npx create-react-app "$APP_NAME" --template typescript &>/dev/null
   )
   cd "$APP_NAME" || exit
-  print_step "Install Bootstrap, React Bootstrap, React Bootstrap Icons"
+  print_step "Install Bootstrap, Reactstrap, FontAwesome"
   (
     # set -x
-    npm install bootstrap &>/dev/null
-    npm install react-bootstrap --legacy-peer-deps &>/dev/null
-    npm install react-bootstrap-icons --legacy-peer-deps &>/dev/null
+    npm install bootstrap @fortawesome/fontawesome-free &>/dev/null
+    npm install reactstrap --legacy-peer-deps &>/dev/null
   )
   print_step "Install Node SASS, which need to compile, may take a while"
   (
@@ -77,13 +76,15 @@ if [[ $# -eq 1 ]]; then
     # set -x
     printf "\n# lint\n.eslintcache\n" >>.gitignore
   )
-  print_step "Add src/bootstrap-custom.css and import to src/App.tsx"
+  print_step "Add FontAwesome, src/bootstrap-custom.css and import to src/App.tsx"
   (
     # set -x
     printf "\$theme-colors: (\n  \"custom-color\": #900,\n);\n\n@import \"../node_modules/bootstrap/scss/bootstrap\";\n" >>src/bootstrap-custom.scss
-    awk '/logo.svg/ { print; print "import '\''./bootstrap-custom.scss'\'';"; next }1' src/App.tsx >src/App2.tsx
+    awk '/logo.svg/ { print; print "import '\''@fortawesome/fontawesome-free/css/all.min.css'\'';"; next }1' src/App.tsx >src/App2.tsx
+    awk '/logo.svg/ { print; print "import '\''./bootstrap-custom.scss'\'';"; next }1' src/App2.tsx >src/App3.tsx
     rm src/App.tsx
-    mv src/App2.tsx src/App.tsx
+    rm src/App2.tsx
+    mv src/App3.tsx src/App.tsx
   )
   print_step "Run npm fix"
   (
