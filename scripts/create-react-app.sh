@@ -94,6 +94,7 @@ if [[ $# -eq 1 ]]; then
   (
     # set -x
     git config advice.addIgnoredFile false
+    git add ./.gitignore
     git add ./*
     git add ./.eslintignore
     git add ./.eslintrc.json
