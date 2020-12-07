@@ -1,7 +1,7 @@
 #! /bin/bash
 
 function print_step() {
-  printf "\E[1;36m"
+  printf "\E[1;31m"
   printf " +-> "
   printf "\E[0m"
   printf "%s\n" "$1"
