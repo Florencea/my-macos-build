@@ -2,10 +2,18 @@
 
 - [React Development Notes](#react-development-notes)
   - [Create React APP + TypeScript + Google TypeScript Style + Bootstrap + Bootstrap Icons + SASS](#create-react-app--typescript--google-typescript-style--bootstrap--bootstrap-icons--sass)
+    - [`cra app-name`](#cra-app-name)
+    - [Full steps](#full-steps)
   - [Create React APP + TypeScript + Google TypeScript Style + Bootstrap + FontAwesome + SASS](#create-react-app--typescript--google-typescript-style--bootstrap--fontawesome--sass)
   - [Create React APP + TypeScript + Google TypeScript Style + Tailwind CSS](#create-react-app--typescript--google-typescript-style--tailwind-css)
 
 ## Create React APP + TypeScript + Google TypeScript Style + Bootstrap + Bootstrap Icons + SASS
+
+### `cra app-name`
+
+- Recommend to use `cra` for alias in `scripts/create-react-app.sh`
+
+### Full steps
 
 ```fish
 npx create-react-app app-name --template typescript
