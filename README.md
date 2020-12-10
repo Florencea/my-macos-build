@@ -157,9 +157,9 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 
 ```fish
 # user agent
-Mozilla/5.0 (Android 10; Mobile; rv:84.0) Gecko/84.0 Firefox/84.0
+Mozilla/5.0 (Android 11; Mobile; rv:82.0) Gecko/82.0 Firefox/82.0
 # size
-414 x 828
+396 x 858
 # DPR
-2.608695652173913
+2.727272727272727
 ```
