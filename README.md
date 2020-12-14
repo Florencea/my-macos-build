@@ -156,6 +156,8 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 ## Firefox DevTools configuations
 
 ```fish
+# name
+Pixel 4a
 # user agent
 Mozilla/5.0 (Android 11; Mobile; rv:82.0) Gecko/82.0 Firefox/82.0
 # size
