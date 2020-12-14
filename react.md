@@ -17,21 +17,20 @@
 ### Full steps of `cra`
 
 ```fish
-npx create-react-app app-name --template typescript
+yarn create react-app app-name --template typescript
 cd app-name
-npm install bootstrap @fortawesome/fontawesome-free
-npm install reactstrap --legacy-peer-deps
+yarn add bootstrap reactstrap @fortawesome/fontawesome-free
 # need to compile, may take a while
-npm install node-sass@4.14.1
-npm install eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise --save-dev
-npx gts init
+yarn add node-sass@4.14.1
+yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev
+npx -y gts init --yarn
 ```
 
 - Remove `typescript` and `@types/node` devDependencies. (important!)
 
 ```fish
-npm uninstall typescript @types/node --save-dev
-npm install typescript @types/node
+yarn remove typescript @types/node --dev
+yarn add typescript @types/node --dev
 ```
 
 - Change npm scripts `"test"` in `package.json` to
@@ -162,18 +161,18 @@ export default reportWebVitals;
 ### Full steps of `crat`
 
 ```fish
-npx create-react-app app-name --template typescript
+yarn create react-app app-name --template typescript
 cd app-name
-npm install tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco
-npm install eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise --save-dev
-npx gts init
+yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free
+yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev
+npx -y gts init --yarn
 ```
 
 - Remove `typescript` and `@types/node` devDependencies. (important!)
 
 ```fish
-npm uninstall typescript @types/node --save-dev
-npm install typescript @types/node
+yarn remove typescript @types/node --dev
+yarn add typescript @types/node --dev
 ```
 
 - Change npm scripts `"start`, `"build"` and `"test"` in `package.json` to
@@ -272,7 +271,7 @@ npm install typescript @types/node
 - Create Tailwind configuration file
 
 ```fish
-npx tailwindcss init
+npx -y tailwindcss init
 ```
 
 - Replace content of `tailwind.config.js` to
