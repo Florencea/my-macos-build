@@ -18,37 +18,31 @@ if [[ $# -eq 1 ]]; then
   print_step "Run Create React App"
   (
     # set -x
-    npx create-react-app "$APP_NAME" --template typescript &>/dev/null
+    yarn create react-app "$APP_NAME" --template typescript &>/dev/null
   )
   cd "$APP_NAME" || exit
   print_step "Install Tailwind CSS, FontAwesome"
   (
     # set -x
-    npm install tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free &>/dev/null
+    yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free &>/dev/null
   )
-  print_step "Install ESLint Plugins: React, JSX-a11y, Import, Promise"
+  print_step "Install ESLint Plugins: React, JSX-a11y, Import, Promise, Node, Prettier"
   (
     # set -x
-    npm install eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise --save-dev &>/dev/null
+    yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev &>/dev/null
   )
   print_step "Run Google gts"
   (
     # set -x
     mv tsconfig.json tsconfig.old.json
-    npx gts init &>/dev/null
-  )
-  print_step "Remove conflict devlopment dependencies: typescript, @types/node"
-  (
-    # set -x
-    npm uninstall typescript @types/node --save-dev &>/dev/null
-    npm install typescript @types/node &>/dev/null
+    npx -y gts init --yarn &>/dev/null
   )
   print_step "Create Tailwind configuration file"
   (
-    # set x
-    npx tailwindcss init &>/dev/null
+    set x
+    npx -y tailwindcss init &>/dev/null
   )
-  print_step "Rewrite package.json, tsconfig.json, eslintrc.json, reportWebVitals.ts. .gitignore, tailwind.config.js, index.css"
+  print_step "Rewrite package.json, tsconfig.json, eslintrc.json, reportWebVitals.ts .gitignore, tailwind.config.js, index.css"
   (
     # set -x
     jq '.scripts.start = "craco start"' <package.json >package2.json
@@ -94,6 +88,12 @@ if [[ $# -eq 1 ]]; then
     printf "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n" >src/index.css
     rm src/index.old.css
   )
+  print_step "Remove conflict devlopment dependencies: typescript, @types/node"
+  (
+    # set -x
+    yarn remove typescript @types/node --dev &>/dev/null
+    yarn add typescript @types/node --dev &>/dev/null
+  )
   print_step "Add FontAwesome to src/App.tsx"
   (
     # set -x
@@ -106,10 +106,10 @@ if [[ $# -eq 1 ]]; then
     # set -x
     echo 'module.exports = { style: { postcss: { plugins: [require("tailwindcss"), require("autoprefixer")], }, }, };' >>craco.config.js
   )
-  print_step "Run npm fix"
+  print_step "Run yarn fix"
   (
     # set -x
-    npm run fix &>/dev/null
+    yarn fix &>/dev/null
   )
   print_step "Add commit for modefied files"
   (

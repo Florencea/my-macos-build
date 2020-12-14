@@ -18,36 +18,29 @@ if [[ $# -eq 1 ]]; then
   print_step "Run Create React App"
   (
     # set -x
-    npx create-react-app "$APP_NAME" --template typescript &>/dev/null
+    yarn create react-app "$APP_NAME" --template typescript &>/dev/null
   )
   cd "$APP_NAME" || exit
   print_step "Install Bootstrap, Reactstrap, FontAwesome"
   (
     # set -x
-    npm install bootstrap @fortawesome/fontawesome-free &>/dev/null
-    npm install reactstrap --legacy-peer-deps &>/dev/null
+    yarn add bootstrap reactstrap @fortawesome/fontawesome-free &>/dev/null
   )
   print_step "Install Node SASS, which need to compile, may take a while"
   (
     # set -x
-    npm install node-sass@4.14.1 &>/dev/null
+    yarn add node-sass@4.14.1 &>/dev/null
   )
-  print_step "Install ESLint Plugins: React, JSX-a11y, Import, Promise"
+  print_step "Install ESLint Plugins: React, JSX-a11y, Import, Promise, Node, Prettier"
   (
     # set -x
-    npm install eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise --save-dev &>/dev/null
+    yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev &>/dev/null
   )
   print_step "Run Google gts"
   (
     # set -x
     mv tsconfig.json tsconfig.old.json
-    npx gts init &>/dev/null
-  )
-  print_step "Remove conflict devlopment dependencies: typescript, @types/node"
-  (
-    # set -x
-    npm uninstall typescript @types/node --save-dev &>/dev/null
-    npm install typescript @types/node &>/dev/null
+    npx -y gts init --yarn &>/dev/null
   )
   print_step "Rewrite package.json, tsconfig.json, eslintrc.json, reportWebVitals.ts. .gitignore"
   (
@@ -79,6 +72,12 @@ if [[ $# -eq 1 ]]; then
     # set -x
     printf "\n# lint\n.eslintcache\n" >>.gitignore
   )
+  print_step "Remove conflict devlopment dependencies: typescript, @types/node"
+  (
+    # set -x
+    yarn remove typescript @types/node --dev &>/dev/null
+    yarn add typescript @types/node --dev &>/dev/null
+  )
   print_step "Add FontAwesome, src/bootstrap-custom.css and import to src/App.tsx"
   (
     # set -x
@@ -89,10 +88,10 @@ if [[ $# -eq 1 ]]; then
     rm src/App2.tsx
     mv src/App3.tsx src/App.tsx
   )
-  print_step "Run npm fix"
+  print_step "Run yarn fix"
   (
     # set -x
-    npm run fix &>/dev/null
+    yarn fix &>/dev/null
   )
   print_step "Add commit for modefied files"
   (
