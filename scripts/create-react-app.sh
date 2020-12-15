@@ -13,7 +13,7 @@ function print_help() {
 if [[ $# -eq 1 ]]; then
   APP_NAME=$1
   printf "\E[1;36m"
-  printf "\n <-+ Create React App Custom Script with Bootstrap +-->\n\n"
+  printf "\n <--+ Create React App Custom Script with Bootstrap +-->\n\n"
   printf "\E[0m"
   print_step "Run Create React App"
   (
