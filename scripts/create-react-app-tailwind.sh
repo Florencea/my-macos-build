@@ -2,7 +2,7 @@
 
 function print_step() {
   printf "\E[1;31m"
-  printf " +-> "
+  printf " +--> "
   printf "\E[0m"
   printf "%s\n" "$1"
 }
@@ -13,7 +13,7 @@ function print_help() {
 if [[ $# -eq 1 ]]; then
   APP_NAME=$1
   printf "\E[1;31m"
-  printf "\n <-+ Create React App Custom Script with Tailwind CSS +->\n\n"
+  printf "\n <-+ Create React App Custom Script with Tailwind CSS +-->\n\n"
   printf "\E[0m"
   print_step "Run Create React App"
   (
