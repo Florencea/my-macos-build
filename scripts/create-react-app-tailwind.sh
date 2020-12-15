@@ -34,12 +34,11 @@ if [[ $# -eq 1 ]]; then
   print_step "Run Google gts"
   (
     # set -x
-    mv tsconfig.json tsconfig.old.json
-    npx -y gts init --yarn &>/dev/null
+    npx gts init -y --yarn &>/dev/null
   )
   print_step "Create Tailwind configuration file"
   (
-    set x
+    # set x
     npx -y tailwindcss init &>/dev/null
   )
   print_step "Rewrite package.json, tsconfig.json, eslintrc.json, reportWebVitals.ts .gitignore, tailwind.config.js, index.css"
@@ -58,7 +57,6 @@ if [[ $# -eq 1 ]]; then
   (
     # set -x
     echo '{"extends":"./node_modules/gts/tsconfig-google.json","compilerOptions":{"rootDir":".","outDir":"build","target":"es5","lib":["dom","dom.iterable","esnext"],"allowJs":true,"skipLibCheck":true,"esModuleInterop":true,"allowSyntheticDefaultImports":true,"strict":true,"forceConsistentCasingInFileNames":true,"noFallthroughCasesInSwitch":true,"module":"esnext","moduleResolution":"node","resolveJsonModule":true,"isolatedModules":true,"noEmit":true,"jsx":"react-jsx"},"include":["src"]}' >tsconfig.json
-    rm tsconfig.old.json
   )
   (
     # set -x
