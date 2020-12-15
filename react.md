@@ -23,7 +23,7 @@ yarn add bootstrap reactstrap @fortawesome/fontawesome-free
 # need to compile, may take a while
 yarn add node-sass@4.14.1
 yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev
-npx -y gts init --yarn
+npx gts init -y --yarn
 ```
 
 - Remove `typescript` and `@types/node` devDependencies. (important!)
@@ -165,7 +165,7 @@ yarn create react-app app-name --template typescript
 cd app-name
 yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free
 yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev
-npx -y gts init --yarn
+npx gts init -y --yarn
 ```
 
 - Remove `typescript` and `@types/node` devDependencies. (important!)
