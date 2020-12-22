@@ -580,16 +580,7 @@ translate.google.com###contentframe:style(top: 0 !important)
 
 ! xfastest.com
 ! remove
-xfastest.com##^#vwspc-section-1
-xfastest.com###vwspc-section-1:remove()
-xfastest.com##^#vwspc-section-3
-xfastest.com###vwspc-section-3:remove()
-xfastest.com##^#vwspc-section-4
-xfastest.com###vwspc-section-4:remove()
-xfastest.com##^#vwspc-section-5
-xfastest.com###vwspc-section-5:remove()
-xfastest.com##^#vwspc-section-6
-xfastest.com###vwspc-section-6:remove()
+xfastest.com##^.vw-page-wrapper > div:not(.container):not(#vwspc-section-2)
 xfastest.com##^footer > .vw-site-footer-sidebars
 xfastest.com##footer > .vw-site-footer-sidebars:remove()
 xfastest.com##^#wpfront-scroll-top-container
@@ -665,4 +656,6 @@ xfastest.com##.vw-post-box .vw-post-box-title a:style(cursor: pointer !important
 xfastest.com##.vw-post-box .wp-post-image:style(cursor: pointer !important)
 xfastest.com##.vw-post-box:style(cursor: pointer !important)
 xfastest.com##.vw-logo-link > img:style(cursor: pointer !important)
+xfastest.com##.vw-page-navigation-pagination > a.page-numbers:style(cursor: pointer !important)
+xfastest.com##.vw-page-navigation-pagination > a.page-numbers > i:style(cursor: pointer !important)
 
