@@ -72,24 +72,9 @@ fission.autostart true
 ui.prefersReducedMotion 1
 xul.panel-animations.enabled false
 
-# enable webrender
-gfx.webrender.all true
-gfx.webrender.compositor true
-
-# enable warp builder
-javascript.options.warp true
-
 # enable cloudflare trr
 network.trr.bootstrapAddress 104.16.248.249
 network.trr.mode 3
-
-# enable twnic trr
-network.trr.custom_uri https://dns.twnic.tw/dns-query
-network.trr.uri https://dns.twnic.tw/dns-query
-network.trr.bootstrapAddress 210.17.9.228
-
-# enable encryped SNI
-network.security.esni.enabled true
 
 # enable http3(warning: unstable)
 network.http.http3.enabled true
