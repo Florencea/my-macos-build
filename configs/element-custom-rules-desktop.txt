@@ -581,6 +581,7 @@ translate.google.com###contentframe:style(top: 0 !important)
 ! xfastest.com
 ! remove
 xfastest.com##^.vw-page-wrapper > div:not(.container):not(#vwspc-section-2)
+xfastest.com##.vw-page-wrapper > div:not(.container):not(#vwspc-section-2):remove()
 xfastest.com##^footer > .vw-site-footer-sidebars
 xfastest.com##footer > .vw-site-footer-sidebars:remove()
 xfastest.com##^#wpfront-scroll-top-container
