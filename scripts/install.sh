@@ -56,13 +56,13 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
-brew install google-chrome
-brew install iina
-brew install keka
-brew install kekadefaultapp
-brew install scroll-reverser
-brew install c0re100-qbittorrent
-brew install visual-studio-code
+brew install --cask google-chrome
+brew install --cask iina
+brew install --cask keka
+brew install --cask kekadefaultapp
+brew install --cask scroll-reverser
+brew install --cask transmission
+brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
