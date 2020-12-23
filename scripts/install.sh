@@ -60,6 +60,7 @@ brew install google-chrome
 brew install iina
 brew install keka
 brew install kekadefaultapp
+brew install scroll-reverser
 brew install c0re100-qbittorrent
 brew install visual-studio-code
 
@@ -72,14 +73,12 @@ brew install gnupg
 brew install id3v2
 brew install jq
 brew install megatools
-brew install mos
 brew install mtr
 brew install nano
 brew install node
 brew install pinentry-mac
 brew install python3
 brew install wget
-brew install yarn
 brew install youtube-dl
 
 print_step "git configuations"
