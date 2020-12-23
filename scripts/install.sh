@@ -73,12 +73,12 @@ brew install gnupg
 brew install id3v2
 brew install jq
 brew install megatools
-brew install mtr
 brew install nano
 brew install node
 brew install pinentry-mac
 brew install python3
 brew install wget
+brew install yarn
 brew install youtube-dl
 
 print_step "git configuations"
