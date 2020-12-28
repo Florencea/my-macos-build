@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2020-12-23
+! Last updated: 2020-12-28
 
 ! universal rules
 ! outline
@@ -420,7 +420,31 @@ pts.org.tw##^.break-news-container > .news-list > li > div > .tag-list
 pts.org.tw##.break-news-container > .news-list > li > div > .tag-list:remove()
 pts.org.tw##^.container > div > aside
 pts.org.tw##.container > div > aside:remove()
+pts.org.tw##^#fb-root
+pts.org.tw###fb-root:remove()
+pts.org.tw##^.relative-news-list
+pts.org.tw##.relative-news-list:remove()
+pts.org.tw##^body > .container > .row > .col-lg-1
+pts.org.tw##body > .container > .row > .col-lg-1:remove()
+pts.org.tw##^body > .container > .row > .col-lg-6 > :not(.post-article)
+pts.org.tw##body > .container > .row > .col-lg-6 > :not(.post-article):remove()
+pts.org.tw##^body > .article-main-info > .container > .row > .col-lg-8 > .tag-list
+pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .tag-list:remove()
+pts.org.tw##^#header > :not(.main-header)
+pts.org.tw###header > :not(.main-header):remove()
+pts.org.tw##^img[src*='scorecardresearch']
+pts.org.tw##^script[src*='facebook']
+pts.org.tw##^script:has-text(lndata)
+pts.org.tw##^script:has-text(scorecardresearch)
+pts.org.tw##^script:has-text(googletagmanager)
+pts.org.tw##^noscript
 ! style
+pts.org.tw##body > .container > .row:style(justify-content: center !important)
+pts.org.tw##body > .container > .row > .col-lg-6:style(flex: 0 0 75% !important)
+pts.org.tw##body > .container > .row > .col-lg-6:style(max-width: 75% !important)
+pts.org.tw##body > .container > .row > .col-lg-6:style(padding-bottom: 30px !important)
+pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .figure:style(margin-top: 24px !important)
+pts.org.tw##.header-logo:style(height: 41px !important)
 pts.org.tw##.main-info:style(background: none !important)
 pts.org.tw##.post-article:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 pts.org.tw##.post-article:style(line-height: 2.11 !important)
