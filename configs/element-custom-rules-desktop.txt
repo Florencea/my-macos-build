@@ -440,8 +440,6 @@ pts.org.tw##^script:has-text(googletagmanager)
 pts.org.tw##^noscript
 ! style
 pts.org.tw##body > .container > .row:style(justify-content: center !important)
-pts.org.tw##body > .container > .row > .col-lg-6:style(flex: 0 0 75% !important)
-pts.org.tw##body > .container > .row > .col-lg-6:style(max-width: 75% !important)
 pts.org.tw##body > .container > .row > .col-lg-6:style(padding-bottom: 30px !important)
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .figure:style(margin-top: 24px !important)
 pts.org.tw##.header-logo:style(height: 41px !important)
