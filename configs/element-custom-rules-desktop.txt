@@ -131,6 +131,8 @@ dmhy.org##^script[src*='tanx']
 ! style
 dmhy.org##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 dmhy.org##.topic-main:style(text-align: left)
+dmhy.org##th[width="96"]:style(width: 110px !important)
+dmhy.org##td[width="98"]:style(white-space: nowrap !important)
 
 ! e-hentai.org
 ! style
