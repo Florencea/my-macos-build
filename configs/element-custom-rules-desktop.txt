@@ -92,6 +92,8 @@ cool3c.com##^.gpt-new
 cool3c.com##.gpt-new:remove()
 cool3c.com##^.block.search
 cool3c.com##.block.search:remove()
+cool3c.com##^#body > div.side-sync.article-row:nth-child(3)
+cool3c.com###body > div.side-sync.article-row:nth-child(3):remove()
 cool3c.com##^link[rel="dns-prefetch"]
 cool3c.com##^script[id*='track']
 cool3c.com##^script:has-text(admanager.scan)
