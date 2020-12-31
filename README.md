@@ -105,7 +105,10 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 
 # Parallels 16.1.1 TNT start with network
-sudo -b /Applications/Parallels\ Desktop.app/Contents/MacOS/prl_client_app
+sudo nano /Library/Preferences/Parallels/network.desktop.xml
+# replace <UseKextless>-1</UseKextless> to <UseKextless>0</UseKextless>
+sudo nano /Library/Preferences/Parallels/dispatcher.desktop.xml
+# replace <Usb>0</Usb> to <Usb>1</Usb>
 
 # Use TouchID for sudo commends
 sudo nano /etc/pam.d/sudo
