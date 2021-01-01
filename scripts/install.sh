@@ -53,7 +53,7 @@ mkdir -p ~/.config/fish
   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
   printf "alias cra=\"sh ~/GitHub/my-macos-build/scripts/create-react-app.sh\"\n"
   printf "alias crat=\"sh ~/GitHub/my-macos-build/scripts/create-react-app-tailwind.sh\"\n"
-  printf "alias myself-cli=\"sh ~/GitHub/myself-cli/myself-cli.sh/\"\n"
+  printf "alias myself-cli=\"sh ~/GitHub/myself-cli/myself-cli.sh\"\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
