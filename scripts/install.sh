@@ -32,8 +32,8 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install cask fonts essential"
-brew install font-inter
-brew install font-jetbrains-mono
+brew install homebrew/cask-fonts/font-inter
+brew install homebrew/cask-fonts/font-jetbrains-mono
 
 print_step "brew install fish"
 brew install fish
@@ -60,7 +60,7 @@ print_step "brew install cask apps"
 brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
-brew install --cask kekadefaultapp
+brew install --cask kekaexternalhelper
 brew install --cask scroll-reverser
 brew install --cask transmission
 brew install --cask visual-studio-code
