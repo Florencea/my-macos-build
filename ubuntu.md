@@ -17,6 +17,36 @@ cat ~/.ssh/id_ed25519.pub | ssh <user>@<host> "cat >> ~/.ssh/authorized_keys"
 ## Change APT Server
 
 ```bash
+# for ubuntu 20.04
+sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
+sudo nano /etc/apt/sources.list
+########################################################
+deb http://free.nchc.org.tw/ubuntu focal main restricted
+deb-src http://free.nchc.org.tw/ubuntu focal main restricted
+deb http://free.nchc.org.tw/ubuntu focal-updates main restricted
+deb-src http://free.nchc.org.tw/ubuntu focal-updates main restricted
+deb http://free.nchc.org.tw/ubuntu focal universe
+deb-src http://free.nchc.org.tw/ubuntu focal universe
+deb http://free.nchc.org.tw/ubuntu focal-updates universe
+deb-src http://free.nchc.org.tw/ubuntu focal-updates universe
+deb http://free.nchc.org.tw/ubuntu focal multiverse
+deb-src http://free.nchc.org.tw/ubuntu focal multiverse
+deb http://free.nchc.org.tw/ubuntu focal-updates multiverse
+deb-src http://free.nchc.org.tw/ubuntu focal-updates multiverse
+deb http://free.nchc.org.tw/ubuntu focal-backports main restricted universe multiverse
+deb-src http://free.nchc.org.tw/ubuntu focal-backports main restricted universe multiverse
+deb http://archive.canonical.com/ubuntu focal partner
+deb-src http://archive.canonical.com/ubuntu focal partner
+deb http://free.nchc.org.tw/ubuntu focal-security main restricted
+deb-src http://free.nchc.org.tw/ubuntu focal-security main restricted
+deb http://free.nchc.org.tw/ubuntu focal-security universe
+deb-src http://free.nchc.org.tw/ubuntu focal-security universe
+deb http://free.nchc.org.tw/ubuntu focal-security multiverse
+deb-src http://free.nchc.org.tw/ubuntu focal-security multiverse
+########################################################
+```
+
+```bash
 # for ubuntu 18.04
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
 sudo nano /etc/apt/sources.list
@@ -47,6 +77,7 @@ deb-src http://security.ubuntu.com/ubuntu bionic-security multiverse
 ## Setup ntp
 
 ```bash
+# for ubuntu 18.04
 sudo apt install -y ntp
 sudo timedatectl set-timezone Asia/Taipei
 sudo timedatectl set-ntp true
