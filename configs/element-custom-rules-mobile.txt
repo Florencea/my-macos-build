@@ -1234,7 +1234,8 @@ imgscloud.com###coverclose_bottom:remove()
 
 ! external datalist
 ! 18av.tv
-18av.tv##.altto form:after:style(font-size: 24px !important)
+18av.tv##.altto form:after:style(font-size: 18px !important)
+18av.tv##.altto form:after:style(word-break: break-word !important)
 18av.tv##.altto form:after:style(font-family: monospace !important)
 18av.tv##.altto form:after:style(font-weight: 300 !important)
 18av.tv##.altto form:after:style(text-align: center !important)
