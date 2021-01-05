@@ -108,6 +108,16 @@ beforweb.com##article section header:style(font-size: 2.6rem !important)
 beforweb.com##.comment-wrapper header:style(padding: 0 5rem !important)
 beforweb.com##.comment-wrapper header:style(margin-top: 8rem !important)
 
+! exhentai.org
+! style
+exhentai.org###i1:style(width: 100% !important)
+exhentai.org###i1:style(max-width: 100% !important)
+exhentai.org###i1 img:style(max-width: 100% !important)
+exhentai.org###i1 img:style(max-height: none !important)
+exhentai.org###i1 img:style(height: auto !important)
+exhentai.org###i1 img:style(width: 100% !important)
+exhentai.org###i1 a:style(pointer-events: none !important)
+
 ! manhuaren.com
 ! remove
 manhuaren.com##^.ad-top
