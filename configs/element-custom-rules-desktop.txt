@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-01-05
+! Last updated: 2021-01-08
 
 ! universal rules
 ! outline
@@ -420,6 +420,12 @@ pts.org.tw##^body > .article-main-info > .container > .row > .col-lg-8 > .tag-li
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .tag-list:remove()
 pts.org.tw##^#header > :not(.main-header)
 pts.org.tw###header > :not(.main-header):remove()
+pts.org.tw##^.article-info
+pts.org.tw##.article-info:remove()
+pts.org.tw##^nav[aria-label='breadcrumb']
+pts.org.tw##nav[aria-label='breadcrumb']:remove()
+pts.org.tw##^.main-footer
+pts.org.tw##.main-footer:remove()
 pts.org.tw##^img[src*='scorecardresearch']
 pts.org.tw##^script[src*='facebook']
 pts.org.tw##^script:has-text(lndata)
@@ -435,6 +441,14 @@ pts.org.tw##.main-info:style(background: none !important)
 pts.org.tw##.post-article:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 pts.org.tw##.post-article:style(line-height: 2.11 !important)
 pts.org.tw##.post-article:style(letter-spacing: 0.6px !important)
+pts.org.tw##.post-article:style(padding-bottom: 4rem !important)
+pts.org.tw##.article-title:style(font-size: 1.5rem !important)
+pts.org.tw##.article-title:style(line-height: 2.2rem !important)
+pts.org.tw##.container > .row > .col-lg-6:style(flex: 0 0 75% !important)
+pts.org.tw##.container > .row > .col-lg-6:style(max-width: 100% !important)
+pts.org.tw##.container > .row > .col-lg-6:style(min-width: 396px !important)
+pts.org.tw##.article-main-info:style(margin-bottom: 0 !important)
+pts.org.tw##.article-main-info:style(padding:2.5rem 0 2rem 0 !important)
 
 ! sogi.com.tw
 ! remove
