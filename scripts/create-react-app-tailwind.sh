@@ -17,25 +17,30 @@ if [[ $# -eq 1 ]]; then
   printf "\E[0m"
   print_step "Run Create React App"
   (
-    yarn create react-app "$APP_NAME" --template typescript &>/dev/null
+    # yarn create react-app "$APP_NAME" --template typescript &>/dev/null
+    yarn create react-app "$APP_NAME" --template typescript
   )
   cd "$APP_NAME" || exit
   print_step "Add Tailwind CSS, FontAwesome"
   (
-    yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free &>/dev/null
+    # yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free &>/dev/null
+    yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 @craco/craco @fortawesome/fontawesome-free
   )
   print_step "Add ESLint Plugins: React, JSX-a11y, Import, Promise, Node, Prettier"
   (
-    yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev &>/dev/null
+    # yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev &>/dev/null
+    yarn add eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise eslint-plugin-node eslint-plugin-prettier --dev
   )
   print_step "Run Google gts"
   (
-    npx gts init -y --yarn &>/dev/null
+    # npx gts init -y --yarn &>/dev/null
+    npx gts init -y --yarn
   )
   print_step "Create Tailwind configuration"
   (
     # tailwind.config.js
-    npx -y tailwindcss init &>/dev/null
+    # npx -y tailwindcss init &>/dev/null
+    npx -y tailwindcss init
     # craco.config.js
     echo 'module.exports = { style: { postcss: { plugins: [require("tailwindcss"), require("autoprefixer")], }, }, };' >>craco.config.js
   )
@@ -78,12 +83,15 @@ if [[ $# -eq 1 ]]; then
   )
   print_step "Remove conflicts: typescript, @types/node"
   (
-    yarn remove typescript @types/node --dev &>/dev/null
-    yarn add typescript @types/node --dev &>/dev/null
+    # yarn remove typescript @types/node --dev &>/dev/null
+    yarn remove typescript @types/node --dev
+    # yarn add typescript @types/node --dev &>/dev/null
+    yarn add typescript @types/node --dev
   )
   print_step "Run yarn fix"
   (
-    yarn fix &>/dev/null
+    # yarn fix &>/dev/null
+    yarn fix
   )
   print_step "Commit modefied files"
   (
