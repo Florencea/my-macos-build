@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-01-08
+! Last updated: 2021-01-14
 
 ! universal rules
 ! outline
@@ -635,7 +635,10 @@ xfastest.com##^.evo_lightboxes
 xfastest.com##.evo_lightboxes:remove()
 xfastest.com##^.vw-site-social-profile
 xfastest.com##.vw-site-social-profile:remove()
+xfastest.com##^.vw-post-box-inner > :not(.vw-post-box-title)
+xfastest.com##.vw-post-box-inner > :not(.vw-post-box-title):remove()
 xfastest.com##^link[rel='dns-prefetch']
+xfastest.com##^script[id="remote_sdk-js"]
 xfastest.com##^script[src*='線上客服']
 xfastest.com##^script[src*='onesignal']
 xfastest.com##^script[src*='maps.google']
@@ -644,6 +647,7 @@ xfastest.com##^script[src*='cloudflareinsights']
 xfastest.com##^script:has-text(googletagmanager)
 xfastest.com##^script[src*='googletagmanager']
 xfastest.com##^script:has-text(fjs)
+xfastest.com##^script:has-text(OneSignal)
 xfastest.com##^script[src*='facebook-tracking']
 xfastest.com##^script[src*='google-tracking']
 xfastest.com##^script[src*='gtm-']
