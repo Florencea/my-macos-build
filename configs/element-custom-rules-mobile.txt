@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-01-15
+! Last updated: 2021-01-19
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -191,10 +191,14 @@ mashdigi.com##.entry-content p:style(padding-bottom: 1rem !important)
 
 ! wnacg.org
 ! remove
+wnacg.org##^body > .UnderPage > :not(section):not(script)
+wnacg.org##body > .UnderPage > :not(section):not(script):remove()
+wnacg.org##^#divAD
+wnacg.org###divAD:remove()
 wnacg.org##^.sh
 wnacg.org##.sh:remove()
-wnacg.org##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show)
-wnacg.org##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):remove()
+wnacg.org##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):not(.UnderPage)
+wnacg.org##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.show):not(.UnderPage):remove()
 wnacg.org##^.Introduct > :not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
 wnacg.org##.Introduct > :not(.Introduct_Sub):not(.txtDesc):not(.openBtn):remove()
 wnacg.org##^[href="/S1z"]
@@ -258,6 +262,8 @@ wnacg.org##body:has(.Introduct):style(height: 100vh !important)
 wnacg.org##body:has(.Introduct):style(display: flex !important)
 wnacg.org##body:has(.Introduct):style(flex-direction: column !important)
 wnacg.org##body:style(justify-content: flex-end !important)
+wnacg.org##body > .UnderPage:style(background-color: #1c1b21 !important)
+wnacg.org##img[src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"]:style(opacity: 0)
 wnacg.org##.bottom:style(position: relative !important)
 wnacg.org##.bottom:style(bottom: 0 !important)
 wnacg.org##.bottom:style(flex: 0 !important)
