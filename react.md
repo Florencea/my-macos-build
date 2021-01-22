@@ -8,8 +8,8 @@
     - [Change file extensions to `.tsx`](#change-file-extensions-to-tsx)
     - [Import Modules](#import-modules)
     - [Jest configuations](#jest-configuations)
-    - [Commit files](#commit-files)
     - [Done](#done)
+    - [Commit files](#commit-files)
   - [Create React APP + TypeScript + Google TypeScript Style + Bootstrap + FontAwesome + SASS](#create-react-app--typescript--google-typescript-style--bootstrap--fontawesome--sass)
     - [`cra app-name`](#cra-app-name)
     - [Full steps of `cra`](#full-steps-of-cra)
@@ -27,6 +27,7 @@ cd <app-name>
 mkdir test
 mkdir components
 npx gts init -y --yarn
+mv .prettierrc.js .prettierrc.ts
 yarn add ts-node jest jest-css-modules @babel/core babel-jest @types/react eslint eslint-plugin-node eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise typescript --force --dev
 yarn add antd @ant-design/icons swr tailwindcss@latest postcss@latest autoprefixer@latest @testing-library/jest-dom @testing-library/react @jest/types
 code .
@@ -119,6 +120,8 @@ styles/
 
 ```fish
 npx -y tailwindcss init -p
+mv tailwind.config.js tailwind.config.ts
+mv postcss.config.js postcss.config.ts
 ```
 
 - `tailwind.config.js`
@@ -326,6 +329,14 @@ it("should properly rendered.", async () => {
 });
 ```
 
+### Done
+
+```fish
+yarn fix
+yarn test
+yarn dev
+```
+
 ### Commit files
 
 ```fish
@@ -333,14 +344,6 @@ git config advice.addIgnoredFile false
 git add ./*
 git add ./.*
 git commit -m "init: Configuations for TypeScript, Tailwind CSS, Ant Design, Jest"
-```
-
-### Done
-
-```fish
-yarn fix
-yarn test
-yarn dev
 ```
 
 ## Create React APP + TypeScript + Google TypeScript Style + Bootstrap + FontAwesome + SASS
