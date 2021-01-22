@@ -1,12 +1,347 @@
 # React Development Notes
 
 - [React Development Notes](#react-development-notes)
+  - [Next.js + TypeScript + Google TypeScript Style + Tailwind CSS + Ant Design + Jest](#nextjs--typescript--google-typescript-style--tailwind-css--ant-design--jest)
+    - [Install packages](#install-packages)
+    - [Configuation files](#configuation-files)
+    - [Tailwind CSS setup](#tailwind-css-setup)
+    - [Change file extensions to `.tsx`](#change-file-extensions-to-tsx)
+    - [Import Modules](#import-modules)
+    - [Jest configuations](#jest-configuations)
+    - [Commit files](#commit-files)
+    - [Done](#done)
   - [Create React APP + TypeScript + Google TypeScript Style + Bootstrap + FontAwesome + SASS](#create-react-app--typescript--google-typescript-style--bootstrap--fontawesome--sass)
     - [`cra app-name`](#cra-app-name)
     - [Full steps of `cra`](#full-steps-of-cra)
   - [Create React APP + TypeScript + Google TypeScript Style + Tailwind CSS + FontAwesome](#create-react-app--typescript--google-typescript-style--tailwind-css--fontawesome)
     - [`crat app-name`](#crat-app-name)
     - [Full steps of `crat`](#full-steps-of-crat)
+
+## Next.js + TypeScript + Google TypeScript Style + Tailwind CSS + Ant Design + Jest
+
+### Install packages
+
+```fish
+yarn create next-app
+cd <app-name>
+mkdir test
+mkdir components
+npx gts init -y --yarn
+yarn add ts-node jest jest-css-modules @babel/core babel-jest @types/react eslint eslint-plugin-node eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise typescript --force --dev
+yarn add antd @ant-design/icons swr tailwindcss@latest postcss@latest autoprefixer@latest @testing-library/jest-dom @testing-library/react @jest/types
+code .
+```
+
+### Configuation files
+
+- `package.json`
+
+```json
+{
+  "scripts": {
+    "test": "jest --passWithNoTests --no-cache --silent --coverage --verbose --watchAll=false",
+    "dev": "next dev",
+    "build": "next build",
+    "build-static": "next export",
+    "start": "next start",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "yarn run compile",
+    "pretest": "yarn run compile",
+    "posttest": "yarn run lint"
+  }
+}
+```
+
+- `tsconfig.json`
+
+```json
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+- `.eslintrc.json`
+
+```json
+{
+  "extends": [
+    "./node_modules/gts/",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:promise/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "plugins": ["react", "jsx-a11y", "import", "promise"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
+```
+
+- `.eslintignore`
+
+```text
+.next/
+build/
+coverage/
+node_modules/
+out/
+public/
+styles/
+```
+
+### Tailwind CSS setup
+
+```fish
+npx -y tailwindcss init -p
+```
+
+- `tailwind.config.js`
+
+```javascript
+module.exports = {
+  purge: ["./pages/**/*.tsx", "./components/**/*.tsx"],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+### Change file extensions to `.tsx`
+
+```fish
+mv pages/api/hello.js pages/api/hello.ts
+mv pages/_app.js pages/_app.tsx
+mv pages/index.js pages/index.tsx
+```
+
+### Import Modules
+
+```fish
+printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' >> styles/tailwind.css
+```
+
+- `pages/_app.tsx`
+
+```tsx
+import React from "react";
+import type { AppProps } from "next/app";
+import "antd/dist/antd.css";
+import "../styles/tailwind.css";
+import "../styles/globals.css";
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+
+export default MyApp;
+```
+
+- `pages/index.tsx`
+
+```tsx
+import React from "react";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+
+export default function Home() {
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className={styles.main}>
+        <h1 className={styles.title}>
+          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        </h1>
+
+        <p className={styles.description}>
+          Get started by editing{" "}
+          <code className={styles.code}>pages/index.js</code>
+        </p>
+
+        <div className={styles.grid}>
+          <a href="https://nextjs.org/docs" className={styles.card}>
+            <h3>Documentation &rarr;</h3>
+            <p>Find in-depth information about Next.js features and API.</p>
+          </a>
+
+          <a href="https://nextjs.org/learn" className={styles.card}>
+            <h3>Learn &rarr;</h3>
+            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          </a>
+
+          <a
+            href="https://github.com/vercel/next.js/tree/master/examples"
+            className={styles.card}
+          >
+            <h3>Examples &rarr;</h3>
+            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          </a>
+
+          <a
+            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className={styles.card}
+          >
+            <h3>Deploy &rarr;</h3>
+            <p>
+              Instantly deploy your Next.js site to a public URL with Vercel.
+            </p>
+          </a>
+        </div>
+      </main>
+
+      <footer className={styles.footer}>
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{" "}
+          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+        </a>
+      </footer>
+    </div>
+  );
+}
+```
+
+- `pages/api/hello.ts`
+
+```typescript
+import type { NextApiRequest, NextApiResponse } from "next";
+
+type Data = {
+  name: string;
+};
+
+export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  res.status(200).json({ name: "John Doe" });
+};
+```
+
+- `src/index.ts`
+
+```typescript
+export default function index() {}
+```
+
+### Jest configuations
+
+```fish
+printf '{\n  "presets": ["next/babel"]\n}\n' >> .babelrc
+touch jest.config.ts
+touch jest.setup.ts
+touch test/index.test.tsx
+```
+
+- `jest.config.ts`
+
+```typescript
+import type { Config } from "@jest/types";
+
+export default async (): Promise<Config.InitialOptions> => {
+  return {
+    setupFilesAfterEnv: ["./jest.setup.ts"],
+    moduleNameMapper: {
+      "\\.(css|less|scss|sss|styl)$": "<rootDir>/node_modules/jest-css-modules",
+    },
+    collectCoverageFrom: [
+      "**/*.{ts,tsx}",
+      "!**/jest.config.ts",
+      "!**/jest.setup.ts",
+      "!**/next-env.d.ts",
+      "!**/postcss.config.js",
+      "!**/tailwind.config.js",
+      "!**/build/*",
+      "!**/build/src/*",
+      "!**/.next/*",
+      "!**/coverage/*",
+      "!**/node_modules/*",
+      "!**/public/*",
+      "!**/styles/*",
+      "!**/test/*",
+    ],
+  };
+};
+```
+
+- `jest.setup.ts`
+
+```typescript
+Object.defineProperty(window, "matchMedia", {
+  value: () => {
+    return {
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {},
+    };
+  },
+});
+```
+
+- `test/index.test.tsx`
+
+```tsx
+import React from "react";
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import Home from "../pages/index";
+
+it("should properly rendered.", async () => {
+  render(<Home />);
+  expect(screen.getByText("Next.js!")).toBeInTheDocument();
+});
+```
+
+### Commit files
+
+```fish
+git config advice.addIgnoredFile false
+git add ./*
+git add ./.*
+git commit -m "init: Configuations for TypeScript, Tailwind CSS, Ant Design, Jest"
+```
+
+### Done
+
+```fish
+yarn fix
+yarn test
+yarn dev
+```
 
 ## Create React APP + TypeScript + Google TypeScript Style + Bootstrap + FontAwesome + SASS
 
