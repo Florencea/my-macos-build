@@ -27,7 +27,6 @@ cd <app-name>
 mkdir test
 mkdir components
 npx gts init -y --yarn
-mv .prettierrc.js .prettierrc.ts
 yarn add ts-node jest jest-css-modules @babel/core babel-jest @types/react eslint eslint-plugin-node eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise typescript --force --dev
 yarn add antd @ant-design/icons swr tailwindcss@latest postcss@latest autoprefixer@latest @testing-library/jest-dom @testing-library/react @jest/types
 code .
@@ -120,8 +119,6 @@ styles/
 
 ```fish
 npx -y tailwindcss init -p
-mv tailwind.config.js tailwind.config.ts
-mv postcss.config.js postcss.config.ts
 ```
 
 - `tailwind.config.js`
