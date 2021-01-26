@@ -1,0 +1,15 @@
+[
+  {
+    "name": "exhentai",
+    "url": "^https?://exhentai\\.org/s/.*$",
+    "exampleUrl": "http://exhentai.org/s/0088446283/653117-4",
+    "nextLink": "//img[@src=\"http://st.exhentai.net/img/n.png\"]/..",
+    "autopager": { "maxpage": 99999, "ipages": [true, 0] }
+  },
+  {
+    "name": "exhentai gallery",
+    "url": "^https?://exhentai\\.org/g/",
+    "exampleUrl": "http://exhentai.org/g/514954/d4fcb4973e/?p=1",
+    "autopager": { "maxpage": 99999, "ipages": [true, 0] }
+  }
+]
