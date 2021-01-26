@@ -97,7 +97,11 @@ for file_name in file_list:
     with open(file_name.split('.')[0] + '.combined.txt', 'w') as output_file:
         for line in get_meta(input_list):
             print(line, file=output_file)
+        if 'mobile' in file_name:
+            print('!#if env_mobile', file=output_file)
         for line in get_remove_rules(input_list):
             print(line, file=output_file)
         for line in get_combined_style_rules(get_style_rules(input_list)):
             print(line, file=output_file)
+        if 'mobile' in file_name:
+            print('!#endif', file=output_file)
