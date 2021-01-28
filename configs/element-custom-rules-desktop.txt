@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-01-14
+! Last updated: 2021-01-28
 
 ! universal rules
 ! outline
@@ -418,14 +418,16 @@ pts.org.tw##^body > .container > .row > .col-lg-6 > :not(.post-article)
 pts.org.tw##body > .container > .row > .col-lg-6 > :not(.post-article):remove()
 pts.org.tw##^body > .article-main-info > .container > .row > .col-lg-8 > .tag-list
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .tag-list:remove()
-pts.org.tw##^#header > :not(.main-header)
-pts.org.tw###header > :not(.main-header):remove()
 pts.org.tw##^.article-info
 pts.org.tw##.article-info:remove()
 pts.org.tw##^nav[aria-label='breadcrumb']
 pts.org.tw##nav[aria-label='breadcrumb']:remove()
 pts.org.tw##^.main-footer
 pts.org.tw##.main-footer:remove()
+pts.org.tw##^.program-mask
+pts.org.tw##.program-mask:remove()
+pts.org.tw##^#header
+pts.org.tw###header
 pts.org.tw##^img[src*='scorecardresearch']
 pts.org.tw##^script[src*='facebook']
 pts.org.tw##^script:has-text(lndata)
