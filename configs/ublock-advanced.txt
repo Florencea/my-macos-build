@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1612400657556,
+  "timeStamp": 1612430172184,
   "version": "1.33.2",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -25,15 +25,12 @@
     "easylist",
     "adguard-spyware",
     "easyprivacy",
-    "fanboy-enhanced",
     "urlhaus-1",
     "spam404-0",
     "adguard-annoyance",
     "adguard-social",
     "fanboy-thirdparty_social",
     "fanboy-cookiemonster",
-    "fanboy-annoyance",
-    "fanboy-social",
     "ublock-annoyances",
     "plowe-0",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
