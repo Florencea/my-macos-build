@@ -34,6 +34,7 @@ printf "\E[0m"
 print_step "brew install cask fonts essential"
 brew install homebrew/cask-fonts/font-inter
 brew install homebrew/cask-fonts/font-jetbrains-mono
+brew install homebrew/cask-fonts/font-jf-open-huninn
 
 print_step "brew install fish"
 brew install fish
@@ -57,15 +58,17 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
-brew install --cask google-chrome
+brew install --cask firefox-nightly --language=zh-TW
+brew install --cask eloston-chromium
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
+brew install --cask c0re100-qbittorrent
 brew install --cask scroll-reverser
-brew install --cask transmission
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
+brew install annie
 brew install ffmpeg
 brew install gcc
 brew install git
@@ -74,8 +77,11 @@ brew install gnupg
 brew install id3v2
 brew install jq
 brew install megatools
+brew install mkcert
+brew install mtr
 brew install nano
 brew install node
+brew install nss
 brew install pinentry-mac
 brew install python3
 brew install wget
