@@ -58,6 +58,7 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
+brew tap homebrew/cask-versions
 brew install --cask firefox-nightly --language=zh-TW
 brew install --cask eloston-chromium
 brew install --cask iina
