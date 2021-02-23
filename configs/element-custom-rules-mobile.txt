@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-01-19
+! Last updated: 2021-02-23
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -438,6 +438,10 @@ wnacg.org##.logo > a:after:style(font-weight: 300 !important)
 wnacg.org##.logo > a:after:style(color: #fbfbfd !important)
 wnacg.org##.logo > a:after:style(padding: 0 4rem 0 1rem !important)
 wnacg.org##.logo > a:after:style(content: '紳士漫畫::行動裝置優化版' !important)
+wnacg.org###classify_container img[src="https://wnacg.org/loading.jpg"]:style(opacity: 0 !important)
+wnacg.org###classify_container img[src="https://wnacg.org/loading.jpg"]:style(height: 238px !important)
+wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(opacity: 0 !important)
+wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !important)
 
 ! 18av.tv
 ! remove
@@ -1260,4 +1264,3 @@ imgscloud.com###coverclose_bottom:remove()
 18av.tv##.altto form:after:style(display: block !important)
 18av.tv##.altto form:after:style(overflow-wrap: normal !important)
 18av.tv##.altto form:after:style(content: '#19420#19722#17939|百瀨 #|水木 #12602#17441|美津屋 #|夏目 #|長瀨 #|大山 #|梓美 #|結佳 #13709|愛原久美 #35372|智惠美 #|美由|白戶 #18200|寺田美空|北野麻美 #|遠山雪菜 #|浪川 #|宮本 #25630|1339' !important)
-
