@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-02-06
+! Last updated: 2021-02-24
 
 ! universal rules
 ! outline
@@ -94,6 +94,8 @@ cool3c.com##^.block.search
 cool3c.com##.block.search:remove()
 cool3c.com##^#body > div.side-sync.article-row:nth-child(3)
 cool3c.com###body > div.side-sync.article-row:nth-child(3):remove()
+cool3c.com##^#footer
+cool3c.com###footer:remove()
 cool3c.com##^link[rel="dns-prefetch"]
 cool3c.com##^script[id*='track']
 cool3c.com##^script:has-text(admanager.scan)
@@ -205,12 +207,14 @@ inside.com.tw##^div[class^=adv]
 inside.com.tw##div[class^=adv]:remove()
 inside.com.tw##^div[class^=dfp_ad]
 inside.com.tw##div[class^=dfp_ad]:remove()
-inside.com.tw##^div.infinite
-inside.com.tw##div.infinite:remove()
-inside.com.tw##^div.content > div.post
-inside.com.tw##div.content > div.post:remove()
-inside.com.tw##^div.hero
-inside.com.tw##div.hero:remove()
+inside.com.tw##^.content > .infinite_article
+inside.com.tw##.content > .infinite_article:remove()
+inside.com.tw##^.container:has(.job)
+inside.com.tw##.container:has(.job):remove()
+inside.com.tw##^.content > .post
+inside.com.tw##.content > .post:remove()
+inside.com.tw##^.hero
+inside.com.tw##.hero:remove()
 inside.com.tw##^.Independent_study
 inside.com.tw##.Independent_study:remove()
 inside.com.tw##^.Independent_study_down
@@ -641,6 +645,8 @@ xfastest.com##^.vw-site-social-profile
 xfastest.com##.vw-site-social-profile:remove()
 xfastest.com##^.vw-post-box-inner > :not(.vw-post-box-title)
 xfastest.com##.vw-post-box-inner > :not(.vw-post-box-title):remove()
+xfastest.com##^.vw-main-post > :not(.entry-title):not(.vw-post-meta):not(.vw-post-content)
+xfastest.com##.vw-main-post > :not(.entry-title):not(.vw-post-meta):not(.vw-post-content):remove()
 xfastest.com##^link[rel='dns-prefetch']
 xfastest.com##^script[id="remote_sdk-js"]
 xfastest.com##^script[src*='線上客服']
@@ -683,6 +689,12 @@ xfastest.com##.vw-post-content > p:style(margin: 40px auto !important)
 xfastest.com##.vw-post-content > p:style(color: #404040 !important)
 xfastest.com##.vw-post-content > p:style(letter-spacing: 0.6px !important)
 xfastest.com##.vw-post-content > p:style(white-space: pre-wrap !important)
+xfastest.com##.vw-post-content a:style(cursor: pointer !important)
+xfastest.com##.vw-post-meta a:style(cursor: pointer !important)
+xfastest.com##.vw-post-meta a i:style(cursor: pointer !important)
+xfastest.com##.vw-post-meta a span:style(cursor: pointer !important)
+xfastest.com##.vw-post-meta a img:style(cursor: pointer !important)
+xfastest.com##.vw-post-meta time:style(cursor: pointer !important)
 xfastest.com##.entry-title:style(font-size: 2.33rem !important)
 xfastest.com##.entry-title:style(line-height: 1.38 !important)
 xfastest.com##.vw-menu li:style(cursor: pointer !important)
