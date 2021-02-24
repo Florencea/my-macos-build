@@ -86,6 +86,15 @@ extensions.pocket.enabled false
 # disable captivedetect
 captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
+
+# enable proton design(warning: experimental)
+browser.proton.enabled true
+browser.proton.appmenu.enabled true
+browser.proton.contextmenus.enabled true
+browser.proton.tabs.enabled true
+browser.proton.toolbar.enabled true
+browser.proton.urlbar.enabled true
+browser.newtabpage.activity-stream.newNewtabExperience.enabled true
 ```
 
 ## macOS commends
