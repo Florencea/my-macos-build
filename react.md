@@ -33,11 +33,11 @@ yarn create @vitejs/app vite-project --template react-ts
 cd vite-project && yarn
 mkdir test
 mkdir src/components
-npx gts init -y --yarn
-rm src/index.ts
 yarn remove vite @vitejs/plugin-react-refresh --dev
 yarn add ts-node jest jest-css-modules @babel/core @babel/preset-react babel-jest ts-jest svg-jest @types/react eslint eslint-plugin-node eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise typescript --force --dev
 yarn add antd @ant-design/icons swr tailwindcss@latest postcss@latest autoprefixer@latest @testing-library/jest-dom @testing-library/react @jest/types vite @vitejs/plugin-react-refresh
+npx gts init -y --yarn
+rm src/index.ts
 code .
 ```
 
