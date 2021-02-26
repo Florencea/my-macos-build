@@ -32,8 +32,7 @@
 yarn create @vitejs/app vite-project --template react-ts
 cd vite-project && yarn
 mkdir test
-mkdir components
-mkdir styles
+mkdir src/components
 npx gts init -y --yarn
 rm src/index.ts
 yarn remove vite @vitejs/plugin-react-refresh --dev
@@ -124,7 +123,6 @@ code .
 build/
 coverage/
 node_modules/
-styles/
 ```
 
 - `vite.config.ts`
@@ -146,7 +144,7 @@ export default defineConfig({
 
 ```fish
 npx tailwindcss init -p
-printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' >> styles/tailwind.css
+printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' >> src/_tailwind.css
 ```
 
 - `tailwind.config.js`
@@ -171,7 +169,7 @@ module.exports = {
 import React from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import "../styles/tailwind.css";
+import "._tailwind.css";
 import "./index.css";
 import App from "./App";
 
@@ -214,7 +212,6 @@ export default async (): Promise<Config.InitialOptions> => {
       "!**/build/*",
       "!**/coverage/*",
       "!**/node_modules/*",
-      "!**/styles/*",
       "!**/test/*",
       "!**/src/main.tsx",
     ],
