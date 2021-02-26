@@ -34,6 +34,7 @@ cd vite-project && yarn
 mkdir test
 mkdir components
 mkdir styles
+npx gts init -y --yarn
 rm src/index.ts
 yarn remove vite @vitejs/plugin-react-refresh --dev
 yarn add ts-node jest jest-css-modules @babel/core @babel/preset-react babel-jest ts-jest svg-jest @types/react eslint eslint-plugin-node eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise typescript --force --dev
