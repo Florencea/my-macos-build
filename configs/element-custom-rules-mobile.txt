@@ -889,6 +889,8 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###hls-video:style(left: 0 !important)
 18av.tv###hls-video:style(width: 100vw !important)
 18av.tv###hls-video:style(height: auto !important)
+18av.tv###hls-video:fullscreen:style(width: auto !important)
+18av.tv###hls-video:fullscreen:style(height: 100vh !important)
 18av.tv##.controlBar:style(height: 100px ! important)
 18av.tv##.playButton:style(width: 100px)
 18av.tv##.fullscreenButton:style(width: 100px)
