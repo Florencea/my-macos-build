@@ -150,7 +150,7 @@ export default defineConfig({
 
 ```javascript
 module.exports = {
-  purge: ["./src/**/*.tsx", "./components/**/*.tsx"],
+  purge: ["./src/**/*.tsx"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
