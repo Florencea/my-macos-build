@@ -2,10 +2,8 @@
 
 - [React Development Notes](#react-development-notes)
   - [Vite + TypeScript + Google TypeScript Style + Tailwind CSS + Ant Design + Jest](#vite--typescript--google-typescript-style--tailwind-css--ant-design--jest)
-    - [Packages](#packages)
-    - [Configuations](#configuations)
-    - [Tailwind CSS](#tailwind-css)
-    - [Jest](#jest)
+    - [Commends](#commends)
+    - [Files](#files)
     - [Yarn](#yarn)
     - [Git](#git)
   - [Next.js + TypeScript + Google TypeScript Style + Tailwind CSS + Ant Design + Jest](#nextjs--typescript--google-typescript-style--tailwind-css--ant-design--jest)
@@ -26,23 +24,30 @@
 
 ## Vite + TypeScript + Google TypeScript Style + Tailwind CSS + Ant Design + Jest
 
-### Packages
+### Commends
 
 ```fish
+# Packages
 yarn create @vitejs/app vite-project --template react-ts
 cd vite-project && yarn
 mkdir test src/components
 yarn remove vite @vitejs/plugin-react-refresh --dev
 yarn add ts-node jest jest-css-modules @babel/core @babel/preset-react babel-jest ts-jest svg-jest @types/react eslint eslint-plugin-node eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-promise typescript --force --dev
 yarn add antd @ant-design/icons swr tailwindcss@latest postcss@latest autoprefixer@latest @testing-library/jest-dom @testing-library/react @jest/types vite @vitejs/plugin-react-refresh
+# Google gts
 npx gts init -y --yarn
 rm src/index.ts
+# Tailwind CSS
 npx tailwindcss init -p
 printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' >> src/_tailwind.css
+# Jest
+touch jest.config.ts
+touch test/App.test.tsx
+# Open VSCode
 code .
 ```
 
-### Configuations
+### Files
 
 - `package.json`
 
@@ -141,8 +146,6 @@ export default defineConfig({
 });
 ```
 
-### Tailwind CSS
-
 - `tailwind.config.js`
 
 ```javascript
@@ -175,13 +178,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-```
-
-### Jest
-
-```fish
-touch jest.config.ts
-touch test/App.test.tsx
 ```
 
 - `jest.config.ts`
