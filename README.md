@@ -7,22 +7,18 @@
 # Boot from recovery, open Terminal.app excuting xartutil, and than clear PRROM & reboot from network recovery
 xartutil --erase-all
 [macOS system installation]
-[System Performances]
+[System performances]
 [Finder performances]
-  ├──[install.sh]
-curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/install.sh -o install.sh;sh install.sh
-  │      ├──[GarageBand installation]
-  │      ├──[Terminal performances]
-  │      ├──[Browser setup]
-  │      │        └──[SSH&GPG setup]
-  │      │              └──[VSCode setup]
-  │      └──[Apps performances]
-  └──[Music performances]
-          ├──[Data copy(Music) to Music.app]
-          ├──[Data copy(GarageBand) to ~/]
-          ├──[Data copy(GitHub) to ~/]
-          ├──[Data copy(Installations) to ~/]
-          └──[Data copy(Repositories) to ~/]
+  ├──[Music performances]
+  │       ├──[Data copy(Music) to Music.app]
+  │       └──[Data copy(Others) to ~/]
+  └──[install.sh]
+          ├──[GarageBand installation]
+          ├──[Terminal performances]
+          ├──[Browser setup]
+          │        └──[SSH&GPG setup]
+          │              └──[VSCode setup]
+          └──[Apps performances]
 ```
 
 ## Online scripts
@@ -74,7 +70,6 @@ ui.prefersReducedMotion 1
 xul.panel-animations.enabled false
 
 # enable cloudflare trr
-network.trr.bootstrapAddress 104.16.248.249
 network.trr.mode 3
 
 # enable http3(warning: unstable)
