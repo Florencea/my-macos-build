@@ -78,6 +78,9 @@ network.http.http3.enabled true
 # disable pockets
 extensions.pocket.enabled false
 
+# disable reader view
+reader.parse-on-load.enabled false
+
 # disable captivedetect
 captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
