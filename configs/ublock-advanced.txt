@@ -1,14 +1,15 @@
 {
-  "timeStamp": 1615253180759,
+  "timeStamp": 1615253847195,
   "version": "1.33.2",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
     "dynamicFilteringEnabled": true,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt\nhttps://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_original_trackers.txt",
     "importedLists": [
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
-      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
+      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
+      "https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_original_trackers.txt"
     ],
     "popupPanelSections": 63,
     "webrtcIPAddressHidden": true
@@ -33,6 +34,7 @@
     "fanboy-cookiemonster",
     "ublock-annoyances",
     "plowe-0",
+    "https://raw.githubusercontent.com/AdguardTeam/cname-trackers/master/combined_original_trackers.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
