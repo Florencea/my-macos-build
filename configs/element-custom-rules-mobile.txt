@@ -8,6 +8,11 @@
 ! text-normal: #fbfbfd
 ! purple-primary: #9059ff
 
+! m.youtube.com
+! fix
+m.youtube.com##.ytp-fullscreen .html5-main-video:style(height: 100vh !important;)
+m.youtube.com##.ytp-fullscreen .caption-window:style(position: fixed !important;)
+
 ! beforweb.com
 ! remove
 beforweb.com##^#ite-slogan
