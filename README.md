@@ -72,7 +72,7 @@ xul.panel-animations.enabled false
 # enable cloudflare trr
 network.trr.mode 3
 
-# enable http3(warning: unstable)
+# enable http3
 network.http.http3.enabled true
 
 # disable pockets
@@ -85,8 +85,11 @@ reader.parse-on-load.enabled false
 captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
 
-# enable fingerprinting resisting(note: will disable user font)
+# enable fingerprinting resisting(note: would disable user font, break canvas sites)
 privacy.resistFingerprinting true
+
+# enable website firstparty isolate(note: would break https-only-mode fallback)
+privacy.firstparty.isolate true
 
 # enable proton design(warning: experimental)
 browser.proton.enabled true
