@@ -85,6 +85,9 @@ reader.parse-on-load.enabled false
 captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
 
+# enable fingerprinting resisting(note: will disable user font)
+privacy.resistFingerprinting
+
 # enable proton design(warning: experimental)
 browser.proton.enabled true
 browser.proton.appmenu.enabled true
