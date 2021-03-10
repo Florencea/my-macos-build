@@ -86,7 +86,7 @@ captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
 
 # enable fingerprinting resisting(note: will disable user font)
-privacy.resistFingerprinting
+privacy.resistFingerprinting true
 
 # enable proton design(warning: experimental)
 browser.proton.enabled true
