@@ -2,3 +2,4 @@
 al/data/
 al/temp/
 .venv/*
+.vscode
