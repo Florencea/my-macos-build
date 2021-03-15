@@ -90,6 +90,7 @@ brew install mtr
 brew install nano
 brew install node
 brew install nss
+brew install rsync
 brew install pinentry-mac
 brew install python3
 brew install wget
