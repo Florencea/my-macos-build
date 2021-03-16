@@ -103,6 +103,7 @@ print_step "git configuations"
   git config --global user.name "$github_username"
   git config --global user.email "$github_email"
   git config --global core.editor "$github_editor"
+  git config --global init.defaultBranch main
   git config --global pull.rebase false
 )
 
