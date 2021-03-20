@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-03-02
+! Last updated: 2021-03-20
 
 ! universal rules
 ! outline
@@ -168,8 +168,6 @@ fandom.com###WikiaMainContent:style(width: 100% !important)
 fandom.com###WikiaMainContent:style(padding: 1em !important)
 
 ! github.com
-! remove
-github.com##^script[src*='behaviors']
 ! style
 github.com##.text-mono:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.blob-code-inner:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
