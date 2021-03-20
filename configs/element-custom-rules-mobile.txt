@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-03-09
+! Last updated: 2021-03-20
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -11,6 +11,7 @@
 ! m.youtube.com
 ! fix
 m.youtube.com##.ytp-fullscreen .html5-main-video:style(height: 100vh !important;)
+m.youtube.com##.ytp-fullscreen .html5-main-video:style(top: 0 !important;)
 m.youtube.com##.ytp-fullscreen .caption-window:style(position: fixed !important;)
 
 ! beforweb.com
