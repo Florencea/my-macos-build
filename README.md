@@ -91,6 +91,9 @@ privacy.resistFingerprinting true
 # enable website firstparty isolate(note: would break https-only-mode fallback)
 privacy.firstparty.isolate true
 
+# dark context menu on macOS(warning: experimental)
+widget.macos.respect-system-appearance true
+
 # enable proton design(warning: experimental)
 browser.proton.enabled true
 browser.proton.appmenu.enabled true
