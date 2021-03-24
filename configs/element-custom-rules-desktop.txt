@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-03-23
+! Last updated: 2021-03-24
 
 ! universal rules
 ! outline
@@ -372,6 +372,10 @@ macrumors.com##^.sidebarblock
 macrumors.com##.sidebarblock:remove()
 macrumors.com##^div[class^=social--]
 macrumors.com##div[class^=social--]:remove()
+macrumors.com##^div[class^=trending--]
+macrumors.com##div[class^=trending--]:remove()
+macrumors.com##^div[class^=headline--]
+macrumors.com##div[class^=headline--]:remove()
 macrumors.com##^script:has-text(sidebarblock)
 macrumors.com##^script[src*='platform.twitter.com']
 macrumors.com##^script[src*='geni.us']
@@ -379,7 +383,9 @@ macrumors.com##^script[src*='skimresources']
 macrumors.com##^script:has-text(quantserve)
 macrumors.com##^script[src*='onthe']
 macrumors.com##^script[src*='scroll']
+macrumors.com##^script[src*='glide.min.js']
 macrumors.com##^script:has-text(googletagmanager)
+macrumors.com##^script:has-text(Genius)
 macrumors.com##^script[src*='gleamjs']
 ! style
 macrumors.com##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
