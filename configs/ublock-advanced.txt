@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1616509043972,
+  "timeStamp": 1616774337732,
   "version": "1.34.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -30,7 +30,6 @@
     "adguard-annoyance",
     "adguard-social",
     "fanboy-thirdparty_social",
-    "fanboy-annoyance",
     "ublock-annoyances",
     "plowe-0",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
