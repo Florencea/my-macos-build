@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-03-24
+! Last updated: 2021-04-03
 
 ! universal rules
 ! outline
@@ -73,6 +73,8 @@ cool3c.com##^.article > .related
 cool3c.com##.article > .related:remove()
 cool3c.com##^.article > .source
 cool3c.com##.article > .source:remove()
+cool3c.com##^article.item.type-normal:has(.inner > .clearfix > .text-sponsor)
+cool3c.com##article.item.type-normal:has(.inner > .clearfix > .text-sponsor):remove()
 cool3c.com##^noscript
 cool3c.com##^#fb-root
 cool3c.com###fb-root:remove()
