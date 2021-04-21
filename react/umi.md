@@ -7,9 +7,11 @@
 ## note
 
 - Umi 支援 LTS 版的 Node.js，若使用最新版會跳警告
-- Umi 相當於帶路由版、對 Antd 友好的 CRA，不像 Next.js 連 API 跟 SSR 都包進去了
-- 引用一般圖片要用`require('./img')`(相對路徑)或`require('@/img')`(從 src 開始的路徑)
-- 引用 svg 同一般模組`import logoSrc from ''./logo.svg`
+- 引用一般圖片要用
+  - `require('./img')`(相對路徑)
+  - `require('@/img')`(從 src 開始的路徑)
+- 引用 svg 同一般模組
+  - `import logoSrc from './logo.svg'`
 
 ## cli
 
@@ -17,20 +19,18 @@
 # 注意 create umi app 是在目錄下發動而不是目錄外
 mkdir myapp && cd myapp
 yarn create @umijs/umi-app
-mv tsconfig.json tsconfig_old.json
-npx gts init -y --yarn
-mv package.json package_old.json
-cat package_old.json | jq 'delpaths([["scripts","lint"],["scripts","clean"],["scripts","complie"],["scripts","fix"],["scripts","prepare"],["scripts","pretest"],["scripts","posttest"]])' | jq 'setpath(["scripts","dev"];"umi dev")' > package.json
-rm package_old.json
-jq 'setpath(["extends"];"./node_modules/gts/tsconfig-google.json")' tsconfig_old.json > tsconfig.json
-rm tsconfig_old.json src/index.ts
+# 修改 prettier 配置使根目錄文件也能被格式化
+printf '.umi\n.umi-production\n.umi-test\n' > .prettierignore
+echo (jq 'setpath(["scripts","dev"];"umi dev")' package.json) > package.json
+yarn && yarn prettier
 mkdir public
 code .
 ```
 
 ## config
 
-- 編輯`.umirc.ts`，以下是通常需要加進去的東西
+- 配置文件[https://umijs.org/zh-CN/config](https://umijs.org/zh-CN/config)
+- 編輯`.umirc.ts`，以下是常用配置
 
   ```ts
   {
@@ -54,7 +54,41 @@ code .
   }
   ```
 
-## 配合 TailwindCSS
+## 配合 ESLint
+
+```sh
+# standard, react, browser
+yarn add eslint eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest eslint-config-standard@latest eslint@^7.12.1 eslint-plugin-import@^2.22.1 eslint-plugin-node@^11.1.0 eslint-plugin-promise@^4.2.1 @typescript-eslint/parser@latest --dev
+```
+
+- `.eslintrc.json`
+
+```json
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "standard"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
+}
+```
+
+## 配合 Tailwind CSS
+
+- 此種情形下`antd`樣式優先權依舊大於`Tailwind CSS`
+- 安裝完需重開編輯器才會有 Tailwind CSS 語法提示
 
 ```sh
 yarn add umi-plugin-tailwindcss --dev
