@@ -22,6 +22,7 @@ yarn create @umijs/umi-app
 printf '.umi\n.umi-production\n.umi-test\n' > .prettierignore
 echo (jq 'setpath(["scripts","dev"];"umi dev")' package.json) > package.json
 yarn && yarn prettier
+# public 裡面要放東西，不然開發伺服器時會報錯，可以等有東西放的時候再建 public 目錄
 mkdir public
 code .
 ```
