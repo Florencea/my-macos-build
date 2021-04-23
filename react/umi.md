@@ -6,7 +6,6 @@
 
 ## note
 
-- Umi 支援 LTS 版的 Node.js，若使用最新版會跳警告
 - 引用一般圖片要用
   - `require('./img')`(相對路徑)
   - `require('@/img')`(從 src 開始的路徑)
