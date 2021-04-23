@@ -19,9 +19,10 @@
 mkdir myapp && cd myapp
 yarn create @umijs/umi-app
 # 修改 prettier 配置使根目錄文件也能被格式化
-printf '.umi\n.umi-production\n.umi-test\n' > .prettierignore
-echo (jq 'setpath(["scripts","dev"];"umi dev")' package.json) > package.json
-yarn && yarn prettier
+printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
+echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve dist")' package.json) > package.json
+yarn add serve --dev
+yarn prettier
 # public 裡面要放東西，不然開發伺服器時會報錯，可以等有東西放的時候再建 public 目錄
 mkdir public
 code .
@@ -34,6 +35,8 @@ code .
 
   ```ts
   {
+    // 路由未匹配時的預設 title
+    title: 'page title',
     // 是否讓生成的文件包含 hash 後綴，通常用於增量發布和避免瀏覽器加載緩存。
     hash: true,
     // 配置 favicon 地址，請放到 public 目錄，編譯後才看得到，開發中看不到 favicon
@@ -50,11 +53,14 @@ code .
       '/api': 'http://localhost:4000/api',
     },
     // 要用 antd 只要從這邊打開就夠了
+    // 自動引入跟 TypeScript 提示需要 yarn add antd --dev
     antd: {},
   }
   ```
 
 ## 配合 ESLint
+
+- 注意：下列 ESLint 規則可以全域預設不寫 `import React from 'react'`，若 VSCode 的自動引入功能一定要引入 React 才能作動的話，請把工作區的 `TypeScript` 版本升到 `4.3` 以上，才能配合 `React 17` 之後不用一直寫 `import React from 'react'` 的問題
 
 ```sh
 # standard, react, browser
@@ -79,9 +85,8 @@ yarn add eslint eslint-plugin-react@latest @typescript-eslint/eslint-plugin@late
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {
-    "react/react-in-jsx-scope": "off"
-  }
+  "globals": { "React": true },
+  "rules": {}
 }
 ```
 
