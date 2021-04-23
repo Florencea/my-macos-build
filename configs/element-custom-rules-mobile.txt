@@ -726,6 +726,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.enlarge_jizcg_xxxxxx:style(overflow: hidden !important)
 18av.tv##span.enlarge_jizcg_xxxxxx:style(margin: 0 1rem !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(width: 25% !important)
+18av.tv##span.enlarge_jizcg_xxxxxx img:style(aspect-ratio: 4 / 3 !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(background-color: #1c1b21 !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(border: none !important)
 18av.tv##span#main_mv:style(font-size: 0 !important)
