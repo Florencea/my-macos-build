@@ -9,18 +9,6 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
-print_step "setup SF Mono Fonts"
-(
-  set -x
-  cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
-)
-
-print_step "download New York Fonts"
-(
-  set -x
-  curl -o ~/Downloads/NY-font.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY-Font.dmg'
-)
-
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 brew tap homebrew/core
@@ -37,9 +25,7 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install cask fonts essential"
-brew install font-inter
 brew install font-jetbrains-mono
-brew install font-jf-open-huninn
 
 print_step "brew install fish"
 brew install fish
@@ -53,23 +39,20 @@ mkdir -p ~/.config/fish
   printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
   printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
   printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
-  printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n"
-  printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n"
   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
-  printf "alias cra=\"sh ~/GitHub/my-macos-build/scripts/create-react-app.sh\"\n"
-  printf "alias crat=\"sh ~/GitHub/my-macos-build/scripts/create-react-app-tailwind.sh\"\n"
   printf "alias myself-cli=\"sh ~/GitHub/myself-cli/myself-cli.sh\"\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
 brew install firefox-nightly --language=zh-TW
-brew install google-chrome-beta
+brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
 brew install c0re100-qbittorrent
 brew install scroll-reverser
+brew install slack
 brew install visual-studio-code
 
 print_step "brew install cask driver"
