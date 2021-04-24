@@ -6,7 +6,7 @@ printf 'Minifiy ec-rules...'
 python3 ~/GitHub/my-macos-build/scripts/ublock-rule-combiner.py
 echo "done."
 echo ""
-printf 'Update ec-rules to github...'
+printf 'Update ec-rules to GitHub...'
 cd ~/GitHub/my-macos-build/ || exit
 git add configs/element-custom-rules-desktop.txt
 git add configs/element-custom-rules-desktop.combined.txt
