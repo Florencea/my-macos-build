@@ -29,9 +29,9 @@
 
 - [React 開發筆記](react/README.md)
 - [FFmpeg 使用筆記](ffmpeg/README.md)
-- <a href="https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt" download="ublock-advanced">uBlock Origin 設定檔下載連結</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt" download="tampermonkey-backup">Tampermonkey 設定檔下載連結</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json" download="tongwentang-pref">新同文堂 設定檔下載連結</a>
+- <a href="https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt" download>uBlock Origin 設定檔下載連結</a>
+- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt" download>Tampermonkey 設定檔下載連結</a>
+- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json" download>新同文堂 設定檔下載連結</a>
 
 ## macOS 重灌流程
 
