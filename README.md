@@ -21,7 +21,7 @@ xartutil --erase-all
           ├──[GarageBand installation]
           ├──[Terminal config]
           ├──[Browser config]
-          │        └──[SSH&GPG config]
+          │        └──[SSH and GPG config]
           │              └──[VSCode config]
           └──[Other apps config]
 ```
