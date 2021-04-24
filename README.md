@@ -75,8 +75,8 @@
 
 ### 步驟 7：從 App Store 安裝軟體
 
-- 安裝 Line、Garageband 等等
-- 放著 Garageband 下載所有樂器包，約數十 GB
+- 安裝 Line、GarageBand 等等
+- 放著 GarageBand 下載所有樂器包，約數十 GB
 
 ### 步驟 8：其餘 App 設定
 
