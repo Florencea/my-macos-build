@@ -22,7 +22,8 @@ if [ -f "$FILE_UBLOCK" ]; then
   echo "done."
   echo ""
 else
-  echo "No uBlock Configuration find in ~/Downloads"
+  # echo "No uBlock Configuration find in ~/Downloads"
+  echo ""
 fi
 # find tampermonkey-backup-*.txt and backup
 if [ -f "$FILE_TAMPERMONKEY" ]; then
@@ -38,7 +39,8 @@ if [ -f "$FILE_TAMPERMONKEY" ]; then
   echo "done."
   echo ""
 else
-  echo "No Tampermonkey Configuration find in ~/Downloads"
+  # echo "No Tampermonkey Configuration find in ~/Downloads"
+  echo ""
 fi
 # find tongwentang-pref*.json and backup
 if [ -f "$FILE_TONGWENTANG" ]; then
@@ -54,5 +56,6 @@ if [ -f "$FILE_TONGWENTANG" ]; then
   echo "done."
   echo ""
 else
-  echo "No 新同文堂 Configuration find in ~/Downloads"
+  # echo "No 新同文堂 Configuration find in ~/Downloads"
+  echo ""
 fi
