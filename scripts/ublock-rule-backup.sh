@@ -8,7 +8,10 @@ echo "done."
 echo ""
 printf 'Update ec-rules to github...'
 cd ~/GitHub/my-macos-build/ || exit
-git add configs/*
+git add configs/element-custom-rules-desktop.txt
+git add configs/element-custom-rules-desktop.combined.txt
+git add configs/element-custom-rules-mobile.txt
+git add configs/element-custom-rules-mobile.combined.txt
 git commit -q -m "feat: update ec-rules by urb"
 git push -q
 echo "done."
