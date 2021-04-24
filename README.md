@@ -33,7 +33,7 @@ xartutil --erase-all
 curl -L https://github.com/Florencea/my-macos-build/raw/main/configs/ublock-advanced.txt -o ublock-advanced.txt
 
 # Make GIF, ffmpeg required
-curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/make-gif.sh -o mkgif.sh;fish mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
+curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/make-gif.sh -o mkgif.sh;sh mkgif.sh <input_file> <from(hh:mm:ss or sec)> <during(sec)>
 
 # Download old macOS system images
 curl -O https://raw.githubusercontent.com/munki/macadmin-scripts/master/installinstallmacos.py
