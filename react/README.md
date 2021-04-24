@@ -1,4 +1,4 @@
-# React Development Notes
+# React 開發筆記
 
-- [Vite](vite.md)
-- [Umi](umi.md)
+- [Vite 使用筆記](vite.md)
+- [Umi 使用筆記](umi.md)

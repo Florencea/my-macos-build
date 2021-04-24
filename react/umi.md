@@ -1,18 +1,18 @@
-# Umi
+# Umi.js 使用筆記
 
-## Docs
+- [Umi.js 使用筆記](#umijs-使用筆記)
+  - [框架相關文件](#框架相關文件)
+  - [命令列建立專案](#命令列建立專案)
+  - [靜態資源引用](#靜態資源引用)
+  - [配置文件說明](#配置文件說明)
+  - [配合 ESLint](#配合-eslint)
+  - [配合 Tailwind CSS](#配合-tailwind-css)
+
+## 框架相關文件
 
 - [https://umijs.org/zh-CN/docs](https://umijs.org/zh-CN/docs)
 
-## note
-
-- 引用一般圖片要用
-  - `require('./img')`(相對路徑)
-  - `require('@/img')`(從 src 開始的路徑)
-- 引用 svg 同一般模組
-  - `import logoSrc from './logo.svg'`
-
-## cli
+## 命令列建立專案
 
 ```sh
 # 注意 create umi app 是在目錄下發動而不是目錄外
@@ -28,9 +28,17 @@ mkdir public
 code .
 ```
 
-## config
+## 靜態資源引用
 
-- 配置文件[https://umijs.org/zh-CN/config](https://umijs.org/zh-CN/config)
+- 引用一般圖片要用
+  - `require('./img')`(相對路徑)
+  - `require('@/img')`(從 src 開始的路徑)
+- 引用 svg 同一般模組
+  - `import logoSrc from './logo.svg'`
+
+## 配置文件說明
+
+- 配置文件 [https://umijs.org/zh-CN/config](https://umijs.org/zh-CN/config)
 - 編輯`.umirc.ts`，以下是常用配置
 
   ```ts
@@ -53,17 +61,17 @@ code .
       '/api': 'http://localhost:4000/api',
     },
     // 要用 antd 只要從這邊打開就夠了
-    // 自動引入跟 TypeScript 提示需要 yarn add antd --dev
+    // VSCode自動引入跟 TypeScript 提示需要 yarn add antd --dev
     antd: {},
   }
   ```
 
 ## 配合 ESLint
 
-- 注意：下列 ESLint 規則可以全域預設不寫 `import React from 'react'`，若 VSCode 的自動引入功能一定要引入 React 才能作動的話，請把工作區的 `TypeScript` 版本升到 `4.3` 以上，才能配合 `React 17` 之後不用一直寫 `import React from 'react'` 的問題
+- 注意：下列 ESLint 規則可以全域預設不寫 `import React from 'react'`，若 VSCode 的自動引入功能得引入 React 才生效，請把工作區的 `TypeScript` 版本升到 `4.3` 以上，就能配合 `React 17` 之後不用一直寫 `import React from 'react'`
 
 ```sh
-# standard, react, browser
+# 使用 standard, react, browser
 yarn add eslint eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest eslint-config-standard@latest eslint@^7.12.1 eslint-plugin-import@^2.22.1 eslint-plugin-node@^11.1.0 eslint-plugin-promise@^4.2.1 @typescript-eslint/parser@latest --dev
 ```
 
@@ -93,7 +101,7 @@ yarn add eslint eslint-plugin-react@latest @typescript-eslint/eslint-plugin@late
 ## 配合 Tailwind CSS
 
 - 此種情形下`antd`樣式優先權依舊大於`Tailwind CSS`
-- 安裝完需重開編輯器才會有 Tailwind CSS 語法提示
+- 安裝完需重開 VSCode 才會有 Tailwind CSS 語法提示
 
 ```sh
 yarn add umi-plugin-tailwindcss --dev
