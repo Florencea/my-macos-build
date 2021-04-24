@@ -2,31 +2,33 @@
 
 ## Reset macOS
 
-```fish
+```bash
 [Clear T2 chip]
-# Boot from recovery, open Terminal.app excuting xartutil, and than clear PRROM & reboot from network recovery
+# Boot from recovery (command + R)
+# Open Terminal.app
 xartutil --erase-all
+# Clear PRROM (command + option + P + R)
+# Boot from network recovery (command + option + R)
 [macOS system installation]
-[System performances]
-[Finder performances]
-  ├──[Music performances]
+# Open Disk Utility.app
+# Clear System Volume useing APFS
+[System performances config]
+[Finder config]
+  ├──[Music.app config]
   │       ├──[Data copy(Music) to Music.app]
   │       └──[Data copy(Others) to ~/]
   └──[install.sh]
           ├──[GarageBand installation]
-          ├──[Terminal performances]
-          ├──[Browser setup]
-          │        └──[SSH&GPG setup]
-          │              └──[VSCode setup]
-          └──[Apps performances]
+          ├──[Terminal config]
+          ├──[Browser config]
+          │        └──[SSH&GPG config]
+          │              └──[VSCode config]
+          └──[Other apps config]
 ```
 
 ## Online scripts
 
-```fish
-# Download Google Drive public single file
-curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/gdrive-download.sh -o gd.sh;sh gd.sh <ID> <downloaded file name>
-
+```bash
 # Get Ublock Origin configuations
 curl -L https://github.com/Florencea/my-macos-build/raw/main/configs/ublock-advanced.txt -o ublock-advanced.txt
 
@@ -40,7 +42,7 @@ sudo python installinstallmacos.py
 
 ## fish shell alias
 
-```fish
+```bash
 nano ~/.config/fish/config.fish
 alias mmb="code ~/GitHub/my-macos-build"
 alias mkgif="sh ~/GitHub/my-macos-build/scripts/make-gif.sh"
@@ -50,56 +52,9 @@ alias urb="sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh"
 alias myself-cli="sh ~/GitHub/myself-cli/myself-cli.sh"
 ```
 
-## Firefox about:config
-
-- Chrome UI for Firefox: [MaterialFox](https://github.com/muckSponge/MaterialFox)
-
-```fish
-# enable fission
-fission.autostart true
-
-# disable ui animations
-ui.prefersReducedMotion 1
-xul.panel-animations.enabled false
-
-# enable cloudflare trr
-network.trr.mode 3
-
-# enable http3
-network.http.http3.enabled true
-
-# disable pockets
-extensions.pocket.enabled false
-
-# disable reader view
-reader.parse-on-load.enabled false
-
-# disable captivedetect
-captivedetect.canonicalURL empty
-network.captive-portal-service.enabled false
-
-# enable fingerprinting resisting(note: would disable user font, break canvas sites)
-privacy.resistFingerprinting true
-
-# enable website firstparty isolate(note: would break https-only-mode fallback)
-privacy.firstparty.isolate true
-
-# dark context menu on macOS(warning: experimental)
-widget.macos.respect-system-appearance true
-
-# enable proton design(warning: experimental)
-browser.proton.enabled true
-browser.proton.appmenu.enabled true
-browser.proton.contextmenus.enabled true
-browser.proton.tabs.enabled true
-browser.proton.toolbar.enabled true
-browser.proton.urlbar.enabled true
-browser.newtabpage.activity-stream.newNewtabExperience.enabled true
-```
-
 ## macOS commends
 
-```fish
+```bash
 # SSH key generate
 ssh-keygen -t ed25519
 cat .ssh/id_ed25519.pub | pbcopy
@@ -113,51 +68,19 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 # Disable AdobeCreativeCloud on system boot
 sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 
-# Parallels 16.1.1 TNT start with network
-sudo nano /Library/Preferences/Parallels/network.desktop.xml
-# replace <UseKextless>-1</UseKextless> to <UseKextless>0</UseKextless>
-sudo nano /Library/Preferences/Parallels/dispatcher.desktop.xml
-# replace <Usb>0</Usb> to <Usb>1</Usb>
-
 # Use TouchID for sudo commends
 sudo nano /etc/pam.d/sudo
 # add this on line 2
 auth       sufficient     pam_tid.so
-
-# Enable TRIM for non Apple SSDs
-sudo trimforce enable
-
-# Disable Chrome local cache(recommend for hard disk machines)
-defaults write com.google.Chrome DiskCacheDir -string /dev/null
-
-# Remove macOS file extension attributes(-r means recursively, deal with delete files after Safari Technology Preview uninstallation)
-xattr -r -c <file or directory>
-
-# Rust Installation
-curl https://sh.rustup.rs | sh
-set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
-mkdir -p ~/.config/fish/completions
-# open new shell
-rustup completions fish > ~/.config/fish/completions/rustup.fish
-```
-
-## humble tab config
-
-```json
-# light theme
-{"options.show_top":"0","options.show_closed":"0","column.0.0":"1","column.1.0":"apps","options.auto_close":"1","open.closed":"true","options.hide_options":"1","options.show_recent":"0","options.shadow_color":"transparent","options.highlight_font_color":"#000","options.show_root":"0","options.show_devices":"0","apps.order":"[\"webstore\",\"pjkljhegncpnkpknbcohdijeoejaedia\",\"apdfllckaahabafndbhieahigkjlhalf\",\"pnhechapfaindjhompbnflcldabbghjo\",\"blpcfgokakmgnkcojhhkbfbldkacnbeo\",\"aohghmighlieiainnegkcijnfilokake\",\"aapocclcgogkmnckokdopfmhonfmgoek\",\"felcaaldnbdncclmgdcncolpebgiejap\"]","options.show_weather":"0","options.highlight_color":"#f1f1f1","options.width":"0.656","options.background_color":"#fafafa","options.font_color":"#333","options.lock":"1","options.css":"#main a{border-radius:1em;}","options.font_size":"20","options.show_apps":"1","options.show_2":"0"}
-
-# dark theme
-{"apps.order":"[\"webstore\",\"pjkljhegncpnkpknbcohdijeoejaedia\",\"apdfllckaahabafndbhieahigkjlhalf\",\"pnhechapfaindjhompbnflcldabbghjo\",\"blpcfgokakmgnkcojhhkbfbldkacnbeo\",\"aohghmighlieiainnegkcijnfilokake\",\"aapocclcgogkmnckokdopfmhonfmgoek\",\"felcaaldnbdncclmgdcncolpebgiejap\"]","column.0.0":"1","column.1.0":"apps","open.closed":"true","options.auto_close":"1","options.background_color":"#202124","options.css":"#main a{border-radius:1em;}","options.font_color":"#bec1c5","options.font_size":"20","options.hide_options":"1","options.highlight_color":"#333639","options.highlight_font_color":"#eff1f2","options.lock":"1","options.shadow_color":"transparent","options.show_2":"0","options.show_apps":"1","options.show_closed":"0","options.show_devices":"0","options.show_recent":"0","options.show_root":"0","options.show_top":"0","options.show_weather":"0","options.width":"0.656"}
 ```
 
 ## Firefox DevTools configuations
 
-```fish
+```bash
 # name
 Pixel 4a
 # user agent
-Mozilla/5.0 (Android 11; Mobile; rv:82.0) Gecko/82.0 Firefox/82.0
+Mozilla/5.0 (Android 11; Mobile; rv:88.0) Gecko/88.0 Firefox/88.0
 # size
 396 x 858
 # DPR
