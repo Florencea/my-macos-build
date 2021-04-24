@@ -52,7 +52,7 @@ mkdir -p ~/.config/fish
   printf "set -g -x fish_greeting\n"
   printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
   printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
-  printf "alias ubk=\"sh ~/GitHub/my-macos-build/scripts/ublock-backup.sh\"\n"
+  printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
   printf "alias al=\"sh ~/GitHub/my-macos-build/al/al.sh\"\n"
   printf "alias gd=\"sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh\"\n"
   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
