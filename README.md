@@ -27,9 +27,6 @@ xartutil --erase-all
 # Download Google Drive public single file
 curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/gdrive-download.sh -o gd.sh;sh gd.sh <ID> <downloaded file name>
 
-# Setup DNS-over-HTTPS(change DNS to 127.0.0.1 and ::1 after installation)
-curl -L https://github.com/Florencea/my-macos-build/raw/main/scripts/doh.sh | sh
-
 # Get Ublock Origin configuations
 curl -L https://github.com/Florencea/my-macos-build/raw/main/configs/ublock-advanced.txt -o ublock-advanced.txt
 
@@ -52,8 +49,6 @@ alias al="sh ~/GitHub/ledger/al/al.sh"
 alias gd="sh ~/GitHub/my-macos-build/scripts/gdrive-download.sh"
 alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
 alias urb="sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh"
-alias cra="sh ~/GitHub/my-macos-build/scripts/create-react-app.sh"
-alias crat="sh ~/GitHub/my-macos-build/scripts/create-react-app-tailwind.sh"
 alias myself-cli="sh ~/GitHub/myself-cli/myself-cli.sh"
 ```
 
