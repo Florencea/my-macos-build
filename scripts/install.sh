@@ -9,6 +9,18 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
+print_step "setup SF Mono Fonts"
+(
+  set -x
+  cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+)
+
+print_step "download New York Fonts"
+(
+  set -x
+  curl -o ~/Downloads/NY-font.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY-Font.dmg'
+)
+
 print_step "install homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 brew tap homebrew/core
