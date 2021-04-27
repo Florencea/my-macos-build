@@ -46,18 +46,16 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
-brew install firefox-nightly --language=zh-TW
+brew install firefox --language=zh-TW
 brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
+brew install microsoft-office
 brew install c0re100-qbittorrent
 brew install scroll-reverser
 brew install slack
 brew install visual-studio-code
-
-print_step "brew install cask driver"
-brew install wacom-tablet
 
 print_step "brew install commend line tools"
 brew install annie
