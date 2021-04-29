@@ -7,6 +7,7 @@
   - [配置文件說明](#配置文件說明)
   - [配合 ESLint](#配合-eslint)
   - [配合 Tailwind CSS](#配合-tailwind-css)
+  - [其他注意事項](#其他注意事項)
 
 ## 框架相關文件
 
@@ -20,9 +21,12 @@ mkdir myapp && cd myapp
 yarn create @umijs/umi-app
 # 修改 prettier 配置使根目錄文件也能被格式化
 printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
-echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve dist")' package.json) > package.json
+# 加入 yarn dev 與 yarn serve 命令
+# 移除 prettier 相關指令，會與 VSCode 內的規則起衝突
+echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve dist") | delpaths([["gitHooks"],["lint-staged"],["script","prettier"]])' package.json) > package.json
+# 設定 trailingComma: none ，防止 prettier 與 eslint 起衝突
+echo (jq 'setpath(["trailingComma"];"none")' .prettierrc) > .prettierrc
 yarn add serve --dev
-yarn prettier
 # public 裡面要放東西，不然開發伺服器時會報錯，可以等有東西放的時候再建 public 目錄
 mkdir public
 code .
@@ -47,6 +51,8 @@ code .
     title: 'page title',
     // 是否讓生成的文件包含 hash 後綴，通常用於增量發布和避免瀏覽器加載緩存。
     hash: true,
+    // 編譯輸出目錄，預設是 'dist'，記得改了這個要去改 .pretieerignore 跟 .gitignore ，不然目錄裡的東西會被影響到
+    outputPath: 'dist',
     // 配置 favicon 地址，請放到 public 目錄，編譯後才看得到，開發中看不到 favicon
     favicon: '/favicon.ico'
     // 開發時的 proxy server 配置
@@ -69,6 +75,7 @@ code .
 ## 配合 ESLint
 
 - 注意：下列 ESLint 規則可以全域預設不寫 `import React from 'react'`，若 VSCode 的自動引入功能得引入 React 才生效，請把工作區的 `TypeScript` 版本升到 `4.3` 以上，就能配合 `React 17` 之後不用一直寫 `import React from 'react'`
+- 規則`multiline-ternary: 0`以防`prettier`與`eslint`格式化三元運算式產生衝突
 
 ```sh
 # 使用 standard, react, browser
@@ -94,7 +101,9 @@ yarn add eslint eslint-plugin-react@latest @typescript-eslint/eslint-plugin@late
   },
   "plugins": ["react", "@typescript-eslint"],
   "globals": { "React": true },
-  "rules": {}
+  "rules": {
+    "multiline-ternary": 0
+  }
 }
 ```
 
@@ -106,3 +115,10 @@ yarn add eslint eslint-plugin-react@latest @typescript-eslint/eslint-plugin@late
 ```sh
 yarn add umi-plugin-tailwindcss --dev
 ```
+
+## 其他注意事項
+
+- 記得反覆檢查
+  - `.gitignore`，編譯目錄需要加進去，還有建議把`yarn.lock`跟`package-lock.json`移除以鎖定套件版本
+  - `.prettierignore`，編譯目錄需要移除
+  - `.prettierrc`，`trailingComma`改為`none`，防止與`eslint`起衝突
