@@ -21,7 +21,9 @@
 ### 安裝套件
 
 ```bash
-yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy
+yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
+mkdir .vscode
+touch .eslintrc.js .prettierrc.js .vscode/settings.json
 ```
 
 ### .eslintrc.js
