@@ -1,0 +1,26 @@
+{
+  // Prettier
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // shellscript
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  // python
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true
+  },
+  "python.formatting.autopep8Args": ["--ignore", "E24,E501"],
+  "python.languageServer": "Pylance",
+  "python.linting.pycodestyleArgs": [
+    "--ignore=E121,E123,E126,E226,E24,E704,W503,E501"
+  ],
+  "python.linting.pycodestyleEnabled": true,
+  // markdown
+  "markdownlint.config": {
+    "MD033": false
+  }
+}

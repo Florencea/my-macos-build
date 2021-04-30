@@ -144,79 +144,79 @@ export default defineConfig({
 
 ```javascript
 module.exports = {
-  purge: ['./src/**/*.tsx'],
+  purge: ["./src/**/*.tsx"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {}
+    extend: {},
   },
   variants: {
-    extend: {}
+    extend: {},
   },
-  plugins: []
-}
+  plugins: [],
+};
 ```
 
 - `src/main.tsx`
 
 ```tsx
-import React from 'react'
-import ReactDOM from 'react-dom'
-import 'antd/dist/antd.css'
-import './_tailwind.css'
-import './index.css'
-import App from './App'
+import React from "react";
+import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
+import "./_tailwind.css";
+import "./index.css";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
-)
+  document.getElementById("root")
+);
 ```
 
 - `jest.config.ts`
 
 ```typescript
-import { Config } from '@jest/types'
+import { Config } from "@jest/types";
 
 export default async (): Promise<Config.InitialOptions> => {
   return {
-    preset: 'ts-jest',
+    preset: "ts-jest",
     moduleNameMapper: {
-      '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
+      "\\.(css|less|scss|sss|styl)$": "<rootDir>/node_modules/jest-css-modules",
     },
     transform: {
-      '\\.svg$': 'svg-jest'
+      "\\.svg$": "svg-jest",
     },
     collectCoverageFrom: [
-      '**/*.{ts,tsx}',
-      '!**/jest.config.ts',
-      '!**/jest.setup.ts',
-      '!**/postcss.config.js',
-      '!**/tailwind.config.js',
-      '!**/vite.config.ts',
-      '!**/build/*',
-      '!**/coverage/*',
-      '!**/node_modules/*',
-      '!**/test/*',
-      '!**/src/main.tsx'
-    ]
-  }
-}
+      "**/*.{ts,tsx}",
+      "!**/jest.config.ts",
+      "!**/jest.setup.ts",
+      "!**/postcss.config.js",
+      "!**/tailwind.config.js",
+      "!**/vite.config.ts",
+      "!**/build/*",
+      "!**/coverage/*",
+      "!**/node_modules/*",
+      "!**/test/*",
+      "!**/src/main.tsx",
+    ],
+  };
+};
 ```
 
 - `test/App.test.tsx`
 
 ```tsx
-import React from 'react'
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import App from '../src/App'
+import React from "react";
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import App from "../src/App";
 
-it('should properly rendered.', async () => {
-  render(<App />)
-  expect(screen.getByText('Hello Vite + React!')).toBeInTheDocument()
-})
+it("should properly rendered.", async () => {
+  render(<App />);
+  expect(screen.getByText("Hello Vite + React!")).toBeInTheDocument();
+});
 ```
 
 ### 格式化檔案，運行測試，開始開發
