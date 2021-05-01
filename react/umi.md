@@ -21,7 +21,7 @@
 mkdir myapp && cd myapp
 yarn create @umijs/umi-app
 # 加入 yarn dev 與 yarn serve 命令
-echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve dist")' package.json) > package.json
+echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve -s dist")' package.json) > package.json
 yarn add serve --dev
 ```
 
