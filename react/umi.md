@@ -99,5 +99,6 @@ yarn add antd --dev
 
 ## 其他注意事項
 
-- 若編譯輸出目錄有更改(不是`dist`了)，記得檢查`.gitignore`、`.prettierignore`
+- 強烈建議不要亂改目錄名稱
+- 若編譯輸出目錄有更改(不是`dist`了)，記得檢查`.gitignore`、`.prettierignore`、`tsconfig.json`(可能有遺漏，建議不要改)
 - 建議把`.gitignore`中的`yarn.lock`跟`package-lock.json`移除以鎖定套件版本
