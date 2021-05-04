@@ -46,8 +46,8 @@ yarn add serve --dev
         'changeOrigin': true,
         'pathRewrite': { '^/api' : '' },
       },
-      // 簡單寫法
-      '/api': 'http://localhost:4000/api',
+      // 簡單寫法，注意轉址的主機名後面不用加路徑
+      '/api': 'http://localhost:4000/',
     },
   }
   ```
