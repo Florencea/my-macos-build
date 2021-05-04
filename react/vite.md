@@ -29,10 +29,8 @@ import reactRefresh from "@vitejs/plugin-react-refresh";
 export default defineConfig({
   plugins: [reactRefresh()],
   build: {
-    // 輸出目錄，預設為 dist
-    outDir: "build",
     // chunk 尺寸大於多少kb會跳警告，預設為 500
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
         // 要不要把不同庫切到不同 chunk 去，這邊設定會把 antd 庫 分到同一個 chunk
