@@ -160,13 +160,34 @@ killall gpg-agent
 
 ## macOS Firefox 開發者工具裝置模擬設定檔備份
 
-```bash
-# 裝置名稱
+- 裝置名稱
+
+```text
 Pixel 4a
-# user agent
+```
+
+- User Agent
+
+```text
 Mozilla/5.0 (Android 11; Mobile; rv:88.0) Gecko/88.0 Firefox/88.0
-# 螢幕尺寸
-396 x 858
-# DPR
+```
+
+- 螢幕尺寸
+
+  - 寬
+
+  ```text
+  396
+  ```
+
+  - 高
+
+  ```text
+  858
+  ```
+
+- DPR
+
+```text
 2.727272727272727
 ```
