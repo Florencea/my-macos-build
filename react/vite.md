@@ -1,11 +1,5 @@
 # Vite 使用筆記
 
-- [Vite 使用筆記](#vite-使用筆記)
-  - [相關文件](#相關文件)
-  - [Vite](#vite)
-  - [Tailwind CSS](#tailwind-css)
-  - [Ant Design](#ant-design)
-
 ## 相關文件
 
 - [Vite](https://cn.vitejs.dev/)

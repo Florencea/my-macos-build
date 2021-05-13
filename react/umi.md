@@ -1,20 +1,10 @@
 # Umi.js 使用筆記
 
-- [Umi.js 使用筆記](#umijs-使用筆記)
-  - [框架相關文件](#框架相關文件)
-  - [命令列建立專案](#命令列建立專案)
-  - [配置文件說明](#配置文件說明)
-  - [配合 ESLint、Prettier](#配合-eslintprettier)
-  - [配合 Tailwind CSS](#配合-tailwind-css)
-  - [配合 Ant Design](#配合-ant-design)
-  - [靜態資源引用](#靜態資源引用)
-  - [其他注意事項](#其他注意事項)
-
-## 框架相關文件
+## 相關文件
 
 - [https://umijs.org/zh-CN/docs](https://umijs.org/zh-CN/docs)
 
-## 命令列建立專案
+## 建立專案
 
 - 注意 create umi app 是在目錄下發動而不是目錄外
 

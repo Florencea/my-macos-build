@@ -2,36 +2,6 @@
 
 - 流程與腳本為作者個人使用，不見得符合所有人的工作流程
 
-## 目錄
-
-- [macOS 使用筆記](#macos-使用筆記)
-  - [目錄](#目錄)
-  - [快速連結](#快速連結)
-  - [macOS 重灌流程](#macos-重灌流程)
-    - [步驟 0：備份/登出各帳號](#步驟-0備份登出各帳號)
-    - [步驟 1：清除 T2 晶片資料](#步驟-1清除-t2-晶片資料)
-    - [步驟 2：安裝 macOS](#步驟-2安裝-macos)
-    - [步驟 3：系統偏好設定](#步驟-3系統偏好設定)
-    - [步驟 4：Finder 設定](#步驟-4finder-設定)
-    - [步驟 5：複製檔案](#步驟-5複製檔案)
-    - [步驟 6：執行 `install.sh`](#步驟-6執行-installsh)
-    - [步驟 7：從 App Store 安裝軟體](#步驟-7從-app-store-安裝軟體)
-    - [步驟 8：其餘 App 設定](#步驟-8其餘-app-設定)
-    - [步驟 9：開發環境 設定](#步驟-9開發環境-設定)
-  - [macOS 命令列](#macos-命令列)
-    - [生成 SSH Key](#生成-ssh-key)
-    - [使用 Touch ID 代替 sudo 時的密碼輸入](#使用-touch-id-代替-sudo-時的密碼輸入)
-    - [禁用 視窗彈出動畫](#禁用-視窗彈出動畫)
-    - [禁用 Adobe Create Cloud 開機啟動](#禁用-adobe-create-cloud-開機啟動)
-    - [重置 Launchpad](#重置-launchpad)
-  - [macOS GPG 設定步驟](#macos-gpg-設定步驟)
-    - [生成 GPG Key](#生成-gpg-key)
-    - [輸出 GPG Key](#輸出-gpg-key)
-    - [拷貝至各平台](#拷貝至各平台)
-    - [設定 Git 使用 GPG](#設定-git-使用-gpg)
-    - [設定 macOS 系統鑰匙圈紀錄 GPG 密碼](#設定-macos-系統鑰匙圈紀錄-gpg-密碼)
-  - [macOS Firefox 開發者工具裝置模擬設定檔備份](#macos-firefox-開發者工具裝置模擬設定檔備份)
-
 ## 快速連結
 
 - [React 開發筆記](react/README.md)

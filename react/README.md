@@ -1,13 +1,5 @@
 # React 開發筆記
 
-- [React 開發筆記](#react-開發筆記)
-  - [快速連結](#快速連結)
-  - [Alloy TypeScript React](#alloy-typescript-react)
-    - [安裝套件](#安裝套件)
-    - [.eslintrc.js](#eslintrcjs)
-    - [.prettierrc.js](#prettierrcjs)
-  - [VSCode Settings](#vscode-settings)
-
 ## 快速連結
 
 - [Vite 使用筆記](vite.md)
