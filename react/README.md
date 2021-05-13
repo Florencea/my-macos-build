@@ -50,8 +50,8 @@ module.exports = {
 
 ```js
 module.exports = {
-  // 一行最多 120 字符
-  printWidth: 120,
+  // 一行最多 80 字符 [與alloy不同，在1080p螢幕下，一行80字VSCode在啟用雙欄佈局的時候不會折行]
+  printWidth: 80,
   // 使用 2 個空格縮進
   tabWidth: 2,
   // 不使用縮進符，而使用空格
@@ -61,17 +61,17 @@ module.exports = {
   // 使用單引號
   singleQuote: true,
   // 對象的 key 僅在必要時用引號
-  quoteProps: "as-needed",
+  quoteProps: 'as-needed',
   // jsx 不使用單引號，而使用雙引號
   jsxSingleQuote: false,
   // 末尾需要有逗號
-  trailingComma: "all",
+  trailingComma: 'all',
   // 大括號內的首尾需要空格
   bracketSpacing: true,
   // jsx 標簽的反尖括號需要換行
   jsxBracketSameLine: false,
   // 箭頭函數，只有一個參數的時候，也需要括號
-  arrowParens: "always",
+  arrowParens: 'always',
   // 每個文件格式化的范圍是文件的全部內容
   rangeStart: 0,
   rangeEnd: Infinity,
@@ -80,15 +80,17 @@ module.exports = {
   // 不需要自動在文件開頭插入 @prettier
   insertPragma: false,
   // 使用默認的折行標准
-  proseWrap: "preserve",
+  proseWrap: 'preserve',
   // 根據顯示樣式決定 html 要不要折行
-  htmlWhitespaceSensitivity: "css",
+  htmlWhitespaceSensitivity: 'css',
   // vue 文件中的 script 和 style 內不用縮進
   vueIndentScriptAndStyle: false,
   // 換行符使用 lf
-  endOfLine: "lf",
+  endOfLine: 'lf',
   // 格式化嵌入的內容
-  embeddedLanguageFormatting: "auto",
+  embeddedLanguageFormatting: 'auto',
+};
+
 };
 ```
 
@@ -108,7 +110,13 @@ module.exports = {
     "plaintext": "html"
   },
   // ESLint
-  "eslint.validate": ["javascript", "javascriptreact", "vue", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue",
+    "typescript",
+    "typescriptreact"
+  ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -125,16 +133,5 @@ module.exports = {
   "markdownlint.config": {
     "MD033": false
   }
-  // python
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.python",
-    "editor.formatOnSave": true
-  },
-  "python.formatting.autopep8Args": ["--ignore", "E24,E501"],
-  "python.languageServer": "Pylance",
-  "python.linting.pycodestyleArgs": [
-    "--ignore=E121,E123,E126,E226,E24,E704,W503,E501"
-  ],
-  "python.linting.pycodestyleEnabled": true,
 }
 ```
