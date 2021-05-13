@@ -16,16 +16,6 @@ mkdir myapp && cd myapp
 yarn create @umijs/umi-app
 ```
 
-- 加入 `yarn dev` 與 `yarn serve` 命令
-
-```bash
-echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve -s dist")' package.json) > package.json
-```
-
-```bash
-yarn add serve --dev
-```
-
 ## 配置文件說明
 
 - 配置文件 [https://umijs.org/zh-CN/config](https://umijs.org/zh-CN/config)
