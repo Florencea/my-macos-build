@@ -122,35 +122,15 @@ gpg --full-generate-key
 
 ### 輸出 GPG Key
 
-- 一行版本
-
 ```bash
 gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
 ```
-
-- 注意：如果系統裡只有一個 GPG Key 才能一行指令解決，指令格式適用 fish Shell，其餘 Shell 需改變寫法
-- 若存在多個 GPG Key，先使用
-
-```bash
-gpg -K --keyid-format LONG
-```
-
-- 列出所有 Key ID (sec 後面的那個) 再使用
-
-```bash
-gpg -a --export <Key ID>
-```
-
-- 來輸出
 
 ### 拷貝至各平台
 
 - 將已拷貝至剪貼簿的 GPG Key 貼到 GitHub、GitLab、Bitbucket
 
 ### 設定 Git 使用 GPG
-
-- 同上一段敘述，若只存在一個 GPG Key 才能一行指令解決
-- 若有多個 GPG Key，請參考前段自行將指令後半替換成`gpg -K --keyid-format LONG`輸出的 Key ID
 
 ```bash
 git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
