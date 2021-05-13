@@ -16,12 +16,23 @@
 
 ## 命令列建立專案
 
-```sh
-# 注意 create umi app 是在目錄下發動而不是目錄外
+- 注意 create umi app 是在目錄下發動而不是目錄外
+
+```bash
 mkdir myapp && cd myapp
+```
+
+```bash
 yarn create @umijs/umi-app
-# 加入 yarn dev 與 yarn serve 命令
+```
+
+- 加入 `yarn dev` 與 `yarn serve` 命令
+
+```bash
 echo (jq 'setpath(["scripts","dev"];"umi dev") | setpath(["scripts","serve"];"serve -s dist")' package.json) > package.json
+```
+
+```bash
 yarn add serve --dev
 ```
 
@@ -55,21 +66,26 @@ yarn add serve --dev
 ## 配合 ESLint、Prettier
 
 - 直接[使用 alloy 配置](README.md#alloy-typescript-react)
+- 修改 .prettierignore 使根目錄文件也能被格式化
 
 ```bash
-# 修改 .prettierignore 使根目錄文件也能被格式化
 printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
-# 刪除原本的 .editorconfig .prettierrc
-rm .editorconfig .prettierrc
-# 參見文件，使用 alloy 配置
 ```
+
+- 刪除原本的 `.editorconfig`、`.prettierrc`
+
+```bash
+rm .editorconfig .prettierrc
+```
+
+- 參見文件，使用 alloy 配置
 
 ## 配合 Tailwind CSS
 
 - 此種情形下`antd`樣式優先權依舊大於`Tailwind CSS`
 - 安裝完需重開 VSCode 才會有 Tailwind CSS 語法提示
 
-```sh
+```bash
 yarn add umi-plugin-tailwindcss --dev
 ```
 

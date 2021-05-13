@@ -16,6 +16,9 @@
 
 ```bash
 yarn create @vitejs/app vite-project --template react-ts
+```
+
+```bash
 cd vite-project && yarn
 ```
 
@@ -53,7 +56,13 @@ export default defineConfig({
 
 ```bash
 yarn add tailwindcss@latest postcss@latest autoprefixer@latest --dev
+```
+
+```bash
 npx tailwindcss init -p
+```
+
+```bash
 printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' >> src/_tailwind.css
 ```
 
@@ -83,6 +92,9 @@ import "./_tailwind.css";
 
 ```bash
 yarn add antd @ant-design/icons
+```
+
+```bash
 yarn add less vite-plugin-imp --dev
 ```
 

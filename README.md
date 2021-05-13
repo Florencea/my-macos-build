@@ -25,6 +25,11 @@
     - [禁用 Adobe Create Cloud 開機啟動](#禁用-adobe-create-cloud-開機啟動)
     - [重置 Launchpad](#重置-launchpad)
   - [macOS GPG 設定步驟](#macos-gpg-設定步驟)
+    - [生成 GPG Key](#生成-gpg-key)
+    - [輸出 GPG Key](#輸出-gpg-key)
+    - [拷貝至各平台](#拷貝至各平台)
+    - [設定 Git 使用 GPG](#設定-git-使用-gpg)
+    - [設定 macOS 系統鑰匙圈紀錄 GPG 密碼](#設定-macos-系統鑰匙圈紀錄-gpg-密碼)
   - [macOS Firefox 開發者工具裝置模擬設定檔備份](#macos-firefox-開發者工具裝置模擬設定檔備份)
 
 ## 快速連結
@@ -99,6 +104,9 @@
 
 ```bash
 ssh-keygen -t ed25519
+```
+
+```bash
 cat .ssh/id_ed25519.pub | pbcopy
 ```
 
@@ -106,7 +114,11 @@ cat .ssh/id_ed25519.pub | pbcopy
 
 ```bash
 sudo nano /etc/pam.d/sudo
-# 在第 2 行加入
+```
+
+- 在第 2 行加入
+
+```bash
 auth       sufficient     pam_tid.so
 ```
 
@@ -131,35 +143,68 @@ defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ## macOS GPG 設定步驟
 
 - 需安裝`gnupg`與`pinentry-mac`
-- 生成 GPG Key
+
+### 生成 GPG Key
 
 ```bash
 gpg --full-generate-key
 ```
 
-- 輸出 GPG Key
+### 輸出 GPG Key
+
+- 一行版本
 
 ```bash
-# 注意：如果系統裡只有一個 GPG Key 才能一行指令解決，指令格式適用 fish Shell，其餘 Shell 需改變寫法
-# 若存在多個 GPG Key，先使用 gpg -K --keyid-format LONG 列出所有 Key ID (sec 後面的那個) 再使用 gpg -a --export <Key ID> 來輸出
 gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
 ```
 
-- 將已拷貝至剪貼簿的 GPG Key 貼到 GitHub、GitLab、Bitbucket
-- 設定 Git 使用剛剛輸出的 GPG Key
+- 注意：如果系統裡只有一個 GPG Key 才能一行指令解決，指令格式適用 fish Shell，其餘 Shell 需改變寫法
+- 若存在多個 GPG Key，先使用
 
 ```bash
-# 同上一段敘述，若只存在一個 GPG Key 才能一行指令解決，請自行將指令後半替換成 gpg -K --keyid-format LONG 輸出的 Key ID
+gpg -K --keyid-format LONG
+```
+
+- 列出所有 Key ID (sec 後面的那個) 再使用
+
+```bash
+gpg -a --export <Key ID>
+```
+
+- 來輸出
+
+### 拷貝至各平台
+
+- 將已拷貝至剪貼簿的 GPG Key 貼到 GitHub、GitLab、Bitbucket
+
+### 設定 Git 使用 GPG
+
+- 同上一段敘述，若只存在一個 GPG Key 才能一行指令解決
+- 若有多個 GPG Key，請參考前段自行將指令後半替換成`gpg -K --keyid-format LONG`輸出的 Key ID
+
+```bash
 git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+```
+
+```bash
 git config --global commit.gpgsign true
+```
+
+```bash
 git config --global gpg.program gpg
 ```
 
-- 設定 macOS 使用系統鑰匙圈紀錄 GPG 密碼
+### 設定 macOS 系統鑰匙圈紀錄 GPG 密碼
 
 ```bash
 printf "pinentry-program /usr/local/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
+```
+
+```bash
 printf "no-tty\n" >> ~/.gnupg/gpg.conf
+```
+
+```bash
 killall gpg-agent
 ```
 

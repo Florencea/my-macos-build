@@ -47,8 +47,9 @@
 | -------------------- | ------------ | -------- |
 | 30                   | 23           | 18       |
 
+- 為了保證畫質，故設定 present veryslow
+
 ```bash
-# 為了保證畫質，故設定 present veryslow
 ffmpeg
   -hide_banner
   -i <輸入檔案>
@@ -57,8 +58,11 @@ ffmpeg
   -preset veryslow
   -vf "subtitles=filename='<與輸入檔案同目錄下的字幕檔案>'"
   <輸出檔案名稱>
+```
 
-# 範例
+- 範例
+
+```bash
 ffmpeg
   -hide_banner
   -i 'input.mp4'
@@ -77,9 +81,10 @@ ffmpeg
 | -------------------- | ------------ | -------- |
 | 31                   | 24           | 20       |
 
+- 為了保證畫質，故設定 present veryslow
+- 為了使輸出的影片能夠被 macOS 的預覽程式識別，要加入 hvc1 的 tag
+
 ```bash
-# 為了保證畫質，故設定 present veryslow
-# 為了使輸出的影片能夠被 macOS 的預覽程式識別，要加入 hvc1 的 tag
 ffmpeg
   -hide_banner
   -i <輸入檔案>
@@ -89,8 +94,11 @@ ffmpeg
   -vf "subtitles=filename='<與輸入檔案同目錄下的字幕檔案>'"
   -tag:v hvc1
   <輸出檔案名稱>
+```
 
-# 範例
+- 範例
+
+```bash
 ffmpeg
   -hide_banner
   -i 'input.mp4'
@@ -110,8 +118,9 @@ ffmpeg
 | -------------------- | ------------ | -------- |
 | 41                   | 30           | 20       |
 
+- 為了保證畫質，故設定 present veryslow
+
 ```bash
-# 為了保證畫質，故設定 present veryslow
 ffmpeg
   -hide_banner
   -i <輸入檔案>
@@ -121,8 +130,11 @@ ffmpeg
   -preset veryslow
   -vf "subtitles=filename='<與輸入檔案同目錄下的字幕檔案>'"
   <輸出檔案名稱>
+```
 
-# 範例
+- 範例
+
+```bash
 ffmpeg
   -hide_banner
   -i 'input.mp4'
@@ -148,8 +160,11 @@ ffmpeg
   -b:a <音軌碼率，預設 128k>
   -vf "subtitles=filename='<與輸入檔案同目錄下的字幕檔案>'"
   <輸出檔案名稱>
+```
 
-# 範例
+- 範例
+
+```bash
 ffmpeg
   -hide_banner
   -i 'input.mp4'
@@ -163,8 +178,9 @@ ffmpeg
 
 ### 硬編 HEVC
 
+- 為了使輸出的影片能夠被 macOS 的預覽程式識別，要加入 hvc1 的 tag
+
 ```bash
-# 為了使輸出的影片能夠被 macOS 的預覽程式識別，要加入 hvc1 的 tag
 ffmpeg
   -hide_banner
   -i <輸入檔案>
@@ -175,8 +191,11 @@ ffmpeg
   -vf "subtitles=filename='<與輸入檔案同目錄下的字幕檔案>'"
   -tag:v hvc1
   <輸出檔案名稱>
+```
 
-  # 範例
+- 範例
+
+```bash
 ffmpeg
   -hide_banner
   -i 'input.mp4'
@@ -192,10 +211,10 @@ ffmpeg
 ## 使用 FFmpeg 從影片製作 GIF
 
 - 除非有進一步需求，建議使用儲存庫內的 [`make-gif.sh`](../scripts/make-gif.sh)
+- `h=-1`表示寬度會隨高度調整
+- 透過減少調色盤的顏色來縮小 GIF 體積
 
 ```bash
-# h=-1表示寬度會隨高度調整
-# 透過減少調色盤的顏色來縮小 GIF 體積
 ffmpeg
   -hide_banner
   -ss <開始時間(秒，可接受小數) 或 開始時間(HH:mm:ss，秒可接受小數)>
@@ -203,8 +222,11 @@ ffmpeg
   -i <輸入影片檔案>
   -filter_complex "[0:v] fps=<每秒幾幀>,scale=w=<GIF圖片寬度>:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"
   <輸出GIF檔案名稱>
+```
 
-# 範例
+- 範例
+
+```bash
 ffmpeg
   -hide_banner
   -ss 00:01:13.5
