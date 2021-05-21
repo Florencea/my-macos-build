@@ -48,7 +48,7 @@ module.exports = {
 
 ### .prettierrc.js
 
-- 可參考[alloy 團隊的配置](https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md#%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88-prettier-%E4%BD%BF%E7%94%A8)，但除了以下配置外其餘都是預設值可以不寫
+- 可參考[alloy 團隊的配置](https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md#%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88-prettier-%E4%BD%BF%E7%94%A8)，但除了簡略版配置外其餘都是預設值可以不寫
 - 視專案狀況而定，若專案非常要求統一規範，建議還是採用 alloy 那種寫法，因為預設值有可能隨 prettier 版本改變
 - 完整版 alloy 寫法
 
