@@ -21,11 +21,15 @@ yarn add antd umi-plugin-tailwindcss --dev
 ```
 
 ```bash
-mkdir -p src/models
+rm src/pages/index.tsx src/pages/index.less
 ```
 
 ```bash
-touch src/models/interface.ts src/access.ts src/util.ts src/app.tsx src/config.ts
+mkdir -p src/models src/pages/protected/default src/pages/public/default
+```
+
+```bash
+touch src/models/interface.ts src/access.ts src/util.ts src/app.tsx src/config.ts src/pages/protected/default/_Index.tsx src/pages/public/default/_Index.tsx
 ```
 
 - `./src/models/interface.ts`
@@ -142,6 +146,7 @@ export async function getInitialState(): Promise<InitialStateT> {
 - `./src/config.ts`
 
 ```ts
+import { InitialStateT } from "./models/interface";
 import { gold, grey } from "@ant-design/colors";
 /**
  * default state
@@ -158,8 +163,8 @@ export const THEME = {
  * routes
  */
 export const TITLE = "page title";
-export const DEFAULT_PATH_PUBLIC = "/route/to/public/page";
-export const DEFAULT_PATH_PROTECTED = "/route/to/protected/page";
+export const DEFAULT_PATH_PUBLIC = "/public/default";
+export const DEFAULT_PATH_PROTECTED = "/protected/default";
 
 const basicRouteConfig = {
   headerRender: false,
@@ -176,8 +181,9 @@ const protectedRoutes = [
   {
     path: DEFAULT_PATH_PROTECTED,
     name: "protected page",
+    icon: "gift",
     access: "isLogin",
-    component: "@/pages/protected/_Index",
+    component: "@/pages/protected/default/_Index",
     ...basicRouteConfig,
   },
 ];
@@ -186,7 +192,7 @@ const publicRoutes = [
   {
     path: DEFAULT_PATH_PUBLIC,
     name: "public page",
-    component: "@/pages/public/_Index",
+    component: "@/pages/public/default/_Index",
     ...basicRouteConfigWithoutMenu,
   },
 ];
@@ -211,19 +217,19 @@ export default defineConfig({
     type: "none",
   },
   fastRefresh: {},
-  proxy: {
-    "/api": "http://localhost:4000/",
-    "/api": {
-      target: "https://localhost:4000/",
-      changeOrigin: true,
-      secure: false,
-    },
-  },
-  devServer: {
-    https: { key: "./cert/localhost.key", cert: "./cert/localhost.crt" },
-  },
+  // proxy: {
+  //   "/api": "http://localhost:4000/",
+  //   "/api": {
+  //     target: "https://localhost:4000/",
+  //     changeOrigin: true,
+  //     secure: false,
+  //   },
+  // },
+  // devServer: {
+  //   https: { key: "./cert/localhost.key", cert: "./cert/localhost.crt" },
+  // },
   // site config
-  favicon: "/favicon.png",
+  // favicon: "/favicon.png",
   // route config
   title: TITLE,
   routes: ROUTES,
@@ -233,34 +239,34 @@ export default defineConfig({
   dynamicImport: {},
   dynamicImportSyntax: {},
   // build config for modern browser only
-  targets: {
-    chrome: 89,
-    firefox: 88,
-    safari: 13,
-    edge: false,
-    ios: 13,
-  },
-  terserOptions: {
-    parse: {
-      ecma: 8,
-    },
-    compress: {
-      ecma: 8,
-    },
-    ecma: 8,
-    keep_classnames: false,
-    keep_fnames: false,
-    ie8: false,
-    module: false,
-    nameCache: null,
-    safari10: false,
-    toplevel: false,
-    output: {
-      ecma: 8,
-      comments: false,
-      ascii_only: true,
-    },
-  },
+  // targets: {
+  //   chrome: 89,
+  //   firefox: 88,
+  //   safari: 13,
+  //   edge: false,
+  //   ios: 13,
+  // },
+  // terserOptions: {
+  //   parse: {
+  //     ecma: 8,
+  //   },
+  //   compress: {
+  //     ecma: 8,
+  //   },
+  //   ecma: 8,
+  //   keep_classnames: false,
+  //   keep_fnames: false,
+  //   ie8: false,
+  //   module: false,
+  //   nameCache: null,
+  //   safari10: false,
+  //   toplevel: false,
+  //   output: {
+  //     ecma: 8,
+  //     comments: false,
+  //     ascii_only: true,
+  //   },
+  // },
   // antd config
   locale: {
     default: "zh-TW",
@@ -273,6 +279,22 @@ export default defineConfig({
   antd: {},
   theme: THEME,
 });
+```
+
+- `./src/pages/protected/default/_Index.tsx`
+
+```tsx
+export default function Index() {
+  return <span>protected default page</span>;
+}
+```
+
+- `./src/pages/public/default/_Index.tsx`
+
+```tsx
+export default function Index() {
+  return <span>public default page</span>;
+}
 ```
 
 ## ESLint & Prettier
