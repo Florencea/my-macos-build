@@ -1,12 +1,8 @@
-# Umi.js 使用筆記
+# Umi Note
 
-## 相關文件
+- <https://umijs.org/>
 
-- [https://umijs.org/zh-CN/docs](https://umijs.org/zh-CN/docs)
-
-## 建立專案
-
-- 注意 create umi app 是在目錄下發動而不是目錄外
+## Umi + Ant Design + Tailwind
 
 ```bash
 mkdir myapp && cd myapp
@@ -16,85 +12,277 @@ mkdir myapp && cd myapp
 yarn create @umijs/umi-app
 ```
 
-## 配置文件說明
+```bash
+yarn add @ant-design/colors @ant-design/icons
+```
 
-- 配置文件 [https://umijs.org/zh-CN/config](https://umijs.org/zh-CN/config)
-- 編輯`.umirc.ts`，以下是常用配置
+```bash
+yarn add antd umi-plugin-tailwindcss --dev
+```
 
-  ```ts
-  {
-    // 路由未匹配時的預設 title
-    title: 'page title',
-    // 是否讓生成的文件包含 hash 後綴，通常用於增量發布和避免瀏覽器加載緩存。
-    hash: true,
-    // 配置 favicon 地址，請放到 public 目錄
-    favicon: '/favicon.ico'
-    // 開發時的 proxy server 配置
-    proxy: {
-      // 需轉址的寫法
-      '/api': {
-        'target': 'http://jsonplaceholder.typicode.com/',
-        'changeOrigin': true,
-        'pathRewrite': { '^/api' : '' },
-      },
-      // 簡單寫法
-      '/api': 'http://localhost:4000/',
-    },
+```bash
+mkdir -p src/models
+```
+
+```bash
+touch src/models/interface.ts src/access.ts src/util.ts src/app.tsx src/config.ts
+```
+
+- `./src/models/interface.ts`
+
+```ts
+export interface InitialStateT {
+  token?: string;
+}
+
+export interface AccessT {
+  isLogin: boolean;
+}
+```
+
+- `./src/access.ts`
+
+```ts
+import { InitialStateT, AccessT } from "./models/interface";
+
+export default function (initialState: InitialStateT): AccessT {
+  return {
+    isLogin: initialState?.token !== undefined,
+  };
+}
+```
+
+- `./src/util.ts`
+
+```ts
+import { InitialStateT } from "./models/interface";
+
+const STATE_KEY = "SITE_STATE";
+
+const getSavedInitialState = (): InitialStateT | undefined => {
+  const savedInitialState = window.localStorage.getItem(STATE_KEY);
+  if (savedInitialState !== null) {
+    return JSON.parse(savedInitialState);
+  } else {
+    return undefined;
   }
-  ```
+};
 
-## 配合 ESLint、Prettier
+const setSavedInitialState = (initialState: InitialStateT) => {
+  window.localStorage.setItem(STATE_KEY, JSON.stringify(initialState));
+};
 
-- 直接[使用 alloy 配置](README.md#alloy-typescript-react)
-- 修改 .prettierignore 使根目錄文件也能被格式化
+export const localStorageHelper = {
+  get: {
+    initialState: getSavedInitialState(),
+  },
+  set: {
+    initialState: setSavedInitialState,
+  },
+  remove: {
+    initialState: () => {
+      window.localStorage.removeItem(STATE_KEY);
+    },
+  },
+  clear: () => {
+    window.localStorage.clear();
+  },
+};
+```
+
+- `./src/app.tsx`
+
+```ts
+import { BasicLayoutProps } from "@ant-design/pro-layout";
+import { InitialStateT } from "./models/interface";
+import { history } from "umi";
+import {
+  DEFAULT_PATH_PROTECTED,
+  DEFAULT_PATH_PUBLIC,
+  INITIALSTATE_DEFAULT,
+  ROUTES_NEED_REDIRECT,
+  TITLE,
+} from "./config";
+import { localStorageHelper } from "./util";
+
+const isAccessRouteNeedRedirect = (path: string) =>
+  new Set(ROUTES_NEED_REDIRECT).has(path);
+
+export const layout = ({
+  initialState,
+}: {
+  initialState: InitialStateT;
+}): BasicLayoutProps => {
+  const { token } = initialState;
+  const isLogin = token !== undefined;
+  return {
+    title: TITLE,
+    onPageChange: async () => {
+      const { location } = history;
+      // authorized user access protected routes
+      if (isLogin && isAccessRouteNeedRedirect(location.pathname)) {
+        history.push(DEFAULT_PATH_PROTECTED);
+      }
+      // unauthorized user access protected routes
+      if (!isLogin && !isAccessRouteNeedRedirect(location.pathname)) {
+        history.push(DEFAULT_PATH_PUBLIC);
+      }
+    },
+  };
+};
+
+export async function getInitialState(): Promise<InitialStateT> {
+  const savedInitialState = localStorageHelper.get.initialState;
+  return savedInitialState !== undefined
+    ? savedInitialState
+    : INITIALSTATE_DEFAULT;
+}
+```
+
+- `./src/config.ts`
+
+```ts
+import { gold, grey } from "@ant-design/colors";
+/**
+ * default state
+ */
+export const INITIALSTATE_DEFAULT: InitialStateT = {};
+/**
+ * theme
+ */
+export const THEME = {
+  "primary-color": gold.primary,
+  "layout-header-background": grey[7],
+};
+/**
+ * routes
+ */
+export const TITLE = "page title";
+export const DEFAULT_PATH_PUBLIC = "/route/to/public/page";
+export const DEFAULT_PATH_PROTECTED = "/route/to/protected/page";
+
+const basicRouteConfig = {
+  headerRender: false,
+};
+
+const basicRouteConfigWithoutMenu = {
+  hideInMenu: true,
+  hideInBreadcrumb: true,
+  menuRender: false,
+  headerRender: false,
+};
+
+const protectedRoutes = [
+  {
+    path: DEFAULT_PATH_PROTECTED,
+    name: "protected page",
+    access: "isLogin",
+    component: "@/pages/protected/_Index",
+    ...basicRouteConfig,
+  },
+];
+
+const publicRoutes = [
+  {
+    path: DEFAULT_PATH_PUBLIC,
+    name: "public page",
+    component: "@/pages/public/_Index",
+    ...basicRouteConfigWithoutMenu,
+  },
+];
+
+export const ROUTES = [
+  ...protectedRoutes,
+  ...publicRoutes,
+  { exact: false, path: "/", name: "", redirect: DEFAULT_PATH_PUBLIC },
+];
+export const ROUTES_NEED_REDIRECT = [DEFAULT_PATH_PUBLIC];
+```
+
+- `.umirc.ts`
+
+```ts
+import { THEME, ROUTES, TITLE } from "./src/config";
+import { defineConfig } from "umi";
+
+export default defineConfig({
+  // dev config
+  nodeModulesTransform: {
+    type: "none",
+  },
+  fastRefresh: {},
+  proxy: {
+    "/api": "http://localhost:4000/",
+    "/api": {
+      target: "https://localhost:4000/",
+      changeOrigin: true,
+      secure: false,
+    },
+  },
+  devServer: {
+    https: { key: "./cert/localhost.key", cert: "./cert/localhost.crt" },
+  },
+  // site config
+  favicon: "/favicon.png",
+  // route config
+  title: TITLE,
+  routes: ROUTES,
+  history: { type: "hash" },
+  // build config
+  hash: true,
+  dynamicImport: {},
+  dynamicImportSyntax: {},
+  // build config for modern browser only
+  targets: {
+    chrome: 89,
+    firefox: 88,
+    safari: 13,
+    edge: false,
+    ios: 13,
+  },
+  terserOptions: {
+    parse: {
+      ecma: 8,
+    },
+    compress: {
+      ecma: 8,
+    },
+    ecma: 8,
+    keep_classnames: false,
+    keep_fnames: false,
+    ie8: false,
+    module: false,
+    nameCache: null,
+    safari10: false,
+    toplevel: false,
+    output: {
+      ecma: 8,
+      comments: false,
+      ascii_only: true,
+    },
+  },
+  // antd config
+  locale: {
+    default: "zh-TW",
+    antd: true,
+    baseNavigator: true,
+  },
+  layout: {
+    logo: null,
+  },
+  antd: {},
+  theme: THEME,
+});
+```
+
+## ESLint & Prettier
 
 ```bash
 printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
 ```
 
-- 刪除原本的 `.editorconfig`、`.prettierrc`
-
 ```bash
 rm .editorconfig .prettierrc
 ```
 
-- 參見文件，使用 alloy 配置
-
-## 配合 Tailwind CSS
-
-- 此種情形下`antd`樣式優先權依舊大於`Tailwind CSS`
-- 安裝完需重開 VSCode 才會有 Tailwind CSS 語法提示
-
-```bash
-yarn add umi-plugin-tailwindcss --dev
-```
-
-## 配合 Ant Design
-
-- 在`.umirc.ts`加入
-
-```js
-{
-  antd: {},
-}
-```
-
-- VSCode 自動引入跟 TypeScript 提示需要
-
-```bash
-yarn add antd --dev
-```
-
-## 靜態資源引用
-
-- 引用一般圖片要用
-  - `require('./img')`(相對路徑)
-  - `require('@/img')`(從 src 開始的路徑)
-- 引用 svg 同一般模組
-  - `import logoSrc from './logo.svg'`
-
-## 其他注意事項
-
-- 強烈建議不要亂改目錄名稱
-- 若編譯輸出目錄有更改(不是`dist`了)，記得檢查`.gitignore`、`.prettierignore`、`tsconfig.json`(可能有遺漏，建議不要改)
-- 建議把`.gitignore`中的`yarn.lock`跟`package-lock.json`移除以鎖定套件版本
+- Use [ESLint Config Alloy TypeScript React](README.md#eslint-config-alloy-typescript-react)

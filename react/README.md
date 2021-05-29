@@ -1,16 +1,13 @@
-# React 開發筆記
+# React Note
 
-## 快速連結
+## Quick Link
 
-- [Vite 使用筆記](vite.md)
-- [Umi 使用筆記](umi.md)
+- [Vite Note](vite.md)
+- [Umi Note](umi.md)
 
-## Alloy TypeScript React
+## ESLint Config Alloy TypeScript React
 
-- [eslint-config-alloy 官方文件](https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md)
-- [eslint-config-alloy 規則列表與說明](https://alloyteam.github.io/eslint-config-alloy/)
-
-### 安裝套件
+- <https://github.com/AlloyTeam/eslint-config-alloy>
 
 ```bash
 yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
@@ -20,13 +17,13 @@ yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-p
 mkdir .vscode && touch .eslintrc.js .prettierrc.js .vscode/settings.json
 ```
 
-### .eslintrc.js
+- `.eslintrc.js`
 
 ```js
 module.exports = {
   extends: ["alloy", "alloy/react", "alloy/typescript"],
   env: {
-    // 你的環境變量（包含多個預定義的全局變量）
+    // Your environments (which contains several predefined global variables)
     //
     browser: true,
     // node: true,
@@ -35,81 +32,65 @@ module.exports = {
     // jquery: true
   },
   globals: {
-    // 你的全局變量（設置為 false 表示它不允許被重新賦值）
+    // Your global variables (setting to false means it's not allowed to be reassigned)
     //
     // myGlobal: false
     React: true,
   },
   rules: {
-    // 自定義你的規則
+    // Customize your rules
   },
 };
 ```
 
-### .prettierrc.js
-
-- 可參考[alloy 團隊的配置](https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md#%E5%A6%82%E4%BD%95%E7%BB%93%E5%90%88-prettier-%E4%BD%BF%E7%94%A8)，但除了簡略版配置外其餘都是預設值可以不寫
-- 視專案狀況而定，若專案非常要求統一規範，建議還是採用 alloy 那種寫法，因為預設值有可能隨 prettier 版本改變
-- 完整版 alloy 寫法
+- `.prettierrc.js`
 
 ```js
+// .prettierrc.js
 module.exports = {
-  // 一行最多 120 字符
+  // max 120 characters per line
   printWidth: 120,
-  // 使用 2 個空格縮進
+  // use 2 spaces for indentation
   tabWidth: 2,
-  // 不使用縮進符，而使用空格
+  // use spaces instead of indentations
   useTabs: false,
-  // 行尾需要有分號
+  // semicolon at the end of the line
   semi: true,
-  // 使用單引號
+  // use single quotes
   singleQuote: true,
-  // 對象的 key 僅在必要時用引號
+  // object's key is quoted only when necessary
   quoteProps: "as-needed",
-  // jsx 不使用單引號，而使用雙引號
+  // use double quotes instead of single quotes in jsx
   jsxSingleQuote: false,
-  // 末尾需要有逗號
+  // no comma at the end
   trailingComma: "all",
-  // 大括號內的首尾需要空格
+  // spaces are required at the beginning and end of the braces
   bracketSpacing: true,
-  // jsx 標簽的反尖括號需要換行
+  // end tag of jsx need to wrap
   jsxBracketSameLine: false,
-  // 箭頭函數，只有一個參數的時候，也需要括號
+  // brackets are required for arrow function parameter, even when there is only one parameter
   arrowParens: "always",
-  // 每個文件格式化的范圍是文件的全部內容
+  // format the entire contents of the file
   rangeStart: 0,
   rangeEnd: Infinity,
-  // 不需要寫文件開頭的 @prettier
+  // no need to write the beginning @prettier of the file
   requirePragma: false,
-  // 不需要自動在文件開頭插入 @prettier
+  // No need to automatically insert @prettier at the beginning of the file
   insertPragma: false,
-  // 使用默認的折行標准
+  // use default break criteria
   proseWrap: "preserve",
-  // 根據顯示樣式決定 html 要不要折行
+  // decide whether to break the html according to the display style
   htmlWhitespaceSensitivity: "css",
-  // vue 文件中的 script 和 style 內不用縮進
+  // vue files script and style tags indentation
   vueIndentScriptAndStyle: false,
-  // 換行符使用 lf
+  // lf for newline
   endOfLine: "lf",
-  // 格式化嵌入的內容
+  // formats quoted code embedded
   embeddedLanguageFormatting: "auto",
 };
 ```
 
-- 簡略版 alloy 寫法
-
-```js
-module.exports = {
-  // 使用單引號 [預設值是 false]
-  singleQuote: true,
-  // 末尾需要有逗號 [預設值是 'es5']
-  trailingComma: "all",
-};
-```
-
-## VSCode Settings
-
-- 挑需要的部分複製入`.vscode/settings.json`即可
+- `.vscode/settings.json`
 
 ```jsonc
 {
@@ -140,11 +121,11 @@ module.exports = {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // shellscript
+  // Shell Script
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  // markdown
+  // Markdown
   "markdownlint.config": {
     "MD033": false
   }
