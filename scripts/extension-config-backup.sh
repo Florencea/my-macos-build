@@ -48,14 +48,14 @@ if [ -f "$FILE_TONGWENTANG" ]; then
   cd $PROJECT_DIR || exit
   git add $FILE_TONGWENTANG_NAME
   echo ""
-  printf 'Find 新同文堂 Configuration: %s\n' "$FILE_TONGWENTANG"
+  printf 'Find NewTongWenTang Configuration: %s\n' "$FILE_TONGWENTANG"
   printf '     --> tongwentang-pref.json\n\n'
   printf 'Backup to GitHub...'
-  git commit -q -m "feat: Update 新同文堂 Configuration by ebk"
+  git commit -q -m "feat: Update NewTongWenTang Configuration by ebk"
   git push -q
   echo "done."
   echo ""
 else
-  # echo "No 新同文堂 Configuration find in ~/Downloads"
+  # echo "No NewTongWenTang Configuration find in ~/Downloads"
   echo ""
 fi
