@@ -236,7 +236,7 @@ export default defineConfig({
   history: { type: "hash" },
   // build config
   hash: true,
-  dynamicImport: {},
+  // dynamicImport: {},
   dynamicImportSyntax: {},
   // build config for modern browser only
   // targets: {
