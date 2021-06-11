@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1622594594153,
+  "timeStamp": 1623370403903,
   "version": "1.35.2",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -10,8 +10,7 @@
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
     ],
-    "popupPanelSections": 63,
-    "prefetchingDisabled": false
+    "popupPanelSections": 63
   },
   "selectedFilterLists": [
     "user-filters",
