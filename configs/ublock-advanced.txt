@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1624607208438,
-  "version": "1.35.2",
+  "timeStamp": 1624792790793,
+  "version": "1.36.0",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
@@ -20,7 +20,6 @@
     "ublock-abuse",
     "ublock-unbreak",
     "adguard-generic",
-    "adguard-mobile",
     "easylist",
     "easyprivacy",
     "urlhaus-1",
@@ -30,6 +29,7 @@
     "fanboy-thirdparty_social",
     "ublock-annoyances",
     "plowe-0",
+    "CHN-0",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
