@@ -151,7 +151,51 @@ printf "no-tty\n" >> ~/.gnupg/gpg.conf
 killall gpg-agent
 ```
 
-## macOS Firefox Devtool Device Specification
+## macOS Firefox Config
+
+### Chrome UI for Firefox
+
+- <https://github.com/muckSponge/MaterialFox>
+
+### Disable UI animations
+
+```text
+ui.prefersReducedMotion 1
+```
+
+```text
+xul.panel-animations.enabled false
+```
+
+### Force Cloudflare TRR
+
+```text
+network.trr.mode 3
+```
+
+### Disable Pockets Extension
+
+```text
+extensions.pocket.enabled false
+```
+
+### Disable Reader View
+
+```text
+reader.parse-on-load.enabled false
+```
+
+### Disable Captive Detection
+
+```text
+captivedetect.canonicalURL empty
+```
+
+```text
+network.captive-portal-service.enabled false
+```
+
+### Devtool Device Specification
 
 - Device Name
 
@@ -162,7 +206,7 @@ Pixel 4a
 - User Agent
 
 ```text
-Mozilla/5.0 (Android 11; Mobile; rv:88.0) Gecko/88.0 Firefox/88.0
+Mozilla/5.0 (Android 11; Mobile; rv:89.0) Gecko/89.0 Firefox/89.0
 ```
 
 - Screen Size
