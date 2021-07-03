@@ -17,7 +17,8 @@
 *##pre:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 *##samp:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 ! render
-*##body:style(-webkit-font-smoothing: auto)
+*##body:style(-webkit-font-smoothing: auto !important)
+*##body:style(-moz-osx-font-smoothing: auto !important)
 ! addons
 *##^.sp-separator
 *##.sp-separator:remove()
