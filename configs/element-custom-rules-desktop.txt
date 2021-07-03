@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-07-01
+! Last updated: 2021-07-03
 
 ! universal rules
 ! outline
@@ -16,6 +16,8 @@
 *##kbd:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 *##pre:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 *##samp:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+! render
+*##body:style(-webkit-font-smoothing: auto)
 ! addons
 *##^.sp-separator
 *##.sp-separator:remove()
