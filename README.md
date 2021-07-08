@@ -3,6 +3,7 @@
 ## Quick Link
 
 - [React Note](react/README.md)
+- [Rust Note](rust/README.md)
 - [FFmpeg Note](ffmpeg/README.md)
 
 ## Download Link
