@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-07-03
+! Last updated: 2021-07-08
 
 ! universal rules
 ! outline
@@ -454,12 +454,18 @@ pts.org.tw##^.container > div > aside
 pts.org.tw##.container > div > aside:remove()
 pts.org.tw##^#fb-root
 pts.org.tw###fb-root:remove()
+pts.org.tw##^#backTop
+pts.org.tw###backTop:remove()
+pts.org.tw##^.editor-recommend-area
+pts.org.tw##.editor-recommend-area:remove()
 pts.org.tw##^.relative-news-list
 pts.org.tw##.relative-news-list:remove()
-pts.org.tw##^body > .container > .row > .col-lg-1
-pts.org.tw##body > .container > .row > .col-lg-1:remove()
-pts.org.tw##^body > .container > .row > .col-lg-6 > :not(.post-article)
-pts.org.tw##body > .container > .row > .col-lg-6 > :not(.post-article):remove()
+pts.org.tw##^body > .container:has(.fb-comments)
+pts.org.tw##body > .container:has(.fb-comments):remove()
+pts.org.tw##^body > .container > .row > .col-lg-2
+pts.org.tw##body > .container > .row > .col-lg-2:remove()
+pts.org.tw##^body > .container > .row > .col-lg-8 > :not(.post-article)
+pts.org.tw##body > .container > .row > .col-lg-8 > :not(.post-article):remove()
 pts.org.tw##^body > .article-main-info > .container > .row > .col-lg-8 > .tag-list
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .tag-list:remove()
 pts.org.tw##^.article-info
@@ -491,9 +497,9 @@ pts.org.tw##.post-article:style(padding-bottom: 4rem !important)
 pts.org.tw##.article-title:style(font-size: 1.5rem !important)
 pts.org.tw##.article-title:style(line-height: 2.2rem !important)
 pts.org.tw##.article-title:style(text-align: center !important)
-pts.org.tw##.container > .row > .col-lg-6:style(flex: 0 0 75% !important)
-pts.org.tw##.container > .row > .col-lg-6:style(max-width: 100% !important)
-pts.org.tw##.container > .row > .col-lg-6:style(min-width: 396px !important)
+pts.org.tw##.container > .row > .col-lg-8:style(flex: 0 0 75% !important)
+pts.org.tw##.container > .row > .col-lg-8:style(max-width: 100% !important)
+pts.org.tw##.container > .row > .col-lg-8:style(min-width: 396px !important)
 pts.org.tw##.article-main-info:style(margin-bottom: 0 !important)
 pts.org.tw##.article-main-info:style(padding:2.5rem 0 2rem 0 !important)
 
