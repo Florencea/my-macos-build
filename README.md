@@ -103,6 +103,26 @@ sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ```
 
+### Rust language Installation
+
+```bash
+curl https://sh.rustup.rs | sh
+```
+
+```bash
+set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+```
+
+```bash
+mkdir -p ~/.config/fish/completions
+```
+
+- Open a new shell
+
+```bash
+rustup completions fish > ~/.config/fish/completions/rustup.fish
+```
+
 ## macOS GPG Steps
 
 - `gnupg` and `pinentry-mac` are required
