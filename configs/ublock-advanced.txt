@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1625723281673,
-  "version": "1.36.0",
+  "timeStamp": 1625795442037,
+  "version": "1.36.2",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
@@ -20,7 +20,6 @@
     "ublock-abuse",
     "ublock-unbreak",
     "adguard-generic",
-    "adguard-mobile",
     "easylist",
     "adguard-spyware",
     "adguard-spyware-url",
