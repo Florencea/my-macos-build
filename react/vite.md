@@ -12,6 +12,15 @@ yarn create @vitejs/app vite-project --template react-ts
 cd vite-project && yarn
 ```
 
+- `package.json`
+
+```json
+{
+  "license": "ISC",
+  "private": true
+}
+```
+
 - `vite.config.ts`
 
 ```ts
@@ -117,4 +126,105 @@ module.exports = {
 
 ```tsx
 import "./_tailwind.css";
+```
+
+## Jest
+
+```bash
+yarn add @babel/core babel-eslint babel-jest babel-preset-react-app @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event jest jest-circus jest-scss-transform jest-watch-typeahead identity-obj-proxy svg-jest --dev
+```
+
+```bash
+touch .babelrc.json jest.config.js jest.css.mock.js jest.setup.js
+```
+
+- `.babelrc.json`
+
+```json
+{
+  "env": {
+    "test": {
+      "presets": ["react-app"]
+    }
+  }
+}
+```
+
+- `jest.config.js`
+
+```js
+module.exports = {
+  roots: ["<rootDir>/src"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  collectCoverageFrom: [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/**/main.tsx",
+  ],
+  testMatch: [
+    "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+    "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}",
+  ],
+  testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+    "^.+\\.scss$": "jest-scss-transform",
+    "^.+\\.css$": "<rootDir>/jest.css.mock.js",
+    "\\.svg$": "svg-jest",
+  },
+  transformIgnorePatterns: [
+    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+    "^.+\\.module\\.(css|sass|scss)$",
+  ],
+  moduleNameMapper: {
+    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+  },
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
+  ],
+  resetMocks: true,
+};
+```
+
+- `jest.css.mock.js`
+
+```js
+module.exports = {
+  process() {
+    return "module.exports = {};";
+  },
+  getCacheKey() {
+    return "cssTransform";
+  },
+};
+```
+
+- `jest.setup.js`
+
+```js
+import "@testing-library/jest-dom";
+```
+
+- `package.json`
+
+```json
+{
+  "scripts": {
+    "test": "yarn run jest --passWithNoTests --silent --coverage --verbose --watchAll=false"
+  }
+}
+```
+
+- `src/App.test.tsx`
+
+```tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import React from "react";
+import App from "./App";
+
+it("should properly rendered when routing to /", async () => {
+  render(<App />);
+  expect(screen.getAllByText(/Vite/)[0]).toBeInTheDocument();
+});
 ```
