@@ -59,7 +59,7 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
-brew install firefox --language=zh-TW
+brew install firefox-nightly --language=zh-TW
 brew install google-chrome
 brew install iina
 brew install keka
@@ -67,6 +67,17 @@ brew install kekaexternalhelper
 brew install c0re100-qbittorrent
 brew install scroll-reverser
 brew install visual-studio-code
+
+# print_step "brew install custom apps (for proper development)"
+# # mongodb
+# brew tap mongodb/brew
+# brew install mongodb-community@5.0
+# brew install mongodb-compass
+# # redis
+# brwe install redis
+# # mysql
+# brew install mysql@5.7
+# brew install mysqlworkbench
 
 print_step "brew install commend line tools"
 brew install annie
