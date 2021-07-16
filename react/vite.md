@@ -131,7 +131,7 @@ import "./_tailwind.css";
 ## Jest
 
 ```bash
-yarn add @babel/core babel-eslint babel-jest babel-preset-react-app @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event jest jest-circus jest-scss-transform jest-watch-typeahead identity-obj-proxy svg-jest --dev
+yarn add @babel/core babel-jest babel-preset-react-app @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event jest jest-circus jest-scss-transform jest-watch-typeahead identity-obj-proxy svg-jest --dev
 ```
 
 ```bash
