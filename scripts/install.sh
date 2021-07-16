@@ -58,6 +58,25 @@ mkdir -p ~/.config/fish
   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
 } >>~/.config/fish/config.fish
 
+# # for Apple Silicon
+# print_step "brew install fish (Apple Silicon)"
+# brew install fish
+# echo '/opt/homebrew/bin/fish' | sudo tee -a /etc/shells
+# chsh -s /opt/homebrew/bin/fish
+# mkdir -p ~/.config/fish
+# {
+#   printf "set -g -x PATH /opt/homebrew/bin \$PATH\n"
+#   printf "set -g fish_user_paths /opt/homebrew/sbin \$fish_user_paths\n"
+#   printf "set -g -x fish_greeting\n"
+#   printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
+#   printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
+#   printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
+#   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
+#   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
+#   printf "alias myself-cli=\"sh ~/GitHub/myself-cli/myself-cli.sh\"\n"
+#   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
+# } >>~/.config/fish/config.fish
+
 print_step "brew install cask apps"
 brew install firefox-nightly --language=zh-TW
 brew install google-chrome
@@ -69,6 +88,8 @@ brew install scroll-reverser
 brew install visual-studio-code
 
 # print_step "brew install custom apps (for proper development)"
+# # microsoft office
+# brew install microsoft-office
 # # mongodb
 # brew tap mongodb/brew
 # brew install mongodb-community@5.0
