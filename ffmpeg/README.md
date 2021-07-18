@@ -1,6 +1,6 @@
 # FFmpeg Note
 
-## Hardware Accelerated Encodeing in macOS
+## Hardware Accelerated Encoding in macOS
 
 - FFmpeg call `videotoolbox` API for hardware accelerated encodeing in macOS
 - Hardware accelerated encodeing is **mush faster** but **less customizable**
