@@ -574,10 +574,10 @@ techbang.com##^#carousel-images-3
 techbang.com###carousel-images-3:remove()
 techbang.com##^.large-content
 techbang.com##.large-content:remove()
-techbang.com##^div[class^='techbang_i_']
-techbang.com##div[class^='techbang_i_']:remove()
-techbang.com##^div[class^='pcadv_i_']
-techbang.com##div[class^='pcadv_i_']:remove()
+techbang.com##^div[class^='techbang_i']
+techbang.com##div[class^='techbang_i']:remove()
+techbang.com##^div[class^='pcadv_i']
+techbang.com##div[class^='pcadv_i']:remove()
 techbang.com##^.top-3-text
 techbang.com##.top-3-text:remove()
 techbang.com##^section.small-articles > ul:has(a[title='pchomead'])
