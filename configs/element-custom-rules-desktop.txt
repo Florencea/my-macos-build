@@ -584,6 +584,8 @@ techbang.com##^section.small-articles > ul:has(a[title='pchomead'])
 techbang.com##section.small-articles > ul:has(a[title='pchomead']):remove()
 techbang.com##^.newsletter-subscribe
 techbang.com##.newsletter-subscribe:remove()
+techbang.com##^.content-top
+techbang.com##.content-top:remove()
 techbang.com##^script:has-text(googletagmanager)
 techbang.com##^script:has-text(popin)
 techbang.com##^script:has-text(atrk)
