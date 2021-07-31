@@ -54,7 +54,6 @@ mkdir -p ~/.config/fish
   printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
-  printf "alias myself-cli=\"sh ~/GitHub/myself-cli/myself-cli.sh\"\n"
   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
 } >>~/.config/fish/config.fish
 
