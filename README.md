@@ -227,7 +227,7 @@ Pixel 4a
 - User Agent
 
 ```text
-Mozilla/5.0 (Android 11; Mobile; rv:89.0) Gecko/89.0 Firefox/89.0
+Mozilla/5.0 (Android 11; Mobile; rv:90.0) Gecko/90.0 Firefox/90.0
 ```
 
 - Screen Size
