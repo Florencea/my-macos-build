@@ -20,7 +20,7 @@
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ```
 
-### 停用視窗彈出動畫
+### 禁用視窗彈出動畫
 
 ```bash
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
@@ -33,15 +33,11 @@ ssh-keygen -t ed25519
 cat .ssh/id_ed25519.pub | pbcopy
 ```
 
-### 使用 Touch ID 取代密碼驗證 `sudo`
+### 使用 Touch ID 取代密碼驗證 sudo 指令
 
 ```bash
 sudo nano /etc/pam.d/sudo
-```
-
-- 在第 2 行加入
-
-```bash
+# 在第 2 行加入
 auth       sufficient     pam_tid.so
 ```
 
@@ -51,11 +47,7 @@ auth       sufficient     pam_tid.so
 curl https://sh.rustup.rs | sh
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
-```
-
-- 打開新的終端機視窗
-
-```bash
+# 打開新的終端機視窗
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 ```
 
@@ -75,32 +67,32 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 
 ### 3. 系統偏好設定
 
-- `安全性與隱私權 -> 隱私權 -> 完全取用磁碟` 加入 `終端機` 並打勾
+- 「安全性與隱私權 -> 隱私權 -> 完全取用磁碟」 加入「終端機」並打勾
 
-### 4. `Finder` 與 Dock 設定
+### 4. Finder 與 Dock 設定
 
 ### 5. 自備份回復資料
 
-- 設定 `音樂`
-- 將音樂檔案拷貝至 `音樂`
+- 設定 「音樂」
+- 將音樂檔案拷貝至 「音樂」
 - 將其餘檔案拷貝至家目錄
 
 ### 6. 自 App Store 安裝 App
 
-### 7. 執行 `install.sh`
+### 7. 執行 install.sh
 
 ### 8. 各 App 設定
 
 ### 9. 開發環境設定
 
-- 設定 `Google Chrome`
+- 設定 「Google Chrome」
 - 設定 SSH Key
 - 設定 GPG Key
-- 設定 `Visual Studio Code`
+- 設定 「Visual Studio Code」
 
 ## macOS GPG 設定
 
-- 需安裝 `gnupg` 與 `pinentry-mac`
+- 需安裝 「gnupg」 與 「pinentry-mac」
 
 ### 1. 生成 GPG Key
 
@@ -124,7 +116,7 @@ git config --global commit.gpgsign true
 git config --global gpg.program gpg
 ```
 
-### 5. 設定 macOS `鑰匙圈存取` 使用 GPG Key
+### 5. 設定「鑰匙圈存取」使用 GPG Key
 
 ```bash
 printf "pinentry-program /usr/local/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
@@ -138,68 +130,32 @@ killall gpg-agent
 
 - <https://github.com/muckSponge/MaterialFox>
 
-### 禁用 UI 動畫
+### about:config
 
-```text
+```bash
+# 禁用 UI 動畫
 ui.prefersReducedMotion 1
 xul.panel-animations.enabled false
-```
-
-### 強制使用 TRR
-
-```text
+# 強制使用 TRR
 network.trr.mode 3
-```
-
-### 禁用 Pocket
-
-```text
+# 禁用 Pocket
 extensions.pocket.enabled false
-```
-
-### 禁用閱讀器模式
-
-```text
+# 禁用閱讀器模式
 reader.parse-on-load.enabled false
-```
-
-### 禁用網路狀態偵測
-
-```text
+# 禁用網路狀態偵測
 captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
 ```
 
 ### 開發者工具行動裝置設定
 
-- 裝置名稱
-
-```text
+```bash
+# 裝置名稱
 Pixel 4a
-```
-
-- 使用者代理
-
-```text
+# 使用者代理
 Mozilla/5.0 (Android 11; Mobile; rv:90.0) Gecko/90.0 Firefox/90.0
-```
-
-- 螢幕尺寸
-
-  - 寬
-
-  ```text
-  396
-  ```
-
-  - 高
-
-  ```text
-  858
-  ```
-
-- DPR
-
-```text
+# 螢幕尺寸
+396 x 858
+# DPR
 2.727272727272727
 ```
