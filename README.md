@@ -1,244 +1,198 @@
 # My macOS Build
 
-## Quick Link
+## 快速連結
 
-- [React Note](react/README.md)
-- [Rust Note](rust/README.md)
-- [FFmpeg Note](ffmpeg/README.md)
+- [React 開發筆記](react/README.md)
+- [Rust 開發筆記](rust/README.md)
+- [FFmpeg 使用筆記](ffmpeg/README.md)
 
-## Download Link
+## 右鍵下載
 
-- <a href="https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt" download>uBlock Origin Configuration</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt" download>Tampermonkey Configuration</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json" download>NewTongWenTang Configuration</a>
+- <a href="https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt" download>uBlock Origin 設定檔</a>
+- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt" download>Tampermonkey 設定檔</a>
+- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json" download>新同文堂 設定檔</a>
 
-## macOS Reset Steps
+## macOS 指令
 
-- For Intel + T2 machines
-
-### 1. Backup Data and Sign Out all Services
-
-- [What to do before you sell, give away, or trade in your Mac](https://support.apple.com/en-us/HT201065)
-
-### 2. Erase Secure Keys in T2 Chip
-
-- [Start up from macOS Recovery](https://support.apple.com/en-us/HT201314#startup) <kbd>command</kbd> + <kbd>R</kbd>
-- Open `Terminal` app in menu bar
-
-```bash
-xartutil --erase-all
-```
-
-- [Reset NVRAM or PRAM on your Mac](https://support.apple.com/en-us/HT204063) <kbd>command</kbd> + <kbd>option</kbd> + <kbd>P</kbd> + <kbd>R</kbd>
-- [Start up from Network Recovery](https://support.apple.com/en-us/HT201314#internet) <kbd>command</kbd> + <kbd>option</kbd> + <kbd>R</kbd>
-
-### 3. Reinstall macOS
-
-- [Use Disk Utility to erase your Mac](https://support.apple.com/en-us/HT208496#erasedisk)
-- [Reinstall macOS](https://support.apple.com/en-us/HT204904#reinstall)
-
-### 4. Setup `System Preferences` app
-
-- In `Security & Privacy -> Privacy -> Full Disk Access` add `Terminal` app and check it
-
-### 5. Setup `Finder` app and Dock
-
-### 6. Data Recovery from Backup
-
-- Setup `Music` app
-- Copy media to `Music` app
-- Copy others to Home Directory
-
-### 7. Install Apps from App Store
-
-### 8. Execute `install.sh`
-
-### 9. Setup Apps
-
-### 10. Setup Development Environment
-
-- Setup `Google Chrome` app
-- [Setup SSH Key](#generate-ssh-key)
-- [Setup GPG Key](#macos-gpg-steps)
-- Setup `Visual Studio Code` app
-
-## macOS commands
-
-### Generate SSH Key
-
-```bash
-ssh-keygen -t ed25519
-```
-
-```bash
-cat .ssh/id_ed25519.pub | pbcopy
-```
-
-### Use Touch ID for `sudo` command
-
-```bash
-sudo nano /etc/pam.d/sudo
-```
-
-- Insert at line 2
-
-```bash
-auth       sufficient     pam_tid.so
-```
-
-### Disable Window Pulse Animation
-
-```bash
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
-```
-
-### Disable Adobe Create Cloud Launch at Boot Up
-
-```bash
-sudo rm -f /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
-```
-
-### Reset Launchpad App Icons
+### 重新排列 LaunchPad
 
 ```bash
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ```
 
-### Rust language Installation
+### 停用視窗彈出動畫
+
+```bash
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+```
+
+### 生成 SSH Key
+
+```bash
+ssh-keygen -t ed25519
+cat .ssh/id_ed25519.pub | pbcopy
+```
+
+### 使用 Touch ID 取代密碼驗證 `sudo`
+
+```bash
+sudo nano /etc/pam.d/sudo
+```
+
+- 在第 2 行加入
+
+```bash
+auth       sufficient     pam_tid.so
+```
+
+### 安裝 Rust 工具鏈
 
 ```bash
 curl https://sh.rustup.rs | sh
-```
-
-```bash
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
-```
-
-```bash
 mkdir -p ~/.config/fish/completions
 ```
 
-- Open a new shell
+- 打開新的終端機視窗
 
 ```bash
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 ```
 
-## macOS GPG Steps
+## macOS 重設步驟
 
-- `gnupg` and `pinentry-mac` are required
+- 適用於 Apple Silicon 機型
+- 適用 macOS Big Sur
 
-### 1. Generate GPG Key
+### 1. 備份所有資料，登出所有服務
+
+- [將 Mac 賣掉、送人或換購以前的注意事項](https://support.apple.com/zh-tw/HT201065)
+
+### 2. 重新安裝 macOS
+
+- [如何清除配備 Apple 晶片的 Mac](https://support.apple.com/zh-tw/HT212030)
+- [如何重新安裝 macOS](https://support.apple.com/zh-tw/HT204904)
+
+### 3. 系統偏好設定
+
+- `安全性與隱私權 -> 隱私權 -> 完全取用磁碟` 加入 `終端機` 並打勾
+
+### 4. `Finder` 與 Dock 設定
+
+### 5. 自備份回復資料
+
+- 設定 `音樂`
+- 將音樂檔案拷貝至 `音樂`
+- 將其餘檔案拷貝至家目錄
+
+### 6. 自 App Store 安裝 App
+
+### 7. 執行 `install.sh`
+
+### 8. 各 App 設定
+
+### 9. 開發環境設定
+
+- 設定 `Google Chrome`
+- 設定 SSH Key
+- 設定 GPG Key
+- 設定 `Visual Studio Code`
+
+## macOS GPG 設定
+
+- 需安裝 `gnupg` 與 `pinentry-mac`
+
+### 1. 生成 GPG Key
 
 ```bash
 gpg --full-generate-key
 ```
 
-### 2. Export GPG Key
+### 2. 匯出 GPG Key(指令已將 Key 複製至剪貼板)
 
 ```bash
 gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
 ```
 
-### 3. Paste to GitHub, GitLab or Bitbucket
+### 3. 將匯出的 GPG Key 輸入到 GitHub, GitLab 或 Bitbucket
 
-- GPG Key is already in clipboard
-
-### 4. Setup Git Configuration
+### 4. 設定 Git 使用 GPG
 
 ```bash
 git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
-```
-
-```bash
 git config --global commit.gpgsign true
-```
-
-```bash
 git config --global gpg.program gpg
 ```
 
-### 5. Save GPG Passphrase in macOS `Keychain Access` app
+### 5. 設定 macOS `鑰匙圈存取` 使用 GPG Key
 
 ```bash
 printf "pinentry-program /usr/local/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
-```
-
-```bash
 printf "no-tty\n" >> ~/.gnupg/gpg.conf
-```
-
-```bash
 killall gpg-agent
 ```
 
-## macOS Firefox Config
+## Firefox 設定
 
-### Chrome UI for Firefox
+### 在 Firefox 使用 Chrome UI
 
 - <https://github.com/muckSponge/MaterialFox>
 
-### Disable UI animations
+### 禁用 UI 動畫
 
 ```text
 ui.prefersReducedMotion 1
-```
-
-```text
 xul.panel-animations.enabled false
 ```
 
-### Force Cloudflare TRR
+### 強制使用 TRR
 
 ```text
 network.trr.mode 3
 ```
 
-### Disable Pockets Extension
+### 禁用 Pocket
 
 ```text
 extensions.pocket.enabled false
 ```
 
-### Disable Reader View
+### 禁用閱讀器模式
 
 ```text
 reader.parse-on-load.enabled false
 ```
 
-### Disable Captive Detection
+### 禁用網路狀態偵測
 
 ```text
 captivedetect.canonicalURL empty
-```
-
-```text
 network.captive-portal-service.enabled false
 ```
 
-### Devtool Device Specification
+### 開發者工具行動裝置設定
 
-- Device Name
+- 裝置名稱
 
 ```text
 Pixel 4a
 ```
 
-- User Agent
+- 使用者代理
 
 ```text
 Mozilla/5.0 (Android 11; Mobile; rv:90.0) Gecko/90.0 Firefox/90.0
 ```
 
-- Screen Size
+- 螢幕尺寸
 
-  - Width
+  - 寬
 
   ```text
   396
   ```
 
-  - Height
+  - 高
 
   ```text
   858
