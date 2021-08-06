@@ -173,7 +173,7 @@ ffmpeg
   -ss <開始時間(秒 或 時:分:秒)>
   -t <GIF時間長度(秒)>
   -i <輸入影片>
-  -filter_complex "[0:v] fps=<gif frame per second>,scale=w=<gif width>:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"
+  -filter_complex "[0:v] fps=<GIF每秒幾幀>,scale=w=<GIF寬度>:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"
   <輸出GIF>
 ```
 
