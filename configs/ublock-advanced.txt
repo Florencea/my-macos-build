@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1628234812277,
+  "timeStamp": 1628235582813,
   "version": "1.37.2",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -23,6 +23,8 @@
     "adguard-generic",
     "easylist",
     "adguard-spyware",
+    "adguard-spyware-url",
+    "block-lan",
     "easyprivacy",
     "urlhaus-1",
     "spam404-0",
