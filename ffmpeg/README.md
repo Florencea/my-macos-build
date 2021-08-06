@@ -1,39 +1,39 @@
-# FFmpeg Note
+# FFmpeg 使用筆記
 
-## Hardware Accelerated Encoding in macOS
+## 有關硬體加速編碼
 
-- FFmpeg call `videotoolbox` API for hardware accelerated encodeing in macOS
-- Hardware accelerated encodeing is **mush faster** but **less customizable**
-  - Video looks similar at `low` bitrate for both hardware and software encoding
-  - However video use hardware accelerated encodeing looks terrible at `mid` or `high` bitrate
-- Hardware accelerated encodeing **works on Intel Integrated GPU only**
-- Software encoding could set `crf` for video quality, smaller is better, but video size get larger
-- Tests runs on MacBook Pro (15-inch, 2018) Intel Core i7-8850H, FFmpeg 4.3
-  - Input video H.264 AVC 1280 x 720
+- FFmpeg 使用 macOS 的 videotoolbox API 執行硬體加速編碼
+- 硬體加速編碼**相當高效**但**自訂性差**
+  - 在碼率低的狀況，硬編跟軟編品質差不多
+  - 中高碼率的狀況，軟編品質遠勝硬編
+- 硬編只會使用**Intel 內顯**
+- 軟編可以使用 crf 參數控制品質，越接近 0 品質越好，但檔案越大
+- 以下測試使用 MacBook Pro (15-inch, 2018) Intel Core i7-8850H, FFmpeg 4.3
+  - 測試輸入影片為 H.264 AVC 1280 x 720
 
-| Output Format | Encoder(Hardware) | Speed(Hardware) | Encoder(Software) | Speed(Software) |
-| ------------- | ----------------- | --------------- | ----------------- | --------------- |
-| H.264         | `videotoolbox`    | 19x             | `libx264`         | 5x              |
-| HEVC          | `videotoolbox`    | 12x             | `libx265`         | 0.1x            |
-| AV1           | 無                | -               | `libaom-av1`      | 0.01x           |
+| 輸出格式 | 編碼器(硬編)   | 速度(硬編) | 編碼器(軟編) | 速度(軟編) |
+| -------- | -------------- | ---------- | ------------ | ---------- |
+| H.264    | `videotoolbox` | 19x        | `libx264`    | 5x         |
+| HEVC     | `videotoolbox` | 12x        | `libx265`    | 0.1x       |
+| AV1      | 無             | -          | `libaom-av1` | 0.01x      |
 
-## Software Encoding Commands
+## 軟編指令
 
-- H.264 `crf` configuration
+- H.264 crf 參數設定
 
-| Acceptable | Normal | Visual Loseless |
-| ---------- | ------ | --------------- |
-| 30         | 23     | 18              |
+| 人眼可接受最低品質 | 普通(網路串流) | 視覺無損 |
+| ------------------ | -------------- | -------- |
+| 30                 | 23             | 18       |
 
 ```bash
 ffmpeg
   -hide_banner
-  -i <input file>
+  -i <輸入檔案>
   -vcodec libx264
   -crf <crf>
   -preset veryslow
-  -vf "subtitles=filename='<subtitle file in same directory>'"
-  <output file>
+  -vf "subtitles=filename='<同目錄下的字幕檔>'"
+  <輸出檔案>
 ```
 
 ```bash
@@ -47,22 +47,22 @@ ffmpeg
   'output.mp4'
 ```
 
-- HEVC `crf` configuration
+- HEVC crf 參數設定
 
-| Acceptable | Normal | Visual Loseless |
-| ---------- | ------ | --------------- |
-| 31         | 24     | 20              |
+| 人眼可接受最低品質 | 普通(網路串流) | 視覺無損 |
+| ------------------ | -------------- | -------- |
+| 31                 | 24             | 20       |
 
 ```bash
 ffmpeg
   -hide_banner
-  -i <input file>
+  -i <輸入檔案>
   -vcodec libx265
   -crf <crf>
   -preset veryslow
-  -vf "subtitles=filename='<subtitle file in same directory>'"
+  -vf "subtitles=filename='<同目錄下的字幕檔>'"
   -tag:v hvc1
-  <output file>
+  <輸出檔案>
 ```
 
 ```bash
@@ -77,22 +77,22 @@ ffmpeg
   'output.mp4'
 ```
 
-- AV1 `crf` configuration
+- AV1 crf 參數設定
 
-| Acceptable | Normal | Visual Loseless |
-| ---------- | ------ | --------------- |
-| 41         | 30     | 20              |
+| 人眼可接受最低品質 | 普通(網路串流) | 視覺無損 |
+| ------------------ | -------------- | -------- |
+| 41                 | 30             | 20       |
 
 ```bash
 ffmpeg
   -hide_banner
-  -i <input file>
+  -i <輸入檔案>
   -vcodec libaom-av1
   -b:v 0
-  -crf <crf數值>
+  -crf <crf>
   -preset veryslow
-  -vf "subtitles=filename='<subtitle file in same directory>'"
-  <output file>
+  -vf "subtitles=filename='<同目錄下的字幕檔>'"
+  <輸出檔案>
 ```
 
 ```bash
@@ -107,20 +107,20 @@ ffmpeg
   'output.mp4'
 ```
 
-## Hardware Encoding Commands
+## 硬編指令
 
 - H.264
 
 ```bash
 ffmpeg
   -hide_banner
-  -i <input file>
+  -i <輸入檔案>
   -c:v h264_videotoolbox
   -profile:v <profile: main | high | baseline>
-  -b:v <video bitrate, default: 400k>
-  -b:a <audio bitrate, default: 128k>
-  -vf "subtitles=filename='<subtitle file in same directory>'"
-  <output file>
+  -b:v <video bitrate, 預設值: 400k>
+  -b:a <audio bitrate, 預設值: 128k>
+  -vf "subtitles=filename='<同目錄下的字幕檔>'"
+  <輸出檔案>
 ```
 
 ```bash
@@ -140,14 +140,14 @@ ffmpeg
 ```bash
 ffmpeg
   -hide_banner
-  -i <input file>
+  -i <輸入檔案>
   -c:v hevc_videotoolbox
   -profile:v <profile: main | high>
-  -b:v <video bitrate, default: 400k>
-  -b:a <audio bitrate, default: 128k>
-  -vf "subtitles=filename='<subtitle file in same directory>'"
+  -b:v <video bitrate, 預設值: 400k>
+  -b:a <audio bitrate, 預設值: 128k>
+  -vf "subtitles=filename='<同目錄下的字幕檔>'"
   -tag:v hvc1
-  <output file>
+  <輸出檔案>
 ```
 
 ```bash
@@ -163,18 +163,18 @@ ffmpeg
   'output.mp4'
 ```
 
-## Make GIF from Video
+## 製作 GIF
 
 - [make-gif.sh](../scripts/make-gif.sh)
 
 ```bash
 ffmpeg
   -hide_banner
-  -ss <start at(second or HH:mm:ss)>
-  -t <duration(second)>
-  -i <input video>
+  -ss <開始時間(秒 或 時:分:秒)>
+  -t <GIF時間長度(秒)>
+  -i <輸入影片>
   -filter_complex "[0:v] fps=<gif frame per second>,scale=w=<gif width>:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1"
-  <output gif>
+  <輸出GIF>
 ```
 
 ```bash

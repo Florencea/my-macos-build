@@ -1,6 +1,6 @@
-# Umi Note
+# UmiJS 開發筆記
 
-- <https://umijs.org/>
+- <https://umijs.org/zh-CN/docs>
 
 ## Umi + Ant Design + Tailwind
 
@@ -307,4 +307,4 @@ printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
 rm .editorconfig .prettierrc
 ```
 
-- Use [ESLint Config Alloy TypeScript React](README.md#eslint-config-alloy-typescript-react)
+- 使用 [ESLint Config Alloy TypeScript React](README.md#eslint-config-alloy-typescript-react)

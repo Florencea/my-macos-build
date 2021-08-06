@@ -1,6 +1,6 @@
-# Vite Note
+# Vite 開發筆記
 
-- <https://vitejs.dev/>
+- <https://cn.vitejs.dev/>
 
 ## Vite
 

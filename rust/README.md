@@ -1,4 +1,4 @@
-# Rust Note
+# Rust 開發筆記
 
 ## VSCode Config
 

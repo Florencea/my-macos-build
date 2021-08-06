@@ -1,13 +1,13 @@
-# React Note
+# React 開發筆記
 
-## Quick Link
+## 快速連結
 
-- [Vite Note](vite.md)
-- [Umi Note](umi.md)
+- [Vite 開發筆記](vite.md)
+- [UmiJS 開發筆記](umi.md)
 
 ## ESLint Config Alloy TypeScript React
 
-- <https://github.com/AlloyTeam/eslint-config-alloy>
+- <https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md>
 
 ```bash
 yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
@@ -23,7 +23,7 @@ mkdir .vscode && touch .eslintrc.js .prettierrc.js .vscode/settings.json
 module.exports = {
   extends: ["alloy", "alloy/react", "alloy/typescript"],
   env: {
-    // Your environments (which contains several predefined global variables)
+    // 你的環境變量（包含多個預定義的全局變量）
     //
     browser: true,
     // node: true,
@@ -32,13 +32,13 @@ module.exports = {
     // jquery: true
   },
   globals: {
-    // Your global variables (setting to false means it's not allowed to be reassigned)
+    // 你的全局變量（設置為 false 表示它不允許被重新賦值）
     //
     // myGlobal: false
     React: true,
   },
   rules: {
-    // Customize your rules
+    // 自定義你的規則
   },
 };
 ```
@@ -46,46 +46,45 @@ module.exports = {
 - `.prettierrc.js`
 
 ```js
-// .prettierrc.js
 module.exports = {
-  // max 120 characters per line
+  // 一行最多 120 字符
   printWidth: 120,
-  // use 2 spaces for indentation
+  // 使用 2 個空格縮進
   tabWidth: 2,
-  // use spaces instead of indentations
+  // 不使用縮進符，而使用空格
   useTabs: false,
-  // semicolon at the end of the line
+  // 行尾需要有分號
   semi: true,
-  // use single quotes
+  // 使用單引號
   singleQuote: true,
-  // object's key is quoted only when necessary
+  // 對象的 key 僅在必要時用引號
   quoteProps: "as-needed",
-  // use double quotes instead of single quotes in jsx
+  // jsx 不使用單引號，而使用雙引號
   jsxSingleQuote: false,
-  // no comma at the end
+  // 末尾需要有逗號
   trailingComma: "all",
-  // spaces are required at the beginning and end of the braces
+  // 大括號內的首尾需要空格
   bracketSpacing: true,
-  // end tag of jsx need to wrap
+  // jsx 標簽的反尖括號需要換行
   jsxBracketSameLine: false,
-  // brackets are required for arrow function parameter, even when there is only one parameter
+  // 箭頭函數，只有一個參數的時候，也需要括號
   arrowParens: "always",
-  // format the entire contents of the file
+  // 每個文件格式化的范圍是文件的全部內容
   rangeStart: 0,
   rangeEnd: Infinity,
-  // no need to write the beginning @prettier of the file
+  // 不需要寫文件開頭的 @prettier
   requirePragma: false,
-  // No need to automatically insert @prettier at the beginning of the file
+  // 不需要自動在文件開頭插入 @prettier
   insertPragma: false,
-  // use default break criteria
+  // 使用默認的折行標准
   proseWrap: "preserve",
-  // decide whether to break the html according to the display style
+  // 根據顯示樣式決定 html 要不要折行
   htmlWhitespaceSensitivity: "css",
-  // vue files script and style tags indentation
+  // vue 文件中的 script 和 style 內不用縮進
   vueIndentScriptAndStyle: false,
-  // lf for newline
+  // 換行符使用 lf
   endOfLine: "lf",
-  // formats quoted code embedded
+  // 格式化嵌入的內容
   embeddedLanguageFormatting: "auto",
 };
 ```
