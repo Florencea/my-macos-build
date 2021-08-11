@@ -92,6 +92,7 @@ rustup completions fish > ~/.config/fish/completions/rustup.fish
 
 ## macOS GPG 設定
 
+- 適用 Apple Silicon 機型
 - 需安裝 「gnupg」 與 「pinentry-mac」
 
 ### 1. 生成 GPG Key
@@ -119,7 +120,7 @@ git config --global gpg.program gpg
 ### 5. 設定「鑰匙圈存取」使用 GPG Key
 
 ```bash
-printf "pinentry-program /usr/local/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
+printf "pinentry-program /opt/homebrew/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
 printf "no-tty\n" >> ~/.gnupg/gpg.conf
 killall gpg-agent
 ```
