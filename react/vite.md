@@ -51,6 +51,27 @@ export default defineConfig({
 });
 ```
 
+## mkcert + HTTP2
+
+```bash
+yarn add vite-plugin-mkcert --dev
+```
+
+- `vite.config.ts`
+
+```ts
+import { defineConfig } from "vite";
+import mkcert from "vite-plugin-mkcert";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  server: {
+    https: true,
+  },
+  plugins: [mkcert()],
+});
+```
+
 ## Ant Design
 
 ```bash
