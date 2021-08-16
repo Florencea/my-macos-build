@@ -186,6 +186,10 @@ fandom.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto 
 fandom.com###WikiaMainContent:style(width: 100% !important)
 fandom.com###WikiaMainContent:style(padding: 1em !important)
 
+! feedly.com
+! style
+feedly.com##.home:style(background-color: #121212 !important)
+
 ! github.com
 ! style
 github.com##.text-mono:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
