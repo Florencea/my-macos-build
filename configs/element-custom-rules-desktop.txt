@@ -508,6 +508,7 @@ pts.org.tw##.article-main-info:style(margin-bottom: 0 !important)
 pts.org.tw##.article-main-info:style(padding:2.5rem 0 2rem 0 !important)
 ! dark
 pts.org.tw##body:style(filter: invert(1))
+pts.org.tw##img:style(filter: invert(1))
 pts.org.tw##body:style(background-color: #1c1b21 !important)
 
 ! sogi.com.tw
