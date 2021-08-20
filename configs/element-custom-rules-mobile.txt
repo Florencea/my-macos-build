@@ -233,6 +233,8 @@ wnacg.org##^.openBtn
 wnacg.org##.openBtn:remove()
 wnacg.org##^.Sub_H2 .icon
 wnacg.org##.Sub_H2 .icon:remove()
+wnacg.org##^.nav li:has(a[href='https://forum.wnacg.link'])
+wnacg.org##.nav li:has(a[href='https://forum.wnacg.link']):remove()
 wnacg.org##^.nav li:has(a[href='https://forum.wnacg.com'])
 wnacg.org##.nav li:has(a[href='https://forum.wnacg.com']):remove()
 wnacg.org##^.nav li:has(a[href='/'])
