@@ -73,6 +73,7 @@ mkdir -p ~/.config/fish
   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
+  printf "alias el=\"exa -lgh --time-style long-iso\"\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
@@ -99,6 +100,7 @@ brew install visual-studio-code
 
 print_step "brew install commend line tools"
 brew install annie
+brew install exa
 brew install ffmpeg
 brew install gcc
 brew install git
