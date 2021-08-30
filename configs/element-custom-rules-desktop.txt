@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-08-16
+! Last updated: 2021-08-30
 
 ! universal rules
 ! outline
@@ -12,10 +12,10 @@
 *##html:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##input:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
-*##code:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-*##kbd:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-*##pre:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-*##samp:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##code:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##kbd:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##pre:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##samp:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 ! render
 *##body:style(-webkit-font-smoothing: auto !important)
 *##body:style(-moz-osx-font-smoothing: auto !important)
@@ -192,16 +192,16 @@ feedly.com##.home:style(background-color: #121212 !important)
 
 ! github.com
 ! style
-github.com##.text-mono:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.blob-code-inner:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.blob-code:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.blob-num:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.commit-tease-sha:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##code:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##pre:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##tt:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##kbd:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##samp:style(font-family: Jetbrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.text-mono:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.blob-code-inner:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.blob-code:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.blob-num:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.commit-tease-sha:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##code:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##pre:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##tt:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##kbd:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##samp:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 github.com##.markdown-body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
