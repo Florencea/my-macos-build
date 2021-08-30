@@ -37,7 +37,7 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install cask fonts essential"
-brew install font-jetbrains-mono
+brew install font-jetbrains-mono-nerd-font
 brew install font-inter
 
 # # for Intel Macs
