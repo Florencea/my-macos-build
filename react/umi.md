@@ -382,6 +382,9 @@ export const routes: Route[] = [
   ...publicRoutes,
   { exact: false, path: "/", name: "", redirect: DEFAULT_PATH_PUBLIC },
 ];
+
+export const getPageTitle = (currentPath: string) =>
+  routes.find((r) => r.path === currentPath)?.name ?? "";
 ```
 
 - `src/configs/state.ts`
