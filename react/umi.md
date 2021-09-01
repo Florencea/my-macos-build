@@ -31,11 +31,11 @@ printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
 ```
 
 ```bash
-mkdir -p .vscode public src/models src/configs src/utils src/pages/private/Welcome src/pages/private/Logout src/pages/public/Login
+mkdir -p .vscode public src/models src/components src/configs src/utils src/pages/private/Welcome src/pages/private/Logout src/pages/public/Login
 ```
 
 ```bash
-touch .eslintrc.js .prettierrc.js .vscode/settings.json public/robots.txt src/access.ts src/app.tsx src/global.less src/interface.ts mock/api.ts src/configs/api.ts src/configs/routes.ts src/configs/state.ts src/configs/theme.ts src/models/auth.ts src/pages/private/Welcome/Welcome.tsx src/pages/private/Logout/Logout.tsx src/pages/public/Login/Login.tsx src/utils/api.ts src/utils/storage.ts
+touch .eslintrc.js .prettierrc.js .vscode/settings.json public/robots.txt src/access.ts src/app.tsx src/global.less src/interface.ts mock/api.ts src/components/PageFrame.tsx src/configs/api.ts src/configs/routes.ts src/configs/state.ts src/configs/theme.ts src/models/auth.ts src/pages/private/Welcome/Welcome.tsx src/pages/private/Logout/Logout.tsx src/pages/public/Login/Login.tsx src/utils/api.ts src/utils/storage.ts
 ```
 
 ```bash
@@ -278,6 +278,43 @@ User-agent: *
 Disallow:
 ```
 
+- `src/components/PageFrame.tsx`
+
+```tsx
+import { getPageTitle } from "@/configs/routes";
+import { Col, Empty, PageHeader, PageHeaderProps, Row } from "antd";
+import { useMemo } from "react";
+import { history } from "umi";
+
+interface Props {
+  pageHeaderProps?: Partial<PageHeaderProps>;
+  children?: React.ReactNode;
+}
+
+export default ({ pageHeaderProps, children }: Props) => {
+  const TITLE = useMemo(
+    () => getPageTitle(history.location.pathname),
+    [history.location.pathname]
+  );
+  return (
+    <Row className="h-screen">
+      <Col className="p-3" span={24}>
+        <PageHeader ghost={false} title={TITLE} {...pageHeaderProps} />
+        <div className="mt-3">
+          {children ?? (
+            <Empty
+              className="pt-20"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="頁面建造中"
+            />
+          )}
+        </div>
+      </Col>
+    </Row>
+  );
+};
+```
+
 - `src/configs/api.ts`
 
 ```ts
@@ -463,12 +500,10 @@ export default () => {
 - `src/pages/private/Welcome/Welcome.tsx`
 
 ```tsx
+import PageFrame from "@/components/PageFrame";
+
 export default () => {
-  return (
-    <div>
-      <span>Welcome</span>
-    </div>
-  );
+  return <PageFrame />;
 };
 ```
 
