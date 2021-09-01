@@ -116,7 +116,7 @@ module.exports = {
 
 - `.vscode/settings.json`
 
-```json
+```jsonc
 {
   // Typescript
   "typescript.tsdk": "node_modules/typescript/lib",
