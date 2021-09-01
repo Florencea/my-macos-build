@@ -35,7 +35,7 @@ mkdir -p .vscode public src/models src/configs src/utils src/pages/private/Welco
 ```
 
 ```bash
-touch .eslintrc.js .prettierrc.js .vscode/settings.json src/access.ts src/app.tsx src/global.less src/interface.ts mock/api.ts src/configs/api.ts src/configs/routes.ts src/configs/state.ts src/configs/theme.ts src/models/auth.ts src/pages/private/Welcome/Welcome.tsx src/pages/private/Logout/Logout.tsx src/pages/public/Login/Login.tsx src/utils/api.ts src/utils/storage.ts
+touch .eslintrc.js .prettierrc.js .vscode/settings.json public/robots.txt src/access.ts src/app.tsx src/global.less src/interface.ts mock/api.ts src/configs/api.ts src/configs/routes.ts src/configs/state.ts src/configs/theme.ts src/models/auth.ts src/pages/private/Welcome/Welcome.tsx src/pages/private/Logout/Logout.tsx src/pages/public/Login/Login.tsx src/utils/api.ts src/utils/storage.ts
 ```
 
 ```bash
@@ -268,6 +268,14 @@ export default {
   },
   "POST /api/logout": { success: true },
 };
+```
+
+- `public/robots.txt`
+
+```text
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
 ```
 
 - `src/configs/api.ts`
