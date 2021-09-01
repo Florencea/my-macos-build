@@ -541,6 +541,11 @@ import { prefix } from "@/configs/api";
 import { ApiOptionT, BasicResT } from "@/interface";
 import { request, RequestConfig } from "umi";
 
+const basicHeaders = {
+  Accept: "application/json",
+  "Content-Type": "application/json; charset=utf-8",
+};
+
 const API_OPTIONS = <dataT>({
   method,
   token,
@@ -551,14 +556,10 @@ const API_OPTIONS = <dataT>({
   prefix,
   headers: token
     ? {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=utf-8",
+        ...basicHeaders,
         Authorization: token,
       }
-    : {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=utf-8",
-      },
+    : basicHeaders,
   params,
   data: body,
 });
