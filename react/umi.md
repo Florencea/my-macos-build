@@ -820,3 +820,11 @@ export type StorageValueT = string | undefined;
 
 export type StateT<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 ```
+
+```bash
+yarn prettier
+```
+
+```bash
+yarn dev
+```
