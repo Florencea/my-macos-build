@@ -19,7 +19,7 @@ yarn add @ant-design/colors @ant-design/icons ahooks
 ```
 
 ```bash
-yarn add antd umi-plugin-tailwindcss eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
+yarn add antd tailwindcss@latest umi-plugin-tailwindcss eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
 ```
 
 ```bash
