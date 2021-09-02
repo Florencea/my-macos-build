@@ -23,7 +23,7 @@ yarn add antd tailwindcss@latest @tailwindcss/postcss7-compat umi-plugin-tailwin
 ```
 
 ```bash
-rm src/pages/index.tsx src/pages/index.less .editorconfig .prettierrc
+rm src/pages/index.tsx src/pages/index.less .editorconfig .prettierrc README.md
 ```
 
 ```bash
