@@ -93,6 +93,8 @@ module.exports = {
 
 ```jsonc
 {
+  // Typescript
+  "typescript.tsdk": "node_modules/typescript/lib",
   // TailWindCSS
   "css.validate": false,
   "editor.quickSuggestions": {
