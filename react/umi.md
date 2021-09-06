@@ -2,6 +2,10 @@
 
 - <https://umijs.org/zh-CN/docs>
 
+## 注意事項
+
+- 與 Tailwind 配合使用時，要注意 Antd 的 CSS 優先權較高
+
 ## Umi + Ant Design + Tailwind + ESLint & Prettier
 
 - 可適應一般使用 token 登入機制的後台開發狀況
