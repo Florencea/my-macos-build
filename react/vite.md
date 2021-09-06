@@ -124,7 +124,7 @@ npx tailwindcss init -p
 ```
 
 ```bash
-printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' >> src/_tailwind.css
+printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\nsvg{vertical-align: unset;}\n' >> src/_tailwind.css
 ```
 
 - `tailwind.config.js`
