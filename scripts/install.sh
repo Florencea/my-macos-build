@@ -18,7 +18,7 @@ print_step "setup SF Mono Fonts"
 print_step "download New York Fonts"
 (
   set -x
-  curl -o ~/Downloads/NY-font.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY-Font.dmg'
+  curl -o ~/Downloads/NY.dmg 'https://devimages-cdn.apple.com/design/resources/download/NY.dmg'
 )
 
 print_step "install homebrew"
