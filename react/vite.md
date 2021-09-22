@@ -51,6 +51,30 @@ export default defineConfig({
 });
 ```
 
+## Auto import React
+
+```bash
+yarn add vite-react-jsx --dev
+```
+
+- `vite.config.ts`
+
+```ts
+import reactJsx from "vite-react-jsx";
+
+export default {
+  plugins: [reactJsx()],
+};
+```
+
+- `tsconfig.json`
+
+```json
+{
+  "jsx": "react-jsx"
+}
+```
+
 ## mkcert + HTTP2
 
 ```bash
@@ -98,7 +122,12 @@ export default defineConfig({
         {
           libName: "antd",
           // dynamic import
-          style: (name) => `antd/es/${name}/style`,
+          style: (name) => {
+            if (name === "col" || name === "row") {
+              return "antd/lib/style/index.less";
+            }
+            return `antd/es/${name}/style/index.less`;
+          },
         },
       ],
     }),
