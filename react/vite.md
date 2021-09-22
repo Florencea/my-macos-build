@@ -5,7 +5,7 @@
 ## Vite
 
 ```bash
-yarn create @vitejs/app vite-project --template react-ts
+yarn create vite vite-project --template react-ts
 ```
 
 ```bash
