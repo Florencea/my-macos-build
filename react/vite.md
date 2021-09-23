@@ -69,6 +69,8 @@ export default defineConfig({
 
 ## Ant Design
 
+- 注意：目前`antd`與`vite`一起使用有問題，建議先不要用
+
 ```bash
 yarn add antd @ant-design/icons
 ```
