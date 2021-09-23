@@ -31,12 +31,9 @@ import reactRefresh from "@vitejs/plugin-react-refresh";
 export default defineConfig({
   plugins: [reactRefresh()],
   build: {
-    // chunk size limit warning, default: 500
     chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
-        // split libraries to different chunk
-        // example here split 'antd' library to single chunk
         manualChunks: {
           antd: ["antd"],
         },
@@ -111,17 +108,16 @@ yarn add less vite-plugin-imp --dev
 ```ts
 import { defineConfig } from "vite";
 import reactRefresh from "@vitejs/plugin-react-refresh";
-import vitePluginImp from "vite-plugin-imp";
+import imp from "vite-plugin-imp";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     reactRefresh(),
-    vitePluginImp({
+    imp({
       libList: [
         {
           libName: "antd",
-          // dynamic import
           style: (name) => {
             if (name === "col" || name === "row") {
               return "antd/lib/style/index.less";
