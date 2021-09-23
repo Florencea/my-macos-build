@@ -5,6 +5,12 @@
 ## 注意事項
 
 - 與 Tailwind 配合使用時，要注意 Antd 的 CSS 優先權較高
+- 老實說這樣也是正常，若 Tailwind 預設樣式覆蓋 Antd 組件，外觀會變得亂七八糟
+- 開發時，盡可能把型別與使用型別的程式碼放一起，記住，型別只是輔助開發，別讓型別定義成為開發累贅
+- 只有在需要儲存前端狀態的場景，才需要從`model`導出`data`，也可以讓`model`裡的 API 函數直接回傳資料，不要在初始化上面下功夫
+- Umi + Antd + Antd Icon + Ahooks 是非常穩定的組合，盡可能使用螞蟻金服系列的 React 生態系，比較不容易出 Bug
+- 新特性如 mfsu、Webpack 5 等到預設啟用的時候再開，bug 很多
+- 內建的國際化必須要刷新畫面才有用，與其使用 setLocale 不如直接改 localstorage 的 `umi_locale`
 
 ## Umi + Ant Design + Tailwind + ESLint & Prettier
 
