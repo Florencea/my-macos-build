@@ -2,6 +2,12 @@
 
 - <https://cn.vitejs.dev/>
 
+## 注意事項
+
+- Vite 生態系跟功能變化非常快，用於生產環境一定要鎖版本！
+- 因為其特性，在 React 方面與基礎庫較友好，越重型的組件庫或生態系，出 bug 的機會越多
+- 與 PWA 生態出奇友好，適合做沒有路由的單頁 PWA
+
 ## Vite
 
 ```bash
@@ -69,7 +75,7 @@ export default defineConfig({
 
 ## Ant Design
 
-- 注意：目前`antd`與`vite`一起使用有問題，建議先不要用
+- 注意：存在很多隱藏的坑，重度依賴 Antd 的話，還是去用 Umi 比較保險
 
 ```bash
 yarn add antd @ant-design/icons
@@ -111,6 +117,9 @@ export default defineConfig({
 
 ## Tailwind CSS
 
+- 注意：與 Antd 一起使用會覆蓋其樣式(因為 Antd 竟然有全域 css 導入)，`svg { vertical-align: unset; }`就是拿來治 Antd Icon 的對齊的
+- 與 Material-ui 或 Chakra 等封裝過樣式的組件庫較友好
+
 ```bash
 yarn add tailwindcss@latest postcss@latest autoprefixer@latest --dev
 ```
@@ -147,12 +156,32 @@ import "./_tailwind.css";
 
 ## Jest
 
+- 初步嘗試可以跑起來，有隱藏的坑未可知
+
 ```bash
-yarn add @babel/core babel-jest babel-preset-react-app @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event jest jest-circus jest-scss-transform jest-watch-typeahead identity-obj-proxy svg-jest --dev
+yarn add \
+@babel/core \
+babel-jest \
+babel-preset-react-app \
+@testing-library/dom \
+@testing-library/jest-dom \
+@testing-library/react \
+@testing-library/user-event \
+jest \
+jest-circus \
+jest-scss-transform \
+jest-watch-typeahead \
+identity-obj-proxy \
+svg-jest \
+--dev
 ```
 
 ```bash
-touch .babelrc.json jest.config.js jest.css.mock.js jest.setup.js
+touch \
+.babelrc.json \
+jest.config.js \
+jest.css.mock.js \
+jest.setup.js
 ```
 
 - `.babelrc.json`
