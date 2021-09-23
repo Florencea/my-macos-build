@@ -47,30 +47,6 @@ export default defineConfig({
 });
 ```
 
-## Auto import React
-
-```bash
-yarn add vite-react-jsx --dev
-```
-
-- `vite.config.ts`
-
-```ts
-import reactJsx from "vite-react-jsx";
-
-export default {
-  plugins: [reactJsx()],
-};
-```
-
-- `tsconfig.json`
-
-```json
-{
-  "jsx": "react-jsx"
-}
-```
-
 ## mkcert + HTTP2
 
 ```bash
@@ -105,13 +81,10 @@ yarn add less vite-plugin-imp --dev
 
 ```ts
 import { defineConfig } from "vite";
-import reactRefresh from "@vitejs/plugin-react-refresh";
 import imp from "vite-plugin-imp";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    reactRefresh(),
     imp({
       libList: [
         {
