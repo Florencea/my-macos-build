@@ -19,15 +19,34 @@ yarn create @umijs/umi-app
 ```
 
 ```bash
-yarn add @ant-design/colors @ant-design/icons ahooks
+yarn add \
+@ant-design/colors \
+@ant-design/icons \
+ahooks
 ```
 
 ```bash
-yarn add antd tailwindcss@latest @tailwindcss/postcss7-compat umi-plugin-tailwindcss eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
+yarn add \
+antd \
+tailwindcss@latest \
+@tailwindcss/postcss7-compat \
+umi-plugin-tailwindcss \
+eslint \
+typescript \
+@typescript-eslint/parser \
+@typescript-eslint/eslint-plugin \
+eslint-plugin-react \
+eslint-config-alloy \
+--dev
 ```
 
 ```bash
-rm src/pages/index.tsx src/pages/index.less .editorconfig .prettierrc README.md
+rm \
+src/pages/index.tsx \
+src/pages/index.less \
+.editorconfig \
+.prettierrc \
+README.md
 ```
 
 ```bash
@@ -35,11 +54,38 @@ printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
 ```
 
 ```bash
-mkdir -p .vscode public src/models src/components src/configs src/utils src/pages/private/Welcome src/pages/private/Logout src/pages/public/Login
+mkdir -p \
+.vscode \
+public \
+src/models \
+src/components \
+src/configs \
+src/utils \
+src/pages/private/Welcome \
+src/pages/private/Logout \
+src/pages/public/Login
 ```
 
 ```bash
-touch .eslintrc.js .prettierrc.js .vscode/settings.json public/robots.txt src/access.ts src/app.tsx src/global.less src/interface.ts mock/api.ts src/components/PageFrame.tsx src/configs/api.ts src/configs/routes.ts src/configs/state.ts src/configs/theme.ts src/models/auth.ts src/pages/private/Welcome/Welcome.tsx src/pages/private/Logout/Logout.tsx src/pages/public/Login/Login.tsx src/utils/api.ts src/utils/storage.ts
+touch \
+.eslintrc.js \
+.prettierrc.js \
+.vscode/settings.json \
+mock/api.ts \
+public/robots.txt \
+src/access.ts \
+src/app.tsx \
+src/global.less \
+src/components/PageFrame.tsx \
+src/configs/api.ts \
+src/configs/routes.ts \
+src/configs/theme.ts \
+src/models/auth.ts \
+src/pages/private/Welcome/Welcome.tsx \
+src/pages/private/Logout/Logout.tsx \
+src/pages/public/Login/Login.tsx \
+src/utils/api.ts \
+src/utils/storage.ts
 ```
 
 ```bash
@@ -328,8 +374,8 @@ export const prefix = "/api";
 
 export const api = {
   auth: {
-    auth: "/login",
-    unauth: "/logout",
+    login: "/login",
+    logout: "/logout",
   },
 };
 ```
@@ -393,21 +439,10 @@ export const getPageTitle = (currentPath: string) =>
   routes.find((r) => r.path === currentPath)?.name ?? "";
 ```
 
-- `src/configs/state.ts`
-
-```ts
-export const state = {
-  token: {
-    default: undefined,
-    key: "myapp_authentication",
-  },
-};
-```
-
 - `src/configs/theme.ts`
 
 ```ts
-import { purple, grey } from "@ant-design/colors";
+import { grey, purple } from "@ant-design/colors";
 
 export const theme = {
   "primary-color": purple[4],
@@ -419,64 +454,75 @@ export const theme = {
 
 ```ts
 import { api } from "@/configs/api";
-import { state } from "@/configs/state";
-import { AuthenticationT, LoginE, LoginT } from "@/interface";
 import { useApi } from "@/utils/api";
 import { storage } from "@/utils/storage";
 import { useBoolean } from "ahooks";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useModel } from "umi";
 
+interface ItemT {
+  token: string;
+}
+
+interface FormT {
+  account: string;
+  password: string;
+}
+
+const DEFAULT_FORM: FormT = {
+  account: "",
+  password: "",
+};
+
+const API = api.auth;
+
 export default () => {
-  const { initialState: token, setInitialState: setToken } =
+  const { initialState, setInitialState } =
     useModel<"@@initialState">("@@initialState");
+  const token = useMemo(() => initialState?.token ?? "", [initialState]);
+
   const [loading, { setTrue: setLoading, setFalse: setNotLoading }] =
     useBoolean();
-  const {
-    auth: { auth: apiAuth, unauth: apiUnAuth },
-  } = api;
 
-  const Auth = useCallback(async (reqData: LoginT) => {
+  const Login = useCallback(async (body: FormT) => {
     try {
       setLoading();
-      const { data } = await useApi<LoginT, AuthenticationT>(apiAuth, {
+      const { data } = await useApi<FormT, ItemT>(API.login, {
         method: "POST",
-        body: reqData,
+        body,
       });
-      storage.set(state.token.key, data?.token);
-      setToken(data?.token);
+      storage.setToken(data.token);
+      setInitialState({ ...initialState, token: data.token });
       return true;
-    } catch (err) {
-      console.error(err);
+    } catch {
       return false;
     } finally {
       setNotLoading();
     }
   }, []);
 
-  const UnAuth = useCallback(async () => {
+  const Logout = useCallback(async () => {
     try {
       setLoading();
-      await useApi<undefined, undefined>(apiUnAuth, {
+      await useApi(API.logout, {
         method: "POST",
         token,
       });
       return true;
-    } catch (err) {
-      console.error(err);
-      return true;
+    } catch {
+      return false;
     } finally {
-      storage.clear();
-      setToken(undefined);
+      storage.removeToken();
+      setInitialState({ ...initialState, token: undefined });
       setNotLoading();
     }
   }, [token]);
 
   return {
     auth: {
-      Auth,
-      UnAuth,
-      Default: LoginE,
+      Login,
+      Logout,
+      DEFAULT_FORM,
       loading,
     },
   };
@@ -492,11 +538,11 @@ import { history, useModel } from "umi";
 
 export default () => {
   const {
-    auth: { UnAuth },
+    auth: { Logout },
   } = useModel("auth");
   useEffect(() => {
     const logout = async () => {
-      if (await UnAuth()) {
+      if (await Logout()) {
         history.push(DEFAULT_PATH_PUBLIC);
       }
     };
@@ -519,17 +565,14 @@ export default () => {
 - `src/pages/public/Login/Login.tsx`
 
 ```tsx
-import { DEFAULT_PATH_PRIVATE, TITLE } from "@/configs/routes";
-import { theme } from "@/configs/theme";
-import { Button, Card, Col, Form, Input, Row } from "antd";
+import { DEFAULT_PATH_PRIVATE } from "@/configs/routes";
+import { Button, Col, Form, Input, Row } from "antd";
 import { useEffect, useRef } from "react";
 import { history, useModel } from "umi";
 
 export default () => {
-  const {
-    auth: { Auth, Default, loading },
-  } = useModel("auth");
-  const [form] = Form.useForm<typeof Default>();
+  const { auth } = useModel("auth");
+  const [form] = Form.useForm<typeof auth.DEFAULT_FORM>();
   const inputRef = useRef<Input>(null);
   useEffect(() => {
     inputRef.current!.focus({
@@ -537,41 +580,38 @@ export default () => {
     });
   }, []);
   return (
-    <Row
-      className="h-screen"
-      style={{ backgroundColor: theme["layout-header-background"] }}
-      align="middle"
-      justify="center"
-    >
+    <Row className="h-screen" align="middle" justify="center">
       <Col>
-        <Card title={`${TITLE} - 登入`} className="fadeInUp">
-          <Form
-            form={form}
-            name="auth"
-            initialValues={Default}
-            onFinish={async (values) => {
-              if (await Auth(values)) {
-                history.push(DEFAULT_PATH_PRIVATE);
-              }
-            }}
-          >
-            <Form.Item label="帳號" name="account" rules={[{ required: true }]}>
-              <Input ref={inputRef} />
-            </Form.Item>
-            <Form.Item
-              label="密碼"
-              name="password"
-              rules={[{ required: true }]}
+        <Form
+          form={form}
+          name="auth"
+          initialValues={auth.DEFAULT_FORM}
+          onFinish={async (values) => {
+            if (await auth.Login(values)) {
+              history.push(DEFAULT_PATH_PRIVATE);
+            }
+          }}
+        >
+          <Form.Item label="帳號" name="account" rules={[{ required: true }]}>
+            <Input ref={inputRef} placeholder="account" />
+          </Form.Item>
+          <Form.Item label="密碼" name="password" rules={[{ required: true }]}>
+            <Input.Password
+              autoComplete="current-password"
+              placeholder="password"
+            />
+          </Form.Item>
+          <Form.Item noStyle>
+            <Button
+              htmlType="submit"
+              type="primary"
+              block
+              loading={auth.loading}
             >
-              <Input.Password autoComplete="current-password" />
-            </Form.Item>
-            <Form.Item noStyle>
-              <Button htmlType="submit" type="primary" block loading={loading}>
-                登入
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
+              登入
+            </Button>
+          </Form.Item>
+        </Form>
       </Col>
     </Row>
   );
@@ -582,8 +622,24 @@ export default () => {
 
 ```tsx
 import { prefix } from "@/configs/api";
-import { ApiOptionT, BasicResT } from "@/interface";
 import { request, RequestConfig } from "umi";
+
+type MethodT = "GET" | "POST" | "PUT" | "DELETE";
+
+interface ApiOptionT<T> {
+  method: MethodT;
+  token?: string;
+  params?: object;
+  body?: T;
+}
+
+interface BasicResT<ResT> {
+  success: boolean;
+  data: ResT;
+  errorCode: string;
+  errorMessage: string;
+  showType: number;
+}
 
 const basicHeaders = {
   Accept: "application/json",
@@ -601,7 +657,7 @@ const API_OPTIONS = <dataT>({
   headers: token
     ? {
         ...basicHeaders,
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       }
     : basicHeaders,
   params,
@@ -611,32 +667,27 @@ const API_OPTIONS = <dataT>({
 /**
  * useApi<ReqT, ResT>(url: string, options: { method: 'GET' | 'POST' | 'PUT' | 'DELETE', token: string , params: object, body: object })
  */
-export const useApi = <ReqT, ResT>(url: string, options: ApiOptionT<ReqT>) =>
-  request<BasicResT<ResT>>(url, API_OPTIONS<ReqT>(options));
+export const useApi = <ReqT = undefined, ResT = undefined>(
+  url: string,
+  options: ApiOptionT<ReqT>
+) => request<BasicResT<ResT>>(url, API_OPTIONS<ReqT>(options));
 ```
 
 - `src/utils/storage.ts`
 
 ```tsx
-import { StorageValueT } from "@/interface";
+const keyToken = "myapp_authentication";
 
 export const storage = {
-  get: (key: string): StorageValueT => {
-    const item = window.localStorage.getItem(key);
-    if (item !== null) {
-      return JSON.parse(item);
-    } else {
-      return undefined;
-    }
+  getToken: () => {
+    const token = window.localStorage.getItem(keyToken);
+    return token !== null ? token : undefined;
   },
-  set: (key: string, item: StorageValueT) => {
-    window.localStorage.setItem(key, JSON.stringify(item));
+  setToken: (token: string) => {
+    window.localStorage.setItem(keyToken, token);
   },
-  remove: (key: string) => {
-    window.localStorage.removeItem(key);
-  },
-  clear: () => {
-    window.localStorage.clear();
+  removeToken: () => {
+    window.localStorage.removeItem(keyToken);
   },
 };
 ```
@@ -644,10 +695,14 @@ export const storage = {
 - `src/access.ts`
 
 ```tsx
-import { AccessT, StorageValueT } from "@/interface";
+import { InitialStateT } from "./app";
 
-export default (token: StorageValueT): AccessT => ({
-  isLogin: token !== undefined,
+interface AccessT {
+  isLogin: boolean;
+}
+
+export default (initialState: InitialStateT): AccessT => ({
+  isLogin: initialState.token !== undefined,
 });
 ```
 
@@ -663,19 +718,17 @@ import {
   ROUTES_NEED_REDIRECT,
   TITLE,
 } from "./configs/routes";
-import { state } from "./configs/state";
-import { StorageValueT } from "./interface";
 import { storage } from "./utils/storage";
 
 const isAccessRouteNeedRedirect = (path: string) =>
   new Set(ROUTES_NEED_REDIRECT).has(path);
 
 export const layout = ({
-  initialState: token,
+  initialState,
 }: {
-  initialState: StorageValueT;
+  initialState: InitialStateT;
 }): BasicLayoutProps => {
-  const isLogin = token !== undefined;
+  const isLogin = initialState.token !== undefined;
   return {
     title: TITLE,
     // logo,
@@ -696,8 +749,13 @@ export const layout = ({
   };
 };
 
-export const getInitialState = async (): Promise<StorageValueT> =>
-  storage.get(state.token.key);
+export interface InitialStateT {
+  token?: string;
+}
+
+export const getInitialState = async (): Promise<InitialStateT> => {
+  return { token: storage.getToken() };
+};
 ```
 
 - `src/global.less`
@@ -787,47 +845,6 @@ export const getInitialState = async (): Promise<StorageValueT> =>
     transform: translate3d(10px, 0, 0);
   }
 }
-```
-
-- `src/interface.ts`
-
-```ts
-export interface AuthenticationT {
-  token: string;
-}
-
-export interface AccessT {
-  isLogin: boolean;
-}
-
-export interface LoginT {
-  account: string;
-  pasword: string;
-}
-
-export const LoginE: LoginT = {
-  account: "",
-  pasword: "",
-};
-
-export type MethodT = "GET" | "POST" | "PUT" | "DELETE";
-
-export interface ApiOptionT<T> {
-  method: MethodT;
-  token?: string;
-  params?: object;
-  body?: T;
-}
-
-export interface BasicResT<ResT> {
-  success: boolean;
-  data?: ResT;
-  errorCode?: string;
-}
-
-export type StorageValueT = string | undefined;
-
-export type StateT<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 ```
 
 ```bash
