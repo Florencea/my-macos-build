@@ -118,12 +118,10 @@ export default defineConfig({
       libList: [
         {
           libName: "antd",
-          style: (name) => {
-            if (name === "col" || name === "row") {
-              return "antd/lib/style/index.less";
-            }
-            return `antd/es/${name}/style/index.less`;
-          },
+          style: (name) =>
+            name === "col" || name === "row"
+              ? "antd/lib/style/index.less"
+              : `antd/es/${name}/style/index.less`,
         },
       ],
     }),
