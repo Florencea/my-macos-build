@@ -117,7 +117,8 @@ export default defineConfig({
 
 ## Tailwind CSS
 
-- 注意：與 Antd 一起使用會覆蓋其樣式(因為 Antd 竟然有全域 css 導入)，`svg { vertical-align: unset; }`就是拿來治 Antd Icon 的對齊的
+- 注意：與 Antd 一起使用會覆蓋其樣式(因為 Antd 竟然有全域 css 導入)
+- `svg { vertical-align: unset; }`就是拿來治 Antd Icon 對齊的
 - 與 Material-ui 或 Chakra 等封裝過樣式的組件庫較友好
 
 ```bash
