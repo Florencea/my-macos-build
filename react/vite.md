@@ -53,6 +53,100 @@ export default defineConfig({
 });
 ```
 
+## ESLint Config Alloy TypeScript React
+
+- 此為針對 Vite 編碼習慣特化的版本
+
+```bash
+yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
+```
+
+```bash
+mkdir .vscode && touch .eslintrc.js .prettierrc.js .vscode/settings.json
+```
+
+- `.eslintrc.js`
+
+```js
+module.exports = {
+  extends: ["alloy", "alloy/react", "alloy/typescript"],
+  env: {
+    // 你的環境變量（包含多個預定義的全局變量）
+    //
+    browser: true,
+    // node: true,
+    // mocha: true,
+    // jest: true,
+    // jquery: true
+  },
+  globals: {
+    // 你的全局變量（設置為 false 表示它不允許被重新賦值）
+    //
+    // myGlobal: false
+    React: true,
+  },
+  rules: {
+    // 自定義你的規則
+    "spaced-comment": ["error", "always", { markers: ["/"] }],
+  },
+};
+```
+
+- `.prettierrc.js`
+
+```js
+module.exports = {
+  // 行尾不需分號
+  semi: false,
+  // 使用單引號
+  singleQuote: true,
+  // 末尾不需逗號
+  trailingComma: "none",
+};
+```
+
+- `.vscode/settings.json`
+
+```jsonc
+{
+  // Typescript
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // TailWindCSS
+  "css.validate": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
+  },
+  // ESLint
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  // Prettier
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Shell Script
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  // Markdown
+  "markdownlint.config": {
+    "MD033": false
+  }
+}
+```
+
 ## mkcert + HTTP2
 
 ```bash
