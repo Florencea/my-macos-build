@@ -226,7 +226,7 @@ module.exports = {
     preflight: false,
   },
   important: "#root",
-  purge: ["./src/**/*.tsx", "index.html"],
+  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: false,
   theme: {
     colors: require("@ant-design/colors"),
