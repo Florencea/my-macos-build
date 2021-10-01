@@ -11,7 +11,7 @@
 ## Vite
 
 ```bash
-yarn create vite vite-project --template react-ts
+npm init vite@latest vite-project -- --template react-ts
 ```
 
 ```bash
@@ -55,10 +55,17 @@ export default defineConfig({
 
 ## ESLint Config Alloy TypeScript React
 
-- 此為針對 Vite 編碼習慣特化的版本
+- 此為針對 Vite 特化的版本
 
 ```bash
-yarn add eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-config-alloy --dev
+npm install \
+eslint \
+typescript \
+@typescript-eslint/parser \
+@typescript-eslint/eslint-plugin \
+eslint-plugin-react \
+eslint-config-alloy \
+--dev
 ```
 
 ```bash
@@ -71,23 +78,14 @@ mkdir .vscode && touch .eslintrc.js .prettierrc.js .vscode/settings.json
 module.exports = {
   extends: ["alloy", "alloy/react", "alloy/typescript"],
   env: {
-    // 你的環境變量（包含多個預定義的全局變量）
-    //
     browser: true,
-    // node: true,
-    // mocha: true,
-    // jest: true,
-    // jquery: true
   },
   globals: {
-    // 你的全局變量（設置為 false 表示它不允許被重新賦值）
-    //
-    // myGlobal: false
-    React: true,
+    React: "readonly",
   },
   rules: {
-    // 自定義你的規則
     "spaced-comment": ["error", "always", { markers: ["/"] }],
+    "@typescript-eslint/no-require-imports": 0,
   },
 };
 ```
@@ -96,12 +94,8 @@ module.exports = {
 
 ```js
 module.exports = {
-  // 行尾不需分號
-  semi: false,
-  // 使用單引號
   singleQuote: true,
-  // 末尾不需逗號
-  trailingComma: "none",
+  trailingComma: "all",
 };
 ```
 
@@ -150,7 +144,7 @@ module.exports = {
 ## mkcert + HTTP2
 
 ```bash
-yarn add vite-plugin-mkcert --dev
+npm install vite-plugin-mkcert --dev
 ```
 
 - `vite.config.ts`
@@ -169,14 +163,14 @@ export default defineConfig({
 
 ## Ant Design
 
-- 注意：存在很多隱藏的坑，重度依賴 Antd 的話，還是去用 Umi 比較保險
+- 注意：存在隱藏的坑未可知，需要不斷修正
 
 ```bash
-yarn add antd @ant-design/icons
+npm install antd @ant-design/icons
 ```
 
 ```bash
-yarn add less vite-plugin-imp --dev
+npm install less vite-plugin-imp --dev
 ```
 
 - `vite.config.ts`
@@ -191,10 +185,7 @@ export default defineConfig({
       libList: [
         {
           libName: "antd",
-          style: (name) =>
-            name === "col" || name === "row"
-              ? "antd/lib/style/index.less"
-              : `antd/es/${name}/style/index.less`,
+          style: (name) => `antd/es/${name}/style`,
         },
       ],
     }),
@@ -211,12 +202,12 @@ export default defineConfig({
 
 ## Tailwind CSS
 
-- 注意：與 Antd 一起使用會覆蓋其樣式(因為 Antd 竟然有全域 css 導入)
-- `svg { vertical-align: unset; }`就是拿來治 Antd Icon 對齊的
-- 與 Material-ui 或 Chakra 等封裝過樣式的組件庫較友好
+- 禁用`preflight`是為了不要在預設狀況干涉`antd`樣式
+- 配置`important`是為了能夠覆蓋`antd`樣式，但不干擾行內樣式
+- `colors`配置可以直接使用`@ant-design/colors`色版，與`antd`搭配時色彩較和諧
 
 ```bash
-yarn add tailwindcss@latest postcss@latest autoprefixer@latest --dev
+npm install tailwindcss@latest postcss@latest autoprefixer@latest --dev
 ```
 
 ```bash
@@ -224,16 +215,21 @@ npx tailwindcss init -p
 ```
 
 ```bash
-printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\nsvg{vertical-align: unset;}\n' >> src/_tailwind.css
+printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' > src/index.css
 ```
 
 - `tailwind.config.js`
 
 ```js
 module.exports = {
-  purge: ["./src/**/*.tsx"],
-  darkMode: false, // or 'media' or 'class'
+  corePlugins: {
+    preflight: false,
+  },
+  important: "#root",
+  purge: ["./src/**/*.tsx", "index.html"],
+  darkMode: false,
   theme: {
+    colors: require("@ant-design/colors"),
     extend: {},
   },
   variants: {
@@ -243,18 +239,12 @@ module.exports = {
 };
 ```
 
-- In `src/main.tsx`
-
-```tsx
-import "./_tailwind.css";
-```
-
 ## Jest
 
-- 初步嘗試可以跑起來，有隱藏的坑未可知
+- 初步嘗試可以跑起來，有隱藏的坑未可知，先擱置
 
 ```bash
-yarn add \
+npm install \
 @babel/core \
 babel-jest \
 babel-preset-react-app \
