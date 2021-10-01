@@ -251,7 +251,11 @@ module.exports = {
   purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: false,
   theme: {
-    colors: require("@ant-design/colors"),
+    colors: {
+      white: "#fff",
+      black: "#000",
+      ...require("@ant-design/colors"),
+    },
     extend: {},
   },
   variants: {
