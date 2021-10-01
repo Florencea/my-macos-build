@@ -65,7 +65,7 @@ typescript \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
 eslint-config-alloy \
---dev
+--save-dev
 ```
 
 ```bash
@@ -144,7 +144,7 @@ module.exports = {
 ## mkcert + HTTP2
 
 ```bash
-npm install vite-plugin-mkcert --dev
+npm install vite-plugin-mkcert --save-dev
 ```
 
 - `vite.config.ts`
@@ -170,7 +170,7 @@ npm install antd @ant-design/icons
 ```
 
 ```bash
-npm install less vite-plugin-imp --dev
+npm install less vite-plugin-imp --save-dev
 ```
 
 - `vite.config.ts`
@@ -207,7 +207,7 @@ export default defineConfig({
 - `colors`配置可以直接使用`@ant-design/colors`色版，與`antd`搭配時色彩較和諧
 
 ```bash
-npm install tailwindcss@latest postcss@latest autoprefixer@latest --dev
+npm install tailwindcss@latest postcss@latest autoprefixer@latest --save-dev
 ```
 
 ```bash
@@ -258,7 +258,7 @@ jest-scss-transform \
 jest-watch-typeahead \
 identity-obj-proxy \
 svg-jest \
---dev
+--save-dev
 ```
 
 ```bash
