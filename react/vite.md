@@ -200,6 +200,28 @@ export default defineConfig({
 });
 ```
 
+- `src/main.tsx`
+- 為了使國際化介面不要出錯
+
+```tsx
+import { ConfigProvider } from "antd";
+import zhTW from "antd/es/locale/zh_TW";
+import "moment/dist/locale/zh-TW";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./index.css";
+
+ReactDOM.render(
+  <StrictMode>
+    <ConfigProvider locale={zhTW}>
+      <App />
+    </ConfigProvider>
+  </StrictMode>,
+  document.getElementById("root")
+);
+```
+
 ## Tailwind CSS
 
 - 禁用`preflight`是為了不要在預設狀況干涉`antd`樣式
