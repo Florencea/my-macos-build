@@ -15,7 +15,7 @@ npm init vite@latest vite-project -- --template react-ts
 ```
 
 ```bash
-cd vite-project && yarn
+cd vite-project && npm install
 ```
 
 - `package.json`
