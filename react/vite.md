@@ -133,10 +133,6 @@ module.exports = {
   // Shell Script
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  // Markdown
-  "markdownlint.config": {
-    "MD033": false
   }
 }
 ```

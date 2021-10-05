@@ -8,9 +8,9 @@
 
 ## 右鍵下載
 
-- <a href="https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt" download>uBlock Origin 設定檔</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt" download>Tampermonkey 設定檔</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json" download>新同文堂 設定檔</a>
+- [uBlock Origin 設定檔](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
+- [Tampermonkey 設定檔](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt)
+- [新同文堂 設定檔](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json)
 
 ## macOS 指令
 
