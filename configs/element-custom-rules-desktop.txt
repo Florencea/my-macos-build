@@ -16,7 +16,8 @@
 *##kbd:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 *##pre:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 *##samp:style(font-family: JetBrainsMonoNerdFontComplete-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-
+! render
+*##body:style(-webkit-font-smoothing: auto !important)
 ! addons
 *##^.sp-separator
 *##.sp-separator:remove()
@@ -183,6 +184,11 @@ fandom.com##^noscript
 fandom.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 fandom.com###WikiaMainContent:style(width: 100% !important)
 fandom.com###WikiaMainContent:style(padding: 1em !important)
+
+! feedly.com
+! style
+feedly.com##.home:style(background-color: #121212 !important)
+
 
 ! github.com
 ! style
@@ -500,6 +506,10 @@ pts.org.tw##.container > .row > .col-lg-8:style(max-width: 100% !important)
 pts.org.tw##.container > .row > .col-lg-8:style(min-width: 396px !important)
 pts.org.tw##.article-main-info:style(margin-bottom: 0 !important)
 pts.org.tw##.article-main-info:style(padding:2.5rem 0 2rem 0 !important)
+! dark
+pts.org.tw##body:style(filter: invert(1))
+pts.org.tw##img:style(filter: invert(1))
+pts.org.tw##body:style(background-color: #1c1b21 !important)
 
 ! sogi.com.tw
 ! remove
