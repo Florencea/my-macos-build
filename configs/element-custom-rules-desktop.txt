@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-10-05
+! Last updated: 2021-10-07
 
 ! universal rules
 ! outline
@@ -300,13 +300,14 @@ ithome.com.tw##^.summary
 ithome.com.tw##.summary:remove()
 ithome.com.tw##^.pagination > ul > li:not(.prev):not(.next)
 ithome.com.tw##.pagination > ul > li:not(.prev):not(.next):remove()
+ithome.com.tw##^#navbar
+ithome.com.tw###navbar:remove()
 ithome.com.tw##^script[src*='ithome.com.tw/sites/default/files/js/js_']
 ithome.com.tw##^script[src*='ads']
 ithome.com.tw##^script[src*='facebook']
 ithome.com.tw##^script:has-text(facebook)
 ! style
 ithome.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-ithome.com.tw##body:style(background-color: #f7f7f7 !important)
 ithome.com.tw##.main-container > div.row-fluid:style(display: flex !important)
 ithome.com.tw##.main-container > div.row-fluid:style(justify-content: center !important)
 ithome.com.tw###page-header:style(display: flex !important)
@@ -337,6 +338,20 @@ ithome.com.tw##.pagination ul:style(box-shadow: none !important)
 ithome.com.tw##.pagination ul > li > a:style(padding: 20px 30px !important)
 ithome.com.tw##.pagination ul > li > a:style(margin: 0 2rem !important)
 ithome.com.tw##.pagination ul > li > a:style(border: 1px solid #ddd !important)
+ithome.com.tw###block-views-view-news-expert-profile:style(margin: auto !important)
+! dark
+ithome.com.tw##body:style(background-color: #1c1b21 !important)
+ithome.com.tw##body:style(color: #f8f9fa !important)
+ithome.com.tw##.main-container:style(background-color: #1c1b21 !important)
+ithome.com.tw##.page-node .page-header:style(color: #f8f9fa !important)
+ithome.com.tw##.submitted:style(color: #f8f9fa !important)
+ithome.com.tw##.submitted .created:style(color: #f8f9fa !important)
+ithome.com.tw##.submitted .pub-wording:style(color: #f8f9fa !important)
+ithome.com.tw##p span:style(color: #f8f9fa !important)
+ithome.com.tw##a:style(color: #66ccff !important)
+ithome.com.tw##a:hover:style(border-color: #66ccff !important)
+ithome.com.tw##h3 > span:style(color: #e77e7e !important)
+ithome.com.tw##h3 > strong:style(color: #e77e7e !important)
 
 ! iyouport.org
 ! remove
@@ -482,6 +497,8 @@ pts.org.tw##^.program-mask
 pts.org.tw##.program-mask:remove()
 pts.org.tw##^#header
 pts.org.tw###header
+pts.org.tw##^.raw-html-embed
+pts.org.tw##.raw-html-embed:remove()
 pts.org.tw##^img[src*='scorecardresearch']
 pts.org.tw##^script[src*='facebook']
 pts.org.tw##^script:has-text(lndata)
@@ -507,8 +524,12 @@ pts.org.tw##.container > .row > .col-lg-8:style(min-width: 396px !important)
 pts.org.tw##.article-main-info:style(margin-bottom: 0 !important)
 pts.org.tw##.article-main-info:style(padding:2.5rem 0 2rem 0 !important)
 ! dark
-pts.org.tw##body:style(filter: invert(1))
-pts.org.tw##img:style(filter: invert(1))
+!pts.org.tw##body:style(filter: invert(1))
+pts.org.tw##body p:style(color: #f8f9fa)
+pts.org.tw##body h1:style(color: #f8f9fa)
+pts.org.tw##.post-article a:style(color: #83c1fc !important)
+pts.org.tw##.post-article a:hover:style(border-color: #83c1fc !important)
+pts.org.tw##.post-article .articleimg:style(color: #83c1fc !important)
 pts.org.tw##body:style(background-color: #1c1b21 !important)
 
 ! sogi.com.tw
