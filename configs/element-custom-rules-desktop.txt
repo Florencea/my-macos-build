@@ -534,6 +534,7 @@ pts.org.tw##.post-article a:style(color: #83c1fc !important)
 pts.org.tw##.post-article a:hover:style(border-color: #83c1fc !important)
 pts.org.tw##.post-article .articleimg:style(color: #83c1fc !important)
 pts.org.tw##body:style(background-color: #1c1b21 !important)
+pts.org.tw##.post-article ul:style(background-color: #1c1b21 !important)
 
 ! sogi.com.tw
 ! remove
