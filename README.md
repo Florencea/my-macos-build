@@ -6,7 +6,7 @@
 - [Rust 開發筆記](rust/README.md)
 - [FFmpeg 使用筆記](ffmpeg/README.md)
 
-## 右鍵下載
+## 右鍵下載設定檔
 
 - [uBlock Origin 設定檔](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
 - [Tampermonkey 設定檔](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt)
