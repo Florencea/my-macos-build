@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-10-07
+! Last updated: 2021-10-11
 
 ! universal rules
 ! outline
@@ -250,108 +250,108 @@ inside.com.tw##^script[src*='rocket-loader']
 ! style
 inside.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
-! ithome.com.tw
+! www.ithome.com.tw
 ! remove
-ithome.com.tw##^[id*='block-block-']
-ithome.com.tw##[id*='block-block-']:remove()
-ithome.com.tw##^[id*='block-views-hot-news-block-']
-ithome.com.tw##[id*='block-views-hot-news-block-']:remove()
-ithome.com.tw##^#block-views-similarterms-block
-ithome.com.tw###block-views-similarterms-block:remove()
-ithome.com.tw##^#skybanner
-ithome.com.tw###skybanner:remove()
-ithome.com.tw##^aside[role="complementary"]
-ithome.com.tw##aside[role="complementary"]:remove()
-ithome.com.tw##^.side-extra
-ithome.com.tw##.side-extra:remove()
-ithome.com.tw##^.content-summary
-ithome.com.tw##.content-summary:remove()
-ithome.com.tw##^.field-name-field-photo-source
-ithome.com.tw##.field-name-field-photo-source:remove()
-ithome.com.tw##^.socail-btns-on-top
-ithome.com.tw##.socail-btns-on-top:remove()
-ithome.com.tw##^.social-btn-set
-ithome.com.tw##.social-btn-set:remove()
-ithome.com.tw##^.view-display-id-article_category
-ithome.com.tw##.view-display-id-article_category:remove()
-ithome.com.tw##^#headerbar
-ithome.com.tw###headerbar:remove()
-ithome.com.tw##^#hpad930up
-ithome.com.tw###hpad930up:remove()
-ithome.com.tw##^#cyber
-ithome.com.tw###cyber:remove()
-ithome.com.tw##^.ad-banner-text
-ithome.com.tw##.ad-banner-text:remove()
-ithome.com.tw##^.today-featured
-ithome.com.tw##.today-featured:remove()
-ithome.com.tw##^#fb-root
-ithome.com.tw###fb-root:remove()
-ithome.com.tw##^#skip-link
-ithome.com.tw###skip-link:remove()
-ithome.com.tw##^footer.footer
-ithome.com.tw##footer.footer:remove()
-ithome.com.tw##^#block-facebook-boxes-fb-like
-ithome.com.tw###block-facebook-boxes-fb-like:remove()
-ithome.com.tw##^p.category
-ithome.com.tw##p.category:remove()
-ithome.com.tw##^.view-header
-ithome.com.tw##.view-header:remove()
-ithome.com.tw##^.summary
-ithome.com.tw##.summary:remove()
-ithome.com.tw##^.pagination > ul > li:not(.prev):not(.next)
-ithome.com.tw##.pagination > ul > li:not(.prev):not(.next):remove()
-ithome.com.tw##^#navbar
-ithome.com.tw###navbar:remove()
-ithome.com.tw##^script[src*='ithome.com.tw/sites/default/files/js/js_']
-ithome.com.tw##^script[src*='ads']
-ithome.com.tw##^script[src*='facebook']
-ithome.com.tw##^script:has-text(facebook)
+www.ithome.com.tw##^[id*='block-block-']
+www.ithome.com.tw##[id*='block-block-']:remove()
+www.ithome.com.tw##^[id*='block-views-hot-news-block-']
+www.ithome.com.tw##[id*='block-views-hot-news-block-']:remove()
+www.ithome.com.tw##^#block-views-similarterms-block
+www.ithome.com.tw###block-views-similarterms-block:remove()
+www.ithome.com.tw##^#skybanner
+www.ithome.com.tw###skybanner:remove()
+www.ithome.com.tw##^aside[role="complementary"]
+www.ithome.com.tw##aside[role="complementary"]:remove()
+www.ithome.com.tw##^.side-extra
+www.ithome.com.tw##.side-extra:remove()
+www.ithome.com.tw##^.content-summary
+www.ithome.com.tw##.content-summary:remove()
+www.ithome.com.tw##^.field-name-field-photo-source
+www.ithome.com.tw##.field-name-field-photo-source:remove()
+www.ithome.com.tw##^.socail-btns-on-top
+www.ithome.com.tw##.socail-btns-on-top:remove()
+www.ithome.com.tw##^.social-btn-set
+www.ithome.com.tw##.social-btn-set:remove()
+www.ithome.com.tw##^.view-display-id-article_category
+www.ithome.com.tw##.view-display-id-article_category:remove()
+www.ithome.com.tw##^#headerbar
+www.ithome.com.tw###headerbar:remove()
+www.ithome.com.tw##^#hpad930up
+www.ithome.com.tw###hpad930up:remove()
+www.ithome.com.tw##^#cyber
+www.ithome.com.tw###cyber:remove()
+www.ithome.com.tw##^.ad-banner-text
+www.ithome.com.tw##.ad-banner-text:remove()
+www.ithome.com.tw##^.today-featured
+www.ithome.com.tw##.today-featured:remove()
+www.ithome.com.tw##^#fb-root
+www.ithome.com.tw###fb-root:remove()
+www.ithome.com.tw##^#skip-link
+www.ithome.com.tw###skip-link:remove()
+www.ithome.com.tw##^footer.footer
+www.ithome.com.tw##footer.footer:remove()
+www.ithome.com.tw##^#block-facebook-boxes-fb-like
+www.ithome.com.tw###block-facebook-boxes-fb-like:remove()
+www.ithome.com.tw##^p.category
+www.ithome.com.tw##p.category:remove()
+www.ithome.com.tw##^.view-header
+www.ithome.com.tw##.view-header:remove()
+www.ithome.com.tw##^.summary
+www.ithome.com.tw##.summary:remove()
+www.ithome.com.tw##^.pagination > ul > li:not(.prev):not(.next)
+www.ithome.com.tw##.pagination > ul > li:not(.prev):not(.next):remove()
+www.ithome.com.tw##^#navbar
+www.ithome.com.tw###navbar:remove()
+www.ithome.com.tw##^script[src*='www.ithome.com.tw/sites/default/files/js/js_']
+www.ithome.com.tw##^script[src*='ads']
+www.ithome.com.tw##^script[src*='facebook']
+www.ithome.com.tw##^script:has-text(facebook)
 ! style
-ithome.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-ithome.com.tw##.main-container > div.row-fluid:style(display: flex !important)
-ithome.com.tw##.main-container > div.row-fluid:style(justify-content: center !important)
-ithome.com.tw###page-header:style(display: flex !important)
-ithome.com.tw###page-header:style(justify-content: center !important)
-ithome.com.tw###page-header:style(width: 100% !important)
-ithome.com.tw##h1.page-header:style(font-size: 1.5rem !important)
-ithome.com.tw##h1.page-header:style(text-align: left !important)
-ithome.com.tw##h1.page-header:style(padding-top: 3rem !important)
-ithome.com.tw##.content:style(padding-left: 0 !important)
-ithome.com.tw##.content:style(margin: 0 1rem !important)
-ithome.com.tw##.img-wrapper > div:style(border: 1px solid #ededed !important)
-ithome.com.tw##.view-content:style(display: flex !important)
-ithome.com.tw##.view-content:style(justify-content: space-around !important)
-ithome.com.tw##.view-content:style(flex-wrap: wrap !important)
-ithome.com.tw##.row-fluid .span4:style(width: 400px !important)
-ithome.com.tw##.row-fluid .span4:style(flex-shrink: 0 !important)
-ithome.com.tw##.row-fluid .span4:style(margin: 1rem 0 !important)
-ithome.com.tw##.channel-item:style(height: auto !important)
-ithome.com.tw##.channel-item:style(max-height: 600px !important)
-ithome.com.tw##.channel-item .title:style(font-size: 1rem !important)
-ithome.com.tw##.channel-item .title:style(font-weight: 400 !important)
-ithome.com.tw##.channel-item .title:style(line-height: 1.6 !important)
-ithome.com.tw##.channel-item .title:style(display: block !important)
-ithome.com.tw##.channel-item .title:style(margin-bottom: 2rem !important)
-ithome.com.tw##.post-at:style(display: block !important)
-ithome.com.tw##.photo img:style(width: 100% !important)
-ithome.com.tw##.pagination ul:style(box-shadow: none !important)
-ithome.com.tw##.pagination ul > li > a:style(padding: 20px 30px !important)
-ithome.com.tw##.pagination ul > li > a:style(margin: 0 2rem !important)
-ithome.com.tw##.pagination ul > li > a:style(border: 1px solid #ddd !important)
-ithome.com.tw###block-views-view-news-expert-profile:style(margin: auto !important)
+www.ithome.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+www.ithome.com.tw##.main-container > div.row-fluid:style(display: flex !important)
+www.ithome.com.tw##.main-container > div.row-fluid:style(justify-content: center !important)
+www.ithome.com.tw###page-header:style(display: flex !important)
+www.ithome.com.tw###page-header:style(justify-content: center !important)
+www.ithome.com.tw###page-header:style(width: 100% !important)
+www.ithome.com.tw##h1.page-header:style(font-size: 1.5rem !important)
+www.ithome.com.tw##h1.page-header:style(text-align: left !important)
+www.ithome.com.tw##h1.page-header:style(padding-top: 3rem !important)
+www.ithome.com.tw##.content:style(padding-left: 0 !important)
+www.ithome.com.tw##.content:style(margin: 0 1rem !important)
+www.ithome.com.tw##.img-wrapper > div:style(border: 1px solid #ededed !important)
+www.ithome.com.tw##.view-content:style(display: flex !important)
+www.ithome.com.tw##.view-content:style(justify-content: space-around !important)
+www.ithome.com.tw##.view-content:style(flex-wrap: wrap !important)
+www.ithome.com.tw##.row-fluid .span4:style(width: 400px !important)
+www.ithome.com.tw##.row-fluid .span4:style(flex-shrink: 0 !important)
+www.ithome.com.tw##.row-fluid .span4:style(margin: 1rem 0 !important)
+www.ithome.com.tw##.channel-item:style(height: auto !important)
+www.ithome.com.tw##.channel-item:style(max-height: 600px !important)
+www.ithome.com.tw##.channel-item .title:style(font-size: 1rem !important)
+www.ithome.com.tw##.channel-item .title:style(font-weight: 400 !important)
+www.ithome.com.tw##.channel-item .title:style(line-height: 1.6 !important)
+www.ithome.com.tw##.channel-item .title:style(display: block !important)
+www.ithome.com.tw##.channel-item .title:style(margin-bottom: 2rem !important)
+www.ithome.com.tw##.post-at:style(display: block !important)
+www.ithome.com.tw##.photo img:style(width: 100% !important)
+www.ithome.com.tw##.pagination ul:style(box-shadow: none !important)
+www.ithome.com.tw##.pagination ul > li > a:style(padding: 20px 30px !important)
+www.ithome.com.tw##.pagination ul > li > a:style(margin: 0 2rem !important)
+www.ithome.com.tw##.pagination ul > li > a:style(border: 1px solid #ddd !important)
+www.ithome.com.tw###block-views-view-news-expert-profile:style(margin: auto !important)
 ! dark
-ithome.com.tw##body:style(background-color: #1c1b21 !important)
-ithome.com.tw##body:style(color: #f8f9fa !important)
-ithome.com.tw##.main-container:style(background-color: #1c1b21 !important)
-ithome.com.tw##.page-node .page-header:style(color: #f8f9fa !important)
-ithome.com.tw##.submitted:style(color: #f8f9fa !important)
-ithome.com.tw##.submitted .created:style(color: #f8f9fa !important)
-ithome.com.tw##.submitted .pub-wording:style(color: #f8f9fa !important)
-ithome.com.tw##p span:style(color: #f8f9fa !important)
-ithome.com.tw##a:style(color: #66ccff !important)
-ithome.com.tw##a:hover:style(border-color: #66ccff !important)
-ithome.com.tw##h3 > span:style(color: #e77e7e !important)
-ithome.com.tw##h3 > strong:style(color: #e77e7e !important)
+www.ithome.com.tw##body:style(background-color: #1c1b21 !important)
+www.ithome.com.tw##body:style(color: #f8f9fa !important)
+www.ithome.com.tw##.main-container:style(background-color: #1c1b21 !important)
+www.ithome.com.tw##.page-node .page-header:style(color: #f8f9fa !important)
+www.ithome.com.tw##.submitted:style(color: #f8f9fa !important)
+www.ithome.com.tw##.submitted .created:style(color: #f8f9fa !important)
+www.ithome.com.tw##.submitted .pub-wording:style(color: #f8f9fa !important)
+www.ithome.com.tw##p span:style(color: #f8f9fa !important)
+www.ithome.com.tw##a:style(color: #66ccff !important)
+www.ithome.com.tw##a:hover:style(border-color: #66ccff !important)
+www.ithome.com.tw##h3 > span:style(color: #e77e7e !important)
+www.ithome.com.tw##h3 > strong:style(color: #e77e7e !important)
 
 ! iyouport.org
 ! remove
