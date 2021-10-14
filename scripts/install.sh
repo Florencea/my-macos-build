@@ -27,7 +27,6 @@ brew tap homebrew/core
 brew tap homebrew/cask
 brew tap homebrew/cask-versions
 brew tap homebrew/cask-fonts
-brew tap homebrew/cask-drivers
 
 print_step "brew install istat menus"
 brew install istat-menus
@@ -83,7 +82,7 @@ brew install iina
 brew install keka
 brew install kekaexternalhelper
 brew install c0re100-qbittorrent
-brew install scroll-reverser
+brew install mos
 brew install visual-studio-code
 
 # print_step "brew install custom apps (for proper development)"
