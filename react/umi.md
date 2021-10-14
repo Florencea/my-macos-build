@@ -60,7 +60,6 @@ printf '.umi\n.umi-production\n.umi-test\ndist/\n' > .prettierignore
 
 ```bash
 mkdir -p \
-.vscode \
 public \
 src/models \
 src/components \
@@ -75,7 +74,6 @@ src/pages/public/Login
 touch \
 .eslintrc.js \
 .prettierrc.js \
-.vscode/settings.json \
 mock/api.ts \
 public/robots.txt \
 src/access.ts \
@@ -119,44 +117,6 @@ module.exports = {
   singleQuote: true,
   trailingComma: "all",
 };
-```
-
-- `.vscode/settings.json`
-
-```jsonc
-{
-  // Typescript
-  "typescript.tsdk": "node_modules/typescript/lib",
-  // TailWindCSS
-  "css.validate": false,
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html"
-  },
-  // ESLint
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "vue",
-    "typescript",
-    "typescriptreact"
-  ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  // Prettier
-  "files.eol": "\n",
-  "editor.tabSize": 2,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // Shell Script
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
-}
 ```
 
 - `.gitignore`
