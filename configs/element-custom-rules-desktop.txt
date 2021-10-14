@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-10-11
+! Last updated: 2021-10-14
 
 ! universal rules
 ! outline
@@ -142,6 +142,8 @@ dmhy.org##^#\31 280_adv
 dmhy.org###\31 280_adv:remove()
 dmhy.org##^.user-sidebar > div.ui-corner-all.box:nth-of-type(4)
 dmhy.org##.user-sidebar > div.ui-corner-all.box:nth-of-type(4):remove()
+dmhy.org##^a.download-pikpak
+dmhy.org##a.download-pikpak:remove()
 dmhy.org##^script[src*='kiwihk']
 dmhy.org##^script:has-text(baidu)
 dmhy.org##^script:has-text(bebi)
