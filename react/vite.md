@@ -68,7 +68,7 @@ eslint-config-alloy
 ```
 
 ```bash
-mkdir .vscode && touch .eslintrc.js .prettierrc.js .vscode/settings.json
+touch .eslintrc.js .prettierrc.js
 ```
 
 - `.eslintrc.js`
@@ -96,44 +96,6 @@ module.exports = {
   singleQuote: true,
   trailingComma: "all",
 };
-```
-
-- `.vscode/settings.json`
-
-```jsonc
-{
-  // Typescript
-  "typescript.tsdk": "node_modules/typescript/lib",
-  // TailWindCSS
-  "css.validate": false,
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html"
-  },
-  // ESLint
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "vue",
-    "typescript",
-    "typescriptreact"
-  ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  // Prettier
-  "files.eol": "\n",
-  "editor.tabSize": 2,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // Shell Script
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
-}
 ```
 
 ## mkcert + HTTP2
