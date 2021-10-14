@@ -21,18 +21,18 @@ mkdir myapp && cd myapp
 ```
 
 ```bash
-npx @umijs/create-umi-app
+yarn create @umijs/umi-app
 ```
 
 ```bash
-npm install \
+yarn add \
 @ant-design/colors \
 @ant-design/icons \
 ahooks
 ```
 
 ```bash
-npm install \
+yarn add -D \
 antd \
 tailwindcss@latest \
 @tailwindcss/postcss7-compat \
@@ -42,8 +42,7 @@ typescript \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
-eslint-config-alloy \
---save-dev
+eslint-config-alloy
 ```
 
 ```bash
@@ -802,9 +801,9 @@ export const getInitialState = async (): Promise<InitialStateT> => {
 ```
 
 ```bash
-npm run prettier
+yarn prettier
 ```
 
 ```bash
-npm run dev
+yarn dev
 ```

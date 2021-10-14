@@ -10,14 +10,13 @@
 - <https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md>
 
 ```bash
-npm install \
+yarn add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
-eslint-config-alloy \
---save-dev
+eslint-config-alloy
 ```
 
 ```bash

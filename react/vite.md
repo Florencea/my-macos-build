@@ -11,11 +11,11 @@
 ## Vite
 
 ```bash
-npm init vite@latest vite-project -- --template react-ts
+yarn create vite vite-project --template react-ts
 ```
 
 ```bash
-cd vite-project && npm install
+cd vite-project && yarn
 ```
 
 - `package.json`
@@ -58,14 +58,13 @@ export default defineConfig({
 - 此為針對 Vite 特化的版本
 
 ```bash
-npm install \
+yarn add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
-eslint-config-alloy \
---save-dev
+eslint-config-alloy
 ```
 
 ```bash
@@ -140,7 +139,7 @@ module.exports = {
 ## mkcert + HTTP2
 
 ```bash
-npm install vite-plugin-mkcert --save-dev
+yarn add -D vite-plugin-mkcert
 ```
 
 - `vite.config.ts`
@@ -162,11 +161,11 @@ export default defineConfig({
 - 注意：存在隱藏的坑未可知，需要不斷修正
 
 ```bash
-npm install antd @ant-design/icons
+yarn add antd @ant-design/icons
 ```
 
 ```bash
-npm install less vite-plugin-imp --save-dev
+yarn add -D less vite-plugin-imp
 ```
 
 - `vite.config.ts`
@@ -225,7 +224,7 @@ ReactDOM.render(
 - `colors`配置可以直接使用`@ant-design/colors`色版，與`antd`搭配時色彩較和諧
 
 ```bash
-npm install tailwindcss@latest postcss@latest autoprefixer@latest --save-dev
+yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
 ```
 
 ```bash
@@ -266,7 +265,7 @@ module.exports = {
 - 初步嘗試可以跑起來，有隱藏的坑未可知，先擱置
 
 ```bash
-npm install \
+yarn add -D \
 @babel/core \
 babel-jest \
 babel-preset-react-app \
@@ -279,8 +278,7 @@ jest-circus \
 jest-scss-transform \
 jest-watch-typeahead \
 identity-obj-proxy \
-svg-jest \
---save-dev
+svg-jest
 ```
 
 ```bash
