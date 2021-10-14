@@ -350,8 +350,15 @@ www.ithome.com.tw##.submitted .pub-wording:style(color: #f8f9fa !important)
 www.ithome.com.tw##p span:style(color: #f8f9fa !important)
 www.ithome.com.tw##a:style(color: #66ccff !important)
 www.ithome.com.tw##a:hover:style(border-color: #66ccff !important)
+www.ithome.com.tw##h2 > span:style(color: #e77e7e !important)
 www.ithome.com.tw##h3 > span:style(color: #e77e7e !important)
+www.ithome.com.tw##h2 > strong:style(color: #e77e7e !important)
 www.ithome.com.tw##h3 > strong:style(color: #e77e7e !important)
+www.ithome.com.tw##blockquote p:style(color: #f8f9fa !important)
+www.ithome.com.tw##p > img:style(width: 100% !important)
+www.ithome.com.tw##p > img:style(height: auto !important)
+www.ithome.com.tw##p > img:style(display: block !important)
+www.ithome.com.tw##p > img:style(margin: 0 auto !important)
 
 ! iyouport.org
 ! remove
