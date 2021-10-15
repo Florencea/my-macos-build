@@ -51,6 +51,12 @@ mkdir -p ~/.config/fish/completions
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 ```
 
+### 移除 Quarantine 屬性
+
+```bash
+sudo xattr -r -d com.apple.quarantine <FILE>
+```
+
 ## macOS 重設步驟
 
 - 適用於 Apple Silicon 機型
