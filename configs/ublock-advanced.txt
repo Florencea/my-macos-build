@@ -1,14 +1,16 @@
 {
-  "timeStamp": 1634377391614,
-  "version": "1.38.4",
+  "timeStamp": 1634433964061,
+  "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
     "dynamicFilteringEnabled": true,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
+    "externalLists": "https://filters.adtidy.org/android/filters/17.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
     "importedLists": [
+      "https://filters.adtidy.org/android/filters/17.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
-      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
+      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
+      "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
@@ -34,6 +36,8 @@
     "ublock-annoyances",
     "plowe-0",
     "CHN-0",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
+    "https://filters.adtidy.org/android/filters/17.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
