@@ -36,7 +36,7 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install cask fonts essential"
-brew install font-jetbrains-mono-nerd-font
+brew install font-jetbrains-mono
 brew install font-inter
 
 # # for Intel Macs
@@ -52,10 +52,9 @@ brew install font-inter
 #   printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
 #   printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
 #   printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
-#   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
 #   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
+#   printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
 #   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
-#   printf "alias el=\"exa -lgh --icons --time-style long-iso\"\n"
 # } >>~/.config/fish/config.fish
 
 print_step "brew install fish"
@@ -70,10 +69,9 @@ mkdir -p ~/.config/fish
   printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
   printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
   printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
-  printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
   printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
+  printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
-  printf "alias el=\"exa -lgh --icons --time-style long-iso\"\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew install cask apps"
@@ -81,26 +79,10 @@ brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
-brew install c0re100-qbittorrent
 brew install mos
 brew install visual-studio-code
 
-# print_step "brew install custom apps (for proper development)"
-# # microsoft office
-# brew install microsoft-office
-# # mongodb
-# brew tap mongodb/brew
-# brew install mongodb-community@5.0
-# brew install mongodb-compass
-# # redis
-# brwe install redis
-# # mysql
-# brew install mysql@5.7
-# brew install mysqlworkbench
-
 print_step "brew install commend line tools"
-brew install annie
-brew install exa
 brew install ffmpeg
 brew install gcc
 brew install git
@@ -110,7 +92,6 @@ brew install id3v2
 brew install jq
 brew install megatools
 brew install mkcert
-brew install mtr
 brew install nano
 brew install node
 brew install nss
@@ -120,7 +101,6 @@ brew install python3
 brew install wget
 brew install yarn
 brew install youtube-dl
-brew install yq
 
 print_step "git configuations"
 (
