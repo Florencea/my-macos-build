@@ -110,6 +110,7 @@ print_step "git configuations"
   git config --global core.editor "$github_editor"
   git config --global init.defaultBranch main
   git config --global pull.rebase false
+  git config --global core.quotepath false
 )
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
