@@ -160,7 +160,7 @@ network.captive-portal-service.enabled false
 # 裝置名稱
 Pixel 4a
 # 使用者代理
-Mozilla/5.0 (Android 11; Mobile; rv:90.0) Gecko/90.0 Firefox/90.0
+Mozilla/5.0 (Android 11; Mobile; rv:92.0) Gecko/92.0 Firefox/92.0
 # 螢幕尺寸
 396 x 858
 # DPR
