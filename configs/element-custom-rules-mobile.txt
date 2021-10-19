@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-05-02
+! Last updated: 2021-10-20
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -542,22 +542,22 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###menu1Content div.HS:remove()
 18av.tv##^[href="https://bit.ly/*"]
 18av.tv##[href="https://bit.ly/*"]:remove()
-18av.tv##^#main_mv > div.mobile_mv
-18av.tv###main_mv > div.mobile_mv:remove()
-18av.tv##^#main_mv > a
-18av.tv###main_mv > a:remove()
-18av.tv##^#main_mv > font > a > font
-18av.tv###main_mv > font > a > font:remove()
-18av.tv##^#main_mv > br
-18av.tv###main_mv > br:remove()
-18av.tv##^#main_mv > img
-18av.tv###main_mv > img:remove()
-18av.tv##^#main_mv > font:has-text(備用)
-18av.tv###main_mv > font:has-text(備用):remove()
-18av.tv##^#main_mv > font:has-text(播放器)
-18av.tv###main_mv > font:has-text(播放器):remove()
-18av.tv##^#main_mv > font:has-text(回報我們)
-18av.tv###main_mv > font:has-text(回報我們):remove()
+18av.tv##^#main_str > div.mobile_mv
+18av.tv###main_str > div.mobile_mv:remove()
+18av.tv##^#main_str > a
+18av.tv###main_str > a:remove()
+18av.tv##^#main_str > font > a > font
+18av.tv###main_str > font > a > font:remove()
+18av.tv##^#main_str > br
+18av.tv###main_str > br:remove()
+18av.tv##^#main_str > img
+18av.tv###main_str > img:remove()
+18av.tv##^#main_str > font:has-text(備用)
+18av.tv###main_str > font:has-text(備用):remove()
+18av.tv##^#main_str > font:has-text(播放器)
+18av.tv###main_str > font:has-text(播放器):remove()
+18av.tv##^#main_str > font:has-text(回報我們)
+18av.tv###main_str > font:has-text(回報我們):remove()
 18av.tv##^.mobile_mv > span
 18av.tv##.mobile_mv > span:remove()
 18av.tv##^.mobile_mv > font
@@ -584,8 +584,10 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###menu1Content span.altto > br:remove()
 18av.tv##^span.cs_mvwidth:has-text(影片放大)
 18av.tv##span.cs_mvwidth:has-text(影片放大):remove()
-18av.tv##^span#main_mv > span:has-text(我是分隔線)
-18av.tv##span#main_mv > span:has-text(我是分隔線):remove()
+18av.tv##^span#main_str > span:has-text(我是分隔線)
+18av.tv##span#main_str > span:has-text(我是分隔線):remove()
+18av.tv##^span#main_mv
+18av.tv##span#main_mv:remove()
 18av.tv##^#Preview_Enlarge_aRF_Bcg_aButton
 18av.tv###Preview_Enlarge_aRF_Bcg_aButton:remove()
 18av.tv##^#SpanadBox
@@ -764,23 +766,23 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(height: 172.5px !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(background-color: #1c1b21 !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(border: none !important)
-18av.tv##span#main_mv:style(font-size: 0 !important)
-18av.tv##span#main_mv:style(margin: 0 !important)
-18av.tv##span#main_mv > font:style(font-size: 0 !important)
-18av.tv##span#main_mv > font > a:style(display: none !important)
-18av.tv##span#main_mv > font > a:style(font-size: 0 !important)
-18av.tv##span#main_mv > font > a[href*='fc']:style(display: block !important)
-18av.tv##span#main_mv > font > a:style(font-weight: normal !important)
-18av.tv##span#main_mv > font > a:style(text-align: center !important)
-18av.tv##span#main_mv > font > a:style(text-decoration: none !important)
-18av.tv##span#main_mv > font > a:style(padding: 4rem !important)
-18av.tv##span#main_mv > font > a:style(margin: 1rem !important)
-18av.tv##span#main_mv > font > a:style(border: none !important)
-18av.tv##span#main_mv > font > a:style(color: #fbfbfd !important)
-18av.tv##span#main_mv > font > a:style(background-color: #33313c !important)
-18av.tv##span#main_mv > font > a:style(border-radius: 0.8rem !important)
-18av.tv##span#main_mv > font > a::before:style(font-size: 1rem !important)
-18av.tv##span#main_mv > font > a::before:style(content: '播放影片' !important)
+18av.tv##span#main_str:style(font-size: 0 !important)
+18av.tv##span#main_str:style(margin: 0 !important)
+18av.tv##span#main_str > font:style(font-size: 0 !important)
+18av.tv##span#main_str > font > a:style(display: none !important)
+18av.tv##span#main_str > font > a:style(font-size: 0 !important)
+18av.tv##span#main_str > font > a[href*='fc']:style(display: block !important)
+18av.tv##span#main_str > font > a:style(font-weight: normal !important)
+18av.tv##span#main_str > font > a:style(text-align: center !important)
+18av.tv##span#main_str > font > a:style(text-decoration: none !important)
+18av.tv##span#main_str > font > a:style(padding: 4rem !important)
+18av.tv##span#main_str > font > a:style(margin: 1rem !important)
+18av.tv##span#main_str > font > a:style(border: none !important)
+18av.tv##span#main_str > font > a:style(color: #fbfbfd !important)
+18av.tv##span#main_str > font > a:style(background-color: #33313c !important)
+18av.tv##span#main_str > font > a:style(border-radius: 0.8rem !important)
+18av.tv##span#main_str > font > a::before:style(font-size: 1rem !important)
+18av.tv##span#main_str > font > a::before:style(content: '播放影片' !important)
 18av.tv##span.cs_mvwidth:style(width: 100% !important)
 18av.tv##span.cs_mvwidth:style(display: block !important)
 18av.tv##span.cs_mvwidth:style(font-size: 0 !important)
