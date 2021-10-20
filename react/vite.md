@@ -92,26 +92,6 @@ eslint-config-alloy
 }
 ```
 
-## mkcert + HTTP2
-
-```bash
-yarn add -D vite-plugin-mkcert
-```
-
-- `vite.config.ts`
-
-```ts
-import { defineConfig } from 'vite'
-import mkcert from 'vite-plugin-mkcert'
-
-export default defineConfig({
-  server: {
-    https: true,
-  },
-  plugins: [mkcert()],
-})
-```
-
 ## Ant Design
 
 - 注意：存在隱藏的坑未可知，需要不斷修正
