@@ -30,8 +30,8 @@ cd vite-project && yarn
 - `vite.config.ts`
 
 ```ts
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
@@ -40,17 +40,17 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          antd: ["antd"],
+          antd: ['antd'],
         },
       },
     },
   },
   server: {
     proxy: {
-      "/api": "http://localhost:4000/",
+      '/api': 'http://localhost:4000/',
     },
   },
-});
+})
 ```
 
 ## ESLint Config Alloy TypeScript React
@@ -59,43 +59,36 @@ export default defineConfig({
 
 ```bash
 yarn add -D \
-eslint \
-typescript \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
 eslint-config-alloy
 ```
 
-```bash
-touch .eslintrc.js .prettierrc.js
-```
+- `package.json`
 
-- `.eslintrc.js`
-
-```js
-module.exports = {
-  extends: ["alloy", "alloy/react", "alloy/typescript"],
-  env: {
-    browser: true,
-  },
-  globals: {
-    React: "readonly",
-  },
-  rules: {
-    "spaced-comment": ["error", "always", { markers: ["/"] }],
-    "@typescript-eslint/no-require-imports": 0,
-  },
-};
-```
-
-- `.prettierrc.js`
-
-```js
-module.exports = {
-  singleQuote: true,
-  trailingComma: "all",
-};
+```json
+{
+  "eslintConfig": {
+    "extends": ["alloy", "alloy/react", "alloy/typescript"],
+    "env": {
+      "browser": true
+    },
+    "globals": {
+      "React": "readonly"
+    },
+    "rules": {
+      "spaced-comment": [
+        "error",
+        "always",
+        {
+          "markers": ["/"]
+        }
+      ],
+      "@typescript-eslint/no-require-imports": 0
+    }
+  }
+}
 ```
 
 ## mkcert + HTTP2
@@ -107,15 +100,15 @@ yarn add -D vite-plugin-mkcert
 - `vite.config.ts`
 
 ```ts
-import { defineConfig } from "vite";
-import mkcert from "vite-plugin-mkcert";
+import { defineConfig } from 'vite'
+import mkcert from 'vite-plugin-mkcert'
 
 export default defineConfig({
   server: {
     https: true,
   },
   plugins: [mkcert()],
-});
+})
 ```
 
 ## Ant Design
@@ -133,15 +126,15 @@ yarn add -D less vite-plugin-imp
 - `vite.config.ts`
 
 ```ts
-import { defineConfig } from "vite";
-import imp from "vite-plugin-imp";
+import { defineConfig } from 'vite'
+import imp from 'vite-plugin-imp'
 
 export default defineConfig({
   plugins: [
     imp({
       libList: [
         {
-          libName: "antd",
+          libName: 'antd',
           style: (name) => `antd/es/${name}/style`,
         },
       ],
@@ -154,20 +147,20 @@ export default defineConfig({
       },
     },
   },
-});
+})
 ```
 
 - `src/main.tsx`
 - 為了使國際化介面不要出錯
 
 ```tsx
-import { ConfigProvider } from "antd";
-import zhTW from "antd/es/locale/zh_TW";
-import "moment/dist/locale/zh-TW";
-import { StrictMode } from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
+import { ConfigProvider } from 'antd'
+import zhTW from 'antd/es/locale/zh_TW'
+import 'moment/dist/locale/zh-TW'
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
 
 ReactDOM.render(
   <StrictMode>
@@ -175,8 +168,8 @@ ReactDOM.render(
       <App />
     </ConfigProvider>
   </StrictMode>,
-  document.getElementById("root")
-);
+  document.getElementById('root')
+)
 ```
 
 ## Tailwind CSS
@@ -204,14 +197,14 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "#root",
-  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  important: '#root',
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: false,
   theme: {
     colors: {
-      white: "#fff",
-      black: "#000",
-      ...require("@ant-design/colors"),
+      white: '#fff',
+      black: '#000',
+      ...require('@ant-design/colors'),
     },
     extend: {},
   },
@@ -219,7 +212,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-};
+}
 ```
 
 ## Jest
@@ -267,37 +260,37 @@ jest.setup.js
 
 ```js
 module.exports = {
-  roots: ["<rootDir>/src"],
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  roots: ['<rootDir>/src'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   collectCoverageFrom: [
-    "src/**/*.{js,jsx,ts,tsx}",
-    "!src/**/*.d.ts",
-    "!src/**/main.tsx",
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/main.tsx',
   ],
   testMatch: [
-    "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-    "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}",
+    '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
   ],
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   transform: {
-    "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-    "^.+\\.scss$": "jest-scss-transform",
-    "^.+\\.css$": "<rootDir>/jest.css.mock.js",
-    "\\.svg$": "svg-jest",
+    '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.scss$': 'jest-scss-transform',
+    '^.+\\.css$': '<rootDir>/jest.css.mock.js',
+    '\\.svg$': 'svg-jest',
   },
   transformIgnorePatterns: [
-    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
-    "^.+\\.module\\.(css|sass|scss)$",
+    '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
+    '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleNameMapper: {
-    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
   watchPlugins: [
-    "jest-watch-typeahead/filename",
-    "jest-watch-typeahead/testname",
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
   ],
   resetMocks: true,
-};
+}
 ```
 
 - `jest.css.mock.js`
@@ -305,18 +298,18 @@ module.exports = {
 ```js
 module.exports = {
   process() {
-    return "module.exports = {};";
+    return 'module.exports = {};'
   },
   getCacheKey() {
-    return "cssTransform";
+    return 'cssTransform'
   },
-};
+}
 ```
 
 - `jest.setup.js`
 
 ```js
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom'
 ```
 
 - `package.json`
@@ -332,12 +325,12 @@ import "@testing-library/jest-dom";
 - `src/App.test.tsx`
 
 ```tsx
-import { render, screen } from "@testing-library/react";
-import React from "react";
-import App from "./App";
+import { render, screen } from '@testing-library/react'
+import React from 'react'
+import App from './App'
 
-it("should properly rendered when routing to /", async () => {
-  render(<App />);
-  expect(screen.getAllByText(/Vite/)[0]).toBeInTheDocument();
-});
+it('should properly rendered when routing to /', async () => {
+  render(<App />)
+  expect(screen.getAllByText(/Vite/)[0]).toBeInTheDocument()
+})
 ```
