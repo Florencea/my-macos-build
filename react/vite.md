@@ -59,6 +59,7 @@ export default defineConfig({
 
 ```bash
 yarn add -D \
+eslint \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
