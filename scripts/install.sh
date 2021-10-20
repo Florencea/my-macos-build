@@ -102,6 +102,11 @@ brew install wget
 brew install yarn
 brew install youtube-dl
 
+print_step "npm install global packages"
+npm install -g npm
+npm install -g eslint
+npm install -g http-server
+
 print_step "git configuations"
 (
   set -x
