@@ -2,7 +2,7 @@
 
 ## 有關 Apple Silicon 中的硬體加速編碼
 
-- FFmpeg 2021 年 1 月後針對 Apple Silicon 釋出的版本 videotoolbox 增加了 `-q:v` 參數可以控制品質(Apple Silicon 專用)
+- FFmpeg 2021 年 3 月後針對 Apple Silicon 釋出的版本 videotoolbox 增加了 `-q:v` 參數可以控制品質(Apple Silicon 專用)
 - `-q:v` 值的範圍為`0` ~ `100`，值越接近 `100` 品質越好(事實上在源碼中會轉換成比例故範圍才是 0~100)
 - 一樣品質越好檔案大小越大，但已經不像控制`-b:v`位元率差的那麼嚴重
 - 以下測試使用 Mac mini (M1, 2020), FFmpeg 4.4.1
