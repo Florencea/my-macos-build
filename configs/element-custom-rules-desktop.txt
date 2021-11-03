@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-10-17
+! Last updated: 2021-11-03
 
 ! universal rules
 ! outline
@@ -429,6 +429,8 @@ macrumors.com##^div[class^=trending--]
 macrumors.com##div[class^=trending--]:remove()
 macrumors.com##^div[class^=headline--]
 macrumors.com##div[class^=headline--]:remove()
+macrumors.com##^div[class^=widget--]:has(h2:has-text(Page))
+macrumors.com##div[class^=widget--]:has(h2:has-text(Page)):remove()
 macrumors.com##^script:has-text(sidebarblock)
 macrumors.com##^script[src*='platform.twitter.com']
 macrumors.com##^script[src*='geni.us']
