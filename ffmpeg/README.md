@@ -34,8 +34,8 @@ ffmpeg
 
 - FFmpeg use videotoolbox API in macOS
 - High efficiency but lack of customization
-- Only use Intel Integrated Graphics
-- `crf` could control video quality, lower is better(larger file)
+- Only available on Intel Integrated Graphics
+- Use `crf` for video quality, lower is better(larger file)
 - Test on MacBook Pro (15-inch, 2018) Intel Core i7-8850H, FFmpeg 4.3
   - Input H.264 AVC 1280 x 720
 
