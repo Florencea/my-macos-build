@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1635400946760,
+  "timeStamp": 1636012594923,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -7,13 +7,11 @@
     "dynamicFilteringEnabled": true,
     "externalLists": "https://curben.gitlab.io/malware-filter/phishing-filter.txt\nhttps://curben.gitlab.io/malware-filter/pup-filter.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
     "importedLists": [
-      "https://curben.gitlab.io/malware-filter/phishing-filter.txt",
-      "https://curben.gitlab.io/malware-filter/pup-filter.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
-      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
-      "https://raw.githubusercontent.com/Spam404/lists/master/adblock-list.txt"
+      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
     ],
     "popupPanelSections": 63,
+    "prefetchingDisabled": false,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
@@ -26,7 +24,6 @@
     "adguard-generic",
     "easylist",
     "adguard-spyware",
-    "adguard-spyware-url",
     "easyprivacy",
     "urlhaus-1",
     "adguard-annoyance",
@@ -36,10 +33,7 @@
     "plowe-0",
     "CHN-0",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
-    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
-    "https://curben.gitlab.io/malware-filter/phishing-filter.txt",
-    "https://curben.gitlab.io/malware-filter/pup-filter.txt",
-    "https://raw.githubusercontent.com/Spam404/lists/master/adblock-list.txt"
+    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
   "hiddenSettings": {
     "cloudStorageCompression": false
