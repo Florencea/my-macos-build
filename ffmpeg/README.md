@@ -18,17 +18,17 @@ ffmpeg
   <OUTPUT_FILE>
 ```
 
-| Quality  | Speed | Size  | Description                                                                                             |
-| -------- | ----- | ----- | ------------------------------------------------------------------------------------------------------- |
-| original | -     | 285MB | Baseline                                                                                                |
-| `0`      | 11x   | 101MB | Under baseline. Subtitles are legible but charactor faces looks very bad.                               |
-| `15`     | 11x   | 131MB | Under baseline. Motion frames looks pixelated.                                                          |
-| `25`     | 11x   | 174MB | Under baseline. But unconspicuous unless complex motion frames.                                         |
-| `40`     | 11x   | 244MB | Could not tell the differences between samples only when watching complex motion frames simultaneously. |
-| `45`     | 11x   | 277MB | Visually consistent.                                                                                    |
-| `50`     | 11x   | 316MB | Visually consistent.                                                                                    |
-| `65`     | 11x   | 528MB | Visually consistent.                                                                                    |
-| `100`    | 11x   | 4GB   | Visually consistent.                                                                                    |
+| Quality  | Speed | Size  | Description                                                               |
+| -------- | ----- | ----- | ------------------------------------------------------------------------- |
+| original | -     | 285MB | Baseline                                                                  |
+| `0`      | 11x   | 101MB | Under baseline. Subtitles are legible but charactor faces looks very bad. |
+| `15`     | 11x   | 131MB | Under baseline. Motion frames looks pixelated.                            |
+| `25`     | 11x   | 174MB | Under baseline. But unconspicuous unless complex motion frames.           |
+| `40`     | 11x   | 244MB | Tell differences only when watching complex motion frames simultaneously. |
+| `45`     | 11x   | 277MB | Visually consistent.                                                      |
+| `50`     | 11x   | 316MB | Visually consistent.                                                      |
+| `65`     | 11x   | 528MB | Visually consistent.                                                      |
+| `100`    | 11x   | 4GB   | Visually consistent.                                                      |
 
 ## Hardware Accelerated Encoding
 
