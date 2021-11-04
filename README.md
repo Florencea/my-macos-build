@@ -1,121 +1,121 @@
 # My macOS Build
 
-## 快速連結
+## Quick Links
 
-- [React 開發筆記](react/README.md)
-- [Rust 開發筆記](rust/README.md)
-- [FFmpeg 使用筆記](ffmpeg/README.md)
+- [React Note](react/README.md)
+- [Rust Note](rust/README.md)
+- [FFmpeg Note](ffmpeg/README.md)
 
-## 右鍵下載設定檔
+## Extenstion Configs
 
-- [uBlock Origin 設定檔](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
-- [Tampermonkey 設定檔](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt)
-- [新同文堂 設定檔](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json)
+- [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
+- [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.txt)
+- [NewTongwentong Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json)
 
-## macOS 指令
+## macOS Commands
 
-### 重新排列 LaunchPad
+### Reset LaunchPad
 
 ```bash
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ```
 
-### 禁用視窗彈出動畫
+### Disable Window Animations
 
 ```bash
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 ```
 
-### 生成 SSH Key
+### Generate SSH Key
 
 ```bash
 ssh-keygen -t ed25519
 cat .ssh/id_ed25519.pub | pbcopy
 ```
 
-### 使用 Touch ID 取代密碼驗證 sudo 指令
+### Use Touch ID for sudo Commands
 
 ```bash
 sudo nano /etc/pam.d/sudo
-# 在第 2 行加入
+# Add this at line 2
 auth       sufficient     pam_tid.so
 ```
 
-### 安裝 Rust 工具鏈
+### Rust Installation
 
 ```bash
 curl https://sh.rustup.rs | sh
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 mkdir -p ~/.config/fish/completions
-# 打開新的終端機視窗
+# Open new shell
 rustup completions fish > ~/.config/fish/completions/rustup.fish
 ```
 
-### 移除 Quarantine 屬性
+### Remove Quarantine Attributes
 
 ```bash
 sudo xattr -r -d com.apple.quarantine <FILE>
 ```
 
-## macOS 重設步驟
+## macOS Setup
 
-- 適用於 Apple Silicon 機型
-- 適用 macOS Big Sur
+- For Apple Silicon macs
+- For macOS Big Sur / Monterey
 
-### 1. 備份所有資料，登出所有服務
+### 1. Backup and logout
 
-- [將 Mac 賣掉、送人或換購以前的注意事項](https://support.apple.com/zh-tw/HT201065)
+- <https://support.apple.com/zh-tw/HT201065>
 
-### 2. 重新安裝 macOS
+### 2. Reinstall macOS
 
-- [如何清除配備 Apple 晶片的 Mac](https://support.apple.com/zh-tw/HT212030)
-- [如何重新安裝 macOS](https://support.apple.com/zh-tw/HT204904)
+- <https://support.apple.com/zh-tw/HT212030>
+- <https://support.apple.com/zh-tw/HT204904>
 
-### 3. 系統偏好設定
+### 3. System Performance
 
-- 「安全性與隱私權 -> 隱私權 -> 完全取用磁碟」 加入「終端機」並打勾
+- Privacy -> Full Disk Access, Add "Terminal.app"
 
-### 4. Finder 與 Dock 設定
+### 4. Finder and Dock
 
-### 5. 自備份回復資料
+### 5. Data Recovery from Backup
 
-- 設定 「音樂」
-- 將音樂檔案拷貝至 「音樂」
-- 將其餘檔案拷貝至家目錄
+- Setup "Music.app"
+- Import media files to "Music.app"
+- Copy data to ~/
 
-### 6. 自 App Store 安裝 App
+### 6. Install Apps from App Store
 
-### 7. 執行 install.sh
+### 7. Execute install.sh
 
-### 8. 各 App 設定
+### 8. Setup Apps
 
-### 9. 開發環境設定
+### 9. Setup Developer tools
 
-- 設定 「Google Chrome」
-- 設定 SSH Key
-- 設定 GPG Key
-- 設定 「Visual Studio Code」
+- Setup "Google Chrome.app"
+- Setup SSH Key
+- Setup GPG Key
+- Setup "Visual Studio Code.app"
 
-## macOS GPG 設定
+## macOS GPG Setup
 
-- 適用 Apple Silicon 機型
-- 需安裝 「gnupg」 與 「pinentry-mac」
+- For Apple Silicon macs
+- Requirement: gnupg, pinentry-mac
 
-### 1. 生成 GPG Key
+### 1. Generate GPG Key
 
 ```bash
 gpg --full-generate-key
 ```
 
-### 2. 匯出 GPG Key(指令已將 Key 複製至剪貼板)
+### 2. Export GPG Key
 
 ```bash
 gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
 ```
 
-### 3. 將匯出的 GPG Key 輸入到 GitHub, GitLab 或 Bitbucket
+### 3. Import GPG Key to GitHub, GitLab or Bitbucket
 
-### 4. 設定 Git 使用 GPG
+### 4. Setup Git
 
 ```bash
 git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
@@ -123,7 +123,7 @@ git config --global commit.gpgsign true
 git config --global gpg.program gpg
 ```
 
-### 5. 設定「鑰匙圈存取」使用 GPG Key
+### 5. Setup macOS Keychain
 
 ```bash
 printf "pinentry-program /opt/homebrew/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
@@ -131,37 +131,37 @@ printf "no-tty\n" >> ~/.gnupg/gpg.conf
 killall gpg-agent
 ```
 
-## Firefox 設定
+## Firefox Setup
 
-### 在 Firefox 使用 Chrome UI
+### Use Chrome UI
 
 - <https://github.com/muckSponge/MaterialFox>
 
-### about:config
+### `about:config`
 
 ```bash
-# 禁用 UI 動畫
+# Disable UI Animation
 ui.prefersReducedMotion 1
 xul.panel-animations.enabled false
-# 強制使用 TRR
+# Force TRR
 network.trr.mode 3
-# 禁用 Pocket
+# Disable Pocket
 extensions.pocket.enabled false
-# 禁用閱讀器模式
+# Disable Reader Mode
 reader.parse-on-load.enabled false
-# 禁用網路狀態偵測
+# Disable Captive Detect
 captivedetect.canonicalURL empty
 network.captive-portal-service.enabled false
 ```
 
-### 開發者工具行動裝置設定
+### Devtools
 
 ```bash
-# 裝置名稱
+# Device
 Pixel 4a
-# 使用者代理
+# User Agent
 Mozilla/5.0 (Android 11; Mobile; rv:92.0) Gecko/92.0 Firefox/92.0
-# 螢幕尺寸
+# Screen Size
 396 x 858
 # DPR
 2.727272727272727

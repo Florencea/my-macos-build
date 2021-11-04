@@ -1,12 +1,6 @@
-# Vite 開發筆記
+# Vite Note
 
 - <https://cn.vitejs.dev/>
-
-## 注意事項
-
-- Vite 生態系跟功能變化非常快，用於生產環境一定要鎖版本！
-- 因為其特性，在 React 方面與基礎庫較友好，越重型的組件庫或生態系，出 bug 的機會越多
-- 與 PWA 生態出奇友好，適合做沒有路由的單頁 PWA
 
 ## Vite
 
@@ -55,8 +49,6 @@ export default defineConfig({
 
 ## ESLint Config Alloy TypeScript React
 
-- 此為針對 Vite 特化的版本
-
 ```bash
 yarn add -D \
 eslint \
@@ -94,8 +86,6 @@ eslint-config-alloy
 
 ## Ant Design
 
-- 注意：存在隱藏的坑未可知，需要不斷修正
-
 ```bash
 yarn add antd @ant-design/icons
 ```
@@ -132,7 +122,6 @@ export default defineConfig({
 ```
 
 - `src/main.tsx`
-- 為了使國際化介面不要出錯
 
 ```tsx
 import { ConfigProvider } from 'antd'
@@ -154,10 +143,6 @@ ReactDOM.render(
 ```
 
 ## Tailwind CSS
-
-- 禁用`preflight`是為了不要在預設狀況干涉`antd`樣式
-- 配置`important`是為了能夠覆蓋`antd`樣式，但不干擾行內樣式
-- `colors`配置可以直接使用`@ant-design/colors`色版，與`antd`搭配時色彩較和諧
 
 ```bash
 yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
@@ -197,8 +182,6 @@ module.exports = {
 ```
 
 ## Jest
-
-- 初步嘗試可以跑起來，有隱藏的坑未可知，先擱置
 
 ```bash
 yarn add -D \

@@ -1,9 +1,9 @@
-# React 開發筆記
+# React Note
 
-## 快速連結
+## Quick Links
 
-- [Vite 開發筆記](vite.md)
-- [UmiJS 開發筆記](umi.md)
+- [Vite Note](vite.md)
+- [UmiJS Note](umi.md)
 
 ## ESLint Config Alloy TypeScript React
 
@@ -27,7 +27,7 @@ mkdir .vscode && touch .eslintrc.js .prettierrc.js .vscode/settings.json
 
 ```js
 module.exports = {
-  extends: ["alloy", "alloy/react", "alloy/typescript"],
+  extends: ['alloy', 'alloy/react', 'alloy/typescript'],
   env: {
     browser: true,
   },
@@ -35,7 +35,7 @@ module.exports = {
     React: true,
   },
   rules: {},
-};
+}
 ```
 
 - `.prettierrc.js`
@@ -43,8 +43,8 @@ module.exports = {
 ```js
 module.exports = {
   singleQuote: true,
-  trailingComma: "all",
-};
+  trailingComma: 'all',
+}
 ```
 
 - `.vscode/settings.json`
