@@ -1,17 +1,16 @@
 {
-  "timeStamp": 1636012594923,
+  "timeStamp": 1636118066196,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
     "dynamicFilteringEnabled": true,
-    "externalLists": "https://curben.gitlab.io/malware-filter/phishing-filter.txt\nhttps://curben.gitlab.io/malware-filter/pup-filter.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
     "importedLists": [
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
     ],
     "popupPanelSections": 63,
-    "prefetchingDisabled": false,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
