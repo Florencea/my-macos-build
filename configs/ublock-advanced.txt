@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1636118066196,
+  "timeStamp": 1636124546369,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -11,6 +11,7 @@
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
     ],
     "popupPanelSections": 63,
+    "prefetchingDisabled": false,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
