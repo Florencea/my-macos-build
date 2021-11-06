@@ -91,6 +91,7 @@ brew install gnupg
 brew install id3v2
 brew install jq
 brew install megatools
+brew install micro
 brew install mkcert
 brew install nano
 brew install node
