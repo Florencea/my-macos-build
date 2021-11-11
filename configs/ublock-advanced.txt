@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "timeStamp": 1636639680351,
-=======
-  "timeStamp": 1636639515920,
->>>>>>> 90600be3a7f683edee4e2354e909c4293d0ba31c
+  "timeStamp": 1636639896504,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -25,10 +21,14 @@
     "ublock-privacy",
     "ublock-abuse",
     "ublock-unbreak",
+    "adguard-generic",
     "easylist",
+    "adguard-spyware",
     "easyprivacy",
     "urlhaus-1",
+    "adguard-annoyance",
     "adguard-social",
+    "fanboy-thirdparty_social",
     "ublock-annoyances",
     "plowe-0",
     "CHN-0",
