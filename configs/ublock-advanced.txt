@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1636205632162,
+  "timeStamp": 1636639515920,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -11,6 +11,7 @@
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
     ],
     "popupPanelSections": 63,
+    "prefetchingDisabled": false,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
@@ -20,14 +21,10 @@
     "ublock-privacy",
     "ublock-abuse",
     "ublock-unbreak",
-    "adguard-generic",
     "easylist",
-    "adguard-spyware",
     "easyprivacy",
     "urlhaus-1",
-    "adguard-annoyance",
     "adguard-social",
-    "fanboy-thirdparty_social",
     "ublock-annoyances",
     "plowe-0",
     "CHN-0",
