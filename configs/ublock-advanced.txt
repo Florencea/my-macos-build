@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1636698813333,
+  "timeStamp": 1636733859229,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -33,6 +33,7 @@
     "ublock-annoyances",
     "plowe-0",
     "CHN-0",
+    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-dark.combined.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
