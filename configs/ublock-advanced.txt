@@ -1,12 +1,13 @@
 {
-  "timeStamp": 1636639896504,
+  "timeStamp": 1636698813333,
   "version": "1.38.6",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
     "dynamicFilteringEnabled": true,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-dark.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
     "importedLists": [
+      "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-dark.combined.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
     ],
