@@ -1,0 +1,42 @@
+! Title: Element Rules by Florencea for Dark Mode
+! Description: Custom styles in Dark mode by Florencea Bear, for uBlock Origin, Adguard
+! Last updated: 2021-11-12
+
+! www.ithome.com.tw
+www.ithome.com.tw##body:style(background-color: #1c1b21 !important)
+www.ithome.com.tw##body:style(color: #f8f9fa !important)
+www.ithome.com.tw##.main-container:style(background-color: #1c1b21 !important)
+www.ithome.com.tw##.page-node .page-header:style(color: #f8f9fa !important)
+www.ithome.com.tw##.submitted:style(color: #f8f9fa !important)
+www.ithome.com.tw##.submitted .created:style(color: #f8f9fa !important)
+www.ithome.com.tw##.submitted .pub-wording:style(color: #f8f9fa !important)
+www.ithome.com.tw##p span:style(color: #f8f9fa !important)
+www.ithome.com.tw##a:style(color: #66ccff !important)
+www.ithome.com.tw##a span:style(color: #66ccff !important)
+www.ithome.com.tw##a:hover:style(border-color: #66ccff !important)
+www.ithome.com.tw##h2 > span:style(color: #e77e7e !important)
+www.ithome.com.tw##h3 > span:style(color: #e77e7e !important)
+www.ithome.com.tw##h2 > strong:style(color: #e77e7e !important)
+www.ithome.com.tw##h3 > strong:style(color: #e77e7e !important)
+www.ithome.com.tw##blockquote p:style(color: #f8f9fa !important)
+www.ithome.com.tw##p > img:style(width: 100% !important)
+www.ithome.com.tw##p > img:style(height: auto !important)
+www.ithome.com.tw##p > img:style(display: block !important)
+www.ithome.com.tw##p > img:style(margin: 0 auto !important)
+
+! pts.org.tw
+pts.org.tw##body p:style(color: #f8f9fa)
+pts.org.tw##body li:style(color: #f8f9fa)
+pts.org.tw##body h1:style(color: #f8f9fa)
+pts.org.tw##body h2:style(color: #f8f9fa)
+pts.org.tw##body h3:style(color: #f8f9fa)
+pts.org.tw##body h4:style(color: #f8f9fa)
+pts.org.tw##body h5:style(color: #f8f9fa)
+pts.org.tw##body h6:style(color: #f8f9fa)
+pts.org.tw##body table:style(color: #f8f9fa)
+pts.org.tw##body .img-talk:style(color: #f8f9fa !important)
+pts.org.tw##.post-article a:style(color: #83c1fc !important)
+pts.org.tw##.post-article a:hover:style(border-color: #83c1fc !important)
+pts.org.tw##.post-article .articleimg:style(color: #83c1fc !important)
+pts.org.tw##body:style(background-color: #1c1b21 !important)
+pts.org.tw##.post-article ul:style(background-color: #1c1b21 !important)
