@@ -2,6 +2,9 @@
 ! Description: Custom styles in Dark mode by Florencea Bear, for uBlock Origin, Adguard
 ! Last updated: 2021-11-12
 
+! feedly.com
+feedly.com##.home:style(background-color: #121212 !important)
+
 ! www.ithome.com.tw
 www.ithome.com.tw##body:style(background-color: #1c1b21 !important)
 www.ithome.com.tw##body:style(color: #f8f9fa !important)
