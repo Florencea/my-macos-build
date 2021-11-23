@@ -1,6 +1,7 @@
 # UmiJS Note
 
 - <https://umijs.org/zh-CN/docs>
+- Only work with yarn
 
 ## Umi + Ant Design + Tailwind + ESLint & Prettier
 

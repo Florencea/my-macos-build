@@ -1,6 +1,7 @@
 # Vite Note
 
 - <https://cn.vitejs.dev/>
+- Works with npm, yarn, pnpm
 
 ## Vite
 
