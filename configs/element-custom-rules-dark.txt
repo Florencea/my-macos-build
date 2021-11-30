@@ -28,6 +28,7 @@ www.ithome.com.tw##p > img:style(display: block !important)
 www.ithome.com.tw##p > img:style(margin: 0 auto !important)
 
 ! pts.org.tw
+pts.org.tw##body .post-article:style(color: #f8f9fa)
 pts.org.tw##body p:style(color: #f8f9fa)
 pts.org.tw##body li:style(color: #f8f9fa)
 pts.org.tw##body h1:style(color: #f8f9fa)
