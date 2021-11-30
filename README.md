@@ -160,7 +160,7 @@ network.captive-portal-service.enabled false
 # Device
 Pixel 4a
 # User Agent
-Mozilla/5.0 (Android 11; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
+Mozilla/5.0 (Android 12; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
 # Screen Size
 396 x 858
 # DPR
