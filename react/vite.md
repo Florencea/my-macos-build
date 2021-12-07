@@ -6,11 +6,11 @@
 ## Vite
 
 ```bash
-yarn create vite vite-project --template react-ts
+npm init -y vite@latest vite-project -- --template react-ts
 ```
 
 ```bash
-cd vite-project && yarn
+cd vite-project && npm install
 ```
 
 - `package.json`
@@ -25,8 +25,8 @@ cd vite-project && yarn
 - `vite.config.ts`
 
 ```ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
@@ -45,13 +45,13 @@ export default defineConfig({
       '/api': 'http://localhost:4000/',
     },
   },
-})
+});
 ```
 
 ## ESLint Config Alloy TypeScript React
 
 ```bash
-yarn add -D \
+npm install -D \
 eslint \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
@@ -88,18 +88,18 @@ eslint-config-alloy
 ## Ant Design
 
 ```bash
-yarn add antd @ant-design/icons
+npm install antd @ant-design/icons
 ```
 
 ```bash
-yarn add -D less vite-plugin-imp
+npm install -D less vite-plugin-imp
 ```
 
 - `vite.config.ts`
 
 ```ts
-import { defineConfig } from 'vite'
-import imp from 'vite-plugin-imp'
+import { defineConfig } from 'vite';
+import imp from 'vite-plugin-imp';
 
 export default defineConfig({
   plugins: [
@@ -119,19 +119,19 @@ export default defineConfig({
       },
     },
   },
-})
+});
 ```
 
 - `src/main.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd'
-import zhTW from 'antd/es/locale/zh_TW'
-import 'moment/dist/locale/zh-TW'
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
-import './index.css'
+import { ConfigProvider } from 'antd';
+import zhTW from 'antd/es/locale/zh_TW';
+import 'moment/dist/locale/zh-TW';
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
 
 ReactDOM.render(
   <StrictMode>
@@ -139,14 +139,14 @@ ReactDOM.render(
       <App />
     </ConfigProvider>
   </StrictMode>,
-  document.getElementById('root')
-)
+  document.getElementById('root'),
+);
 ```
 
 ## Tailwind CSS
 
 ```bash
-yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 ```
 
 ```bash
@@ -179,13 +179,13 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};
 ```
 
 ## Jest
 
 ```bash
-yarn add -D \
+npm install -D \
 @babel/core \
 babel-jest \
 babel-preset-react-app \
@@ -227,15 +227,8 @@ jest.setup.js
 module.exports = {
   roots: ['<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  collectCoverageFrom: [
-    'src/**/*.{js,jsx,ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/**/main.tsx',
-  ],
-  testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-    '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
-  ],
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts', '!src/**/main.tsx'],
+  testMatch: ['<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}', '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
   testEnvironment: 'jsdom',
   transform: {
     '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
@@ -250,12 +243,9 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
-  ],
+  watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   resetMocks: true,
-}
+};
 ```
 
 - `jest.css.mock.js`
@@ -263,18 +253,18 @@ module.exports = {
 ```js
 module.exports = {
   process() {
-    return 'module.exports = {};'
+    return 'module.exports = {};';
   },
   getCacheKey() {
-    return 'cssTransform'
+    return 'cssTransform';
   },
-}
+};
 ```
 
 - `jest.setup.js`
 
 ```js
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 ```
 
 - `package.json`
@@ -290,12 +280,12 @@ import '@testing-library/jest-dom'
 - `src/App.test.tsx`
 
 ```tsx
-import { render, screen } from '@testing-library/react'
-import React from 'react'
-import App from './App'
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import App from './App';
 
 it('should properly rendered when routing to /', async () => {
-  render(<App />)
-  expect(screen.getAllByText(/Vite/)[0]).toBeInTheDocument()
-})
+  render(<App />);
+  expect(screen.getAllByText(/Vite/)[0]).toBeInTheDocument();
+});
 ```

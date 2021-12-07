@@ -10,7 +10,7 @@
 - <https://github.com/AlloyTeam/eslint-config-alloy/blob/master/README.zh-CN.md>
 
 ```bash
-yarn add -D \
+npm install -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
@@ -35,7 +35,7 @@ module.exports = {
     React: true,
   },
   rules: {},
-}
+};
 ```
 
 - `.prettierrc.js`
@@ -44,7 +44,7 @@ module.exports = {
 module.exports = {
   singleQuote: true,
   trailingComma: 'all',
-}
+};
 ```
 
 - `.vscode/settings.json`
@@ -63,13 +63,7 @@ module.exports = {
     "plaintext": "html"
   },
   // ESLint
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "vue",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "vue", "typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
