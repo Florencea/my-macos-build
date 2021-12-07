@@ -89,7 +89,6 @@ brew install node@16
 } >>~/.npmrc
 (
   set -x
-  brew install yarn
   npm install -g npm
   npm install -g eslint
   npm install -g http-server
