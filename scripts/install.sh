@@ -2,10 +2,8 @@
 
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  printf "\E[1;36m"
-  printf "\nplease setup homebrew path, and open a new shell to continue\n\n"
-  printf "\E[0m"
-  exit
+  echo 'eval "\$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
+  eval "\$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 function print_step() {
