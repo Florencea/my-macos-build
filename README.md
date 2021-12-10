@@ -145,13 +145,17 @@ ui.prefersReducedMotion 1
 xul.panel-animations.enabled false
 # Force TRR
 network.trr.mode 3
+# TRR Speeds, not for privacy
+network.trr.custom_uri https://dns.google/dns-query
+network.trr.uri https://dns.google/dns-query
+network.trr.disable-ECS false
+network.trr.useGET true
+# Use prefetch, not for privacy
+network.prefetch-next true
 # Disable Pocket
 extensions.pocket.enabled false
 # Disable Reader Mode
 reader.parse-on-load.enabled false
-# Disable Captive Detect
-captivedetect.canonicalURL empty
-network.captive-portal-service.enabled false
 ```
 
 ### Devtools
