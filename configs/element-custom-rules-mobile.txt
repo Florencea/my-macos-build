@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-12-08
+! Last updated: 2021-12-11
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -696,12 +696,13 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span#main:style(display: block !important)
 18av.tv##span#main:style(padding: 0 !important)
 18av.tv##span#main:style(text-align: center !important)
+18av.tv##span#main > a.aRF:style(position: relative !important)
 18av.tv##span#main > a.aRF:style(width: 100% !important)
 18av.tv##span#main > a.aRF:style(display: inline-flex !important)
 18av.tv##span#main > a.aRF:style(flex-direction: column-reverse !important)
 18av.tv##span#main > a.aRF:style(justify-content: space-between !important)
 18av.tv##span#main > a.aRF:style(margin: 0 !important)
-18av.tv##span#main > a.aRF:style(padding: 1rem 1rem 2rem 1rem !important)
+18av.tv##span#main > a.aRF:style(padding: 1rem 25% 3rem 1rem !important)
 18av.tv##span#main > a.aRF:style(box-sizing: border-box !important)
 18av.tv##span#main > a.aRF:style(color: #fbfbfd !important)
 18av.tv##span#main > a.aRF:style(text-align: left !important)
@@ -713,9 +714,9 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span#main > a.aRF img:style(margin-bottom: 0.5rem !important)
 18av.tv##span#main > a.aRF img:style(margin-left: -1rem !important)
 18av.tv##span#main > a.aRF img:style(bottom: 0 !important)
-18av.tv##span#main > a.aRF img:style(width: calc(100% + 2rem) !important)
-18av.tv##span#main > a.aRF img:style(max-width: calc(100% + 2rem) !important)
-18av.tv##span#main > a.aRF img:style(height: 18rem !important)
+18av.tv##span#main > a.aRF img:style(width: calc(125% + 4rem) !important)
+18av.tv##span#main > a.aRF img:style(max-width: calc(125% + 4rem) !important)
+18av.tv##span#main > a.aRF img:style(height: 14rem !important)
 18av.tv##span#main > a.aRF img:style(object-fit: cover !important)
 18av.tv##span#main > a.aRF img:style(object-position: center center !important)
 18av.tv##span#main > .aButton_np_S:style(-moz-appearance: none !important)
@@ -770,8 +771,8 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.enlarge_jizcg_xxxxxx:style(width: auto !important)
 18av.tv##span.enlarge_jizcg_xxxxxx:style(overflow: hidden !important)
 18av.tv##span.enlarge_jizcg_xxxxxx:style(margin: 0 1rem !important)
-18av.tv##span.enlarge_jizcg_xxxxxx img:style(width: 229px !important)
-18av.tv##span.enlarge_jizcg_xxxxxx img:style(height: 172.5px !important)
+18av.tv##span.enlarge_jizcg_xxxxxx img:style(width: 25% !important)
+18av.tv##span.enlarge_jizcg_xxxxxx img:style(aspect-ratio: 16 / 9 !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(background-color: #1c1b21 !important)
 18av.tv##span.enlarge_jizcg_xxxxxx img:style(border: none !important)
 18av.tv##span#main_str:style(font-size: 0 !important)
