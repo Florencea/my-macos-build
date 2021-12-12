@@ -725,7 +725,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span#main > a.aRF img:style(bottom: 0 !important)
 18av.tv##span#main > a.aRF img:style(width: calc(125% + 4rem) !important)
 18av.tv##span#main > a.aRF img:style(max-width: calc(125% + 4rem) !important)
-18av.tv##span#main > a.aRF img:style(height: 14rem !important)
+18av.tv##span#main > a.aRF img:style(height: 18rem !important)
 18av.tv##span#main > a.aRF img:style(object-fit: cover !important)
 18av.tv##span#main > a.aRF img:style(object-position: center center !important)
 18av.tv##span#main > .aButton_np_S:style(-moz-appearance: none !important)
