@@ -61,6 +61,7 @@ brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
+brew install --cask mos
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
