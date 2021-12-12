@@ -60,36 +60,31 @@ sudo xattr -r -d com.apple.quarantine <FILE>
 ## macOS Setup
 
 - For Apple Silicon macs
-- For macOS Big Sur / Monterey
+- For macOS Monterey
 
-### 1. Backup and logout
+### 1. Logout Browsers and Reinstall macOS
 
-- <https://support.apple.com/zh-tw/HT201065>
+- <https://support.apple.com/zh-tw/HT212749>
 
-### 2. Reinstall macOS
-
-- <https://support.apple.com/zh-tw/HT212030>
-- <https://support.apple.com/zh-tw/HT204904>
-
-### 3. System Performance
+### 2. System Performance
 
 - Privacy -> Full Disk Access, Add "Terminal.app"
 
-### 4. Finder and Dock
+### 3. Finder and Dock
 
-### 5. Data Recovery from Backup
+### 4. Data Recovery from Backup
 
 - Setup "Music.app"
 - Import media files to "Music.app"
 - Copy data to ~/
 
-### 6. Install Apps from App Store
+### 5. Install Apps from App Store
 
-### 7. Execute install.sh
+### 6. Execute install.sh
 
-### 8. Setup Apps
+### 7. Setup Apps
 
-### 9. Setup Developer tools
+### 8. Setup Developer tools
 
 - Setup "Google Chrome.app"
 - Setup SSH Key
@@ -139,19 +134,19 @@ killall gpg-agent
 
 ### `about:config`
 
+- All for speeds, not privacy
+
 ```bash
-# Disable UI Animation
-ui.prefersReducedMotion 1
-xul.panel-animations.enabled false
-# Force TRR
+# DNS over HTTPS
 network.trr.mode 3
-# TRR Speeds, not for privacy
 network.trr.custom_uri https://dns.google/dns-query
 network.trr.uri https://dns.google/dns-query
 network.trr.disable-ECS false
 network.trr.useGET true
-# Use prefetch, not for privacy
+# Use prefetch
 network.prefetch-next true
+network.dns.disablePrefetch false
+network.dns.disablePrefetchFromHTTPS false
 # Disable Pocket
 extensions.pocket.enabled false
 # Disable Reader Mode
