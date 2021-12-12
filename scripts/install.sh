@@ -2,8 +2,8 @@
 
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  echo 'eval "\$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-  eval "\$(/opt/homebrew/bin/brew shellenv)"
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 function print_step() {
@@ -16,23 +16,12 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 
-print_step "upgrade homebrew taps"
-brew tap homebrew/core
-brew tap homebrew/cask
-brew tap homebrew/cask-versions
-brew tap homebrew/cask-fonts
-
 print_step "brew install istat menus"
-brew install istat-menus
+brew install --cask istat-menus
 printf "\E[0;31m"
 printf "982092332@qq.com\n"
 printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
 printf "\E[0m"
-
-print_step "brew install fonts essential"
-brew install font-jetbrains-mono
-brew install font-inter
-brew install font-new-york
 
 print_step "brew install fish"
 brew install fish
@@ -51,12 +40,17 @@ mkdir -p ~/.config/fish
   printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
 } >>~/.config/fish/config.fish
 
+print_step "brew install fonts essential"
+brew install --cask font-jetbrains-mono
+brew install --cask font-inter
+brew install --cask font-new-york
+
 print_step "brew install cask apps"
-brew install google-chrome
-brew install iina
-brew install keka
-brew install kekaexternalhelper
-brew install visual-studio-code
+brew install --cask google-chrome
+brew install --cask iina
+brew install --cask keka
+brew install --cask kekaexternalhelper
+brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
@@ -78,18 +72,17 @@ brew install wget
 brew install youtube-dl
 
 print_step "setup nodejs tools"
-brew install node@16
+node_lts="node@16"
+brew install "$node_lts"
 {
-  printf "fish_add_path /opt/homebrew/opt/node@16/bin\n"
+  printf "fish_add_path /opt/homebrew/opt/$node_lts/bin\n"
 } >>~/.config/fish/config.fish
 {
   printf "fund=false\naudit=false\n"
 } >>~/.npmrc
 (
   set -x
-  npm install -g npm
-  npm install -g eslint
-  npm install -g http-server
+  /opt/homebrew/opt/$node_lts/bin/npm install -g npm eslint http-server serve
 )
 
 print_step "git configuations"
