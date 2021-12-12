@@ -12,9 +12,20 @@ function print_step() {
   printf "\E[0m"
 }
 
+# git
 github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
+# config
+script_dir="~/GitHub/my-macos-build"
+script_path="$script_dir/scripts"
+# brew
+brew_dir="/opt/homebrew"
+brew_path="$brew_dir/bin"
+brew_system_path="$brew_dir/sbin"
+# node
+node_lts="node@16"
+node_path="$brew_dir/opt/$node_lts/bin"
 
 print_step "brew install istat menus"
 brew install --cask istat-menus
@@ -25,19 +36,19 @@ printf "\E[0m"
 
 print_step "brew install fish"
 brew install fish
-echo '/opt/homebrew/bin/fish' | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
+echo "$brew_path/fish" | sudo tee -a /etc/shells
+chsh -s $brew_path/fish
 mkdir -p ~/.config/fish
 {
-  printf "set -g -x PATH /opt/homebrew/bin \$PATH\n"
-  printf "set -g fish_user_paths /opt/homebrew/sbin \$fish_user_paths\n"
+  printf "set -g -x PATH $brew_path \$PATH\n"
+  printf "set -g fish_user_paths $brew_system_path \$fish_user_paths\n"
   printf "set -g -x fish_greeting\n"
-  printf "alias mmb=\"code ~/GitHub/my-macos-build\"\n"
-  printf "alias mkgif=\"sh ~/GitHub/my-macos-build/scripts/make-gif.sh\"\n"
-  printf "alias ebk=\"sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh\"\n"
-  printf "alias urb=\"sh ~/GitHub/my-macos-build/scripts/ublock-rule-backup.sh\"\n"
-  printf "alias ua=\"sh ~/GitHub/my-macos-build/scripts/update-all.sh\"\n"
-  printf "alias fa=\"sh ~/GitHub/my-macos-build/scripts/git-fetch-all.sh\"\n"
+  printf "alias mmb=\"code $script_dir\"\n"
+  printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
+  printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
+  printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
+  printf "alias ua=\"sh $script_path/update-all.sh\"\n"
+  printf "alias fa=\"sh $script_path/git-fetch-all.sh\"\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew install fonts essential"
@@ -72,17 +83,16 @@ brew install wget
 brew install youtube-dl
 
 print_step "setup nodejs tools"
-node_lts="node@16"
-brew install "$node_lts"
+brew install $node_lts
 {
-  printf "fish_add_path /opt/homebrew/opt/$node_lts/bin\n"
+  printf "fish_add_path $node_path\n"
 } >>~/.config/fish/config.fish
 {
   printf "fund=false\naudit=false\n"
 } >>~/.npmrc
 (
   set -x
-  /opt/homebrew/opt/$node_lts/bin/npm install -g npm eslint http-server serve
+  $node_path/npm install -g npm eslint http-server serve
 )
 
 print_step "git configuations"
