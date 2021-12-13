@@ -33,6 +33,10 @@ antd \
 ```
 
 ```bash
+npm install
+```
+
+```bash
 rm \
 src/pages/index.tsx \
 src/pages/index.less \
@@ -71,7 +75,7 @@ src/pages/private/Welcome.tsx \
 src/pages/private/Logout.tsx \
 src/pages/public/Login.tsx \
 src/hooks/useApi.ts \
-src/hookss/useToken.ts
+src/hooks/useToken.ts
 ```
 
 ```bash
@@ -168,7 +172,7 @@ module.exports = {
     preflight: false
   },
   important: '#root',
-  content: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
+  purge: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
   darkMode: 'media',
   theme: {
     colors: {
