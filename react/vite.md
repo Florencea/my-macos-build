@@ -13,41 +13,6 @@ npm init -y vite@latest vite-project -- --template react-ts
 cd vite-project && npm install
 ```
 
-- `package.json`
-
-```json
-{
-  "license": "ISC",
-  "private": true
-}
-```
-
-- `vite.config.ts`
-
-```ts
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    chunkSizeWarningLimit: 500,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          antd: ['antd']
-        }
-      }
-    }
-  },
-  server: {
-    proxy: {
-      '/api': 'http://localhost:4000/'
-    }
-  }
-});
-```
-
 ## Ant Design
 
 ```bash
@@ -61,11 +26,13 @@ npm install -D less vite-plugin-imp
 - `vite.config.ts`
 
 ```ts
-import { defineConfig } from 'vite';
-import imp from 'vite-plugin-imp';
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import imp from 'vite-plugin-imp'
 
 export default defineConfig({
   plugins: [
+    react(),
     imp({
       libList: [
         {
@@ -82,19 +49,19 @@ export default defineConfig({
       }
     }
   }
-});
+})
 ```
 
 - `src/main.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd';
-import zhTW from 'antd/es/locale/zh_TW';
-import 'moment/dist/locale/zh-TW';
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import { ConfigProvider } from 'antd'
+import zhTW from 'antd/es/locale/zh_TW'
+import 'moment/dist/locale/zh-TW'
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
 
 ReactDOM.render(
   <StrictMode>
@@ -103,7 +70,7 @@ ReactDOM.render(
     </ConfigProvider>
   </StrictMode>,
   document.getElementById('root')
-);
+)
 ```
 
 ## Tailwind CSS
@@ -128,8 +95,8 @@ module.exports = {
     preflight: false
   },
   important: '#root',
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false,
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: 'media',
   theme: {
     colors: {
       white: '#fff',
@@ -138,9 +105,6 @@ module.exports = {
     },
     extend: {}
   },
-  variants: {
-    extend: {}
-  },
   plugins: []
-};
+}
 ```

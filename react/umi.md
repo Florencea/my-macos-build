@@ -90,13 +90,13 @@ code .
 module.exports = {
   extends: ['alloy', 'alloy/react', 'alloy/typescript'],
   env: {
-    browser: true,
+    browser: true
   },
   globals: {
-    React: true,
+    React: true
   },
-  rules: {},
-};
+  rules: {}
+}
 ```
 
 - `.prettierrc.js`
@@ -104,8 +104,8 @@ module.exports = {
 ```js
 module.exports = {
   singleQuote: true,
-  trailingComma: 'all',
-};
+  trailingComma: 'all'
+}
 ```
 
 - `.gitignore`
@@ -134,14 +134,14 @@ module.exports = {
 - `.umirc.ts`
 
 ```ts
-import { routes, TITLE } from './src/configs/routes';
-import { theme } from './src/configs/theme';
-import { defineConfig } from 'umi';
+import { routes, TITLE } from './src/configs/routes'
+import { theme } from './src/configs/theme'
+import { defineConfig } from 'umi'
 
 export default defineConfig({
   // dev config
   nodeModulesTransform: {
-    type: 'none',
+    type: 'none'
   },
   fastRefresh: {},
   proxy: {
@@ -168,14 +168,14 @@ export default defineConfig({
   locale: {
     default: 'zh-TW',
     antd: true,
-    baseNavigator: true,
+    baseNavigator: true
   },
   layout: {
-    logo: null,
+    logo: null
   },
   antd: {},
-  theme,
-});
+  theme
+})
 ```
 
 - `package.json`
@@ -193,34 +193,34 @@ export default defineConfig({
 ```ts
 const user = {
   account: 'test',
-  password: 'test',
-};
+  password: 'test'
+}
 
 const success = {
   success: true,
   data: {
-    token: 'fake_token',
-  },
-};
+    token: 'fake_token'
+  }
+}
 
 const failed = {
   success: false,
   errorCode: '401',
   errorMessage: '帳號或密碼錯誤',
-  showType: 2,
-};
+  showType: 2
+}
 
 export default {
   'POST /api/login': (req: any, res: any) => {
-    const { account, password } = req.body;
+    const { account, password } = req.body
     if (account === user.account && password === user.password) {
-      res.json(success);
+      res.json(success)
     } else {
-      res.status(401).json(failed);
+      res.status(401).json(failed)
     }
   },
-  'POST /api/logout': { success: true },
-};
+  'POST /api/logout': { success: true }
+}
 ```
 
 - `public/robots.txt`
@@ -234,63 +234,72 @@ Disallow:
 - `src/components/PageFrame.tsx`
 
 ```tsx
-import { getPageTitle } from '@/configs/routes';
-import { Col, Empty, PageHeader, PageHeaderProps, Row } from 'antd';
-import { useMemo } from 'react';
-import { history } from 'umi';
+import { getPageTitle } from '@/configs/routes'
+import { Col, Empty, PageHeader, PageHeaderProps, Row } from 'antd'
+import { useMemo } from 'react'
+import { history } from 'umi'
 
 interface Props {
-  pageHeaderProps?: Partial<PageHeaderProps>;
-  children?: React.ReactNode;
+  pageHeaderProps?: Partial<PageHeaderProps>
+  children?: React.ReactNode
 }
 
 export default ({ pageHeaderProps, children }: Props) => {
-  const TITLE = useMemo(() => getPageTitle(history.location.pathname), [history.location.pathname]);
+  const TITLE = useMemo(
+    () => getPageTitle(history.location.pathname),
+    [history.location.pathname]
+  )
   return (
     <Row className="h-screen">
       <Col className="p-3" span={24}>
         <PageHeader ghost={false} title={TITLE} {...pageHeaderProps} />
         <div className="mt-3">
-          {children ?? <Empty className="pt-20" image={Empty.PRESENTED_IMAGE_SIMPLE} description="頁面建造中" />}
+          {children ?? (
+            <Empty
+              className="pt-20"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="頁面建造中"
+            />
+          )}
         </div>
       </Col>
     </Row>
-  );
-};
+  )
+}
 ```
 
 - `src/configs/api.ts`
 
 ```ts
-export const prefix = '/api';
+export const prefix = '/api'
 
 export const api = {
   auth: {
     login: '/login',
-    logout: '/logout',
-  },
-};
+    logout: '/logout'
+  }
+}
 ```
 
 - `src/configs/routes.ts`
 
 ```ts
-import { Route } from '@ant-design/pro-layout/lib/typings';
+import { Route } from '@ant-design/pro-layout/lib/typings'
 
-export const DEFAULT_PATH_PUBLIC = '/login';
-export const DEFAULT_PATH_PRIVATE = '/welcome';
-export const TITLE = 'myapp';
+export const DEFAULT_PATH_PUBLIC = '/login'
+export const DEFAULT_PATH_PRIVATE = '/welcome'
+export const TITLE = 'myapp'
 
 const basicRouteConfig: Route = {
   hideInBreadcrumb: true,
-  headerRender: false,
-};
+  headerRender: false
+}
 
 const basicRouteConfigWithoutMenu: Route = {
   ...basicRouteConfig,
   hideInMenu: true,
-  menuRender: false,
-};
+  menuRender: false
+}
 
 const privateRoutes: Route[] = [
   {
@@ -299,7 +308,7 @@ const privateRoutes: Route[] = [
     name: '歡迎',
     icon: 'Smile',
     access: 'isLogin',
-    component: '@/pages/private/Welcome/Welcome',
+    component: '@/pages/private/Welcome/Welcome'
   },
   {
     ...basicRouteConfig,
@@ -307,167 +316,170 @@ const privateRoutes: Route[] = [
     name: '登出',
     icon: 'Logout',
     access: 'isLogin',
-    component: '@/pages/private/Logout/Logout',
-  },
-];
+    component: '@/pages/private/Logout/Logout'
+  }
+]
 
 const publicRoutes: Route[] = [
   {
     ...basicRouteConfigWithoutMenu,
     path: DEFAULT_PATH_PUBLIC,
-    component: '@/pages/public/Login/Login',
-  },
-];
+    component: '@/pages/public/Login/Login'
+  }
+]
 
-export const ROUTES_NEED_REDIRECT = [DEFAULT_PATH_PUBLIC];
+export const ROUTES_NEED_REDIRECT = [DEFAULT_PATH_PUBLIC]
 
 export const routes: Route[] = [
   ...privateRoutes,
   ...publicRoutes,
-  { exact: false, path: '/', name: '', redirect: DEFAULT_PATH_PUBLIC },
-];
+  { exact: false, path: '/', name: '', redirect: DEFAULT_PATH_PUBLIC }
+]
 
-export const getPageTitle = (currentPath: string) => routes.find((r) => r.path === currentPath)?.name ?? '';
+export const getPageTitle = (currentPath: string) =>
+  routes.find((r) => r.path === currentPath)?.name ?? ''
 ```
 
 - `src/configs/theme.ts`
 
 ```ts
-import { grey, purple } from '@ant-design/colors';
+import { grey, purple } from '@ant-design/colors'
 
 export const theme = {
   'primary-color': purple[4],
-  'layout-header-background': grey[7],
-};
+  'layout-header-background': grey[7]
+}
 ```
 
 - `src/models/auth.ts`
 
 ```ts
-import { api } from '@/configs/api';
-import { useApi } from '@/utils/api';
-import { storage } from '@/utils/storage';
-import { useBoolean } from 'ahooks';
-import { useCallback, useMemo } from 'react';
-import { useModel } from 'umi';
+import { api } from '@/configs/api'
+import { useApi } from '@/utils/api'
+import { storage } from '@/utils/storage'
+import { useBoolean } from 'ahooks'
+import { useCallback, useMemo } from 'react'
+import { useModel } from 'umi'
 
 interface ItemT {
-  token: string;
+  token: string
 }
 
 interface FormT {
-  account: string;
-  password: string;
+  account: string
+  password: string
 }
 
 const DEFAULT_FORM: FormT = {
   account: '',
-  password: '',
-};
+  password: ''
+}
 
-const API = api.auth;
+const API = api.auth
 
 export default () => {
-  const { initialState, setInitialState } = useModel<'@@initialState'>('@@initialState');
-  const token = useMemo(() => initialState?.token ?? '', [initialState]);
+  const { initialState, setInitialState } =
+    useModel<'@@initialState'>('@@initialState')
+  const token = useMemo(() => initialState?.token ?? '', [initialState])
 
-  const [loading, { setTrue: setLoading, setFalse: setNotLoading }] = useBoolean();
+  const [loading, { setTrue: setLoading, setFalse: setNotLoading }] =
+    useBoolean()
 
   const Login = useCallback(async (body: FormT) => {
     try {
-      setLoading();
+      setLoading()
       const { data } = await useApi<FormT, ItemT>(API.login, {
         method: 'POST',
-        body,
-      });
-      storage.setToken(data.token);
-      setInitialState({ ...initialState, token: data.token });
-      return true;
+        body
+      })
+      storage.setToken(data.token)
+      setInitialState({ ...initialState, token: data.token })
+      return true
     } catch {
-      return false;
+      return false
     } finally {
-      setNotLoading();
+      setNotLoading()
     }
-  }, []);
+  }, [])
 
   const Logout = useCallback(async () => {
     try {
-      setLoading();
+      setLoading()
       await useApi(API.logout, {
         method: 'POST',
-        token,
-      });
-      return true;
+        token
+      })
+      return true
     } catch {
-      return false;
+      return false
     } finally {
-      storage.removeToken();
-      setInitialState({ ...initialState, token: undefined });
-      setNotLoading();
+      storage.removeToken()
+      setInitialState({ ...initialState, token: undefined })
+      setNotLoading()
     }
-  }, [token]);
+  }, [token])
 
   return {
     auth: {
       Login,
       Logout,
       DEFAULT_FORM,
-      loading,
-    },
-  };
-};
+      loading
+    }
+  }
+}
 ```
 
 - `src/pages/private/Logout/Logout.tsx`
 
 ```tsx
-import { DEFAULT_PATH_PUBLIC } from '@/configs/routes';
-import { useEffect } from 'react';
-import { history, useModel } from 'umi';
+import { DEFAULT_PATH_PUBLIC } from '@/configs/routes'
+import { useEffect } from 'react'
+import { history, useModel } from 'umi'
 
 export default () => {
   const {
-    auth: { Logout },
-  } = useModel('auth');
+    auth: { Logout }
+  } = useModel('auth')
   useEffect(() => {
     const logout = async () => {
       if (await Logout()) {
-        history.push(DEFAULT_PATH_PUBLIC);
+        history.push(DEFAULT_PATH_PUBLIC)
       }
-    };
-    logout();
-  }, []);
-  return null;
-};
+    }
+    logout()
+  }, [])
+  return null
+}
 ```
 
 - `src/pages/private/Welcome/Welcome.tsx`
 
 ```tsx
-import PageFrame from '@/components/PageFrame';
+import PageFrame from '@/components/PageFrame'
 
 export default () => {
-  return <PageFrame />;
-};
+  return <PageFrame />
+}
 ```
 
 - `src/pages/public/Login/Login.tsx`
 
 ```tsx
-import { DEFAULT_PATH_PRIVATE } from '@/configs/routes';
-import { Button, Col, Form, Input, Row } from 'antd';
-import { useEffect, useRef } from 'react';
-import { history, useModel } from 'umi';
+import { DEFAULT_PATH_PRIVATE } from '@/configs/routes'
+import { Button, Col, Form, Input, Row } from 'antd'
+import { useEffect, useRef } from 'react'
+import { history, useModel } from 'umi'
 
 export default () => {
-  const { auth } = useModel('auth');
-  const [form] = Form.useForm<typeof auth.DEFAULT_FORM>();
-  const inputRef = useRef<Input>(null);
+  const { auth } = useModel('auth')
+  const [form] = Form.useForm<typeof auth.DEFAULT_FORM>()
+  const inputRef = useRef<Input>(null)
   useEffect(() => {
     inputRef.current!.focus({
-      cursor: 'all',
-    });
-  }, []);
+      cursor: 'all'
+    })
+  }, [])
   return (
     <Row className="h-screen" align="middle" justify="center">
       <Col>
@@ -477,7 +489,7 @@ export default () => {
           initialValues={auth.DEFAULT_FORM}
           onFinish={async (values) => {
             if (await auth.Login(values)) {
-              history.push(DEFAULT_PATH_PRIVATE);
+              history.push(DEFAULT_PATH_PRIVATE)
             }
           }}
         >
@@ -485,141 +497,166 @@ export default () => {
             <Input ref={inputRef} placeholder="account" />
           </Form.Item>
           <Form.Item label="密碼" name="password" rules={[{ required: true }]}>
-            <Input.Password autoComplete="current-password" placeholder="password" />
+            <Input.Password
+              autoComplete="current-password"
+              placeholder="password"
+            />
           </Form.Item>
           <Form.Item noStyle>
-            <Button htmlType="submit" type="primary" block loading={auth.loading}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              block
+              loading={auth.loading}
+            >
               登入
             </Button>
           </Form.Item>
         </Form>
       </Col>
     </Row>
-  );
-};
+  )
+}
 ```
 
 - `src/utils/api.ts`
 
 ```tsx
-import { prefix } from '@/configs/api';
-import { request, RequestConfig } from 'umi';
+import { prefix } from '@/configs/api'
+import { request, RequestConfig } from 'umi'
 
-type MethodT = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type MethodT = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 interface ApiOptionT<T> {
-  method: MethodT;
-  token?: string;
-  params?: object;
-  body?: T;
+  method: MethodT
+  token?: string
+  params?: object
+  body?: T
 }
 
 interface BasicResT<ResT> {
-  success: boolean;
-  data: ResT;
-  errorCode: string;
-  errorMessage: string;
-  showType: number;
+  success: boolean
+  data: ResT
+  errorCode: string
+  errorMessage: string
+  showType: number
 }
 
 const basicHeaders = {
   Accept: 'application/json',
-  'Content-Type': 'application/json; charset=utf-8',
-};
+  'Content-Type': 'application/json; charset=utf-8'
+}
 
-const API_OPTIONS = <dataT>({ method, token, params, body }: ApiOptionT<dataT>): RequestConfig => ({
+const API_OPTIONS = <dataT>({
+  method,
+  token,
+  params,
+  body
+}: ApiOptionT<dataT>): RequestConfig => ({
   method,
   prefix,
   headers: token
     ? {
         ...basicHeaders,
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       }
     : basicHeaders,
   params,
-  data: body,
-});
+  data: body
+})
 
 /**
  * useApi<ReqT, ResT>(url: string, options: { method: 'GET' | 'POST' | 'PUT' | 'DELETE', token: string , params: object, body: object })
  */
-export const useApi = <ReqT = undefined, ResT = undefined>(url: string, options: ApiOptionT<ReqT>) =>
-  request<BasicResT<ResT>>(url, API_OPTIONS<ReqT>(options));
+export const useApi = <ReqT = undefined, ResT = undefined>(
+  url: string,
+  options: ApiOptionT<ReqT>
+) => request<BasicResT<ResT>>(url, API_OPTIONS<ReqT>(options))
 ```
 
 - `src/utils/storage.ts`
 
 ```tsx
-const keyToken = 'myapp_authentication';
+const keyToken = 'myapp_authentication'
 
 export const storage = {
   getToken: () => {
-    const token = window.localStorage.getItem(keyToken);
-    return token !== null ? token : undefined;
+    const token = window.localStorage.getItem(keyToken)
+    return token !== null ? token : undefined
   },
   setToken: (token: string) => {
-    window.localStorage.setItem(keyToken, token);
+    window.localStorage.setItem(keyToken, token)
   },
   removeToken: () => {
-    window.localStorage.removeItem(keyToken);
-  },
-};
+    window.localStorage.removeItem(keyToken)
+  }
+}
 ```
 
 - `src/access.ts`
 
 ```tsx
-import { InitialStateT } from './app';
+import { InitialStateT } from './app'
 
 interface AccessT {
-  isLogin: boolean;
+  isLogin: boolean
 }
 
 export default (initialState: InitialStateT): AccessT => ({
-  isLogin: initialState.token !== undefined,
-});
+  isLogin: initialState.token !== undefined
+})
 ```
 
 - `src/app.tsx`
 
 ```tsx
-import { BasicLayoutProps } from '@ant-design/pro-layout';
-import { history } from 'umi';
+import { BasicLayoutProps } from '@ant-design/pro-layout'
+import { history } from 'umi'
 // import logo from '../public/favicon.png';
-import { DEFAULT_PATH_PRIVATE, DEFAULT_PATH_PUBLIC, ROUTES_NEED_REDIRECT, TITLE } from './configs/routes';
-import { storage } from './utils/storage';
+import {
+  DEFAULT_PATH_PRIVATE,
+  DEFAULT_PATH_PUBLIC,
+  ROUTES_NEED_REDIRECT,
+  TITLE
+} from './configs/routes'
+import { storage } from './utils/storage'
 
-const isAccessRouteNeedRedirect = (path: string) => new Set(ROUTES_NEED_REDIRECT).has(path);
+const isAccessRouteNeedRedirect = (path: string) =>
+  new Set(ROUTES_NEED_REDIRECT).has(path)
 
-export const layout = ({ initialState }: { initialState: InitialStateT }): BasicLayoutProps => {
-  const isLogin = initialState.token !== undefined;
+export const layout = ({
+  initialState
+}: {
+  initialState: InitialStateT
+}): BasicLayoutProps => {
+  const isLogin = initialState.token !== undefined
   return {
     title: TITLE,
     // logo,
     rightContentRender: () => null,
     onPageChange: async () => {
       const {
-        location: { pathname },
-      } = history;
+        location: { pathname }
+      } = history
       // authorized user access protected routes
       if (isLogin && isAccessRouteNeedRedirect(pathname)) {
-        history.push(DEFAULT_PATH_PRIVATE);
+        history.push(DEFAULT_PATH_PRIVATE)
       }
       // unauthorized user access protected routes
       if (!isLogin && !isAccessRouteNeedRedirect(pathname)) {
-        history.push(DEFAULT_PATH_PUBLIC);
+        history.push(DEFAULT_PATH_PUBLIC)
       }
-    },
-  };
-};
+    }
+  }
+}
 
 export interface InitialStateT {
-  token?: string;
+  token?: string
 }
 
 export const getInitialState = async (): Promise<InitialStateT> => {
-  return { token: storage.getToken() };
-};
+  return { token: storage.getToken() }
+}
 ```
 
 - `src/global.less`
