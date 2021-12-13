@@ -2,6 +2,7 @@
 
 ## Quick Links
 
+- [Next.js Note](nextjs.md)
 - [Vite Note](vite.md)
 - [UmiJS Note](umi.md)
 

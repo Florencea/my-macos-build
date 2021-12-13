@@ -1,7 +1,7 @@
 # Vite Note
 
 - <https://cn.vitejs.dev/>
-- Works with npm, yarn, pnpm
+- Works with npm, yarn, yarn2, pnpm
 
 ## Vite
 
@@ -16,7 +16,7 @@ cd vite-project && npm install
 ## Ant Design
 
 ```bash
-npm install antd @ant-design/icons
+npm install antd @ant-design/icons @ant-design/colors
 ```
 
 ```bash
