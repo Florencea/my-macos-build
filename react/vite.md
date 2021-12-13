@@ -35,54 +35,17 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          antd: ['antd'],
-        },
-      },
-    },
+          antd: ['antd']
+        }
+      }
+    }
   },
   server: {
     proxy: {
-      '/api': 'http://localhost:4000/',
-    },
-  },
-});
-```
-
-## ESLint Config Alloy TypeScript React
-
-```bash
-npm install -D \
-eslint \
-@typescript-eslint/parser \
-@typescript-eslint/eslint-plugin \
-eslint-plugin-react \
-eslint-config-alloy
-```
-
-- `package.json`
-
-```json
-{
-  "eslintConfig": {
-    "extends": ["alloy", "alloy/react", "alloy/typescript"],
-    "env": {
-      "browser": true
-    },
-    "globals": {
-      "React": "readonly"
-    },
-    "rules": {
-      "spaced-comment": [
-        "error",
-        "always",
-        {
-          "markers": ["/"]
-        }
-      ],
-      "@typescript-eslint/no-require-imports": 0
+      '/api': 'http://localhost:4000/'
     }
   }
-}
+});
 ```
 
 ## Ant Design
@@ -107,18 +70,18 @@ export default defineConfig({
       libList: [
         {
           libName: 'antd',
-          style: (name) => `antd/es/${name}/style`,
-        },
-      ],
-    }),
+          style: (name) => `antd/es/${name}/style`
+        }
+      ]
+    })
   ],
   css: {
     preprocessorOptions: {
       less: {
-        javascriptEnabled: true,
-      },
-    },
-  },
+        javascriptEnabled: true
+      }
+    }
+  }
 });
 ```
 
@@ -139,7 +102,7 @@ ReactDOM.render(
       <App />
     </ConfigProvider>
   </StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 ```
 
@@ -162,7 +125,7 @@ printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' > src/in
 ```js
 module.exports = {
   corePlugins: {
-    preflight: false,
+    preflight: false
   },
   important: '#root',
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -171,121 +134,13 @@ module.exports = {
     colors: {
       white: '#fff',
       black: '#000',
-      ...require('@ant-design/colors'),
+      ...require('@ant-design/colors')
     },
-    extend: {},
+    extend: {}
   },
   variants: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 };
-```
-
-## Jest
-
-```bash
-npm install -D \
-@babel/core \
-babel-jest \
-babel-preset-react-app \
-@testing-library/dom \
-@testing-library/jest-dom \
-@testing-library/react \
-@testing-library/user-event \
-jest \
-jest-circus \
-jest-scss-transform \
-jest-watch-typeahead \
-identity-obj-proxy \
-svg-jest
-```
-
-```bash
-touch \
-.babelrc.json \
-jest.config.js \
-jest.css.mock.js \
-jest.setup.js
-```
-
-- `.babelrc.json`
-
-```json
-{
-  "env": {
-    "test": {
-      "presets": ["react-app"]
-    }
-  }
-}
-```
-
-- `jest.config.js`
-
-```js
-module.exports = {
-  roots: ['<rootDir>/src'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts', '!src/**/main.tsx'],
-  testMatch: ['<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}', '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
-  testEnvironment: 'jsdom',
-  transform: {
-    '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
-    '^.+\\.scss$': 'jest-scss-transform',
-    '^.+\\.css$': '<rootDir>/jest.css.mock.js',
-    '\\.svg$': 'svg-jest',
-  },
-  transformIgnorePatterns: [
-    '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
-    '^.+\\.module\\.(css|sass|scss)$',
-  ],
-  moduleNameMapper: {
-    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-  },
-  watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
-  resetMocks: true,
-};
-```
-
-- `jest.css.mock.js`
-
-```js
-module.exports = {
-  process() {
-    return 'module.exports = {};';
-  },
-  getCacheKey() {
-    return 'cssTransform';
-  },
-};
-```
-
-- `jest.setup.js`
-
-```js
-import '@testing-library/jest-dom';
-```
-
-- `package.json`
-
-```json
-{
-  "scripts": {
-    "test": "yarn run jest --passWithNoTests --silent --coverage --verbose --watchAll=false"
-  }
-}
-```
-
-- `src/App.test.tsx`
-
-```tsx
-import { render, screen } from '@testing-library/react';
-import React from 'react';
-import App from './App';
-
-it('should properly rendered when routing to /', async () => {
-  render(<App />);
-  expect(screen.getAllByText(/Vite/)[0]).toBeInTheDocument();
-});
 ```
