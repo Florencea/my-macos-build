@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-12-12
+! Last updated: 2021-12-13
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -552,8 +552,8 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###menu1Content a.c1:remove()
 18av.tv##^#menu1Content div.HS
 18av.tv###menu1Content div.HS:remove()
-18av.tv##^[href="https://bit.ly/*"]
-18av.tv##[href="https://bit.ly/*"]:remove()
+18av.tv##^[href^="https://bit.ly/"]
+18av.tv##[href^="https://bit.ly/"]:remove()
 18av.tv##^#main_str > div.mobile_mv
 18av.tv###main_str > div.mobile_mv:remove()
 18av.tv##^#main_str > a
@@ -723,8 +723,8 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span#main > a.aRF img:not(.sc):style(margin-bottom: 0.5rem !important)
 18av.tv##span#main > a.aRF img:not(.sc):style(margin-left: -1rem !important)
 18av.tv##span#main > a.aRF img:not(.sc):style(bottom: 0 !important)
-18av.tv##span#main > a.aRF img:not(.sc):style(width: calc(125% + 4rem) !important)
-18av.tv##span#main > a.aRF img:not(.sc):style(max-width: calc(125% + 4rem) !important)
+18av.tv##span#main > a.aRF img:not(.sc):style(width: calc(125% + 5rem) !important)
+18av.tv##span#main > a.aRF img:not(.sc):style(max-width: calc(125% + 5rem) !important)
 18av.tv##span#main > a.aRF img:not(.sc):style(height: 18rem !important)
 18av.tv##span#main > a.aRF img:not(.sc):style(object-fit: cover !important)
 18av.tv##span#main > a.aRF img:not(.sc):style(object-position: center center !important)
