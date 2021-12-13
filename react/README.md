@@ -91,6 +91,9 @@ eslint-config-alloy
     },
     "globals": {
       "React": "readonly"
+    },
+    "rules": {
+      "@typescript-eslint/no-require-imports": 0
     }
   }
 }

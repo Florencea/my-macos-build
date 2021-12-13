@@ -3,7 +3,7 @@
 - <https://umijs.org/zh-CN/docs>
 - Only work with npm, yarn
 
-## Umi + Ant Design + Tailwind + ESLint & Prettier
+## umi + antd + tailwindcss
 
 ```bash
 mkdir myapp && cd myapp
@@ -14,17 +14,8 @@ npx -y @umijs/create-umi-app
 ```
 
 ```bash
-npm install \
-@ant-design/colors \
-@ant-design/icons \
-ahooks
-```
-
-```bash
 npm install -D \
-antd \
-tailwindcss@latest \
-@tailwindcss/postcss7-compat \
+tailwindcss@2 \
 umi-plugin-tailwindcss \
 eslint \
 typescript \
@@ -35,11 +26,17 @@ eslint-config-alloy
 ```
 
 ```bash
+npm install \
+antd \
+@ant-design/colors \
+@ant-design/icons
+```
+
+```bash
 rm \
 src/pages/index.tsx \
 src/pages/index.less \
-.editorconfig \
-.prettierrc \
+mock/.gitkeep \
 README.md
 ```
 
@@ -53,16 +50,13 @@ public \
 src/models \
 src/components \
 src/configs \
-src/utils \
-src/pages/private/Welcome \
-src/pages/private/Logout \
-src/pages/public/Login
+src/hooks \
+src/pages/private \
+src/pages/public
 ```
 
 ```bash
 touch \
-.eslintrc.js \
-.prettierrc.js \
 mock/api.ts \
 public/robots.txt \
 src/access.ts \
@@ -73,44 +67,20 @@ src/configs/api.ts \
 src/configs/routes.ts \
 src/configs/theme.ts \
 src/models/auth.ts \
-src/pages/private/Welcome/Welcome.tsx \
-src/pages/private/Logout/Logout.tsx \
-src/pages/public/Login/Login.tsx \
-src/utils/api.ts \
-src/utils/storage.ts
+src/pages/private/Welcome.tsx \
+src/pages/private/Logout.tsx \
+src/pages/public/Login.tsx \
+src/hooks/useApi.ts \
+src/hookss/useToken.ts
 ```
 
 ```bash
 code .
 ```
 
-- `.eslintrc.js`
-
-```js
-module.exports = {
-  extends: ['alloy', 'alloy/react', 'alloy/typescript'],
-  env: {
-    browser: true
-  },
-  globals: {
-    React: true
-  },
-  rules: {}
-}
-```
-
-- `.prettierrc.js`
-
-```js
-module.exports = {
-  singleQuote: true,
-  trailingComma: 'all'
-}
-```
-
 - `.gitignore`
 
-```text
+```ignore
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -134,47 +104,40 @@ module.exports = {
 - `.umirc.ts`
 
 ```ts
+import { defineConfig } from 'umi'
 import { routes, TITLE } from './src/configs/routes'
 import { theme } from './src/configs/theme'
-import { defineConfig } from 'umi'
 
 export default defineConfig({
-  // dev config
   nodeModulesTransform: {
     type: 'none'
   },
   fastRefresh: {},
-  proxy: {
-    // '/api': 'http://localhost:4000/',
-    // "/api": {
-    //   target: "https://localhost:4000/",
-    //   changeOrigin: true,
-    //   secure: false,
-    // },
-  },
-  // devServer: {
-  //   https: { key: "./cert/localhost.key", cert: "./cert/localhost.crt" },
-  // },
-  // site config
-  // favicon: '/favicon.png',
-  // route config
-  title: TITLE,
-  routes,
-  history: { type: 'hash' },
-  // build config
   hash: true,
   ignoreMomentLocale: true,
-  // antd config
   locale: {
     default: 'zh-TW',
     antd: true,
     baseNavigator: true
   },
-  layout: {
-    logo: null
-  },
   antd: {},
-  theme
+  layout: {},
+  theme,
+  routes,
+  title: TITLE,
+  history: { type: 'hash' }
+  // proxy: {
+  //   '/api': 'http://localhost:4000/',
+  //   "/api": {
+  //     target: "https://localhost:4000/",
+  //     changeOrigin: true,
+  //     secure: false,
+  //   },
+  // },
+  // devServer: {
+  //   https: { key: "./cert/localhost.key", cert: "./cert/localhost.crt" },
+  // },
+  // favicon: '/favicon.png',
 })
 ```
 
@@ -182,20 +145,46 @@ export default defineConfig({
 
 ```json
 {
-  "scripts": {
-    "dev": "umi dev"
+  "eslintConfig": {
+    "extends": ["alloy", "alloy/react", "alloy/typescript"],
+    "env": {
+      "browser": true
+    },
+    "globals": {
+      "React": "readonly"
+    },
+    "rules": {
+      "@typescript-eslint/no-require-imports": 0
+    }
   }
+}
+```
+
+- `tailwind.config.js`
+
+```js
+module.exports = {
+  corePlugins: {
+    preflight: false
+  },
+  important: '#root',
+  content: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
+  darkMode: 'media',
+  theme: {
+    colors: {
+      white: '#fff',
+      black: '#000',
+      ...require('@ant-design/colors')
+    },
+    extend: {}
+  },
+  plugins: []
 }
 ```
 
 - `mock/api.ts`
 
 ```ts
-const user = {
-  account: 'test',
-  password: 'test'
-}
-
 const success = {
   success: true,
   data: {
@@ -213,7 +202,7 @@ const failed = {
 export default {
   'POST /api/login': (req: any, res: any) => {
     const { account, password } = req.body
-    if (account === user.account && password === user.password) {
+    if (`${account}|${password}` === 'test|test') {
       res.json(success)
     } else {
       res.status(401).json(failed)
@@ -284,6 +273,7 @@ export const api = {
 - `src/configs/routes.ts`
 
 ```ts
+import { AccessT } from '@/access'
 import { Route } from '@ant-design/pro-layout/lib/typings'
 
 export const DEFAULT_PATH_PUBLIC = '/login'
@@ -301,14 +291,14 @@ const basicRouteConfigWithoutMenu: Route = {
   menuRender: false
 }
 
-const privateRoutes: Route[] = [
+const privateRoutes: (Route & { access: keyof AccessT })[] = [
   {
     ...basicRouteConfig,
     path: DEFAULT_PATH_PRIVATE,
     name: '歡迎',
     icon: 'Smile',
     access: 'isLogin',
-    component: '@/pages/private/Welcome/Welcome'
+    component: '@/pages/private/Welcome'
   },
   {
     ...basicRouteConfig,
@@ -316,7 +306,7 @@ const privateRoutes: Route[] = [
     name: '登出',
     icon: 'Logout',
     access: 'isLogin',
-    component: '@/pages/private/Logout/Logout'
+    component: '@/pages/private/Logout'
   }
 ]
 
@@ -324,7 +314,7 @@ const publicRoutes: Route[] = [
   {
     ...basicRouteConfigWithoutMenu,
     path: DEFAULT_PATH_PUBLIC,
-    component: '@/pages/public/Login/Login'
+    component: '@/pages/public/Login'
   }
 ]
 
@@ -343,185 +333,16 @@ export const getPageTitle = (currentPath: string) =>
 - `src/configs/theme.ts`
 
 ```ts
-import { grey, purple } from '@ant-design/colors'
+import { volcano } from '@ant-design/colors'
 
 export const theme = {
-  'primary-color': purple[4],
-  'layout-header-background': grey[7]
+  'primary-color': volcano.primary
 }
 ```
 
-- `src/models/auth.ts`
+- `src/hooks/useApi.ts`
 
 ```ts
-import { api } from '@/configs/api'
-import { useApi } from '@/utils/api'
-import { storage } from '@/utils/storage'
-import { useBoolean } from 'ahooks'
-import { useCallback, useMemo } from 'react'
-import { useModel } from 'umi'
-
-interface ItemT {
-  token: string
-}
-
-interface FormT {
-  account: string
-  password: string
-}
-
-const DEFAULT_FORM: FormT = {
-  account: '',
-  password: ''
-}
-
-const API = api.auth
-
-export default () => {
-  const { initialState, setInitialState } =
-    useModel<'@@initialState'>('@@initialState')
-  const token = useMemo(() => initialState?.token ?? '', [initialState])
-
-  const [loading, { setTrue: setLoading, setFalse: setNotLoading }] =
-    useBoolean()
-
-  const Login = useCallback(async (body: FormT) => {
-    try {
-      setLoading()
-      const { data } = await useApi<FormT, ItemT>(API.login, {
-        method: 'POST',
-        body
-      })
-      storage.setToken(data.token)
-      setInitialState({ ...initialState, token: data.token })
-      return true
-    } catch {
-      return false
-    } finally {
-      setNotLoading()
-    }
-  }, [])
-
-  const Logout = useCallback(async () => {
-    try {
-      setLoading()
-      await useApi(API.logout, {
-        method: 'POST',
-        token
-      })
-      return true
-    } catch {
-      return false
-    } finally {
-      storage.removeToken()
-      setInitialState({ ...initialState, token: undefined })
-      setNotLoading()
-    }
-  }, [token])
-
-  return {
-    auth: {
-      Login,
-      Logout,
-      DEFAULT_FORM,
-      loading
-    }
-  }
-}
-```
-
-- `src/pages/private/Logout/Logout.tsx`
-
-```tsx
-import { DEFAULT_PATH_PUBLIC } from '@/configs/routes'
-import { useEffect } from 'react'
-import { history, useModel } from 'umi'
-
-export default () => {
-  const {
-    auth: { Logout }
-  } = useModel('auth')
-  useEffect(() => {
-    const logout = async () => {
-      if (await Logout()) {
-        history.push(DEFAULT_PATH_PUBLIC)
-      }
-    }
-    logout()
-  }, [])
-  return null
-}
-```
-
-- `src/pages/private/Welcome/Welcome.tsx`
-
-```tsx
-import PageFrame from '@/components/PageFrame'
-
-export default () => {
-  return <PageFrame />
-}
-```
-
-- `src/pages/public/Login/Login.tsx`
-
-```tsx
-import { DEFAULT_PATH_PRIVATE } from '@/configs/routes'
-import { Button, Col, Form, Input, Row } from 'antd'
-import { useEffect, useRef } from 'react'
-import { history, useModel } from 'umi'
-
-export default () => {
-  const { auth } = useModel('auth')
-  const [form] = Form.useForm<typeof auth.DEFAULT_FORM>()
-  const inputRef = useRef<Input>(null)
-  useEffect(() => {
-    inputRef.current!.focus({
-      cursor: 'all'
-    })
-  }, [])
-  return (
-    <Row className="h-screen" align="middle" justify="center">
-      <Col>
-        <Form
-          form={form}
-          name="auth"
-          initialValues={auth.DEFAULT_FORM}
-          onFinish={async (values) => {
-            if (await auth.Login(values)) {
-              history.push(DEFAULT_PATH_PRIVATE)
-            }
-          }}
-        >
-          <Form.Item label="帳號" name="account" rules={[{ required: true }]}>
-            <Input ref={inputRef} placeholder="account" />
-          </Form.Item>
-          <Form.Item label="密碼" name="password" rules={[{ required: true }]}>
-            <Input.Password
-              autoComplete="current-password"
-              placeholder="password"
-            />
-          </Form.Item>
-          <Form.Item noStyle>
-            <Button
-              htmlType="submit"
-              type="primary"
-              block
-              loading={auth.loading}
-            >
-              登入
-            </Button>
-          </Form.Item>
-        </Form>
-      </Col>
-    </Row>
-  )
-}
-```
-
-- `src/utils/api.ts`
-
-```tsx
 import { prefix } from '@/configs/api'
 import { request, RequestConfig } from 'umi'
 
@@ -574,31 +395,194 @@ export const useApi = <ReqT = undefined, ResT = undefined>(
 ) => request<BasicResT<ResT>>(url, API_OPTIONS<ReqT>(options))
 ```
 
-- `src/utils/storage.ts`
+- `src/hooks/useToken.ts`
+
+```ts
+const TOKEN_KEY = 'myapp_auth'
+export const getToken = () => {
+  const token = window.localStorage.getItem(TOKEN_KEY)
+  return token !== null ? token : undefined
+}
+export const setToken = (token: string) => {
+  window.localStorage.setItem(TOKEN_KEY, token)
+}
+export const removeToken = () => {
+  window.localStorage.removeItem(TOKEN_KEY)
+}
+```
+
+- `src/models/auth.ts`
+
+```ts
+import { api } from '@/configs/api'
+import { useApi } from '@/hooks/useApi'
+import { removeToken, setToken } from '@/hooks/useToken'
+import { useCallback, useMemo, useState } from 'react'
+import { useModel } from 'umi'
+
+interface ItemT {
+  token: string
+}
+
+interface FormT {
+  account: string
+  password: string
+}
+
+const DEFAULT_FORM: FormT = {
+  account: '',
+  password: ''
+}
+
+const API = api.auth
+
+export default () => {
+  const { initialState, setInitialState } =
+    useModel<'@@initialState'>('@@initialState')
+  const token = useMemo(() => initialState?.token ?? '', [initialState])
+
+  const [loading, setLoading] = useState(false)
+
+  const Login = useCallback(async (body: FormT) => {
+    try {
+      setLoading(true)
+      const { data } = await useApi<FormT, ItemT>(API.login, {
+        method: 'POST',
+        body
+      })
+      setToken(data.token)
+      setInitialState({ ...initialState, token: data.token })
+      return true
+    } catch {
+      return false
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const Logout = useCallback(async () => {
+    try {
+      setLoading(true)
+      await useApi(API.logout, {
+        method: 'POST',
+        token
+      })
+      return true
+    } catch {
+      return false
+    } finally {
+      removeToken()
+      setInitialState({ ...initialState, token: undefined })
+      setLoading(false)
+    }
+  }, [token])
+
+  return {
+    auth: {
+      Login,
+      Logout,
+      DEFAULT_FORM,
+      loading
+    }
+  }
+}
+```
+
+- `src/pages/private/Logout.tsx`
 
 ```tsx
-const keyToken = 'myapp_authentication'
+import { DEFAULT_PATH_PUBLIC } from '@/configs/routes'
+import { useEffect } from 'react'
+import { history, useModel } from 'umi'
 
-export const storage = {
-  getToken: () => {
-    const token = window.localStorage.getItem(keyToken)
-    return token !== null ? token : undefined
-  },
-  setToken: (token: string) => {
-    window.localStorage.setItem(keyToken, token)
-  },
-  removeToken: () => {
-    window.localStorage.removeItem(keyToken)
-  }
+export default () => {
+  const {
+    auth: { Logout }
+  } = useModel('auth')
+  useEffect(() => {
+    const logout = async () => {
+      if (await Logout()) {
+        history.push(DEFAULT_PATH_PUBLIC)
+      }
+    }
+    logout()
+  }, [])
+  return null
+}
+```
+
+- `src/pages/private/Welcome.tsx`
+
+```tsx
+import PageFrame from '@/components/PageFrame'
+
+export default () => {
+  return <PageFrame />
+}
+```
+
+- `src/pages/public/Login.tsx`
+
+```tsx
+import { DEFAULT_PATH_PRIVATE } from '@/configs/routes'
+import { Button, Col, Form, Input, Row } from 'antd'
+import { useEffect, useRef } from 'react'
+import { history, useModel } from 'umi'
+
+export default () => {
+  const { auth } = useModel('auth')
+  const [form] = Form.useForm<typeof auth.DEFAULT_FORM>()
+  const inputRef = useRef<Input>(null)
+  useEffect(() => {
+    inputRef.current!.focus({
+      cursor: 'all'
+    })
+  }, [])
+  return (
+    <Row className="h-screen" align="middle" justify="center">
+      <Col className="p-8 rounded bg-white fadeInUp">
+        <Form
+          form={form}
+          name="auth"
+          initialValues={auth.DEFAULT_FORM}
+          onFinish={async (values) => {
+            if (await auth.Login(values)) {
+              history.push(DEFAULT_PATH_PRIVATE)
+            }
+          }}
+        >
+          <Form.Item label="帳號" name="account" rules={[{ required: true }]}>
+            <Input ref={inputRef} placeholder="account" />
+          </Form.Item>
+          <Form.Item label="密碼" name="password" rules={[{ required: true }]}>
+            <Input.Password
+              autoComplete="current-password"
+              placeholder="password"
+            />
+          </Form.Item>
+          <Form.Item noStyle>
+            <Button
+              htmlType="submit"
+              type="primary"
+              block
+              loading={auth.loading}
+            >
+              登入
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
+  )
 }
 ```
 
 - `src/access.ts`
 
-```tsx
+```ts
 import { InitialStateT } from './app'
 
-interface AccessT {
+export interface AccessT {
   isLogin: boolean
 }
 
@@ -612,14 +596,13 @@ export default (initialState: InitialStateT): AccessT => ({
 ```tsx
 import { BasicLayoutProps } from '@ant-design/pro-layout'
 import { history } from 'umi'
-// import logo from '../public/favicon.png';
 import {
   DEFAULT_PATH_PRIVATE,
   DEFAULT_PATH_PUBLIC,
   ROUTES_NEED_REDIRECT,
   TITLE
 } from './configs/routes'
-import { storage } from './utils/storage'
+import { getToken } from './hooks/useToken'
 
 const isAccessRouteNeedRedirect = (path: string) =>
   new Set(ROUTES_NEED_REDIRECT).has(path)
@@ -632,7 +615,7 @@ export const layout = ({
   const isLogin = initialState.token !== undefined
   return {
     title: TITLE,
-    // logo,
+    logo: null,
     rightContentRender: () => null,
     onPageChange: async () => {
       const {
@@ -655,7 +638,7 @@ export interface InitialStateT {
 }
 
 export const getInitialState = async (): Promise<InitialStateT> => {
-  return { token: storage.getToken() }
+  return { token: getToken() }
 }
 ```
 
@@ -753,5 +736,5 @@ npm run prettier
 ```
 
 ```bash
-npm run dev
+npm start
 ```
