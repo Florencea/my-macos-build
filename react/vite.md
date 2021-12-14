@@ -29,6 +29,7 @@ yarn add -D less vite-plugin-imp
 ```ts
 import { blue } from '@ant-design/colors'
 import react from '@vitejs/plugin-react'
+import { getThemeVariables } from 'antd/dist/theme'
 import { defineConfig } from 'vite'
 import imp from 'vite-plugin-imp'
 
@@ -49,6 +50,10 @@ export default defineConfig({
       less: {
         javascriptEnabled: true,
         modifyVars: {
+          ...getThemeVariables({
+            dark: true
+          }),
+          dark: true,
           'primary-color': blue.primary
         }
       }
@@ -108,8 +113,82 @@ module.exports = {
       black: '#000',
       ...require('@ant-design/colors')
     },
-    extend: {}
+    extend: {
+      animation: {
+        spin: 'spin 20s linear infinite'
+      }
+    }
   },
   plugins: []
 }
+```
+
+## Index example
+
+```bash
+rm src/App.css
+```
+
+- `src/App.tsx`
+
+```tsx
+import { useState } from 'react'
+import logo from './logo.svg'
+import { Button, DatePicker, message } from 'antd'
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <div className="text-center">
+      <header
+        className="h-screen flex flex-col justify-center items-center text-white"
+        style={{ fontSize: 'calc(10px + 2vmin)' }}
+      >
+        <img
+          src={logo}
+          className="h-[40vmin] pointer-events-none motion-safe:animate-spin"
+          alt="logo"
+        />
+        <p>Hello Vite + React!</p>
+        <p>
+          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+            count is: {count}
+          </Button>
+          <DatePicker
+            onChange={(date) => {
+              if (date !== null) {
+                message.info(date.toISOString())
+              }
+            }}
+          />
+        </p>
+        <p>
+          Edit <code>App.tsx</code> and save to test HMR updates.
+        </p>
+        <p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+          {' | '}
+          <a
+            className="App-link"
+            href="https://vitejs.dev/guide/features.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vite Docs
+          </a>
+        </p>
+      </header>
+    </div>
+  )
+}
+
+export default App
 ```
