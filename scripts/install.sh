@@ -23,10 +23,6 @@ script_path="$script_dir/scripts"
 brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
-# node
-node_use_lts=false
-node_lts="node@16"
-node_path="$brew_dir/opt/$node_lts/bin"
 
 print_step "brew install istat menus"
 brew install --cask istat-menus
@@ -78,26 +74,14 @@ brew install megatools
 brew install micro
 brew install mkcert
 brew install nano
+brew install node
 brew install nss
 brew install rsync
 brew install pinentry-mac
 brew install python3
 brew install wget
-brew install youtube-dl
-
-print_step "setup nodejs tools"
-if ["$node_use_lts" == true]; then
-  brew install $node_lts
-  {
-    printf "fish_add_path $node_path\n"
-  } >>~/.config/fish/config.fish
-else
-  brew install node
-fi
 brew install yarn
-{
-  printf "fund=false\naudit=false\n"
-} >>~/.npmrc
+brew install youtube-dl
 
 print_step "git configuations"
 (
