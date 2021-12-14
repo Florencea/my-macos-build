@@ -16,7 +16,7 @@ yarn create @umijs/umi-app
 
 ```bash
 yarn add -D \
-tailwindcss@2 \
+@tailwindcss/postcss7-compat \
 umi-plugin-tailwindcss \
 eslint \
 typescript \
