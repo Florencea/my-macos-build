@@ -98,10 +98,6 @@ brew install yarn
 {
   printf "fund=false\naudit=false\n"
 } >>~/.npmrc
-yarn set version stable
-{
-  printf "nodeLinker: node-modules\n"
-} >>~/.yarnrc.yml
 
 print_step "git configuations"
 (
