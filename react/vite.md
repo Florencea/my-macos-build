@@ -81,7 +81,7 @@ ReactDOM.render(
 ## Tailwind CSS
 
 ```bash
-yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
+yarn add -D tailwindcss postcss autoprefixer
 ```
 
 ```bash
