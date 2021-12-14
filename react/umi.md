@@ -121,7 +121,9 @@ export default defineConfig({
     antd: true,
     baseNavigator: true
   },
-  antd: {},
+  antd: {
+    dark: true
+  },
   layout: {},
   theme,
   routes,
@@ -526,7 +528,7 @@ export default () => {
 
 ```tsx
 import { DEFAULT_PATH_PRIVATE } from '@/configs/routes'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Card, Col, Form, Input, Row } from 'antd'
 import { useEffect, useRef } from 'react'
 import { history, useModel } from 'umi'
 
@@ -541,38 +543,44 @@ export default () => {
   }, [])
   return (
     <Row className="h-screen" align="middle" justify="center">
-      <Col className="p-8 rounded bg-white fadeInUp">
-        <Form
-          form={form}
-          name="auth"
-          initialValues={auth.DEFAULT_FORM}
-          onFinish={async (values) => {
-            if (await auth.Login(values)) {
-              history.push(DEFAULT_PATH_PRIVATE)
-            }
-          }}
-        >
-          <Form.Item label="帳號" name="account" rules={[{ required: true }]}>
-            <Input ref={inputRef} placeholder="account" />
-          </Form.Item>
-          <Form.Item label="密碼" name="password" rules={[{ required: true }]}>
-            <Input.Password
-              autoComplete="current-password"
-              placeholder="password"
-            />
-          </Form.Item>
-          <Form.Item noStyle>
-            <Button
-              htmlType="submit"
-              type="primary"
-              block
-              loading={auth.loading}
+      <Card>
+        <Col className="p-8 rounded fadeInUp">
+          <Form
+            form={form}
+            name="auth"
+            initialValues={auth.DEFAULT_FORM}
+            onFinish={async (values) => {
+              if (await auth.Login(values)) {
+                history.push(DEFAULT_PATH_PRIVATE)
+              }
+            }}
+          >
+            <Form.Item label="帳號" name="account" rules={[{ required: true }]}>
+              <Input ref={inputRef} placeholder="account" />
+            </Form.Item>
+            <Form.Item
+              label="密碼"
+              name="password"
+              rules={[{ required: true }]}
             >
-              登入
-            </Button>
-          </Form.Item>
-        </Form>
-      </Col>
+              <Input.Password
+                autoComplete="current-password"
+                placeholder="password"
+              />
+            </Form.Item>
+            <Form.Item noStyle>
+              <Button
+                htmlType="submit"
+                type="primary"
+                block
+                loading={auth.loading}
+              >
+                登入
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Card>
     </Row>
   )
 }
