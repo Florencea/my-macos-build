@@ -27,6 +27,7 @@ yarn add -D less vite-plugin-imp
 - `vite.config.ts`
 
 ```ts
+import { blue } from '@ant-design/colors'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import imp from 'vite-plugin-imp'
@@ -46,7 +47,10 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       less: {
-        javascriptEnabled: true
+        javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': blue.primary
+        }
       }
     }
   }
