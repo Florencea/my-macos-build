@@ -24,13 +24,6 @@ brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
 
-print_step "brew install istat menus"
-brew install --cask istat-menus
-printf "\E[0;31m"
-printf "982092332@qq.com\n"
-printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
-printf "\E[0m"
-
 print_step "brew install fish"
 brew install fish
 echo "$brew_path/fish" | sudo tee -a /etc/shells
@@ -48,6 +41,13 @@ mkdir -p ~/.config/fish
   printf "alias fa=\"sh $script_path/git-fetch-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
 } >>~/.config/fish/config.fish
+
+print_step "brew install istat menus"
+brew install --cask istat-menus
+printf "\E[0;31m"
+printf "982092332@qq.com\n"
+printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
+printf "\E[0m"
 
 print_step "brew install fonts essential"
 brew install --cask font-jetbrains-mono
