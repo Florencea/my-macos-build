@@ -2,11 +2,12 @@
 
 - <https://nextjs.org/docs/getting-started>
 - Works with npm, yarn, yarn2, pnpm
+- Official: yarn
 
 ## Next.js
 
 ```bash
-npx -y create-next-app@latest --typescript
+yarn create next-app --typescript
 ```
 
 - `package.json`
@@ -24,7 +25,7 @@ npx -y create-next-app@latest --typescript
 ## Ant Design
 
 ```bash
-npm install antd @ant-design/icons @ant-design/colors next-with-less
+yarn add antd @ant-design/icons @ant-design/colors next-with-less less less-loader
 ```
 
 - `next.config.js`
@@ -79,11 +80,11 @@ export default MyApp
 ## Tailwind CSS
 
 ```bash
-npm install -D tailwindcss postcss autoprefixer
+yarn add -D tailwindcss postcss autoprefixer
 ```
 
 ```bash
-npx tailwindcss init -p
+yarn run tailwindcss init -p
 ```
 
 ```bash

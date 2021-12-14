@@ -28,7 +28,7 @@
 ### For Vite
 
 ```bash
-npm install -D \
+yarn add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
@@ -71,7 +71,7 @@ eslint-config-alloy
 ### For Umi.js
 
 ```bash
-npm install -D \
+yarn add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \

@@ -2,6 +2,7 @@
 
 - <https://umijs.org/zh-CN/docs>
 - Only work with npm, yarn
+- Official: yarn
 
 ## umi + antd + tailwindcss
 
@@ -10,11 +11,11 @@ mkdir myapp && cd myapp
 ```
 
 ```bash
-npx -y @umijs/create-umi-app
+yarn create @umijs/umi-app
 ```
 
 ```bash
-npm install -D \
+yarn add -D \
 tailwindcss@2 \
 umi-plugin-tailwindcss \
 eslint \
@@ -26,14 +27,10 @@ eslint-config-alloy
 ```
 
 ```bash
-npm install \
+yarn add \
 antd \
 @ant-design/colors \
 @ant-design/icons
-```
-
-```bash
-npm install
 ```
 
 ```bash
@@ -736,9 +733,9 @@ export const getInitialState = async (): Promise<InitialStateT> => {
 ```
 
 ```bash
-npm run prettier
+yarn prettier
 ```
 
 ```bash
-npm start
+yarn start
 ```

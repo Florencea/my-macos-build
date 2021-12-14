@@ -2,6 +2,7 @@
 
 - <https://cn.vitejs.dev/>
 - Works with npm, yarn, yarn2, pnpm
+- Official: pnpm
 
 ## Vite
 
