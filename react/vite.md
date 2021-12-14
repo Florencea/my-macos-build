@@ -7,21 +7,21 @@
 ## Vite
 
 ```bash
-npm init -y vite@latest vite-project -- --template react-ts
+yarn create vite vite-project --template react-ts
 ```
 
 ```bash
-cd vite-project && npm install
+cd vite-project && yarn
 ```
 
 ## Ant Design
 
 ```bash
-npm install antd @ant-design/icons @ant-design/colors
+yarn add antd @ant-design/icons @ant-design/colors
 ```
 
 ```bash
-npm install -D less vite-plugin-imp
+yarn add -D less vite-plugin-imp
 ```
 
 - `vite.config.ts`
@@ -77,11 +77,11 @@ ReactDOM.render(
 ## Tailwind CSS
 
 ```bash
-npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
 ```
 
 ```bash
-npx tailwindcss init -p
+yarn run tailwindcss init -p
 ```
 
 ```bash
