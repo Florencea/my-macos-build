@@ -22,6 +22,12 @@ yarn create next-app --typescript
 }
 ```
 
+- Disable telemetry
+
+```bash
+printf "NEXT_TELEMETRY_DISABLED=1\n" >> .env
+```
+
 ## Ant Design
 
 ```bash
