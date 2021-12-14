@@ -24,6 +24,7 @@ brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
 # node
+node_use_lts=false
 node_lts="node@16"
 node_path="$brew_dir/opt/$node_lts/bin"
 
@@ -85,17 +86,18 @@ brew install wget
 brew install youtube-dl
 
 print_step "setup nodejs tools"
-brew install $node_lts
-{
-  printf "fish_add_path $node_path\n"
-} >>~/.config/fish/config.fish
+if ["$node_use_lts" == true]; then
+  brew install $node_lts
+  {
+    printf "fish_add_path $node_path\n"
+  } >>~/.config/fish/config.fish
+else
+  brew install node
+fi
+brew install yarn
 {
   printf "fund=false\naudit=false\n"
 } >>~/.npmrc
-(
-  set -x
-  $node_path/npm install -g npm eslint http-server serve
-)
 
 print_step "git configuations"
 (
