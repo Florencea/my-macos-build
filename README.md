@@ -137,6 +137,9 @@ killall gpg-agent
 - All for speeds, not privacy
 
 ```bash
+# Disable UI Animation
+ui.prefersReducedMotion 1
+xul.panel-animations.enabled false
 # DNS over HTTPS
 network.trr.mode 3
 network.trr.custom_uri https://dns.google/dns-query
