@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2021-12-12
+! Last updated: 2021-12-16
 
 ! universal rules
 ! outline
@@ -420,6 +420,10 @@ macrumors.com##^script:has-text(Genius)
 macrumors.com##^script[src*='gleamjs']
 ! style
 macrumors.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! frommuji.muji.tw
+! style
+frommuji.muji.tw##p:style(line-height: 2rem !important)
 
 ! myself-bbs.com
 ! style
