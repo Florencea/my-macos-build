@@ -38,7 +38,6 @@ mkdir -p ~/.config/fish
   printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
   printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
   printf "alias ua=\"sh $script_path/update-all.sh\"\n"
-  printf "alias fa=\"sh $script_path/git-fetch-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
 } >>~/.config/fish/config.fish
 

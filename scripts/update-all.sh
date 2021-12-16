@@ -1,6 +1,25 @@
 #! /bin/bash
 # nano ~/.config/fish/config.fish
 # alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
+
+function print_step() {
+  printf "\E[1;36m"
+  printf "\n + %s\n\n" "$1"
+  printf "\E[0m"
+}
+
+print_step "Update brew cli and apps"
 cd ~ || exit
-set -x
-brew upgrade
+(
+  set -x
+  brew upgrade
+)
+
+print_step "Update all Repositories in ~/GitHub"
+BASE_DIR="/Users/$(whoami)/GitHub/"
+cd "$BASE_DIR"
+for f in $(ls $BASE_DIR); do
+  cd "$BASE_DIR/$f"
+  printf "+ git pull: %s\n" $f
+  git pull
+done
