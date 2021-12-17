@@ -80,7 +80,7 @@ brew install pinentry-mac
 brew install python3
 brew install wget
 brew install yarn
-brew install youtube-dl
+brew install yt-dlp
 
 print_step "git configuations"
 (
