@@ -967,7 +967,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:nth-child(1):style(pointer-events: none !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou > a[href='//18av.tv/hmmcg_all.html']:style(width: 29% !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou > a[href='//18av.tv/hmmcg_all.html']:style(text-align: center !important)
-18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou > a[href='//18av.tv/hmmcg_all.html']:style(padding: 0.95rem 1.5rem !important)
+18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou > a[href='//18av.tv/hmmcg_all.html']:style(padding: 1rem 1.5rem !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou > a[href='//18av.tv/hmmcg_all.html']:style(margin-left: 1.4rem !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou > a[href='//18av.tv/hmmcg_all.html']:style(pointer-events: all !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_18CH:style(display: block !important)
