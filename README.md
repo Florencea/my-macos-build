@@ -137,10 +137,6 @@ prefetch
 - Devtools
 
 ```text
-Pixel 4a
-```
-
-```text
 Mozilla/5.0 (Android 12; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
 ```
 
