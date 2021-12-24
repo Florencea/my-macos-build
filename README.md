@@ -3,7 +3,6 @@
 ## Quick Links
 
 - [React Note](react/README.md)
-- [Rust Note](rust/README.md)
 - [FFmpeg Note](ffmpeg/README.md)
 
 ## Extenstion Configs
@@ -20,35 +19,16 @@
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ```
 
-### Disable Window Animations
-
-```bash
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
-```
-
-### Generate SSH Key
-
-```bash
-ssh-keygen -t ed25519
-cat .ssh/id_ed25519.pub | pbcopy
-```
-
 ### Use Touch ID for sudo Commands
 
 ```bash
 sudo nano /etc/pam.d/sudo
-# Add this at line 2
-auth       sufficient     pam_tid.so
 ```
 
-### Rust Installation
+- Add this at line 2
 
 ```bash
-curl https://sh.rustup.rs | sh
-set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
-mkdir -p ~/.config/fish/completions
-# Open new shell
-rustup completions fish > ~/.config/fish/completions/rustup.fish
+auth       sufficient     pam_tid.so
 ```
 
 ### Remove Quarantine Attributes
@@ -59,8 +39,7 @@ sudo xattr -r -d com.apple.quarantine <FILE>
 
 ## macOS Setup
 
-- For Apple Silicon macs
-- For macOS Monterey
+- For Apple Silicon and macOS 12
 
 ### 1. Logout Browsers and Reinstall macOS
 
@@ -88,83 +67,87 @@ sudo xattr -r -d com.apple.quarantine <FILE>
 
 - Setup "Google Chrome.app"
 - Setup SSH Key
+
+```bash
+ssh-keygen -t ed25519
+```
+
+```bash
+cat .ssh/id_ed25519.pub | pbcopy
+```
+
 - Setup GPG Key
-- Setup "Visual Studio Code.app"
-
-## macOS GPG Setup
-
-- For Apple Silicon macs
-- Requirement: gnupg, pinentry-mac
-
-### 1. Generate GPG Key
 
 ```bash
 gpg --full-generate-key
 ```
 
-### 2. Export GPG Key
-
 ```bash
 gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
 ```
 
-### 3. Import GPG Key to GitHub, GitLab or Bitbucket
-
-### 4. Setup Git
+- Import GPG Key to GitHub, GitLab or Bitbucket
 
 ```bash
 git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
+```
+
+```bash
 git config --global commit.gpgsign true
+```
+
+```bash
 git config --global gpg.program gpg
 ```
 
-### 5. Setup macOS Keychain
-
 ```bash
 printf "pinentry-program /opt/homebrew/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
+```
+
+```bash
 printf "no-tty\n" >> ~/.gnupg/gpg.conf
+```
+
+```bash
 killall gpg-agent
 ```
 
+- Setup "Visual Studio Code.app"
+
 ## Firefox Setup
 
-### Use Chrome UI
+- Set DNS over HTTPS
 
-- <https://github.com/muckSponge/MaterialFox>
-
-### `about:config`
-
-- All for speeds, not privacy
-
-```bash
-# Disable UI Animation
-ui.prefersReducedMotion 1
-xul.panel-animations.enabled false
-# DNS over HTTPS
-network.trr.mode 3
-network.trr.custom_uri https://dns.google/dns-query
-network.trr.uri https://dns.google/dns-query
-network.trr.disable-ECS false
-network.trr.useGET true
-# Use prefetch
-network.prefetch-next true
-network.dns.disablePrefetch false
-network.dns.disablePrefetchFromHTTPS false
-# Disable Pocket
-extensions.pocket.enabled false
-# Disable Reader Mode
-reader.parse-on-load.enabled false
+```text
+https://dns.google/dns-query
 ```
 
-### Devtools
+- Set ECS to `false`
 
-```bash
-# Device
+```text
+network.trr.disable-ECS
+```
+
+- Set all prefetch configs to default
+
+```text
+prefetch
+```
+
+- Devtools
+
+```text
 Pixel 4a
-# User Agent
+```
+
+```text
 Mozilla/5.0 (Android 12; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
-# Screen Size
+```
+
+```text
 396 x 858
-# DPR
+```
+
+```text
 2.727272727272727
 ```
