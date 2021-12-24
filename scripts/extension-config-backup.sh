@@ -21,9 +21,6 @@ if [ -f "$FILE_UBLOCK" ]; then
   git push -q
   echo "done."
   echo ""
-else
-  # echo "No uBlock Configuration find in ~/Downloads"
-  echo ""
 fi
 # find tampermonkey-backup-*.txt and backup
 if [ -f "$FILE_TAMPERMONKEY" ]; then
@@ -38,9 +35,6 @@ if [ -f "$FILE_TAMPERMONKEY" ]; then
   git push -q
   echo "done."
   echo ""
-else
-  # echo "No Tampermonkey Configuration find in ~/Downloads"
-  echo ""
 fi
 # find tongwentang-pref*.json and backup
 if [ -f "$FILE_TONGWENTANG" ]; then
@@ -54,8 +48,5 @@ if [ -f "$FILE_TONGWENTANG" ]; then
   git commit -q -m "feat: Update NewTongWenTang Configuration by ebk"
   git push -q
   echo "done."
-  echo ""
-else
-  # echo "No NewTongWenTang Configuration find in ~/Downloads"
   echo ""
 fi
