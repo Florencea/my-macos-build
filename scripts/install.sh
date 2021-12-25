@@ -42,7 +42,7 @@ mkdir -p ~/.config/fish
 } >>~/.config/fish/config.fish
 
 print_step "brew install istat menus"
-brew install --cask istat-menus
+brew install istat-menus
 printf "\E[0;31m"
 printf "982092332@qq.com\n"
 printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
