@@ -49,17 +49,17 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install fonts essential"
-brew install --cask font-jetbrains-mono
-brew install --cask font-inter
-brew install --cask font-new-york
+brew install font-jetbrains-mono
+brew install font-inter
+brew install font-new-york
 
 print_step "brew install cask apps"
-brew install --cask google-chrome
-brew install --cask iina
-brew install --cask keka
-brew install --cask kekaexternalhelper
-brew install --cask mos
-brew install --cask visual-studio-code
+brew install google-chrome
+brew install iina
+brew install keka
+brew install kekaexternalhelper
+brew install mos
+brew install visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
@@ -70,7 +70,6 @@ brew install gnupg
 brew install id3v2
 brew install jq
 brew install megatools
-brew install micro
 brew install mkcert
 brew install nano
 brew install node
@@ -80,7 +79,7 @@ brew install pinentry-mac
 brew install python3
 brew install wget
 brew install yarn
-brew install yt-dlp
+brew install yt-dlp/taps/yt-dlp
 
 print_step "git configuations"
 (
