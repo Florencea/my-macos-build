@@ -3,8 +3,8 @@
 # alias ebk="sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh"
 FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head -n1)
 FILE_UBLOCK_NAME=ublock-advanced.txt
-FILE_TAMPERMONKEY=$(find ~/Downloads -maxdepth 1 -name 'tampermonkey-backup-*.txt' | head -n1)
-FILE_TAMPERMONKEY_NAME=tampermonkey-backup.txt
+FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'scripts_*.zip' | head -n1)
+FILE_VIOLENTMONKEY_NAME=violentmonkey-backup.zip
 FILE_TONGWENTANG=$(find ~/Downloads -maxdepth 1 -name 'tongwentang-pref*.json' | head -n1)
 FILE_TONGWENTANG_NAME=tongwentang-pref.json
 PROJECT_DIR=~/GitHub/my-macos-build/configs/
@@ -22,16 +22,16 @@ if [ -f "$FILE_UBLOCK" ]; then
   echo "done."
   echo ""
 fi
-# find tampermonkey-backup-*.txt and backup
-if [ -f "$FILE_TAMPERMONKEY" ]; then
-  mv "$FILE_TAMPERMONKEY" "$PROJECT_DIR$FILE_TAMPERMONKEY_NAME"
+# find scripts_*.zip and backup
+if [ -f "$FILE_VIOLENTMONKEY" ]; then
+  mv "$FILE_VIOLENTMONKEY" "$PROJECT_DIR$FILE_VIOLENTMONKEY_NAME"
   cd $PROJECT_DIR || exit
-  git add $FILE_TAMPERMONKEY_NAME
+  git add $FILE_VIOLENTMONKEY_NAME
   echo ""
-  printf 'Find Tampermonkey Configuration: %s\n' "$FILE_TAMPERMONKEY"
-  printf '     --> tampermonkey-backup.txt\n\n'
+  printf 'Find VIOLENTMONKEY Configuration: %s\n' "$FILE_VIOLENTMONKEY"
+  printf '     --> violentmonkey-backup.zip\n\n'
   printf 'Backup to GitHub...'
-  git commit -q -m "feat: Update Tampermonkey Configuration by ebk"
+  git commit -q -m "feat: Update violentmonkey Configuration by ebk"
   git push -q
   echo "done."
   echo ""
