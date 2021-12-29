@@ -5,6 +5,8 @@ FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head 
 FILE_UBLOCK_NAME=ublock-advanced.txt
 FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'scripts_*.zip' | head -n1)
 FILE_VIOLENTMONKEY_NAME=violentmonkey-backup.zip
+FILE_TWP=$(find ~/Downloads -maxdepth 1 -name 'twp-backup_*.txt' | head -n1)
+FILE_TWP_NAME=twp-backup.txt
 PROJECT_DIR=~/GitHub/my-macos-build/configs/
 # find my-ublock-backup*.txt and backup
 if [ -f "$FILE_UBLOCK" ]; then
@@ -30,6 +32,20 @@ if [ -f "$FILE_VIOLENTMONKEY" ]; then
   printf '     --> violentmonkey-backup.zip\n\n'
   printf 'Backup to GitHub...'
   git commit -q -m "feat: Update violentmonkey Configuration by ebk"
+  git push -q
+  echo "done."
+  echo ""
+fi
+# find twp-backup_*.txt and backup
+if [ -f "$FILE_TWP" ]; then
+  mv "$FILE_TWP" "$PROJECT_DIR$FILE_TWP_NAME"
+  cd $PROJECT_DIR || exit
+  git add $FILE_TWP_NAME
+  echo ""
+  printf 'Find twp Configuration: %s\n' "$FILE_UBLOCK"
+  printf '     --> twp-backup.txt\n\n'
+  printf 'Backup to GitHub...'
+  git commit -q -m "feat: Update twp Configuration by ebk"
   git push -q
   echo "done."
   echo ""
