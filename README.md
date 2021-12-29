@@ -71,7 +71,16 @@ ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub |
 
 ## Firefox Setup
 
-### Build
+### Fenix Build(Iceraven)
+
+- <https://developer.android.com/studio/publish/app-signing#generate-key>
+
+```bash
+DEBUG_ALIAS
+DEBUG_KEY_PASSWORD
+DEBUG_KEY_STORE_PASSWORD
+DEBUG_SIGNING_KEY
+```
 
 - `app/build.gradle`
 
@@ -96,15 +105,13 @@ val tabGroupFeature = false
 
 ```kotlin
 // Add safebrowsing providers for China
-if (true) {
-  val o = SafeBrowsingProvider
-    .from(ContentBlocking.GOOGLE_SAFE_BROWSING_PROVIDER)
-    .getHashUrl("")
-    .updateUrl("")
-    .build()
-  runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
-  runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
-}
+val o = SafeBrowsingProvider
+  .from(ContentBlocking.GOOGLE_SAFE_BROWSING_PROVIDER)
+  .getHashUrl("")
+  .updateUrl("")
+  .build()
+runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
+runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 ```
 
 ### Settings
