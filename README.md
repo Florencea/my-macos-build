@@ -9,7 +9,6 @@
 
 - [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
 - [Violentmonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/violentmonkey-backup.zip)
-- [NewTongwentong Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json)
 
 ## macOS Commands
 
@@ -22,13 +21,9 @@ defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ### Use Touch ID for sudo Commands
 
 ```bash
-sudo nano /etc/pam.d/sudo
-```
-
-- Add this at line 2
-
-```bash
-auth       sufficient     pam_tid.so
+sudo sed -i '' '2i\
+auth       sufficient     pam_tid.so\
+' /etc/pam.d/sudo
 ```
 
 ### Remove Quarantine Attributes
@@ -65,51 +60,10 @@ sudo xattr -r -d com.apple.quarantine <FILE>
 
 ### 8. Setup Developer tools
 
-- Setup "Google Chrome.app"
 - Setup SSH Key
 
 ```bash
-ssh-keygen -t ed25519
-```
-
-```bash
-cat .ssh/id_ed25519.pub | pbcopy
-```
-
-- Setup GPG Key
-
-```bash
-gpg --full-generate-key
-```
-
-```bash
-gpg -a --export (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s") | pbcopy
-```
-
-- Import GPG Key to GitHub, GitLab or Bitbucket
-
-```bash
-git config --global user.signingkey (gpg -K --keyid-format LONG | grep sec | grep -o -E "\S{16}\s")
-```
-
-```bash
-git config --global commit.gpgsign true
-```
-
-```bash
-git config --global gpg.program gpg
-```
-
-```bash
-printf "pinentry-program /opt/homebrew/bin/pinentry-mac\n" >> ~/.gnupg/gpg-agent.conf
-```
-
-```bash
-printf "no-tty\n" >> ~/.gnupg/gpg.conf
-```
-
-```bash
-killall gpg-agent
+ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub | pbcopy
 ```
 
 - Setup "Visual Studio Code.app"
