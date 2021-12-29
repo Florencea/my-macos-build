@@ -25,6 +25,10 @@ yarn create next-app --typescript
 - Disable telemetry
 
 ```bash
+yarn run next telemetry disable
+```
+
+```bash
 printf "NEXT_TELEMETRY_DISABLED=1\n" >> .env
 ```
 
