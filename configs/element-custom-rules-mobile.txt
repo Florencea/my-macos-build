@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2021-12-28
+! Last updated: 2021-12-29
 
 ! Firefox Interface css color
 ! bg-dark: #1c1b21
@@ -728,7 +728,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span#main > a.aRF img:style(bottom: 0 !important)
 18av.tv##span#main > a.aRF img:style(width: 100% !important)
 18av.tv##span#main > a.aRF img:style(max-width: 100% !important)
-18av.tv##span#main > a.aRF img:style(height: 26rem !important)
+18av.tv##span#main > a.aRF img:style(height: 18rem !important)
 18av.tv##span#main > a.aRF img:style(object-fit: cover !important)
 18av.tv##span#main > a.aRF img:style(object-position: center center !important)
 18av.tv##span#main > a.aRF img:style(border-radius: 0.2rem !important)
@@ -952,7 +952,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(display: block !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(width: 27% !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(padding: 0 !important)
-18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(margin-top: 1rem !important)
+18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(margin-top: 0.9rem !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(margin-left: 1.5rem !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li > a:style(display: inline-block !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li > a:style(margin: 0 !important)
@@ -1238,7 +1238,7 @@ imgscloud.com###coverclose_bottom:remove()
 18h.mm-cg.com##span#main a.aRF:style(font-weight: 400 !important)
 18h.mm-cg.com##span#main a.aRF:style(line-height: 1.5rem !important)
 18h.mm-cg.com##span#main a.aRF:style(outline: 0 !important)
-18h.mm-cg.com##span#main a.aRF img:style(background-color: #33313c !important)
+18h.mm-cg.com##span#main a.aRF img:style(background-color: #1c1b21 !important)
 18h.mm-cg.com##span#main a.aRF img:style(display: block !important)
 18h.mm-cg.com##span#main a.aRF img:style(margin-bottom: 1rem !important)
 18h.mm-cg.com##span#main a.aRF img:style(bottom: 0 !important)
