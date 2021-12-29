@@ -71,6 +71,44 @@ ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub |
 
 ## Firefox Setup
 
+### Build
+
+- `app/build.gradle`
+
+```text
+16201230 -> 16366570
+What-I-want-on-Fenix -> addons-mobile
+```
+
+- `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
+
+```kotlin
+const val showHomeButtonFeature = false
+const val showHomeBehindSearch = false
+const val showStartOnHomeSettings = false
+const val showRecentTabsFeature = false
+const val recentBookmarksFeature = false
+const val customizeHome = false
+val tabGroupFeature = false
+```
+
+- `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
+
+```kotlin
+// Add safebrowsing providers for China
+if (true) {
+  val o = SafeBrowsingProvider
+    .from(ContentBlocking.GOOGLE_SAFE_BROWSING_PROVIDER)
+    .getHashUrl("")
+    .updateUrl("")
+    .build()
+  runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
+  runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
+}
+```
+
+### Settings
+
 - Set DNS over HTTPS
 
 ```text
