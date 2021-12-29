@@ -952,7 +952,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(display: block !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(width: 27% !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(padding: 0 !important)
-18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(margin-top: 0.9rem !important)
+18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(margin-top: 0.85rem !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li.biaotou:style(margin-left: 1.5rem !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li > a:style(display: inline-block !important)
 18av.tv###menu1Content > span.altto_list > ul > #Detailed_Hmmcg > span.biaotou > ul > li > a:style(margin: 0 !important)
@@ -1408,4 +1408,3 @@ imgscloud.com###coverclose_bottom:remove()
 ||18h.mm-cg.com/31M/background/NR.gif$image
 ||18h.mm-cg.com/31M/background/NL.gif$image
 ||18h.mm-cg.com/mmad.js$script
-
