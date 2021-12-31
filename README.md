@@ -27,12 +27,6 @@ auth       sufficient     pam_tid.so\
 ' /etc/pam.d/sudo
 ```
 
-### Remove Quarantine Attributes
-
-```bash
-sudo xattr -r -d com.apple.quarantine <FILE>
-```
-
 ## macOS Setup
 
 - For Apple Silicon and macOS 12
