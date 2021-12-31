@@ -49,17 +49,17 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install fonts essential"
-brew install font-jetbrains-mono
-brew install font-inter
-brew install font-new-york
+brew install homebrew/cask-fonts/font-jetbrains-mono
+brew install homebrew/cask-fonts/font-inter
+brew install homebrew/cask-fonts/font-new-york
 
 print_step "brew install cask apps"
-brew install google-chrome
-brew install iina
-brew install keka
-brew install kekaexternalhelper
-brew install mos
-brew install visual-studio-code
+brew install --cask google-chrome
+brew install --cask iina
+brew install --cask keka
+brew install --cask kekaexternalhelper
+brew install --cask mos
+brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
