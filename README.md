@@ -63,27 +63,28 @@ ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub |
 
 - Setup "Visual Studio Code.app"
 
-## Firefox Setup
+## Firefox
 
-### Fenix Build(Iceraven)
-
-- <https://developer.android.com/studio/publish/app-signing#generate-key>
+### Fenix Build
 
 ```bash
-DEBUG_ALIAS
-DEBUG_KEY_PASSWORD
-DEBUG_KEY_STORE_PASSWORD
-DEBUG_SIGNING_KEY
+brew install android-studio
 ```
 
-- `app/build.gradle`
+- Download [current Fenix release](https://github.com/mozilla-mobile/fenix/releases/latest) codes and import to Android Studio
 
-```text
-16201230 -> 16366570
-What-I-want-on-Fenix -> addons-mobile
+- Use Custom Add-ons: `app/build.gradle`
+
+```bash
+# AMO_COLLECTION_USER
+buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\""
+-> buildConfigField "String", "AMO_COLLECTION_USER", "\"16366570\""
+# AMO_COLLECTION_NAME
+buildConfigField "String", "AMO_COLLECTION_NAME", "\"7dfae8669acc4312a65e8ba5553036\""
+-> buildConfigField "String", "AMO_COLLECTION_NAME", "\"addons-mobile\""
 ```
 
-- `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
+- Disable Home Button in BrowserBar: `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
 
 ```kotlin
 const val showHomeButtonFeature = false
@@ -92,10 +93,10 @@ const val showStartOnHomeSettings = false
 const val showRecentTabsFeature = false
 const val recentBookmarksFeature = false
 const val customizeHome = false
-val tabGroupFeature = false
+const val tabGroupFeature = false
 ```
 
-- `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
+- Disable Google SafeBrowsing: `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
 
 ```kotlin
 // Add safebrowsing providers for China
@@ -108,7 +109,14 @@ runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
 runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 ```
 
-### Settings
+- Build signed apk use `configs/key0`
+
+```text
+key0
+123456
+```
+
+### Firefox Desktop
 
 - Set DNS over HTTPS
 
