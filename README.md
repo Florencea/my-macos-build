@@ -139,7 +139,7 @@ prefetch
 - Devtools
 
 ```text
-Mozilla/5.0 (Android 12; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
+Mozilla/5.0 (Android 12; Mobile; rv:95.0) Gecko/95.0 Firefox/95.0
 ```
 
 ```text
