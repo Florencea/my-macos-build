@@ -14,6 +14,47 @@ yarn create vite vite-project --template react-ts
 cd vite-project && yarn
 ```
 
+```bash
+yarn add -D \
+eslint \
+typescript \
+@typescript-eslint/parser \
+@typescript-eslint/eslint-plugin \
+eslint-plugin-react \
+eslint-config-alloy
+```
+
+- `package.json`
+
+```json
+{
+  "eslintConfig": {
+    "extends": ["alloy", "alloy/react", "alloy/typescript"],
+    "env": {
+      "browser": true
+    },
+    "globals": {
+      "React": "readonly"
+    },
+    "rules": {
+      "spaced-comment": [
+        "error",
+        "always",
+        {
+          "markers": ["/"]
+        }
+      ],
+      "@typescript-eslint/no-require-imports": 0
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  }
+}
+```
+
 ## Ant Design
 
 ```bash
