@@ -9,7 +9,6 @@
 
 - [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
 - [Violentmonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/violentmonkey-backup.zip)
-- [TWP Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/twp-backup.txt)
 
 ## macOS Commands
 
@@ -63,125 +62,10 @@ ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub |
 
 - Setup "Visual Studio Code.app"
 
-## Firefox
-
-### Fenix Build
-
-```bash
-brew install android-studio
-```
-
-```bash
-softwareupdate --install-rosetta
-```
-
-- Download [current Fenix release](https://github.com/mozilla-mobile/fenix/releases/latest) codes and import to Android Studio
-
-- Use Custom Add-ons: `app/build.gradle`
-
-```bash
-# AMO_COLLECTION_USER
-buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\""
--> buildConfigField "String", "AMO_COLLECTION_USER", "\"16366570\""
-# AMO_COLLECTION_NAME
-buildConfigField "String", "AMO_COLLECTION_NAME", "\"7dfae8669acc4312a65e8ba5553036\""
--> buildConfigField "String", "AMO_COLLECTION_NAME", "\"addons-mobile\""
-# versionName
-def versionName = variant.buildType.name == 'nightly' ? Config.nightlyVersionName() : Config.releaseVersionName(project)
--> def versionName = "YOUR_VERSION"
-# AppId
-applicationIdSuffix ".firefox"
--> applicationIdSuffix ".firefoxCustom"
-# protobuf
-artifact = Deps.protobuf_compiler
--> artifact = "${Deps.protobuf_compiler}:osx-x86_64"
-# build type
-include "x86", "armeabi-v7a", "arm64-v8a", "x86_64"
--> include "arm64-v8a"
-# disable CRASH_REPORTING (Replace if-else block)
-buildConfigField 'boolean', 'CRASH_REPORTING', 'false'
-# disable TELEMETRY (Replace if-else block)
-buildConfigField 'boolean', 'TELEMETRY', 'false'
-# ADJUST_TOKEN (Replace if-else block)
-buildConfigField 'String', 'ADJUST_TOKEN', 'null'
-println("--")
-# disable NIMBUS (Replace if-else block)
-buildConfigField 'String', 'NIMBUS_ENDPOINT', 'null'
-println("--")
-```
-
-- Disable Home Button in BrowserBar: `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
-
-```kotlin
-// flags
-const val pullToRefreshEnabled = false
-const val addressesFeature = false
-const val showHomeButtonFeature = false
-const val showHomeBehindSearch = false
-const val showStartOnHomeSettings = false
-const val showRecentTabsFeature = false
-const val recentBookmarksFeature = false
-const val inactiveTabs = false
-const val customizeHome = false
-const val tabGroupFeature = false
-// disable pockets
-return listOf("en-US", "en-CA").contains(langTag)
--> return listOf("nothing").contains(langTag)
-```
-
-- Disable Google SafeBrowsing: `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
-
-```kotlin
-// Add safebrowsing providers for China
-val o = SafeBrowsingProvider
-  .from(ContentBlocking.GOOGLE_SAFE_BROWSING_PROVIDER)
-  .getHashUrl("")
-  .updateUrl("")
-  .build()
-runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
-runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
-```
-
-- Fix App Crash When Click "What's New": `app/src/main/java/org/mozilla/fenix/home/HomeFragment.kt`
-
-```kotlin
-searchTermOrURL = SupportUtils.getWhatsNewUrl(context),
--> searchTermOrURL = "https://github.com/mozilla-mobile/fenix",
-```
-
-- Build signed apk use `configs/key0`
+## Firefox Devtools
 
 ```text
-key0
-123456
-```
-
-- APKs in `app/release`
-
-### Firefox Desktop
-
-- Set DNS over HTTPS
-
-```text
-https://dns.google/dns-query
-```
-
-- Set ECS to `false`
-
-```text
-network.trr.disable-ECS
-```
-
-- Set all prefetch configs to default
-
-```text
-prefetch
-```
-
-- Devtools
-
-```text
-Mozilla/5.0 (Android 12; Mobile; rv:95.0) Gecko/95.0 Firefox/95.0
+Mozilla/5.0 (Android 12; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
 ```
 
 ```text
