@@ -2,8 +2,11 @@
 
 ## Quick Links
 
-- [React Note](react/README.md)
-- [FFmpeg Note](ffmpeg/README.md)
+- [Next.js Note](NOTE_NEXTJS.md)
+- [Vite Note](NOTE_VITEJS.md)
+- [UmiJS Note](NOTE_UMIJS.md)
+- [FFmpeg Note](NOTE_FFMPEG.md)
+- [Iceraven Note](NOTE_ICERAVEN.md)
 
 ## Extenstion Configs
 
