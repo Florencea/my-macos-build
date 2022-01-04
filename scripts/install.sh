@@ -6,7 +6,7 @@ function print_step() {
   printf "\E[0m"
 }
 
-print_step "set Touch ID for sudo commands"
+print_step "set touch id for sudo commands"
 sudo sed -i '' '2i\
 auth       sufficient     pam_tid.so\
 ' /etc/pam.d/sudo
@@ -97,7 +97,7 @@ print_step "git configuations"
   git config --global core.quotepath false
 )
 
-print_step "Setup SSH Key"
+print_step "setup ssh key"
 
 (
   set -x
