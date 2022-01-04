@@ -6,7 +6,7 @@
 
 ### 2. Add Repository Secrets
 
-- **Note: Only for self usage, this key is different from original one!**
+- **Note: Only for personal use, this key is different from upstream!**
 - `DEBUG_SIGNING_KEY`
 
 ```bash
