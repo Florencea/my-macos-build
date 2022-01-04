@@ -1,16 +1,21 @@
 #! /bin/bash
 
-if ! command -v brew &>/dev/null; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 function print_step() {
   printf "\E[1;36m"
   printf "\n + %s\n\n" "$1"
   printf "\E[0m"
 }
+
+print_step "set Touch ID for sudo commands"
+sudo sed -i '' '2i\
+auth       sufficient     pam_tid.so\
+' /etc/pam.d/sudo
+
+if ! command -v brew &>/dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 # git
 github_username="Florencea"
@@ -39,7 +44,13 @@ mkdir -p ~/.config/fish
   printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
   printf "alias ua=\"sh $script_path/update-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
+  printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
 } >>~/.config/fish/config.fish
+
+print_step "brew update taps"
+brew tap homebrew/cask
+brew tap homebrew/cask-fonts
+brew tap homebrew/cask-versions
 
 print_step "brew install istat menus"
 brew install istat-menus
@@ -49,17 +60,17 @@ printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-
 printf "\E[0m"
 
 print_step "brew install fonts essential"
-brew install homebrew/cask-fonts/font-jetbrains-mono
-brew install homebrew/cask-fonts/font-inter
-brew install homebrew/cask-fonts/font-new-york
+brew install font-jetbrains-mono
+brew install font-inter
+brew install font-new-york
 
 print_step "brew install cask apps"
-brew install --cask google-chrome
-brew install --cask iina
-brew install --cask keka
-brew install --cask kekaexternalhelper
-brew install --cask mos
-brew install --cask visual-studio-code
+brew install google-chrome
+brew install iina
+brew install keka
+brew install kekaexternalhelper
+brew install mos
+brew install visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
@@ -84,6 +95,13 @@ print_step "git configuations"
   git config --global init.defaultBranch main
   git config --global pull.rebase false
   git config --global core.quotepath false
+)
+
+print_step "Setup SSH Key"
+
+(
+  set -x
+  ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
 )
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
