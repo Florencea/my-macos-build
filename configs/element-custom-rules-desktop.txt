@@ -677,7 +677,8 @@ twnic.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sa
 
 ! wikiwiki.jp
 ! remove
-wikiwiki.jp###inbound-ad-container
+wikiwiki.jp##^#inbound-ad-container
+wikiwiki.jp###inbound-ad-container:remove()
 
 ! xfastest.com
 ! remove
