@@ -54,7 +54,7 @@ module.exports = require('next-with-less')({
     lessOptions: {
       modifyVars: {
         'primary-color':
-          require('@ant-design/colors').presetDarkPalettes.volcano[6]
+          require('@ant-design/colors').presetDarkPalettes.volcano[5]
       }
     }
   }
@@ -160,9 +160,9 @@ const Card = ({
 }) => (
   <a
     href={href}
-    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-volcano-6 hover:border-volcano-6"
+    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-volcano-5 hover:border-volcano-5"
   >
-    <h2 className="mb-4 text-2xl text-volcano-6">{header} &rarr;</h2>
+    <h2 className="mb-4 text-2xl text-volcano-5">{header} &rarr;</h2>
     <p className="m-0 text-xl">{paragraph}</p>
   </a>
 )
