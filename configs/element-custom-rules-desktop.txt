@@ -219,8 +219,6 @@ inside.com.tw##^.post_list_item-ad
 inside.com.tw##.post_list_item-ad:remove()
 inside.com.tw##^.post_toolbox
 inside.com.tw##.post_toolbox:remove()
-inside.com.tw##^.post_list_item:has(a[href='https://www.inside.com.tw/category/native'])
-inside.com.tw##.post_list_item:has(a[href='https://www.inside.com.tw/category/native']):remove()
 inside.com.tw##^div[class*=adv]
 inside.com.tw##div[class*=adv]:remove()
 inside.com.tw##^div[class*=dfp_ad]
