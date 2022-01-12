@@ -162,9 +162,9 @@ const Card = ({
 }) => (
   <a
     href={href}
-    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-volcano-primary hover:border-volcano-primary"
+    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-volcano-6 hover:border-volcano-6"
   >
-    <h2 className="mb-4 text-2xl text-volcano-primary">{header} &rarr;</h2>
+    <h2 className="mb-4 text-2xl text-volcano-6">{header} &rarr;</h2>
     <p className="m-0 text-xl">{paragraph}</p>
   </a>
 )
