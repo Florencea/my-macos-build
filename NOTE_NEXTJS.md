@@ -42,10 +42,7 @@ yarn add antd @ant-design/icons @ant-design/colors next-with-less less less-load
 
 ```js
 /** @type {import('next').NextConfig} */
-const withLess = require('next-with-less')
-const { volcano } = require('@ant-design/colors')
-
-module.exports = withLess({
+module.exports = require('next-with-less')({
   exportPathMap: async () => ({
     '/': { page: '/' }
   }),
@@ -56,7 +53,8 @@ module.exports = withLess({
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
-        'primary-color': volcano.primary
+        'primary-color':
+          require('@ant-design/colors').presetDarkPalettes.volcano[6]
       }
     }
   }
@@ -118,7 +116,7 @@ module.exports = {
     colors: {
       white: '#fff',
       black: '#000',
-      ...require('@ant-design/colors')
+      ...require('@ant-design/colors').presetDarkPalettes
     },
     extend: {}
   },
