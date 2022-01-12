@@ -68,7 +68,7 @@ yarn add -D less vite-plugin-imp
 - `vite.config.ts`
 
 ```ts
-import { blue } from '@ant-design/colors'
+import { presetDarkPalettes } from '@ant-design/colors'
 import react from '@vitejs/plugin-react'
 import { getThemeVariables } from 'antd/dist/theme'
 import { defineConfig } from 'vite'
@@ -94,8 +94,7 @@ export default defineConfig({
           ...getThemeVariables({
             dark: true
           }),
-          dark: true,
-          'primary-color': blue.primary
+          'primary-color': presetDarkPalettes.blue.primary
         }
       }
     }
@@ -152,7 +151,7 @@ module.exports = {
     colors: {
       white: '#fff',
       black: '#000',
-      ...require('@ant-design/colors')
+      ...require('@ant-design/colors').presetDarkPalettes
     },
     extend: {
       animation: {
