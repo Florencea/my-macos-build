@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1642138428274,
+  "timeStamp": 1642166649382,
   "version": "1.40.8",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -12,7 +12,6 @@
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
-    "showIconBadge": false,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
