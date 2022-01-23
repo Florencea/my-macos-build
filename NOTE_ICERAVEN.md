@@ -39,6 +39,7 @@ key0
 ```yaml
 name: Android build
 on:
+  workflow_dispatch:
   push:
     branches:
       - fork
