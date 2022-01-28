@@ -59,7 +59,7 @@ jobs:
       - name: Install Android SDK with pieces Gradle skips
         run: ./automation/iceraven/install-sdk.sh
       - name: Create version name
-        run: echo "VERSION_NAME=$(git describe --tags HEAD)" >> $GITHUB_ENV
+        run: echo "VERSION_NAME=$(cat version.txt)" >> $GITHUB_ENV
       - name: Build forkRelease variant of app
         uses: eskatos/gradle-command-action@v1
         with:
