@@ -63,7 +63,7 @@ jobs:
       - name: Build forkRelease variant of app
         uses: eskatos/gradle-command-action@v1
         with:
-          wrapper-cache-enabled: true
+          distributions-cache-enabled: true
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
           arguments: assembleForkRelease -PversionName=${{ env.VERSION_NAME }}
