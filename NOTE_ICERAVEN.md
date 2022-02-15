@@ -92,7 +92,7 @@ include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 ```
 
 - `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
-- Disable features
+- Disable features (as needed)
 
 ```kotlin
 const val pullToRefreshEnabled = false
@@ -106,6 +106,24 @@ const val showHomeBehindSearch = false
 const val customizeHome = false
 const val tabGroupFeature = false
 return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").contains(langTag)
+```
+
+- `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
+- If `showHomeButtonFeature` feature flag gone, comment this part (Line 74 ~ 84)
+- see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
+
+```kotlin
+val homeAction = BrowserToolbar.Button(
+    imageDrawable = AppCompatResources.getDrawable(
+        context,
+        R.drawable.mozac_ic_home
+    )!!,
+    contentDescription = context.getString(R.string.browser_toolbar_home),
+    iconTintColorResource = ThemeManager.resolveAttribute(R.attr.primaryText, context),
+    listener = browserToolbarInteractor::onHomeButtonClicked
+)
+
+browserToolbarView.view.addNavigationAction(homeAction)
 ```
 
 - `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
