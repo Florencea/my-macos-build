@@ -2,6 +2,7 @@
 
 ## Quick Links
 
+- [Create React App Note](NOTE_CRA.md)
 - [Next.js Note](NOTE_NEXTJS.md)
 - [Vite Note](NOTE_VITEJS.md)
 - [UmiJS Note](NOTE_UMIJS.md)
