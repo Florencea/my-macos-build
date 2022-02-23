@@ -217,11 +217,11 @@ function App() {
           {' | '}
           <a
             className="App-link"
-            href="https://vitejs.dev/guide/features.html"
+            href="https://create-react-app.dev/docs/getting-started"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Vite Docs
+            CRA Docs
           </a>
         </p>
       </header>
