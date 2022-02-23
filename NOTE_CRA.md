@@ -7,7 +7,7 @@
 ## Create React App
 
 ```bash
-yarn create react-app my-app --template typescript
+yarn create react-app my-app --template typescript && cd my-app
 ```
 
 ```bash
