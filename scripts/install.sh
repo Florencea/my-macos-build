@@ -24,6 +24,8 @@ github_editor="nano"
 # config
 script_dir="~/GitHub/my-macos-build"
 script_path="$script_dir/scripts"
+# myself-cli
+myself_cli_script_path="~/GitHub/myself-cli"
 # brew
 brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
@@ -44,6 +46,7 @@ mkdir -p ~/.config/fish
   printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
   printf "alias ua=\"sh $script_path/update-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
+  printf "alias myself-cli=\"sh $myself_cli_script_path/myself-cli.sh\"\n"
   printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
 } >>~/.config/fish/config.fish
 
