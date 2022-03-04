@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1642679121553,
-  "version": "1.40.8",
+  "timeStamp": 1646371570990,
+  "version": "1.41.8",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
@@ -12,6 +12,7 @@
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
+    "suspendUntilListsAreLoaded": true,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
@@ -25,7 +26,6 @@
     "easylist",
     "adguard-spyware",
     "adguard-spyware-url",
-    "block-lan",
     "easyprivacy",
     "urlhaus-1",
     "adguard-annoyance",
