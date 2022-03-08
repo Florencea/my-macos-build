@@ -22,10 +22,10 @@ github_username="Florencea"
 github_email="bearflorencea@gmail.com"
 github_editor="nano"
 # config
-script_dir="~/GitHub/my-macos-build"
+script_dir="~/Codespaces/my-macos-build"
 script_path="$script_dir/scripts"
 # myself-cli
-myself_cli_script_path="~/GitHub/myself-cli"
+myself_cli_script_path="~/Codespaces/myself-cli"
 # brew
 brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"

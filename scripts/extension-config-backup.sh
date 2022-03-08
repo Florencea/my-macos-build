@@ -1,13 +1,13 @@
 #! /bin/bash
 # nano ~/.config/fish/config.fish
-# alias ebk="sh ~/GitHub/my-macos-build/scripts/extension-config-backup.sh"
+# alias ebk="sh ~/Codespaces/my-macos-build/scripts/extension-config-backup.sh"
 FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head -n1)
 FILE_UBLOCK_NAME=ublock-advanced.txt
 FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'scripts_*.zip' | head -n1)
 FILE_VIOLENTMONKEY_NAME=violentmonkey-backup.zip
 FILE_TONGWENTANG=$(find ~/Downloads -maxdepth 1 -name 'tongwentang-pref*.json' | head -n1)
 FILE_TONGWENTANG_NAME=tongwentang-pref.json
-PROJECT_DIR=~/GitHub/my-macos-build/configs/
+PROJECT_DIR=~/Codespaces/my-macos-build/configs/
 # find my-ublock-backup*.txt and backup
 if [ -f "$FILE_UBLOCK" ]; then
   mv "$FILE_UBLOCK" "$PROJECT_DIR$FILE_UBLOCK_NAME"
@@ -16,7 +16,7 @@ if [ -f "$FILE_UBLOCK" ]; then
   echo ""
   printf 'Find uBlock Configuration: %s\n' "$FILE_UBLOCK"
   printf '     --> ublock-advanced.txt\n\n'
-  printf 'Backup to GitHub...'
+  printf 'Backup...'
   git commit -q -m "feat: Update uBlock Configuration by ebk"
   git push -q
   echo "done."
@@ -30,7 +30,7 @@ if [ -f "$FILE_VIOLENTMONKEY" ]; then
   echo ""
   printf 'Find VIOLENTMONKEY Configuration: %s\n' "$FILE_VIOLENTMONKEY"
   printf '     --> violentmonkey-backup.zip\n\n'
-  printf 'Backup to GitHub...'
+  printf 'Backup...'
   git commit -q -m "feat: Update violentmonkey Configuration by ebk"
   git push -q
   echo "done."
@@ -44,7 +44,7 @@ if [ -f "$FILE_TONGWENTANG" ]; then
   echo ""
   printf 'Find NewTongWenTang Configuration: %s\n' "$FILE_TONGWENTANG"
   printf '     --> tongwentang-pref.json\n\n'
-  printf 'Backup to GitHub...'
+  printf 'Backup...'
   git commit -q -m "feat: Update NewTongWenTang Configuration by ebk"
   git push -q
   echo "done."

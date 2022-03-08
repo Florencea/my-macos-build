@@ -1,6 +1,6 @@
 #! /bin/bash
 # nano ~/.config/fish/config.fish
-# alias ua="sh ~/GitHub/my-macos-build/scripts/update-all.sh"
+# alias ua="sh ~/Codespaces/my-macos-build/scripts/update-all.sh"
 
 function print_step() {
   printf "\E[1;36m"
@@ -15,8 +15,8 @@ cd ~ || exit
   brew upgrade
 )
 
-print_step "Update all Repositories in ~/GitHub"
-BASE_DIR="/Users/$(whoami)/GitHub/"
+print_step "Update all Repositories in ~/Codespaces"
+BASE_DIR="/Users/$(whoami)/Codespaces/"
 cd "$BASE_DIR"
 for f in $(ls $BASE_DIR); do
   cd "$BASE_DIR/$f"

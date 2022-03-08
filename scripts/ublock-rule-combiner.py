@@ -1,9 +1,9 @@
 from datetime import datetime
 
 file_list = [
-    "/Users/florencea/GitHub/my-macos-build/configs/element-custom-rules-desktop.txt",
-    "/Users/florencea/GitHub/my-macos-build/configs/element-custom-rules-mobile.txt",
-    "/Users/florencea/GitHub/my-macos-build/configs/element-custom-rules-dark.txt",
+    "/Users/florencea/Codespaces/my-macos-build/configs/element-custom-rules-desktop.txt",
+    "/Users/florencea/Codespaces/my-macos-build/configs/element-custom-rules-mobile.txt",
+    "/Users/florencea/Codespaces/my-macos-build/configs/element-custom-rules-dark.txt",
 ]
 
 

@@ -2,7 +2,7 @@
 
 # require ffmpeg
 # nano ~/.config/fish/config.fish
-# alias rec="sh ~/GitHub/my-macos-build/scripts/re-encode.sh"
+# alias rec="sh ~/Codespaces/my-macos-build/scripts/re-encode.sh"
 if [ "$#" -ne 1 ]; then
   echo "Usage: rec [input_file]"
   echo "       rec \"input.mp4\""
