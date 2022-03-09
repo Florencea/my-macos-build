@@ -20,6 +20,8 @@ BASE_DIR="/Users/$(whoami)/Codespaces/"
 cd "$BASE_DIR"
 for f in $(ls $BASE_DIR); do
   cd "$BASE_DIR/$f"
-  printf "+ git pull: %s\n" $f
-  git pull
+  if [ -d .git ]; then
+    printf "+ git pull: %s\n" $f
+    git pull
+  fi
 done
