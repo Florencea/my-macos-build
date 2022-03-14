@@ -81,6 +81,8 @@ brew install git
 brew install jq
 brew install mkcert
 brew install nano
+brew install nanorc
+echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node
 brew install rsync
 brew install python
