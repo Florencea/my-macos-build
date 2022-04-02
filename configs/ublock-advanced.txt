@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1646661059259,
+  "timeStamp": 1648912938716,
   "version": "1.41.8",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -21,6 +21,7 @@
     "ublock-filters",
     "ublock-badware",
     "ublock-privacy",
+    "ublock-quick-fixes",
     "ublock-abuse",
     "ublock-unbreak",
     "adguard-generic",
@@ -35,10 +36,10 @@
     "ublock-annoyances",
     "plowe-0",
     "CHN-0",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-dark.combined.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-desktop.combined.txt",
-    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
+    "https://github.com/Florencea/my-macos-build/raw/main/configs/element-custom-rules-mobile.combined.txt"
   ],
   "hiddenSettings": {
     "cloudStorageCompression": false
