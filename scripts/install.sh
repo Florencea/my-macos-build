@@ -99,6 +99,7 @@ print_step "git configuations"
   git config --global init.defaultBranch main
   git config --global pull.rebase false
   git config --global core.quotepath false
+  git config --global core.ignorecase false
 )
 
 print_step "setup ssh key"
