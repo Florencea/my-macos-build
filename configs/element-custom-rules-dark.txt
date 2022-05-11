@@ -3,15 +3,15 @@
 ! Last updated: 2022-04-02
 
 ! Firefox Interface css color
-! bg-dark: #1c1b21
+! bg-dark: #2b2a32
 
 ! feedly.com
 feedly.com##.home:style(background-color: #121212 !important)
 
 ! www.ithome.com.tw
-www.ithome.com.tw##body:style(background-color: #1c1b21 !important)
+www.ithome.com.tw##body:style(background-color: #2b2a32 !important)
 www.ithome.com.tw##body:style(color: #f8f9fa !important)
-www.ithome.com.tw##.main-container:style(background-color: #1c1b21 !important)
+www.ithome.com.tw##.main-container:style(background-color: #2b2a32 !important)
 www.ithome.com.tw##.page-node .page-header:style(color: #f8f9fa !important)
 www.ithome.com.tw##.submitted:style(color: #f8f9fa !important)
 www.ithome.com.tw##.submitted .created:style(color: #f8f9fa !important)
@@ -45,5 +45,5 @@ pts.org.tw##body .img-talk:style(color: #f8f9fa !important)
 pts.org.tw##.post-article a:style(color: #83c1fc !important)
 pts.org.tw##.post-article a:hover:style(border-color: #83c1fc !important)
 pts.org.tw##.post-article .articleimg:style(color: #83c1fc !important)
-pts.org.tw##body:style(background-color: #1c1b21 !important)
-pts.org.tw##.post-article ul:style(background-color: #1c1b21 !important)
+pts.org.tw##body:style(background-color: #2b2a32 !important)
+pts.org.tw##.post-article ul:style(background-color: #2b2a32 !important)
