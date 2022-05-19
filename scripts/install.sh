@@ -71,7 +71,11 @@ brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
+brew install microsoft-office
+brew install mysqlworkbench
 brew install mos
+brew install qbittorrent
+brew install slack
 brew install visual-studio-code
 
 print_step "brew install commend line tools"
@@ -85,6 +89,8 @@ brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node
 brew install rsync
+brew install pnpm
+pnpm install-completion fish
 brew install python
 brew install wget
 brew install yarn
