@@ -1,5 +1,6 @@
 # Vite Note
 
+- note for vite version: `2.9.9`
 - <https://cn.vitejs.dev/>
 - Works with npm, yarn, yarn2, pnpm
 - Official: pnpm
@@ -7,15 +8,15 @@
 ## Vite
 
 ```bash
-yarn create vite vite-project --template react-ts
+pnpm create vite vite-project --template react-ts
 ```
 
 ```bash
-cd vite-project && yarn
+cd vite-project && pnpm i
 ```
 
 ```bash
-yarn add -D \
+pnpm add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
@@ -34,7 +35,8 @@ eslint-config-alloy
       "browser": true
     },
     "globals": {
-      "React": "readonly"
+      "React": "readonly",
+      "JSX": "readonly"
     },
     "rules": {
       "spaced-comment": [
@@ -58,19 +60,18 @@ eslint-config-alloy
 ## Ant Design
 
 ```bash
-yarn add antd @ant-design/icons @ant-design/colors
+pnpm add antd @ant-design/icons @ant-design/colors moment
 ```
 
 ```bash
-yarn add -D less vite-plugin-imp
+pnpm add -D less vite-plugin-imp
 ```
 
 - `vite.config.ts`
 
 ```ts
-import { presetDarkPalettes } from '@ant-design/colors'
+import { presetPalettes } from '@ant-design/colors'
 import react from '@vitejs/plugin-react'
-import { getThemeVariables } from 'antd/dist/theme'
 import { defineConfig } from 'vite'
 import imp from 'vite-plugin-imp'
 
@@ -81,24 +82,22 @@ export default defineConfig({
       libList: [
         {
           libName: 'antd',
-          style: (name) => `antd/es/${name}/style`
-        }
-      ]
-    })
+          libDirectory: 'es',
+          style: (name) => `antd/es/${name}/style`,
+        },
+      ],
+    }),
   ],
   css: {
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
         modifyVars: {
-          ...getThemeVariables({
-            dark: true
-          }),
-          'primary-color': presetDarkPalettes.blue.primary
-        }
-      }
-    }
-  }
+          'primary-color': presetPalettes.blue.primary,
+        },
+      },
+    },
+  },
 })
 ```
 
@@ -111,7 +110,6 @@ import 'moment/dist/locale/zh-TW'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import './index.css'
 
 ReactDOM.render(
   <StrictMode>
@@ -119,48 +117,97 @@ ReactDOM.render(
       <App />
     </ConfigProvider>
   </StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
 ```
 
-## Tailwind CSS
+## Windi CSS
 
 ```bash
-yarn add -D tailwindcss postcss autoprefixer
+pnpm add -D vite-plugin-windicss windicss
 ```
 
 ```bash
-yarn run tailwindcss init -p
+touch windi.config.ts
 ```
 
-```bash
-printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' > src/index.css
-```
+- `windi.config.ts`
 
-- `tailwind.config.js`
+```ts
+import { defineConfig } from 'windicss/helpers'
+import { presetPalettes } from '@ant-design/colors'
 
-```js
-module.exports = {
-  corePlugins: {
-    preflight: false
-  },
+export default defineConfig({
+  preflight: false,
+  darkMode: false,
   important: '#root',
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: 'media',
   theme: {
-    colors: {
-      white: '#fff',
-      black: '#000',
-      ...require('@ant-design/colors').presetDarkPalettes
-    },
     extend: {
-      animation: {
-        spin: 'spin 20s linear infinite'
-      }
-    }
+      colors: {
+        white: '#fff',
+        black: '#000',
+        ...presetPalettes,
+      },
+    },
   },
-  plugins: []
-}
+})
+```
+
+- `vite.config.ts`
+
+```ts
+import { presetPalettes } from '@ant-design/colors'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import imp from 'vite-plugin-imp'
+import windiCss from 'vite-plugin-windicss'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    windiCss(),
+    imp({
+      libList: [
+        {
+          libName: 'antd',
+          libDirectory: 'es',
+          style: (name) => `antd/es/${name}/style`,
+        },
+      ],
+    }),
+  ],
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': presetPalettes.blue.primary,
+        },
+      },
+    },
+  },
+})
+```
+
+- `src/main.tsx`
+
+```tsx
+import { ConfigProvider } from 'antd'
+import zhTW from 'antd/es/locale/zh_TW'
+import 'moment/dist/locale/zh-TW'
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom'
+import 'virtual:windi.css'
+import App from './App'
+
+ReactDOM.render(
+  <StrictMode>
+    <ConfigProvider locale={zhTW}>
+      <App />
+    </ConfigProvider>
+  </StrictMode>,
+  document.getElementById('root'),
+)
 ```
 
 ## Index example
@@ -172,17 +219,17 @@ rm src/App.css
 - `src/App.tsx`
 
 ```tsx
+import { Button, DatePicker, message } from 'antd'
 import { useState } from 'react'
 import logo from './logo.svg'
-import { Button, DatePicker, message } from 'antd'
 
-function App() {
+export default function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="text-center">
+    <div className="text-center bg-[#282c34] text-white">
       <header
-        className="h-screen flex flex-col justify-center items-center text-white"
+        className="h-screen flex flex-col justify-center items-center"
         style={{ fontSize: 'calc(10px + 2vmin)' }}
       >
         <img
@@ -229,6 +276,4 @@ function App() {
     </div>
   )
 }
-
-export default App
 ```
