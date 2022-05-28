@@ -91,6 +91,7 @@ brew install node
 brew install rsync
 brew install pnpm
 pnpm install-completion fish
+pnpm config set enable-pre-post-scripts true
 brew install python
 brew install wget
 brew install yarn
