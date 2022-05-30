@@ -4,33 +4,46 @@
 - Only work with npm, yarn
 - Official: yarn
 
-## umi + antd + tailwindcss
+## umi + antd + windicss
 
 ```bash
 mkdir myapp && cd myapp
 ```
 
 ```bash
-yarn create @umijs/umi-app
+pnpm create @umijs/umi-app
 ```
 
 ```bash
-yarn add -D \
-@tailwindcss/postcss7-compat \
-umi-plugin-tailwindcss \
+pnpm add \
+dva-core@"^1.1.0 | ^1.5.0-0 | ^1.6.0-0" \
+redbox-react@1.x \
+redux@4.x \
+react-router@">=5.0.0 <6.0.0" \
+--save-peer
+```
+
+```bash
+pnpm add \
+react@16.x \
+react-dom@16.x \
+antd \
+@ant-design/colors \
+@ant-design/icons \
+moment
+```
+
+```bash
+pnpm add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
-eslint-config-alloy
-```
-
-```bash
-yarn add \
-antd \
-@ant-design/colors \
-@ant-design/icons
+eslint-config-alloy \
+@umijs/route-utils \
+windicss \
+windicss-webpack-plugin
 ```
 
 ```bash
@@ -38,7 +51,8 @@ rm \
 src/pages/index.tsx \
 src/pages/index.less \
 mock/.gitkeep \
-README.md
+README.md \
+.prettierrc
 ```
 
 ```bash
@@ -58,6 +72,7 @@ src/pages/public
 
 ```bash
 touch \
+windi.config.ts \
 mock/api.ts \
 public/robots.txt \
 src/access.ts \
@@ -66,7 +81,6 @@ src/global.less \
 src/components/PageFrame.tsx \
 src/configs/api.ts \
 src/configs/routes.ts \
-src/configs/theme.ts \
 src/models/auth.ts \
 src/pages/private/Welcome.tsx \
 src/pages/private/Logout.tsx \
@@ -106,12 +120,13 @@ code .
 
 ```ts
 import { defineConfig } from 'umi'
+import WindiCSSWebpackPlugin from 'windicss-webpack-plugin'
 import { routes, TITLE } from './src/configs/routes'
-import { theme } from './src/configs/theme'
+import { blue } from '@ant-design/colors'
 
 export default defineConfig({
   nodeModulesTransform: {
-    type: 'none'
+    type: 'none',
   },
   fastRefresh: {},
   hash: true,
@@ -119,16 +134,18 @@ export default defineConfig({
   locale: {
     default: 'zh-TW',
     antd: true,
-    baseNavigator: true
+    baseNavigator: true,
   },
-  antd: {
-    dark: true
-  },
+  antd: {},
   layout: {},
-  theme,
+  theme: { 'primary-color': blue.primary },
   routes,
   title: TITLE,
-  history: { type: 'hash' }
+  history: { type: 'hash' },
+  mfsu: false,
+  chainWebpack: (config: any) => {
+    config.plugin('windicss').use(WindiCSSWebpackPlugin)
+  },
   // proxy: {
   //   '/api': 'http://localhost:4000/',
   //   "/api": {
@@ -144,10 +161,40 @@ export default defineConfig({
 })
 ```
 
+- `windi.config.ts`
+
+```ts
+import { defineConfig } from 'windicss/helpers'
+import { presetDarkPalettes } from '@ant-design/colors'
+
+export default defineConfig({
+  extract: {
+    exclude: ['node_modules', '.git', 'dist', 'mock', '.umi'],
+  },
+  attributify: false,
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        ...presetDarkPalettes,
+      },
+    },
+  },
+})
+```
+
 - `package.json`
 
 ```json
 {
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "postinstall": "umi generate tmp",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
   "eslintConfig": {
     "extends": ["alloy", "alloy/react", "alloy/typescript"],
     "env": {
@@ -159,29 +206,12 @@ export default defineConfig({
     "rules": {
       "@typescript-eslint/no-require-imports": 0
     }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
-}
-```
-
-- `tailwind.config.js`
-
-```js
-module.exports = {
-  corePlugins: {
-    preflight: false
-  },
-  important: '#root',
-  purge: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
-  darkMode: 'media',
-  theme: {
-    colors: {
-      white: '#fff',
-      black: '#000',
-      ...require('@ant-design/colors')
-    },
-    extend: {}
-  },
-  plugins: []
 }
 ```
 
@@ -191,15 +221,15 @@ module.exports = {
 const success = {
   success: true,
   data: {
-    token: 'fake_token'
-  }
+    token: 'fake_token',
+  },
 }
 
 const failed = {
   success: false,
   errorCode: '401',
   errorMessage: '帳號或密碼錯誤',
-  showType: 2
+  showType: 2,
 }
 
 export default {
@@ -211,7 +241,7 @@ export default {
       res.status(401).json(failed)
     }
   },
-  'POST /api/logout': { success: true }
+  'POST /api/logout': { success: true },
 }
 ```
 
@@ -239,7 +269,7 @@ interface Props {
 export default ({ pageHeaderProps, children }: Props) => {
   const TITLE = useMemo(
     () => getPageTitle(history.location.pathname),
-    [history.location.pathname]
+    [history.location.pathname],
   )
   return (
     <Row className="h-screen">
@@ -268,8 +298,8 @@ export const prefix = '/api'
 export const api = {
   auth: {
     login: '/login',
-    logout: '/logout'
-  }
+    logout: '/logout',
+  },
 }
 ```
 
@@ -285,13 +315,13 @@ export const TITLE = 'myapp'
 
 const basicRouteConfig: Route = {
   hideInBreadcrumb: true,
-  headerRender: false
+  headerRender: false,
 }
 
 const basicRouteConfigWithoutMenu: Route = {
   ...basicRouteConfig,
   hideInMenu: true,
-  menuRender: false
+  menuRender: false,
 }
 
 const privateRoutes: (Route & { access: keyof AccessT })[] = [
@@ -301,7 +331,7 @@ const privateRoutes: (Route & { access: keyof AccessT })[] = [
     name: '歡迎',
     icon: 'Smile',
     access: 'isLogin',
-    component: '@/pages/private/Welcome'
+    component: '@/pages/private/Welcome',
   },
   {
     ...basicRouteConfig,
@@ -309,16 +339,16 @@ const privateRoutes: (Route & { access: keyof AccessT })[] = [
     name: '登出',
     icon: 'Logout',
     access: 'isLogin',
-    component: '@/pages/private/Logout'
-  }
+    component: '@/pages/private/Logout',
+  },
 ]
 
 const publicRoutes: Route[] = [
   {
     ...basicRouteConfigWithoutMenu,
     path: DEFAULT_PATH_PUBLIC,
-    component: '@/pages/public/Login'
-  }
+    component: '@/pages/public/Login',
+  },
 ]
 
 export const ROUTES_NEED_REDIRECT = [DEFAULT_PATH_PUBLIC]
@@ -326,21 +356,11 @@ export const ROUTES_NEED_REDIRECT = [DEFAULT_PATH_PUBLIC]
 export const routes: Route[] = [
   ...privateRoutes,
   ...publicRoutes,
-  { exact: false, path: '/', name: '', redirect: DEFAULT_PATH_PUBLIC }
+  { exact: false, path: '/', name: '', redirect: DEFAULT_PATH_PUBLIC },
 ]
 
 export const getPageTitle = (currentPath: string) =>
   routes.find((r) => r.path === currentPath)?.name ?? ''
-```
-
-- `src/configs/theme.ts`
-
-```ts
-import { volcano } from '@ant-design/colors'
-
-export const theme = {
-  'primary-color': volcano.primary
-}
 ```
 
 - `src/hooks/useApi.ts`
@@ -368,25 +388,25 @@ interface BasicResT<ResT> {
 
 const basicHeaders = {
   Accept: 'application/json',
-  'Content-Type': 'application/json; charset=utf-8'
+  'Content-Type': 'application/json; charset=utf-8',
 }
 
 const API_OPTIONS = <dataT>({
   method,
   token,
   params,
-  body
+  body,
 }: ApiOptionT<dataT>): RequestConfig => ({
   method,
   prefix,
   headers: token
     ? {
         ...basicHeaders,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       }
     : basicHeaders,
   params,
-  data: body
+  data: body,
 })
 
 /**
@@ -394,7 +414,7 @@ const API_OPTIONS = <dataT>({
  */
 export const useApi = <ReqT = undefined, ResT = undefined>(
   url: string,
-  options: ApiOptionT<ReqT>
+  options: ApiOptionT<ReqT>,
 ) => request<BasicResT<ResT>>(url, API_OPTIONS<ReqT>(options))
 ```
 
@@ -434,7 +454,7 @@ interface FormT {
 
 const DEFAULT_FORM: FormT = {
   account: '',
-  password: ''
+  password: '',
 }
 
 const API = api.auth
@@ -451,7 +471,7 @@ export default () => {
       setLoading(true)
       const { data } = await useApi<FormT, ItemT>(API.login, {
         method: 'POST',
-        body
+        body,
       })
       setToken(data.token)
       setInitialState({ ...initialState, token: data.token })
@@ -468,7 +488,7 @@ export default () => {
       setLoading(true)
       await useApi(API.logout, {
         method: 'POST',
-        token
+        token,
       })
       return true
     } catch {
@@ -485,8 +505,8 @@ export default () => {
       Login,
       Logout,
       DEFAULT_FORM,
-      loading
-    }
+      loading,
+    },
   }
 }
 ```
@@ -500,7 +520,7 @@ import { history, useModel } from 'umi'
 
 export default () => {
   const {
-    auth: { Logout }
+    auth: { Logout },
   } = useModel('auth')
   useEffect(() => {
     const logout = async () => {
@@ -535,10 +555,10 @@ import { history, useModel } from 'umi'
 export default () => {
   const { auth } = useModel('auth')
   const [form] = Form.useForm<typeof auth.DEFAULT_FORM>()
-  const inputRef = useRef<Input>(null)
+  const inputRef = useRef<any>(null)
   useEffect(() => {
     inputRef.current!.focus({
-      cursor: 'all'
+      cursor: 'all',
     })
   }, [])
   return (
@@ -596,7 +616,7 @@ export interface AccessT {
 }
 
 export default (initialState: InitialStateT): AccessT => ({
-  isLogin: initialState.token !== undefined
+  isLogin: initialState.token !== undefined,
 })
 ```
 
@@ -605,11 +625,12 @@ export default (initialState: InitialStateT): AccessT => ({
 ```tsx
 import { BasicLayoutProps } from '@ant-design/pro-layout'
 import { history } from 'umi'
+import 'windi.css'
 import {
   DEFAULT_PATH_PRIVATE,
   DEFAULT_PATH_PUBLIC,
   ROUTES_NEED_REDIRECT,
-  TITLE
+  TITLE,
 } from './configs/routes'
 import { getToken } from './hooks/useToken'
 
@@ -617,7 +638,7 @@ const isAccessRouteNeedRedirect = (path: string) =>
   new Set(ROUTES_NEED_REDIRECT).has(path)
 
 export const layout = ({
-  initialState
+  initialState,
 }: {
   initialState: InitialStateT
 }): BasicLayoutProps => {
@@ -628,7 +649,7 @@ export const layout = ({
     rightContentRender: () => null,
     onPageChange: async () => {
       const {
-        location: { pathname }
+        location: { pathname },
       } = history
       // authorized user access protected routes
       if (isLogin && isAccessRouteNeedRedirect(pathname)) {
@@ -638,7 +659,7 @@ export const layout = ({
       if (!isLogin && !isAccessRouteNeedRedirect(pathname)) {
         history.push(DEFAULT_PATH_PUBLIC)
       }
-    }
+    },
   }
 }
 
@@ -741,9 +762,9 @@ export const getInitialState = async (): Promise<InitialStateT> => {
 ```
 
 ```bash
-yarn prettier
+pnpm prettier
 ```
 
 ```bash
-yarn start
+pnpm dev
 ```
