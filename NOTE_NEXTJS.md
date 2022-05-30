@@ -1,13 +1,13 @@
 # Next.js Note
 
 - <https://nextjs.org/docs/getting-started>
-- Works with npm, yarn, yarn2, pnpm
-- Official: yarn
+- Works with `npm`, `yarn`, `yarn2`, `pnpm`
+- Official: `pnpm`
 
 ## Next.js
 
 ```bash
-yarn create next-app --typescript
+pnpm create next-app --typescript
 ```
 
 - `package.json`
@@ -25,7 +25,7 @@ yarn create next-app --typescript
 - Disable telemetry
 
 ```bash
-yarn run next telemetry disable
+pnpm next telemetry disable
 ```
 
 ```bash
@@ -35,7 +35,8 @@ printf "NEXT_TELEMETRY_DISABLED=1\n" >> .env
 ## Ant Design
 
 ```bash
-yarn add antd @ant-design/icons @ant-design/colors next-with-less less less-loader
+pnpm add webpack --save-peer
+pnpm add antd @ant-design/icons @ant-design/colors moment next-with-less less less-loader
 ```
 
 - `next.config.js`
@@ -44,20 +45,20 @@ yarn add antd @ant-design/icons @ant-design/colors next-with-less less less-load
 /** @type {import('next').NextConfig} */
 module.exports = require('next-with-less')({
   exportPathMap: async () => ({
-    '/': { page: '/' }
+    '/': { page: '/' },
   }),
   images: {
-    loader: 'custom'
+    loader: 'custom',
   },
   reactStrictMode: true,
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
         'primary-color':
-          require('@ant-design/colors').presetDarkPalettes.volcano[5]
-      }
-    }
-  }
+          require('@ant-design/colors').presetDarkPalettes.volcano[5],
+      },
+    },
+  },
 })
 ```
 
@@ -88,11 +89,11 @@ export default MyApp
 ## Tailwind CSS
 
 ```bash
-yarn add -D tailwindcss postcss autoprefixer
+pnpm add -D tailwindcss postcss autoprefixer
 ```
 
 ```bash
-yarn run tailwindcss init -p
+pnpm tailwindcss init -p
 ```
 
 ```bash
@@ -104,23 +105,23 @@ printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' > styles
 ```js
 module.exports = {
   corePlugins: {
-    preflight: false
+    preflight: false,
   },
   important: '#__next',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}'
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'media',
   theme: {
     colors: {
       white: '#fff',
       black: '#000',
-      ...require('@ant-design/colors').presetDarkPalettes
+      ...require('@ant-design/colors').presetDarkPalettes,
     },
-    extend: {}
+    extend: {},
   },
-  plugins: []
+  plugins: [],
 }
 ```
 
@@ -152,7 +153,7 @@ import { useState } from 'react'
 const Card = ({
   href,
   header,
-  paragraph
+  paragraph,
 }: {
   href: string
   header: string
