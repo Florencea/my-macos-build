@@ -75,7 +75,6 @@ brew install microsoft-office
 brew install mysqlworkbench
 brew install mos
 brew install qbittorrent
-brew install slack
 brew install visual-studio-code
 
 print_step "brew install commend line tools"
