@@ -4,6 +4,8 @@
 - Works with npm, yarn
 - Official: yarn
 
+- **CRACO is no longer maintained**
+
 ## Create React App
 
 ```bash
