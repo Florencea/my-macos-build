@@ -105,6 +105,8 @@ cool3c.com##^.board-c3c_all_float_inner
 cool3c.com##.board-c3c_all_float_inner:remove()
 cool3c.com##^#body > .row:not(.side-sync)
 cool3c.com###body > .row:not(.side-sync):remove()
+cool3c.com##div:has(> #ad2-title)
+cool3c.com##div:has(> #ad2-title):remove()
 cool3c.com##^.fixed-bottom
 cool3c.com##.fixed-bottom:remove()
 cool3c.com##^.gpt-new
