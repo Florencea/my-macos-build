@@ -1409,3 +1409,15 @@ imgscloud.com###coverclose_bottom:remove()
 ||18h.mm-cg.com/31M/background/NL.gif$image
 ||18h.mm-cg.com/mmad.js$script
 
+! external datalist
+! 18av.tv
+18av.tv##.altto form:after:style(font-size: 25.6px !important)
+18av.tv##.altto form:after:style(word-break: break-word !important)
+18av.tv##.altto form:after:style(font-family: monospace !important)
+18av.tv##.altto form:after:style(font-weight: 300 !important)
+18av.tv##.altto form:after:style(text-align: center !important)
+18av.tv##.altto form:after:style(line-height: 1.5rem !important)
+18av.tv##.altto form:after:style(color: #43424a !important)
+18av.tv##.altto form:after:style(display: block !important)
+18av.tv##.altto form:after:style(overflow-wrap: normal !important)
+18av.tv##.altto form:after:style(content: '#19420#19722#17939|百瀨 #|水木 #12602#17441|美津屋 #|夏目 #|長瀨 #|大山 #|梓美 #|結佳 #13709|愛原久美 #35372|智惠美 #|美由|白戶 #18200|寺田美空|北野麻美 #|遠山雪菜 #|浪川 #|宮本 #25630|1339' !important)
