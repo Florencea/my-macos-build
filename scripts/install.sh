@@ -24,8 +24,6 @@ github_editor="nano"
 # config
 script_dir="~/Codespaces/my-macos-build"
 script_path="$script_dir/scripts"
-# myself-cli
-myself_cli_script_path="~/Codespaces/myself-cli"
 # brew
 brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
@@ -71,10 +69,8 @@ brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
-brew install microsoft-office
-brew install mysqlworkbench
 brew install mos
-brew install qbittorrent
+brew install c0re100-qbittorrent
 brew install visual-studio-code
 
 print_step "brew install commend line tools"
@@ -82,14 +78,12 @@ brew install ffmpeg
 brew install gcc
 brew install git
 brew install jq
-brew install mkcert
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node
 brew install rsync
 brew install pnpm
-pnpm install-completion fish
 pnpm config set enable-pre-post-scripts true
 brew install python
 brew install wget
