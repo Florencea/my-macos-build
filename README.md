@@ -2,10 +2,8 @@
 
 ## Quick Links
 
-- [Create React App Note](NOTE_CRA.md)
-- [Next.js Note](NOTE_NEXTJS.md)
 - [Vite Note](NOTE_VITEJS.md)
-- [UmiJS Note](NOTE_UMIJS.md)
+- [Next.js Note](NOTE_NEXTJS.md)
 - [FFmpeg Note](NOTE_FFMPEG.md)
 - [Iceraven Note](NOTE_ICERAVEN.md)
 
@@ -45,7 +43,7 @@
 ## Firefox Devtools
 
 ```text
-Mozilla/5.0 (Android 12; Mobile; rv:94.0) Gecko/94.0 Firefox/94.0
+Mozilla/5.0 (Android 12; Mobile; rv:100.0) Gecko/100.0 Firefox/100.0
 ```
 
 ```text
