@@ -1,6 +1,6 @@
 # Vite Note
 
-- vite: `2.9.9`, react: `18.x`
+- vite: `2.9.x`, react: `18.x`
 - <https://cn.vitejs.dev/>
 - Works with npm, yarn, yarn2, pnpm
 - Official: pnpm
