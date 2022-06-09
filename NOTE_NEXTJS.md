@@ -17,7 +17,7 @@ pnpm create next-app --typescript
   "prettier": {
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "none"
+    "trailingComma": "all"
   }
 }
 ```

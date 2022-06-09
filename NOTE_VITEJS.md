@@ -72,7 +72,7 @@ rm src/App.css
   "prettier": {
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "none"
+    "trailingComma": "all"
   }
 }
 ```
