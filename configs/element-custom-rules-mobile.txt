@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2022-06-07
+! Last updated: 2022-06-12
 
 ! Firefox Interface css color
 ! bg-dark: #2b2a32
@@ -149,12 +149,23 @@ manhuaren.com##^.guide
 manhuaren.com##.guide:remove()
 manhuaren.com##^body > a
 manhuaren.com##body > a:remove()
+manhuaren.com##^.win-pay-btn-group
+manhuaren.com##.win-pay-btn-group:remove()
+manhuaren.com##^.win-pay-logo-con
+manhuaren.com##.win-pay-logo-con:remove()
 manhuaren.com##^script:has-text(cnzz)
 manhuaren.com##^script:has-text(mhrsta)
 manhuaren.com##^script:has-text(download-cross)
 soman.com##^script:has-text(cnzz)
 ! style
 manhuaren.com###cp_img:style(padding-top: 60px !important)
+manhuaren.com##.win-pay-chapter:style(color: #fff !important)
+manhuaren.com##.win-pay-chapter:style(background-color: #f7bb05 !important)
+manhuaren.com##.win-pay-chapter:style(padding-top: 30px !important)
+manhuaren.com##.win-pay-chapter:style(padding-bottom: 30px !important)
+manhuaren.com##.win-pay-chapter:style(text-decoration: none !important)
+manhuaren.com##.win-pay2:style(width: 100% !important)
+manhuaren.com##.win-pay2:style(left: 0 !important)
 
 ! mashdigi.com
 ! remove
