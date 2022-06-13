@@ -32,16 +32,19 @@ pnpm next telemetry disable
 printf "NEXT_TELEMETRY_DISABLED=1\n" >> .env
 ```
 
-## Ant Design
+## antd + windiCSS
 
 ```bash
 pnpm add webpack --save-peer
-pnpm add antd @ant-design/icons @ant-design/colors moment next-with-less less less-loader
+pnpm add antd @ant-design/icons @ant-design/colors moment
+pnpm add -D next-with-less less less-loader windicss windicss-webpack-plugin
 ```
 
 - `next.config.js`
 
 ```js
+const WindiCSSWebpackPlugin = require('windicss-webpack-plugin')
+
 /** @type {import('next').NextConfig} */
 module.exports = require('next-with-less')({
   exportPathMap: async () => ({
@@ -51,6 +54,10 @@ module.exports = require('next-with-less')({
     loader: 'custom',
   },
   reactStrictMode: true,
+  webpack(config) {
+    config.plugins.push(new WindiCSSWebpackPlugin())
+    return config
+  },
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
@@ -71,7 +78,7 @@ import zhTW from 'antd/lib/locale/zh_TW'
 import moment from 'moment'
 import 'moment/locale/zh-tw'
 import type { AppProps } from 'next/app'
-import '../styles/globals.css'
+import 'windi.css'
 
 moment.locale('zh-tw')
 
@@ -86,43 +93,31 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp
 ```
 
-## Tailwind CSS
+- `windi.config.ts`
 
-```bash
-pnpm add -D tailwindcss postcss autoprefixer
-```
+```ts
+import { presetDarkPalettes } from '@ant-design/colors'
+import { defineConfig } from 'windicss/helpers'
 
-```bash
-pnpm tailwindcss init -p
-```
-
-```bash
-printf '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n' > styles/globals.css
-```
-
-- `tailwind.config.js`
-
-```js
-module.exports = {
-  corePlugins: {
-    preflight: false,
-  },
+export default defineConfig({
+  preflight: false,
+  attributify: false,
+  darkMode: false,
   important: '#__next',
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
-  darkMode: 'media',
   theme: {
-    colors: {
-      white: '#fff',
-      black: '#000',
-      ...require('@ant-design/colors').presetDarkPalettes,
+    extend: {
+      colors: {
+        white: '#fff',
+        black: '#000',
+        ...presetDarkPalettes,
+      },
     },
-    extend: {},
   },
-  plugins: [],
-}
+  extract: {
+    include: ['**/*.{jsx,tsx,css}'],
+    exclude: ['node_modules', '.git', '.next'],
+  },
+})
 ```
 
 ## Index example and for static export
@@ -138,7 +133,7 @@ module.exports = {
 ```
 
 ```bash
-rm styles/Home.module.css
+rm styles/Home.module.css styles/globals.css
 ```
 
 - `pages/index.tsx`
@@ -190,7 +185,7 @@ const Home: NextPage = () => {
           </code>
         </p>
 
-        <div>
+        <div className="flex space-x-2">
           <Button type="primary" onClick={() => setCount(count + 1)}>
             Count: {count}
           </Button>
@@ -234,8 +229,8 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <span className="h-4 ml-2 invert">
+          Powered by
+          <span className="h-4 ml-2 filter invert">
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
