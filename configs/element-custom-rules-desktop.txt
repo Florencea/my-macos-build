@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2022-06-14
+! Last updated: 2022-06-17
 
 ! universal rules
 ! outline
@@ -369,6 +369,14 @@ macrumors.com##^script[src*='gleamjs']
 ! style
 macrumors.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
+! mui.com
+! remove
+mui.com##^div:has(> div:has(> a[data-ga-event-category="sponsor"]))
+mui.com##div:has(> div:has(> a[data-ga-event-category="sponsor"])):remove()
+mui.com##p.description.ad
+mui.com##^a[href*="ukraine"]
+mui.com##a[href*="ukraine"]:remove()
+
 ! frommuji.muji.tw
 ! style
 frommuji.muji.tw##p:style(line-height: 2rem !important)
@@ -613,6 +621,13 @@ thenewslens.com##^script:has-text(scorecardresearch)
 ! twnic.tw
 ! style
 twnic.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! vitejs.dev
+! remove
+vitejs.dev##^.VPDocAsideSponsors
+vitejs.dev##.VPDocAsideSponsors:remove()
+vitejs.dev##^.VPDocAsideCarbonAds
+vitejs.dev##.VPDocAsideCarbonAds:remove()
 
 ! wikiwiki.jp
 ! remove
