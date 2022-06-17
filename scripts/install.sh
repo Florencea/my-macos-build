@@ -59,7 +59,11 @@ printf "982092332@qq.com\n"
 printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
 printf "\E[0m"
 
+print_step "brew install fonts essential"
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+brew install font-jetbrains-mono
+brew install font-inter
+brew install font-new-york
 
 print_step "brew install cask apps"
 brew install google-chrome
@@ -82,8 +86,6 @@ brew install node
 brew install rsync
 brew install pnpm
 pnpm config set enable-pre-post-scripts true
-pnpm config set fund false
-pnpm config set audit false
 brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
