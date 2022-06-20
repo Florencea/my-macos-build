@@ -81,13 +81,21 @@ brew install jq
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node
 brew install rsync
-brew install pnpm
-pnpm config set enable-pre-post-scripts true
 brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
+
+print_step "setup pnpm, nodejs"
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+source ~/.config/fish/config.fish
+pnpm install-completion
+source ~/.config/fish/config.fish
+pnpm env use --global lts
+pnpm config set enable-pre-post-scripts true
+pnpm config set child-concurrency 8
+pnpm config set audit false
+pnpm config set fund false
 
 print_step "git configuations"
 (
