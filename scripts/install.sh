@@ -89,7 +89,7 @@ brew install yt-dlp/taps/yt-dlp
 print_step "setup pnpm, nodejs"
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 source ~/.config/fish/config.fish
-pnpm install-completion
+pnpm install-completion fish
 source ~/.config/fish/config.fish
 pnpm env use --global lts
 pnpm config set enable-pre-post-scripts true
