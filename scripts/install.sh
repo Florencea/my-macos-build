@@ -92,6 +92,7 @@ source ~/.config/fish/config.fish
 pnpm install-completion fish
 source ~/.config/fish/config.fish
 pnpm env use --global lts
+pnpm env use --global latest
 pnpm config set enable-pre-post-scripts true
 pnpm config set child-concurrency 8
 pnpm config set audit false
