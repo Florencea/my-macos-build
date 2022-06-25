@@ -86,18 +86,6 @@ brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
 
-print_step "setup pnpm, nodejs"
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-source ~/.config/fish/config.fish
-pnpm install-completion fish
-source ~/.config/fish/config.fish
-pnpm env use --global lts
-pnpm env use --global latest
-pnpm config set enable-pre-post-scripts true
-pnpm config set child-concurrency 8
-pnpm config set audit false
-pnpm config set fund false
-
 print_step "git configuations"
 (
   set -x
@@ -125,3 +113,16 @@ print_step "disable eyecandy, reset launchpad & clear scripts"
   killall Dock
   rm "$0"
 )
+
+print_step "setup pnpm"
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+print_step "please open an fish shell and continue scripts below"
+exit 0
+# in fish shell
+pnpm install-completion fish
+source ~/.config/fish/config.fish
+pnpm env use --global lts
+pnpm config set enable-pre-post-scripts true
+pnpm config set child-concurrency 8
+pnpm config set audit false
+pnpm config set fund false
