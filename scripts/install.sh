@@ -93,9 +93,9 @@ brew install node@16
   printf "set -gx LDFLAGS \"-L/opt/homebrew/opt/node@16/lib\"\n"
   printf "set -gx CPPFLAGS \"-I/opt/homebrew/opt/node@16/include\"\n"
 } >>~/.config/fish/config.fish
-npm config set audit=false
-npm config set fund=false
-npm install --location=global yarn
+/opt/homebrew/opt/node@16/bin/npm config set audit=false
+/opt/homebrew/opt/node@16/bin/npm config set fund=false
+/opt/homebrew/opt/node@16/bin/npm install --location=global yarn
 
 print_step "git configuations"
 (
