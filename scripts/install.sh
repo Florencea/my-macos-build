@@ -35,9 +35,9 @@ echo "$brew_path/fish" | sudo tee -a /etc/shells
 chsh -s $brew_path/fish
 mkdir -p ~/.config/fish
 {
-  printf "set -g -x PATH $brew_path \$PATH\n"
-  printf "set -g fish_user_paths $brew_system_path \$fish_user_paths\n"
-  printf "set -g -x fish_greeting\n"
+  printf "set -gx PATH $brew_path \$PATH\n"
+  printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
+  printf "set -gx fish_greeting\n"
   printf "alias mmb=\"code $script_dir\"\n"
   printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
   printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
@@ -86,6 +86,18 @@ brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
 
+print_step "setup node and yarn"
+brew install node@16
+{
+  printf "set -gx PATH /opt/homebrew/opt/node@16/bin \$PATH\n"
+  printf "alias mmb=\"code $script_dir\"\n"
+  printf "set -gx LDFLAGS \"-L/opt/homebrew/opt/node@16/lib\"\n"
+  printf "set -gx CPPFLAGS \"-I/opt/homebrew/opt/node@16/include\"\n"
+} >>~/.config/fish/config.fish
+npm config set audit=false
+npm config set fund=false
+npm install --location=global yarn
+
 print_step "git configuations"
 (
   set -x
@@ -113,16 +125,3 @@ print_step "disable eyecandy, reset launchpad & clear scripts"
   killall Dock
   rm "$0"
 )
-
-print_step "setup pnpm"
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-print_step "please open an fish shell and continue scripts below"
-exit 0
-# in fish shell
-pnpm install-completion fish
-source ~/.config/fish/config.fish
-pnpm env use --global lts
-pnpm config set enable-pre-post-scripts true
-pnpm config set child-concurrency 8
-pnpm config set audit false
-pnpm config set fund false
