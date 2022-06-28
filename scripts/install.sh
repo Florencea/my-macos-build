@@ -90,7 +90,6 @@ print_step "setup node and yarn"
 brew install node@16
 {
   printf "set -gx PATH /opt/homebrew/opt/node@16/bin \$PATH\n"
-  printf "alias mmb=\"code $script_dir\"\n"
   printf "set -gx LDFLAGS \"-L/opt/homebrew/opt/node@16/lib\"\n"
   printf "set -gx CPPFLAGS \"-I/opt/homebrew/opt/node@16/include\"\n"
 } >>~/.config/fish/config.fish
