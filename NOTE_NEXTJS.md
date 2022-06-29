@@ -1,13 +1,12 @@
 # Next.js Note
 
+- next: `12.2.0`, react: `18.2.0`
 - <https://nextjs.org/docs/getting-started>
-- Works with `npm`, `yarn`, `yarn2`, `pnpm`
-- Official: `pnpm`
 
 ## Next.js
 
 ```bash
-pnpm create next-app --typescript
+yarn create next-app --typescript
 ```
 
 - `package.json`
@@ -22,47 +21,50 @@ pnpm create next-app --typescript
 }
 ```
 
-- Disable telemetry
+## antd + tailwindCSS
 
 ```bash
-pnpm next telemetry disable
+yarn add \
+antd \
+@ant-design/icons \
+@ant-design/colors \
+moment
 ```
 
 ```bash
-printf "NEXT_TELEMETRY_DISABLED=1\n" >> .env
+yarn add -D \
+next-with-less \
+less \
+less-loader \
+tailwindcss \
+postcss \
+autoprefixer
 ```
 
-## antd + windiCSS
+```bash
+yarn tailwindcss init -p
+```
 
 ```bash
-pnpm add webpack --save-peer
-pnpm add antd @ant-design/icons @ant-design/colors moment
-pnpm add -D next-with-less less less-loader windicss windicss-webpack-plugin
+rm styles/Home.module.css styles/globals.css
 ```
 
 - `next.config.js`
 
 ```js
-const WindiCSSWebpackPlugin = require('windicss-webpack-plugin')
+const { presetDarkPalettes } = require('@ant-design/colors')
+const { getThemeVariables } = require('antd/dist/theme')
 
 /** @type {import('next').NextConfig} */
 module.exports = require('next-with-less')({
-  exportPathMap: async () => ({
-    '/': { page: '/' },
-  }),
-  images: {
-    loader: 'custom',
-  },
   reactStrictMode: true,
-  webpack(config) {
-    config.plugins.push(new WindiCSSWebpackPlugin())
-    return config
-  },
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
-        'primary-color':
-          require('@ant-design/colors').presetDarkPalettes.volcano[5],
+        ...getThemeVariables({
+          dark: true,
+        }),
+        'primary-color': presetDarkPalettes.cyan.primary,
       },
     },
   },
@@ -78,32 +80,35 @@ import zhTW from 'antd/lib/locale/zh_TW'
 import moment from 'moment'
 import 'moment/locale/zh-tw'
 import type { AppProps } from 'next/app'
-import 'windi.css'
+import 'tailwindcss/tailwind.css'
 
 moment.locale('zh-tw')
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ConfigProvider locale={zhTW}>
       <Component {...pageProps} />
     </ConfigProvider>
   )
 }
-
-export default MyApp
 ```
 
-- `windi.config.ts`
+- `tailwind.config.js`
 
-```ts
-import { presetDarkPalettes } from '@ant-design/colors'
-import { defineConfig } from 'windicss/helpers'
+```js
+const { presetDarkPalettes } = require('@ant-design/colors')
 
-export default defineConfig({
-  preflight: false,
-  attributify: false,
-  darkMode: false,
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  corePlugins: {
+    preflight: false,
+  },
+  darkMode: 'media',
   important: '#__next',
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
@@ -111,29 +116,13 @@ export default defineConfig({
         black: '#000',
         ...presetDarkPalettes,
       },
+      animation: {
+        spin: 'spin 20s linear infinite',
+      },
     },
   },
-  extract: {
-    include: ['**/*.{jsx,tsx,css}'],
-    exclude: ['node_modules', '.git', '.next'],
-  },
-})
-```
-
-## Index example and for static export
-
-- `package.json`
-
-```json
-{
-  "scripts": {
-    "export": "next build && next export"
-  }
+  plugins: [],
 }
-```
-
-```bash
-rm styles/Home.module.css styles/globals.css
 ```
 
 - `pages/index.tsx`
@@ -156,9 +145,9 @@ const Card = ({
 }) => (
   <a
     href={href}
-    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-volcano-5 hover:border-volcano-5"
+    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-cyan-5 hover:border-cyan-5"
   >
-    <h2 className="mb-4 text-2xl text-volcano-5">{header} &rarr;</h2>
+    <h2 className="mb-4 text-2xl text-cyan-5">{header} &rarr;</h2>
     <p className="m-0 text-xl">{paragraph}</p>
   </a>
 )
