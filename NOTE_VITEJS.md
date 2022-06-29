@@ -2,21 +2,19 @@
 
 - vite: `2.9.x`, react: `18.x`
 - <https://cn.vitejs.dev/>
-- Works with npm, yarn, yarn2, pnpm
-- Official: pnpm
 
-## vite + antd + windi
+## vite + antd + tailwindCSS
 
 ```bash
-pnpm create vite vite-project --template react-ts
+yarn create vite vite-project --template react-ts
 ```
 
 ```bash
-cd vite-project && pnpm i
+cd vite-project && yarn
 ```
 
 ```bash
-pnpm add -D \
+yarn add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
@@ -25,12 +23,13 @@ eslint-plugin-react \
 eslint-config-alloy \
 less \
 vite-plugin-imp \
-vite-plugin-windicss \
-windicss
+tailwindcss \
+postcss \
+autoprefixer
 ```
 
 ```bash
-pnpm add \
+yarn add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -38,7 +37,7 @@ moment
 ```
 
 ```bash
-touch windi.config.ts
+yarn tailwindcss init -p
 ```
 
 ```bash
@@ -80,16 +79,15 @@ rm src/App.css
 - `vite.config.ts`
 
 ```ts
-import { presetPalettes } from '@ant-design/colors'
+import { presetDarkPalettes } from '@ant-design/colors'
 import react from '@vitejs/plugin-react'
+import { getThemeVariables } from 'antd/dist/theme'
 import { defineConfig } from 'vite'
 import imp from 'vite-plugin-imp'
-import windiCss from 'vite-plugin-windicss'
 
 export default defineConfig({
   plugins: [
     react(),
-    windiCss(),
     imp({
       libList: [
         {
@@ -105,7 +103,10 @@ export default defineConfig({
       less: {
         javascriptEnabled: true,
         modifyVars: {
-          'primary-color': presetPalettes.blue.primary,
+          ...getThemeVariables({
+            dark: true,
+          }),
+          'primary-color': presetDarkPalettes.cyan.primary,
         },
       },
     },
@@ -113,30 +114,33 @@ export default defineConfig({
 })
 ```
 
-- `windi.config.ts`
+- `tailwind.config.js`
 
-```ts
-import { defineConfig } from 'windicss/helpers'
-import { presetPalettes } from '@ant-design/colors'
+```js
+const { presetDarkPalettes } = require('@ant-design/colors')
 
-export default defineConfig({
-  preflight: false,
-  attributify: false,
-  darkMode: false,
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  corePlugins: {
+    preflight: false,
+  },
+  darkMode: 'media',
   important: '#root',
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
         white: '#fff',
         black: '#000',
-        ...presetPalettes,
+        ...presetDarkPalettes,
       },
       animation: {
         spin: 'spin 20s linear infinite',
       },
     },
   },
-})
+  plugins: [],
+}
 ```
 
 - `src/main.tsx`
@@ -146,13 +150,12 @@ import { ConfigProvider } from 'antd'
 import zhTW from 'antd/es/locale/zh_TW'
 import 'moment/dist/locale/zh-TW'
 import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
-import 'virtual:windi.css'
+import { createRoot } from 'react-dom/client'
+import 'tailwindcss/tailwind.css'
 import App from './App'
 
-const rootNode = document.getElementById('root') as HTMLElement
-
-const root = ReactDOM.createRoot(rootNode)
+const container = document.getElementById('root') as HTMLDivElement
+const root = createRoot(container)
 
 root.render(
   <StrictMode>
@@ -174,14 +177,14 @@ export default function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="text-center bg-[#282c34] text-white">
+    <div className="text-center">
       <header className="h-screen flex flex-col justify-center items-center text-3xl space-y-3">
         <img
           src={logo}
           className="h-[40vmin] pointer-events-none motion-safe:animate-spin"
           alt="logo"
         />
-        <div>Hello Vite + React!</div>
+        <div>Hello Vite + Antd + TailwindCSS!</div>
         <div className="space-x-2">
           <Button type="primary" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
@@ -189,7 +192,7 @@ export default function App() {
           <DatePicker
             onChange={(date) => {
               if (date !== null) {
-                message.info(date.toDate().toLocaleDateString())
+                message.info(date.toLocaleString())
               }
             }}
           />
