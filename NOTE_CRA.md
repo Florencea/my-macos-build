@@ -24,7 +24,7 @@ moment
 ```bash
 yarn add -D \
 serve \
-@craco/craco@alpha \
+@craco/craco \
 craco-antd \
 tailwindcss \
 postcss \
@@ -40,7 +40,7 @@ touch craco.config.js
 ```
 
 ```bash
-rm src/App.css src/index.css src/reportWebVitals.ts
+rm src/App.css src/index.css src/reportWebVitals.ts src/App.test.tsx src/setupTests.ts
 ```
 
 - `package.json`
@@ -50,7 +50,6 @@ rm src/App.css src/index.css src/reportWebVitals.ts
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
-    "test": "craco test",
     "preview": "serve -s build",
     "eject": "react-scripts eject"
   },
