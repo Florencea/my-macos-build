@@ -83,11 +83,6 @@ brew install node
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install rsync
-brew install pnpm
-pnpm config set enable-pre-post-scripts true
-pnpm config set child-concurrency 8
-pnpm config set audit false
-pnpm config set fund false
 brew install python
 brew install wget
 brew install yarn
