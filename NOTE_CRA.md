@@ -10,7 +10,7 @@ yarn create react-app my-app --template typescript
 ```
 
 ```bash
-cd my-app && yarn upgrade --latest
+cd my-app
 ```
 
 ```bash
@@ -46,6 +46,10 @@ touch craco.config.js
 
 ```bash
 rm src/App.css src/index.css src/reportWebVitals.ts src/App.test.tsx src/setupTests.ts
+```
+
+```bash
+yarn upgrade --latest
 ```
 
 - `package.json`
