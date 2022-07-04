@@ -3,25 +3,15 @@
 - next: `12.2.0`, react: `18.2.0`
 - <https://nextjs.org/docs/getting-started>
 
-## Next.js
+## Next.js + antd + tailwindCSS
 
 ```bash
 yarn create next-app --typescript
 ```
 
-- `package.json`
-
-```json
-{
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  }
-}
+```bash
+cd my-app
 ```
-
-## antd + tailwindCSS
 
 ```bash
 yarn add \
@@ -47,6 +37,18 @@ yarn tailwindcss init -p
 
 ```bash
 rm styles/Home.module.css styles/globals.css
+```
+
+- `package.json`
+
+```json
+{
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}
 ```
 
 - `next.config.js`
