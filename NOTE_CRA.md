@@ -18,17 +18,22 @@ yarn add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
-moment
-```
-
-```bash
-yarn add -D \
+moment \
 serve \
 @craco/craco \
 craco-antd \
 tailwindcss \
 postcss \
 autoprefixer
+```
+
+```bash
+yarn remove \
+@testing-library/jest-dom \
+@testing-library/react \
+@testing-library/user-event \
+@types/jest \
+web-vitals
 ```
 
 ```bash
