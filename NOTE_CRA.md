@@ -95,7 +95,6 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  darkMode: 'media',
   important: '#root',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {

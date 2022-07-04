@@ -103,7 +103,6 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  darkMode: 'media',
   important: '#__next',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',

@@ -124,7 +124,6 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  darkMode: 'media',
   important: '#root',
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
