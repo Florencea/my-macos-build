@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2022-06-14
+! Last updated: 2022-07-04
 
 ! Firefox Interface css color
 ! bg-dark: #2b2a32
@@ -258,6 +258,8 @@ wnacg.org##^.nav li:has(a[href='https://forum.wnacg.link'])
 wnacg.org##.nav li:has(a[href='https://forum.wnacg.link']):remove()
 wnacg.org##^.nav li:has(a[href='https://forum.wnacg.com'])
 wnacg.org##.nav li:has(a[href='https://forum.wnacg.com']):remove()
+wnacg.org##^.nav li:has(a[href='https://wnbbs.top'])
+wnacg.org##.nav li:has(a[href='https://wnbbs.top']):remove()
 wnacg.org##^.nav li:has(a[href='/'])
 wnacg.org##.nav li:has(a[href='/']):remove()
 wnacg.org##^.header .icon.head
