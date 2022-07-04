@@ -10,7 +10,7 @@ yarn create react-app my-app --template typescript
 ```
 
 ```bash
-cd my-app
+cd my-app && yarn upgrade --latest
 ```
 
 ```bash
