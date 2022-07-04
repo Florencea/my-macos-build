@@ -117,9 +117,6 @@ module.exports = {
         black: '#000',
         ...presetDarkPalettes,
       },
-      animation: {
-        spin: 'spin 20s linear infinite',
-      },
     },
   },
   plugins: [],
