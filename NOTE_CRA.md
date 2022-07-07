@@ -66,6 +66,9 @@ yarn upgrade --latest
     "semi": false,
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "extends": ["react-app"]
   }
 }
 ```
