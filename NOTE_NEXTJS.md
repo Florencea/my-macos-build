@@ -1,12 +1,12 @@
 # Next.js Note
 
-- next: `12.2.0`, react: `18.2.0`
+- next: `12.2.x`, react: `18.2.0`
 - <https://nextjs.org/docs/getting-started>
 
 ## Next.js + antd + tailwindCSS
 
 ```bash
-yarn create next-app --typescript
+pnpm create next-app --typescript
 ```
 
 ```bash
@@ -14,7 +14,7 @@ cd my-app
 ```
 
 ```bash
-yarn add \
+pnpm add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -22,7 +22,7 @@ moment
 ```
 
 ```bash
-yarn add -D \
+pnpm add -D \
 next-with-less \
 less \
 less-loader \
@@ -32,7 +32,7 @@ autoprefixer
 ```
 
 ```bash
-yarn tailwindcss init -p
+pnpm tailwindcss init -p
 ```
 
 ```bash
