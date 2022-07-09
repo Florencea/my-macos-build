@@ -6,15 +6,15 @@
 ## vite + antd + tailwindCSS
 
 ```bash
-yarn create vite vite-project --template react-ts
+pnpm create vite vite-project --template react-ts
 ```
 
 ```bash
-cd vite-project && yarn
+cd vite-project && pnpm i
 ```
 
 ```bash
-yarn add -D \
+pnpm add -D \
 eslint \
 typescript \
 @typescript-eslint/parser \
@@ -29,7 +29,7 @@ autoprefixer
 ```
 
 ```bash
-yarn add \
+pnpm add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -37,7 +37,7 @@ moment
 ```
 
 ```bash
-yarn tailwindcss init -p
+pnpm tailwindcss init -p
 ```
 
 ```bash

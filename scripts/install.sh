@@ -105,15 +105,6 @@ print_step "setup ssh key"
   ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
 )
 
-print_step "disable eyecandy, reset launchpad & clear scripts"
-(
-  set -x
-  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
-  defaults write com.apple.dock ResetLaunchPad -bool true
-  killall Dock
-  rm "$0"
-)
-
 print_step "setup pnpm"
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 print_step "please open an fish shell and continue scripts below"
@@ -127,3 +118,12 @@ pnpm config set enable-pre-post-scripts true
 pnpm config set child-concurrency 10
 pnpm config set audit false
 pnpm config set fund false
+
+print_step "disable eyecandy, reset launchpad & clear scripts"
+(
+  set -x
+  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+  defaults write com.apple.dock ResetLaunchPad -bool true
+  killall Dock
+  rm "$0"
+)
