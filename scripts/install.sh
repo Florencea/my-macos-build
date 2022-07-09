@@ -122,6 +122,7 @@ exit 0
 pnpm install-completion fish
 source ~/.config/fish/config.fish
 pnpm env use --global latest
+pnpm config set strict-peer-dependencies false
 pnpm config set enable-pre-post-scripts true
 pnpm config set child-concurrency 10
 pnpm config set audit false
