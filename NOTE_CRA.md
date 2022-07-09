@@ -6,7 +6,7 @@
 ## cra + antd + tailwindCSS
 
 ```bash
-yarn create react-app my-app --template typescript
+pnpm create react-app my-app --template typescript
 ```
 
 ```bash
@@ -14,7 +14,7 @@ cd my-app
 ```
 
 ```bash
-yarn add \
+pnpm add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -28,7 +28,7 @@ autoprefixer
 ```
 
 ```bash
-yarn remove \
+pnpm rm \
 @testing-library/jest-dom \
 @testing-library/react \
 @testing-library/user-event \
@@ -37,7 +37,7 @@ web-vitals
 ```
 
 ```bash
-yarn tailwindcss init -p
+pnpm tailwindcss init -p
 ```
 
 ```bash
@@ -45,11 +45,11 @@ touch craco.config.js
 ```
 
 ```bash
-rm src/App.css src/index.css src/reportWebVitals.ts src/App.test.tsx src/setupTests.ts
+rm package-lock.json src/App.css src/index.css src/reportWebVitals.ts src/App.test.tsx src/setupTests.ts
 ```
 
 ```bash
-yarn upgrade --latest
+pnpm up --latest
 ```
 
 - `package.json`
