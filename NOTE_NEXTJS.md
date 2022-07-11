@@ -45,8 +45,7 @@ rm styles/Home.module.css styles/globals.css
 {
   "prettier": {
     "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
+    "singleQuote": true
   }
 }
 ```

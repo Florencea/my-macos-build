@@ -64,8 +64,7 @@ pnpm up --latest
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
+    "singleQuote": true
   },
   "eslintConfig": {
     "extends": ["react-app"]

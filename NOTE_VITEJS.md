@@ -15,12 +15,12 @@ cd vite-project && pnpm i
 
 ```bash
 pnpm add -D \
-eslint \
 typescript \
-@typescript-eslint/parser \
-@typescript-eslint/eslint-plugin \
-eslint-plugin-react \
-eslint-config-alloy \
+eslint \
+eslint-config-react-app \
+@babel/core \
+@babel/plugin-syntax-flow \
+@babel/plugin-transform-react-jsx \
 less \
 vite-plugin-imp \
 tailwindcss \
@@ -44,34 +44,20 @@ pnpm tailwindcss init -p
 rm src/App.css
 ```
 
+```bash
+pnpm up --latest
+```
+
 - `package.json`
 
 ```json
 {
   "eslintConfig": {
-    "extends": ["alloy", "alloy/react", "alloy/typescript"],
-    "env": {
-      "browser": true
-    },
-    "globals": {
-      "React": "readonly",
-      "JSX": "readonly"
-    },
-    "rules": {
-      "spaced-comment": [
-        "error",
-        "always",
-        {
-          "markers": ["/"]
-        }
-      ],
-      "@typescript-eslint/no-require-imports": 0
-    }
+    "extends": ["react-app"]
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
+    "singleQuote": true
   }
 }
 ```
