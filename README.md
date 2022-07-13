@@ -44,7 +44,7 @@
 ## Firefox Devtools
 
 ```text
-Mozilla/5.0 (Android 12; Mobile; rv:100.0) Gecko/100.0 Firefox/100.0
+Mozilla/5.0 (Android 12; Mobile; rv:102.0) Gecko/102.0 Firefox/102.0
 ```
 
 ```text
