@@ -14,6 +14,10 @@ cd my-app
 ```
 
 ```bash
+sudo rm -rf node_modules
+```
+
+```bash
 pnpm add \
 antd \
 @ant-design/icons \
