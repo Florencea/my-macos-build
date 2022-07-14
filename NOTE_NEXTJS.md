@@ -26,6 +26,7 @@ pnpm add -D \
 next-with-less \
 less \
 less-loader \
+webpack \
 tailwindcss \
 postcss \
 autoprefixer
