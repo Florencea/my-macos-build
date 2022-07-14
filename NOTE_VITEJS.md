@@ -1,6 +1,6 @@
 # Vite Note
 
-- vite: `2.9.x`, react: `18.x`
+- vite: `3.0.x`, react: `18.x`
 - <https://cn.vitejs.dev/>
 
 ## vite + antd + tailwindCSS
@@ -41,7 +41,7 @@ pnpm tailwindcss init -p
 ```
 
 ```bash
-rm src/App.css
+rm src/App.css src/index.css
 ```
 
 ```bash
@@ -67,7 +67,7 @@ pnpm up --latest
 ```ts
 import { presetDarkPalettes } from '@ant-design/colors'
 import react from '@vitejs/plugin-react'
-import { getThemeVariables } from 'antd/dist/theme'
+import { getThemeVariables } from 'antd/dist/theme.js'
 import { defineConfig } from 'vite'
 import imp from 'vite-plugin-imp'
 
@@ -156,7 +156,7 @@ root.render(
 ```tsx
 import { Button, DatePicker, message } from 'antd'
 import { useState } from 'react'
-import logo from './logo.svg'
+import logo from './assets/react.svg'
 
 export default function App() {
   const [count, setCount] = useState(0)
@@ -166,7 +166,7 @@ export default function App() {
       <header className="h-screen flex flex-col justify-center items-center text-3xl space-y-3">
         <img
           src={logo}
-          className="h-[40vmin] pointer-events-none motion-safe:animate-spin"
+          className="h-[30vmin] pointer-events-none motion-safe:animate-spin mb-10"
           alt="logo"
         />
         <div>Hello Vite + Antd + TailwindCSS!</div>
