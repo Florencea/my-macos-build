@@ -100,7 +100,7 @@ export default defineConfig({
 })
 ```
 
-- `tailwind.config.js`
+- `tailwind.config.cjs`
 
 ```js
 const { presetDarkPalettes } = require('@ant-design/colors')
