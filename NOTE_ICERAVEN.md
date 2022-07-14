@@ -109,7 +109,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- If `showHomeButtonFeature` feature flag gone, comment this part (Line 74 ~ 84)
+- If `showHomeButtonFeature` feature flag gone, comment this part (Line 75 ~ 85)
 - see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
@@ -160,6 +160,40 @@ runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 <string name="preferences_relinquish_memory_title">保留分頁</string>
 <!-- Description for relinquish memory preference in customization settings -->
 <string name="preferences_relinquish_memory_description">保留分頁，避免被系統自動關閉</string>
+```
+
+- `app/src/main/res/drawable/progress_gradient.xml`
+- Disable progress bar by set color to transparent
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#002b2a32" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <corners
+                    android:bottomLeftRadius="0dp"
+                    android:bottomRightRadius="8dp"
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="8dp"/>
+                <gradient
+                    android:angle="45"
+                    android:centerColor="#002b2a32"
+                    android:endColor="#002b2a32"
+                    android:startColor="#002b2a32" />
+            </shape>
+        </scale>
+    </item>
+</layer-list>
 ```
 
 ### 4. Push to `fork` branch to trigger build
