@@ -81,6 +81,16 @@ brew install jq
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
+brew install node@16
+{
+  printf "set -gx PATH /opt/homebrew/opt/node@16/bin \$PATH\n"
+  printf "set -gx LDFLAGS \"-L/opt/homebrew/opt/node@16/lib\"\n"
+  printf "set -gx CPPFLAGS \"-I/opt/homebrew/opt/node@16/include\"\n"
+} >>~/.config/fish/config.fish
+{
+  printf "audit=false\n"
+  printf "fund=false\n"
+} >>~/.npmrc
 brew install rsync
 brew install python
 brew install wget
@@ -104,20 +114,6 @@ print_step "setup ssh key"
   set -x
   ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
 )
-
-print_step "setup pnpm"
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-print_step "please open an fish shell and continue scripts below"
-exit 0
-# in fish shell
-pnpm install-completion fish
-source ~/.config/fish/config.fish
-pnpm env use --global latest
-pnpm config set strict-peer-dependencies false
-pnpm config set enable-pre-post-scripts true
-pnpm config set child-concurrency 10
-pnpm config set audit false
-pnpm config set fund false
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
 (
