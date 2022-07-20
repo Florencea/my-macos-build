@@ -40,8 +40,6 @@ mkdir -p ~/.config/fish
   printf "set -gx fish_greeting\n"
   printf "alias mmb=\"code $script_dir\"\n"
   printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
-  printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
-  printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
   printf "alias ua=\"sh $script_path/update-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
   printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
