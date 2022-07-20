@@ -84,6 +84,8 @@ brew install node@16
 {
   printf "audit=false\n"
   printf "fund=false\n"
+  printf "loglevel=error\n"
+  printf "engine-strict=true\n"
 } >>~/.npmrc
 brew install rsync
 brew install python
