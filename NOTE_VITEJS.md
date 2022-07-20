@@ -6,21 +6,18 @@
 ## vite + antd + tailwindCSS
 
 ```bash
-pnpm create vite vite-project --template react-ts
+npm create vite vite-project -- --template react-ts
 ```
 
 ```bash
-cd vite-project && pnpm i
+cd vite-project && npm i
 ```
 
 ```bash
-pnpm add -D \
+npm i -D \
 typescript \
 eslint \
 eslint-config-react-app \
-@babel/core \
-@babel/plugin-syntax-flow \
-@babel/plugin-transform-react-jsx \
 less \
 vite-plugin-imp \
 tailwindcss \
@@ -29,7 +26,7 @@ autoprefixer
 ```
 
 ```bash
-pnpm add \
+npm i \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -37,15 +34,11 @@ moment
 ```
 
 ```bash
-pnpm tailwindcss init -p
+npx tailwindcss init -p
 ```
 
 ```bash
 rm src/App.css src/index.css
-```
-
-```bash
-pnpm up --latest
 ```
 
 - `package.json`
@@ -156,36 +149,42 @@ root.render(
 ```tsx
 import { Button, DatePicker, message } from 'antd'
 import { useState } from 'react'
-import logo from './assets/react.svg'
+import reactLogo from './assets/react.svg'
 
 export default function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="text-center">
-      <header className="h-screen flex flex-col justify-center items-center text-3xl space-y-3">
-        <img
-          src={logo}
-          className="h-[30vmin] pointer-events-none motion-safe:animate-spin mb-10"
-          alt="logo"
-        />
-        <div>Hello Vite + Antd + TailwindCSS!</div>
-        <div className="space-x-2">
-          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </Button>
-          <DatePicker
-            onChange={(date) => {
-              if (date !== null) {
-                message.info(date.toLocaleString())
-              }
-            }}
+    <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
+      <div className="space-x-8">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+          <img
+            src="/vite.svg"
+            className="h-[20vmin] pointer-events-none mb-10"
+            alt="Vite logo"
           />
-        </div>
-        <div>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </div>
-      </header>
+        </a>
+        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
+          <img
+            src={reactLogo}
+            className="h-[20vmin] pointer-events-none motion-safe:animate-spin mb-10"
+            alt="React logo"
+          />
+        </a>
+      </div>
+      <p>Vite + React + TailwindCSS + antd</p>
+      <div className="flex justify-center space-x-3">
+        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+          count is: {count}
+        </Button>
+        <DatePicker
+          onChange={(date) => {
+            if (date !== null) {
+              message.info(date.toLocaleString())
+            }
+          }}
+        />
+      </div>
     </div>
   )
 }
