@@ -86,8 +86,8 @@ jobs:
 - Change Default AMO Collections and speedup build
 
 ```bash
-16201230 -> 16366570
-What-I-want-on-Fenix -> addons-mobile
+16201230 -> 17496363
+What-I-want-on-Fenix -> 1
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 ```
 
