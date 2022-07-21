@@ -96,20 +96,11 @@ include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 
 ```kotlin
 const val pullToRefreshEnabled = false
-const val addressesFeature = false
-const val showHomeButtonFeature = false
-const val showStartOnHomeSettings = false
-const val showRecentTabsFeature = false
-const val recentBookmarksFeature = false
-const val inactiveTabs = false
-const val showHomeBehindSearch = false
-const val customizeHome = false
-const val tabGroupFeature = false
 return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").contains(langTag)
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- If `showHomeButtonFeature` feature flag gone, comment this part (Line 75 ~ 85)
+- Comment this part (Line 75 ~ 85)
 - see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
