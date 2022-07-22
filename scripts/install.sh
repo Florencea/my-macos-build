@@ -106,11 +106,12 @@ print_step "setup ssh key"
   ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
 )
 
-print_step "setup pnpm"
-curl -fsSL https://get.pnpm.io/install.sh | sh -
 print_step "please open an fish shell and continue scripts below"
 exit 0
 # in fish shell
+print_step "setup pnpm"
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+source ~/.config/fish/config.fish
 pnpm install-completion fish
 source ~/.config/fish/config.fish
 pnpm env use --global latest
