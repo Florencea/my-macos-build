@@ -119,6 +119,7 @@ pnpm config set enable-pre-post-scripts true
 pnpm config set child-concurrency 10
 pnpm config set audit false
 pnpm config set fund false
+pnpm config set loglevel error
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
 (

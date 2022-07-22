@@ -1,20 +1,23 @@
 # Vite Note
 
-- vite: `3.0.x`, react: `18.x`
 - <https://cn.vitejs.dev/>
 
 ## vite + antd + tailwindCSS
 
 ```bash
-npm create vite vite-project -- --template react-ts
+pnpm create vite vite-project --template react-ts
 ```
 
 ```bash
-cd vite-project && npm i
+cd vite-project && pnpm i
 ```
 
 ```bash
-npm i -D \
+printf "strict-peer-dependencies=false\nenable-pre-post-scripts=true\naudit=false\nfund=false\nloglevel=error" > .npmrc
+```
+
+```bash
+pnpm add -D \
 typescript \
 eslint \
 eslint-config-react-app \
@@ -26,7 +29,7 @@ autoprefixer
 ```
 
 ```bash
-npm i \
+pnpm add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -34,7 +37,7 @@ moment
 ```
 
 ```bash
-npx tailwindcss init -p
+pnpm tailwindcss init -p
 ```
 
 ```bash
