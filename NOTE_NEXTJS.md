@@ -1,12 +1,11 @@
 # Next.js Note
 
-- next: `12.2.x`, react: `18.2.0`
 - <https://nextjs.org/docs/getting-started>
 
 ## Next.js + antd + tailwindCSS
 
 ```bash
-npx create-next-app@latest --typescript
+pnpm create next-app --typescript
 ```
 
 ```bash
@@ -14,7 +13,11 @@ cd my-app
 ```
 
 ```bash
-npm i \
+printf "strict-peer-dependencies=false\nenable-pre-post-scripts=true\naudit=false\nfund=false\nloglevel=error\nlegacy-peer-deps=true\n" > .npmrc
+```
+
+```bash
+pnpm add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -22,16 +25,17 @@ moment
 ```
 
 ```bash
-npm add -D \
+pnpm add -D \
 next-with-less \
 less \
+less-loader \
 tailwindcss \
 postcss \
 autoprefixer
 ```
 
 ```bash
-npx tailwindcss init -p
+pnpm tailwindcss init -p
 ```
 
 ```bash
