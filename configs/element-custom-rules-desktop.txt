@@ -345,6 +345,8 @@ www.ithome.com.tw###block-views-view-news-expert-profile:style(margin: auto !imp
 ! remove
 juejin.cn##^.suspension-panel
 juejin.cn##.suspension-panel:remove()
+juejin.cn##^.sidebar-block:has(a[href*="bd.juejin.cn"])
+juejin.cn##.sidebar-block:has(a[href*="bd.juejin.cn"]):remove()
 
 ! macrumors.com
 ! remove
