@@ -13,7 +13,7 @@ cd vite-project && pnpm i
 ```
 
 ```bash
-printf "strict-peer-dependencies=false\nenable-pre-post-scripts=true\naudit=false\nfund=false\nloglevel=error" > .npmrc
+printf "strict-peer-dependencies=false\nenable-pre-post-scripts=true\naudit=false\nfund=false\nloglevel=error\nlegacy-peer-deps=true\n" > .npmrc
 ```
 
 ```bash

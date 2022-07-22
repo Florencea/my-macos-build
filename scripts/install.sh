@@ -120,6 +120,7 @@ pnpm config set child-concurrency 10
 pnpm config set audit false
 pnpm config set fund false
 pnpm config set loglevel error
+pnpm config set legacy-peer-deps true
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
 (
