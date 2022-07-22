@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2022-06-17
+! Last updated: 2022-07-22
 
 ! universal rules
 ! outline
@@ -340,6 +340,11 @@ www.ithome.com.tw##.pagination ul > li > a:style(padding: 20px 30px !important)
 www.ithome.com.tw##.pagination ul > li > a:style(margin: 0 2rem !important)
 www.ithome.com.tw##.pagination ul > li > a:style(border: 1px solid #ddd !important)
 www.ithome.com.tw###block-views-view-news-expert-profile:style(margin: auto !important)
+
+! juejin.cn
+! remove
+juejin.cn##^.suspension-panel
+juejin.cn##.suspension-panel:remove()
 
 ! macrumors.com
 ! remove
