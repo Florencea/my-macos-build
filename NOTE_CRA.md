@@ -5,7 +5,7 @@
 ## cra + antd + tailwindCSS
 
 ```bash
-pnpm create react-app my-app --template typescript
+yarn create react-app my-app --template typescript
 ```
 
 ```bash
@@ -13,29 +13,17 @@ cd my-app
 ```
 
 ```bash
-rm -rf package-lock.json src/App.css src/index.css src/App.test.tsx src/reportWebVitals.ts src/setupTests.ts node_modules
+rm -rf src/App.css src/index.css
 ```
 
 ```bash
-printf "strict-peer-dependencies=false\nenable-pre-post-scripts=true\naudit=false\nfund=false\nloglevel=error\nlegacy-peer-deps=true\n" > .npmrc
-```
-
-```bash
-pnpm rm @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest web-vitals
-```
-
-```bash
-pnpm up --latest
-```
-
-```bash
-pnpm add \
+yarn add \
 antd \
 @ant-design/icons \
 @ant-design/colors \
 moment \
 serve \
-@craco/craco \
+@craco/craco@alpha \
 craco-antd \
 tailwindcss \
 postcss \
@@ -43,7 +31,7 @@ autoprefixer
 ```
 
 ```bash
-pnpm tailwindcss init -p
+yarn tailwindcss init -p
 ```
 
 ```bash
@@ -57,14 +45,12 @@ touch craco.config.js
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
+    "test": "craco test",
     "preview": "serve -s build"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "eslintConfig": {
-    "extends": ["react-app"]
   }
 }
 ```
@@ -131,6 +117,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import 'tailwindcss/tailwind.css'
 import App from './App'
+import reportWebVitals from './reportWebVitals'
 
 const container = document.getElementById('root') as HTMLDivElement
 const root = createRoot(container)
@@ -142,6 +129,11 @@ root.render(
     </ConfigProvider>
   </StrictMode>,
 )
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals()
 ```
 
 - `src/App.tsx`
