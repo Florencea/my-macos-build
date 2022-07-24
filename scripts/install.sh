@@ -82,9 +82,11 @@ brew install jq
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
+brew install node
 brew install rsync
 brew install python
 brew install wget
+brew install yarn
 brew install yt-dlp/taps/yt-dlp
 
 print_step "git configuations"
@@ -105,23 +107,6 @@ print_step "setup ssh key"
   set -x
   ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
 )
-
-print_step "please open an fish shell and continue scripts below"
-exit 0
-# in fish shell
-print_step "setup pnpm"
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-source ~/.config/fish/config.fish
-pnpm install-completion fish
-source ~/.config/fish/config.fish
-pnpm env use --global latest
-pnpm config set strict-peer-dependencies false
-pnpm config set enable-pre-post-scripts true
-pnpm config set child-concurrency 10
-pnpm config set audit false
-pnpm config set fund false
-pnpm config set loglevel error
-pnpm config set legacy-peer-deps true
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
 (
