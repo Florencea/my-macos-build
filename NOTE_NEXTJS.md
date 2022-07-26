@@ -27,7 +27,13 @@ less \
 less-loader \
 tailwindcss \
 postcss \
-autoprefixer
+autoprefixer \
+@typescript-eslint/parser \
+@typescript-eslint/eslint-plugin \
+eslint-plugin-react \
+eslint-config-alloy \
+@next/eslint-plugin-next \
+prettier
 ```
 
 ```bash
@@ -42,10 +48,22 @@ rm styles/Home.module.css styles/globals.css
 
 ```json
 {
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  }
+  "eslintConfig": {
+    "extends": ["alloy", "alloy/react", "alloy/typescript", "plugin:@next/next/recommended"],
+    "globals": {
+      "React": "readonly",
+      "JSX": "readonly"
+    },
+    "overrides": [
+      {
+        "files": ["**/*.js"],
+        "rules": {
+          "@typescript-eslint/no-require-imports": 0
+        }
+      }
+    ]
+  },
+  "prettier": "eslint-config-alloy/.prettierrc.js"
 }
 ```
 
