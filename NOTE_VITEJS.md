@@ -50,6 +50,10 @@ rm src/App.css src/index.css
 {
   "eslintConfig": {
     "extends": ["alloy", "alloy/react", "alloy/typescript"],
+    "globals": {
+      "React": "readonly",
+      "JSX": "readonly"
+    },
     "overrides": [
       {
         "files": ["**/*.cjs"],
