@@ -52,8 +52,8 @@ rm styles/Home.module.css styles/globals.css
 - `next.config.js`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors')
-const { getThemeVariables } = require('antd/dist/theme')
+const { presetDarkPalettes } = require('@ant-design/colors');
+const { getThemeVariables } = require('antd/dist/theme');
 
 /** @type {import('next').NextConfig} */
 module.exports = require('next-with-less')({
@@ -68,35 +68,35 @@ module.exports = require('next-with-less')({
       },
     },
   },
-})
+});
 ```
 
 - `pages/_app.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd'
-import 'antd/dist/antd.dark.less'
-import zhTW from 'antd/lib/locale/zh_TW'
-import moment from 'moment'
-import 'moment/locale/zh-tw'
-import type { AppProps } from 'next/app'
-import 'tailwindcss/tailwind.css'
+import { ConfigProvider } from 'antd';
+import 'antd/dist/antd.dark.less';
+import zhTW from 'antd/lib/locale/zh_TW';
+import moment from 'moment';
+import 'moment/locale/zh-tw';
+import type { AppProps } from 'next/app';
+import 'tailwindcss/tailwind.css';
 
-moment.locale('zh-tw')
+moment.locale('zh-tw');
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ConfigProvider locale={zhTW}>
       <Component {...pageProps} />
     </ConfigProvider>
-  )
+  );
 }
 ```
 
 - `tailwind.config.js`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors')
+const { presetDarkPalettes } = require('@ant-design/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -104,10 +104,7 @@ module.exports = {
     preflight: false,
   },
   important: '#__next',
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -118,27 +115,19 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
 ```
 
 - `pages/index.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from 'antd'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import { useState } from 'react'
+import { Button, DatePicker, message } from 'antd';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useState } from 'react';
 
-const Card = ({
-  href,
-  header,
-  paragraph,
-}: {
-  href: string
-  header: string
-  paragraph: string
-}) => (
+const Card = ({ href, header, paragraph }: { href: string; header: string; paragraph: string }) => (
   <a
     href={href}
     className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-cyan-5 hover:border-cyan-5"
@@ -146,10 +135,10 @@ const Card = ({
     <h2 className="mb-4 text-2xl text-cyan-5">{header} &rarr;</h2>
     <p className="m-0 text-xl">{paragraph}</p>
   </a>
-)
+);
 
 const Home: NextPage = () => {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   return (
     <div className="py-8">
       <Head>
@@ -164,10 +153,7 @@ const Home: NextPage = () => {
         </h1>
 
         <p className="text-center mt-12 mb-6 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded p-3 text-base font-mono">
-            pages/index.tsx
-          </code>
+          Get started by editing <code className="rounded p-3 text-base font-mono">pages/index.tsx</code>
         </p>
 
         <div className="flex space-x-2">
@@ -177,7 +163,7 @@ const Home: NextPage = () => {
           <DatePicker
             onChange={(date) => {
               if (date !== null) {
-                message.info(date.toISOString())
+                message.info(date.toISOString());
               }
             }}
           />
@@ -216,20 +202,13 @@ const Home: NextPage = () => {
         >
           Powered by
           <span className="h-4 ml-2 filter invert">
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              width={72}
-              height={16}
-              loader={({ src }) => src}
-              unoptimized
-            />
+            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} loader={({ src }) => src} unoptimized />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 ```

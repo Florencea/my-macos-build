@@ -16,7 +16,10 @@ cd vite-project && yarn
 yarn add -D \
 typescript \
 eslint \
-eslint-config-react-app \
+@typescript-eslint/parser \
+@typescript-eslint/eslint-plugin \
+eslint-plugin-react \
+eslint-config-alloy \
 less \
 vite-plugin-imp \
 tailwindcss \
@@ -45,23 +48,28 @@ rm src/App.css src/index.css
 ```json
 {
   "eslintConfig": {
-    "extends": ["react-app"]
+    "extends": ["alloy", "alloy/react", "alloy/typescript"],
+    "overrides": [
+      {
+        "files": ["**/*.cjs"],
+        "rules": {
+          "@typescript-eslint/no-require-imports": 0
+        }
+      }
+    ]
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  }
+  "prettier": "eslint-config-alloy/.prettierrc.js"
 }
 ```
 
 - `vite.config.ts`
 
 ```ts
-import { presetDarkPalettes } from '@ant-design/colors'
-import react from '@vitejs/plugin-react'
-import { getThemeVariables } from 'antd/dist/theme.js'
-import { defineConfig } from 'vite'
-import imp from 'vite-plugin-imp'
+import { presetDarkPalettes } from '@ant-design/colors';
+import react from '@vitejs/plugin-react';
+import { getThemeVariables } from 'antd/dist/theme.js';
+import { defineConfig } from 'vite';
+import imp from 'vite-plugin-imp';
 
 export default defineConfig({
   plugins: [
@@ -89,13 +97,13 @@ export default defineConfig({
       },
     },
   },
-})
+});
 ```
 
 - `tailwind.config.cjs`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors')
+const { presetDarkPalettes } = require('@ant-design/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -117,22 +125,22 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
 ```
 
 - `src/main.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd'
-import zhTW from 'antd/es/locale/zh_TW'
-import 'moment/dist/locale/zh-TW'
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import 'tailwindcss/tailwind.css'
-import App from './App'
+import { ConfigProvider } from 'antd';
+import zhTW from 'antd/es/locale/zh_TW';
+import 'moment/dist/locale/zh-TW';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import 'tailwindcss/tailwind.css';
+import App from './App';
 
-const container = document.getElementById('root') as HTMLDivElement
-const root = createRoot(container)
+const container = document.getElementById('root') as HTMLDivElement;
+const root = createRoot(container);
 
 root.render(
   <StrictMode>
@@ -140,28 +148,24 @@ root.render(
       <App />
     </ConfigProvider>
   </StrictMode>,
-)
+);
 ```
 
 - `src/App.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from 'antd'
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { Button, DatePicker, message } from 'antd';
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
 
 export default function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
       <div className="space-x-8">
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img
-            src="/vite.svg"
-            className="h-[20vmin] pointer-events-none mb-10"
-            alt="Vite logo"
-          />
+          <img src="/vite.svg" className="h-[20vmin] pointer-events-none mb-10" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank" rel="noreferrer">
           <img
@@ -179,12 +183,12 @@ export default function App() {
         <DatePicker
           onChange={(date) => {
             if (date !== null) {
-              message.info(date.toLocaleString())
+              message.info(date.toLocaleString());
             }
           }}
         />
       </div>
     </div>
-  )
+  );
 }
 ```

@@ -58,9 +58,9 @@ touch craco.config.js
 - `craco.config.js`
 
 ```js
-const cracoAntdPlugin = require('craco-antd')
-const { presetDarkPalettes } = require('@ant-design/colors')
-const { getThemeVariables } = require('antd/dist/theme')
+const cracoAntdPlugin = require('craco-antd');
+const { presetDarkPalettes } = require('@ant-design/colors');
+const { getThemeVariables } = require('antd/dist/theme');
 
 module.exports = {
   plugins: [
@@ -76,13 +76,13 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 - `tailwind.config.js`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors')
+const { presetDarkPalettes } = require('@ant-design/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -104,23 +104,23 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
 ```
 
 - `src/index.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd'
-import zhTW from 'antd/es/locale/zh_TW'
-import 'moment/locale/zh-tw'
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import 'tailwindcss/tailwind.css'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
+import { ConfigProvider } from 'antd';
+import zhTW from 'antd/es/locale/zh_TW';
+import 'moment/locale/zh-tw';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import 'tailwindcss/tailwind.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const container = document.getElementById('root') as HTMLDivElement
-const root = createRoot(container)
+const container = document.getElementById('root') as HTMLDivElement;
+const root = createRoot(container);
 
 root.render(
   <StrictMode>
@@ -128,32 +128,28 @@ root.render(
       <App />
     </ConfigProvider>
   </StrictMode>,
-)
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+reportWebVitals();
 ```
 
 - `src/App.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from 'antd'
-import { useState } from 'react'
-import logo from './logo.svg'
+import { Button, DatePicker, message } from 'antd';
+import { useState } from 'react';
+import logo from './logo.svg';
 
 export default function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div className="text-center">
       <header className="h-screen flex flex-col justify-center items-center text-3xl space-y-3">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none motion-safe:animate-spin"
-          alt="logo"
-        />
+        <img src={logo} className="h-[40vmin] pointer-events-none motion-safe:animate-spin" alt="logo" />
         <div>Hello CRA + Antd + TailwindCSS!</div>
         <div className="space-x-2">
           <Button type="primary" onClick={() => setCount((count) => count + 1)}>
@@ -162,7 +158,7 @@ export default function App() {
           <DatePicker
             onChange={(date) => {
               if (date !== null) {
-                message.info(date.toLocaleString())
+                message.info(date.toLocaleString());
               }
             }}
           />
@@ -175,6 +171,6 @@ export default function App() {
         </a>
       </header>
     </div>
-  )
+  );
 }
 ```
