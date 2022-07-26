@@ -27,7 +27,14 @@ serve \
 craco-antd \
 tailwindcss \
 postcss \
-autoprefixer
+autoprefixer \
+typescript \
+eslint \
+@typescript-eslint/parser \
+@typescript-eslint/eslint-plugin \
+eslint-plugin-react \
+eslint-config-alloy \
+prettier
 ```
 
 ```bash
@@ -48,10 +55,25 @@ touch craco.config.js
     "test": "craco test",
     "preview": "serve -s build"
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  }
+  "eslintConfig": {
+    "extends": ["alloy", "alloy/react", "alloy/typescript"],
+    "env": {
+      "jest": true
+    },
+    "globals": {
+      "React": "readonly",
+      "JSX": "readonly"
+    },
+    "overrides": [
+      {
+        "files": ["**/*.js"],
+        "rules": {
+          "@typescript-eslint/no-require-imports": 0
+        }
+      }
+    ]
+  },
+  "prettier": "eslint-config-alloy/.prettierrc.js"
 }
 ```
 
