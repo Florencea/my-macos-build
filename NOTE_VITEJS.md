@@ -20,6 +20,7 @@ eslint \
 @typescript-eslint/eslint-plugin \
 eslint-plugin-react \
 eslint-config-alloy \
+prettier \
 less \
 vite-plugin-imp \
 tailwindcss \
