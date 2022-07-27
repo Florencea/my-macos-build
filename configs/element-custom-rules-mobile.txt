@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2022-07-26
+! Last updated: 2022-07-27
 
 ! Firefox Interface css color
 ! bg-dark: #2b2a32
@@ -34,7 +34,7 @@ beforweb.com##.article-entry + p:remove()
 ! style
 beforweb.com##html:style(font-size: 16px)
 beforweb.com##html:style(width: 100%)
-beforweb.com##body:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+beforweb.com##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 beforweb.com###page:style(width: 100% !important)
 beforweb.com###page:style(background-image: none !important)
 beforweb.com##header.page:style(margin-bottom: 4rem !important)
@@ -226,7 +226,7 @@ mashdigi.com##^.entry-content > a
 mashdigi.com##^amp-pixel
 ! style
 mashdigi.com##html:style(font-size: 16px !important)
-mashdigi.com##body:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+mashdigi.com##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 mashdigi.com##article.post:style(padding: 0 2rem)
 mashdigi.com##.entry-title:style(font-size: 1.8rem !important)
 mashdigi.com##.entry-title:style(line-height: 1.4 !important)
@@ -313,7 +313,7 @@ wnacg.org##^script[src*='search']
 ! style
 wnacg.org##html:style(font-size: 12px)
 wnacg.org##html:style(background-color: #2b2a32 !important)
-wnacg.org##body:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+wnacg.org##body:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 wnacg.org##body:style(background-color: #2b2a32 !important)
 wnacg.org##body:style(color: #fafafa !important)
 wnacg.org##body:style(position: relative !important)
@@ -732,7 +732,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###Main_content:style(width: 100% !important)
 18av.tv###Main_content:style(display: flex !important)
 18av.tv###Main_content:style(flex-direction: column-reverse !important)
-18av.tv###container:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+18av.tv###container:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 18av.tv###container:style(margin-bottom: 0 !important)
 18av.tv###container:style(padding-bottom: 0 !important)
 18av.tv###container:style(background-image: none !important)
@@ -869,7 +869,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##.mobile_mv > a:style(margin: 1rem 0 !important)
 18av.tv##.mobile_mv > a:style(color: #fbfbfd !important)
 18av.tv##.mobile_mv > a:style(background-color: #0069d9 !important)
-18av.tv###menu1Content:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+18av.tv###menu1Content:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 18av.tv###menu1Content:style(background-image: none !important)
 18av.tv###menu1Content:style(background-color: #2b2a32 !important)
 18av.tv###menu1Content:style(float: none !important)
@@ -1048,7 +1048,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###custompage:style(border: 2px solid #43424a !important)
 18av.tv###custompage:style(border-radius: 0.6rem !important)
 18av.tv###custompage:style(color: #fbfbfd !important)
-18av.tv##span.d_category_list:style(font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+18av.tv##span.d_category_list:style(font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 18av.tv##span.d_category_list:style(width: 100% !important)
 18av.tv##span.d_category_list:style(text-align: center !important)
 18av.tv##span.d_category_list:style(font-size: 1rem !important)
