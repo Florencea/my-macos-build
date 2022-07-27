@@ -83,10 +83,15 @@ brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node
+{
+  printf "audit=false\n"
+  printf "fund=false\n"
+  printf "loglevel=error\n"
+} >>~/.npmrc
+npm i -g npm@latest
 brew install rsync
 brew install python
 brew install wget
-brew install yarn
 brew install yt-dlp/taps/yt-dlp
 
 print_step "git configuations"
