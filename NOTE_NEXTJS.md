@@ -5,7 +5,7 @@
 ## Next.js + antd + tailwindCSS
 
 ```bash
-yarn create next-app --typescript
+npx create-next-app@latest --typescript
 ```
 
 ```bash
@@ -13,7 +13,7 @@ cd my-app
 ```
 
 ```bash
-yarn add \
+npm i \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -21,7 +21,7 @@ moment
 ```
 
 ```bash
-yarn add -D \
+npm i -D \
 next-with-less \
 less \
 less-loader \
@@ -37,7 +37,7 @@ prettier
 ```
 
 ```bash
-yarn tailwindcss init -p
+npx tailwindcss init -p
 ```
 
 ```bash
