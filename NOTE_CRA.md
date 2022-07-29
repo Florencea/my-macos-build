@@ -5,7 +5,7 @@
 ## cra + antd + tailwindCSS
 
 ```bash
-yarn create react-app my-app --template typescript
+npx create-react-app my-app --template typescript
 ```
 
 ```bash
@@ -17,7 +17,11 @@ rm -rf src/App.css src/index.css
 ```
 
 ```bash
-yarn add \
+printf "audit=false\nfund=false\nloflevel=error\nlegacy-peer-deps=true\n" > .npmrc
+```
+
+```bash
+npm i \
 antd \
 @ant-design/icons \
 @ant-design/colors \
@@ -38,7 +42,7 @@ prettier
 ```
 
 ```bash
-yarn tailwindcss init -p
+npx tailwindcss init -p
 ```
 
 ```bash
