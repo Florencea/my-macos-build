@@ -15,6 +15,15 @@ cd ~ || exit
   brew upgrade
 )
 
+print_step "Update global npm packages"
+cd ~ || exit
+(
+  set -x
+  npm install -g npm@latest
+  npm update -g
+  npm list -g
+)
+
 print_step "Update all Repositories in ~/Codespaces"
 BASE_DIR="/Users/$(whoami)/Codespaces/"
 cd "$BASE_DIR"
