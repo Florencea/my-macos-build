@@ -388,8 +388,8 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 
 ! 18av.tv
 ! remove
-18av.tv##^body > :not(div.htmleaf-container):not(div.main):not(script)
-18av.tv##body > :not(div.htmleaf-container):not(div.main):not(script):remove()
+18av.tv##^body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"])
+18av.tv##body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"]):remove()
 18av.tv##^div.container > :not(div.contents)
 18av.tv##div.container > :not(div.contents):remove()
 18av.tv##^div.container > div.contents > :not(div.content)
@@ -426,7 +426,9 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##div#show_cg_html > p
 18av.tv##^script:has-text(gtag)
 18av.tv##^script:has-text(_Hasync)
+18av.tv##^script:has-text(cnzz)
 18av.tv##^script[src*='googletagmanager']
+18av.tv##^script[src*='realsrv']
 
 ! style
 18av.tv##body:style(background-color: #2b2a32 !important)
@@ -486,16 +488,25 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(border-radius: 0.6rem !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a::before:style(font-size: 1rem !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a::before:style(content: '播放影片' !important)
+18av.tv###hls-video:style(position: fixed !important)
+18av.tv###hls-video:style(top: 30vh !important)
+18av.tv###hls-video:style(left: 0 !important)
+18av.tv###hls-video:style(width: 100vw !important)
+18av.tv###hls-video:style(height: auto !important)
+18av.tv##.controlBar:style(height: 100px ! important)
+18av.tv##.playButton:style(width: 100px)
+18av.tv##.fullscreenButton:style(width: 100px)
+18av.tv##.fullscreenButton:style(background-size: 30px ! important)
 
 ! others
-imgscloud.com##^#cover_information
-imgscloud.com###cover_information:remove()
-imgscloud.com##^#suncover
-imgscloud.com###suncover:remove()
-imgscloud.com##^#coverclose_top
-imgscloud.com###coverclose_top:remove()
-imgscloud.com##^#coverclose_bottom
-imgscloud.com###coverclose_bottom:remove()
+18av.tv##^#cover_information
+18av.tv###cover_information:remove()
+18av.tv##^#suncover
+18av.tv###suncover:remove()
+18av.tv##^#coverclose_top
+18av.tv###coverclose_top:remove()
+18av.tv##^#coverclose_bottom
+18av.tv###coverclose_bottom:remove()
 ||18av.tv/31M/background/NR.gif$image
 ||18av.tv/31M/background/NL.gif$image
 ||18av.tv/mmad.js$script
@@ -507,3 +518,4 @@ imgscloud.com###coverclose_bottom:remove()
 ||gbhost3.imgscloud.com
 
 ! 18av.tv##.altto form:after:style(content: '#19420#19722#17939|百瀨 #|水木 #12602#17441|美津屋 #|夏目 #|長瀨 #|大山 #|梓美 #|結佳 #13709|愛原久美 #35372|智惠美 #|美由|白戶 #18200|寺田美空|北野麻美 #|遠山雪菜 #|浪川 #|宮本 #25630|1339' !important)
+
