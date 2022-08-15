@@ -17,7 +17,7 @@ rm -rf src/App.css src/index.css
 ```
 
 ```bash
-printf "audit=false\nfund=false\nloflevel=error\nlegacy-peer-deps=true\n" > .npmrc
+printf "audit=false\nfund=false\nloglevel=error\nlegacy-peer-deps=true\n" > .npmrc
 ```
 
 ```bash
