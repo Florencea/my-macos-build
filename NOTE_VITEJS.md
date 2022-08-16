@@ -9,11 +9,17 @@ npm create vite vite-project -- --template react-ts
 ```
 
 ```bash
-cd vite-project && npm i
+cd vite-project && printf "audit=false\nfund=false\nloglevel=error\n" > .npmrc && npm i && npm rm react react-dom
 ```
 
 ```bash
 npm i -D \
+react \
+react-dom \
+antd \
+@ant-design/icons \
+@ant-design/colors \
+moment \
 typescript \
 eslint \
 @typescript-eslint/parser \
@@ -29,14 +35,6 @@ autoprefixer
 ```
 
 ```bash
-npm i \
-antd \
-@ant-design/icons \
-@ant-design/colors \
-moment
-```
-
-```bash
 npx tailwindcss init -p
 ```
 
@@ -48,6 +46,12 @@ rm src/App.css src/index.css
 
 ```json
 {
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "reset": "sudo rm -rf node_modules dist && npm i"
+  },
   "eslintConfig": {
     "extends": ["alloy", "alloy/react", "alloy/typescript"],
     "globals": {
@@ -62,8 +66,7 @@ rm src/App.css src/index.css
         }
       }
     ]
-  },
-  "prettier": "eslint-config-alloy/.prettierrc.js"
+  }
 }
 ```
 
