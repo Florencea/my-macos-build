@@ -13,6 +13,10 @@ cd my-app
 ```
 
 ```bash
+printf "audit=false\nfund=false\nloglevel=error\n" > .npmrc
+```
+
+```bash
 npm i \
 antd \
 @ant-design/icons \
@@ -48,6 +52,13 @@ rm styles/Home.module.css styles/globals.css
 
 ```json
 {
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "reset": "sudo rm -rf node_modules .next out && npm i"
+  },
   "eslintConfig": {
     "extends": ["alloy", "alloy/react", "alloy/typescript", "plugin:@next/next/recommended"],
     "globals": {
@@ -76,6 +87,7 @@ const { getThemeVariables } = require('antd/dist/theme');
 /** @type {import('next').NextConfig} */
 module.exports = require('next-with-less')({
   reactStrictMode: true,
+  swcMinify: true,
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
