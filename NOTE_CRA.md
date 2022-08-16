@@ -21,12 +21,15 @@ printf "audit=false\nfund=false\nloglevel=error\nlegacy-peer-deps=true\n" > .npm
 ```
 
 ```bash
+npx npm-check-updates -u && npm i
+```
+
+```bash
 npm i \
 antd \
 @ant-design/icons \
 @ant-design/colors \
 moment \
-serve \
 @craco/craco@alpha \
 craco-antd \
 tailwindcss \
@@ -57,7 +60,7 @@ touch craco.config.js
     "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "preview": "serve -s build"
+    "reset": "sudo rm -rf node_modules build && npm i"
   },
   "eslintConfig": {
     "extends": ["alloy", "alloy/react", "alloy/typescript"],
