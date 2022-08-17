@@ -37,10 +37,6 @@ postcss \
 autoprefixer \
 typescript \
 eslint \
-@typescript-eslint/parser \
-@typescript-eslint/eslint-plugin \
-eslint-plugin-react \
-eslint-config-alloy \
 prettier
 ```
 
@@ -60,27 +56,19 @@ touch craco.config.js
     "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
     "reset": "sudo rm -rf node_modules build && npm i"
   },
   "eslintConfig": {
-    "extends": ["alloy", "alloy/react", "alloy/typescript"],
-    "env": {
-      "jest": true
-    },
-    "globals": {
-      "React": "readonly",
-      "JSX": "readonly"
-    },
-    "overrides": [
-      {
-        "files": ["**/*.js"],
-        "rules": {
-          "@typescript-eslint/no-require-imports": 0
-        }
-      }
-    ]
+    "extends": ["react-app"]
   },
-  "prettier": "eslint-config-alloy/.prettierrc.js"
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "semi": true
+  },
+  "homepage": ".",
+  "browserslist": ["defaults"]
 }
 ```
 
@@ -156,7 +144,7 @@ root.render(
     <ConfigProvider locale={zhTW}>
       <App />
     </ConfigProvider>
-  </StrictMode>,
+  </StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -178,14 +166,18 @@ export default function App() {
   return (
     <div className="text-center">
       <header className="h-screen flex flex-col justify-center items-center text-3xl space-y-3">
-        <img src={logo} className="h-[40vmin] pointer-events-none motion-safe:animate-spin" alt="logo" />
+        <img
+          src={logo}
+          className="h-[40vmin] pointer-events-none motion-safe:animate-spin"
+          alt="logo"
+        />
         <div>Hello CRA + Antd + TailwindCSS!</div>
         <div className="space-x-2">
-          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+          <Button type="primary" onClick={() => setCount(count => count + 1)}>
             count is: {count}
           </Button>
           <DatePicker
-            onChange={(date) => {
+            onChange={date => {
               if (date !== null) {
                 message.info(date.toLocaleString());
               }
