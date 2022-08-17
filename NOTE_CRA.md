@@ -60,7 +60,7 @@ touch craco.config.js
     "reset": "sudo rm -rf node_modules build && npm i"
   },
   "eslintConfig": {
-    "extends": ["react-app"]
+    "extends": ["react-app", "react-app/jest"]
   },
   "prettier": {
     "arrowParens": "avoid",
