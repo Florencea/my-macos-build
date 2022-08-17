@@ -22,10 +22,7 @@ antd \
 moment \
 typescript \
 eslint \
-@typescript-eslint/parser \
-@typescript-eslint/eslint-plugin \
-eslint-plugin-react \
-eslint-config-alloy \
+eslint-config-react-app \
 prettier \
 less \
 vite-plugin-imp \
@@ -53,19 +50,12 @@ rm src/App.css src/index.css
     "reset": "sudo rm -rf node_modules dist && npm i"
   },
   "eslintConfig": {
-    "extends": ["alloy", "alloy/react", "alloy/typescript"],
-    "globals": {
-      "React": "readonly",
-      "JSX": "readonly"
-    },
-    "overrides": [
-      {
-        "files": ["**/*.cjs"],
-        "rules": {
-          "@typescript-eslint/no-require-imports": 0
-        }
-      }
-    ]
+    "extends": ["react-app"]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "semi": true
   }
 }
 ```
@@ -87,7 +77,7 @@ export default defineConfig({
         {
           libName: 'antd',
           libDirectory: 'es',
-          style: (name) => `antd/es/${name}/style`,
+          style: name => `antd/es/${name}/style`,
         },
       ],
     }),
@@ -155,7 +145,7 @@ root.render(
     <ConfigProvider locale={zhTW}>
       <App />
     </ConfigProvider>
-  </StrictMode>,
+  </StrictMode>
 );
 ```
 
@@ -173,7 +163,11 @@ export default function App() {
     <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
       <div className="space-x-8">
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="h-[20vmin] pointer-events-none mb-10" alt="Vite logo" />
+          <img
+            src="/vite.svg"
+            className="h-[20vmin] pointer-events-none mb-10"
+            alt="Vite logo"
+          />
         </a>
         <a href="https://reactjs.org" target="_blank" rel="noreferrer">
           <img
@@ -185,11 +179,11 @@ export default function App() {
       </div>
       <p>Vite + React + TailwindCSS + antd</p>
       <div className="flex justify-center space-x-3">
-        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+        <Button type="primary" onClick={() => setCount(count => count + 1)}>
           count is: {count}
         </Button>
         <DatePicker
-          onChange={(date) => {
+          onChange={date => {
             if (date !== null) {
               message.info(date.toLocaleString());
             }
