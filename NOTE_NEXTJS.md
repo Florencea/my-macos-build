@@ -17,26 +17,17 @@ printf "audit=false\nfund=false\nloglevel=error\n" > .npmrc
 ```
 
 ```bash
-npm i \
+npm i -D \
 antd \
 @ant-design/icons \
 @ant-design/colors \
-moment
-```
-
-```bash
-npm i -D \
+moment \
 next-with-less \
 less \
 less-loader \
 tailwindcss \
 postcss \
 autoprefixer \
-@typescript-eslint/parser \
-@typescript-eslint/eslint-plugin \
-eslint-plugin-react \
-eslint-config-alloy \
-@next/eslint-plugin-next \
 prettier
 ```
 
@@ -45,7 +36,7 @@ npx tailwindcss init -p
 ```
 
 ```bash
-rm styles/Home.module.css styles/globals.css
+rm styles/Home.module.css styles/globals.css .eslintrc.json
 ```
 
 - `package.json`
@@ -60,21 +51,13 @@ rm styles/Home.module.css styles/globals.css
     "reset": "sudo rm -rf node_modules .next out && npm i"
   },
   "eslintConfig": {
-    "extends": ["alloy", "alloy/react", "alloy/typescript", "plugin:@next/next/recommended"],
-    "globals": {
-      "React": "readonly",
-      "JSX": "readonly"
-    },
-    "overrides": [
-      {
-        "files": ["**/*.js"],
-        "rules": {
-          "@typescript-eslint/no-require-imports": 0
-        }
-      }
-    ]
+    "extends": ["next/core-web-vitals"]
   },
-  "prettier": "eslint-config-alloy/.prettierrc.js"
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "semi": true
+  }
 }
 ```
 
@@ -134,7 +117,10 @@ module.exports = {
     preflight: false,
   },
   important: '#__next',
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
@@ -157,7 +143,15 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const Card = ({ href, header, paragraph }: { href: string; header: string; paragraph: string }) => (
+const Card = ({
+  href,
+  header,
+  paragraph,
+}: {
+  href: string;
+  header: string;
+  paragraph: string;
+}) => (
   <a
     href={href}
     className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-cyan-5 hover:border-cyan-5"
@@ -183,7 +177,10 @@ const Home: NextPage = () => {
         </h1>
 
         <p className="text-center mt-12 mb-6 text-2xl">
-          Get started by editing <code className="rounded p-3 text-base font-mono">pages/index.tsx</code>
+          Get started by editing{' '}
+          <code className="rounded p-3 text-base font-mono">
+            pages/index.tsx
+          </code>
         </p>
 
         <div className="flex space-x-2">
@@ -191,7 +188,7 @@ const Home: NextPage = () => {
             Count: {count}
           </Button>
           <DatePicker
-            onChange={(date) => {
+            onChange={date => {
               if (date !== null) {
                 message.info(date.toISOString());
               }
@@ -232,7 +229,14 @@ const Home: NextPage = () => {
         >
           Powered by
           <span className="h-4 ml-2 filter invert">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} loader={({ src }) => src} unoptimized />
+            <Image
+              src="/vercel.svg"
+              alt="Vercel Logo"
+              width={72}
+              height={16}
+              loader={({ src }) => src}
+              unoptimized
+            />
           </span>
         </a>
       </footer>
