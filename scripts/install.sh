@@ -73,6 +73,18 @@ brew install kekaexternalhelper
 brew install mos
 brew install c0re100-qbittorrent
 brew install vscodium
+mkdir -p ~/Library/Application\ Support/VSCodium
+{
+  printf "{\n"
+  printf "  \"extensionsGallery\": {\n"
+  printf "    \"serviceUrl\": \"https://marketplace.visualstudio.com/_apis/public/gallery\",\n"
+  printf "    \"cacheUrl\": \"https://vscode.blob.core.windows.net/gallery/index\",\n"
+  printf "    \"itemUrl\": \"https://marketplace.visualstudio.com/items\",\n"
+  printf "    \"controlUrl\": \"\",\n"
+  printf "    \"recommendationsUrl\": \"\"\n"
+  printf "  }\n"
+  printf "}\n"
+} >>~/Library/Application\ Support/VSCodium/product.json
 
 print_step "brew install commend line tools"
 brew install ffmpeg
