@@ -85,6 +85,7 @@ mkdir -p ~/Library/Application\ Support/VSCodium
   printf "  }\n"
   printf "}\n"
 } >>~/Library/Application\ Support/VSCodium/product.json
+defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
