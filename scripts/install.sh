@@ -38,7 +38,7 @@ mkdir -p ~/.config/fish
   printf "set -gx PATH $brew_path \$PATH\n"
   printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
   printf "set -gx fish_greeting\n"
-  printf "alias mmb=\"code $script_dir\"\n"
+  printf "alias mmb=\"codium $script_dir\"\n"
   printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
   printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
   printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
@@ -72,7 +72,7 @@ brew install keka
 brew install kekaexternalhelper
 brew install mos
 brew install c0re100-qbittorrent
-brew install visual-studio-code
+brew install vscodium
 
 print_step "brew install commend line tools"
 brew install ffmpeg
