@@ -10,7 +10,7 @@ fi
 INPUT_FILE=$1
 OUTPUT_FILE="mkgif_$(date +"%Y%m%d%H%M%S").gif"
 if [ -f "$INPUT_FILE" ]; then
-  OUTPUT_ERROR=$(ffmpeg -hide_banner -loglevel error -ss "$2" -t "$3" -i "$1" -filter_complex "[0:v] fps=18,scale=w=432:h=-1:flags=lanczos[x];[x]split[x1][x2];[x1]palettegen[p];[x2][p]paletteuse" "$OUTPUT_FILE" 2>&1)
+  OUTPUT_ERROR=$(ffmpeg -hide_banner -loglevel error -ss "$2" -t "$3" -i "$1" -filter_complex "[0:v] fps=12,scale=w=480:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1" "$OUTPUT_FILE" 2>&1)
   if [ -n "$OUTPUT_ERROR" ]; then
     echo "$OUTPUT_ERROR"
     rm "$OUTPUT_FILE" >/dev/null 2>&1
