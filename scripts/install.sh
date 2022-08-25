@@ -66,7 +66,7 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
-brew install google-chrome
+brew install eloston-chromium
 brew install iina
 brew install keka
 brew install kekaexternalhelper
