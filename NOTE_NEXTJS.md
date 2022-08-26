@@ -46,6 +46,7 @@ rm styles/Home.module.css styles/globals.css .eslintrc.json
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint",
     "reset": "sudo rm -rf node_modules .next out && npm i"
@@ -64,31 +65,36 @@ rm styles/Home.module.css styles/globals.css .eslintrc.json
 - `next.config.js`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors');
-const { getThemeVariables } = require('antd/dist/theme');
+const { presetPalettes } = require('@ant-design/colors');
+const withLess = require('next-with-less');
 
 /** @type {import('next').NextConfig} */
-module.exports = require('next-with-less')({
+const nextConfig = {
   reactStrictMode: true,
+  images: {
+    loader: 'custom',
+  },
   swcMinify: true,
+  compiler: {
+    removeConsole: true,
+  },
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
-        ...getThemeVariables({
-          dark: true,
-        }),
-        'primary-color': presetDarkPalettes.cyan.primary,
+        'primary-color': presetPalettes.blue.primary,
       },
     },
   },
-});
+};
+
+module.exports = withLess(nextConfig);
 ```
 
 - `pages/_app.tsx`
 
 ```tsx
 import { ConfigProvider } from 'antd';
-import 'antd/dist/antd.dark.less';
+import 'antd/dist/antd.less';
 import zhTW from 'antd/lib/locale/zh_TW';
 import moment from 'moment';
 import 'moment/locale/zh-tw';
@@ -109,7 +115,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 - `tailwind.config.js`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors');
+const { presetPalettes } = require('@ant-design/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -126,7 +132,8 @@ module.exports = {
       colors: {
         white: '#fff',
         black: '#000',
-        ...presetDarkPalettes,
+        primary: presetPalettes.blue.primary,
+        ...presetPalettes,
       },
     },
   },
@@ -137,11 +144,12 @@ module.exports = {
 - `pages/index.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from 'antd';
+import { Button, DatePicker, message, Typography } from 'antd';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
+const { Title, Paragraph } = Typography;
 
 const Card = ({
   href,
@@ -154,10 +162,10 @@ const Card = ({
 }) => (
   <a
     href={href}
-    className="m-4 p-6 text-left no-underline border border-solid border-white rounded-xl transition-colors max-w-xs text-white hover:text-cyan-5 hover:border-cyan-5"
+    className="m-4 p-6 text-left no-underline border border-solid border-grey-0 rounded-xl transition-colors max-w-xs hover:border-primary"
   >
-    <h2 className="mb-4 text-2xl text-cyan-5">{header} &rarr;</h2>
-    <p className="m-0 text-xl">{paragraph}</p>
+    <Title className="mb-4 text-2xl">{header} &rarr;</Title>
+    <Paragraph className="m-0 text-xl">{paragraph}</Paragraph>
   </a>
 );
 
@@ -220,7 +228,7 @@ const Home: NextPage = () => {
         </div>
       </main>
 
-      <footer className="flex flex-1 py-8 border-0 border-t border-t-white border-solid justify-center items-center">
+      <footer className="flex flex-1 py-8 border-0 border-t border-t-grey-0 border-solid justify-center items-center">
         <a
           className="flex justify-center items-center grow"
           href="https://vercel.com"
@@ -228,7 +236,7 @@ const Home: NextPage = () => {
           rel="noopener noreferrer"
         >
           Powered by
-          <span className="h-4 ml-2 filter invert">
+          <span className="h-4 ml-2">
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
