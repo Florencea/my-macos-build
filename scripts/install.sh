@@ -38,7 +38,7 @@ mkdir -p ~/.config/fish
   printf "set -gx PATH $brew_path \$PATH\n"
   printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
   printf "set -gx fish_greeting\n"
-  printf "alias mmb=\"codium $script_dir\"\n"
+  printf "alias mmb=\"code $script_dir\"\n"
   printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
   printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
   printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
@@ -66,26 +66,14 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
-brew install eloston-chromium
+brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
 brew install mos
 brew install c0re100-qbittorrent
-brew install vscodium
-mkdir -p ~/Library/Application\ Support/VSCodium
-{
-  printf "{\n"
-  printf "  \"extensionsGallery\": {\n"
-  printf "    \"serviceUrl\": \"https://marketplace.visualstudio.com/_apis/public/gallery\",\n"
-  printf "    \"cacheUrl\": \"https://vscode.blob.core.windows.net/gallery/index\",\n"
-  printf "    \"itemUrl\": \"https://marketplace.visualstudio.com/items\",\n"
-  printf "    \"controlUrl\": \"\",\n"
-  printf "    \"recommendationsUrl\": \"\"\n"
-  printf "  }\n"
-  printf "}\n"
-} >>~/Library/Application\ Support/VSCodium/product.json
-defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
+brew install visual-studio-code
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
@@ -100,6 +88,7 @@ brew install node
   printf "audit=false\n"
   printf "fund=false\n"
   printf "loglevel=error\n"
+  printf "update-notifier=false\n"
 } >>~/.npmrc
 npm i -g npm@latest
 brew install rsync
