@@ -1,0 +1,34 @@
+source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
+source '/opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh'
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:${FPATH}
+  zstyle ':completion:*' list-prompt ''
+  zstyle ':completion:*' select-prompt ''
+  autoload -Uz compinit
+  compinit
+fi
+
+export CLICOLOR=1
+
+alias ll='ls -lh'
+alias la='ls -lah'
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '(%b)'
+setopt PROMPT_SUBST
+
+PROMPT='%F{10}%n%f@%m%F{2} %~%f ${vcs_info_msg_0_}>'
+
+alias mmb='code ~/Codespaces/my-macos-build'
+alias mkgif='sh ~/Codespaces/my-macos-build/scripts/make-gif.sh'
+alias ebk='sh ~/Codespaces/my-macos-build/scripts/extension-config-backup.sh'
+alias urb='sh ~/Codespaces/my-macos-build/scripts/ublock-rule-backup.sh'
+alias ua='sh ~/Codespaces/my-macos-build/scripts/update-all.sh'
+alias rec='sh ~/Codespaces/my-macos-build/scripts/re-encode.sh'
+alias rsl='defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock'
+alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Bear.ovpn'
+alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/'
+
+source '/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
