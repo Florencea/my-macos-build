@@ -1,6 +1,8 @@
 #! /bin/bash
 # nano ~/.config/fish/config.fish
 # alias ebk="sh ~/Codespaces/my-macos-build/scripts/extension-config-backup.sh"
+FILE_ADGUARD=$(find ~/Downloads -maxdepth 1 -name '*_adg_ext_settings_*.json' | head -n1)
+FILE_ADGUARD_NAME=adg-settings.json
 FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head -n1)
 FILE_UBLOCK_NAME=ublock-advanced.txt
 FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'scripts_*.zip' | head -n1)
@@ -8,6 +10,20 @@ FILE_VIOLENTMONKEY_NAME=violentmonkey-backup.zip
 FILE_TONGWENTANG=$(find ~/Downloads -maxdepth 1 -name 'tongwentang-pref*.json' | head -n1)
 FILE_TONGWENTANG_NAME=tongwentang-pref.json
 PROJECT_DIR=~/Codespaces/my-macos-build/configs/
+# find *_adg_ext_settings_*.json and backup
+if [ -f "$FILE_ADGUARD" ]; then
+  mv "$FILE_ADGUARD" "$PROJECT_DIR$FILE_ADGUARD_NAME"
+  cd $PROJECT_DIR || exit
+  git add $FILE_ADGUARD_NAME
+  echo ""
+  printf 'Find AdGuard Configuration: %s\n' "$FILE_ADGUARD"
+  printf '     --> adg-settings.json\n\n'
+  printf 'Backup...'
+  git commit -q -m "feat: Update AdGuard Configuration by ebk"
+  git push -q
+  echo "done."
+  echo ""
+fi
 # find my-ublock-backup*.txt and backup
 if [ -f "$FILE_UBLOCK" ]; then
   mv "$FILE_UBLOCK" "$PROJECT_DIR$FILE_UBLOCK_NAME"
