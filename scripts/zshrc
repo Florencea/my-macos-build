@@ -16,10 +16,10 @@ alias la='ls -lah'
 
 autoload -Uz vcs_info
 precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '(%b)'
+zstyle ':vcs_info:git:*' formats '%F{6}( %b)%f'
 setopt PROMPT_SUBST
 
-PROMPT='%F{10}%n%f@%m%F{2} %~%f ${vcs_info_msg_0_}>'
+PROMPT='%F{2}%~%f ${vcs_info_msg_0_}$ '
 
 alias mmb='code ~/Codespaces/my-macos-build'
 alias mkgif='sh ~/Codespaces/my-macos-build/scripts/make-gif.sh'
