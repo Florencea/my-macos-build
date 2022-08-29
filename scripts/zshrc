@@ -21,12 +21,15 @@ setopt PROMPT_SUBST
 
 PROMPT='%F{2}%~%f ${vcs_info_msg_0_}$ '
 
-alias mmb='code ~/Codespaces/my-macos-build'
-alias mkgif='sh ~/Codespaces/my-macos-build/scripts/make-gif.sh'
-alias ebk='sh ~/Codespaces/my-macos-build/scripts/extension-config-backup.sh'
-alias urb='sh ~/Codespaces/my-macos-build/scripts/ublock-rule-backup.sh'
-alias ua='sh ~/Codespaces/my-macos-build/scripts/update-all.sh'
-alias rec='sh ~/Codespaces/my-macos-build/scripts/re-encode.sh'
+SCRIPT_HOME='~/Codespaces/my-macos-build'
+SCRIPT_PATH="$SCRIPT_HOME/scripts"
+
+alias mmb="code $SCRIPT_HOME"
+alias mkgif="sh $SCRIPT_PATH/make-gif.sh"
+alias ebk="sh $SCRIPT_PATH/extension-config-backup.sh"
+alias urb="sh $SCRIPT_PATH/ublock-rule-backup.sh"
+alias ua="sh $SCRIPT_PATH/update-all.sh"
+alias rec="sh  $SCRIPT_PATH/re-encode.sh"
 alias rsl='defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock'
 alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Bear.ovpn'
 alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/'
