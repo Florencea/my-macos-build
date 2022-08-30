@@ -32,6 +32,6 @@ alias ua="sh $SCRIPT_PATH/update-all.sh"
 alias rec="sh  $SCRIPT_PATH/re-encode.sh"
 alias rsl='defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock'
 alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Bear.ovpn'
-alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/'
+alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/ && chmod -R 700 ~/Documents'
 
 source '/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
