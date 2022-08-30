@@ -36,7 +36,7 @@ brew install zsh-completions
 brew install zsh-history-substring-search
 brew install zsh-syntax-highlighting
 chmod -R go-w "$(brew --prefix)/share"
-curl -L "https://github.com/$github_username/my-macos-build/raw/main/scripts/zshrc" -o ~/.zshrc
+curl -L "https://github.com/$github_username/my-macos-build/raw/main/scripts/zshrc.txt" -o ~/.zshrc
 
 print_step "brew update taps"
 brew tap homebrew/cask
