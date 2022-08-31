@@ -57,14 +57,26 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
+brew install firefox --language=zh-TW
 brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
 brew install mos
 brew install c0re100-qbittorrent
-brew install visual-studio-code
-defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+brew install vscodium
+{
+  printf "{\n"
+  printf "  \"extensionsGallery\": {\n"
+  printf "    \"serviceUrl\": \"https://marketplace.visualstudio.com/_apis/public/gallery\",\n"
+  printf "    \"cacheUrl\": \"https://vscode.blob.core.windows.net/gallery/index\",\n"
+  printf "    \"itemUrl\": \"https://marketplace.visualstudio.com/items\",\n"
+  printf "    \"controlUrl\": \"\",\n"
+  printf "    \"recommendationsUrl\": \"\"\n"
+  printf "  }\n"
+  printf "}\n"
+} >>~/Library/Application\ Support/VSCodium/product.json
+defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
