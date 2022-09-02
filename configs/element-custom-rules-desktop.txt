@@ -566,8 +566,8 @@ techbang.com##^.line-link-wrapper
 techbang.com##.line-link-wrapper:remove()
 techbang.com##^.float-top
 techbang.com##.float-top:remove()
-techbang.com##^google-news-wrapper.popup-items
-techbang.com##google-news-wrapper.popup-items:reomve()
+techbang.com##^.google-news-wrapper.popup-items
+techbang.com##.google-news-wrapper.popup-items:reomve()
 techbang.com##^script:has-text(googletagmanager)
 techbang.com##^script:has-text(popin)
 techbang.com##^script:has-text(atrk)
