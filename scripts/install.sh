@@ -29,14 +29,23 @@ brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
 
-print_step "brew install zsh"
-brew install zsh
-brew install zsh-autosuggestions
-brew install zsh-completions
-brew install zsh-history-substring-search
-brew install zsh-syntax-highlighting
-chmod -R go-w "$(brew --prefix)/share"
-curl -L "https://github.com/$github_username/my-macos-build/raw/main/scripts/zshrc.txt" -o ~/.zshrc
+print_step "brew install fish"
+brew install fish
+echo "$brew_path/fish" | sudo tee -a /etc/shells
+chsh -s $brew_path/fish
+mkdir -p ~/.config/fish
+{
+  printf "set -gx PATH $brew_path \$PATH\n"
+  printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
+  printf "set -gx fish_greeting\n"
+  printf "alias mmb=\"code $script_dir\"\n"
+  printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
+  printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
+  printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
+  printf "alias ua=\"sh $script_path/update-all.sh\"\n"
+  printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
+  printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
+} >>~/.config/fish/config.fish
 
 print_step "brew update taps"
 brew tap homebrew/cask
@@ -57,26 +66,14 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
-brew install firefox --language=zh-TW
 brew install google-chrome
 brew install iina
 brew install keka
 brew install kekaexternalhelper
 brew install mos
 brew install c0re100-qbittorrent
-brew install vscodium
-{
-  printf "{\n"
-  printf "  \"extensionsGallery\": {\n"
-  printf "    \"serviceUrl\": \"https://marketplace.visualstudio.com/_apis/public/gallery\",\n"
-  printf "    \"cacheUrl\": \"https://vscode.blob.core.windows.net/gallery/index\",\n"
-  printf "    \"itemUrl\": \"https://marketplace.visualstudio.com/items\",\n"
-  printf "    \"controlUrl\": \"\",\n"
-  printf "    \"recommendationsUrl\": \"\"\n"
-  printf "  }\n"
-  printf "}\n"
-} >>~/Library/Application\ Support/VSCodium/product.json
-defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
+brew install visual-studio-code
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
