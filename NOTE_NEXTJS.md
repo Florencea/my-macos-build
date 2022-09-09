@@ -76,7 +76,7 @@ const withLess = require('next-with-less');
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    loader: 'custom',
+    unoptimized: true,
   },
   swcMinify: true,
   compiler: {
@@ -92,6 +92,7 @@ const nextConfig = {
 };
 
 module.exports = withLess(nextConfig);
+
 ```
 
 - `pages/_app.tsx`
@@ -281,8 +282,6 @@ const Home: NextPage = () => {
                     alt="Vercel Logo"
                     width={72}
                     height={16}
-                    loader={({ src }) => src}
-                    unoptimized
                   />
                 </Col>
               </Row>
