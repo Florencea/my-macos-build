@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2022-09-10
+! Last updated: 2022-09-11
 
 ! Firefox Interface css color
 ! bg-dark: #2b2a32
@@ -527,16 +527,16 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(color: #fbfbfd !important)
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(border-radius: 0.6rem 0 0 0.6rem !important)
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(margin-bottom: 0 !important)
-18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(border-right: 1px solid #515151 !important)
+18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(border-right: 2px solid #2b2a32 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(width: 25% !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(padding: 0.8rem 1rem !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(background-color: #43424a !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(color: #fbfbfd !important)
+18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(color: #837d9d !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(border-radius: 0 0.6rem 0.6rem 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:hover:style(border-radius: 0 0.6rem 0 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:before:style(border: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt:style(margin: 0 !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt > a.sun_input_group_txt:style(color: #fbfbfd !important)
+18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt > a.sun_input_group_txt:style(color: #837d9d !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(left: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(background-color: transparent !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(border: 0 !important)
@@ -606,4 +606,3 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 ||gbhost3.imgscloud.com
 
 ! 18av.tv##.altto form:after:style(content: '#19420#19722#17939|百瀨 #|水木 #12602#17441|美津屋 #|夏目 #|長瀨 #|大山 #|梓美 #|結佳 #13709|愛原久美 #35372|智惠美 #|美由|白戶 #18200|寺田美空|北野麻美 #|遠山雪菜 #|浪川 #|宮本 #25630|1339' !important)
-
