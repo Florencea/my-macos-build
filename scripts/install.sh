@@ -45,9 +45,6 @@ mkdir -p ~/.config/fish
   printf "alias ua=\"sh $script_path/update-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
   printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
-  printf "\n"
-  printf "string match -q \"$TERM_PROGRAM\" \"vscode\"\n"
-  printf "and . (code --locate-shell-integration-path fish)\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew update taps"
