@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2022-09-02
+! Last updated: 2022-09-15
 
 ! universal rules
 ! outline
@@ -454,6 +454,8 @@ pts.org.tw##^#header
 pts.org.tw###header
 pts.org.tw##^.raw-html-embed
 pts.org.tw##.raw-html-embed:remove()
+pts.org.tw##^.container:has(div:has(h3.section-title:has-text(相關新聞)))
+pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關新聞))):remove()
 pts.org.tw##^img[src*='scorecardresearch']
 pts.org.tw##^script[src*='facebook']
 pts.org.tw##^script:has-text(lndata)
@@ -567,7 +569,7 @@ techbang.com##.line-link-wrapper:remove()
 techbang.com##^.float-top
 techbang.com##.float-top:remove()
 techbang.com##^.google-news-wrapper.popup-items
-techbang.com##.google-news-wrapper.popup-items:reomve()
+techbang.com##.google-news-wrapper.popup-items:remove()
 techbang.com##^script:has-text(googletagmanager)
 techbang.com##^script:has-text(popin)
 techbang.com##^script:has-text(atrk)
@@ -577,10 +579,12 @@ techbang.com##^script:has-text(idle_popup)
 techbang.com##^script:has-text(check_fb_ready)
 techbang.com##^script:has-text(facebook)
 techbang.com##^script:has-text(NREUM)
+techbang.com##^script:has-text(googletagservices)
+techbang.com##^script:has-text(guoshipartners.com)
 techbang.com##script:has-text(carousel-images):remove()
 techbang.com##^script[src*='trvdp.com']
 techbang.com##^script[src*='sync']
-techbang.com##^script:has-text(guoshipartners.com)
+techbang.com##^script[src*='anymind360']
 ! style
 techbang.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 techbang.com##.main-content:style(width: 100% !important)
@@ -760,3 +764,4 @@ xfastest.com##.vw-post-box:style(cursor: pointer !important)
 xfastest.com##.vw-logo-link > img:style(cursor: pointer !important)
 xfastest.com##.vw-page-navigation-pagination > a.page-numbers:style(cursor: pointer !important)
 xfastest.com##.vw-page-navigation-pagination > a.page-numbers > i:style(cursor: pointer !important)
+
