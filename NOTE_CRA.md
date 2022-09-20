@@ -70,7 +70,8 @@ postcss \
 autoprefixer \
 typescript \
 eslint \
-prettier
+prettier \
+serve
 ```
 
 ```bash
