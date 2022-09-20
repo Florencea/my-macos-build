@@ -17,18 +17,51 @@ rm -rf src/App.css src/index.css
 ```
 
 ```bash
-printf "audit=false\nfund=false\nloglevel=error\nlegacy-peer-deps=true\n" > .npmrc
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\n" > .npmrc
 ```
 
 ```bash
-npx npm-check-updates -u && npm i
+npx npm-check-updates -u && npm up --save
+```
+
+- `package.json`
+
+```json
+{
+  "scripts": {
+    "dev": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "preview": "serve -s build",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
+    "reset": "rm -rf node_modules build && npm i"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "semi": true
+  },
+  "homepage": ".",
+  "browserslist": [
+    "defaults"
+  ],
+  "overrides": {
+    "craco-antd": {
+      "@craco/craco": "^7.0.0-alpha"
+    }
+  }
+}
 ```
 
 ```bash
 npm i \
 antd \
-@ant-design/icons \
-@ant-design/colors \
 moment \
 @craco/craco@alpha \
 craco-antd \
@@ -48,47 +81,16 @@ npx tailwindcss init -p
 touch craco.config.js
 ```
 
-- `package.json`
-
-```json
-{
-  "scripts": {
-    "dev": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
-    "reset": "sudo rm -rf node_modules build && npm i"
-  },
-  "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
-  },
-  "prettier": {
-    "arrowParens": "avoid",
-    "singleQuote": true,
-    "semi": true
-  },
-  "homepage": ".",
-  "browserslist": ["defaults"]
-}
-```
-
 - `craco.config.js`
 
 ```js
-const cracoAntdPlugin = require('craco-antd');
-const { presetDarkPalettes } = require('@ant-design/colors');
-const { getThemeVariables } = require('antd/dist/theme');
-
 module.exports = {
   plugins: [
     {
-      plugin: cracoAntdPlugin,
+      plugin: require('craco-antd'),
       options: {
         customizeTheme: {
-          ...getThemeVariables({
-            dark: true,
-          }),
-          '@primary-color': presetDarkPalettes.cyan.primary,
+          '@primary-color': require('tailwindcss/colors').cyan[500],
         },
       },
     },
@@ -99,8 +101,6 @@ module.exports = {
 - `tailwind.config.js`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   corePlugins: {
@@ -108,19 +108,6 @@ module.exports = {
   },
   important: '#root',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        white: '#fff',
-        black: '#000',
-        ...presetDarkPalettes,
-      },
-      animation: {
-        spin: 'spin 20s linear infinite',
-      },
-    },
-  },
-  plugins: [],
 };
 ```
 
@@ -147,9 +134,6 @@ root.render(
   </StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 ```
 
@@ -164,33 +148,24 @@ export default function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="text-center">
-      <header className="h-screen flex flex-col justify-center items-center text-3xl space-y-3">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none motion-safe:animate-spin"
-          alt="logo"
+    <div className="h-screen flex flex-col justify-center items-center text-3xl text-center space-y-3">
+      <img src={logo} className="h-[30vmin]" alt="logo" />
+      <div>Hello CRA + Antd + TailwindCSS!</div>
+      <div className="space-x-2">
+        <Button type="primary" onClick={() => setCount(count => count + 1)}>
+          count is: {count}
+        </Button>
+        <DatePicker
+          onChange={date => {
+            if (date !== null) {
+              message.info(date.toLocaleString());
+            }
+          }}
         />
-        <div>Hello CRA + Antd + TailwindCSS!</div>
-        <div className="space-x-2">
-          <Button type="primary" onClick={() => setCount(count => count + 1)}>
-            count is: {count}
-          </Button>
-          <DatePicker
-            onChange={date => {
-              if (date !== null) {
-                message.info(date.toLocaleString());
-              }
-            }}
-          />
-        </div>
-        <div>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </div>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+      </div>
+      <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+        Learn React
+      </a>
     </div>
   );
 }
