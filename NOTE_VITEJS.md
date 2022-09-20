@@ -9,7 +9,7 @@ npm create vite vite-project -- --template react-ts
 ```
 
 ```bash
-cd vite-project && printf "audit=false\nfund=false\nloglevel=error\n" > .npmrc && npm i && npm rm react react-dom
+cd vite-project && printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\n" > .npmrc && npm i && npm rm react react-dom
 ```
 
 ```bash
@@ -17,8 +17,6 @@ npm i -D \
 react \
 react-dom \
 antd \
-@ant-design/icons \
-@ant-design/colors \
 moment \
 typescript \
 eslint \
@@ -36,7 +34,7 @@ npx tailwindcss init -p
 ```
 
 ```bash
-rm src/App.css src/index.css
+rm -rf src/App.css src/index.css src/assets
 ```
 
 - `package.json`
@@ -47,10 +45,14 @@ rm src/App.css src/index.css
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "reset": "sudo rm -rf node_modules dist && npm i"
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,md,json}'",
+    "deps:up": "npm up --save && npm run reset",
+    "reset": "rm -rf node_modules dist && npm i"
   },
   "eslintConfig": {
-    "extends": ["react-app"]
+    "extends": [
+      "react-app"
+    ]
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -63,16 +65,14 @@ rm src/App.css src/index.css
 - `vite.config.ts`
 
 ```ts
-import { presetDarkPalettes } from '@ant-design/colors';
-import react from '@vitejs/plugin-react';
-import { getThemeVariables } from 'antd/dist/theme.js';
+import pluginReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import imp from 'vite-plugin-imp';
+import pluginImp from 'vite-plugin-imp';
 
 export default defineConfig({
   plugins: [
-    react(),
-    imp({
+    pluginReact(),
+    pluginImp({
       libList: [
         {
           libName: 'antd',
@@ -87,22 +87,18 @@ export default defineConfig({
       less: {
         javascriptEnabled: true,
         modifyVars: {
-          ...getThemeVariables({
-            dark: true,
-          }),
-          'primary-color': presetDarkPalettes.cyan.primary,
+          'primary-color': '#2f54eb',
         },
       },
     },
   },
 });
+
 ```
 
 - `tailwind.config.cjs`
 
 ```js
-const { presetDarkPalettes } = require('@ant-design/colors');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   corePlugins: {
@@ -110,19 +106,6 @@ module.exports = {
   },
   important: '#root',
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        white: '#fff',
-        black: '#000',
-        ...presetDarkPalettes,
-      },
-      animation: {
-        spin: 'spin 20s linear infinite',
-      },
-    },
-  },
-  plugins: [],
 };
 ```
 
@@ -154,7 +137,6 @@ root.render(
 ```tsx
 import { Button, DatePicker, message } from 'antd';
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -167,13 +149,6 @@ export default function App() {
             src="/vite.svg"
             className="h-[20vmin] pointer-events-none mb-10"
             alt="Vite logo"
-          />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img
-            src={reactLogo}
-            className="h-[20vmin] pointer-events-none motion-safe:animate-spin mb-10"
-            alt="React logo"
           />
         </a>
       </div>
