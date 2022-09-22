@@ -3,7 +3,7 @@
 # alias ebk="sh ~/Codespaces/my-macos-build/scripts/extension-config-backup.sh"
 FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head -n1)
 FILE_UBLOCK_NAME=ublock-advanced.txt
-FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'scripts_*.zip' | head -n1)
+FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'violentmonkey_*.zip' | head -n1)
 FILE_VIOLENTMONKEY_NAME=violentmonkey-backup.zip
 FILE_TONGWENTANG=$(find ~/Downloads -maxdepth 1 -name 'tongwentang-pref*.json' | head -n1)
 FILE_TONGWENTANG_NAME=tongwentang-pref.json
