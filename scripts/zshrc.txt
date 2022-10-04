@@ -33,7 +33,6 @@ alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Be
 alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/ && chmod -R 700 ~/Documents'
 
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
-source '/opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh'
 source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
