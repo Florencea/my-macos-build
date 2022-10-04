@@ -1,6 +1,3 @@
-source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
-source '/opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh'
-
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:${FPATH}
   zstyle ':completion:*' list-prompt ''
@@ -34,4 +31,8 @@ alias rsl='defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock'
 alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Bear.ovpn'
 alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/ && chmod -R 700 ~/Documents'
 
+source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
+source '/opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh'
 source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
