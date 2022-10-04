@@ -2,6 +2,7 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:${FPATH}
   zstyle ':completion:*' list-prompt ''
   zstyle ':completion:*' select-prompt ''
+  zstyle ':completion:*' menu yes select
   autoload -Uz compinit
   compinit
 fi
