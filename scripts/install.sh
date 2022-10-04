@@ -34,7 +34,7 @@ brew install zsh
 brew install zsh-autosuggestions
 brew install zsh-completions
 brew install zsh-history-substring-search
-brew install zsh-syntax-highlighting
+brew install zsh-fast-syntax-highlighting
 chmod -R go-w "$(brew --prefix)/share"
 curl -L "https://github.com/$github_username/my-macos-build/raw/main/scripts/zshrc.txt" -o ~/.zshrc
 

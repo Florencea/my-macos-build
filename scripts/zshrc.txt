@@ -24,7 +24,7 @@ PROMPT='%F{2}%~%f ${vcs_info_msg_0_}$ '
 SCRIPT_HOME='~/Codespaces/my-macos-build'
 SCRIPT_PATH="$SCRIPT_HOME/scripts"
 
-alias mmb="codium $SCRIPT_HOME"
+alias mmb="code $SCRIPT_HOME"
 alias mkgif="sh $SCRIPT_PATH/make-gif.sh"
 alias ebk="sh $SCRIPT_PATH/extension-config-backup.sh"
 alias urb="sh $SCRIPT_PATH/ublock-rule-backup.sh"
@@ -34,4 +34,4 @@ alias rsl='defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock'
 alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Bear.ovpn'
 alias boxrsync='cd ~ && rsync -ahPz --delete --exclude=.DS_Store /Volumes/BoxData/bear/Documents/ ~/Documents/ && chmod -R 700 ~/Documents'
 
-source '/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
