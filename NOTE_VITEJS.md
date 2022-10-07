@@ -104,7 +104,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: '#root',
+  important: 'html > body',
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 };
 ```
