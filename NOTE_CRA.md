@@ -107,7 +107,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: '#root',
+  important: 'html > body',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
 };
 ```
