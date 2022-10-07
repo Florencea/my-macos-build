@@ -127,7 +127,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: '#__next',
+  important: 'html > body',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
