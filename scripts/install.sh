@@ -29,13 +29,26 @@ brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
 
-print_step "brew install zsh"
-brew install zsh
-brew install zsh-autosuggestions
-brew install zsh-completions
-brew install zsh-fast-syntax-highlighting
-chmod -R go-w "$(brew --prefix)/share"
-curl -L "https://github.com/$github_username/my-macos-build/raw/main/scripts/zshrc.txt" -o ~/.zshrc
+print_step "brew install fish"
+brew install fish
+echo "$brew_path/fish" | sudo tee -a /etc/shells
+chsh -s $brew_path/fish
+mkdir -p ~/.config/fish
+{
+  printf "set -gx PATH $brew_path \$PATH\n"
+  printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
+  printf "set -gx fish_greeting\n"
+  printf "alias mmb=\"code $script_dir\"\n"
+  printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
+  printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
+  printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
+  printf "alias ua=\"sh $script_path/update-all.sh\"\n"
+  printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
+  printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
+  printf "\n"
+  printf "string match -q \"$TERM_PROGRAM\" \"vscode\"\n"
+  printf "and . (code --locate-shell-integration-path fish)\n"
+} >>~/.config/fish/config.fish
 
 print_step "brew update taps"
 brew tap homebrew/cask
