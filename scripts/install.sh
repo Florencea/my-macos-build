@@ -45,9 +45,6 @@ mkdir -p ~/.config/fish
   printf "alias ua=\"sh $script_path/update-all.sh\"\n"
   printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
   printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
-  printf "\n"
-  printf "string match -q \"$TERM_PROGRAM\" \"vscode\"\n"
-  printf "and . (code --locate-shell-integration-path fish)\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew update taps"
@@ -69,7 +66,6 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
-brew install firefox --language=zh-TW
 brew install google-chrome
 brew install iina
 brew install keka
