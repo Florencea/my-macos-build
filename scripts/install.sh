@@ -84,6 +84,7 @@ brew install ffmpeg
 brew install gcc
 brew install git
 brew install jq
+brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
@@ -93,8 +94,9 @@ brew install node
   printf "fund=false\n"
   printf "loglevel=error\n"
   printf "update-notifier=false\n"
+  printf "engine-strict=true\n"
 } >>~/.npmrc
-npm i -g npm@latest
+npm i -g npm@9
 brew install rsync
 brew install python
 brew install wget
