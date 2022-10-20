@@ -19,7 +19,7 @@ print_step "Update global npm packages"
 cd ~ || exit
 (
   set -x
-  npm install -g npm@latest
+  npm install -g npm@9
   npm update -g
   npm list -g
 )
