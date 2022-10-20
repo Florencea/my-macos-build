@@ -59,9 +59,7 @@ rm styles/Home.module.css styles/globals.css .eslintrc.json
     "extends": ["next/core-web-vitals"]
   },
   "prettier": {
-    "arrowParens": "avoid",
     "singleQuote": true,
-    "semi": true
   }
 }
 ```

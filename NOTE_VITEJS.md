@@ -55,9 +55,7 @@ rm -rf src/App.css src/index.css src/assets
     ]
   },
   "prettier": {
-    "arrowParens": "avoid",
     "singleQuote": true,
-    "semi": true
   }
 }
 ```

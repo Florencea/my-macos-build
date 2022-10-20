@@ -43,9 +43,7 @@ npx npm-check-updates -u && npm up --save
     ]
   },
   "prettier": {
-    "arrowParens": "avoid",
     "singleQuote": true,
-    "semi": true
   },
   "homepage": ".",
   "browserslist": [
