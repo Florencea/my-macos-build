@@ -6,6 +6,7 @@
 - [Create React App Note](NOTE_CRA.md)
 - [Next.js Note](NOTE_NEXTJS.md)
 - [FFmpeg Note](NOTE_FFMPEG.md)
+- [Fenix Note](NOTE_FENIX.md)
 - [Iceraven Note](NOTE_ICERAVEN.md)
 
 ## Extenstion Configs
