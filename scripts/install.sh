@@ -85,14 +85,15 @@ brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node
-{
-  printf "audit=false\n"
-  printf "fund=false\n"
-  printf "loglevel=error\n"
-  printf "update-notifier=false\n"
-  printf "engine-strict=true\n"
-} >>~/.npmrc
-npm install --global npm@latest
+(
+  set -x
+  npm config set audit=false --location=user
+  npm config set fund=false --location=user
+  npm config set loglevel=error --location=user
+  npm config set update-notifier=false --location=user
+  npm config set engine-strict=true --location=user
+  npm install --global npm@latest
+)
 brew install rsync
 brew install python
 brew install wget
