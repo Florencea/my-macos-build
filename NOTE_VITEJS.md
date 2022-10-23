@@ -9,11 +9,15 @@ npm create vite vite-project -- --template react-ts
 ```
 
 ```bash
-cd vite-project && printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\n" > .npmrc && npm i && npm rm react react-dom
+cd vite-project
 ```
 
 ```bash
-npm i -D \
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project && npm install && npm uninstall react react-dom
+```
+
+```bash
+npm install --save-dev \
 react \
 react-dom \
 antd \
@@ -30,7 +34,7 @@ autoprefixer
 ```
 
 ```bash
-npx tailwindcss init -p
+npx tailwindcss init --postcss
 ```
 
 ```bash
@@ -46,16 +50,14 @@ rm -rf src/App.css src/index.css src/assets
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,md,json}'",
-    "deps:up": "npm up --save && npm run reset",
-    "reset": "rm -rf node_modules dist && npm i"
+    "deps:up": "npm update --save && npm run reset",
+    "reset": "rm -rf node_modules dist && npm install"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "extends": ["react-app"]
   },
   "prettier": {
-    "singleQuote": true,
+    "singleQuote": true
   }
 }
 ```
@@ -75,11 +77,15 @@ export default defineConfig({
         {
           libName: 'antd',
           libDirectory: 'es',
-          style: name => `antd/es/${name}/style`,
+          style: (name) => `antd/es/${name}/style`,
         },
       ],
     }),
   ],
+  build: {
+    chunkSizeWarningLimit: Infinity,
+    reportCompressedSize: false,
+  },
   css: {
     preprocessorOptions: {
       less: {
@@ -91,7 +97,6 @@ export default defineConfig({
     },
   },
 });
-
 ```
 
 - `tailwind.config.cjs`
@@ -152,11 +157,11 @@ export default function App() {
       </div>
       <p>Vite + React + TailwindCSS + antd</p>
       <div className="flex justify-center space-x-3">
-        <Button type="primary" onClick={() => setCount(count => count + 1)}>
+        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
           count is: {count}
         </Button>
         <DatePicker
-          onChange={date => {
+          onChange={(date) => {
             if (date !== null) {
               message.info(date.toLocaleString());
             }
