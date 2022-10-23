@@ -17,11 +17,11 @@ rm -rf src/App.css src/index.css
 ```
 
 ```bash
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\n" > .npmrc
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project
 ```
 
 ```bash
-npx npm-check-updates -u && npm up --save
+npx npm-check-updates --upgrade && npm update --save
 ```
 
 - `package.json`
@@ -32,9 +32,9 @@ npx npm-check-updates -u && npm up --save
     "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "preview": "serve -s build",
+    "preview": "serve --single build",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
-    "reset": "rm -rf node_modules build && npm i"
+    "reset": "rm -rf node_modules build && npm install"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +43,7 @@ npx npm-check-updates -u && npm up --save
     ]
   },
   "prettier": {
-    "singleQuote": true,
+    "singleQuote": true
   },
   "homepage": ".",
   "browserslist": [
@@ -58,7 +58,7 @@ npx npm-check-updates -u && npm up --save
 ```
 
 ```bash
-npm i \
+npm install \
 antd \
 moment \
 @craco/craco@alpha \
@@ -73,7 +73,7 @@ serve
 ```
 
 ```bash
-npx tailwindcss init -p
+npx tailwindcss init --postcss
 ```
 
 ```bash

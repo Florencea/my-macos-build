@@ -87,11 +87,7 @@ echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node
 (
   set -x
-  npm config set audit=false --location=user
-  npm config set fund=false --location=user
-  npm config set loglevel=error --location=user
-  npm config set update-notifier=false --location=user
-  npm config set engine-strict=true --location=user
+  npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=user
   npm install --global npm@latest
 )
 brew install rsync
