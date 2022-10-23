@@ -13,7 +13,7 @@ cd my-app
 ```
 
 ```bash
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\n" > .npmrc
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project
 ```
 
 ```bash
@@ -21,10 +21,8 @@ printf "NEXT_TELEMETRY_DISABLED=1\n" > .env
 ```
 
 ```bash
-npm i -D \
+npm install --save-dev \
 antd \
-@ant-design/icons \
-@ant-design/colors \
 moment \
 next-with-less \
 less \
@@ -36,7 +34,7 @@ prettier
 ```
 
 ```bash
-npx tailwindcss init -p
+npx tailwindcss init --postcss
 ```
 
 ```bash
@@ -53,13 +51,14 @@ rm styles/Home.module.css styles/globals.css .eslintrc.json
     "export": "next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "reset": "sudo rm -rf node_modules .next out && npm i"
+    "deps:up": "npm update --save && npm run reset",
+    "reset": "sudo rm -rf node_modules .next out && npm install"
   },
   "eslintConfig": {
     "extends": ["next/core-web-vitals"]
   },
   "prettier": {
-    "singleQuote": true,
+    "singleQuote": true
   }
 }
 ```
@@ -67,7 +66,6 @@ rm styles/Home.module.css styles/globals.css .eslintrc.json
 - `next.config.js`
 
 ```js
-const { presetPalettes } = require('@ant-design/colors');
 const withLess = require('next-with-less');
 
 /** @type {import('next').NextConfig} */
@@ -83,14 +81,13 @@ const nextConfig = {
   lessLoaderOptions: {
     lessOptions: {
       modifyVars: {
-        'primary-color': presetPalettes.blue.primary,
+        'primary-color': '#2f54eb',
       },
     },
   },
 };
 
 module.exports = withLess(nextConfig);
-
 ```
 
 - `pages/_app.tsx`
@@ -118,8 +115,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 - `tailwind.config.js`
 
 ```js
-const { presetPalettes } = require('@ant-design/colors');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   corePlugins: {
@@ -130,17 +125,6 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
-  theme: {
-    extend: {
-      colors: {
-        white: '#fff',
-        black: '#000',
-        primary: presetPalettes.blue.primary,
-        ...presetPalettes,
-      },
-    },
-  },
-  plugins: [],
 };
 ```
 
@@ -199,7 +183,7 @@ const Home: NextPage = () => {
                 Count: {count}
               </Button>
               <DatePicker
-                onChange={date => {
+                onChange={(date) => {
                   if (date !== null) {
                     message.info(date.toISOString());
                   }
