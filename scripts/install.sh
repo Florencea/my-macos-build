@@ -92,7 +92,7 @@ brew install node
   printf "update-notifier=false\n"
   printf "engine-strict=true\n"
 } >>~/.npmrc
-npm i -g npm@9
+npm install --global npm@latest
 brew install rsync
 brew install python
 brew install wget

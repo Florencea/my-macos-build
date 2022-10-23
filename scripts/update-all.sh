@@ -19,9 +19,8 @@ print_step "Update global npm packages"
 cd ~ || exit
 (
   set -x
-  npm update -g
-  npm install -g npm@9
-  npm list -g
+  npm update --global
+  npm list --global
 )
 
 print_step "Update all Repositories in ~/Codespaces"
