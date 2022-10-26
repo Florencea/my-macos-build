@@ -34,21 +34,17 @@ npx npm-check-updates --upgrade && npm update --save
     "test": "craco test",
     "preview": "serve --single build",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
+    "deps:up": "npm update --save && npm run reset",
     "reset": "rm -rf node_modules build && npm install"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "prettier": {
     "singleQuote": true
   },
   "homepage": ".",
-  "browserslist": [
-    "defaults"
-  ],
+  "browserslist": ["defaults"],
   "overrides": {
     "craco-antd": {
       "@craco/craco": "^7.0.0-alpha"
@@ -151,11 +147,11 @@ export default function App() {
       <img src={logo} className="h-[30vmin]" alt="logo" />
       <div>Hello CRA + Antd + TailwindCSS!</div>
       <div className="space-x-2">
-        <Button type="primary" onClick={() => setCount(count => count + 1)}>
+        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
           count is: {count}
         </Button>
         <DatePicker
-          onChange={date => {
+          onChange={(date) => {
             if (date !== null) {
               message.info(date.toLocaleString());
             }
