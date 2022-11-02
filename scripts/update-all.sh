@@ -30,6 +30,6 @@ for f in $(ls $BASE_DIR); do
   cd "$BASE_DIR/$f"
   if [ -d .git ]; then
     printf "+ git pull: %s\n" $f
-    git pull
+    git pull --all
   fi
 done
