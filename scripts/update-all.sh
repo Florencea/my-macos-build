@@ -20,6 +20,7 @@ cd ~ || exit
 (
   set -x
   npm update --global
+  npm install --global npm@9
   npm list --global
 )
 
