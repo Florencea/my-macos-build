@@ -20,7 +20,6 @@ cd ~ || exit
 (
   set -x
   npm update --global
-  npm install --global npm@9
   npm list --global
 )
 
@@ -30,7 +29,7 @@ cd "$BASE_DIR"
 for f in $(ls $BASE_DIR); do
   cd "$BASE_DIR/$f"
   if [ -d .git ]; then
-    printf "+ git pull: %s\n" $f
+    printf "+ git pull --all: %s\n" $f
     git pull --all
   fi
 done
