@@ -2,24 +2,16 @@
 
 ## Build Guide
 
-### 0. Install Android Studio
+### 1. Install Android Studio
 
 ```bash
 brew install android-studio
 ```
 
-### 1. Clone Repository
+### 2. Clone Release Branch (Tag)
 
 ```bash
-git clone git@github.com:mozilla-mobile/fenix.git
-```
-
-### 2. Switch to Release Branch (Tag)
-
-- Could also use VSCode GUI
-
-```bash
-git checkout v106.1.0
+git clone --depth 1 --branch v106.1.0 git@github.com:mozilla-mobile/fenix.git
 ```
 
 ### 3. Edit Files
@@ -130,4 +122,3 @@ runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 - Wait until Gradle Sync Finished.
 - `Build -> Build Bundle(s) / APK(s) -> Build APK(s)`
 - Result APK in `app/build/outputs/apk/release/app-arm64-v8a-release.apk`
-  
