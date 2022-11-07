@@ -33,40 +33,42 @@ key0
 
 ### 3. Edit Files
 
-- `.github/workflows/android-build.yml`
+- `.github/workflows/iceraven-build.yml`
 - Could delete all other actions in `.github/workflows`
 
 ```yaml
-name: Android build
+name: Release Automation
 on:
   workflow_dispatch:
   push:
     branches:
       - fork
 jobs:
-  run-build:
+  release-automation:
+    name: Build App
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Setup Java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 11
+          distribution: temurin
       - name: Install Android SDK with pieces Gradle skips
         run: ./automation/iceraven/install-sdk.sh
       - name: Create version name
         run: echo "VERSION_NAME=$(cat version.txt)" >> $GITHUB_ENV
       - name: Build forkRelease variant of app
-        uses: eskatos/gradle-command-action@v1
+        uses: gradle/gradle-build-action@v2
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=5g -Xms4096m -Xmx5800m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
         with:
-          distributions-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-          arguments: assembleForkRelease -PversionName=${{ env.VERSION_NAME }}
+          gradle-home-cache-cleanup: true
+          gradle-executable: /usr/bin/time
+          arguments: -v ./gradlew app:assembleForkRelease -PversionName=${{ env.VERSION_NAME }}
       - name: Create signed APKs
         uses: abhijitvalluri/sign-apks@v0.8
         with:
