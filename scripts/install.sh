@@ -84,20 +84,12 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-
-nodejs="node@18"
-
-brew install "$nodejs"
+brew install node@18
 (
   set -x
   npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=user
   npm install --global npm@latest
 )
-{
-  printf "fish_add_path $brew_dir/opt/$nodejs/bin\n"
-  printf "set -gx LDFLAGS \"$brew_dir/opt/$nodejs/lib\"\n"
-  printf "set -gx CPPFLAGS \"$brew_dir/opt/$nodejs/include\"\n"
-} >>~/.config/fish/config.fish
 brew install rsync
 brew install python
 brew install wget
