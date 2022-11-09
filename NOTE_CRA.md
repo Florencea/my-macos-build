@@ -47,7 +47,7 @@ npx npm-check-updates --upgrade && npm update --save
   "browserslist": ["defaults"],
   "overrides": {
     "craco-antd": {
-      "@craco/craco": "^7.0.0-alpha"
+      "@craco/craco": "$@craco/craco"
     }
   }
 }
@@ -57,7 +57,7 @@ npx npm-check-updates --upgrade && npm update --save
 npm install \
 antd \
 moment \
-@craco/craco@alpha \
+@craco/craco \
 craco-antd \
 tailwindcss \
 postcss \
