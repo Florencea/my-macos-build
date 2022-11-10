@@ -84,7 +84,7 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node@18
+brew install node
 (
   set -x
   npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=user
