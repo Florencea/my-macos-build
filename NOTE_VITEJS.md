@@ -5,7 +5,7 @@
 ## vite + antd + tailwindCSS
 
 ```bash
-npm create vite vite-project -- --template react-ts
+npm -y create vite vite-project -- --template react-ts
 ```
 
 ```bash
@@ -13,7 +13,7 @@ cd vite-project
 ```
 
 ```bash
-npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project && npm install && npm uninstall react react-dom
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project && npm uninstall react react-dom
 ```
 
 ```bash
@@ -49,7 +49,7 @@ rm -rf src/App.css src/index.css src/assets
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,md,json}'",
+    "prettier": "prettier 'src/**/*' 'index.html' 'package.json' 'postcss.config.js' 'README.md' 'tailwindcss.config.js' 'tsconfig.json' 'tsconfig.node.json' 'vite.config.ts' --write --ignore-unknown --no-error-on-unmatched-pattern",
     "deps:up": "npm update --save && npm run reset",
     "reset": "rm -rf node_modules dist && npm install"
   },
@@ -76,7 +76,6 @@ export default defineConfig({
       libList: [
         {
           libName: 'antd',
-          libDirectory: 'es',
           style: (name) => `antd/es/${name}/style`,
         },
       ],
@@ -108,7 +107,7 @@ module.exports = {
     preflight: false,
   },
   important: 'html > body',
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 };
 ```
 
