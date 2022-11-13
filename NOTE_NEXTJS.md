@@ -5,7 +5,7 @@
 ## Next.js + antd + tailwindCSS
 
 ```bash
-npx create-next-app@latest --typescript
+npx -y create-next-app@latest my-app --typescript --eslint --use-npm
 ```
 
 ```bash
@@ -25,8 +25,6 @@ npm install --save-dev \
 antd \
 moment \
 next-with-less \
-less \
-less-loader \
 tailwindcss \
 postcss \
 autoprefixer \
@@ -38,7 +36,7 @@ npx tailwindcss init --postcss
 ```
 
 ```bash
-rm styles/Home.module.css styles/globals.css .eslintrc.json
+rm -rf styles .eslintrc.json
 ```
 
 - `package.json`
@@ -52,7 +50,7 @@ rm styles/Home.module.css styles/globals.css .eslintrc.json
     "start": "next start",
     "lint": "next lint",
     "deps:up": "npm update --save && npm run reset",
-    "reset": "sudo rm -rf node_modules .next out && npm install"
+    "reset": "rm -rf node_modules .next out && npm install"
   },
   "eslintConfig": {
     "extends": ["next/core-web-vitals"]
@@ -76,7 +74,7 @@ const nextConfig = {
   },
   swcMinify: true,
   compiler: {
-    removeConsole: true,
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   lessLoaderOptions: {
     lessOptions: {
@@ -88,28 +86,6 @@ const nextConfig = {
 };
 
 module.exports = withLess(nextConfig);
-```
-
-- `pages/_app.tsx`
-
-```tsx
-import { ConfigProvider } from 'antd';
-import 'antd/dist/antd.less';
-import zhTW from 'antd/lib/locale/zh_TW';
-import moment from 'moment';
-import 'moment/locale/zh-tw';
-import type { AppProps } from 'next/app';
-import 'tailwindcss/tailwind.css';
-
-moment.locale('zh-tw');
-
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ConfigProvider locale={zhTW}>
-      <Component {...pageProps} />
-    </ConfigProvider>
-  );
-}
 ```
 
 - `tailwind.config.js`
@@ -126,6 +102,28 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
 };
+```
+
+- `pages/_app.tsx`
+
+```tsx
+import { ConfigProvider } from 'antd';
+import 'antd/dist/antd.less';
+import zhTW from 'antd/lib/locale/zh_TW';
+import moment from 'moment';
+import 'moment/locale/zh-tw';
+import type { AppProps } from 'next/app';
+import 'tailwindcss/tailwind.css';
+
+moment.locale('zh-tw');
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <ConfigProvider locale={zhTW}>
+      <Component {...pageProps} />
+    </ConfigProvider>
+  );
+}
 ```
 
 - `pages/index.tsx`
