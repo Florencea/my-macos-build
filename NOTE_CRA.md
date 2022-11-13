@@ -32,7 +32,7 @@ npx npm-check-updates --upgrade && npm update --save
     "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "preview": "serve --single build",
+    "preview": "sirv build --single --port 3000",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
     "deps:up": "npm update --save && npm run reset",
     "reset": "rm -rf node_modules build && npm install"
@@ -65,7 +65,7 @@ autoprefixer \
 typescript \
 eslint \
 prettier \
-serve
+sirv-cli
 ```
 
 ```bash
@@ -85,7 +85,7 @@ module.exports = {
       plugin: require('craco-antd'),
       options: {
         customizeTheme: {
-          '@primary-color': require('tailwindcss/colors').cyan[500],
+          '@primary-color': '#2f54eb',
         },
       },
     },
