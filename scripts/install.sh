@@ -84,12 +84,12 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node
+brew install node@18
 (
   set -x
   npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=user
-  npm install --global npm@latest
 )
+brew install openvpn
 brew install rsync
 brew install python
 brew install wget

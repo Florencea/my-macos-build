@@ -8,11 +8,9 @@ function print_step() {
   printf "\E[0m"
 }
 
-print_step "Update brew cli, apps and npm"
+print_step "Update brew cli, apps"
 cd ~ || exit
 brew upgrade
-npm update --global
-npm list --global
 
 BASE_DIR="/Users/$(whoami)/Codespaces/"
 print_step "Update all Repositories in $BASE_DIR"
