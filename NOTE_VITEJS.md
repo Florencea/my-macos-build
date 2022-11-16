@@ -38,6 +38,10 @@ npx tailwindcss init --postcss
 ```
 
 ```bash
+printf "/public\n/dist\n" > .prettierignore
+```
+
+```bash
 rm -rf src/App.css src/index.css src/assets
 ```
 
@@ -49,15 +53,12 @@ rm -rf src/App.css src/index.css src/assets
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prettier": "prettier 'src/**/*' 'index.html' 'package.json' 'postcss.config.js' 'README.md' 'tailwindcss.config.js' 'tsconfig.json' 'tsconfig.node.json' 'vite.config.ts' --write --ignore-unknown --no-error-on-unmatched-pattern",
+    "prettier": "prettier --write '**/*' --ignore-unknown",
     "deps:up": "npm update --save && npm run reset",
     "reset": "rm -rf node_modules dist && npm install"
   },
   "eslintConfig": {
     "extends": ["react-app"]
-  },
-  "prettier": {
-    "singleQuote": true
   }
 }
 ```
@@ -65,9 +66,9 @@ rm -rf src/App.css src/index.css src/assets
 - `vite.config.ts`
 
 ```ts
-import pluginReact from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import pluginImp from 'vite-plugin-imp';
+import pluginReact from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import pluginImp from "vite-plugin-imp";
 
 export default defineConfig({
   plugins: [
@@ -75,7 +76,7 @@ export default defineConfig({
     pluginImp({
       libList: [
         {
-          libName: 'antd',
+          libName: "antd",
           style: (name) => `antd/es/${name}/style`,
         },
       ],
@@ -90,7 +91,7 @@ export default defineConfig({
       less: {
         javascriptEnabled: true,
         modifyVars: {
-          'primary-color': '#2f54eb',
+          "primary-color": "#2f54eb",
         },
       },
     },
@@ -106,23 +107,23 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: 'html > body',
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  important: "html > body",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 };
 ```
 
 - `src/main.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd';
-import zhTW from 'antd/es/locale/zh_TW';
-import 'moment/dist/locale/zh-TW';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import 'tailwindcss/tailwind.css';
-import App from './App';
+import { ConfigProvider } from "antd";
+import zhTW from "antd/es/locale/zh_TW";
+import "moment/dist/locale/zh-TW";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "tailwindcss/tailwind.css";
+import App from "./App";
 
-const container = document.getElementById('root') as HTMLDivElement;
+const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);
 
 root.render(
@@ -137,8 +138,8 @@ root.render(
 - `src/App.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from 'antd';
-import { useState } from 'react';
+import { Button, DatePicker, message } from "antd";
+import { useState } from "react";
 
 export default function App() {
   const [count, setCount] = useState(0);
