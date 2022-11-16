@@ -8,17 +8,21 @@ function print_step() {
   printf "\E[0m"
 }
 
-print_step "Update brew cli, apps"
+print_step "Update command line tools and apps"
 cd ~ || exit
-brew upgrade
+(
+  set -x
+  brew upgrade
+  brew cleanup --prune=all
+)
 
-BASE_DIR="/Users/$(whoami)/Codespaces/"
-print_step "Update all Repositories in $BASE_DIR"
-cd "$BASE_DIR" || exit
-for dir in $(ls $BASE_DIR); do
-  cd "$BASE_DIR/$dir"
+WORKSPACE_DIR="/Users/$(whoami)/Codespaces/"
+print_step "Update repositories in $WORKSPACE_DIR"
+cd "$WORKSPACE_DIR" || exit
+for PROJECT in $(ls $WORKSPACE_DIR); do
+  cd "$WORKSPACE_DIR/$PROJECT"
   if [ -d .git ]; then
-    printf "+ %s\n" $dir
+    printf "+ %s\n" $PROJECT
     git pull --all
   fi
 done
