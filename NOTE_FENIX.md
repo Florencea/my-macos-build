@@ -1,5 +1,21 @@
 # Fenix Note
 
+- [Fenix Note](#fenix-note)
+  - [Cloud Build Guide](#cloud-build-guide)
+    - [1. Fork Repository](#1-fork-repository)
+    - [2. Add Repository Secrets](#2-add-repository-secrets)
+    - [3. Clone Release Tag](#3-clone-release-tag)
+    - [4. Edit Files](#4-edit-files)
+    - [5. Force push to `main` branch](#5-force-push-to-main-branch)
+    - [6. Use GitHub Actions to Build](#6-use-github-actions-to-build)
+  - [Local Build Guide](#local-build-guide)
+    - [1. Install Android Studio](#1-install-android-studio)
+    - [2. Clone Release Branch (Tag)](#2-clone-release-branch-tag)
+    - [3. Edit Files](#3-edit-files)
+    - [4. Import Project to Android Studio](#4-import-project-to-android-studio)
+    - [5. Choose Build Variant: `release`](#5-choose-build-variant-release)
+    - [6. Build APK](#6-build-apk)
+
 ## Cloud Build Guide
 
 ### 1. Fork Repository
@@ -62,17 +78,17 @@ jobs:
           java-version: 11
           distribution: temurin
       - name: Install Android SDK with pieces Gradle skips
-        run: sh ./automation/iceraven/install-sdk.sh
+        run: ./automation/iceraven/install-sdk.sh
       - name: Create version name
         run: echo "VERSION_NAME=$(cat version.txt)" >> $GITHUB_ENV
       - name: Build release variant of app
         uses: gradle/gradle-build-action@v2
         env:
-          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=5g -Xms4096m -Xmx5800m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=1g -Xms4096m -Xmx5800m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
         with:
           gradle-home-cache-cleanup: true
           gradle-executable: /usr/bin/time
-          arguments: -v ./gradlew app:assembleRelease -PversionName=${{ env.VERSION_NAME }}
+          arguments: -v ./gradlew app:assembleRelease -PversionName=${{ env.VERSION_NAME }} --stacktrace
       - name: Create signed APKs
         uses: abhijitvalluri/sign-apks@v0.8
         with:
@@ -90,6 +106,7 @@ jobs:
 
 - Add Android SDK installaton script from iceraven
 - `automation/iceraven/install-sdk.sh`
+- `chmod 755 automation/iceraven/install-sdk.sh`
 
 ```bash
 #!/usr/bin/env bash
