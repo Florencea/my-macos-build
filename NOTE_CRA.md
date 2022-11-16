@@ -5,7 +5,7 @@
 ## cra + antd + tailwindCSS
 
 ```bash
-npx create-react-app my-app --template typescript
+npm -y create react-app -- my-app --template typescript
 ```
 
 ```bash
@@ -13,15 +13,19 @@ cd my-app
 ```
 
 ```bash
-rm -rf src/App.css src/index.css
-```
-
-```bash
 npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project
 ```
 
 ```bash
-npx npm-check-updates --upgrade && npm update --save
+npx -y npm-check-updates --upgrade && npm update --save
+```
+
+```bash
+printf "/public\n/build\n" > .prettierignore
+```
+
+```bash
+rm -rf src/App.css src/index.css
 ```
 
 - `package.json`
@@ -33,15 +37,12 @@ npx npm-check-updates --upgrade && npm update --save
     "build": "craco build",
     "test": "craco test",
     "preview": "sirv build --single --port 3000",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,css,md}'",
+    "prettier": "prettier --write '**/*' --ignore-unknown",
     "deps:up": "npm update --save && npm run reset",
     "reset": "rm -rf node_modules build && npm install"
   },
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
-  },
-  "prettier": {
-    "singleQuote": true
   },
   "homepage": ".",
   "browserslist": ["defaults"],
@@ -82,10 +83,10 @@ touch craco.config.js
 module.exports = {
   plugins: [
     {
-      plugin: require('craco-antd'),
+      plugin: require("craco-antd"),
       options: {
         customizeTheme: {
-          '@primary-color': '#2f54eb',
+          "@primary-color": "#2f54eb",
         },
       },
     },
@@ -101,24 +102,24 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: 'html > body',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  important: "html > body",
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
 };
 ```
 
 - `src/index.tsx`
 
 ```tsx
-import { ConfigProvider } from 'antd';
-import zhTW from 'antd/es/locale/zh_TW';
-import 'moment/locale/zh-tw';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import 'tailwindcss/tailwind.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { ConfigProvider } from "antd";
+import zhTW from "antd/es/locale/zh_TW";
+import "moment/locale/zh-tw";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "tailwindcss/tailwind.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-const container = document.getElementById('root') as HTMLDivElement;
+const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);
 
 root.render(
@@ -135,9 +136,9 @@ reportWebVitals();
 - `src/App.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from 'antd';
-import { useState } from 'react';
-import logo from './logo.svg';
+import { Button, DatePicker, message } from "antd";
+import { useState } from "react";
+import logo from "./logo.svg";
 
 export default function App() {
   const [count, setCount] = useState(0);
