@@ -17,10 +17,6 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-npx -y npm-check-updates --upgrade && npm update --save
-```
-
-```bash
 printf "/public\n/build\n" > .prettierignore
 ```
 
@@ -37,9 +33,9 @@ rm -rf src/App.css src/index.css
     "build": "craco build",
     "test": "craco test",
     "preview": "sirv build --single --port 3000",
-    "prettier": "prettier --write '**/*' --ignore-unknown",
+    "prettier": "prettier --write \"**/*\" --ignore-unknown",
     "deps:up": "npm update --save && npm run reset",
-    "reset": "rm -rf node_modules build && npm install"
+    "reset": "shx rm -rf node_modules build && npm install"
   },
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
@@ -56,8 +52,23 @@ rm -rf src/App.css src/index.css
 
 ```bash
 npm install \
-antd \
-moment \
+react@latest \
+react-dom@latest \
+antd
+```
+
+```bash
+npm install --save-dev \
+react-scripts@latest \
+@testing-library/jest-dom@latest \
+@testing-library/react@latest \
+@testing-library/user-event@latest \
+@types/jest@latest \
+@types/node@latest \
+@types/react@latest \
+@types/react-dom@latest \
+typescript@latest \
+web-vitals@latest \
 @craco/craco \
 craco-antd \
 tailwindcss \
@@ -66,7 +77,8 @@ autoprefixer \
 typescript \
 eslint \
 prettier \
-sirv-cli
+sirv-cli \
+shx
 ```
 
 ```bash
