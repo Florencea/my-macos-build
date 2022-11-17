@@ -17,7 +17,7 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-printf "NEXT_TELEMETRY_DISABLED=1\n" > .env
+printf "NEXT_TELEMETRY_DISABLED=1\nPORT=3001\n" > .env
 ```
 
 ```bash
@@ -25,23 +25,31 @@ printf ".next\nnext-env.d.ts\n/public\n/out\n" > .prettierignore
 ```
 
 ```bash
+npm uninstall typescript
+```
+
+```bash
 npm install \
+next@latest \
+react@latest \
+react-dom@latest \
+antd \
+next-with-less \
+dotenv-cli
+```
+
+```bash
+npm install --save-dev \
 @types/node@latest \
 @types/react@latest \
 @types/react-dom@latest \
 eslint@latest \
 eslint-config-next@latest \
-next@latest \
-react@latest \
-react-dom@latest \
-typescript@latest \
-antd \
-moment \
-next-with-less \
 tailwindcss \
 postcss \
 autoprefixer \
-prettier
+prettier \
+shx
 ```
 
 ```bash
@@ -57,14 +65,14 @@ rm -rf styles .eslintrc.json
 ```json
 {
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "export": "next build && next export",
-    "start": "next start",
-    "lint": "next lint",
-    "prettier": "prettier --write '**/*' --ignore-unknown",
+    "dev": "dotenv next dev",
+    "build": "dotenv next build",
+    "export": "dotenv next build && dotenv next export",
+    "start": "dotenv next start",
+    "lint": "dotenv next lint",
+    "prettier": "prettier --write \"**/*\" --ignore-unknown",
     "deps:up": "npm update --save && npm run reset",
-    "reset": "rm -rf node_modules .next out next-env.d.ts && npm install"
+    "reset": "shx rm -rf node_modules out .next next-env.d.ts && npm install"
   },
   "eslintConfig": {
     "extends": ["next/core-web-vitals"]
@@ -125,8 +133,6 @@ import moment from "moment";
 import "moment/locale/zh-tw";
 import type { AppProps } from "next/app";
 import "tailwindcss/tailwind.css";
-
-moment.locale("zh-tw");
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
