@@ -10,11 +10,7 @@ function print_step() {
 
 print_step "Update command line tools and apps"
 cd ~ || exit
-(
-  set -x
-  brew upgrade
-  brew cleanup --prune=all
-)
+brew upgrade
 
 WORKSPACE_DIR="/Users/$(whoami)/Codespaces/"
 print_step "Update repositories in $WORKSPACE_DIR"
