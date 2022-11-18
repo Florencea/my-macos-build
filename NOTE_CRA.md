@@ -17,47 +17,6 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-printf "/public\n/build\n" > .prettierignore
-```
-
-```bash
-rm -rf src/App.css src/index.css
-```
-
-- `package.json`
-
-```json
-{
-  "scripts": {
-    "dev": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "preview": "sirv build --single --port 3000",
-    "prettier": "prettier --write \"**/*\" --ignore-unknown",
-    "deps:up": "npm update --save && npm run reset",
-    "reset": "shx rm -rf node_modules build && npm install"
-  },
-  "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
-  },
-  "homepage": ".",
-  "browserslist": ["defaults"],
-  "overrides": {
-    "craco-antd": {
-      "@craco/craco": "$@craco/craco"
-    }
-  }
-}
-```
-
-```bash
-npm install \
-react@latest \
-react-dom@latest \
-antd
-```
-
-```bash
 npm install --save-dev \
 react-scripts@latest \
 @testing-library/jest-dom@latest \
@@ -69,8 +28,6 @@ react-scripts@latest \
 @types/react-dom@latest \
 typescript@latest \
 web-vitals@latest \
-@craco/craco \
-craco-antd \
 tailwindcss \
 postcss \
 autoprefixer \
@@ -82,28 +39,51 @@ shx
 ```
 
 ```bash
-npx tailwindcss init --postcss
+npm install \
+react@latest \
+react-dom@latest \
+antd
 ```
 
 ```bash
-touch craco.config.js
+touch .eslintrc.json
 ```
 
-- `craco.config.js`
+```bash
+printf "/public\n/build\n" > .prettierignore
+```
 
-```js
-module.exports = {
-  plugins: [
-    {
-      plugin: require("craco-antd"),
-      options: {
-        customizeTheme: {
-          "@primary-color": "#2f54eb",
-        },
-      },
-    },
-  ],
-};
+```bash
+rm -rf src/App.css src/index.css
+```
+
+```bash
+npx tailwindcss init --postcss
+```
+
+- `package.json`
+
+```json
+{
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "preview": "sirv build --single --port 3000",
+    "prettier": "prettier --write \"**/*\" --ignore-unknown",
+    "deps:up": "npm update --save && npm run reset",
+    "reset": "shx rm -rf node_modules build && npm install"
+  },
+  "browserslist": ["defaults"]
+}
+```
+
+- `.eslintrc.json`
+
+```json
+{
+  "extends": ["react-app", "react-app/jest"]
+}
 ```
 
 - `tailwind.config.js`
@@ -114,7 +94,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "html > body",
+  important: "body",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
 };
 ```
@@ -123,8 +103,9 @@ module.exports = {
 
 ```tsx
 import { ConfigProvider } from "antd";
-import zhTW from "antd/es/locale/zh_TW";
-import "moment/locale/zh-tw";
+import "antd/dist/reset.css";
+import zhTW from "antd/locale/zh_TW";
+import "dayjs/locale/zh-tw";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "tailwindcss/tailwind.css";
@@ -136,7 +117,15 @@ const root = createRoot(container);
 
 root.render(
   <StrictMode>
-    <ConfigProvider locale={zhTW}>
+    <ConfigProvider
+      locale={zhTW}
+      theme={{
+        token: {
+          colorPrimary: "#2f54eb",
+          colorInfo: "#2f54eb",
+        },
+      }}
+    >
       <App />
     </ConfigProvider>
   </StrictMode>
@@ -148,9 +137,10 @@ reportWebVitals();
 - `src/App.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from "antd";
+import { Button, DatePicker, message, Typography } from "antd";
 import { useState } from "react";
 import logo from "./logo.svg";
+const { Link, Title } = Typography;
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -158,7 +148,7 @@ export default function App() {
   return (
     <div className="h-screen flex flex-col justify-center items-center text-3xl text-center space-y-3">
       <img src={logo} className="h-[30vmin]" alt="logo" />
-      <div>Hello CRA + Antd + TailwindCSS!</div>
+      <Title>Hello CRA + Antd + TailwindCSS!</Title>
       <div className="space-x-2">
         <Button type="primary" onClick={() => setCount((count) => count + 1)}>
           count is: {count}
@@ -166,14 +156,18 @@ export default function App() {
         <DatePicker
           onChange={(date) => {
             if (date !== null) {
-              message.info(date.toLocaleString());
+              message.info(date.toDate().toLocaleDateString("zh-TW"));
             }
           }}
         />
       </div>
-      <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+      <Link
+        href="https://reactjs.org"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Learn React
-      </a>
+      </Link>
     </div>
   );
 }
