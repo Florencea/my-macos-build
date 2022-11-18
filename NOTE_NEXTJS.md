@@ -25,16 +25,11 @@ printf ".next\nnext-env.d.ts\n/public\n/out\n" > .prettierignore
 ```
 
 ```bash
-npm uninstall typescript
-```
-
-```bash
 npm install \
 next@latest \
 react@latest \
 react-dom@latest \
 antd \
-next-with-less \
 dotenv-cli
 ```
 
@@ -45,6 +40,7 @@ npm install --save-dev \
 @types/react-dom@latest \
 eslint@latest \
 eslint-config-next@latest \
+typescript@latest \
 tailwindcss \
 postcss \
 autoprefixer \
@@ -57,7 +53,7 @@ npx tailwindcss init --postcss
 ```
 
 ```bash
-rm -rf styles .eslintrc.json
+rm -rf styles
 ```
 
 - `package.json`
@@ -73,9 +69,6 @@ rm -rf styles .eslintrc.json
     "prettier": "prettier --write \"**/*\" --ignore-unknown",
     "deps:up": "npm update --save && npm run reset",
     "reset": "shx rm -rf node_modules out .next next-env.d.ts && npm install"
-  },
-  "eslintConfig": {
-    "extends": ["next/core-web-vitals"]
   }
 }
 ```
@@ -83,8 +76,6 @@ rm -rf styles .eslintrc.json
 - `next.config.js`
 
 ```js
-const withLess = require("next-with-less");
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -95,31 +86,59 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  lessLoaderOptions: {
-    lessOptions: {
-      modifyVars: {
-        "primary-color": "#2f54eb",
-      },
-    },
-  },
 };
 
-module.exports = withLess(nextConfig);
+module.exports = nextConfig;
 ```
 
 - `tailwind.config.js`
 
 ```js
+const SEED_TOKEN_COLORS = Object.fromEntries(
+  Object.entries(require("antd").theme.defaultSeed).filter(([, value]) =>
+    `${value}`.startsWith("#")
+  )
+);
+
+const SEED_TOKEN_BORDER_RADIUS = Object.fromEntries(
+  Object.entries(require("antd").theme.defaultSeed).filter(([, value]) =>
+    `${value}`.toLowerCase().includes("radius")
+  )
+);
+
+/** @type {Pick<import('antd/es/theme').SeedToken, keyof import('antd/es/theme').SeedToken & `color${string}`>} */
+const customColorSeed = {
+  colorPrimary: "#722ed1",
+  colorInfo: "#722ed1",
+};
+
+/** @type {Pick<import('antd/es/theme').SeedToken, keyof import('antd/es/theme').SeedToken & `${string}Radius`>} */
+const customRadiusSeed = {
+  borderRadius: 4,
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "html > body",
+  important: "body",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  theme: {
+    extend: {
+      colors: {
+        ...SEED_TOKEN_COLORS,
+        ...customColorSeed,
+      },
+      borderRadius: {
+        ...SEED_TOKEN_BORDER_RADIUS,
+        ...customRadiusSeed,
+      },
+    },
+  },
 };
 ```
 
@@ -127,16 +146,27 @@ module.exports = {
 
 ```tsx
 import { ConfigProvider } from "antd";
-import "antd/dist/antd.less";
-import zhTW from "antd/lib/locale/zh_TW";
-import moment from "moment";
-import "moment/locale/zh-tw";
+import "antd/dist/reset.css";
+import zhTW from "antd/locale/zh_TW";
+import "dayjs/locale/zh-tw";
 import type { AppProps } from "next/app";
 import "tailwindcss/tailwind.css";
+import tailwindConfig from "../tailwind.config.js";
+
+const { colors, borderRadius } = tailwindConfig.theme!
+  .extend as unknown as Record<string, Record<string, string>>;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ConfigProvider locale={zhTW}>
+    <ConfigProvider
+      locale={zhTW}
+      theme={{
+        token: {
+          ...colors,
+          ...borderRadius,
+        },
+      }}
+    >
       <Component {...pageProps} />
     </ConfigProvider>
   );
@@ -146,42 +176,51 @@ export default function App({ Component, pageProps }: AppProps) {
 - `pages/index.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from "antd";
+import { Button, DatePicker, message, Typography } from "antd";
 import { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+const { Title } = Typography;
 
 const Page: NextPage = () => {
   const [count, setCount] = useState(0);
+  const [msg, msgConetext] = message.useMessage();
   return (
-    <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
-      <a
-        className="relative block w-[20vmin] h-[10vmin]"
-        href="https://nextjs.org/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <Image
-          src="/vercel.svg"
-          className="pointer-events-none mb-10"
-          alt="Vercel logo"
-          fill
-        />
-      </a>
-      <p>next + tailwindcss + antd</p>
-      <div className="flex justify-center space-x-3">
-        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-          count is: {count}
-        </Button>
-        <DatePicker
-          onChange={(date) => {
-            if (date !== null) {
-              message.info(date.toLocaleString());
-            }
-          }}
-        />
+    <>
+      {msgConetext}
+      <Head>
+        <title>Next + TailwindCSS + Antd</title>
+      </Head>
+      <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
+        <a
+          className="relative block w-[20vmin] h-[10vmin]"
+          href="https://nextjs.org/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Image
+            src="/vercel.svg"
+            className="pointer-events-none mb-10"
+            alt="Vercel logo"
+            fill
+          />
+        </a>
+        <Title className="text-colorPrimary">Next + TailwindCSS + Antd</Title>
+        <div className="flex justify-center space-x-3">
+          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+            count is: {count}
+          </Button>
+          <DatePicker
+            onChange={(date) => {
+              if (date !== null) {
+                msg.info(date.toDate().toLocaleDateString("zh-TW"));
+              }
+            }}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
