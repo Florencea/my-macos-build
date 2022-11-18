@@ -2,7 +2,7 @@
 
 - <https://cn.vitejs.dev/>
 
-## vite + antd + tailwindCSS
+## vite + antd + tailwindcss
 
 ```bash
 npm -y create vite vite-project -- --template react-ts
@@ -13,28 +13,38 @@ cd vite-project
 ```
 
 ```bash
-npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project && npm uninstall react react-dom
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project
+```
+
+```bash
+npm install \
+react@latest \
+react-dom@latest \
+antd
 ```
 
 ```bash
 npm install --save-dev \
-react \
-react-dom \
-antd \
-moment \
-typescript \
+@types/react@latest \
+@types/react-dom@latest \
+@vitejs/plugin-react@latest \
+typescript@latest \
+vite@latest \
 eslint \
 eslint-config-react-app \
 prettier \
-less \
-vite-plugin-imp \
 tailwindcss \
 postcss \
-autoprefixer
+autoprefixer \
+shx
 ```
 
 ```bash
 npx tailwindcss init --postcss
+```
+
+```bash
+touch .eslintrc.json
 ```
 
 ```bash
@@ -55,46 +65,30 @@ rm -rf src/App.css src/index.css src/assets
     "preview": "vite preview",
     "prettier": "prettier --write '**/*' --ignore-unknown",
     "deps:up": "npm update --save && npm run reset",
-    "reset": "rm -rf node_modules dist && npm install"
-  },
-  "eslintConfig": {
-    "extends": ["react-app"]
+    "reset": "shx rm -rf node_modules dist && npm install"
   }
+}
+```
+
+- `.eslintrc.json`
+
+```json
+{
+  "extends": "react-app"
 }
 ```
 
 - `vite.config.ts`
 
 ```ts
-import pluginReact from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import pluginImp from "vite-plugin-imp";
 
 export default defineConfig({
-  plugins: [
-    pluginReact(),
-    pluginImp({
-      libList: [
-        {
-          libName: "antd",
-          style: (name) => `antd/es/${name}/style`,
-        },
-      ],
-    }),
-  ],
+  plugins: [react()],
   build: {
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
-  },
-  css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true,
-        modifyVars: {
-          "primary-color": "#2f54eb",
-        },
-      },
-    },
   },
 });
 ```
@@ -107,7 +101,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "html > body",
+  important: "body",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 };
 ```
@@ -116,8 +110,9 @@ module.exports = {
 
 ```tsx
 import { ConfigProvider } from "antd";
+import "antd/dist/reset.css";
 import zhTW from "antd/es/locale/zh_TW";
-import "moment/dist/locale/zh-TW";
+import "dayjs/locale/zh-tw";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "tailwindcss/tailwind.css";
@@ -128,7 +123,15 @@ const root = createRoot(container);
 
 root.render(
   <StrictMode>
-    <ConfigProvider locale={zhTW}>
+    <ConfigProvider
+      locale={zhTW}
+      theme={{
+        token: {
+          colorPrimary: "#fa541c",
+          colorInfo: "#fa541c",
+        },
+      }}
+    >
       <App />
     </ConfigProvider>
   </StrictMode>
@@ -143,32 +146,36 @@ import { useState } from "react";
 
 export default function App() {
   const [count, setCount] = useState(0);
+  const [msg, msgConetext] = message.useMessage();
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
-      <div className="space-x-8">
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img
-            src="/vite.svg"
-            className="h-[20vmin] pointer-events-none mb-10"
-            alt="Vite logo"
+    <>
+      {msgConetext}
+      <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
+        <div className="space-x-8">
+          <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+            <img
+              src="/vite.svg"
+              className="h-[20vmin] pointer-events-none mb-10"
+              alt="Vite logo"
+            />
+          </a>
+        </div>
+        <p>Vite + React + TailwindCSS + antd</p>
+        <div className="flex justify-center space-x-3">
+          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+            count is: {count}
+          </Button>
+          <DatePicker
+            onChange={(date) => {
+              if (date !== null) {
+                msg.info(date.toDate().toLocaleDateString("zh-TW"));
+              }
+            }}
           />
-        </a>
+        </div>
       </div>
-      <p>Vite + React + TailwindCSS + antd</p>
-      <div className="flex justify-center space-x-3">
-        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-          count is: {count}
-        </Button>
-        <DatePicker
-          onChange={(date) => {
-            if (date !== null) {
-              message.info(date.toLocaleString());
-            }
-          }}
-        />
-      </div>
-    </div>
+    </>
   );
 }
 ```

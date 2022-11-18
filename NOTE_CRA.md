@@ -2,7 +2,7 @@
 
 - <https://create-react-app.dev/docs/getting-started/>
 
-## cra + antd + tailwindCSS
+## cra + antd + tailwindcss
 
 ```bash
 npm -y create react-app -- my-app --template typescript
@@ -144,31 +144,35 @@ const { Link, Title } = Typography;
 
 export default function App() {
   const [count, setCount] = useState(0);
+  const [msg, msgConetext] = message.useMessage();
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center text-3xl text-center space-y-3">
-      <img src={logo} className="h-[30vmin]" alt="logo" />
-      <Title>Hello CRA + Antd + TailwindCSS!</Title>
-      <div className="space-x-2">
-        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-          count is: {count}
-        </Button>
-        <DatePicker
-          onChange={(date) => {
-            if (date !== null) {
-              message.info(date.toDate().toLocaleDateString("zh-TW"));
-            }
-          }}
-        />
+    <>
+      {msgConetext}
+      <div className="h-screen flex flex-col justify-center items-center text-3xl text-center space-y-3">
+        <img src={logo} className="h-[30vmin]" alt="logo" />
+        <Title>Hello CRA + Antd + TailwindCSS!</Title>
+        <div className="space-x-2">
+          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+            count is: {count}
+          </Button>
+          <DatePicker
+            onChange={(date) => {
+              if (date !== null) {
+                msg.info(date.toDate().toLocaleDateString("zh-TW"));
+              }
+            }}
+          />
+        </div>
+        <Link
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </Link>
       </div>
-      <Link
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </Link>
-    </div>
+    </>
   );
 }
 ```
