@@ -1,9 +1,9 @@
 #! /bin/bash
 
 function print_step() {
-  printf "\E[1;36m"
-  printf "\n + %s\n\n" "$1"
-  printf "\E[0m"
+  printf "\033[1m"
+  printf "\n%s\n\n" "$1"
+  printf "\033[0m"
 }
 
 print_step "set touch id for sudo commands"
