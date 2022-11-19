@@ -17,7 +17,9 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-npm install --save-dev \
+npm install --save-prod \
+react@latest \
+react-dom@latest \
 react-scripts@latest \
 @testing-library/jest-dom@latest \
 @testing-library/react@latest \
@@ -28,6 +30,7 @@ react-scripts@latest \
 @types/react-dom@latest \
 typescript@latest \
 web-vitals@latest \
+antd \
 tailwindcss \
 postcss \
 autoprefixer \
@@ -36,13 +39,6 @@ eslint \
 prettier \
 sirv-cli \
 shx
-```
-
-```bash
-npm install \
-react@latest \
-react-dom@latest \
-antd
 ```
 
 ```bash
