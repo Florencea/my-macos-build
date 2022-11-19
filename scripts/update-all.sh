@@ -48,7 +48,7 @@ for PROJECT in $(ls $WORKSPACE_DIR); do
     if [ $LOCAL = $REMOTE ]; then
       print_green " ok"
     elif [ $LOCAL = $BASE ]; then
-      print_cyan " syncing..."
+      print_cyan " pull from upstream"
       git pull --all
       echo ""
     elif [ $REMOTE = $BASE ]; then
