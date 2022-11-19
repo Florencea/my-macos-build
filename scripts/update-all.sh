@@ -3,7 +3,6 @@
 # alias ua="sh ~/Codespaces/my-macos-build/scripts/update-all.sh"
 
 function print_repo() {
-  printf "\n"
   printf "\033[34m"
   printf "==> "
   printf "\033[0m"
@@ -15,7 +14,7 @@ function print_repo() {
 
 function print_green() {
   printf "\033[32m"
-  printf "%s" "$1"
+  printf "%s\n" "$1"
   printf "\033[0m"
 }
 
@@ -62,5 +61,3 @@ for PROJECT in $(ls $WORKSPACE_DIR); do
     fi
   fi
 done
-
-printf "\n\n"
