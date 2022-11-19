@@ -17,19 +17,15 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-npm install \
-react@latest \
-react-dom@latest \
-antd
-```
-
-```bash
-npm install --save-dev \
+npm install --save-prod \
 @types/react@latest \
 @types/react-dom@latest \
 @vitejs/plugin-react@latest \
+react@latest \
+react-dom@latest \
 typescript@latest \
 vite@latest \
+antd \
 eslint \
 eslint-config-react-app \
 prettier \
@@ -44,7 +40,7 @@ npx tailwindcss init --postcss
 ```
 
 ```bash
-touch .eslintrc.json
+printf "{\n  \"extends\": \"react-app\"\n}\n" > .eslintrc.json
 ```
 
 ```bash
@@ -67,14 +63,6 @@ rm -rf src/App.css src/index.css src/assets
     "deps:up": "npm update --save && npm run reset",
     "reset": "shx rm -rf node_modules dist && npm install"
   }
-}
-```
-
-- `.eslintrc.json`
-
-```json
-{
-  "extends": "react-app"
 }
 ```
 
@@ -127,8 +115,8 @@ root.render(
       locale={zhTW}
       theme={{
         token: {
-          colorPrimary: "#fa541c",
-          colorInfo: "#fa541c",
+          colorPrimary: "#722ed1",
+          colorInfo: "#722ed1",
         },
       }}
     >
