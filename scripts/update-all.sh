@@ -21,13 +21,13 @@ function print_green() {
 
 function print_red() {
   printf "\033[31m"
-  printf "%s" "$1"
+  printf "%s\n" "$1"
   printf "\033[0m"
 }
 
 function print_cyan() {
   printf "\033[36m"
-  printf "%s" "$1"
+  printf "%s\n" "$1"
   printf "\033[0m"
 }
 
@@ -57,7 +57,7 @@ for PROJECT in $(ls $WORKSPACE_DIR); do
       git status
       echo ""
     else
-      print_red " diverged"
+      print_red " diverged\n"
       git status
     fi
   fi
