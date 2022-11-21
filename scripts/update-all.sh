@@ -46,17 +46,17 @@ for PROJECT in $(ls $WORKSPACE_DIR); do
     BASE=$(git merge-base @ "$UPSTREAM")
 
     if [ $LOCAL = $REMOTE ]; then
-      print_green " ok"
+      print_green " ✓"
     elif [ $LOCAL = $BASE ]; then
-      print_cyan " pull from upstream"
+      print_cyan " ↓"
       git pull --all
       echo ""
     elif [ $REMOTE = $BASE ]; then
-      print_red " need to push"
+      print_red " ↑"
       git status
       echo ""
     else
-      print_red " diverged\n"
+      print_red " ✕"
       git status
     fi
   fi
