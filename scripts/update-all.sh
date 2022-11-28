@@ -24,12 +24,6 @@ function print_red() {
   printf "\033[0m"
 }
 
-function print_cyan() {
-  printf "\033[36m"
-  printf "%s\n" "$1"
-  printf "\033[0m"
-}
-
 cd ~ || exit
 brew upgrade
 
@@ -49,15 +43,17 @@ for PROJECT in $(ls $WORKSPACE_DIR); do
     if [ $LOCAL = $REMOTE ]; then
       print_green " ✓"
     elif [ $LOCAL = $BASE ]; then
-      print_cyan " ↓"
+      echo ""
       git pull --all
       echo ""
     elif [ $REMOTE = $BASE ]; then
       print_red " ↑"
+      echo ""
       git status
       echo ""
     else
       print_red " ✕"
+      echo ""
       git status
     fi
   fi
