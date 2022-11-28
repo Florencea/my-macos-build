@@ -33,7 +33,7 @@ for PROJECT in $(ls $WORKSPACE_DIR); do
   cd "$WORKSPACE_DIR/$PROJECT"
   if [ -d .git ]; then
     print_repo "$PROJECT"
-    git fetch
+    git fetch --quiet
 
     UPSTREAM=${1:-'@{u}'}
     LOCAL=$(git rev-parse @)
