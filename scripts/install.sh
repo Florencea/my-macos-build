@@ -66,13 +66,16 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
-brew install google-chrome
-brew install iina
-brew install keka
-brew install kekaexternalhelper
-brew install mos
-brew install c0re100-qbittorrent
-brew install visual-studio-code
+brew install --cask docker
+brew install --cask google-chrome
+brew install --cask iina
+brew install --cask keka
+brew install --cask kekaexternalhelper
+brew install --cask microsoft-office
+brew install --cask mos
+brew install --cask mysqlworkbench
+brew install --cask c0re100-qbittorrent
+brew install --cask visual-studio-code
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
