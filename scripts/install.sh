@@ -81,6 +81,10 @@ brew install gcc
 brew install git
 brew install jq
 brew install mtr
+brew install mysql@5.7
+{
+  printf "fish_add_path \"/opt/homebrew/opt/mysql@5.7/bin\"\n"
+} >>~/.config/fish/config.fish
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
@@ -89,6 +93,9 @@ brew install node@18
   set -x
   npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true save-exact=true --location=user
 )
+{
+  printf "fish_add_path \"/opt/homebrew/opt/node@18/bin\"\n"
+} >>~/.config/fish/config.fish
 brew install openvpn
 brew install rsync
 brew install python
