@@ -5,7 +5,7 @@
 ## vite + antd + tailwindcss
 
 ```bash
-npm -y create vite vite-project -- --template react-ts
+npm -y create vite@latest vite-project -- --template react-ts
 ```
 
 ```bash
@@ -17,7 +17,7 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-npm install --save-prod \
+npm i -P \
 @types/react@latest \
 @types/react-dom@latest \
 @vitejs/plugin-react@latest \
@@ -29,10 +29,10 @@ antd \
 eslint \
 eslint-config-react-app \
 prettier \
+prettier-plugin-tailwindcss \
 tailwindcss \
 postcss \
-autoprefixer \
-shx
+autoprefixer
 ```
 
 ```bash
@@ -59,9 +59,7 @@ rm -rf src/App.css src/index.css src/assets
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write '**/*' --ignore-unknown",
-    "deps:up": "npm update --save && npm run reset",
-    "reset": "shx rm -rf node_modules dist && npm install"
+    "prettier": "prettier --write '**/*' --ignore-unknown"
   }
 }
 ```
@@ -75,6 +73,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   build: {
+    outDir: "node_modules/.vite/dist",
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
   },
@@ -139,12 +138,12 @@ export default function App() {
   return (
     <>
       {msgConetext}
-      <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
+      <div className="flex h-screen flex-col items-center justify-center text-center text-3xl">
         <div className="space-x-8">
           <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
             <img
               src="/vite.svg"
-              className="h-[20vmin] pointer-events-none mb-10"
+              className="pointer-events-none mb-10 h-[20vmin]"
               alt="Vite logo"
             />
           </a>
