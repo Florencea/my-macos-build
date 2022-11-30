@@ -5,11 +5,11 @@
 ## vite + antd + tailwindcss
 
 ```bash
-npm -y create vite@latest vite-project -- --template react-ts
+npm -y create vite@latest vite-app -- --template react-ts
 ```
 
 ```bash
-cd vite-project
+cd vite-app
 ```
 
 ```bash

@@ -5,11 +5,11 @@
 ## cra + antd + tailwindcss
 
 ```bash
-npm -y create react-app -- my-app --template typescript
+npm -y create react-app -- cra-app --template typescript
 ```
 
 ```bash
-cd my-app
+cd cra-app
 ```
 
 ```bash
@@ -17,7 +17,7 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-npm install --save-prod \
+npm i -P \
 react@latest \
 react-dom@latest \
 react-scripts@latest \
@@ -37,12 +37,21 @@ autoprefixer \
 typescript \
 eslint \
 prettier \
+prettier-plugin-tailwindcss \
 sirv-cli \
-shx
+dotenv-cli
 ```
 
 ```bash
-touch .eslintrc.json
+printf "PORT=3000\n" > .env
+```
+
+```bash
+printf "defaults\n" > .browserslistrc
+```
+
+```bash
+printf "{\n  \"extends\": [\"react-app\", \"react-app/jest\"]\n}\n" > .eslintrc.json
 ```
 
 ```bash
@@ -54,7 +63,7 @@ rm -rf src/App.css src/index.css
 ```
 
 ```bash
-npx tailwindcss init --postcss
+npx tailwindcss init -p
 ```
 
 - `package.json`
@@ -62,23 +71,12 @@ npx tailwindcss init --postcss
 ```json
 {
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "preview": "sirv build --single --port 3000",
-    "prettier": "prettier --write \"**/*\" --ignore-unknown",
-    "deps:up": "npm update --save && npm run reset",
-    "reset": "shx rm -rf node_modules build && npm install"
-  },
-  "browserslist": ["defaults"]
-}
-```
-
-- `.eslintrc.json`
-
-```json
-{
-  "extends": ["react-app", "react-app/jest"]
+    "dev": "dotenv react-scripts start",
+    "build": "dotenv react-scripts build",
+    "test": "dotenv react-scripts test",
+    "preview": "dotenv sirv build --single",
+    "prettier": "prettier --write \"**/*\" --ignore-unknown"
+  }
 }
 ```
 
@@ -145,7 +143,7 @@ export default function App() {
   return (
     <>
       {msgConetext}
-      <div className="h-screen flex flex-col justify-center items-center text-3xl text-center space-y-3">
+      <div className="flex h-screen flex-col items-center justify-center space-y-3 text-center text-3xl">
         <img src={logo} className="h-[30vmin]" alt="logo" />
         <Title>Hello CRA + Antd + TailwindCSS!</Title>
         <div className="space-x-2">
