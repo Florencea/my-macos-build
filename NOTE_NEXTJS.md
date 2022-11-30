@@ -5,11 +5,11 @@
 ## Next.js + antd + tailwindCSS
 
 ```bash
-npm -y create next-app@latest -- my-app --typescript --eslint --use-npm
+npm -y create next-app@latest -- next-app --typescript --eslint --use-npm
 ```
 
 ```bash
-cd my-app
+cd next-app
 ```
 
 ```bash
@@ -21,7 +21,7 @@ printf ".next\nnext-env.d.ts\n/public\n/out\n" > .prettierignore
 ```
 
 ```bash
-npm install --save-prod \
+npm i -P \
 @types/node@latest \
 @types/react@latest \
 @types/react-dom@latest \
@@ -37,11 +37,11 @@ tailwindcss \
 postcss \
 autoprefixer \
 prettier \
-shx
+prettier-plugin-tailwindcss
 ```
 
 ```bash
-npx tailwindcss init --postcss
+npx tailwindcss init -p
 ```
 
 ```bash
@@ -58,9 +58,7 @@ rm -rf styles
     "export": "dotenv next build && dotenv next export",
     "start": "dotenv next start",
     "lint": "dotenv next lint",
-    "prettier": "prettier --write \"**/*\" --ignore-unknown",
-    "deps:up": "npm update --save && npm run reset",
-    "reset": "shx rm -rf node_modules out .next next-env.d.ts && npm install"
+    "prettier": "prettier --write \"**/*\" --ignore-unknown"
   }
 }
 ```
@@ -151,9 +149,9 @@ const Page: NextPage = () => {
       <Head>
         <title>Next + TailwindCSS + Antd</title>
       </Head>
-      <div className="h-screen flex flex-col justify-center items-center text-center text-3xl">
+      <div className="flex h-screen flex-col items-center justify-center text-center text-3xl">
         <a
-          className="relative block w-[20vmin] h-[10vmin]"
+          className="relative block h-[10vmin] w-[20vmin]"
           href="https://nextjs.org/"
           target="_blank"
           rel="noreferrer"

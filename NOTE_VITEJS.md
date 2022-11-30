@@ -36,7 +36,7 @@ autoprefixer
 ```
 
 ```bash
-npx tailwindcss init --postcss
+npx tailwindcss init -p
 ```
 
 ```bash
