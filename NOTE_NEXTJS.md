@@ -58,7 +58,7 @@ rm -rf styles
     "export": "dotenv next build && dotenv next export",
     "start": "dotenv next start",
     "lint": "dotenv next lint",
-    "prettier": "prettier --write \"**/*\" --ignore-unknown"
+    "format": "prettier --write \"**/*\" --ignore-unknown"
   }
 }
 ```

@@ -59,7 +59,7 @@ rm -rf src/App.css src/index.css src/assets
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write '**/*' --ignore-unknown"
+    "format": "prettier --write '**/*' --ignore-unknown"
   }
 }
 ```
@@ -73,9 +73,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "node_modules/.vite/dist",
     chunkSizeWarningLimit: Infinity,
-    reportCompressedSize: false,
   },
 });
 ```
@@ -116,6 +114,9 @@ root.render(
         token: {
           colorPrimary: "#722ed1",
           colorInfo: "#722ed1",
+          colorLink: "#722ed1",
+          colorLinkHover: "#722ed1",
+          colorLinkActive: "#722ed1",
         },
       }}
     >

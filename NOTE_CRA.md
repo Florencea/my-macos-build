@@ -75,7 +75,7 @@ npx tailwindcss init -p
     "build": "dotenv react-scripts build",
     "test": "dotenv react-scripts test",
     "preview": "dotenv sirv build --single",
-    "prettier": "prettier --write \"**/*\" --ignore-unknown"
+    "format": "prettier --write \"**/*\" --ignore-unknown"
   }
 }
 ```
