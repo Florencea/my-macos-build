@@ -49,7 +49,7 @@ printf "\E[0m"
 
 print_step "brew install fonts essential"
 brew install font-jetbrains-mono
-brew install font-inter
+brew install font-ibm-plex
 brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
