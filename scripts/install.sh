@@ -80,6 +80,7 @@ brew install yt-dlp/taps/yt-dlp
 
 print_step "setup nvm"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+echo "lts/*" >~/.nvmrc
 
 print_step "git configuations"
 (
