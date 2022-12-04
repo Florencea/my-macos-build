@@ -192,6 +192,7 @@ fandom.com###WikiaMainContent:style(padding: 1em !important)
 
 ! github.com
 ! style
+github.com##.react-code-cell:style(font-family: JetBrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.text-mono:style(font-family: JetBrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.blob-code-inner:style(font-family: JetBrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.blob-code:style(font-family: JetBrains Mono, SF Mono, Consolas, Liberation Mono, Menlo, monospace !important)
