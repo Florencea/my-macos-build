@@ -29,23 +29,11 @@ brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
 
-print_step "brew install fish"
-brew install fish
-echo "$brew_path/fish" | sudo tee -a /etc/shells
-chsh -s $brew_path/fish
-mkdir -p ~/.config/fish
-{
-  printf "set -gx PATH $brew_path \$PATH\n"
-  printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
-  printf "set -gx fish_greeting\n"
-  printf "alias mmb=\"code $script_dir\"\n"
-  printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
-  printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
-  printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
-  printf "alias ua=\"sh $script_path/update-all.sh\"\n"
-  printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
-  printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
-} >>~/.config/fish/config.fish
+print_step "brew install zsh"
+brew install zsh
+brew install zsh-autosuggestions
+brew install zsh-fast-syntax-highlighting
+curl -L https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
 
 print_step "brew update taps"
 brew tap homebrew/cask
@@ -66,14 +54,11 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
-brew install --cask docker
 brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
-brew install --cask microsoft-office
 brew install --cask mos
-brew install --cask mysqlworkbench
 brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
@@ -84,26 +69,17 @@ brew install gcc
 brew install git
 brew install jq
 brew install mtr
-brew install mysql@5.7
-{
-  printf "fish_add_path \"/opt/homebrew/opt/mysql@5.7/bin\"\n"
-} >>~/.config/fish/config.fish
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node@18
-(
-  set -x
-  npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true save-exact=true --location=user
-)
-{
-  printf "fish_add_path \"/opt/homebrew/opt/node@18/bin\"\n"
-} >>~/.config/fish/config.fish
 brew install openvpn
 brew install rsync
 brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
+
+print_step "setup nvm"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
 print_step "git configuations"
 (
