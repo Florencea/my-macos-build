@@ -14,7 +14,7 @@ alias la='ls -lah'
 
 autoload -Uz vcs_info
 precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '%F{6}( %b)%f'
+zstyle ':vcs_info:git:*' formats '%F{6}(%b)%f'
 setopt PROMPT_SUBST
 
 PROMPT='%F{2}%~%f ${vcs_info_msg_0_}$ '

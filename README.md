@@ -13,7 +13,6 @@
 
 - [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
 - [Violentmonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/violentmonkey-backup.zip)
-- [NewTongwentong Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json)
 
 ## Firefox Devtools
 

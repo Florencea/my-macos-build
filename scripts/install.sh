@@ -29,11 +29,14 @@ brew_dir="/opt/homebrew"
 brew_path="$brew_dir/bin"
 brew_system_path="$brew_dir/sbin"
 
-print_step "brew install zsh"
+print_step "setup zsh"
 brew install zsh
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
 curl -L https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
+
+print_step "setup fonts"
+cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew update taps"
 brew tap homebrew/cask
@@ -47,11 +50,6 @@ printf "982092332@qq.com\n"
 printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
 printf "\E[0m"
 
-print_step "brew install fonts essential"
-brew install font-sf-pro
-brew install font-new-york
-cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
-
 print_step "brew install cask apps"
 brew install --cask google-chrome
 brew install --cask iina
@@ -64,7 +62,6 @@ defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
-brew install gcc
 brew install git
 brew install jq
 brew install mtr
@@ -79,8 +76,10 @@ brew install yt-dlp/taps/yt-dlp
 
 print_step "setup nvm"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+source ~/.zshrc
 echo "lts/*" >~/.nvmrc
 echo "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
+nvm install-latest-npm
 
 print_step "git configuations"
 (
@@ -95,7 +94,6 @@ print_step "git configuations"
 )
 
 print_step "setup ssh key"
-
 (
   set -x
   ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
