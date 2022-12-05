@@ -1,8 +1,8 @@
 ! Title: Element Rules by Florencea for Dark Mode
 ! Description: Custom styles in Dark mode by Florencea Bear, for uBlock Origin, Adguard
-! Last updated: 2022-05-19
+! Last updated: 2022-12-05
 
-! Firefox Interface css color
+! Firefox css color
 ! bg-dark: #2b2a32
 
 ! feedly.com

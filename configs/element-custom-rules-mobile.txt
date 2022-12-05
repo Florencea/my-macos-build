@@ -150,7 +150,6 @@ wnacg.org##^script[src*='search']
 ! style
 wnacg.org##html:style(font-size: 12px)
 wnacg.org##html:style(background-color: #2b2a32 !important)
-wnacg.org##body:style(font-family: "SF Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 wnacg.org##body:style(background-color: #2b2a32 !important)
 wnacg.org##body:style(color: #fafafa !important)
 wnacg.org##body:style(position: relative !important)
@@ -604,5 +603,3 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 ||ammcg.imgscloud.com
 ||gahost3.imgscloud.com
 ||gbhost3.imgscloud.com
-
-! 18av.tv##.altto form:after:style(content: '#19420#19722#17939|百瀨 #|水木 #12602#17441|美津屋 #|夏目 #|長瀨 #|大山 #|梓美 #|結佳 #13709|愛原久美 #35372|智惠美 #|美由|白戶 #18200|寺田美空|北野麻美 #|遠山雪菜 #|浪川 #|宮本 #25630|1339' !important)
