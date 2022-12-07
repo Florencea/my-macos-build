@@ -66,25 +66,35 @@ brew install font-new-york
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
+brew install --cask docker
 brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
+brew install --cask microsoft-office
 brew install --cask mos
+brew install --cask mysqlworkbench
 brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
+brew install gcc
 brew install git
 brew install jq
 brew install mtr
+brew install mysql@5.7
+echo "fish_add_path /opt/homebrew/opt/mysql@5.7/bin" >>~/.config/fish/config.fish
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node
-echo "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
+brew install node@18
+echo "fish_add_path /opt/homebrew/opt/node@18/bin" >>~/.config/fish/config.fish
+(
+  set -x
+  npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=user
+)
 brew install openvpn
 brew install rsync
 brew install python
