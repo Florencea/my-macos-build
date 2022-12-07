@@ -13,7 +13,7 @@ cd cra-app
 ```
 
 ```bash
-npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true save-exact=true --location=project
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project
 ```
 
 ```bash
