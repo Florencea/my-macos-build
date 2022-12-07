@@ -390,12 +390,6 @@ mui.com##a[href*="ukraine"]:remove()
 ! style
 frommuji.muji.tw##p:style(line-height: 2rem !important)
 
-! myself-bbs.com
-! style
-myself-bbs.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-myself-bbs.com##.xs0:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-myself-bbs.com##.yeei_nv li a:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-
 ! nyaa.si
 ! style
 nyaa.si##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
@@ -455,8 +449,8 @@ pts.org.tw##^#header
 pts.org.tw###header
 pts.org.tw##^.raw-html-embed
 pts.org.tw##.raw-html-embed:remove()
-pts.org.tw##^.container:has(div:has(h3.section-title:has-text(相關新聞)))
-pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關新聞))):remove()
+pts.org.tw##^.container:has(div:has(h3.section-title:has-text(相關)))
+pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關))):remove()
 pts.org.tw##^img[src*='scorecardresearch']
 pts.org.tw##^.cookie-flex
 pts.org.tw##.cookie-flex:remove()
@@ -494,10 +488,6 @@ sogi.com.tw##^.fcellphone[data-sort-price='99999999']
 sogi.com.tw##.fcellphone[data-sort-price='99999999']:remove()
 ! style
 sogi.com.tw###main:style(padding-top: 0 !important)
-
-! startpage.com
-! style
-startpage.com##.w-gl:style(font-family: inherit !important)
 
 ! techbang.com
 ! remove

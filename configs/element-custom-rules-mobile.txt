@@ -9,12 +9,6 @@
 ! text-normal: #fbfbfd
 ! purple-primary: #642ab5
 
-! m.youtube.com
-! fix
-m.youtube.com##.ytp-fullscreen .html5-main-video:style(height: 100vh !important;)
-m.youtube.com##.ytp-fullscreen .html5-main-video:style(top: 0 !important;)
-m.youtube.com##.ytp-fullscreen .caption-window:style(position: fixed !important;)
-
 ! exhentai.org
 ! style
 exhentai.org###i1:style(width: 100% !important)
