@@ -1,12 +1,42 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2022-12-05
+! Last updated: 2022-12-07
 
+! universal rules
+! outline
+*##a:style(outline: none !important)
+*##input:style(outline: none !important)
+*##select:style(outline: none !important)
+*##button:style(outline: none !important)
+! fonts
+*##html:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+*##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+*##input:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+*##code:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##kbd:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##pre:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+*##samp:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+! render
+*##body:style(-webkit-font-smoothing: auto !important)
+*##body:style(-moz-osx-font-smoothing: auto !important)
 ! addons
 *##^.sp-separator
 *##.sp-separator:remove()
+*###sp-prefs-setup:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 *###sp-fw-container:style(opacity: 0.1 !important)
 *###sp-fw-container:hover:style(opacity: 1 !important)
+
+! bitbucket.org
+! style
+bitbucket.org##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! books.com.tw
+! style
+books.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! coolpc.com.tw
+! style
+coolpc.com.tw##*:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! cool3c.com
 ! remove
@@ -97,6 +127,7 @@ cool3c.com##^script[src*='googlesyndication']
 ||trackjay.cool3c.com^$script
 ! ||cool3c.com/*/img-failed*$image
 ! style
+cool3c.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 cool3c.com###main:style(padding: 0 !important)
 cool3c.com###main:style(transition: none !important)
 cool3c.com##header:style(padding: 2rem !important)
@@ -123,12 +154,17 @@ dmhy.org##^script:has-text(histats)
 dmhy.org##^img[src*='histats']
 dmhy.org##^script[src*='tanx']
 ! style
+dmhy.org##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 dmhy.org##.topic-main:style(text-align: left)
 dmhy.org##th[width="96"]:style(width: 110px !important)
 dmhy.org##td[width="98"]:style(white-space: nowrap !important)
 
+! e-hentai.org
+! style
+e-hentai.org##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 ! exhentai.org
 ! style
+exhentai.org##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 exhentai.org##.gl4t:hover:style(max-height: none !important)
 
 ! fandom.com
@@ -150,8 +186,36 @@ fandom.com##^script[src*='google-analytics']
 fandom.com##^script:has-text(googletagmanager)
 fandom.com##^noscript
 ! style
+fandom.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 fandom.com###WikiaMainContent:style(width: 100% !important)
 fandom.com###WikiaMainContent:style(padding: 1em !important)
+
+! github.com
+! style
+github.com##.react-code-cell:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.text-mono:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.blob-code-inner:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.blob-code:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.blob-num:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##.commit-tease-sha:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##code:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##pre:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##tt:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##kbd:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##samp:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
+github.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+github.com##.markdown-body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! google.com
+! style
+google.com##.g:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com##.g h3:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com##.std:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com###result-stats:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com##html:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com##input:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+google.com##h1:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! inside.com.tw
 ! remove
@@ -186,6 +250,8 @@ inside.com.tw##div[class*='board-in_all_bottom_mobile_']:remove()
 inside.com.tw##^img[src*='atrk']
 inside.com.tw##^script[src*='rocket-loader']
 ||www.inside.com.tw/assets/js/member.js
+! style
+inside.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! www.ithome.com.tw
 ! remove
@@ -244,6 +310,7 @@ www.ithome.com.tw##^script[src*='ads']
 www.ithome.com.tw##^script[src*='facebook']
 www.ithome.com.tw##^script:has-text(facebook)
 ! style
+www.ithome.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 www.ithome.com.tw##.main-container > div.row-fluid:style(display: flex !important)
 www.ithome.com.tw##.main-container > div.row-fluid:style(justify-content: center !important)
 www.ithome.com.tw###page-header:style(display: flex !important)
@@ -308,6 +375,8 @@ macrumors.com##^script[src*='glide.min.js']
 macrumors.com##^script:has-text(googletagmanager)
 macrumors.com##^script:has-text(Genius)
 macrumors.com##^script[src*='gleamjs']
+! style
+macrumors.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! mui.com
 ! remove
@@ -320,6 +389,16 @@ mui.com##a[href*="ukraine"]:remove()
 ! frommuji.muji.tw
 ! style
 frommuji.muji.tw##p:style(line-height: 2rem !important)
+
+! myself-bbs.com
+! style
+myself-bbs.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+myself-bbs.com##.xs0:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+myself-bbs.com##.yeei_nv li a:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! nyaa.si
+! style
+nyaa.si##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! pixiv.net
 ! remove
@@ -392,6 +471,7 @@ pts.org.tw##body > .container > .row > .col-lg-6:style(padding-bottom: 30px !imp
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .figure:style(margin-top: 24px !important)
 pts.org.tw##.header-logo:style(height: 41px !important)
 pts.org.tw##.main-info:style(background: none !important)
+pts.org.tw##.post-article:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 pts.org.tw##.post-article:style(line-height: 2.11 !important)
 pts.org.tw##.post-article:style(letter-spacing: 0.6px !important)
 pts.org.tw##.post-article:style(padding-bottom: 4rem !important)
@@ -414,6 +494,10 @@ sogi.com.tw##^.fcellphone[data-sort-price='99999999']
 sogi.com.tw##.fcellphone[data-sort-price='99999999']:remove()
 ! style
 sogi.com.tw###main:style(padding-top: 0 !important)
+
+! startpage.com
+! style
+startpage.com##.w-gl:style(font-family: inherit !important)
 
 ! techbang.com
 ! remove
@@ -505,6 +589,7 @@ techbang.com##^script[src*='trvdp.com']
 techbang.com##^script[src*='sync']
 techbang.com##^script[src*='anymind360']
 ! style
+techbang.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 techbang.com##.main-content:style(width: 100% !important)
 techbang.com##.main-content:style(float: none !important)
 techbang.com##.inner-content:style(width: 100% !important)
@@ -553,6 +638,10 @@ thenewslens.com##^script[src*='ad-block']
 thenewslens.com##^script[src*='_piano']
 thenewslens.com##^script[src*='googlesyndication']
 thenewslens.com##^script:has-text(scorecardresearch)
+
+! twnic.tw
+! style
+twnic.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! vitejs.dev
 ! remove
@@ -630,7 +719,29 @@ xfastest.com##^iframe[src*='googletagmanager']
 xfastest.com##^a[href*='ads.xfastest.com']
 ! style
 xfastest.com##html:style(font-size: 18px !important)
+xfastest.com##html:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##body:style(font-weight: 400 !important)
+xfastest.com##cite:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h1:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h2:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h3:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h4:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h5:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##h6:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-menu-location-main .main-menu-link:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-header-font:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-post-box.vw-post-format-link a:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-social-counter-count:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-page-navigation-pagination:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.page-numbers:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com###wp-calendar caption:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-accordion-header-text:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-tab-title:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-review-item-title:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-pagination-load-more:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.vw-copyright:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+xfastest.com##.type-post p:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 xfastest.com##.type-post p:style(font-weight: 400 !important)
 xfastest.com##footer:style(font-weight: 400 !important)
 xfastest.com##.vw-post-content > p:style(font-size: 1rem !important)
