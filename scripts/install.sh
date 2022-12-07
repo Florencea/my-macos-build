@@ -17,34 +17,28 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# git
-github_username="Florencea"
-github_email="bearflorencea@gmail.com"
-github_editor="nano"
-# config
-script_dir="~/Codespaces/my-macos-build"
-script_path="$script_dir/scripts"
-# brew
-brew_dir="/opt/homebrew"
-brew_path="$brew_dir/bin"
-brew_system_path="$brew_dir/sbin"
-
 print_step "brew install fish"
 brew install fish
-echo "$brew_path/fish" | sudo tee -a /etc/shells
-chsh -s $brew_path/fish
+echo "/opt/homebrew/bin/fish" | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
 mkdir -p ~/.config/fish
 {
-  printf "set -gx PATH $brew_path \$PATH\n"
-  printf "set -gx fish_user_paths $brew_system_path \$fish_user_paths\n"
-  printf "set -gx fish_greeting\n"
-  printf "alias mmb=\"code $script_dir\"\n"
-  printf "alias mkgif=\"sh $script_path/make-gif.sh\"\n"
-  printf "alias ebk=\"sh $script_path/extension-config-backup.sh\"\n"
-  printf "alias urb=\"sh $script_path/ublock-rule-backup.sh\"\n"
-  printf "alias ua=\"sh $script_path/update-all.sh\"\n"
-  printf "alias rec=\"sh $script_path/re-encode.sh\"\n"
-  printf "alias rsl=\"defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock\"\n"
+  printf "set CODE_BASE \"\$HOME/Codespaces/my-macos-build\"\n"
+  printf "set SCRIPT_HOME \"\$CODE_BASE/scripts\"\n"
+  printf "set SCRIPT_PRIVATE_HOME \"\$HOME/.ssh\"\n\n"
+  printf "set -gx PATH /opt/homebrew/bin \$PATH\n"
+  printf "set -gx fish_user_paths /opt/homebrew/sbin \$fish_user_paths\n"
+  printf "set -gx fish_greeting\n\n"
+  printf "alias mmb=\"code \$CODE_BASE\"\n"
+  printf "alias mkgif=\"sh \$SCRIPT_HOME/make-gif.sh\"\n"
+  printf "alias ebk=\"sh \$SCRIPT_HOME/extension-config-backup.sh\"\n"
+  printf "alias urb=\"sh \$SCRIPT_HOME/ublock-rule-backup.sh\"\n"
+  printf "alias ua=\"sh \$SCRIPT_HOME/update-all.sh\"\n"
+  printf "alias rec=\"sh \$SCRIPT_HOME/re-encode.sh\"\n"
+  printf "alias rsl=\"sh \$SCRIPT_PRIVATE_HOME/reset_dock.sh\"\n"
+  printf "alias boxvpn=\"sh \$SCRIPT_PRIVATE_HOME/vpn.sh\"\n"
+  printf "alias boxrsync=\"sh \$SCRIPT_PRIVATE_HOME/rsync.sh\"\n"
+  printf "alias boxdump=\"sh \$SCRIPT_PRIVATE_HOME/sqldump.sh\"\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew update taps"
@@ -104,9 +98,9 @@ brew install yt-dlp/taps/yt-dlp
 print_step "git configuations"
 (
   set -x
-  git config --global user.name "$github_username"
-  git config --global user.email "$github_email"
-  git config --global core.editor "$github_editor"
+  git config --global user.name "Florencea"
+  git config --global user.email "bearflorencea@gmail.com"
+  git config --global core.editor "nano"
   git config --global init.defaultBranch main
   git config --global pull.rebase false
   git config --global core.quotepath false
