@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1668582545250,
-  "version": "1.44.4",
+  "timeStamp": 1670649865767,
+  "version": "1.45.2",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
