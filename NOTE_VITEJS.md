@@ -5,7 +5,7 @@
 ## vite + antd + tailwindcss
 
 ```bash
-npm -y create vite@latest vite-app -- --template react-ts
+npm -y create vite@latest vite-app -- --template react-swc-ts
 ```
 
 ```bash
@@ -20,7 +20,7 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 npm i -P \
 @types/react@latest \
 @types/react-dom@latest \
-@vitejs/plugin-react@latest \
+@vitejs/plugin-react-swc@latest \
 react@latest \
 react-dom@latest \
 typescript@latest \
@@ -29,7 +29,6 @@ antd \
 eslint \
 eslint-config-react-app \
 prettier \
-prettier-plugin-tailwindcss \
 tailwindcss \
 postcss \
 autoprefixer
@@ -48,7 +47,7 @@ printf "/public\n/dist\n" > .prettierignore
 ```
 
 ```bash
-rm -rf src/App.css src/index.css src/assets
+rm -rf src/App.css src/assets
 ```
 
 - `package.json`
@@ -67,7 +66,7 @@ rm -rf src/App.css src/index.css src/assets
 - `vite.config.ts`
 
 ```ts
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -91,17 +90,25 @@ module.exports = {
 };
 ```
 
+- `src/index.css`
+
+```css
+@import "antd/dist/reset.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
 - `src/main.tsx`
 
 ```tsx
 import { ConfigProvider } from "antd";
-import "antd/dist/reset.css";
 import zhTW from "antd/es/locale/zh_TW";
 import "dayjs/locale/zh-tw";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "tailwindcss/tailwind.css";
 import App from "./App";
+import "./index.css";
 
 const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);
