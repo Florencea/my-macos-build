@@ -85,10 +85,7 @@ brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node@18
 echo "fish_add_path /opt/homebrew/opt/node@18/bin" >>~/.config/fish/config.fish
-(
-  set -x
-  npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=user
-)
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install openvpn
 brew install rsync
 brew install python
