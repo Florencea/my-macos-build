@@ -38,7 +38,7 @@ mkdir -p ~/.config/fish
   printf "alias rsl=\"sh \$SCRIPT_PRIVATE_HOME/reset_dock.sh\"\n"
   printf "alias boxvpn=\"sh \$SCRIPT_PRIVATE_HOME/vpn.sh\"\n"
   printf "alias boxrsync=\"sh \$SCRIPT_PRIVATE_HOME/rsync.sh\"\n"
-  printf "alias boxdump=\"sh \$SCRIPT_PRIVATE_HOME/sqldump.sh\"\n"
+  printf "alias boxdump=\"sh \$SCRIPT_PRIVATE_HOME/sqldump.sh\"\n\n"
 } >>~/.config/fish/config.fish
 
 print_step "brew update taps"
@@ -78,8 +78,8 @@ brew install gcc
 brew install git
 brew install jq
 brew install mtr
-brew install mysql@5.7
-echo "fish_add_path /opt/homebrew/opt/mysql@5.7/bin" >>~/.config/fish/config.fish
+brew install mysql-client@5.7
+echo "fish_add_path /opt/homebrew/opt/mysql-client@5.7/bin" >>~/.config/fish/config.fish
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
@@ -104,11 +104,15 @@ print_step "git configuations"
   git config --global core.ignorecase false
 )
 
-print_step "setup ssh key"
-(
-  set -x
-  ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
-)
+if [ -d "$HOME/.ssh" ]; then
+  print_step "$HOME.ssh exist, skip ssh key generation"
+else
+  print_step "setup ssh key"
+  (
+    set -x
+    ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
+  )
+fi
 
 print_step "disable eyecandy, reset launchpad & clear scripts"
 (
