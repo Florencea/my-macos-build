@@ -67,7 +67,6 @@ brew install --cask keka
 brew install --cask kekaexternalhelper
 brew install --cask microsoft-office
 brew install --cask mos
-brew install --cask mysqlworkbench
 brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
