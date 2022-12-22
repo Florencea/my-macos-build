@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Desktop
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Desktop, Adguard Desktop
-! Last updated: 2022-12-21
+! Last updated: 2022-12-22
 
 ! universal rules
 ! outline
@@ -166,6 +166,13 @@ e-hentai.org##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Not
 ! style
 exhentai.org##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 exhentai.org##.gl4t:hover:style(max-height: none !important)
+
+! elle.com
+! remove
+elle.com##.leaderboard-ad
+elle.com##.breaker-ad
+elle.com##.feed-block-ad-column
+elle.com##.vertical-ad
 
 ! fandom.com
 ! remove
