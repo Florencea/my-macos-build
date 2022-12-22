@@ -311,7 +311,6 @@ www.ithome.com.tw##^script[src*='facebook']
 www.ithome.com.tw##^script:has-text(facebook)
 ! style
 www.ithome.com.tw##body:style(font-family: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
-www.ithome.com.tw##body:style(background-color: #f7f7f7 !important)
 www.ithome.com.tw##.main-container > div.row-fluid:style(display: flex !important)
 www.ithome.com.tw##.main-container > div.row-fluid:style(justify-content: center !important)
 www.ithome.com.tw###page-header:style(display: flex !important)
