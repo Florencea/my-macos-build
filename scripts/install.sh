@@ -72,6 +72,7 @@ defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 print_step "brew install commend line tools"
 brew install colima
 brew install docker
+brew install docker-compose
 brew install ffmpeg
 brew install gcc
 brew install git
