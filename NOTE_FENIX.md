@@ -59,7 +59,7 @@ on:
 jobs:
   release-automation:
     name: Build App
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
