@@ -59,6 +59,7 @@ brew install font-inter
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
+brew install --cask docker
 brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
@@ -70,9 +71,6 @@ brew install --cask visual-studio-code
 defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
-brew install colima
-brew install docker
-brew install docker-compose
 brew install ffmpeg
 brew install gcc
 brew install git
