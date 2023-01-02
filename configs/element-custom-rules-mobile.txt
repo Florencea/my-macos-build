@@ -1,6 +1,6 @@
 ! Title: Element Rules by Florencea for Mobile
 ! Description: Custom rules by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2022-12-22
+! Last updated: 2023-01-02
 
 ! Firefox css color
 ! bg-dark: #2b2a32
@@ -441,14 +441,16 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##div.posts > div.post:style(margin: 0 !important)
 18av.tv##div.posts > div.post:style(float: none !important)
 18av.tv##div.posts > div.post:style(width: 100% !important)
-18av.tv##div.posts > div.post > a > img.thumb:style(width: 100% !important)
-18av.tv##div.posts > div.post > a > img.thumb:style(height: 15rem !important)
-18av.tv##div.posts > div.post > a > img.thumb:style(object-fit: cover !important)
-18av.tv##div.posts > div.post > a > img.thumb:style(background-color: #2b2a32 !important)
-18av.tv##div.posts > div.post > a > img.thumb:style(border-radius: 0.6rem !important)
+18av.tv##div.content:not(.hcomicsversion) > div.posts > div.post .thumb:style(height: auto !important)
+18av.tv##div.content:not(.hcomicsversion) > div.posts > div.post .thumb:style(aspect-ratio: 16 / 9 !important)
+18av.tv##div.content:not(.hcomicsversion) > div.posts > div.post .thumb:style(object-fit: cover !important)
+18av.tv##div.content.hcomicsversion > div.posts > div.post .thumb:style(height: 16rem !important)
+18av.tv##div.content.hcomicsversion > div.posts > div.post .thumb:style(object-fit: cover !important)
 18av.tv##div.archive-title > a > h1:style(font-size: 1rem !important)
 18av.tv##div.archive-title > a:style(color: #fbfbfd !important)
 18av.tv##div.con > h3 > a:style(color: #fbfbfd !important)
+18av.tv##div.content:not(.hcomicsversion) div.con:style(height: 100px !important)
+18av.tv##div.content:not(.hcomicsversion) div.con > h3 > a:style(user-select: text !important)
 18av.tv##div.hcomicsversion > div.posts:style(flex-direction: row !important)
 18av.tv##div.hcomicsversion > div.posts:style(flex-wrap: wrap !important)
 18av.tv##div.hcomicsversion > div.posts:style(justify-content: space-between !important)
@@ -485,7 +487,6 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(border: none !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(color: #fbfbfd !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(background-color: #43424a !important)
-18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(border-radius: 0.6rem !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a::before:style(font-size: 1rem !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a::before:style(content: '播放影片' !important)
 18av.tv###hls-video:style(position: fixed !important)
@@ -502,7 +503,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.animenu__top_r:style(background-color: #2b2a32 !important)
 18av.tv##span.animenu__top_r:style(float: none !important)
 18av.tv##span.animenu__top_r:style(height: auto !important)
-18av.tv##span.animenu__top_r:style(padding: 1rem !important)
+18av.tv##span.animenu__top_r:style(padding: 1rem 8px !important)
 18av.tv##div.sun_search_form_container:style(float: none !important)
 18av.tv##span.sun-search_input_group:style(border: 0 !important)
 18av.tv##span.sun-search_input_group:style(margin: 0 !important)
@@ -518,15 +519,12 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(float: none !important)
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(background-color: #43424a !important)
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(color: #fbfbfd !important)
-18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(border-radius: 0.6rem 0 0 0.6rem !important)
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(margin-bottom: 0 !important)
 18av.tv##span.sun-search_input_group > input.sun-search_input_text:style(border-right: 2px solid #2b2a32 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(width: 25% !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(padding: 0.8rem 1rem !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(background-color: #43424a !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(color: #837d9d !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(border-radius: 0 0.6rem 0.6rem 0 !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:hover:style(border-radius: 0 0.6rem 0 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:before:style(border: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt:style(margin: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt > a.sun_input_group_txt:style(color: #837d9d !important)
@@ -534,8 +532,6 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(background-color: transparent !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(border: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(border-top: 1px solid #515151 !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:not(:last-child) > a:style(border-radius: 0 !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:last-child > a:style(border-radius: 0 0 0.6rem 0.6rem !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:after:style(border: none !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:style(line-height: unset !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:style(padding: 0.8rem 1rem !important)
@@ -571,7 +567,6 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##center form select.sel_enlarge_page:style(height: auto !important)
 18av.tv##center form select.sel_enlarge_page:style(text-align: center !important)
 18av.tv##center form select.sel_enlarge_page:style(border: 0 !important)
-18av.tv##center form select.sel_enlarge_page:style(border-radius: 0.6rem !important)
 18av.tv##center form select.sel_enlarge_page:style(color: #fbfbfd !important)
 18av.tv##center form select.sel_enlarge_page:style(background-color: #43424a !important)
 18av.tv###but_Prev_02:style(display: none !important)
@@ -597,3 +592,4 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 ||ammcg.imgscloud.com
 ||gahost3.imgscloud.com
 ||gbhost3.imgscloud.com
+
