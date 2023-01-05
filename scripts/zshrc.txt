@@ -1,3 +1,4 @@
+# brew completion
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:${FPATH}
   zstyle ':completion:*' list-prompt ''
@@ -7,31 +8,36 @@ if type brew &>/dev/null; then
   compinit
 fi
 
+# variables and path
 export CLICOLOR=1
+export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
-alias ll='ls -lh'
-alias la='ls -lah'
-
+# prompt
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '%F{6}(%b)%f'
 setopt PROMPT_SUBST
-
 PROMPT='%F{2}%~%f ${vcs_info_msg_0_}$ '
 
-SCRIPT_HOME='~/Codespaces/my-macos-build'
-SCRIPT_PATH="$SCRIPT_HOME/scripts"
+# alias
+CODE_BASE="$HOME/Codespaces/my-macos-build"
+SCRIPT_HOME="$CODE_BASE/scripts"
+SCRIPT_PRIVATE_HOME="$HOME/.ssh"
+alias ll='ls -lh'
+alias la='ls -lah'
+alias mmb="code $CODE_BASE"
+alias mkgif="sh $SCRIPT_HOME/make-gif.sh"
+alias ebk="sh $SCRIPT_HOME/extension-config-backup.sh"
+alias urb="sh $SCRIPT_HOME/ublock-rule-backup.sh"
+alias ua="sh $SCRIPT_HOME/update-all.sh"
+alias rec="sh $SCRIPT_HOME/re-encode.sh"
+alias rsl="sh $SCRIPT_PRIVATE_HOME/reset_dock.sh"
+alias boxvpn="sh $SCRIPT_PRIVATE_HOME/vpn.sh"
+alias boxrsync="sh $SCRIPT_PRIVATE_HOME/rsync.sh"
+alias boxdump="sh $SCRIPT_PRIVATE_HOME/sqldump.sh"
 
-alias mmb="code $SCRIPT_HOME"
-alias mkgif="sh $SCRIPT_PATH/make-gif.sh"
-alias ebk="sh $SCRIPT_PATH/extension-config-backup.sh"
-alias urb="sh $SCRIPT_PATH/ublock-rule-backup.sh"
-alias ua="sh $SCRIPT_PATH/update-all.sh"
-alias rec="sh  $SCRIPT_PATH/re-encode.sh"
-alias rsl='defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock'
-alias boxvpn='sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config ~/.ssh/Box-Bear.ovpn'
-
+# plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
-
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)

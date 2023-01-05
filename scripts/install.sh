@@ -17,29 +17,35 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-print_step "brew install fish"
-brew install fish
-echo "/opt/homebrew/bin/fish" | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
-mkdir -p ~/.config/fish
-{
-  printf "set CODE_BASE \"\$HOME/Codespaces/my-macos-build\"\n"
-  printf "set SCRIPT_HOME \"\$CODE_BASE/scripts\"\n"
-  printf "set SCRIPT_PRIVATE_HOME \"\$HOME/.ssh\"\n\n"
-  printf "set -gx PATH /opt/homebrew/bin \$PATH\n"
-  printf "set -gx fish_user_paths /opt/homebrew/sbin \$fish_user_paths\n"
-  printf "set -gx fish_greeting\n\n"
-  printf "alias mmb=\"code \$CODE_BASE\"\n"
-  printf "alias mkgif=\"sh \$SCRIPT_HOME/make-gif.sh\"\n"
-  printf "alias ebk=\"sh \$SCRIPT_HOME/extension-config-backup.sh\"\n"
-  printf "alias urb=\"sh \$SCRIPT_HOME/ublock-rule-backup.sh\"\n"
-  printf "alias ua=\"sh \$SCRIPT_HOME/update-all.sh\"\n"
-  printf "alias rec=\"sh \$SCRIPT_HOME/re-encode.sh\"\n"
-  printf "alias rsl=\"sh \$SCRIPT_PRIVATE_HOME/reset_dock.sh\"\n"
-  printf "alias boxvpn=\"sh \$SCRIPT_PRIVATE_HOME/vpn.sh\"\n"
-  printf "alias boxrsync=\"sh \$SCRIPT_PRIVATE_HOME/rsync.sh\"\n"
-  printf "alias boxdump=\"sh \$SCRIPT_PRIVATE_HOME/sqldump.sh\"\n\n"
-} >>~/.config/fish/config.fish
+# print_step "brew install fish"
+# brew install fish
+# echo "/opt/homebrew/bin/fish" | sudo tee -a /etc/shells
+# chsh -s /opt/homebrew/bin/fish
+# mkdir -p ~/.config/fish
+# {
+#   printf "set CODE_BASE \"\$HOME/Codespaces/my-macos-build\"\n"
+#   printf "set SCRIPT_HOME \"\$CODE_BASE/scripts\"\n"
+#   printf "set SCRIPT_PRIVATE_HOME \"\$HOME/.ssh\"\n\n"
+#   printf "set -gx PATH /opt/homebrew/bin \$PATH\n"
+#   printf "set -gx fish_user_paths /opt/homebrew/sbin \$fish_user_paths\n"
+#   printf "set -gx fish_greeting\n\n"
+#   printf "alias mmb=\"code \$CODE_BASE\"\n"
+#   printf "alias mkgif=\"sh \$SCRIPT_HOME/make-gif.sh\"\n"
+#   printf "alias ebk=\"sh \$SCRIPT_HOME/extension-config-backup.sh\"\n"
+#   printf "alias urb=\"sh \$SCRIPT_HOME/ublock-rule-backup.sh\"\n"
+#   printf "alias ua=\"sh \$SCRIPT_HOME/update-all.sh\"\n"
+#   printf "alias rec=\"sh \$SCRIPT_HOME/re-encode.sh\"\n"
+#   printf "alias rsl=\"sh \$SCRIPT_PRIVATE_HOME/reset_dock.sh\"\n"
+#   printf "alias boxvpn=\"sh \$SCRIPT_PRIVATE_HOME/vpn.sh\"\n"
+#   printf "alias boxrsync=\"sh \$SCRIPT_PRIVATE_HOME/rsync.sh\"\n"
+#   printf "alias boxdump=\"sh \$SCRIPT_PRIVATE_HOME/sqldump.sh\"\n\n"
+# } >>~/.config/fish/config.fish
+
+print_step "brew install zsh"
+brew install zsh
+brew install zsh-autosuggestions
+brew install zsh-fast-syntax-highlighting
+curl -L https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
 
 print_step "brew update taps"
 brew tap homebrew/cask
@@ -75,12 +81,12 @@ brew install git
 brew install jq
 brew install mtr
 brew install mysql-client@5.7
-echo "fish_add_path /opt/homebrew/opt/mysql-client@5.7/bin" >>~/.config/fish/config.fish
+# echo "fish_add_path /opt/homebrew/opt/mysql-client@5.7/bin" >>~/.config/fish/config.fish
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node@18
-echo "fish_add_path /opt/homebrew/opt/node@18/bin" >>~/.config/fish/config.fish
+# echo "fish_add_path /opt/homebrew/opt/node@18/bin" >>~/.config/fish/config.fish
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install openvpn
 brew install rsync
