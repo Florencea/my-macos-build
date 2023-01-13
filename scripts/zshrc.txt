@@ -16,9 +16,9 @@ export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 # prompt
 autoload -Uz vcs_info
 precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '%F{6}(%b)%f'
+zstyle ':vcs_info:git:*' formats ' %F{6}(%b)%f'
 setopt PROMPT_SUBST
-PROMPT='%F{2}%~%f ${vcs_info_msg_0_}%% '
+PROMPT='%F{2}%~%f ${vcs_info_msg_0_} %% '
 
 # alias
 CODE_BASE="$HOME/Codespaces/my-macos-build"
