@@ -72,7 +72,7 @@ brew install --cask kekaexternalhelper
 brew install --cask mos
 brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
-defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+# defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 print_step "brew install commend line tools"
 brew install ffmpeg
@@ -121,6 +121,7 @@ print_step "disable eyecandy, reset launchpad & clear scripts"
   set -x
   defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
   defaults write com.apple.dock ResetLaunchPad -bool true
+  defaults write -g ApplePressAndHoldEnabled -bool false
   killall Dock
   rm "$0"
 )
