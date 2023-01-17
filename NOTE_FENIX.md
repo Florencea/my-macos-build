@@ -59,7 +59,7 @@ on:
 jobs:
   release-automation:
     name: Build App
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -72,12 +72,14 @@ jobs:
           distribution: temurin
       - name: Install Android SDK with pieces Gradle skips
         run: ./automation/iceraven/install-sdk.sh
+      - name: Inspect memory
+        run: free -m
       - name: Create version name
         run: echo "VERSION_NAME=$(cat version.txt)" >> $GITHUB_ENV
       - name: Build release variant of app
         uses: gradle/gradle-build-action@v2
         env:
-          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=1g -Xms4096m -Xmx5800m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g -Xms2g -Xmx5g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
         with:
           gradle-home-cache-cleanup: true
           gradle-executable: /usr/bin/time
@@ -109,16 +111,16 @@ jobs:
 mkdir -p $HOME/android-sdk/android-sdk-linux
 pushd $HOME/android-sdk/android-sdk-linux
 mkdir -p licenses
-echo "8933bad161af4178b1185d1a37fbf41ea5269c55" >>licenses/android-sdk-license
-echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >>licenses/android-sdk-license
-echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >>licenses/android-sdk-license
-if [ ! -e cmdline-tools ]; then
-  mkdir -p cmdline-tools
-  pushd cmdline-tools
-  wget --quiet "$(curl -s https://developer.android.com/studio | grep -oP "https://dl.google.com/android/repository/commandlinetools-linux-[0-9]+_latest.zip")"
-  unzip commandlinetools-linux-*_latest.zip
-  mv cmdline-tools tools
-  popd
+echo "8933bad161af4178b1185d1a37fbf41ea5269c55" >> licenses/android-sdk-license
+echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> licenses/android-sdk-license
+echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >> licenses/android-sdk-license
+if [ ! -e cmdline-tools ] ; then
+    mkdir -p cmdline-tools
+    pushd cmdline-tools
+    wget --quiet "$(curl -s https://developer.android.com/studio | grep -oP "https://dl.google.com/android/repository/commandlinetools-linux-[0-9]+_latest.zip")"
+    unzip commandlinetools-linux-*_latest.zip
+    mv cmdline-tools tools
+    popd
 fi
 popd
 export ANDROID_SDK_ROOT=$HOME/android-sdk/android-sdk-linux
@@ -127,7 +129,7 @@ export ANDROID_SDK_ROOT=$HOME/android-sdk/android-sdk-linux
 ${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin/sdkmanager "ndk;21.0.6113669"
 
 # Point the build at the tools
-echo "sdk.dir=${ANDROID_SDK_ROOT}" >>local.properties
+echo "sdk.dir=${ANDROID_SDK_ROOT}" >> local.properties
 ```
 
 - `app/build.gradle`
