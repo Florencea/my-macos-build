@@ -158,6 +158,8 @@
 	</data>
 	<key>BackgroundSettingsForInactiveWindows</key>
 	<false/>
+	<key>CommandString</key>
+	<string>login -fpql florencea /bin/zsh -l</string>
 	<key>CursorBlink</key>
 	<true/>
 	<key>CursorColor</key>
@@ -185,6 +187,8 @@
 	<integer>1</integer>
 	<key>ProfileCurrentVersion</key>
 	<real>2.0699999999999998</real>
+	<key>RunCommandAsShell</key>
+	<true/>
 	<key>SelectionColor</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
@@ -196,6 +200,22 @@
 	</data>
 	<key>ShouldLimitScrollback</key>
 	<integer>1</integer>
+	<key>ShouldRestoreContent</key>
+	<false/>
+	<key>ShowActiveProcessArgumentsInTitle</key>
+	<false/>
+	<key>ShowActiveProcessInTitle</key>
+	<true/>
+	<key>ShowDimensionsInTitle</key>
+	<false/>
+	<key>ShowRepresentedURLInTitle</key>
+	<true/>
+	<key>ShowRepresentedURLPathInTitle</key>
+	<true/>
+	<key>ShowShellCommandInTitle</key>
+	<true/>
+	<key>ShowTerminalInDockIcon</key>
+	<false/>
 	<key>ShowWindowSettingsNameInTitle</key>
 	<false/>
 	<key>TextBoldColor</key>
@@ -221,6 +241,25 @@
 	<integer>120</integer>
 	<key>name</key>
 	<string>GitHub</string>
+	<key>noWarnProcesses</key>
+	<array>
+		<dict>
+			<key>ProcessName</key>
+			<string>screen</string>
+		</dict>
+		<dict>
+			<key>ProcessName</key>
+			<string>tmux</string>
+		</dict>
+		<dict>
+			<key>ProcessName</key>
+			<string>login</string>
+		</dict>
+		<dict>
+			<key>ProcessName</key>
+			<string>zsh</string>
+		</dict>
+	</array>
 	<key>rowCount</key>
 	<integer>30</integer>
 	<key>shellExitAction</key>
