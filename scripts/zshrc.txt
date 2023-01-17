@@ -15,10 +15,7 @@ fi
 # variables and path
 export CLICOLOR=1
 export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@" # This lazy loads nvm
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
 # prompt
 autoload -Uz vcs_info
