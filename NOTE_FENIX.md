@@ -151,7 +151,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 75 ~ 85)
+- Comment this part (Line 86 ~ 96)
 - see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
