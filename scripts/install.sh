@@ -12,6 +12,9 @@ auth       sufficient     pam_tid.so\
 ' /etc/pam.d/sudo
 
 if ! command -v brew &>/dev/null; then
+  export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.ustc.edu.cn/brew.git"
+  export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+  export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
