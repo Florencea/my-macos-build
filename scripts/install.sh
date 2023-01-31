@@ -32,7 +32,7 @@ brew tap --custom-remote --force-auto-update homebrew/cask https://github.com/Ho
 brew tap --custom-remote --force-auto-update homebrew/cask-versions https://mirrors.ustc.edu.cn/homebrew-cask-versions.git
 brew tap --custom-remote --force-auto-update homebrew/cask-versions https://github.com/Homebrew/homebrew-cask-versions
 brew tap --custom-remote --force-auto-update homebrew/cask-fonts https://mirrors.sustech.edu.cn/homebrew/homebrew-cask-fonts.git
-brew tap --custom-remote --force-auto-update homebrew/cask-versions https://github.com/Homebrew/homebrew-cask-fonts
+brew tap --custom-remote --force-auto-update homebrew/cask-fonts https://github.com/Homebrew/homebrew-cask-fonts
 
 print_step "brew install istat menus"
 brew install istat-menus
