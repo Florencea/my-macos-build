@@ -85,7 +85,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "body",
+  important: "#root",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 };
 ```
@@ -102,7 +102,7 @@ module.exports = {
 - `src/main.tsx`
 
 ```tsx
-import { ConfigProvider } from "antd";
+import { App as AntApp, ConfigProvider } from "antd";
 import zhTW from "antd/es/locale/zh_TW";
 import "dayjs/locale/zh-tw";
 import { StrictMode } from "react";
@@ -116,6 +116,7 @@ const root = createRoot(container);
 root.render(
   <StrictMode>
     <ConfigProvider
+      getPopupContainer={() => container}
       locale={zhTW}
       theme={{
         token: {
@@ -127,7 +128,9 @@ root.render(
         },
       }}
     >
-      <App />
+      <AntApp>
+        <App />
+      </AntApp>
     </ConfigProvider>
   </StrictMode>
 );
@@ -136,41 +139,38 @@ root.render(
 - `src/App.tsx`
 
 ```tsx
-import { Button, DatePicker, message } from "antd";
+import { App as AntApp, Button, DatePicker } from "antd";
 import { useState } from "react";
 
 export default function App() {
   const [count, setCount] = useState(0);
-  const [msg, msgConetext] = message.useMessage();
+  const { message } = AntApp.useApp();
 
   return (
-    <>
-      {msgConetext}
-      <div className="flex h-screen flex-col items-center justify-center text-center text-3xl">
-        <div className="space-x-8">
-          <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-            <img
-              src="/vite.svg"
-              className="pointer-events-none mb-10 h-[20vmin]"
-              alt="Vite logo"
-            />
-          </a>
-        </div>
-        <p>Vite + React + TailwindCSS + antd</p>
-        <div className="flex justify-center space-x-3">
-          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </Button>
-          <DatePicker
-            onChange={(date) => {
-              if (date !== null) {
-                msg.info(date.toDate().toLocaleDateString("zh-TW"));
-              }
-            }}
+    <div className="flex h-screen flex-col items-center justify-center text-center text-3xl">
+      <div className="space-x-8">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+          <img
+            src="/vite.svg"
+            className="pointer-events-none mb-10 h-[20vmin]"
+            alt="Vite logo"
           />
-        </div>
+        </a>
       </div>
-    </>
+      <p>Vite + React + TailwindCSS + antd</p>
+      <div className="flex justify-center space-x-3">
+        <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+          count is: {count}
+        </Button>
+        <DatePicker
+          onChange={(date) => {
+            if (date !== null) {
+              message.info(date.toDate().toLocaleDateString("zh-TW"));
+            }
+          }}
+        />
+      </div>
+    </div>
   );
 }
 ```
