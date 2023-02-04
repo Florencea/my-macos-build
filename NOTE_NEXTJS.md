@@ -5,7 +5,7 @@
 ## Next.js + antd + tailwindCSS
 
 ```bash
-npm -y create next-app@latest -- next-app --typescript --eslint --use-npm
+npx -y create-next-app@latest next-app --typescript --eslint --use-npm --no-src-dir --no-experimental-app --import-alias "@/*"
 ```
 
 ```bash
@@ -36,8 +36,11 @@ dotenv-cli \
 tailwindcss \
 postcss \
 autoprefixer \
-prettier \
-prettier-plugin-tailwindcss
+prettier
+```
+
+```bash
+npm rm @next/font
 ```
 
 ```bash
@@ -72,7 +75,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
@@ -89,25 +91,18 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "body",
+  important: "#__next",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {
-      colors: {
-        primary: "#722ed1",
-      },
-    },
-  },
 };
 ```
 
 - `pages/_app.tsx`
 
 ```tsx
-import { ConfigProvider } from "antd";
+import { App as AntApp, ConfigProvider } from "antd";
 import "antd/dist/reset.css";
 import zhTW from "antd/locale/zh_TW";
 import "dayjs/locale/zh-tw";
@@ -117,15 +112,25 @@ import "tailwindcss/tailwind.css";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ConfigProvider
+      getPopupContainer={
+        typeof window !== "undefined"
+          ? () => document.getElementById("__next") as HTMLDivElement
+          : undefined
+      }
       locale={zhTW}
       theme={{
         token: {
           colorPrimary: "#722ed1",
           colorInfo: "#722ed1",
+          colorLink: "#722ed1",
+          colorLinkHover: "#722ed1",
+          colorLinkActive: "#722ed1",
         },
       }}
     >
-      <Component {...pageProps} />
+      <AntApp>
+        <Component {...pageProps} />
+      </AntApp>
     </ConfigProvider>
   );
 }
@@ -134,7 +139,7 @@ export default function App({ Component, pageProps }: AppProps) {
 - `pages/index.tsx`
 
 ```tsx
-import { Button, DatePicker, message, Typography } from "antd";
+import { App as AntApp, Button, DatePicker, Typography } from "antd";
 import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -142,10 +147,9 @@ import { useState } from "react";
 
 const Page: NextPage = () => {
   const [count, setCount] = useState(0);
-  const [msg, msgConetext] = message.useMessage();
+  const { message } = AntApp.useApp();
   return (
     <>
-      {msgConetext}
       <Head>
         <title>Next + TailwindCSS + Antd</title>
       </Head>
@@ -157,15 +161,13 @@ const Page: NextPage = () => {
           rel="noreferrer"
         >
           <Image
-            src="/vercel.svg"
+            src="/next.svg"
             className="pointer-events-none mb-10"
             alt="Vercel logo"
             fill
           />
         </a>
-        <Typography.Title className="text-primary">
-          Next + TailwindCSS + Antd
-        </Typography.Title>
+        <Typography.Title>Next + TailwindCSS + Antd</Typography.Title>
         <div className="flex justify-center space-x-3">
           <Button type="primary" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
@@ -173,7 +175,7 @@ const Page: NextPage = () => {
           <DatePicker
             onChange={(date) => {
               if (date !== null) {
-                msg.info(date.toDate().toLocaleDateString("zh-TW"));
+                message.info(date.toDate().toLocaleDateString("zh-TW"));
               }
             }}
           />
