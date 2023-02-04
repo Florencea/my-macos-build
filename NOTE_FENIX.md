@@ -43,13 +43,14 @@ key0
 ### 3. Clone Release Tag
 
 ```bash
-git clone --depth 1 --branch v107.1.0 git@github.com:Florencea/fenix.git
+git clone --depth 1 --branch v109.2.0 git@github.com:Florencea/fenix.git
 ```
 
 ### 4. Edit Files
 
 - Add GitHub Action script
-- `.github/workflows/release.yml`
+- `rm .github/workflows/*.yml`
+- `touch .github/workflows/release.yml`
 - Could delete all other actions in `.github/workflows`
 
 ```yml
@@ -100,7 +101,8 @@ jobs:
 ```
 
 - Add Android SDK installaton script from iceraven
-- `automation/iceraven/install-sdk.sh`
+- `mkdir automation/iceraven`
+- `touch automation/iceraven/install-sdk.sh`
 - `chmod 755 automation/iceraven/install-sdk.sh`
 
 ```bash
