@@ -72,6 +72,11 @@ brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
 
+unset HOMEBREW_BREW_GIT_REMOTE
+git -C "/opt/homebrew" remote set-url origin https://github.com/Homebrew/brew
+unset HOMEBREW_CORE_GIT_REMOTE
+git -C "/opt/homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
+
 print_step "git configuations"
 (
   set -x
