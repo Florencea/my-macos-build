@@ -1,6 +1,4 @@
 #! /bin/bash
-# nano ~/.config/fish/config.fish
-# alias ua="sh ~/Codespaces/my-macos-build/scripts/update-all.sh"
 
 function print_repo() {
   printf "\033[34m"
