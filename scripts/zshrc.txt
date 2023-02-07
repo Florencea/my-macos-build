@@ -32,15 +32,15 @@ SCRIPT_PRIVATE_HOME="$HOME/.ssh"
 alias ll='ls -lh'
 alias la='ls -lah'
 alias mmb="code $CODE_BASE"
-alias mkgif="sh $SCRIPT_HOME/make-gif.sh"
-alias ebk="sh $SCRIPT_HOME/extension-config-backup.sh $CONFIG_HOME"
-alias urb="sh $SCRIPT_HOME/ublock-rule-backup.sh $SCRIPT_HOME $CONFIG_HOME"
-alias ua="sh $SCRIPT_HOME/update-all.sh"
-alias rec="sh $SCRIPT_HOME/re-encode.sh"
-alias rsl="sh $SCRIPT_PRIVATE_HOME/reset_dock.sh"
-alias boxvpn="sh $SCRIPT_PRIVATE_HOME/vpn.sh"
-alias boxrsync="sh $SCRIPT_PRIVATE_HOME/rsync.sh"
-alias boxdump="sh $SCRIPT_PRIVATE_HOME/sqldump.sh"
+alias mkgif="sh $SCRIPT_HOME/mkgif.sh"
+alias ebk="sh $SCRIPT_HOME/ebk.sh $CONFIG_HOME"
+alias urb="sh $SCRIPT_HOME/urb.sh $SCRIPT_HOME $CONFIG_HOME"
+alias ua="sh $SCRIPT_HOME/ua.sh"
+alias rec="sh $SCRIPT_HOME/rec.sh"
+alias rsl="sh $SCRIPT_PRIVATE_HOME/rsl.sh"
+alias boxvpn="sh $SCRIPT_PRIVATE_HOME/boxvpn.sh"
+alias boxrsync="sh $SCRIPT_PRIVATE_HOME/boxrsync.sh"
+alias boxdump="sh $SCRIPT_PRIVATE_HOME/boxdump.sh"
 
 # plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
