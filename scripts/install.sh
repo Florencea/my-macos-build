@@ -12,9 +12,6 @@ auth       sufficient     pam_tid.so\
 ' /etc/pam.d/sudo
 
 if ! command -v brew &>/dev/null; then
-  export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.ustc.edu.cn/brew.git"
-  export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
-  export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -27,10 +24,8 @@ brew install zsh-fast-syntax-highlighting
 curl -L https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
 
 print_step "brew update taps"
-brew tap --custom-remote --force-auto-update homebrew/cask https://mirrors.ustc.edu.cn/homebrew-cask.git
-brew tap --custom-remote --force-auto-update homebrew/cask https://github.com/Homebrew/homebrew-cask
-brew tap --custom-remote --force-auto-update homebrew/cask-versions https://mirrors.ustc.edu.cn/homebrew-cask-versions.git
-brew tap --custom-remote --force-auto-update homebrew/cask-versions https://github.com/Homebrew/homebrew-cask-versions
+brew tap homebrew/cask
+brew tap homebrew/cask-versions
 brew tap homebrew/cask-fonts
 
 print_step "brew install istat menus"
@@ -71,11 +66,6 @@ brew install rsync
 brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
-
-unset HOMEBREW_BREW_GIT_REMOTE
-git -C "/opt/homebrew" remote set-url origin https://github.com/Homebrew/brew
-unset HOMEBREW_CORE_GIT_REMOTE
-git -C "/opt/homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
 
 print_step "git configuations"
 (
