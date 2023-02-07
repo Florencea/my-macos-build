@@ -18,12 +18,6 @@ function print_green() {
   printf "\033[0m"
 }
 
-function print_red() {
-  printf "\033[31m"
-  printf "%s\n" "$1"
-  printf "\033[0m"
-}
-
 cd "$HOME" || exit
 brew upgrade
 
@@ -34,26 +28,12 @@ for PROJECT in $(ls $CODE_SPACE); do
     print_repo "$PROJECT"
     git fetch --quiet
 
-    UPSTREAM=${1:-'@{u}'}
-    LOCAL=$(git rev-parse @)
-    REMOTE=$(git rev-parse "$UPSTREAM")
-    BASE=$(git merge-base @ "$UPSTREAM")
-
-    if [ $LOCAL = $REMOTE ]; then
+    if [ $(git rev-parse HEAD) == $(git rev-parse @{u}) ]; then
       print_green " ✓"
-    elif [ $LOCAL = $BASE ]; then
+    else
       echo ""
       git pull --all
       echo ""
-    elif [ $REMOTE = $BASE ]; then
-      print_red " ↑"
-      echo ""
-      git status
-      echo ""
-    else
-      print_red " ✕"
-      echo ""
-      git status
     fi
   fi
 done
