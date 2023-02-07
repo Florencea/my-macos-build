@@ -27,6 +27,7 @@ PROMPT='%F{2}%~%f${vcs_info_msg_0_} %% '
 # alias
 CODE_BASE="$HOME/Codespaces/my-macos-build"
 SCRIPT_HOME="$CODE_BASE/scripts"
+CONFIG_HOME="$CODE_BASE/configs"
 SCRIPT_PRIVATE_HOME="$HOME/.ssh"
 alias ll='ls -lh'
 alias la='ls -lah'
