@@ -1,5 +1,7 @@
 #! /bin/bash
 
+CODE_SPACE=$1
+
 function print_repo() {
   printf "\033[34m"
   printf "==> "
@@ -22,13 +24,12 @@ function print_red() {
   printf "\033[0m"
 }
 
-cd ~ || exit
+cd "$HOME" || exit
 brew upgrade
 
-WORKSPACE_DIR="/Users/$(whoami)/Codespaces/"
-cd "$WORKSPACE_DIR" || exit
-for PROJECT in $(ls $WORKSPACE_DIR); do
-  cd "$WORKSPACE_DIR/$PROJECT"
+cd "$CODE_SPACE" || exit
+for PROJECT in $(ls $CODE_SPACE); do
+  cd "$CODE_SPACE/$PROJECT"
   if [ -d .git ]; then
     print_repo "$PROJECT"
     git fetch --quiet

@@ -25,7 +25,8 @@ setopt PROMPT_SUBST
 PROMPT='%F{2}%~%f${vcs_info_msg_0_} %% '
 
 # alias
-CODE_BASE="$HOME/Codespaces/my-macos-build"
+CODE_SPACE="$HOME/Codespaces"
+CODE_BASE="$CODE_SPACE/my-macos-build"
 SCRIPT_HOME="$CODE_BASE/scripts"
 CONFIG_HOME="$CODE_BASE/configs"
 SCRIPT_PRIVATE_HOME="$HOME/.ssh"
@@ -35,7 +36,7 @@ alias mmb="code $CODE_BASE"
 alias mkgif="sh $SCRIPT_HOME/mkgif.sh"
 alias ebk="sh $SCRIPT_HOME/ebk.sh $CONFIG_HOME"
 alias urb="sh $SCRIPT_HOME/urb.sh $SCRIPT_HOME $CONFIG_HOME"
-alias ua="sh $SCRIPT_HOME/ua.sh"
+alias ua="sh $SCRIPT_HOME/ua.sh $CODE_SPACE"
 alias rec="sh $SCRIPT_HOME/rec.sh"
 alias rsl="sh $SCRIPT_PRIVATE_HOME/rsl.sh"
 alias boxvpn="sh $SCRIPT_PRIVATE_HOME/boxvpn.sh"
