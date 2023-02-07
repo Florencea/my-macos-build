@@ -1,37 +1,26 @@
 #! /bin/bash
 
-FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head -n1)
-FILE_UBLOCK_NAME=ublock-advanced.txt
-FILE_TAMPERMONKEY=$(find ~/Downloads -maxdepth 1 -name 'tampermonkey-backup-*.zip' | head -n1)
-FILE_TAMPERMONKEY_NAME=tampermonkey-backup.zip
+CONFIG_HOME=$1
 
-PROJECT_DIR=~/Codespaces/my-macos-build/configs/
+# backup $FILE_PATTERN $FILE_NAME
+function backup() {
+  FILE_PATTERN=$1
+  FILE_NAME=$2
+  FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
+  if [ -f "$FILE_BACKUP" ]; then
+    mv "$FILE_BACKUP" "$CONFIG_HOME/$FILE_NAME"
+    cd "$CONFIG_HOME" || exit
+    git add "$FILE_NAME"
+    echo ""
+    printf "Find Configuration: %s\n" "$FILE_BACKUP"
+    printf "     --> %s\n\n" "$FILE_NAME"
+    printf "Backup..."
+    git commit -q -m "feat: Update $FILE_NAME by ebk"
+    git push -q
+    echo "done."
+    echo ""
+  fi
+}
 
-# find my-ublock-backup*.txt and backup
-if [ -f "$FILE_UBLOCK" ]; then
-  mv "$FILE_UBLOCK" "$PROJECT_DIR$FILE_UBLOCK_NAME"
-  cd $PROJECT_DIR || exit
-  git add $FILE_UBLOCK_NAME
-  echo ""
-  printf 'Find uBlock Configuration: %s\n' "$FILE_UBLOCK"
-  printf '     --> ublock-advanced.txt\n\n'
-  printf 'Backup...'
-  git commit -q -m "feat: Update uBlock Configuration by ebk"
-  git push -q
-  echo "done."
-  echo ""
-fi
-# find tampermonkey-backup-**.zip and backup
-if [ -f "$FILE_TAMPERMONKEY" ]; then
-  mv "$FILE_TAMPERMONKEY" "$PROJECT_DIR$FILE_TAMPERMONKEY_NAME"
-  cd $PROJECT_DIR || exit
-  git add $FILE_TAMPERMONKEY_NAME
-  echo ""
-  printf 'Find TAMPERMONKEY Configuration: %s\n' "$FILE_TAMPERMONKEY"
-  printf '     --> tampermonkey-backup.zip\n\n'
-  printf 'Backup...'
-  git commit -q -m "feat: Update tampermonkey Configuration by ebk"
-  git push -q
-  echo "done."
-  echo ""
-fi
+backup "my-ublock-backup*.txt" "ublock-advanced.txt"
+backup "tampermonkey-backup-*.zip" "tampermonkey-backup.zip"
