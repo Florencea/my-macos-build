@@ -1,15 +1,12 @@
 #! /bin/bash
-# nano ~/.config/fish/config.fish
-# alias ebk="sh ~/Codespaces/my-macos-build/scripts/extension-config-backup.sh"
+
 FILE_UBLOCK=$(find ~/Downloads -maxdepth 1 -name 'my-ublock-backup*.txt' | head -n1)
 FILE_UBLOCK_NAME=ublock-advanced.txt
 FILE_TAMPERMONKEY=$(find ~/Downloads -maxdepth 1 -name 'tampermonkey-backup-*.zip' | head -n1)
 FILE_TAMPERMONKEY_NAME=tampermonkey-backup.zip
-FILE_VIOLENTMONKEY=$(find ~/Downloads -maxdepth 1 -name 'violentmonkey_*.zip' | head -n1)
-FILE_VIOLENTMONKEY_NAME=violentmonkey-backup.zip
-FILE_TONGWENTANG=$(find ~/Downloads -maxdepth 1 -name 'tongwentang-pref*.json' | head -n1)
-FILE_TONGWENTANG_NAME=tongwentang-pref.json
+
 PROJECT_DIR=~/Codespaces/my-macos-build/configs/
+
 # find my-ublock-backup*.txt and backup
 if [ -f "$FILE_UBLOCK" ]; then
   mv "$FILE_UBLOCK" "$PROJECT_DIR$FILE_UBLOCK_NAME"
@@ -34,34 +31,6 @@ if [ -f "$FILE_TAMPERMONKEY" ]; then
   printf '     --> tampermonkey-backup.zip\n\n'
   printf 'Backup...'
   git commit -q -m "feat: Update tampermonkey Configuration by ebk"
-  git push -q
-  echo "done."
-  echo ""
-fi
-# find violentmonkey_*.zip and backup
-if [ -f "$FILE_VIOLENTMONKEY" ]; then
-  mv "$FILE_VIOLENTMONKEY" "$PROJECT_DIR$FILE_VIOLENTMONKEY_NAME"
-  cd $PROJECT_DIR || exit
-  git add $FILE_VIOLENTMONKEY_NAME
-  echo ""
-  printf 'Find VIOLENTMONKEY Configuration: %s\n' "$FILE_VIOLENTMONKEY"
-  printf '     --> violentmonkey-backup.zip\n\n'
-  printf 'Backup...'
-  git commit -q -m "feat: Update violentmonkey Configuration by ebk"
-  git push -q
-  echo "done."
-  echo ""
-fi
-# find tongwentang-pref*.json and backup
-if [ -f "$FILE_TONGWENTANG" ]; then
-  mv "$FILE_TONGWENTANG" "$PROJECT_DIR$FILE_TONGWENTANG_NAME"
-  cd $PROJECT_DIR || exit
-  git add $FILE_TONGWENTANG_NAME
-  echo ""
-  printf 'Find NewTongWenTang Configuration: %s\n' "$FILE_TONGWENTANG"
-  printf '     --> tongwentang-pref.json\n\n'
-  printf 'Backup...'
-  git commit -q -m "feat: Update NewTongWenTang Configuration by ebk"
   git push -q
   echo "done."
   echo ""
