@@ -1,0 +1,70 @@
+{
+  "timeStamp": 1675758073195,
+  "version": "1.46.0",
+  "userSettings": {
+    "advancedUserEnabled": true,
+    "contextMenuEnabled": false,
+    "externalLists": "https://filters.adtidy.org/extension/ublock/filters/3.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
+    "importedLists": [
+      "https://filters.adtidy.org/extension/ublock/filters/3.txt",
+      "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
+      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
+      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
+      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt",
+      "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt"
+    ],
+    "popupPanelSections": 63,
+    "prefetchingDisabled": false,
+    "suspendUntilListsAreLoaded": true,
+    "webrtcIPAddressHidden": true
+  },
+  "selectedFilterLists": [
+    "user-filters",
+    "ublock-filters",
+    "ublock-badware",
+    "ublock-privacy",
+    "ublock-quick-fixes",
+    "ublock-abuse",
+    "ublock-unbreak",
+    "adguard-generic",
+    "adguard-mobile",
+    "easylist",
+    "adguard-spyware-url",
+    "easyprivacy",
+    "urlhaus-1",
+    "curben-phishing",
+    "curben-pup",
+    "adguard-annoyance",
+    "adguard-social",
+    "fanboy-thirdparty_social",
+    "fanboy-cookiemonster",
+    "ublock-annoyances",
+    "dpollock-0",
+    "plowe-0",
+    "CHN-0",
+    "JPN-1",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
+    "https://filters.adtidy.org/extension/ublock/filters/3.txt",
+    "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
+    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
+    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
+    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt"
+  ],
+  "hiddenSettings": {
+    "cloudStorageCompression": false
+  },
+  "whitelist": [
+    "about-scheme",
+    "chrome-extension-scheme",
+    "chrome-scheme",
+    "edge-scheme",
+    "moz-extension-scheme",
+    "opera-scheme",
+    "vivaldi-scheme",
+    "wyciwyg-scheme"
+  ],
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop\ninfoq.cn geekbang.org * noop\nfacebook.com fbcdn.net * noop\n* lib.sinaapp.com * noop\n* yandex.st * noop\n* yastatic.net * noop\n* * 3p-script block\n* * 3p-frame block\nbooks.com.tw book.com.tw * noop\n* akadns.net * noop\n* akamaized.net * noop\n* azureedge.net * noop\n* ecdns.net * noop\n* edgekey.net * noop\n* edgecastcdn.net * noop\n* ampproject.org * noop\n* akamaiedge.net * noop\n* cloudfront.net * noop\n* amazonaws.com * noop\n* cloudflare.com * noop\n* aspnetcdn.com * noop\n* fontawesome.com * noop\n* google.com * noop\n* googleapis.com * noop\n* gstatic.com * noop\n* recaptcha.net * noop\n* fastly.net * noop\n* hwcdn.net * noop\n* bootstrapcdn.com * noop\n* herokudns.com * noop\n* mwcloudcdn.com * noop\n* psicdn.net * noop\n* v-cdn.net * noop\n* fonts.net * noop\n* gammacdn.net * noop\n* akamai.net * noop\n* polyfill.io * noop\n* typekit.net * noop\n* cloudflare.net * noop\n* cloudflarestream.com * noop\n* onetrust.com * noop\n* videodelivery.net * noop\n* spcdntip.com * noop\n* typesquare.com * noop\n* unpkg.com * noop\n* hinet.net * noop\n* pcloud.tw * noop\n* ecimg.tw * noop\n* alikunlun.net * noop\n* pstatp.com * noop\n* cdnst.net * noop\n* netdna-ssl.com * noop\n* youtube.com * noop\n* ytimg.com * noop\n* netlify.com * noop\n* steamstatic.com * noop\n* mozit.cloud * noop\n* mozilla.net * noop\n* mozillademos.org * noop\n* redditstatic.com * noop\n* cdn-apple.com * noop\n* discourse-cdn.com * noop\n* kxcdn.com * noop\n* netlify.app * noop\n* vimeo.com * noop\n* vimeocdn.com * noop\n* cdpn.io * noop\n* codepen.io * noop\n* youtube-nocookie.com * noop\n* googleusercontent.com * noop\n* vercel-dns.com * noop\n* azure.com * noop\n* imgur.com * noop\ngamer.com.tw bahamut.com.tw * noop\n* ghbtns.com * noop\n* intlscdn.com * noop\n* jspm.io * noop\n* typekit.com * noop\n* jwplayer.com * noop\n* aicdn.com * noop\n* apcdns.com * noop\n* github.com * noop\n* webflow.com * noop\n* wp.com * noop\n* hdslb.com * noop\n* disqus.com * noop\n* disquscdn.com * noop\n* csb.app * noop\n* rackcdn.com * noop\n* glitch.com * noop\n* glitch.me * noop\n* dropboxstatic.com * noop\n* dropboxusercontent.com * noop\n* alicdn.com * noop\n* ksyuncdn.com * noop\n* kunlunle.com * noop\n* intellij.net * noop\n* cloudapp.net * noop\n* twimg.com * noop\n* 00cdn.com * noop\n* 126.net * noop\n* 15cdn.com * noop\n* 163jiasu.com * noop\n* 1e100.net * noop\n* 21cvcdn.com * noop\n* 21okglb.cn * noop\n* 21speedcdn.com * noop\n* 21vianet.com.cn * noop\n* 21vokglb.cn * noop\n* 2cname.com * noop\n* 360anyu.com * noop\n* 360cdn.com * noop\n* 360cloudwaf.com * noop\n* 360safedns.com * noop\n* 360wzws.com * noop\n* 365cyd.cn * noop\n* 51cdn.com * noop\n* 800cdn.com * noop\n* akamaitech.net * noop\n* akamaitechnologies.com * noop\n* aligaofang.com * noop\n* alikunlun.com * noop\n* alipaydns.com * noop\n* aliyun-inc.com * noop\n* aliyuncs.com * noop\n* alphacdn.net * noop\n* anquan.io * noop\n* aocde.com * noop\n* aocdn.com * noop\n* att-dsa.net * noop\n* azioncdn.net * noop\n* b-cdn.net * noop\n* bdydns.com * noop\n* belugacdn.com * noop\n* biliapi.com * noop\n* bsclink.cn * noop\n* bsgslb.cn * noop\n* c3cache.net * noop\n* c3dns.net * noop\n* cachecn.com * noop\n* cachefly.net * noop\n* ccgslb.cn * noop\n* ccgslb.com * noop\n* ccgslb.com.cn * noop\n* ccgslb.net * noop\n* cdn20.com * noop\n* cdn77.net * noop\n* cdn77.org * noop\n* cdncenter.cn * noop\n* cdndo.com * noop\n* cdnetworks.net * noop\n* cdnga.net * noop\n* cdngc.net * noop\n* cdngslb.com * noop\n* cdnhwc1.com * noop\n* cdnhwc2.com * noop\n* cdnhwc3.com * noop\n* cdnify.io * noop\n* cdnle.com * noop\n* cdnnetworks.com * noop\n* cdnsun.net * noop\n* cdntip.com * noop\n* cdnudns.com * noop\n* cdnunion.com * noop\n* cdnunion.net * noop\n* cdxcn.cn * noop\n* cedexis.net * noop\n* chinacache.net * noop\n* chinacloudsites.cn * noop\n* chinamaincloud.com * noop\n* chinanetcenter.com * noop\n* chuangcdn.com * noop\n* cloudcdn.net * noop\n* cloudfence.cn * noop\n* cloudglb.com * noop\n* cnispgroup.com * noop\n* coding.io * noop\n* coding.me * noop\n* ctxcdn.cn * noop\n* customcdn.cn * noop\n* customcdn.com.cn * noop\n* dayugslb.com * noop\n* dlgslb.cn * noop\n* dnion.com * noop\n* dnsv1.com * noop\n* edgesuite.net * noop\n* elemecdn.com * noop\n* ewcache.com * noop\n* fastcdn.com * noop\n* fastlylb.net * noop\n* fastweb.com * noop\n* fastwebcdn.com * noop\n* ffdns.net * noop\n* flexbalancer.net * noop\n* flxdns.com * noop\n* footprint.net * noop\n* frontwize.com * noop\n* fwcdn.com * noop\n* fwdns.net * noop\n* gccdn.cn * noop\n* gccdn.net * noop\n* gcdn.co * noop\n* github.io * noop\n* gitlab.io * noop\n* globalcdn.cn * noop\n* gosuncdn.com * noop\n* hacdn.net * noop\n* hadns.net * noop\n* hdslb.net * noop\n* herokuapp.com * noop\n* huaweicloud.com * noop\n* incapdns.net * noop\n* inscname.net * noop\n* insnw.net * noop\n* internapcdn.net * noop\n* jcloud-cdn.com * noop\n* jcloudcs.com * noop\n* jcloudlb.com * noop\n* jdcdn.com * noop\n* jiashule.com * noop\n* jiasule.org * noop\n* jsd.cc * noop\n* ks-cdn.com * noop\n* ksyuncdn-k1.com * noop\n* lccdn.org * noop\n* lldns.net * noop\n* llnwd.net * noop\n* llnwi.net * noop\n* lswcdn.net * noop\n* lsycdn.com * noop\n* lxdns.com * noop\n* maoyun.tv * noop\n* maoyundns.com * noop\n* mmtrixopt.com * noop\n* mmycdn.cn * noop\n* mncdn.com * noop\n* momentcdn.com * noop\n* mschcdn.com * noop\n* msecnd.net * noop\n* msscdn.com * noop\n* mucdn.net * noop\n* mwcname.com * noop\n* mygslb.com * noop\n* ncname.com * noop\n* netdna-cdn.com * noop\n* netdna.com * noop\n* newdefend.cn * noop\n* ngaagslb.cn * noop\n* nscloudwaf.com * noop\n* nucdn.net * noop\n* ogslb.com * noop\n* okcdn.com * noop\n* okglb.com * noop\n* p2cdn.com * noop\n* panthercdn.com * noop\n* powercdn.cn * noop\n* qbox.me * noop\n* qh-cdn.com * noop\n* qhcdn.com * noop\n* qianxun.com * noop\n* qihucdn.com * noop\n* qingcache.com * noop\n* qingcdn.com * noop\n* qingcloud.com * noop\n* qiniu.com * noop\n* qiniudns.com * noop\n* quic.cloud * noop\n* rncdn1.com * noop\n* saebbs.com * noop\n* sangfordns.com * noop\n* sankuai.com * noop\n* scsdns.com * noop\n* shifen.com * noop\n* simplecdn.net * noop\n* sina.com.cn * noop\n* sinacdn.com * noop\n* sinaedge.com * noop\n* sinajs.cn * noop\n* sinasws.com * noop\n* spdydns.com * noop\n* speedcdns.com * noop\n* speedycloud.cc * noop\n* sprycdn.com * noop\n* stackpathcdn.com * noop\n* stackpathdns.com * noop\n* stspg-customer.com * noop\n* swiftserve.com * noop\n* systemcdn.net * noop\n* tan14.net * noop\n* tbcache.com * noop\n* tcdnvod.com * noop\n* tdnsv5.com * noop\n* tencdns.net * noop\n* tencent-cloud.net * noop\n* tl88.net * noop\n* tlgslb.com * noop\n* trafficmanager.net * noop\n* trpcdn.net * noop\n* turbobytes-cdn.com * noop\n* turbobytes.net * noop\n* txcdn.cn * noop\n* txnetworks.cn * noop\n* tzcdn.cn * noop\n* ucloud.cn * noop\n* ucloud.com.cn * noop\n* ucloudgda.com * noop\n* unud.net * noop\n* uxengine.net * noop\n* v0cdn.net * noop\n* verycdn.net * noop\n* verycloud.cn * noop\n* verygslb.com * noop\n* vhostgo.com * noop\n* websitecname.cn * noop\n* worldcdn.net * noop\n* worldssl.net * noop\n* wscdns.com * noop\n* wscloudcdn.com * noop\n* wsdvs.com * noop\n* wsglb0.com * noop\n* wsssec.com * noop\n* wswebcdn.com * noop\n* wswebpic.com * noop\n* wtxcdn.com * noop\n* xgslb.net * noop\n* xundayun.cn * noop\n* xundayun.com * noop\n* xwaf.cn * noop\n* yfcdn.net * noop\n* ytcdn.net * noop\n* yundunddos.com * noop\n* yunjiasu-cdn.net * noop\n* zeit-cdn.net * noop\n* zeit.co * noop\n* zenedge.net * noop\n* zenlogic.net * noop\n* zetacdn.net * noop\n* appspot.com * noop\n* zawazawa.jp * noop\n* wpengine.com * noop\ntwnic.tw twnic.net.tw * noop\n* netlifyglobalcdn.com * noop\n* kgstatic.net * noop\n* loli.net * noop\n* pagecdn.io * noop\n* redditmedia.com * noop\n* wikimedia.org * noop\n* wikipedia.org * noop\n* line-scdn.net * noop\n* kunlunar.com * noop\n* kunlunhuf.com * noop\n* kunlunno.com * noop\n* media-amazon.com * noop\n* ssl-images-amazon.com * noop\ngitlab.com gitlab-static.net * noop\n* pximg.net * noop\n* wordpress.com * noop\n* gfx.ms * noop\n* live.com * noop\n* liveperson.com * noop\n* liveperson.net * noop\n* lpsnmedia.net * noop\n* msauth.net * noop\n* t-msedge.net * noop\n* office.net * noop\n* dc-msedge.net * noop\n* microsoft.com * noop\n* msocdn.com * noop\n* office.com * noop\n* office365.com * noop\n* k-msedge.net * noop\n* microsoftonline.com * noop\n* msftauth.net * noop\n* spo-msedge.net * noop\n* sharepoint.com * noop\n* windows.net * noop\n* akamaihd.net * noop\n* b-msedge.net * noop\n* l-msedge.net * noop\n* 1drv.com * noop\n* a-msedge.net * noop\n* livefilestore.com * noop\n* sfx.ms * noop\n* bing.com * noop\n* live.net * noop\nadobe.com adobedtm.com * noop\nadobe.com adobelogin.com * noop\nnetflix.com nflxext.com * noop\nnetflix.com nflximg.net * noop\n* cloudcannon.com * noop\n* jsdelivr.net * noop\n* baidu.com * noop\n* baomitu.com * noop\n* bootcdn.net * noop\n* bootcss.com * noop\n* css.net * noop\n* geekzu.org * noop\n* jquery.com * noop\n* materialdesignicons.com * noop\n* plyr.io * noop\n* ravenjs.com * noop\n* staticfile.org * noop\n* upaiyun.com * noop\n* ustclug.org * noop\n* zencdn.net * noop\n* s-microsoft.com * noop\nmyself-bbs.com lcfangel.net * noop\n* hcaptcha.com * noop\n* medium.com * noop\nnetflix.com nflxvideo.net * noop\n* medium.systems * noop\n* kunluncan.com * noop\n* sstatic.net * noop\n* cbricdns.net * noop\n* virtualearth.net * noop\nmyself-bbs.com cookie3.cloud * noop\nslack.com slack-edge.com * noop\n* bdimg.com * noop\nshopee.tw shopeemobile.com * noop\n* alipayobjects.com * noop\napple.com aaplimg.com * noop\n* auth0.com * noop\n* onedrive.com * noop\n* ggpht.com * noop\n* google.com.tw * noop\n* googlevideo.com * noop\n* codesandbox.io * noop\n* rawgit.com * noop\nswagger.io smartbear.co * noop\n* squarespace-cdn.com * noop\n* squarespace.com * noop\n* sandpack-bundler.pages.dev * noop\n* awsstatic.com * noop\n* cdndm5.com * noop\n* cdndm5.net * noop\n* cdnmanhua.net * noop\n* apple-cloudkit.com * noop\n* apple.com * noop\n* atl-paas.net * noop\n* atlassian.com * noop\n* bb-inf.net * noop\n* bytebucket.org * noop\n* bytescm.com * noop\n* githubassets.com * noop\n* githubusercontent.com * noop\n* nocookie.net * noop\n* stackblitz.io * noop\n* staticblitz.com * noop\n* vscode-webview.net * noop\n* webcontainer.io * noop\n* openbenchmarking.org * noop\n* vsassets.io * noop\n* vscode-cdn.net * noop\n* vscode-unpkg.net * noop\n* zhimg.com * noop\nanime1.me anicdn.com * noop\nelle.com hearstapps.com * noop\n* media-lab.ai * noop",
+  "urlFilteringString": "",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
+  "userFilters": ""
+}
