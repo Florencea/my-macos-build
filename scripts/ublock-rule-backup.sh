@@ -1,25 +1,20 @@
 #! /bin/bash
 
-echo ""
+SCRIPT_HOME=$1
+CONFIG_HOME=$2
 
-printf 'Minifiy ec-rules for ubo...'
-python3 ~/Codespaces/my-macos-build/scripts/ublock-rule-combiner.py
-
-echo "done."
-echo ""
+FILE_LIST="element-custom-rules-desktop element-custom-rules-mobile element-custom-rules-dark"
 
 printf 'Update ec-rules...'
 
-cd ~/Codespaces/my-macos-build/ || exit
-
-git add configs/element-custom-rules-desktop.txt
-git add configs/element-custom-rules-desktop.combined.txt
-git add configs/element-custom-rules-mobile.txt
-git add configs/element-custom-rules-mobile.combined.txt
-git add configs/element-custom-rules-dark.txt
-git add configs/element-custom-rules-dark.combined.txt
+for FILE in ${FILE_LIST}; do
+  cd "$HOME"
+  python3 "$SCRIPT_HOME/ublock-rule-combiner.py" "$CONFIG_HOME/$FILE.txt"
+  cd "$CONFIG_HOME" || exit
+  git add "$FILE.txt"
+  git add "$FILE.combined.txt"
+done
 git commit -q -m "feat: update ec-rules by urb"
 git push -q
 
 echo "done."
-echo ""

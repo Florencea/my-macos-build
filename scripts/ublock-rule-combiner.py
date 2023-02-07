@@ -1,10 +1,7 @@
 from datetime import datetime
+from sys import argv
 
-file_list = [
-    "/Users/florencea/Codespaces/my-macos-build/configs/element-custom-rules-desktop.txt",
-    "/Users/florencea/Codespaces/my-macos-build/configs/element-custom-rules-mobile.txt",
-    "/Users/florencea/Codespaces/my-macos-build/configs/element-custom-rules-dark.txt",
-]
+file_name = argv[1]
 
 
 def not_emply_line(line_list):
@@ -93,16 +90,15 @@ def get_combined_style_rules(style_rule_list):
     return combined_style_rule_list
 
 
-for file_name in file_list:
-    input_list = read_input_rule(file_name)
-    with open(file_name.split(".")[0] + ".combined.txt", "w") as output_file:
-        for line in get_meta(input_list):
-            print(line, file=output_file)
-        if "mobile" in file_name:
-            print("!#if env_mobile", file=output_file)
-        for line in get_remove_rules(input_list):
-            print(line, file=output_file)
-        for line in get_combined_style_rules(get_style_rules(input_list)):
-            print(line, file=output_file)
-        if "mobile" in file_name:
-            print("!#endif", file=output_file)
+input_list = read_input_rule(file_name)
+with open(file_name.split(".")[0] + ".combined.txt", "w") as output_file:
+    for line in get_meta(input_list):
+        print(line, file=output_file)
+    if "mobile" in file_name:
+        print("!#if env_mobile", file=output_file)
+    for line in get_remove_rules(input_list):
+        print(line, file=output_file)
+    for line in get_combined_style_rules(get_style_rules(input_list)):
+        print(line, file=output_file)
+    if "mobile" in file_name:
+        print("!#endif", file=output_file)
