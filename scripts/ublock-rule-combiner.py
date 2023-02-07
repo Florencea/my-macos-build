@@ -91,7 +91,7 @@ def get_combined_style_rules(style_rule_list):
 
 
 input_list = read_input_rule(file_name)
-with open(file_name.split(".")[0] + ".combined.txt", "w") as output_file:
+with open(file_name.split(".")[0] + ".min.txt", "w") as output_file:
     for line in get_meta(input_list):
         print(line, file=output_file)
     if "mobile" in file_name:

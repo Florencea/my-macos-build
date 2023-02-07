@@ -22,5 +22,5 @@ function backup() {
   fi
 }
 
-backup "my-ublock-backup*.txt" "ublock-advanced.txt"
+backup "my-ublock-backup*.txt" "ubo-config.txt"
 backup "tampermonkey-backup-*.zip" "tampermonkey-backup.zip"

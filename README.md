@@ -9,9 +9,8 @@
 
 ## Extenstion Configs
 
-- [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ublock-advanced.txt)
+- [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-config.txt)
 - [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey-backup.zip)
-- [NewTongwentong Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang-pref.json)
 
 ## Firefox Devtools
 
