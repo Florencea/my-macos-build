@@ -55,14 +55,11 @@ brew install gcc
 brew install git
 brew install jq
 brew install mtr
-brew install mysql-client@5.7
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node@18
+brew install node
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
-brew install openvpn
-brew install rsync
 brew install python
 brew install wget
 brew install yt-dlp/taps/yt-dlp
