@@ -50,6 +50,7 @@ brew install --cask transmission
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
+brew install curl
 brew install ffmpeg
 brew install gcc
 brew install git
@@ -58,7 +59,7 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node@18
+brew install node
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install python
 brew install wget
