@@ -14,6 +14,7 @@ fi
 
 # variables and path
 export CLICOLOR=1
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
 # prompt
 autoload -Uz vcs_info
