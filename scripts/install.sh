@@ -30,10 +30,7 @@ brew tap homebrew/cask-fonts
 
 print_step "brew install istat menus"
 brew install istat-menus
-printf "\E[0;31m"
-printf "982092332@qq.com\n"
-printf "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA\n"
-printf "\E[0m"
+defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
 print_step "brew install fonts essential"
 brew install font-jetbrains-mono
