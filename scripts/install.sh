@@ -38,10 +38,12 @@ brew install font-inter
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 
 print_step "brew install cask apps"
+brew install --cask docker
 brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
+brew install --cask microsoft-office
 brew install --cask mos
 brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
