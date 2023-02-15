@@ -43,7 +43,7 @@ key0
 ### 3. Clone Release Tag
 
 ```bash
-git clone --depth 1 --branch v109.2.0 git@github.com:Florencea/fenix.git
+git clone --depth 1 --branch v110.0.1 git@github.com:Florencea/fenix.git
 ```
 
 ### 4. Edit Files
@@ -138,7 +138,7 @@ echo "sdk.dir=${ANDROID_SDK_ROOT}" >> local.properties
 - Change Default AMO Collections and speedup build
 
 ```bash
-buildConfigField "String", "AMO_COLLECTION_NAME", "\"7dfae8669acc4312a65e8ba5553036\"" -> buildConfigField "String", "AMO_COLLECTION_NAME", "\"1\""
+buildConfigField "String", "AMO_COLLECTION_NAME", "\"Extensions-for-Android\"" -> buildConfigField "String", "AMO_COLLECTION_NAME", "\"1\""
 buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\"" -> buildConfigField "String", "AMO_COLLECTION_USER", "\"17496363\""
 applicationIdSuffix ".firefox" -> applicationIdSuffix ".firefox_custom"
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
