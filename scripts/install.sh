@@ -21,7 +21,7 @@ print_step "brew install zsh"
 brew install zsh
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
-curl -L https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
 
 print_step "brew update taps"
 brew tap homebrew/cask-versions
