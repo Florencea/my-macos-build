@@ -19,7 +19,7 @@ function print_green() {
 }
 
 cd "$HOME" || exit
-brew upgrade
+brew upgrade --quiet
 
 cd "$CODE_SPACE" || exit
 for PROJECT in $(ls $CODE_SPACE); do
