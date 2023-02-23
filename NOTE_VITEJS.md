@@ -27,7 +27,6 @@ typescript@latest \
 vite@latest \
 antd \
 eslint \
-eslint-config-react-app \
 eslint-plugin-react-hooks \
 @typescript-eslint/parser \
 prettier \
