@@ -159,7 +159,7 @@
 	<key>BackgroundSettingsForInactiveWindows</key>
 	<false/>
 	<key>CommandString</key>
-	<string></string>
+	<string>login -fpql florencea /opt/homebrew/bin/fish</string>
 	<key>CursorBlink</key>
 	<true/>
 	<key>CursorColor</key>
@@ -258,6 +258,10 @@
 		<dict>
 			<key>ProcessName</key>
 			<string>zsh</string>
+		</dict>
+		<dict>
+			<key>ProcessName</key>
+			<string>fish</string>
 		</dict>
 	</array>
 	<key>rowCount</key>
