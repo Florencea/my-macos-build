@@ -64,7 +64,6 @@ brew install openvpn
 brew install rsync
 brew install python
 brew install wget
-brew install yt-dlp/taps/yt-dlp
 
 print_step "git configuations"
 (
