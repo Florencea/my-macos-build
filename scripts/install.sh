@@ -17,10 +17,11 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-print_step "brew install fish"
-brew install fish
-mkdir -p "$HOME/.config/fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/config.fish.txt -o "$HOME/.config/fish/config.fish"
+print_step "brew install zsh"
+brew install zsh
+brew install zsh-autosuggestions
+brew install zsh-fast-syntax-highlighting
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
 
 print_step "brew update taps"
 brew tap homebrew/cask-versions
