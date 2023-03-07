@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-02-07
+! Last updated: 2023-03-07
 
 ! universal rules
 ! outline
@@ -145,8 +145,8 @@ dmhy.org##^#\31 280_adv
 dmhy.org###\31 280_adv:remove()
 dmhy.org##^.user-sidebar > div.ui-corner-all.box:nth-of-type(4)
 dmhy.org##.user-sidebar > div.ui-corner-all.box:nth-of-type(4):remove()
-dmhy.org##^a.download-pikpak
-dmhy.org##a.download-pikpak:remove()
+dmhy.org##^a.download-pp
+dmhy.org##a.download-pp:remove()
 dmhy.org##^script[src*='kiwihk']
 dmhy.org##^script:has-text(baidu)
 dmhy.org##^script:has-text(bebi)
