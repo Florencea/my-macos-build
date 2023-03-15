@@ -23,11 +23,6 @@ print_step "system config"
   cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
   defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
   defaults write -g ApplePressAndHoldEnabled -bool false
-)
-
-print_step "git config"
-(
-  set -x
   git config --global user.name "Florencea"
   git config --global user.email "bearflorencea@gmail.com"
   git config --global core.editor "nano"
@@ -43,7 +38,8 @@ else
   print_step "setup ssh key"
   (
     set -x
-    ssh-keygen -q -t ed25519 -N '' -f ~/.ssh/id_ed25519 && cat .ssh/id_ed25519.pub
+    cd "$HOME"
+    ssh-keygen -q -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519" && cat "$HOME/.ssh/id_ed25519.pub"
   )
 fi
 
@@ -52,7 +48,7 @@ brew install fish
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 chsh -s /opt/homebrew/bin/fish
 mkdir -p "$HOME/.config/fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/config.fish.txt -o "$HOME/.config/fish/config.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/config.fish -o "$HOME/.config/fish/config.fish"
 
 print_step "brew install istat menus"
 brew install istat-menus
