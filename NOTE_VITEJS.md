@@ -27,8 +27,7 @@ typescript@latest \
 vite@latest \
 antd \
 eslint \
-eslint-plugin-react-hooks \
-@typescript-eslint/parser \
+eslint-config-react-app \
 prettier \
 tailwindcss \
 postcss \
@@ -40,7 +39,7 @@ npx tailwindcss init -p
 ```
 
 ```bash
-printf "{\n  \"root\": true,\n  \"extends\": [\"plugin:react-hooks/recommended\"],\n  \"parser\": \"@typescript-eslint/parser\",\n  \"env\": { \"browser\": true, \"node\": true }\n}" > .eslintrc.json
+printf "{\n  \"extends\": \"react-app\"\n}" > .eslintrc.json
 ```
 
 ```bash
