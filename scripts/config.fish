@@ -3,6 +3,8 @@ set BREW_PATH "/opt/homebrew"
 set -gx PATH "$BREW_PATH/bin" $PATH
 set -gx fish_user_paths "$BREW_PATH/sbin" $fish_user_paths
 set -gx fish_greeting
+# node
+fish_add_path "$BREW_PATH/opt/node@18/bin"
 # alias
 set CODE_SPACE "$HOME/Codespaces"
 set CODE_BASE "$CODE_SPACE/my-macos-build"
