@@ -1,13 +1,11 @@
 {
-  "timeStamp": 1675758073195,
-  "version": "1.46.0",
+  "timeStamp": 1678867781677,
+  "version": "1.47.4",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://filters.adtidy.org/extension/ublock/filters/3.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
+    "externalLists": "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
     "importedLists": [
-      "https://filters.adtidy.org/extension/ublock/filters/3.txt",
-      "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt",
@@ -43,8 +41,6 @@
     "plowe-0",
     "CHN-0",
     "JPN-1",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
-    "https://filters.adtidy.org/extension/ublock/filters/3.txt",
     "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
