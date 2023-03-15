@@ -49,6 +49,7 @@ brew install zsh
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o ~/.zshrc
+source ~/.zshrc
 
 print_step "brew install istat menus"
 brew install istat-menus
@@ -70,7 +71,7 @@ brew install jq
 brew install mtr
 brew install nano
 brew install nanorc
-echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
+echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install openvpn
