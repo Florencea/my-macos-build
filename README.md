@@ -5,7 +5,6 @@
 - [Vite Note](NOTE_VITEJS.md)
 - [Next.js Note](NOTE_NEXTJS.md)
 - [FFmpeg Note](NOTE_FFMPEG.md)
-- [Fenix Note](NOTE_FENIX.md)
 
 ## Extenstion Configs
 
@@ -15,7 +14,7 @@
 ## Firefox Devtools
 
 ```text
-Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/109.0 Firefox/109.0
+Mozilla/5.0 (Android 13; Mobile; rv:111.0) Gecko/111.0 Firefox/111.0
 ```
 
 ```text
