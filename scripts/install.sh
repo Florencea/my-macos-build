@@ -44,6 +44,7 @@ else
 fi
 
 print_step "brew install zsh"
+brew install curl
 brew install zsh
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
@@ -64,6 +65,7 @@ brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
 brew install ffmpeg
+brew install git
 brew install jq
 brew install mtr
 brew install nano
@@ -72,6 +74,7 @@ echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
 brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install openvpn
+brew install rsync
 
 print_step "done, reset launchpad & clear scripts"
 (
