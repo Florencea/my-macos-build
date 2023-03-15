@@ -19,6 +19,8 @@ fi
 
 print_step "brew install fish"
 brew install fish
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
 mkdir -p "$HOME/.config/fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
