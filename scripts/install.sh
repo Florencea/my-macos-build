@@ -33,7 +33,7 @@ print_step "system config"
 )
 
 if [ -d "$HOME/.ssh" ]; then
-  print_step "$HOME.ssh exist, skip ssh key generation"
+  print_step "$HOME/.ssh exist, skip ssh key generation"
 else
   print_step "setup ssh key"
   (
@@ -43,12 +43,11 @@ else
   )
 fi
 
-print_step "brew install fish"
-brew install fish
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
-mkdir -p "$HOME/.config/fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish -o "$HOME/.config/fish/config.fish"
+print_step "brew install zsh"
+brew install zsh
+brew install zsh-autosuggestions
+brew install zsh-fast-syntax-highlighting
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o ~/.zshrc
 
 print_step "brew install istat menus"
 brew install istat-menus
