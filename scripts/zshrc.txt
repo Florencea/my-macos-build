@@ -14,9 +14,6 @@ fi
 
 # variables and path
 export CLICOLOR=1
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
 # prompt
 autoload -Uz vcs_info
@@ -41,8 +38,6 @@ alias ua="sh $SCRIPT_HOME/ua.sh $CODE_SPACE"
 alias rec="sh $SCRIPT_HOME/rec.sh"
 alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
 alias boxvpn="sh $SCRIPT_PRIVATE_HOME/boxvpn.sh"
-alias boxrsync="sh $SCRIPT_PRIVATE_HOME/boxrsync.sh"
-alias boxdump="sh $SCRIPT_PRIVATE_HOME/boxdump.sh"
 
 # plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'

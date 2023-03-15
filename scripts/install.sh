@@ -23,18 +23,15 @@ brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/zshrc.txt -o ~/.zshrc
 
-print_step "brew update taps"
-brew tap homebrew/cask-versions
-brew tap homebrew/cask-fonts
-
 print_step "brew install istat menus"
 brew install istat-menus
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
 print_step "brew install fonts essential"
-brew install font-jetbrains-mono
-brew install font-inter
-cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+(
+  set -x
+  cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+)
 
 print_step "brew install cask apps"
 brew install --cask google-chrome
@@ -46,23 +43,16 @@ brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
-brew install bash
-brew install curl
 brew install ffmpeg
-brew install gcc
 brew install git
 brew install jq
 brew install mtr
-brew install mysql-client@5.7
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node@18
+brew install node
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install openvpn
-brew install rsync
-brew install python
-brew install wget
 
 print_step "git configuations"
 (
