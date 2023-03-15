@@ -17,45 +17,15 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-print_step "brew install fish"
-brew install fish
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
-mkdir -p "$HOME/.config/fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/config.fish.txt -o "$HOME/.config/fish/config.fish"
-
-print_step "brew install istat menus"
-brew install istat-menus
-defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
-
-print_step "brew install fonts essential"
+print_step "system config"
 (
   set -x
   cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+  defaults write -g ApplePressAndHoldEnabled -bool false
 )
 
-print_step "brew install cask apps"
-brew install --cask google-chrome
-brew install --cask iina
-brew install --cask keka
-brew install --cask kekaexternalhelper
-brew install --cask mos
-brew install --cask c0re100-qbittorrent
-brew install --cask visual-studio-code
-
-print_step "brew install commend line tools"
-brew install ffmpeg
-brew install git
-brew install jq
-brew install mtr
-brew install nano
-brew install nanorc
-echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
-brew install node
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
-brew install openvpn
-
-print_step "git configuations"
+print_step "git config"
 (
   set -x
   git config --global user.name "Florencea"
@@ -77,12 +47,41 @@ else
   )
 fi
 
-print_step "disable eyecandy, reset launchpad & clear scripts"
+print_step "brew install fish"
+brew install fish
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+mkdir -p "$HOME/.config/fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/config.fish.txt -o "$HOME/.config/fish/config.fish"
+
+print_step "brew install istat menus"
+brew install istat-menus
+defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
+
+print_step "brew install cask apps"
+brew install --cask google-chrome
+brew install --cask iina
+brew install --cask keka
+brew install --cask kekaexternalhelper
+brew install --cask mos
+brew install --cask c0re100-qbittorrent
+brew install --cask visual-studio-code
+
+print_step "brew install commend line tools"
+brew install ffmpeg
+brew install jq
+brew install mtr
+brew install nano
+brew install nanorc
+echo "include /opt/homebrew/share/nanorc/*.nanorc" >>~/.nanorc
+brew install node
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
+brew install openvpn
+
+print_step "done, reset launchpad & clear scripts"
 (
   set -x
-  defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
   defaults write com.apple.dock ResetLaunchPad -bool true
-  defaults write -g ApplePressAndHoldEnabled -bool false
   killall Dock
   rm "$0"
 )
