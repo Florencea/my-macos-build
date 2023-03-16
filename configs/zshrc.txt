@@ -5,7 +5,10 @@ if type brew &>/dev/null; then
   zstyle ':completion:*' select-prompt ''
   zstyle ':completion:*' menu yes select
   autoload -Uz compinit
-  if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  if [ -d "$HOME/.zcompdump" ]; then
+    compinit
+  fi
+  if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' "$HOME/.zcompdump") ]; then
     compinit
   else
     compinit -C

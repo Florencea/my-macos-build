@@ -44,7 +44,6 @@ else
 fi
 
 print_step "brew install zsh"
-brew install curl
 brew install zsh
 brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
@@ -65,7 +64,10 @@ brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
+brew install bash
+brew install curl
 brew install ffmpeg
+brew install gcc
 brew install git
 brew install jq
 brew install mtr
@@ -76,6 +78,9 @@ brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install openvpn
 brew install rsync
+brew install python
+brew install wget
+brew install yt-dlp/taps/yt-dlp
 
 print_step "done, reset launchpad & clear scripts"
 (
