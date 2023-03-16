@@ -24,3 +24,4 @@ function backup() {
 
 backup "my-ublock-backup*.txt" "ubo-config.txt"
 backup "tampermonkey-backup-*.zip" "userscript.zip"
+backup "tongwentang-*.json" "tongwentang.json"
