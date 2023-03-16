@@ -13,7 +13,7 @@ cd next-app
 ```
 
 ```bash
-npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true --location=project
+npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true save=true --location=project
 ```
 
 ```bash
