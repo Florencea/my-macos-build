@@ -1,11 +1,12 @@
 {
-  "timeStamp": 1678867781677,
+  "timeStamp": 1678949420218,
   "version": "1.47.4",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
+    "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
     "importedLists": [
+      "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt",
@@ -44,7 +45,8 @@
     "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
-    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt"
+    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt"
   ],
   "hiddenSettings": {
     "cloudStorageCompression": false
