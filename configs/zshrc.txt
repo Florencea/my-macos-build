@@ -6,12 +6,13 @@ if type brew &>/dev/null; then
   zstyle ':completion:*' menu yes select
   autoload -Uz compinit
   if [ -d "$HOME/.zcompdump" ]; then
-    compinit
-  fi
-  if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' "$HOME/.zcompdump") ]; then
-    compinit
+    if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' "$HOME/.zcompdump") ]; then
+      compinit
+    else
+      compinit -C
+    fi
   else
-    compinit -C
+    compinit
   fi
 fi
 
