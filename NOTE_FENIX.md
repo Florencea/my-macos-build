@@ -13,6 +13,8 @@
 
 ### 1. Fork Repository
 
+- <https://github.com/mozilla-mobile/fenix>
+
 ### 2. Add Repository Secrets
 
 - **Note: Only for personal use, this key is different from upstream!**
@@ -43,7 +45,7 @@ key0
 ### 3. Clone Release Tag
 
 ```bash
-git clone --depth 1 --branch v110.0.1 git@github.com:Florencea/fenix.git
+git clone --depth 1 --branch v108.2.0 git@github.com:Florencea/fenix.git
 ```
 
 ### 4. Edit Files
@@ -138,7 +140,7 @@ echo "sdk.dir=${ANDROID_SDK_ROOT}" >> local.properties
 - Change Default AMO Collections and speedup build
 
 ```bash
-buildConfigField "String", "AMO_COLLECTION_NAME", "\"Extensions-for-Android\"" -> buildConfigField "String", "AMO_COLLECTION_NAME", "\"1\""
+buildConfigField "String", "AMO_COLLECTION_NAME", "\"7dfae8669acc4312a65e8ba5553036\"" -> buildConfigField "String", "AMO_COLLECTION_NAME", "\"1\""
 buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\"" -> buildConfigField "String", "AMO_COLLECTION_USER", "\"17496363\""
 applicationIdSuffix ".firefox" -> applicationIdSuffix ".firefox_custom"
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
@@ -153,7 +155,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 92 ~ 102)
+- Comment this part (Line 75 ~ 85)
 - see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
