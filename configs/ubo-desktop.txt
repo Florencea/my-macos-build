@@ -2,6 +2,8 @@
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
 ! Last updated: 2023-03-15
 
+! render
+*##body:style(-webkit-font-smoothing: auto !important)
 ! addons
 *##^.sp-separator
 *##.sp-separator:remove()
