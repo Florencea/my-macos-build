@@ -27,7 +27,11 @@ typescript@latest \
 vite@latest \
 antd \
 eslint \
-eslint-config-react-app \
+eslint-config-prettier \
+eslint-plugin-react \
+eslint-plugin-react-hooks \
+@typescript-eslint/eslint-plugin \
+@typescript-eslint/parser \
 prettier \
 tailwindcss \
 postcss \
@@ -39,7 +43,11 @@ npx tailwindcss init -p
 ```
 
 ```bash
-printf "{\n  \"extends\": \"react-app\"\n}" > .eslintrc.json
+printf "{\n  \"root\": true,\n  \"env\": {\n    \"browser\": true,\n    \"node\": true\n  },\n  \"settings\": {\n    \"react\": {\n      \"version\": \"detect\"\n    }\n  },\n  \"extends\": [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:react/jsx-runtime\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\"\n  ],\n  \"parser\": \"@typescript-eslint/parser\",\n  \"parserOptions\": {\n    \"ecmaFeatures\": {\n      \"jsx\": true\n    },\n    \"ecmaVersion\": \"latest\",\n    \"sourceType\": \"module\"\n  },\n  \"plugins\": [\n    \"react\",\n    \"react-hooks\",\n    \"@typescript-eslint\"\n  ]\n}" > .eslintrc.json
+```
+
+```bash
+printf "/public\n/dist\n" > .eslintignore
 ```
 
 ```bash
@@ -58,6 +66,7 @@ rm -rf src/App.css src/assets
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs . && tsc --noEmit --skipLibCheck",
     "format": "prettier --write '**/*' --ignore-unknown"
   }
 }
