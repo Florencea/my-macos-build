@@ -17,7 +17,19 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
+printf "{\n  \"extends\": [\n    \"next/core-web-vitals\",\n    \"prettier\"\n  ]\n}" > .eslintrc.json
+```
+
+```bash
+printf "{\n  \"singleQuote\": true,\n  \"semi\": false\n}" > .prettierrc.json
+```
+
+```bash
 printf ".next\nnext-env.d.ts\n/public\n/out\n" > .prettierignore
+```
+
+```bash
+printf "PORT=3000\nNEXT_TELEMETRY_DISABLED=1\n"
 ```
 
 ```bash
@@ -30,6 +42,7 @@ react@latest \
 react-dom@latest \
 eslint@latest \
 eslint-config-next@latest \
+eslint-config-prettier \
 typescript@latest \
 antd \
 dotenv-cli \
@@ -76,11 +89,11 @@ const nextConfig = {
     unoptimized: true,
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === 'production',
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 - `tailwind.config.js`
@@ -91,40 +104,40 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: "#__next",
+  important: '#__next',
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
-};
+}
 ```
 
 - `pages/_app.tsx`
 
 ```tsx
-import { App as AntApp, ConfigProvider } from "antd";
-import "antd/dist/reset.css";
-import zhTW from "antd/locale/zh_TW";
-import "dayjs/locale/zh-tw";
-import type { AppProps } from "next/app";
-import "tailwindcss/tailwind.css";
+import { App as AntApp, ConfigProvider } from 'antd'
+import 'antd/dist/reset.css'
+import zhTW from 'antd/locale/zh_TW'
+import 'dayjs/locale/zh-tw'
+import type { AppProps } from 'next/app'
+import 'tailwindcss/tailwind.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ConfigProvider
       getPopupContainer={
-        typeof window !== "undefined"
-          ? () => document.getElementById("__next") as HTMLDivElement
+        typeof window !== 'undefined'
+          ? () => document.getElementById('__next') as HTMLDivElement
           : undefined
       }
       locale={zhTW}
       theme={{
         token: {
-          colorPrimary: "#722ed1",
-          colorInfo: "#722ed1",
-          colorLink: "#722ed1",
-          colorLinkHover: "#722ed1",
-          colorLinkActive: "#722ed1",
+          colorPrimary: '#722ed1',
+          colorInfo: '#722ed1',
+          colorLink: '#722ed1',
+          colorLinkHover: '#722ed1',
+          colorLinkActive: '#722ed1',
         },
       }}
     >
@@ -132,22 +145,22 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </AntApp>
     </ConfigProvider>
-  );
+  )
 }
 ```
 
 - `pages/index.tsx`
 
 ```tsx
-import { App as AntApp, Button, DatePicker, Typography } from "antd";
-import { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { useState } from "react";
+import { App as AntApp, Button, DatePicker, Typography } from 'antd'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import { useState } from 'react'
 
 const Page: NextPage = () => {
-  const [count, setCount] = useState(0);
-  const { message } = AntApp.useApp();
+  const [count, setCount] = useState(0)
+  const { message } = AntApp.useApp()
   return (
     <>
       <Head>
@@ -175,15 +188,15 @@ const Page: NextPage = () => {
           <DatePicker
             onChange={(date) => {
               if (date !== null) {
-                message.info(date.toDate().toLocaleDateString("zh-TW"));
+                message.info(date.toDate().toLocaleDateString('zh-TW'))
               }
             }}
           />
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
 ```
