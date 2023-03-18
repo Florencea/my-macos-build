@@ -17,11 +17,11 @@ npm config set audit=false fund=false loglevel=error update-notifier=false engin
 ```
 
 ```bash
-printf "{\n  \"extends\": [\n    \"next/core-web-vitals\",\n    \"prettier\"\n  ]\n}" > .eslintrc.json
+printf "{\n  \"extends\": [\n    \"next/core-web-vitals\",\n    \"prettier\"\n  ]\n}\n" > .eslintrc.json
 ```
 
 ```bash
-printf "{\n  \"singleQuote\": true,\n  \"semi\": false\n}" > .prettierrc.json
+printf "{\n  \"singleQuote\": true,\n  \"semi\": false\n}\n" > .prettierrc.json
 ```
 
 ```bash

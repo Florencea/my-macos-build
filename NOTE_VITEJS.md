@@ -43,7 +43,7 @@ npx tailwindcss init -p
 ```
 
 ```bash
-printf "{\n  \"root\": true,\n  \"env\": {\n    \"browser\": true,\n    \"node\": true\n  },\n  \"settings\": {\n    \"react\": {\n      \"version\": \"detect\"\n    }\n  },\n  \"extends\": [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:react/jsx-runtime\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\"\n  ],\n  \"parser\": \"@typescript-eslint/parser\",\n  \"parserOptions\": {\n    \"ecmaFeatures\": {\n      \"jsx\": true\n    },\n    \"ecmaVersion\": \"latest\",\n    \"sourceType\": \"module\"\n  },\n  \"plugins\": [\n    \"react\",\n    \"react-hooks\",\n    \"@typescript-eslint\"\n  ]\n}" > .eslintrc.json
+printf "{\n  \"root\": true,\n  \"env\": {\n    \"browser\": true,\n    \"node\": true\n  },\n  \"settings\": {\n    \"react\": {\n      \"version\": \"detect\"\n    }\n  },\n  \"extends\": [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:react/jsx-runtime\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\"\n  ],\n  \"parser\": \"@typescript-eslint/parser\",\n  \"parserOptions\": {\n    \"ecmaFeatures\": {\n      \"jsx\": true\n    },\n    \"ecmaVersion\": \"latest\",\n    \"sourceType\": \"module\"\n  },\n  \"plugins\": [\n    \"react\",\n    \"react-hooks\",\n    \"@typescript-eslint\"\n  ]\n}\n" > .eslintrc.json
 ```
 
 ```bash
@@ -51,7 +51,7 @@ printf "/public\n/dist\n" > .eslintignore
 ```
 
 ```bash
-printf "{\n  \"singleQuote\": true,\n  \"semi\": false\n}" > .prettierrc.json
+printf "{\n  \"singleQuote\": true,\n  \"semi\": false\n}\n" > .prettierrc.json
 ```
 
 ```bash
