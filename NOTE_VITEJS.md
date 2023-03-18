@@ -66,8 +66,8 @@ rm -rf src/App.css src/assets
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs . && tsc --noEmit --skipLibCheck",
-    "format": "prettier --write '**/*' --ignore-unknown"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs . && tsc",
+    "format": "prettier '**/*' --write --ignore-unknown"
   }
 }
 ```
