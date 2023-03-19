@@ -91,6 +91,7 @@ brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
+curl -qfsSL https://www.npmjs.com/install.sh | sh
 brew install openvpn
 brew install rsync
 brew install python
