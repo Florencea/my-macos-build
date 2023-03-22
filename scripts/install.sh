@@ -43,6 +43,13 @@ else
   )
 fi
 
+print_step "brew update taps"
+brew tap homebrew/cask-versions
+brew tap homebrew/cask-fonts
+
+print_step "brew install fonts essential"
+brew install font-jetbrains-mono
+
 print_step "brew install zsh"
 brew install zsh
 brew install zsh-autosuggestions

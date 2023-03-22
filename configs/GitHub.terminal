@@ -171,22 +171,22 @@
 	V11kand+kJKUmaSttbgAAAAAAAABAQAAAAAAAAAZAAAAAAAAAAAAAAAAAAAAwQ==
 	</data>
 	<key>CursorType</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>Font</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
-	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA11TRk1v
-	bm8tTWVkaXVt0hcYGRpaJGNsYXNzbmFtZVgkY2xhc3Nlc1ZOU0ZvbnSiGRtYTlNPYmpl
-	Y3QIERokKTI3SUxRU1heZ253foWOkJKUoqeyu8LFAAAAAAAAAQEAAAAAAAAAHAAAAAAA
-	AAAAAAAAAAAAAM4=
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA18QFUpl
+	dEJyYWluc01vbm8tUmVndWxhctIXGBkaWiRjbGFzc25hbWVYJGNsYXNzZXNWTlNGb250
+	ohkbWE5TT2JqZWN0CBEaJCkyN0lMUVNYXmdud36FjpCSlKyxvMXMzwAAAAAAAAEBAAAA
+	AAAAABwAAAAAAAAAAAAAAAAAAADY
 	</data>
 	<key>FontAntialias</key>
 	<true/>
 	<key>FontHeightSpacing</key>
-	<real>1.1499999999999999</real>
-	<key>FontWidthSpacing</key>
 	<integer>1</integer>
+	<key>FontWidthSpacing</key>
+	<real>1.004</real>
 	<key>ProfileCurrentVersion</key>
 	<real>2.0699999999999998</real>
 	<key>RunCommandAsShell</key>
@@ -205,23 +205,23 @@
 	<key>ShouldRestoreContent</key>
 	<false/>
 	<key>ShowActiveProcessArgumentsInTabTitle</key>
-	<false/>
+	<true/>
 	<key>ShowActiveProcessArgumentsInTitle</key>
-	<false/>
+	<true/>
 	<key>ShowActiveProcessInTitle</key>
 	<true/>
 	<key>ShowDimensionsInTitle</key>
-	<false/>
-	<key>ShowRepresentedURLInTabTitle</key>
-	<false/>
-	<key>ShowRepresentedURLInTitle</key>
-	<false/>
-	<key>ShowRepresentedURLPathInTitle</key>
 	<true/>
+	<key>ShowRepresentedURLInTabTitle</key>
+	<true/>
+	<key>ShowRepresentedURLInTitle</key>
+	<true/>
+	<key>ShowRepresentedURLPathInTitle</key>
+	<false/>
 	<key>ShowShellCommandInTitle</key>
 	<false/>
 	<key>ShowTerminalInDockIcon</key>
-	<false/>
+	<true/>
 	<key>ShowWindowSettingsNameInTitle</key>
 	<false/>
 	<key>TextBoldColor</key>
@@ -256,14 +256,6 @@
 		<dict>
 			<key>ProcessName</key>
 			<string>tmux</string>
-		</dict>
-		<dict>
-			<key>ProcessName</key>
-			<string>login</string>
-		</dict>
-		<dict>
-			<key>ProcessName</key>
-			<string>zsh</string>
 		</dict>
 	</array>
 	<key>rowCount</key>
