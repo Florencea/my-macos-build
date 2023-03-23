@@ -49,6 +49,7 @@ brew tap homebrew/cask-fonts
 
 print_step "brew install fonts essential"
 brew install font-jetbrains-mono
+brew install font-inter
 
 print_step "brew install zsh"
 brew install zsh
