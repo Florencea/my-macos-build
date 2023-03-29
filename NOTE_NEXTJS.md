@@ -1,6 +1,7 @@
 # Next.js Note
 
 - This guide will scaffold a project with [Next.js](https://nextjs.org/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
+- Last update with `next@13.2.4`, `antd@5.3.3`, `tailwindcss@3.3.0`
 
 ## Step 1. CLI commands
 
