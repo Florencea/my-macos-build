@@ -94,7 +94,7 @@ export default defineConfig({
 
 - `tailwind.config.ts`
 
-```js
+```ts
 import type { Config } from 'tailwindcss'
 
 export default {
