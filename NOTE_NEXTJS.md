@@ -179,14 +179,13 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 const Page: NextPage = () => {
-  const [count, setCount] = useState(0)
   const { message } = AntApp.useApp()
   return (
     <>
       <Head>
         <title>Next + TailwindCSS + Antd</title>
       </Head>
-      <div className="flex h-screen flex-col items-center justify-center text-center text-3xl">
+      <div className="flex h-screen flex-col items-center justify-center gap-3 text-center">
         <a
           className="relative block h-[10vmin] w-[20vmin]"
           href="https://nextjs.org/"
@@ -200,19 +199,22 @@ const Page: NextPage = () => {
             fill
           />
         </a>
-        <Typography.Title>Next + TailwindCSS + Antd</Typography.Title>
-        <div className="flex justify-center space-x-3">
-          <Button type="primary" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </Button>
-          <DatePicker
-            onChange={(date) => {
-              if (date !== null) {
-                message.info(date.toDate().toLocaleDateString('zh-TW'))
-              }
-            }}
-          />
-        </div>
+        <h1 className="text-3xl font-bold text-primary">
+          Vite + React + TailwindCSS + antd
+        </h1>
+        <Descriptions bordered>
+          <Descriptions.Item label="antd">
+            <Space>
+              <Tag color="processing">{version}</Tag>
+              <DatePicker
+                onChange={(date) => {
+                  if (!date) return
+                  message.info(date?.toDate().toLocaleString())
+                }}
+              />
+            </Space>
+          </Descriptions.Item>
+        </Descriptions>
       </div>
     </>
   )
