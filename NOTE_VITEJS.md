@@ -1,8 +1,11 @@
 # Vite Note
 
-- <https://cn.vitejs.dev/>
+- This guide will scaffold a project with [Vite](https://vitejs.dev/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
+- Last update with `vite@4.2.1`, `antd@5.3.3`, `tailwindcss@3.3.0`
 
-## vite + antd + tailwindcss
+## Step 1. CLI commands
+
+- [Scaffolding Your First Vite Project](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)
 
 ```bash
 npm -y create vite@latest vite-app -- --template react-swc-ts
@@ -12,9 +15,20 @@ npm -y create vite@latest vite-app -- --template react-swc-ts
 cd vite-app
 ```
 
+- [npm config](https://docs.npmjs.com/cli/v9/commands/npm-config)
+  - [`audit = false`](https://docs.npmjs.com/cli/v9/using-npm/config#audit)
+  - [`fund = false`](https://docs.npmjs.com/cli/v9/using-npm/config#fund)
+  - [`loglevel = error`](https://docs.npmjs.com/cli/v9/using-npm/config#loglevel)
+  - [`update-notifier = false`](https://docs.npmjs.com/cli/v9/using-npm/config#update-notifier)
+  - [`engine-strict = true`](https://docs.npmjs.com/cli/v9/using-npm/config#engine-strict)
+  - [`save = true`](https://docs.npmjs.com/cli/v9/using-npm/config#save)
+  - [`location = project`](https://docs.npmjs.com/cli/v9/commands/npm-config#location)
+
 ```bash
 npm config set audit=false fund=false loglevel=error update-notifier=false engine-strict=true save=true --location=project
 ```
+
+- Install and update packages
 
 ```bash
 npm i -P \
@@ -40,31 +54,55 @@ postcss \
 autoprefixer
 ```
 
+- Initialize Tailwind Config
+  - [Install Tailwind CSS with Next.js](https://tailwindcss.com/docs/guides/nextjs)
+  - [ESM and TypeScript support](https://tailwindcss.com/blog/tailwindcss-v3-3#esm-and-typescript-support)
+
 ```bash
 npx tailwindcss init -p --ts
 ```
+
+- Use Customized [ESLint Config](https://eslint.org/docs/latest/use/configure/configuration-files)
+  - [For React](https://github.com/jsx-eslint/eslint-plugin-react)
+    - [Using the new JSX transform from React 17](https://github.com/jsx-eslint/eslint-plugin-react#configuration-legacy-eslintrc)
+  - [For Typescript](https://typescript-eslint.io/getting-started)
+  - [For Prettier](https://github.com/prettier/eslint-config-prettier)
+  - [For React Hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)
 
 ```bash
 printf "{\n  \"root\": true,\n  \"env\": {\n    \"browser\": true,\n    \"node\": true\n  },\n  \"settings\": {\n    \"react\": {\n      \"version\": \"detect\"\n    }\n  },\n  \"extends\": [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:react/jsx-runtime\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\"\n  ],\n  \"parser\": \"@typescript-eslint/parser\",\n  \"parserOptions\": {\n    \"ecmaFeatures\": {\n      \"jsx\": true\n    },\n    \"ecmaVersion\": \"latest\",\n    \"sourceType\": \"module\"\n  },\n  \"plugins\": [\"react\", \"react-hooks\", \"@typescript-eslint\"]\n}\n" > .eslintrc.json
 ```
 
+- ESLint igonre patterns
+
 ```bash
 printf "/public\n/dist\n" > .eslintignore
 ```
 
-```bash
-printf "{\n  \"singleQuote\": true,\n  \"semi\": false\n}\n" > .prettierrc.json
-```
+- Prettier igonre patterns
 
 ```bash
 printf "/public\n/dist\n" > .prettierignore
 ```
 
+- Remove unnecessary files
+
 ```bash
 rm -rf src/App.css src/index.css src/assets
 ```
 
+## Step 2. Modify templete files
+
 - `package.json`
+  - [`vite`](https://vitejs.dev/guide/cli.html#vite)
+  - [`vite build`](https://vitejs.dev/guide/cli.html#vite-build)
+    - `tsc` for type check, vite build project use [esbuild](https://esbuild.github.io/) and [rollup.js](https://rollupjs.org/), bundling without type checking
+  - [`vite preview`](https://vitejs.dev/guide/cli.html#vite-preview)
+  - [`eslint CLI`](https://eslint.org/docs/latest/use/command-line-interface)
+  - [`prettier CLI`](https://prettier.io/docs/en/cli.html)
+    - [`--write`](https://prettier.io/docs/en/cli.html#--write)
+    - [`--ignore-unknown`](https://prettier.io/docs/en/cli.html#--ignore-unknown)
+    - [`--cache`](https://prettier.io/docs/en/cli.html#--cache)
 
 ```json
 {
@@ -73,12 +111,18 @@ rm -rf src/App.css src/index.css src/assets
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs . && tsc",
-    "format": "prettier '**/*' --write --ignore-unknown"
+    "format": "prettier '**/*' --write --ignore-unknown --cache"
   }
 }
 ```
 
 - `vite.config.ts`
+  - [`build.chunkSizeWarningLimit: Infinity`](https://vitejs.dev/config/build-options.html#build-chunksizewarninglimit)
+    - Because chunk size close to 500k when do nothing with antd
+    - It's easy to over the limit
+  - [`@vitejs/plugin-react-swc`](https://vitejs.dev/blog/announcing-vite4.html#new-react-plugin-using-swc-during-development)
+    - This plugin use [SWC](https://swc.rs/) during development
+    - For big projects that don't require non-standard React extensions, cold start and Hot Module Replacement (HMR) can be significantly faster.
 
 ```ts
 import react from "@vitejs/plugin-react-swc";
@@ -93,6 +137,9 @@ export default defineConfig({
 ```
 
 - `tailwind.config.ts`
+  - [`important: '#root'`](https://tailwindcss.com/docs/configuration#selector-strategy)
+    - For overriding antd style
+  - Note: Extends styles from Tailwind config, then import to antd `<ConfigProvider />`
 
 ```ts
 import type { Config } from "tailwindcss";
@@ -112,6 +159,16 @@ export default {
 ```
 
 - `src/main.tsx`
+  - [Customize antd theme with `<ConfigProvider />`](https://ant.design/docs/react/customize-theme#customize-theme-with-configprovider)
+    - Import theme colors from Tailwind config
+  - [Internationalization](https://ant.design/docs/react/i18n)
+    - Remember to import dayjs locales for DatePicker components
+  - [Use `<StyleProvider/>` to overrides Tailwind preflight CSS rules](https://ant.design/docs/react/compatible-style)
+    - Tailwind [preflight](https://tailwindcss.com/docs/preflight) rules would conflict with some antd component styles like `<Button />`
+  - [`getPopupContainer`](https://ant.design/components/config-provider#api)
+    - Set the container of the popup element on React root element
+    - Because Tailwind's `important` rules base on `<div id="#root" />`
+  - [`<App />` provide global style & static function replacement](https://ant.design/components/app)
 
 ```tsx
 import { StyleProvider } from "@ant-design/cssinjs";
@@ -155,6 +212,7 @@ root.render(
 ```
 
 - `src/App.tsx`
+  - Basic page to check antd and Tailwind CSS works fine
 
 ```tsx
 import {
