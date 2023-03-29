@@ -61,7 +61,7 @@ printf "/public\n/dist\n" > .prettierignore
 ```
 
 ```bash
-rm -rf src/App.css src/assets
+rm -rf src/App.css src/index.css src/assets
 ```
 
 - `package.json`
@@ -111,14 +111,6 @@ export default {
 } satisfies Config
 ```
 
-- `src/index.css`
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
 - `src/main.tsx`
 
 ```tsx
@@ -128,9 +120,9 @@ import zhTW from 'antd/es/locale/zh_TW'
 import 'dayjs/locale/zh-tw'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import 'tailwindcss/tailwind.css'
 import tailwindConfig from '../tailwind.config'
 import App from './App'
-import './index.css'
 
 const container = document.getElementById('root') as HTMLDivElement
 const root = createRoot(container)
@@ -185,7 +177,9 @@ export default function App() {
           alt="Vite logo"
         />
       </a>
-      <h1 className="text-3xl font-bold">Vite + React + TailwindCSS + antd</h1>
+      <h1 className="text-3xl font-bold text-primary">
+        Vite + React + TailwindCSS + antd
+      </h1>
       <Descriptions bordered>
         <Descriptions.Item label="antd">
           <Space>
