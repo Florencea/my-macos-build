@@ -172,11 +172,17 @@ export default function App({ Component, pageProps }: AppProps) {
 - `pages/index.tsx`
 
 ```tsx
-import { App as AntApp, Button, DatePicker, Typography } from 'antd'
+import {
+  App as AntApp,
+  DatePicker,
+  Descriptions,
+  Space,
+  Tag,
+  version,
+} from 'antd'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
 
 const Page: NextPage = () => {
   const { message } = AntApp.useApp()
