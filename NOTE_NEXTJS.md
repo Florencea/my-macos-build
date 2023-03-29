@@ -129,11 +129,11 @@ const nextConfig = {
     unoptimized: true,
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
 - `postcss.config.js`
@@ -147,7 +147,7 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
-}
+};
 ```
 
 - `tailwind.config.ts`
@@ -156,23 +156,23 @@ module.exports = {
   - Note: Extends styles from Tailwind config, then import to antd `<ConfigProvider />`
 
 ```ts
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 export default {
-  important: '#__next',
+  important: "#__next",
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: '#722ed1',
+        primary: "#722ed1",
       },
     },
   },
   plugins: [],
-} satisfies Config
+} satisfies Config;
 ```
 
 - `pages/_app.tsx`
@@ -189,23 +189,23 @@ export default {
   - [`<App />` provide global style & static function replacement](https://ant.design/components/app)
 
 ```tsx
-import { StyleProvider } from '@ant-design/cssinjs'
-import { App as AntApp, ConfigProvider } from 'antd'
-import zhTW from 'antd/locale/zh_TW'
-import 'dayjs/locale/zh-tw'
-import type { AppProps } from 'next/app'
-import 'tailwindcss/tailwind.css'
-import tailwindConfig from '../tailwind.config'
+import { StyleProvider } from "@ant-design/cssinjs";
+import { App as AntApp, ConfigProvider } from "antd";
+import zhTW from "antd/locale/zh_TW";
+import "dayjs/locale/zh-tw";
+import type { AppProps } from "next/app";
+import "tailwindcss/tailwind.css";
+import tailwindConfig from "../tailwind.config";
 
-const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary
+const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <StyleProvider hashPriority="high">
       <ConfigProvider
         getPopupContainer={
-          typeof window !== 'undefined'
-            ? () => document.getElementById('__next') as HTMLDivElement
+          typeof window !== "undefined"
+            ? () => document.getElementById("__next") as HTMLDivElement
             : undefined
         }
         locale={zhTW}
@@ -224,7 +224,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </AntApp>
       </ConfigProvider>
     </StyleProvider>
-  )
+  );
 }
 ```
 
@@ -242,13 +242,13 @@ import {
   Space,
   Tag,
   version,
-} from 'antd'
-import { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+} from "antd";
+import { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
 
 const Page: NextPage = () => {
-  const { message } = AntApp.useApp()
+  const { message } = AntApp.useApp();
   return (
     <>
       <Head>
@@ -277,8 +277,8 @@ const Page: NextPage = () => {
               <Tag color="processing">{version}</Tag>
               <DatePicker
                 onChange={(date) => {
-                  if (!date) return
-                  message.info(date?.toDate().toLocaleString())
+                  if (!date) return;
+                  message.info(date?.toDate().toLocaleString());
                 }}
               />
             </Space>
@@ -286,8 +286,8 @@ const Page: NextPage = () => {
         </Descriptions>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
 ```
