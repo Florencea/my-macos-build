@@ -55,7 +55,7 @@ autoprefixer
 ```
 
 - Initialize Tailwind Config
-  - [Install Tailwind CSS with Next.js](https://tailwindcss.com/docs/guides/nextjs)
+  - [Install Tailwind CSS with Vite](https://tailwindcss.com/docs/guides/vite)
   - [ESM and TypeScript support](https://tailwindcss.com/blog/tailwindcss-v3-3#esm-and-typescript-support)
 
 ```bash
