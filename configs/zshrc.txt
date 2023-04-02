@@ -43,7 +43,6 @@ alias urb="sh $SCRIPT_HOME/urb.sh $SCRIPT_HOME $CONFIG_HOME"
 alias ua="sh $SCRIPT_HOME/ua.sh $CODE_SPACE"
 alias rec="sh $SCRIPT_HOME/rec.sh"
 alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
-alias boxvpn="sh $SCRIPT_PRIVATE_HOME/boxvpn.sh"
 
 # plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'

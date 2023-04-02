@@ -85,7 +85,6 @@ brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 curl -fsSL https://www.npmjs.com/install.sh | sh
-brew install openvpn
 brew install rsync
 brew install python
 brew install wget
