@@ -57,7 +57,7 @@ rm -rf styles
 ```
 
 ```sh
-touch .npmrc .eslintrc.json .prettierignore .env
+touch .env .eslintrc.json .npmrc .prettierignore
 ```
 
 ```sh
