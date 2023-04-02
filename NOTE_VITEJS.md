@@ -26,7 +26,7 @@ cd vite-app
 ```
 
 ```sh
-npm i -P \
+npm i -D \
 @types/react@latest \
 @types/react-dom@latest \
 @vitejs/plugin-react-swc@latest \
@@ -38,11 +38,8 @@ antd \
 @ant-design/cssinjs \
 dayjs \
 eslint \
+eslint-config-react-app \
 eslint-config-prettier \
-eslint-plugin-react \
-eslint-plugin-react-hooks \
-@typescript-eslint/eslint-plugin \
-@typescript-eslint/parser \
 prettier \
 tailwindcss \
 postcss \
@@ -69,7 +66,7 @@ code .
 
 ### `.eslintignore`
 
-```sh
+```ignore
 /public
 /dist
 ```
@@ -78,39 +75,13 @@ code .
 
 ```json
 {
-  "root": true,
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": ["react", "@typescript-eslint"]
+  "extends": ["react-app", "prettier"]
 }
 ```
 
 ### `.npmrc`
 
-```sh
+```npmrc
 audit=false
 fund=false
 loglevel=error
@@ -121,7 +92,7 @@ save=true
 
 ### `.prettierignore`
 
-```sh
+```ignore
 /public
 /dist
 ```
@@ -138,6 +109,18 @@ save=true
     "format": "prettier '**/*' --write --ignore-unknown --cache"
   }
 }
+```
+
+### `postcss.config.js`
+
+```js
+const postcssConfig = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+export default postcssConfig;
 ```
 
 ### `tailwind.config.ts`
@@ -169,6 +152,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     chunkSizeWarningLimit: Infinity,
+    reportCompressedSize: false,
   },
 });
 ```
