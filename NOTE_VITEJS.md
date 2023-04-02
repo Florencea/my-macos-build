@@ -10,6 +10,7 @@
     - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
     - [`package.json`](#packagejson)
+    - [`postcss.config.js`](#postcssconfigjs)
     - [`tailwind.config.ts`](#tailwindconfigts)
     - [`vite.config.ts`](#viteconfigts)
     - [`src/main.tsx`](#srcmaintsx)
