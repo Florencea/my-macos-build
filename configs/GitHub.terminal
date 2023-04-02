@@ -176,10 +176,10 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
-	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA18QFUpl
-	dEJyYWluc01vbm8tUmVndWxhctIXGBkaWiRjbGFzc25hbWVYJGNsYXNzZXNWTlNGb250
-	ohkbWE5TT2JqZWN0CBEaJCkyN0lMUVNYXmdud36FjpCSlKyxvMXMzwAAAAAAAAEBAAAA
-	AAAAABwAAAAAAAAAAAAAAAAAAADY
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA15TRk1v
+	bm8tUmVndWxhctIXGBkaWiRjbGFzc25hbWVYJGNsYXNzZXNWTlNGb250ohkbWE5TT2Jq
+	ZWN0CBEaJCkyN0lMUVNYXmdud36FjpCSlKOos7zDxgAAAAAAAAEBAAAAAAAAABwAAAAA
+	AAAAAAAAAAAAAADP
 	</data>
 	<key>FontAntialias</key>
 	<true/>
@@ -259,7 +259,7 @@
 		</dict>
 	</array>
 	<key>rowCount</key>
-	<integer>30</integer>
+	<integer>36</integer>
 	<key>shellExitAction</key>
 	<integer>2</integer>
 	<key>type</key>
