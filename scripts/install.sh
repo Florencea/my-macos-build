@@ -43,6 +43,14 @@ else
   )
 fi
 
+print_step "brew update taps"
+brew tap homebrew/cask-versions
+brew tap homebrew/cask-fonts
+
+print_step "brew install fonts essential"
+brew install font-jetbrains-mono
+brew install font-inter
+
 print_step "brew install zsh"
 brew install zsh
 brew install zsh-autosuggestions
@@ -77,6 +85,7 @@ brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 curl -fsSL https://www.npmjs.com/install.sh | sh
+brew install openvpn
 brew install rsync
 brew install python
 brew install wget
