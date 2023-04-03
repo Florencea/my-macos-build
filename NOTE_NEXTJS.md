@@ -68,7 +68,7 @@ code .
 
 ### `.env`
 
-```sh
+```dotenv
 PORT=3000
 NEXT_TELEMETRY_DISABLED=1
 ```
@@ -83,7 +83,7 @@ NEXT_TELEMETRY_DISABLED=1
 
 ### `.npmrc`
 
-```sh
+```npmrc
 audit=false
 fund=false
 loglevel=error
@@ -94,7 +94,7 @@ save=true
 
 ### `.prettierignore`
 
-```sh
+```ignore
 .next
 next-env.d.ts
 /public
