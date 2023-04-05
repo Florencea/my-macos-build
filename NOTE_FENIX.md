@@ -13,7 +13,7 @@
 
 ### 1. Fork Repository
 
-- <https://github.com/mozilla-mobile/fenix>
+- <https://github.com/mozilla-mobile/firefox-android>
 
 ### 2. Add Repository Secrets
 
@@ -45,7 +45,7 @@ key0
 ### 3. Clone Release Tag
 
 ```bash
-git clone --depth 1 --branch v108.2.0 git@github.com:Florencea/fenix.git
+git clone --depth 1 --branch fenix-v111.1.1 git@github.com:Florencea/firefox-android.git
 ```
 
 ### 4. Edit Files
@@ -67,6 +67,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+        with:
+          submodules: 'true'
           fetch-depth: 0
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -82,7 +84,7 @@ jobs:
       - name: Build release variant of app
         uses: gradle/gradle-build-action@v2
         env:
-          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g -Xms2g -Xmx5g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
+          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=1g -Xms2g -Xmx4g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
         with:
           gradle-home-cache-cleanup: true
           gradle-executable: /usr/bin/time
