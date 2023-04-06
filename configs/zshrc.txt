@@ -33,7 +33,6 @@ CODE_SPACE="$HOME/Codespaces"
 CODE_BASE="$CODE_SPACE/my-macos-build"
 SCRIPT_HOME="$CODE_BASE/scripts"
 CONFIG_HOME="$CODE_BASE/configs"
-SCRIPT_PRIVATE_HOME="$HOME/.ssh"
 alias ll='ls -lh'
 alias la='ls -lah'
 alias mmb="code $CODE_BASE"
@@ -43,7 +42,6 @@ alias urb="sh $SCRIPT_HOME/urb.sh $SCRIPT_HOME $CONFIG_HOME"
 alias ua="sh $SCRIPT_HOME/ua.sh $CODE_SPACE"
 alias rec="sh $SCRIPT_HOME/rec.sh"
 alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
-alias boxvpn="sh $SCRIPT_PRIVATE_HOME/boxvpn.sh"
 
 # plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
