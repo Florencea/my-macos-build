@@ -58,6 +58,8 @@ git clone --depth 1 --branch fenix-v111.1.1 git@github.com:Florencea/firefox-and
 ```yml
 name: Release Automation
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 jobs:
   release-automation:
@@ -67,7 +69,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          submodules: "true"
           fetch-depth: 1
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -75,7 +76,7 @@ jobs:
           java-version: 11
           distribution: temurin
       - name: Install Android SDK with pieces Gradle skips
-        run: ./automation/iceraven/install-sdk.sh
+        run: ./automation/install-sdk.sh
       - name: Inspect memory
         run: free -m
       - name: Create version name
@@ -104,9 +105,9 @@ jobs:
 ```
 
 - Add Android SDK installaton script from iceraven
-- `mkdir -p automation/iceraven`
-- `touch automation/iceraven/install-sdk.sh`
-- `chmod 755 automation/iceraven/install-sdk.sh`
+- `mkdir automation`
+- `touch automation/install-sdk.sh`
+- `chmod 755 automation/install-sdk.sh`
 
 ```sh
 #!/usr/bin/env bash
