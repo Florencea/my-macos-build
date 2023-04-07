@@ -27,7 +27,7 @@ cd vite-app
 ```
 
 ```sh
-npm i -D \
+npm i -D --save \
 @types/react@latest \
 @types/react-dom@latest \
 @vitejs/plugin-react-swc@latest \

@@ -27,7 +27,7 @@ cd next-app
 ```
 
 ```sh
-npm i -P \
+npm i -P --save \
 @types/node@latest \
 @types/react@latest \
 @types/react-dom@latest \
