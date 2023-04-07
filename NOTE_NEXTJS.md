@@ -19,7 +19,7 @@
 ## CLI
 
 ```sh
-npx -y create-next-app@latest next-app --ts --eslint --use-npm --no-src-dir --no-experimental-app --import-alias "@/*"
+npx -y create-next-app@latest next-app --ts --no-tailwind --eslint --use-npm --no-src-dir --no-experimental-app --import-alias "@/*"
 ```
 
 ```sh
