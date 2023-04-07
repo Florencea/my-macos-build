@@ -19,7 +19,7 @@
 ## CLI
 
 ```sh
-npx -y create-next-app@latest next-app --ts --no-tailwind --eslint --use-npm --no-src-dir --no-experimental-app --import-alias "@/*"
+npx -y create-next-app@latest next-app --ts --no-tailwind --eslint --use-npm --no-src-dir --no-experimental-app --import-alias --reset-preferences "@/*"
 ```
 
 ```sh
@@ -45,7 +45,8 @@ dotenv-cli \
 tailwindcss \
 postcss \
 autoprefixer \
-prettier
+prettier \
+sirv-cli
 ```
 
 ```sh
@@ -106,6 +107,7 @@ next-env.d.ts
 ```js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: process.env.STATIC ? "export" : "standalone",
   reactStrictMode: true,
   images: {
     unoptimized: true,
@@ -125,7 +127,7 @@ module.exports = nextConfig;
   "scripts": {
     "dev": "dotenv next dev",
     "build": "dotenv next build",
-    "export": "dotenv next build && dotenv next export",
+    "export": "dotenv -v STATIC=1 next build",
     "start": "dotenv next start",
     "lint": "dotenv next lint",
     "format": "prettier '**/*' --write --ignore-unknown --cache"
