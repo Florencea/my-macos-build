@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-04-04
+! Last updated: 2023-04-07
 
 ! universal rules
 ! outline
@@ -608,6 +608,8 @@ techbang.com##label.caption:style(border: 0 !important)
 
 ! thenewslens.com
 ! remove
+thenewslens.com##^.js-subscription-wrapper
+thenewslens.com##.js-subscription-wrapper:remove()
 thenewslens.com##^.ad-section
 thenewslens.com##.ad-section:remove()
 thenewslens.com##^div[id^=taboola-]
