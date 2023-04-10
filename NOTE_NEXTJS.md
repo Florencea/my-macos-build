@@ -128,6 +128,7 @@ module.exports = nextConfig;
     "dev": "dotenv next dev",
     "build": "dotenv next build",
     "export": "dotenv -v STATIC=1 next build",
+    "preview": "dotenv sirv out",
     "start": "dotenv next start",
     "lint": "dotenv next lint",
     "format": "prettier '**/*' --write --ignore-unknown --cache"
