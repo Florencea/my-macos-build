@@ -89,9 +89,10 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-brew install node
+brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
-npm i -g npm
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+curl -fsSL https://www.npmjs.com/install.sh | sh
 brew install rsync
 brew install python
 brew install wget
