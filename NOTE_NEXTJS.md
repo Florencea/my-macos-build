@@ -172,13 +172,18 @@ export default {
 ### `pages/_app.tsx`
 
 ```tsx
-import { StyleProvider } from "@ant-design/cssinjs";
 import { App as AntApp, ConfigProvider } from "antd";
 import zhTW from "antd/locale/zh_TW";
 import "dayjs/locale/zh-tw";
 import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import "tailwindcss/tailwind.css";
 import tailwindConfig from "../tailwind.config";
+
+const StyleProvider = dynamic(
+  () => import("@ant-design/cssinjs").then((mod) => mod.StyleProvider),
+  { ssr: false }
+);
 
 const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary;
 
@@ -186,10 +191,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <StyleProvider hashPriority="high">
       <ConfigProvider
-        getPopupContainer={
-          typeof window !== "undefined"
-            ? () => document.getElementById("__next") as HTMLDivElement
-            : undefined
+        getPopupContainer={() =>
+          document.getElementById("__next") as HTMLDivElement
         }
         locale={zhTW}
         theme={{
