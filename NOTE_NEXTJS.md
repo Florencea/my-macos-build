@@ -110,7 +110,7 @@ const nextConfig = {
   output: process.env.STATIC ? "export" : "standalone",
   reactStrictMode: true,
   images: {
-    unoptimized: true,
+    unoptimized: process.env.STATIC ? true : false,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
