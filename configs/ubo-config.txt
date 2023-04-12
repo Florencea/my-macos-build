@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1680598720795,
-  "version": "1.48.2",
+  "timeStamp": 1681307654116,
+  "version": "1.48.4",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
@@ -15,6 +15,7 @@
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
+    "suspendUntilListsAreLoaded": true,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
