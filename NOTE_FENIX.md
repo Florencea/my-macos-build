@@ -45,7 +45,7 @@ key0
 ### 3. Clone Release Tag
 
 ```sh
-git clone --depth 1 --branch fenix-v111.1.1 git@github.com:Florencea/firefox-android.git
+git clone --depth 1 --branch fenix-v112.0 git@github.com:Florencea/firefox-android.git
 ```
 
 ### 4. Edit Files
@@ -58,8 +58,6 @@ git clone --depth 1 --branch fenix-v111.1.1 git@github.com:Florencea/firefox-and
 ```yml
 name: Release Automation
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 jobs:
   release-automation:
@@ -142,7 +140,7 @@ echo "sdk.dir=${ANDROID_SDK_ROOT}" >> local.properties
 - Change Default AMO Collections and speedup build
 
 ```bash
-buildConfigField "String", "AMO_COLLECTION_NAME", "\"7dfae8669acc4312a65e8ba5553036\"" -> buildConfigField "String", "AMO_COLLECTION_NAME", "\"1\""
+buildConfigField "String", "AMO_COLLECTION_NAME", "\"Extensions-for-Android\"" -> buildConfigField "String", "AMO_COLLECTION_NAME", "\"1\""
 buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\"" -> buildConfigField "String", "AMO_COLLECTION_USER", "\"17496363\""
 applicationIdSuffix ".firefox" -> applicationIdSuffix ".firefox_custom"
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
