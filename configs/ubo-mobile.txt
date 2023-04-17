@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2023-02-07
+! Last updated: 2023-04-17
 
 ! Firefox css color
 ! bg-dark: #2b2a32
@@ -419,6 +419,8 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##^script:has-text(gtag)
 18av.tv##^script:has-text(_Hasync)
 18av.tv##^script:has-text(cnzz)
+18av.tv##^script:has-text(ad_idzone)
+18av.tv##^script:has-text(Maskcg_removeBox)
 18av.tv##^script[src*='googletagmanager']
 18av.tv##^script[src*='realsrv']
 
@@ -481,11 +483,15 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(background-color: #43424a !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a::before:style(font-size: 1rem !important)
 18av.tv##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a::before:style(content: '播放影片' !important)
-18av.tv###hls-video:style(position: fixed !important)
-18av.tv###hls-video:style(top: 30vh !important)
-18av.tv###hls-video:style(left: 0 !important)
-18av.tv###hls-video:style(width: 100vw !important)
-18av.tv###hls-video:style(height: auto !important)
+18av.tv##div:has(> #fluid_video_wrapper_hls-video):style(width: 100vw !important)
+18av.tv##div:has(> #fluid_video_wrapper_hls-video):style(height: 100vh !important)
+18av.tv##div:has(> #fluid_video_wrapper_hls-video):style(display: flex !important)
+18av.tv##div:has(> #fluid_video_wrapper_hls-video):style(flex-direction: column !important)
+18av.tv##div:has(> #fluid_video_wrapper_hls-video):style(justify-content: center !important)
+18av.tv##div:has(> #fluid_video_wrapper_hls-video):style(align-items: center !important)
+18av.tv###fluid_video_wrapper_hls-video:style(position: relative !important)
+18av.tv###fluid_video_wrapper_hls-video:style(width: 100vw !important)
+18av.tv###fluid_video_wrapper_hls-video:style(height: auto !important)
 18av.tv##.controlBar:style(height: 100px ! important)
 18av.tv##.playButton:style(width: 100px)
 18av.tv##.fullscreenButton:style(width: 100px)
@@ -517,14 +523,14 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(padding: 0.8rem 1rem !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(background-color: #43424a !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:style(color: #837d9d !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown:before:style(border: 0 !important)
+18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown::before:style(border: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt:style(margin: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > div.sun_input_group_txt > a.sun_input_group_txt:style(color: #837d9d !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(left: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(background-color: transparent !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(border: 0 !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child:style(border-top: 1px solid #515151 !important)
-18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:after:style(border: none !important)
+18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a::after:style(border: none !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:style(line-height: unset !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:style(padding: 0.8rem 1rem !important)
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li > a:style(background-color: #43424a !important)
@@ -578,7 +584,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 ||18av.tv/31M/background/NR.gif$image
 ||18av.tv/31M/background/NL.gif$image
 ||18av.tv/mmad.js$script
-||18av.tv/js/playercloudsfluid/fluidplayer.min.js$script
+!||18av.tv/js/playercloudsfluid/fluidplayer.min.js$script
 ||youjizz.com/videos/embed/$subdocument
 ||fc.imgscloud.com/fcfluidplayer.php$subdocument
 ||ammcg.imgscloud.com
