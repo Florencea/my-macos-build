@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2023-04-17
+! Last updated: 2023-04-19
 
 ! Firefox css color
 ! bg-dark: #2b2a32
@@ -426,6 +426,7 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 
 ! style
 18av.tv##body:style(background-color: #2b2a32 !important)
+18av.tv##body:style(margin: 0 !important)
 18av.tv##div.container > div.contents > div.content:style(background-color: #2b2a32 !important)
 18av.tv##div.container > div.contents > div.content:style(font-size: 0 !important)
 18av.tv##div.container > div.contents > div.content:has(span.content_18h_wpcg):style(padding: 0 !important)
@@ -571,6 +572,41 @@ wnacg.org##img[src="https://wnacg.org/loading.jpg"]:style(height: 158px !importa
 18av.tv###ReplacePage_select_02:style(display: none !important)
 18av.tv###cg_width_select_02:style(display: none !important)
 18av.tv###but_Next_02:style(display: none !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container:style(height: 106px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container:style(height: 28px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container:style(top: 16px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_left:style(height: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_left:style(top: 46px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_right:style(height: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_right:style(top: 46px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container .fluid_controls_progress:style(height: 6px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container .fluid_controls_progress .fluid_controls_currentprogress:style(height: 6px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container .fluid_controls_progress:style(top: 10px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container .fluid_controls_buffered:style(height: 6px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_progress_container .fluid_controls_buffered:style(top: 10px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_left:style(width: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button:style(width: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button:style(height: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(width: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(height: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(background-size: 622px 192px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_play::before:style(background-position: -30px -38px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_pause::before:style(background-position: -30px -114px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_fullscreen::before:style(background-position: -176px -38px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_theatre:style(display: none !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_playback_rate:style(display: none !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_right .fluid_control_volume_container:style(display: none !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_volume:style(display: none !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_fluid_control_duration:style(height: 48px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_fluid_control_duration:style(font-size: 26px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_fluid_control_duration:style(line-height: 42px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_fluid_control_duration:style(left: 50% !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_fluid_control_duration:style(margin-left: -105px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_timeline_preview:style(display: none !important)
+18av.tv###fluid_video_wrapper_hls-video:style(pointer-events: none !important)
+18av.tv###hls-video:style(pointer-events: auto !important)
+18av.tv###hls-video_fluid_controls_container:style(pointer-events: auto !important)
+18av.tv###hls-video_fluid_initial_play:style(display: none !important)
 ! others
 18av.tv##^#cover_information
 18av.tv###cover_information:remove()
