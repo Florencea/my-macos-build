@@ -19,7 +19,7 @@
 ## CLI
 
 ```sh
-npm -y create vite@latest vite-app -- --template react-swc-ts
+npm -y create vite@latest vite-app -- --template react-ts
 ```
 
 ```sh
@@ -30,21 +30,29 @@ cd vite-app
 npm i -D --save \
 @types/react@latest \
 @types/react-dom@latest \
-@vitejs/plugin-react-swc@latest \
+@vitejs/plugin-react@latest \
 react@latest \
 react-dom@latest \
 typescript@latest \
 vite@latest \
-antd \
-@ant-design/cssinjs \
-dayjs \
-eslint \
-eslint-config-react-app \
-eslint-config-prettier \
-prettier \
-tailwindcss \
-postcss \
-autoprefixer
+antd@latest \
+@ant-design/cssinjs@latest \
+dayjs@latest \
+eslint@latest \
+eslint-config-react-app@latest \
+eslint-config-prettier@latest \
+prettier@latest \
+tailwindcss@latest \
+postcss@latest \
+autoprefixer@latest
+```
+
+```sh
+npm rm \
+@typescript-eslint/eslint-plugin \
+@typescript-eslint/parser \
+eslint-plugin-react-hooks \
+eslint-plugin-react-refresh
 ```
 
 ```sh
@@ -52,11 +60,11 @@ npx tailwindcss init -p --ts
 ```
 
 ```sh
-rm -rf src/App.css src/index.css src/assets
+rm -rf .eslintrc.cjs src/assets src/App.css src/index.css
 ```
 
 ```sh
-touch .eslintignore .eslintrc.json .prettierignore .npmrc
+touch .eslintignore .eslintrc.json .prettierignore .prettierrc.json .npmrc
 ```
 
 ```sh
@@ -98,6 +106,16 @@ save=true
 /dist
 ```
 
+### `.prettierrc.json`
+
+```json
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+```
+
 ### `package.json`
 
 ```json
@@ -120,34 +138,34 @@ const postcssConfig = {
     tailwindcss: {},
     autoprefixer: {},
   },
-};
-export default postcssConfig;
+}
+export default postcssConfig
 ```
 
 ### `tailwind.config.ts`
 
 ```ts
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 export default {
-  important: "#root",
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  important: '#root',
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        primary: "#722ed1",
+        primary: '#722ed1',
       },
     },
   },
   plugins: [],
-} satisfies Config;
+} satisfies Config
 ```
 
 ### `vite.config.ts`
 
 ```ts
-import react from "@vitejs/plugin-react-swc";
-import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
@@ -155,28 +173,27 @@ export default defineConfig({
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
   },
-});
+})
 ```
 
 ### `src/main.tsx`
 
 ```tsx
-import { StyleProvider } from "@ant-design/cssinjs";
-import { App as AntApp, ConfigProvider } from "antd";
-import zhTW from "antd/es/locale/zh_TW";
-import "dayjs/locale/zh-tw";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "tailwindcss/tailwind.css";
-import tailwindConfig from "../tailwind.config";
-import App from "./App";
+import { StyleProvider } from '@ant-design/cssinjs'
+import { App as AntApp, ConfigProvider } from 'antd'
+import zhTW from 'antd/es/locale/zh_TW'
+import 'dayjs/locale/zh-tw'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import 'tailwindcss/tailwind.css'
+import tailwindConfig from '../tailwind.config'
+import App from './App'
 
-const container = document.getElementById("root") as HTMLDivElement;
-const root = createRoot(container);
+const container = document.getElementById('root') as HTMLDivElement
 
-const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary;
+const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary
 
-root.render(
+createRoot(container).render(
   <StrictMode>
     <ConfigProvider
       getPopupContainer={() => container}
@@ -197,8 +214,8 @@ root.render(
         </AntApp>
       </StyleProvider>
     </ConfigProvider>
-  </StrictMode>
-);
+  </StrictMode>,
+)
 ```
 
 ### `src/App.tsx`
@@ -211,10 +228,10 @@ import {
   Space,
   Tag,
   version,
-} from "antd";
+} from 'antd'
 
 export default function App() {
-  const { message } = AntApp.useApp();
+  const { message } = AntApp.useApp()
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-3 text-center">
       <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
@@ -233,14 +250,14 @@ export default function App() {
             <Tag color="processing">{version}</Tag>
             <DatePicker
               onChange={(date) => {
-                if (!date) return;
-                message.info(date?.toDate().toLocaleString());
+                if (!date) return
+                message.info(date?.toDate().toLocaleString())
               }}
             />
           </Space>
         </Descriptions.Item>
       </Descriptions>
     </div>
-  );
+  )
 }
 ```
