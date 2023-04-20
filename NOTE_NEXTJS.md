@@ -36,17 +36,17 @@ react@latest \
 react-dom@latest \
 eslint@latest \
 eslint-config-next@latest \
-eslint-config-prettier \
+eslint-config-prettier@latest \
 typescript@latest \
-antd \
-@ant-design/cssinjs \
-dayjs \
-dotenv-cli \
-tailwindcss \
-postcss \
-autoprefixer \
-prettier \
-sirv-cli
+antd@latest \
+@ant-design/cssinjs@latest \
+dayjs@latest \
+dotenv-cli@latest \
+tailwindcss@latest \
+postcss@latest \
+autoprefixer@latest \
+prettier@latest \
+sirv-cli@latest
 ```
 
 ```sh
@@ -58,7 +58,7 @@ rm -rf styles
 ```
 
 ```sh
-touch .env .eslintrc.json .npmrc .prettierignore
+touch .env .eslintrc.json .npmrc .prettierrc.json .prettierignore
 ```
 
 ```sh
@@ -102,22 +102,32 @@ next-env.d.ts
 /out
 ```
 
+### `.prettierrc.json`
+
+```json
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+```
+
 ### `next.config.js`
 
 ```js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.STATIC ? "export" : "standalone",
+  output: process.env.STATIC ? 'export' : 'standalone',
   reactStrictMode: true,
   images: {
     unoptimized: process.env.STATIC ? true : false,
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === 'production',
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ### `package.json`
@@ -144,55 +154,55 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
-};
+}
 ```
 
 ### `tailwind.config.ts`
 
 ```ts
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 export default {
-  important: "#__next",
+  important: '#__next',
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       colors: {
-        primary: "#722ed1",
+        primary: '#722ed1',
       },
     },
   },
   plugins: [],
-} satisfies Config;
+} satisfies Config
 ```
 
 ### `pages/_app.tsx`
 
 ```tsx
-import { App as AntApp, ConfigProvider } from "antd";
-import zhTW from "antd/locale/zh_TW";
-import "dayjs/locale/zh-tw";
-import type { AppProps } from "next/app";
-import dynamic from "next/dynamic";
-import "tailwindcss/tailwind.css";
-import tailwindConfig from "../tailwind.config";
+import { App as AntApp, ConfigProvider } from 'antd'
+import zhTW from 'antd/locale/zh_TW'
+import 'dayjs/locale/zh-tw'
+import type { AppProps } from 'next/app'
+import dynamic from 'next/dynamic'
+import 'tailwindcss/tailwind.css'
+import tailwindConfig from '../tailwind.config'
 
 const StyleProvider = dynamic(
-  () => import("@ant-design/cssinjs").then((mod) => mod.StyleProvider),
-  { ssr: false }
-);
+  () => import('@ant-design/cssinjs').then((mod) => mod.StyleProvider),
+  { ssr: false },
+)
 
-const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary;
+const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <StyleProvider hashPriority="high">
       <ConfigProvider
         getPopupContainer={() =>
-          document.getElementById("__next") as HTMLDivElement
+          document.getElementById('__next') as HTMLDivElement
         }
         locale={zhTW}
         theme={{
@@ -210,7 +220,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </AntApp>
       </ConfigProvider>
     </StyleProvider>
-  );
+  )
 }
 ```
 
@@ -224,13 +234,13 @@ import {
   Space,
   Tag,
   version,
-} from "antd";
-import { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
+} from 'antd'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
 
 const Page: NextPage = () => {
-  const { message } = AntApp.useApp();
+  const { message } = AntApp.useApp()
   return (
     <>
       <Head>
@@ -259,8 +269,8 @@ const Page: NextPage = () => {
               <Tag color="processing">{version}</Tag>
               <DatePicker
                 onChange={(date) => {
-                  if (!date) return;
-                  message.info(date?.toDate().toLocaleString());
+                  if (!date) return
+                  message.info(date?.toDate().toLocaleString())
                 }}
               />
             </Space>
@@ -268,8 +278,8 @@ const Page: NextPage = () => {
         </Descriptions>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
 ```
