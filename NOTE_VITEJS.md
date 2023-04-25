@@ -137,18 +137,6 @@ save=true
 }
 ```
 
-### `postcss.config.js`
-
-```js
-const postcssConfig = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-export default postcssConfig
-```
-
 ### `tailwind.config.ts`
 
 ```ts
