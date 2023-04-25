@@ -39,20 +39,15 @@ antd@latest \
 @ant-design/cssinjs@latest \
 dayjs@latest \
 eslint@latest \
-eslint-config-react-app@latest \
+@typescript-eslint/eslint-plugin@latest \
+@typescript-eslint/parser@latest \
+eslint-plugin-react-hooks@latest \
+eslint-plugin-react-refresh@latest \
 eslint-config-prettier@latest \
 prettier@latest \
 tailwindcss@latest \
 postcss@latest \
 autoprefixer@latest
-```
-
-```sh
-npm rm \
-@typescript-eslint/eslint-plugin \
-@typescript-eslint/parser \
-eslint-plugin-react-hooks \
-eslint-plugin-react-refresh
 ```
 
 ```sh
@@ -84,7 +79,19 @@ code .
 
 ```json
 {
-  "extends": ["react-app", "prettier"]
+  "env": { "browser": true, "es2020": true, "node": true },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module" },
+  "plugins": ["react-refresh"],
+  "rules": {
+    "react-refresh/only-export-components": "warn"
+  }
 }
 ```
 
@@ -124,7 +131,7 @@ save=true
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs . && tsc",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs --report-unused-disable-directives . && tsc",
     "format": "prettier '**/*' --write --ignore-unknown --cache"
   }
 }
