@@ -88,7 +88,7 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-brew install node@18
+brew install node
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install rsync
 brew install python
