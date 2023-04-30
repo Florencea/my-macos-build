@@ -117,7 +117,7 @@ next-env.d.ts
 ```js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.STATIC ? 'export' : 'standalone',
+  output: process.env.STATIC ? 'export' : undefined,
   reactStrictMode: true,
   images: {
     unoptimized: process.env.STATIC ? true : false,
