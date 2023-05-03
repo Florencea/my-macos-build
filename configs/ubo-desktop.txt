@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-04-13
+! Last updated: 2023-05-03
 
 ! universal rules
 ! outline
@@ -233,6 +233,8 @@ inside.com.tw##.post_list_item-ad:remove()
 inside.com.tw##^.post_toolbox
 inside.com.tw##^.post_list_item:has(a[href='https://www.inside.com.tw/category/native'])
 inside.com.tw##.post_list_item:has(a[href='https://www.inside.com.tw/category/native']):remove()
+inside.com.tw##^.post_list_item:has(.sponsored_label)
+inside.com.tw##.post_list_item:has(.sponsored_label):remove()
 inside.com.tw##.post_toolbox:remove()
 inside.com.tw##^div[class*=adv]
 inside.com.tw##div[class*=adv]:remove()
