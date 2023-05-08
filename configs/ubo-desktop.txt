@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-05-03
+! Last updated: 2023-05-08
 
 ! universal rules
 ! outline
@@ -778,3 +778,6 @@ xfastest.com##.vw-post-box:style(cursor: pointer !important)
 xfastest.com##.vw-logo-link > img:style(cursor: pointer !important)
 xfastest.com##.vw-page-navigation-pagination > a.page-numbers:style(cursor: pointer !important)
 xfastest.com##.vw-page-navigation-pagination > a.page-numbers > i:style(cursor: pointer !important)
+
+! youtube.com
+youtube.com###cinematics.ytd-watch-flexy:style(display: none !important)
