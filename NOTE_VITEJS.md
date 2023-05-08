@@ -6,9 +6,10 @@
   - [CLI](#cli)
   - [FILES](#files)
     - [`.eslintignore`](#eslintignore)
-    - [`.eslintrc.json`](#eslintrcjson)
+    - [`eslint.config.js`](#eslintconfigjs)
     - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
+    - [`.prettierrc.json`](#prettierrcjson)
     - [`package.json`](#packagejson)
     - [`tailwind.config.ts`](#tailwindconfigts)
     - [`vite.config.ts`](#viteconfigts)
@@ -43,6 +44,7 @@ eslint@latest \
 eslint-plugin-react-hooks@latest \
 eslint-plugin-react-refresh@latest \
 eslint-config-prettier@latest \
+globals \
 prettier@latest \
 tailwindcss@latest \
 postcss@latest \
@@ -58,7 +60,7 @@ rm -rf .eslintrc.cjs src/assets src/App.css src/index.css
 ```
 
 ```sh
-touch .eslintignore .eslintrc.json .prettierignore .prettierrc.json .npmrc
+touch .eslintignore eslint.config.js .prettierignore .prettierrc.json .npmrc
 ```
 
 ```sh
@@ -72,26 +74,6 @@ code .
 ```ignore
 /public
 /dist
-```
-
-### `.eslintrc.json`
-
-```json
-{
-  "env": { "browser": true, "es2020": true, "node": true },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module" },
-  "plugins": ["react-refresh"],
-  "rules": {
-    "react-refresh/only-export-components": "warn"
-  }
-}
 ```
 
 ### `.npmrc`
@@ -122,6 +104,40 @@ save=true
 }
 ```
 
+### `eslint.config.js`
+
+```js
+import js from '@eslint/js'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
+import prettier from 'eslint-config-prettier'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import globals from 'globals'
+
+export default [
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: globals.browser,
+      parser: tsParser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      '@typescript-eslint': tsPlugin,
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...tsPlugin.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': 'warn',
+    },
+  },
+  prettier,
+]
+```
+
 ### `package.json`
 
 ```json
@@ -130,7 +146,7 @@ save=true
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs --report-unused-disable-directives . && tsc",
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0 && tsc",
     "format": "prettier '**/*' --write --ignore-unknown --cache"
   }
 }
