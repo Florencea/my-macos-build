@@ -45,7 +45,7 @@ key0
 ### 3. Clone Release Tag
 
 ```sh
-git clone --depth 1 --branch fenix-v112.2.0 git@github.com:Florencea/firefox-android.git
+git clone --depth 1 --branch fenix-v113.0 git@github.com:Florencea/firefox-android.git
 ```
 
 ### 4. Edit Files
@@ -155,7 +155,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 92 ~ 102)
+- Comment this part (Line 93 ~ 103)
 - see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
