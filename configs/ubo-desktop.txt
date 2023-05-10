@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-05-09
+! Last updated: 2023-05-10
 
 ! universal rules
 ! outline
@@ -442,10 +442,10 @@ pts.org.tw##^.relative-news-list
 pts.org.tw##.relative-news-list:remove()
 pts.org.tw##^body > .container:has(.fb-comments)
 pts.org.tw##body > .container:has(.fb-comments):remove()
-pts.org.tw##^body > .container > .row > .col-lg-2
-pts.org.tw##body > .container > .row > .col-lg-2:remove()
-pts.org.tw##^body > .container > .row > .col-lg-8 > :not(.post-article)
-pts.org.tw##body > .container > .row > .col-lg-8 > :not(.post-article):remove()
+pts.org.tw##^body > article > .container > .row > .col-lg-2
+pts.org.tw##body > article > .container > .row > .col-lg-2:remove()
+pts.org.tw##^body > article > .container > .row > .col-lg-8 > :not(.post-article)
+pts.org.tw##body > article > .container > .row > .col-lg-8 > :not(.post-article):remove()
 pts.org.tw##^body > .article-main-info > .container > .row > .col-lg-8 > .tag-list
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .tag-list:remove()
 pts.org.tw##^.article-info
@@ -458,8 +458,12 @@ pts.org.tw##^.program-mask
 pts.org.tw##.program-mask:remove()
 pts.org.tw##^#header
 pts.org.tw###header
+pts.org.tw##^nav.main-nav
+pts.org.tw##nav.main-nav:remove()
 pts.org.tw##^.raw-html-embed
 pts.org.tw##.raw-html-embed:remove()
+pts.org.tw##^.tag-list
+pts.org.tw##.tag-list:remove()
 pts.org.tw##^.container:has(div:has(h3.section-title:has-text(相關)))
 pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關))):remove()
 pts.org.tw##^img[src*='scorecardresearch']
@@ -483,6 +487,7 @@ pts.org.tw##.post-article:style(padding-bottom: 4rem !important)
 pts.org.tw##.article-title:style(font-size: 1.5rem !important)
 pts.org.tw##.article-title:style(line-height: 2.2rem !important)
 pts.org.tw##.article-title:style(text-align: center !important)
+pts.org.tw##.container > .row:has(> .col-lg-8):style(justify-content: center !important)
 pts.org.tw##.container > .row > .col-lg-8:style(flex: 0 0 75% !important)
 pts.org.tw##.container > .row > .col-lg-8:style(max-width: 100% !important)
 pts.org.tw##.container > .row > .col-lg-8:style(min-width: 396px !important)
