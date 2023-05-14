@@ -6,10 +6,9 @@
   - [CLI](#cli)
   - [FILES](#files)
     - [`.eslintignore`](#eslintignore)
-    - [`eslint.config.js`](#eslintconfigjs)
+    - [`.eslintrc.json`](#eslintrcjson)
     - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
-    - [`.prettierrc.json`](#prettierrcjson)
     - [`package.json`](#packagejson)
     - [`tailwind.config.ts`](#tailwindconfigts)
     - [`vite.config.ts`](#viteconfigts)
@@ -44,7 +43,6 @@ eslint@latest \
 eslint-plugin-react-hooks@latest \
 eslint-plugin-react-refresh@latest \
 eslint-config-prettier@latest \
-globals \
 prettier@latest \
 tailwindcss@latest \
 postcss@latest \
@@ -60,7 +58,7 @@ rm -rf .eslintrc.cjs src/assets src/App.css src/index.css
 ```
 
 ```sh
-touch .eslintignore eslint.config.js .prettierignore .prettierrc.json .npmrc
+touch .eslintignore .eslintrc.json .prettierignore .prettierrc.json .npmrc
 ```
 
 ```sh
@@ -74,6 +72,26 @@ code .
 ```ignore
 /public
 /dist
+```
+
+### `.eslintrc.json`
+
+```json
+{
+  "env": { "browser": true, "es2020": true, "node": true },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module" },
+  "plugins": ["react-refresh"],
+  "rules": {
+    "react-refresh/only-export-components": "warn"
+  }
+}
 ```
 
 ### `.npmrc`
@@ -104,40 +122,6 @@ save=true
 }
 ```
 
-### `eslint.config.js`
-
-```js
-import js from '@eslint/js'
-import tsPlugin from '@typescript-eslint/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
-import prettier from 'eslint-config-prettier'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import globals from 'globals'
-
-export default [
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      globals: globals.browser,
-      parser: tsParser,
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      '@typescript-eslint': tsPlugin,
-    },
-    rules: {
-      ...js.configs.recommended.rules,
-      ...tsPlugin.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': 'warn',
-    },
-  },
-  prettier,
-]
-```
-
 ### `package.json`
 
 ```json
@@ -146,7 +130,7 @@ export default [
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint src --report-unused-disable-directives --max-warnings 0 && tsc",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs --report-unused-disable-directives . && tsc",
     "format": "prettier '**/*' --write --ignore-unknown --cache"
   }
 }
@@ -155,27 +139,27 @@ export default [
 ### `tailwind.config.ts`
 
 ```ts
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 export default {
-  important: '#root',
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  important: "#root",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        primary: '#722ed1',
+        primary: "#722ed1",
       },
     },
   },
   plugins: [],
-} satisfies Config
+} satisfies Config;
 ```
 
 ### `vite.config.ts`
 
 ```ts
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
@@ -183,25 +167,25 @@ export default defineConfig({
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
   },
-})
+});
 ```
 
 ### `src/main.tsx`
 
 ```tsx
-import { StyleProvider } from '@ant-design/cssinjs'
-import { App as AntApp, ConfigProvider } from 'antd'
-import zhTW from 'antd/es/locale/zh_TW'
-import 'dayjs/locale/zh-tw'
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import 'tailwindcss/tailwind.css'
-import tailwindConfig from '../tailwind.config'
-import App from './App'
+import { StyleProvider } from "@ant-design/cssinjs";
+import { App as AntApp, ConfigProvider } from "antd";
+import zhTW from "antd/es/locale/zh_TW";
+import "dayjs/locale/zh-tw";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "tailwindcss/tailwind.css";
+import tailwindConfig from "../tailwind.config";
+import App from "./App";
 
-const container = document.getElementById('root') as HTMLDivElement
+const container = document.getElementById("root") as HTMLDivElement;
 
-const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary
+const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary;
 
 createRoot(container).render(
   <StrictMode>
@@ -224,8 +208,8 @@ createRoot(container).render(
         </AntApp>
       </StyleProvider>
     </ConfigProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);
 ```
 
 ### `src/App.tsx`
@@ -238,10 +222,10 @@ import {
   Space,
   Tag,
   version,
-} from 'antd'
+} from "antd";
 
 export default function App() {
-  const { message } = AntApp.useApp()
+  const { message } = AntApp.useApp();
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-3 text-center">
       <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
@@ -260,14 +244,14 @@ export default function App() {
             <Tag color="processing">{version}</Tag>
             <DatePicker
               onChange={(date) => {
-                if (!date) return
-                message.info(date?.toDate().toLocaleString())
+                if (!date) return;
+                message.info(date?.toDate().toLocaleString());
               }}
             />
           </Space>
         </Descriptions.Item>
       </Descriptions>
     </div>
-  )
+  );
 }
 ```
