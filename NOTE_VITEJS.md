@@ -58,7 +58,7 @@ rm -rf .eslintrc.cjs src/assets src/App.css src/index.css
 ```
 
 ```sh
-touch .eslintignore .eslintrc.json .prettierignore .prettierrc.json .npmrc
+touch .eslintignore .eslintrc.json .prettierignore .npmrc
 ```
 
 ```sh
@@ -110,16 +110,6 @@ save=true
 ```ignore
 /public
 /dist
-```
-
-### `.prettierrc.json`
-
-```json
-{
-  "semi": false,
-  "singleQuote": true,
-  "trailingComma": "all"
-}
 ```
 
 ### `package.json`
