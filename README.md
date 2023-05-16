@@ -3,7 +3,8 @@
 ## Quick Links
 
 - [Vite Note](NOTE_VITEJS.md)
-- [Next.js Note](NOTE_NEXTJS.md)
+- [Next.js Note (App Router)](NOTE_NEXTJS_APP.md)
+- [Next.js Note (Pages Router)](NOTE_NEXTJS_PAGES.md)
 - [FFmpeg Note](NOTE_FFMPEG.md)
 - [Fenix Note](NOTE_FENIX.md)
 
