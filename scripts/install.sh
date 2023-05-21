@@ -71,7 +71,6 @@ brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
-brew install bash
 brew install curl
 brew install ffmpeg
 brew install gcc

@@ -5,13 +5,13 @@
 - [Vite Note](NOTE_VITEJS.md)
 - [Next.js Note (App Router)](NOTE_NEXTJS_APP.md)
 - [Next.js Note (Pages Router)](NOTE_NEXTJS_PAGES.md)
-- [FFmpeg Note](NOTE_FFMPEG.md)
+- [Media Note](NOTE_MEDIA.md)
 - [Fenix Note](NOTE_FENIX.md)
 
 ## Extenstion Configs
 
-- [uBlock Origin Configs](https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-config.txt)
-- [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/userscript.zip)
+- <a href="https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-config.txt" download="ubo-config.txt">uBlock Origin Configs</a>
+- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/userscript.zip" download="userscript.zip">Tampermonkey Configs</a>
 
 ## Firefox Devtools
 
