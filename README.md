@@ -10,8 +10,8 @@
 
 ## Extenstion Configs
 
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/ubo-config.txt" download="ubo-config.txt">uBlock Origin Configs</a>
-- <a href="https://github.com/Florencea/my-macos-build/raw/main/configs/userscript.zip" download="userscript.zip">Tampermonkey Configs</a>
+- [uBlock Origin Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/ubo-config.txt)
+- [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/userscript.zip)
 
 ## Firefox Devtools
 
