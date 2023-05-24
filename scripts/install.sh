@@ -57,6 +57,13 @@ brew install zsh-autosuggestions
 brew install zsh-fast-syntax-highlighting
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
 
+print_step "brew install fish"
+brew install fish
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+mkdir -p "$HOME/.config/fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
+
 print_step "brew install istat menus"
 brew install istat-menus
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
@@ -71,6 +78,7 @@ brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
 print_step "brew install commend line tools"
+brew install bash
 brew install curl
 brew install ffmpeg
 brew install gcc
