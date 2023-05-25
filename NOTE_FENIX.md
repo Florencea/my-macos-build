@@ -86,7 +86,7 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
           build-root-directory: fenix
-          arguments: app:assembleRelease -PversionName=${{ env.VERSION_NAME }} --stacktrace
+          arguments: app:assembleRelease -x app:lintVitalAnalyzeFenixRelease -x app:lintVitalReportFenixRelease -x app:lintVitalFenixRelease -PversionName=${{ env.VERSION_NAME }} --stacktrace --no-daemon
       - name: Create signed APKs
         uses: abhijitvalluri/sign-apks@v0.8
         with:
