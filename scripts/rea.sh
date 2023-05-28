@@ -11,13 +11,13 @@ INPUT_ASS="$INPUT_DIR.cht.ass"
 TEMP_FILE="temp_$INPUT_FILE"
 OUTPUT_FILE="$INPUT_DIR.result.mkv"
 
-if [-d "$INPUT_DIR"]; then
+if [ -d "$INPUT_DIR" ]; then
   cd $INPUT_DIR
   if [ -f "$INPUT_FILE" ]; then
     if [ -f "$INPUT_ASS" ]; then
       mv "$INPUT_FILE" "$TEMP_FILE"
       printf "combile ass start, params: -c:v copy -c:a copy -c:s copy\n"
-      OUTPUT_ERROR=$(ffmpeg -i "$TEMP_FILE" -i "$INPUT_ASS" -c:v copy -c:a copy -c:s copy -map 0:0 -map 0:1 -map 1:0 -disposition:s:0 default "$OUTPUT_FILE" 2>&1)
+      OUTPUT_ERROR=$(ffmpeg -hide_banner -loglevel error -i "$TEMP_FILE" -i "$INPUT_ASS" -c:v copy -c:a copy -c:s copy -map 0:0 -map 0:1 -map 1:0 -disposition:s:0 default "$OUTPUT_FILE" 2>&1)
       if [ -n "$OUTPUT_ERROR" ]; then
         echo "$OUTPUT_ERROR"
         rm "$OUTPUT_FILE" >/dev/null 2>&1
