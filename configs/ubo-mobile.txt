@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2023-05-10
+! Last updated: 2023-06-11
 
 ! Firefox css color
 ! bg-dark: #2b2a32
@@ -582,7 +582,7 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(height: 158px !importa
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button:style(height: 48px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(width: 48px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(height: 48px !important)
-18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(background-size: 622px 192px !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button::before:style(background-size: 778px 192px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_play::before:style(background-position: -30px -38px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_pause::before:style(background-position: -30px -114px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_fullscreen::before:style(background-position: -176px -38px !important)
