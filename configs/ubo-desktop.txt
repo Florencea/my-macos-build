@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-06-03
+! Last updated: 2023-06-11
 
 ! universal rules
 ! outline
@@ -390,6 +390,10 @@ macrumors.com##^script:has-text(Genius)
 macrumors.com##^script[src*='gleamjs']
 ! style
 macrumors.com##body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
+
+! mobile01.com
+mobile01.com##^div[id^=div-gpt-ad-]
+mobile01.com##div[id^=div-gpt-ad-]:remove()
 
 ! mui.com
 ! remove
@@ -787,3 +791,4 @@ xfastest.com##.vw-post-box:style(cursor: pointer !important)
 xfastest.com##.vw-logo-link > img:style(cursor: pointer !important)
 xfastest.com##.vw-page-navigation-pagination > a.page-numbers:style(cursor: pointer !important)
 xfastest.com##.vw-page-navigation-pagination > a.page-numbers > i:style(cursor: pointer !important)
+
