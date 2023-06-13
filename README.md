@@ -16,11 +16,16 @@
 ## Firefox Devtools
 
 ```text
-Mozilla/5.0 (Android 13; Mobile; rv:113.0) Gecko/113.0 Firefox/113.0
+Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0
 ```
 
 ```text
+396 x 858
 414 x 794
+```
+
+```text
+2.727272727272727
 ```
 
 ```text
