@@ -86,7 +86,11 @@ code .
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module" },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "warnOnUnsupportedTypeScriptVersion": false
+  },
   "plugins": ["react-refresh"],
   "rules": {
     "react-refresh/only-export-components": "warn"
