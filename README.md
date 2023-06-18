@@ -20,12 +20,7 @@ Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0
 ```
 
 ```text
-396 x 858
 414 x 794
-```
-
-```text
-2.727272727272727
 ```
 
 ```text
