@@ -1,9 +1,9 @@
-# Next.js Note fr App Router
+# Next.js Note for App Router
 
 - Scaffold a project with [Next.js](https://nextjs.org/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
 - Use App Router
 
-- [Next.js Note fr App Router](#nextjs-note-fr-app-router)
+- [Next.js Note for App Router](#nextjs-note-for-app-router)
   - [CLI](#cli)
   - [FILES](#files)
     - [`.env`](#env)
