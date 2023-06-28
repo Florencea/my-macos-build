@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# combile ass to mkv
+
 if [ "$#" -ne 1 ]; then
   echo "Usage: rea [input_dir]"
   echo "       rea \"input\""

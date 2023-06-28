@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# re-encode mp4
+
 if [ "$#" -ne 1 ]; then
   echo "Usage: rec [input_file]"
   echo "       rec \"input.mp4\""
