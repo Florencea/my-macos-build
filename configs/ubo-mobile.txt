@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2023-06-11
+! Last updated: 2023-07-01
 
 ! Firefox css color
 ! bg-dark: #2b2a32
@@ -533,7 +533,6 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(height: 158px !importa
 18av.tv##center form #MainMenu_but:style(display: flex !important)
 18av.tv##center form #MainMenu_but:style(flex-direction: column-reverse !important)
 18av.tv##center form #MainMenu_but:style(text-align: center !important)
-18av.tv##center form #MainMenu_but:style(padding-bottom: 10rem !important)
 18av.tv##center form .but_enlarge:style(appearance: none !important)
 18av.tv##center form .but_enlarge:style(-moz-appearance: none !important)
 18av.tv##center form .but_enlarge:style(display: block !important)
@@ -541,14 +540,14 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(height: 158px !importa
 18av.tv##center form .but_enlarge:style(width: auto !important)
 18av.tv##center form .but_enlarge:style(height: auto !important)
 18av.tv##center form .but_enlarge:style(font-size: 1rem !important)
-18av.tv##center form .but_enlarge:style(padding: 6rem !important)
+18av.tv##center form .but_enlarge:style(padding: 8rem !important)
 18av.tv##center form .but_enlarge:style(box-sizing: border-box !important)
 18av.tv##center form .but_enlarge:style(margin: 0.5rem 1rem !important)
 18av.tv##center form .but_enlarge:style(color: #fbfbfd !important)
 18av.tv##center form .but_enlarge:style(background-color: #2b2a32 !important)
 18av.tv##center form .but_enlarge:style(border: none !important)
 18av.tv##center form .but_enlarge#but_Prev:style(font-size: 1rem !important)
-18av.tv##center form .but_enlarge#but_Prev:style(padding: 2rem !important)
+18av.tv##center form .but_enlarge#but_Prev:style(padding: 1rem !important)
 18av.tv##center form select.sel_enlarge_page:style(appearance: none !important)
 18av.tv##center form select.sel_enlarge_page:style(-moz-appearance: none !important)
 18av.tv##center form select.sel_enlarge_page:style(display: block !important)
@@ -588,6 +587,7 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(height: 158px !importa
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_fullscreen::before:style(background-position: -176px -38px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_fullscreen_exit::before:style(background-position: -176px -114px !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_theatre:style(display: none !important)
+18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_mini_player:style(display: none !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_playback_rate:style(display: none !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_controls_right .fluid_control_volume_container:style(display: none !important)
 18av.tv##.fluid_video_wrapper.fluid_player_layout_default .fluid_controls_container .fluid_button.fluid_button_volume:style(display: none !important)
