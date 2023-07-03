@@ -93,6 +93,8 @@ echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install node@20
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install rsync
+brew install rust
+brew install rustfmt
 brew install python
 python3 -m pip install --upgrade pip
 pip3 install black
