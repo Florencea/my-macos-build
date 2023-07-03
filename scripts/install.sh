@@ -92,6 +92,7 @@ brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install node@20
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
+npm install --global npm
 brew install rsync
 brew install rust
 brew install rustfmt
