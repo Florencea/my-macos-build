@@ -3,6 +3,7 @@
 - Scaffold a project with [Vite](https://vitejs.dev/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
 
 - [Vite Note](#vite-note)
+  - [TESTED PACKAGE VERSION](#tested-package-version)
   - [CLI](#cli)
   - [FILES](#files)
     - [`.eslintignore`](#eslintignore)
@@ -14,6 +15,36 @@
     - [`vite.config.ts`](#viteconfigts)
     - [`src/main.tsx`](#srcmaintsx)
     - [`src/App.tsx`](#srcapptsx)
+
+## TESTED PACKAGE VERSION
+
+- `node`: `18.16.1`
+- `npm`: `9.5.1`
+
+```json
+{
+  "@ant-design/cssinjs": "1.11.0",
+  "@types/react": "18.2.14",
+  "@types/react-dom": "18.2.6",
+  "@typescript-eslint/eslint-plugin": "5.61.0",
+  "@typescript-eslint/parser": "5.61.0",
+  "@vitejs/plugin-react": "4.0.1",
+  "antd": "5.6.4",
+  "autoprefixer": "10.4.14",
+  "dayjs": "1.11.9",
+  "eslint": "8.44.0",
+  "eslint-config-prettier": "8.8.0",
+  "eslint-plugin-react-hooks": "4.6.0",
+  "eslint-plugin-react-refresh": "0.4.1",
+  "postcss": "8.4.24",
+  "prettier": "2.8.8",
+  "react": "18.2.0",
+  "react-dom": "18.2.0",
+  "tailwindcss": "3.3.2",
+  "typescript": "5.1.6",
+  "vite": "4.3.9"
+}
+```
 
 ## CLI
 
