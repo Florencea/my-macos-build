@@ -1,5 +1,7 @@
 # Next.js Note for Pages Router
 
+- IMPORTANT!, broke on Next.js `13.4.8` [[NEXT-1143] Dev mode slow compilation #48748](https://github.com/vercel/next.js/issues/48748#issuecomment-1618905240)
+
 - Scaffold a project with [Next.js](https://nextjs.org/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
 - Use Pages Router
 
