@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-06-11
+! Last updated: 2023-07-05
 
 ! universal rules
 ! outline
@@ -25,6 +25,11 @@
 *###sp-prefs-setup:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 *###sp-fw-container:style(opacity: 0.1 !important)
 *###sp-fw-container:hover:style(opacity: 1 !important)
+
+! anime1.me
+! remove
+anime1.me##^div[id^=ad-]
+anime1.me##div[id^=ad-]:remove()
 
 ! bitbucket.org
 ! style
