@@ -25,15 +25,3 @@ Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/115.0 Firefox/115.0
 ```text
 2.727272727272727
 ```
-
-```sh
-# Disable UI Animation
-ui.prefersReducedMotion 1
-xul.panel-animations.enabled false
-# Force TRR
-network.trr.mode 3
-# Disable Pocket
-extensions.pocket.enabled false
-# Disable Reader Mode
-reader.parse-on-load.enabled false
-```

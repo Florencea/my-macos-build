@@ -69,7 +69,6 @@ brew install istat-menus
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
 print_step "brew install cask apps"
-brew install --cask firefox-nightly --language=zh-TW
 brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
@@ -94,8 +93,6 @@ echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 brew install rsync
-brew install rust
-brew install rustfmt
 brew install python
 python3 -m pip install --upgrade pip
 pip3 install black
