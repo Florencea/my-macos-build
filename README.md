@@ -12,16 +12,16 @@
 - [uBlock Origin Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/ubo-config.txt)
 - [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/userscript.zip)
 
-## Firefox Devtools and `about:config`
+## Firefox Devtools
 
 ```text
 Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/115.0 Firefox/115.0
 ```
 
 ```text
-396 x 858
+414 x 794
 ```
 
 ```text
-2.727272727272727
+2.608695652173913
 ```
