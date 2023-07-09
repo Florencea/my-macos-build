@@ -35,14 +35,14 @@
   "eslint": "8.44.0",
   "eslint-config-prettier": "8.8.0",
   "eslint-plugin-react-hooks": "4.6.0",
-  "eslint-plugin-react-refresh": "0.4.1",
+  "eslint-plugin-react-refresh": "0.4.2",
   "postcss": "8.4.25",
   "prettier": "3.0.0",
   "react": "18.2.0",
   "react-dom": "18.2.0",
   "tailwindcss": "3.3.2",
   "typescript": "5.1.6",
-  "vite": "4.4.0"
+  "vite": "4.4.2"
 }
 ```
 
