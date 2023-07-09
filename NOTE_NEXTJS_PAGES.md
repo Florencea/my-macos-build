@@ -1,11 +1,10 @@
 # Next.js Note for Pages Router
 
-- IMPORTANT!, broke on Next.js `13.4.8` [[NEXT-1143] Dev mode slow compilation #48748](https://github.com/vercel/next.js/issues/48748#issuecomment-1618905240)
-
 - Scaffold a project with [Next.js](https://nextjs.org/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
 - Use Pages Router
 
 - [Next.js Note for Pages Router](#nextjs-note-for-pages-router)
+  - [TESTED PACKAGE VERSION](#tested-package-version)
   - [CLI](#cli)
   - [FILES](#files)
     - [`.env`](#env)
@@ -18,6 +17,35 @@
     - [`tailwind.config.ts`](#tailwindconfigts)
     - [`pages/_app.tsx`](#pages_apptsx)
     - [`pages/index.tsx`](#pagesindextsx)
+
+## TESTED PACKAGE VERSION
+
+- `node`: `18.16.1`
+- `npm`: `9.5.1`
+
+```json
+{
+  "@ant-design/cssinjs": "1.11.1",
+  "@types/node": "20.4.1",
+  "@types/react": "18.2.14",
+  "@types/react-dom": "18.2.6",
+  "antd": "5.6.4",
+  "autoprefixer": "10.4.14",
+  "dayjs": "1.11.9",
+  "dotenv-cli": "7.2.1",
+  "eslint": "8.44.0",
+  "eslint-config-next": "13.4.9",
+  "eslint-config-prettier": "8.8.0",
+  "next": "13.4.9",
+  "postcss": "8.4.25",
+  "prettier": "3.0.0",
+  "react": "18.2.0",
+  "react-dom": "18.2.0",
+  "sirv-cli": "2.0.2",
+  "tailwindcss": "3.3.2",
+  "typescript": "5.1.6"
+}
+```
 
 ## CLI
 
@@ -185,7 +213,7 @@ import tailwindConfig from "../tailwind.config";
 
 const StyleProvider = dynamic(
   () => import("@ant-design/cssinjs").then((mod) => mod.StyleProvider),
-  { ssr: false }
+  { ssr: false },
 );
 
 const PRIMARY_COLOR = tailwindConfig.theme.extend.colors.primary;
