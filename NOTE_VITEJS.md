@@ -24,8 +24,8 @@
 ```json
 {
   "@ant-design/cssinjs": "1.11.1",
-  "@types/react": "18.2.14",
-  "@types/react-dom": "18.2.6",
+  "@types/react": "18.2.15",
+  "@types/react-dom": "18.2.7",
   "@typescript-eslint/eslint-plugin": "6.0.0",
   "@typescript-eslint/parser": "6.0.0",
   "@vitejs/plugin-react": "4.0.3",
@@ -36,13 +36,13 @@
   "eslint-config-prettier": "8.8.0",
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
-  "postcss": "8.4.25",
+  "postcss": "8.4.26",
   "prettier": "3.0.0",
   "react": "18.2.0",
   "react-dom": "18.2.0",
-  "tailwindcss": "3.3.2",
+  "tailwindcss": "3.3.3",
   "typescript": "5.1.6",
-  "vite": "4.4.3"
+  "vite": "4.4.4"
 }
 ```
 
