@@ -3,7 +3,6 @@
 ## Quick Links
 
 - [Vite Note](NOTE_VITEJS.md)
-- [Next.js Note (Pages Router)](NOTE_NEXTJS_PAGES.md)
 - [Media Note](NOTE_MEDIA.md)
 - [Fenix Note](NOTE_FENIX.md)
 
