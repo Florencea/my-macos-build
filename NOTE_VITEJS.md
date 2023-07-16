@@ -32,7 +32,7 @@
   "antd": "5.7.0",
   "autoprefixer": "10.4.14",
   "dayjs": "1.11.9",
-  "eslint": "8.44.0",
+  "eslint": "8.45.0",
   "eslint-config-prettier": "8.8.0",
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
