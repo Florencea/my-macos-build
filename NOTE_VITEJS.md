@@ -18,18 +18,18 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `18.16.1`
-- `npm`: `9.5.1`
+- `node`: `18.17.0`
+- `npm`: `9.6.7`
 
 ```json
 {
-  "@ant-design/cssinjs": "1.11.1",
+  "@ant-design/cssinjs": "1.12.0",
   "@types/react": "18.2.15",
   "@types/react-dom": "18.2.7",
-  "@typescript-eslint/eslint-plugin": "6.0.0",
-  "@typescript-eslint/parser": "6.0.0",
+  "@typescript-eslint/eslint-plugin": "6.1.0",
+  "@typescript-eslint/parser": "6.1.0",
   "@vitejs/plugin-react": "4.0.3",
-  "antd": "5.7.0",
+  "antd": "5.7.1",
   "autoprefixer": "10.4.14",
   "dayjs": "1.11.9",
   "eslint": "8.45.0",
