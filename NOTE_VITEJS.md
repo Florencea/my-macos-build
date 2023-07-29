@@ -23,7 +23,7 @@
 
 ```json
 {
-  "@ant-design/cssinjs": "1.15.0",
+  "@ant-design/cssinjs": "1.16.1",
   "@types/react": "18.2.17",
   "@types/react-dom": "18.2.7",
   "@typescript-eslint/eslint-plugin": "6.2.0",
@@ -32,8 +32,8 @@
   "antd": "5.7.3",
   "autoprefixer": "10.4.14",
   "dayjs": "1.11.9",
-  "eslint": "8.45.0",
-  "eslint-config-prettier": "8.8.0",
+  "eslint": "8.46.0",
+  "eslint-config-prettier": "8.9.0",
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
   "postcss": "8.4.27",
