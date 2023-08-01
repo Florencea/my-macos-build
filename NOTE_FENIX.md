@@ -45,7 +45,7 @@ key0
 ### 3. Clone Release Tag
 
 ```sh
-git clone --depth 1 --branch fenix-v115.0 git@github.com:Florencea/firefox-android.git
+git clone --depth 1 --branch fenix-v116.0 git@github.com:Florencea/firefox-android.git
 ```
 
 ### 4. Edit Files
