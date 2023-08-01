@@ -155,7 +155,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
 - Comment this part (Line 96 ~ 106)
-- see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/mozilla-mobile/fenix/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
+- see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/Florencea/firefox-android/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
 val homeAction = BrowserToolbar.Button(
@@ -169,6 +169,21 @@ val homeAction = BrowserToolbar.Button(
 )
 
 browserToolbarView.view.addNavigationAction(homeAction)
+```
+
+- `fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt`
+- Change Line 1631 `featureFlag = false`
+- see [Bug 1816004 - Remove unused unifiedSearchFeature and notificationPrePermissionPromptEnabled feature flags](https://github.com/Florencea/firefox-android/commit/2dee46be18d91da5697e51516ad38efc2643c678)
+
+```kotlin
+/**
+  * Indicates if the Unified Search feature should be visible.
+  */
+var showUnifiedSearchFeature by lazyFeatureFlagPreference(
+    key = appContext.getPreferenceKey(R.string.pref_key_show_unified_search_2),
+    default = { FxNimbus.features.unifiedSearch.value().enabled },
+    featureFlag = false,
+)
 ```
 
 - `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
