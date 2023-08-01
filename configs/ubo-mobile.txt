@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile
-! Last updated: 2023-07-01
+! Last updated: 2023-08-01
 
 ! Firefox css color
 ! bg-dark: #2b2a32
@@ -409,6 +409,8 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(height: 158px !importa
 18av.tv##^span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(自拍))
 18av.tv##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(自拍)):remove()
 18av.tv##div#show_cg_html > p
+18av.tv##^span.sun_input_group_btn
+18av.tv##span.sun_input_group_btn:remove()
 18av.tv##^script:has-text(gtag)
 18av.tv##^script:has-text(_Hasync)
 18av.tv##^script:has-text(cnzz)
