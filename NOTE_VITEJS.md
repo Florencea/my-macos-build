@@ -24,12 +24,12 @@
 ```json
 {
   "@ant-design/cssinjs": "1.16.1",
-  "@types/react": "18.2.17",
+  "@types/react": "18.2.18",
   "@types/react-dom": "18.2.7",
-  "@typescript-eslint/eslint-plugin": "6.2.0",
-  "@typescript-eslint/parser": "6.2.0",
-  "@vitejs/plugin-react": "4.0.3",
-  "antd": "5.7.3",
+  "@typescript-eslint/eslint-plugin": "6.2.1",
+  "@typescript-eslint/parser": "6.2.1",
+  "@vitejs/plugin-react": "4.0.4",
+  "antd": "5.8.1",
   "autoprefixer": "10.4.14",
   "dayjs": "1.11.9",
   "eslint": "8.46.0",
@@ -37,12 +37,12 @@
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
   "postcss": "8.4.27",
-  "prettier": "3.0.0",
+  "prettier": "3.0.1",
   "react": "18.2.0",
   "react-dom": "18.2.0",
   "tailwindcss": "3.3.3",
   "typescript": "5.1.6",
-  "vite": "4.4.7"
+  "vite": "4.4.8"
 }
 ```
 
