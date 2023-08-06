@@ -164,6 +164,7 @@ module.exports = {
     project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
+  ignorePatterns: ["tailwind.config.ts", "postcss.config.js"],
   plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": [
@@ -255,7 +256,7 @@ export default {
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true
   },
-  "include": ["vite.config.ts", "postcss.config.js"]
+  "include": ["vite.config.ts"]
 }
 ```
 
