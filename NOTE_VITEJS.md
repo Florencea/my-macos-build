@@ -1,20 +1,25 @@
 # Vite Note
 
-- Scaffold a project with [Vite](https://vitejs.dev/), [Ant Design](https://ant.design/) and [Tailwind CSS](https://tailwindcss.com/)
+- Scaffold a project with [Vite](https://vitejs.dev/), [Ant Design](https://ant.design/), [Tailwind CSS](https://tailwindcss.com/) and [Generouted(Next.js like route)](https://github.com/oedotme/generouted)
 
 - [Vite Note](#vite-note)
   - [TESTED PACKAGE VERSION](#tested-package-version)
   - [CLI](#cli)
   - [FILES](#files)
+    - [`.env`](#env)
     - [`.eslintignore`](#eslintignore)
-    - [`.eslintrc.json`](#eslintrcjson)
+    - [`.eslintrc.cjs`](#eslintrccjs)
     - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
+    - [`index.html`](#indexhtml)
     - [`package.json`](#packagejson)
     - [`tailwind.config.ts`](#tailwindconfigts)
+    - [`tsconfig.node.json`](#tsconfignodejson)
     - [`vite.config.ts`](#viteconfigts)
     - [`src/main.tsx`](#srcmaintsx)
-    - [`src/App.tsx`](#srcapptsx)
+    - [`src/vite-env.d.ts`](#srcvite-envdts)
+    - [`src/pages/[...all].tsx`](#srcpagesalltsx)
+    - [`src/pages/index.tsx`](#srcpagesindextsx)
 
 ## TESTED PACKAGE VERSION
 
@@ -24,6 +29,8 @@
 ```json
 {
   "@ant-design/cssinjs": "1.16.1",
+  "@generouted/react-router": "1.15.3",
+  "@types/node": "20.4.8",
   "@types/react": "18.2.18",
   "@types/react-dom": "18.2.7",
   "@typescript-eslint/eslint-plugin": "6.2.1",
@@ -34,12 +41,14 @@
   "dayjs": "1.11.9",
   "eslint": "8.46.0",
   "eslint-config-prettier": "9.0.0",
+  "eslint-plugin-react": "7.33.1",
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
   "postcss": "8.4.27",
   "prettier": "3.0.1",
   "react": "18.2.0",
   "react-dom": "18.2.0",
+  "react-router-dom": "6.14.2",
   "tailwindcss": "3.3.3",
   "typescript": "5.1.6",
   "vite": "4.4.8"
@@ -58,19 +67,23 @@ cd vite-app
 
 ```sh
 npm i -D --save \
+@types/node@latest \
 @types/react@latest \
 @types/react-dom@latest \
-@vitejs/plugin-react@latest \
 react@latest \
 react-dom@latest \
 typescript@latest \
 vite@latest \
+@vitejs/plugin-react@latest \
+@generouted/react-router@latest \
+react-router-dom@latest \
 antd@latest \
 @ant-design/cssinjs@latest \
 dayjs@latest \
 eslint@latest \
 @typescript-eslint/eslint-plugin@latest \
 @typescript-eslint/parser@latest \
+eslint-plugin-react@latest \
 eslint-plugin-react-hooks@latest \
 eslint-plugin-react-refresh@latest \
 eslint-config-prettier@latest \
@@ -85,11 +98,15 @@ npx tailwindcss init -p --ts
 ```
 
 ```sh
-rm -rf .eslintrc.cjs src/assets src/App.css src/index.css
+rm -rf src/assets src/App.css src/App.tsx src/index.css
 ```
 
 ```sh
-touch .eslintignore .eslintrc.json .prettierignore .npmrc
+mkdir src/pages
+```
+
+```sh
+touch .env .eslintignore .prettierignore .npmrc src/pages/[...all].tsx src/pages/index.tsx
 ```
 
 ```sh
@@ -98,34 +115,63 @@ code .
 
 ## FILES
 
+### `.env`
+
+```sh
+VITE_TITLE="VITE APP"
+VITE_FAVICON="vite.svg"
+VITE_WEB_BASE="/"
+VITE_API_PREFIX="/api"
+PORT=5173
+PROXY_SERVER="http://localhost:5173/"
+```
+
 ### `.eslintignore`
 
 ```ignore
 /public
 /dist
+.eslintrc.cjs
 ```
 
-### `.eslintrc.json`
+### `.eslintrc.cjs`
 
-```json
-{
-  "env": { "browser": true, "es2020": true, "node": true },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+```js
+module.exports = {
+  root: true,
+  env: { browser: true, es2020: true, node: true },
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
-  "plugins": ["react-refresh"],
-  "rules": {
-    "react-refresh/only-export-components": "warn"
-  }
-}
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "prettier",
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
+    tsconfigRootDir: __dirname,
+  },
+  plugins: ["react-refresh"],
+  rules: {
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
+  },
+};
 ```
 
 ### `.npmrc`
@@ -144,6 +190,24 @@ save=true
 ```ignore
 /public
 /dist
+```
+
+### `index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>%VITE_TITLE%</title>
+    <link rel="icon" type="images/svg+xml" href="/%VITE_FAVICON%" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
 ```
 
 ### `package.json`
@@ -179,18 +243,58 @@ export default {
 } satisfies Config;
 ```
 
+### `tsconfig.node.json`
+
+```json
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true
+  },
+  "include": ["vite.config.ts", "postcss.config.js"]
+}
+```
+
 ### `vite.config.ts`
 
 ```ts
+import generouted from "@generouted/react-router/plugin";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { join } from "node:path";
+import { cwd } from "node:process";
+import { CommonServerOptions, defineConfig, loadEnv } from "vite";
+
+const { PORT, VITE_API_PREFIX, PROXY_SERVER, VITE_WEB_BASE } = loadEnv(
+  "development",
+  cwd(),
+  "",
+);
+
+const SERVER_OPTIONS: CommonServerOptions = {
+  port: parseInt(PORT, 10),
+  strictPort: true,
+  proxy: {
+    [join(VITE_WEB_BASE, VITE_API_PREFIX)]: {
+      target: PROXY_SERVER,
+      changeOrigin: true,
+      secure: false,
+    },
+  },
+};
 
 export default defineConfig({
-  plugins: [react()],
+  base: VITE_WEB_BASE,
+  server: SERVER_OPTIONS,
+  preview: SERVER_OPTIONS,
   build: {
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
   },
+  plugins: [react(), generouted()],
 });
 ```
 
@@ -198,14 +302,14 @@ export default defineConfig({
 
 ```tsx
 import { StyleProvider } from "@ant-design/cssinjs";
-import { App as AntApp, ConfigProvider } from "antd";
+import { Routes } from "@generouted/react-router/lazy";
+import { App, ConfigProvider } from "antd";
 import zhTW from "antd/es/locale/zh_TW";
 import "dayjs/locale/zh-tw";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "tailwindcss/tailwind.css";
-import tailwindConfig from "../tailwind.config";
-import App from "./App";
+import tailwindConfig from "../tailwind.config.ts";
 
 const container = document.getElementById("root") as HTMLDivElement;
 
@@ -227,29 +331,49 @@ createRoot(container).render(
       }}
     >
       <StyleProvider hashPriority="high">
-        <AntApp>
-          <App />
-        </AntApp>
+        <App>
+          <Routes />
+        </App>
       </StyleProvider>
     </ConfigProvider>
   </StrictMode>,
 );
 ```
 
-### `src/App.tsx`
+### `src/vite-env.d.ts`
+
+```ts
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly VITE_TITLE: string;
+  readonly VITE_FAVICON: string;
+  readonly VITE_WEB_BASE: string;
+  readonly VITE_API_PREFIX: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+```
+
+### `src/pages/[...all].tsx`
 
 ```tsx
-import {
-  App as AntApp,
-  DatePicker,
-  Descriptions,
-  Space,
-  Tag,
-  version,
-} from "antd";
+import { Navigate } from "../router";
 
-export default function App() {
-  const { message } = AntApp.useApp();
+export default function NotFound() {
+  return <Navigate to="/" replace />;
+}
+```
+
+### `src/pages/index.tsx`
+
+```tsx
+import { App, DatePicker, Descriptions, Space, Tag, version } from "antd";
+
+export default function Index() {
+  const { message } = App.useApp();
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-3 text-center">
       <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
@@ -269,7 +393,7 @@ export default function App() {
             <DatePicker
               onChange={(date) => {
                 if (!date) return;
-                message.info(date?.toDate().toLocaleString());
+                void message.info(date.toDate().toLocaleString());
               }}
             />
           </Space>
