@@ -106,7 +106,7 @@ mkdir src/pages
 ```
 
 ```sh
-touch .env .eslintignore .prettierignore .npmrc src/pages/[...all].tsx src/pages/index.tsx
+touch .env .eslintignore .prettierignore .npmrc 'src/pages/[...all].tsx' src/pages/index.tsx
 ```
 
 ```sh
