@@ -29,12 +29,12 @@
 ```json
 {
   "@ant-design/cssinjs": "1.16.1",
-  "@generouted/react-router": "1.15.3",
+  "@generouted/react-router": "1.15.4",
   "@types/node": "20.4.8",
-  "@types/react": "18.2.18",
+  "@types/react": "18.2.19",
   "@types/react-dom": "18.2.7",
-  "@typescript-eslint/eslint-plugin": "6.2.1",
-  "@typescript-eslint/parser": "6.2.1",
+  "@typescript-eslint/eslint-plugin": "6.3.0",
+  "@typescript-eslint/parser": "6.3.0",
   "@vitejs/plugin-react": "4.0.4",
   "antd": "5.8.2",
   "autoprefixer": "10.4.14",
@@ -51,7 +51,7 @@
   "react-router-dom": "6.14.2",
   "tailwindcss": "3.3.3",
   "typescript": "5.1.6",
-  "vite": "4.4.8"
+  "vite": "4.4.9"
 }
 ```
 
