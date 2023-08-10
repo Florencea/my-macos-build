@@ -23,15 +23,15 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `18.17.0`
+- `node`: `18.17.1`
 - `npm`: `9.6.7`
 
 ```json
 {
-  "@ant-design/cssinjs": "1.16.1",
+  "@ant-design/cssinjs": "1.16.2",
   "@generouted/react-router": "1.15.4",
-  "@types/node": "20.4.8",
-  "@types/react": "18.2.19",
+  "@types/node": "20.4.9",
+  "@types/react": "18.2.20",
   "@types/react-dom": "18.2.7",
   "@typescript-eslint/eslint-plugin": "6.3.0",
   "@typescript-eslint/parser": "6.3.0",
