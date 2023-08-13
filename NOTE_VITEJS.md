@@ -37,7 +37,7 @@
   "@typescript-eslint/parser": "6.3.0",
   "@vitejs/plugin-react": "4.0.4",
   "antd": "5.8.3",
-  "autoprefixer": "10.4.14",
+  "autoprefixer": "10.4.15",
   "dayjs": "1.11.9",
   "eslint": "8.47.0",
   "eslint-config-prettier": "9.0.0",
