@@ -23,8 +23,8 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `20.5.1`
-- `npm`: `9.8.0`
+- `node`: `18.17.1`
+- `npm`: `9.6.7`
 
 ```json
 {
@@ -41,11 +41,11 @@
   "dayjs": "1.11.9",
   "eslint": "8.47.0",
   "eslint-config-prettier": "9.0.0",
-  "eslint-plugin-react": "7.33.1",
+  "eslint-plugin-react": "7.33.2",
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
-  "postcss": "8.4.27",
-  "prettier": "3.0.1",
+  "postcss": "8.4.28",
+  "prettier": "3.0.2",
   "react": "18.2.0",
   "react-dom": "18.2.0",
   "react-router-dom": "6.15.0",
