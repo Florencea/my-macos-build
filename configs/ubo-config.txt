@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1692249169086,
+  "timeStamp": 1692292717543,
   "version": "1.51.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -15,6 +15,7 @@
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
+    "suspendUntilListsAreLoaded": true,
     "webrtcIPAddressHidden": true
   },
   "selectedFilterLists": [
@@ -36,18 +37,20 @@
     "curben-pup",
     "dpollock-0",
     "plowe-0",
-    "adguard-cookies",
     "adguard-mobile-app-banners",
     "adguard-other-annoyances",
     "adguard-popup-overlays",
     "adguard-social",
     "adguard-widgets",
+    "adguard-cookies",
+    "ublock-cookies-adguard",
     "easylist-chat",
-    "fanboy-cookiemonster",
     "easylist-newsletters",
     "easylist-notifications",
     "easylist-annoyances",
     "fanboy-social",
+    "fanboy-cookiemonster",
+    "ublock-cookies-easylist",
     "fanboy-thirdparty_social",
     "ublock-annoyances",
     "CHN-0",
