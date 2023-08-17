@@ -96,7 +96,6 @@ printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-s
 brew install rsync
 brew install python
 python3 -m pip install --upgrade pip
-pip3 install black
 brew install wget
 brew install yt-dlp/taps/yt-dlp
 
