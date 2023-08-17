@@ -214,6 +214,9 @@ github.com##body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "N
 github.com##.markdown-body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
 ! google.com
+! remove
+||google.*/search$removeparam=gs_lcrp
+||google.*/search$removeparam=ie
 ! style
 google.com##.g:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 google.com##.g h3:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
