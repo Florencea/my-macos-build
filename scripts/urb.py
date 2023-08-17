@@ -51,11 +51,7 @@ def get_remove_rules(input_list):
     remove_rule_list = []
     for line in input_list:
         if not_comment_line(line) and not_style_line(line):
-            if is_remove_function_line(line):
-                remove_rule_list.append(line.replace(":remove()", ""))
-                remove_rule_list.append(line)
-            else:
-                remove_rule_list.append(line)
+            remove_rule_list.append(line)
     return remove_rule_list
 
 
