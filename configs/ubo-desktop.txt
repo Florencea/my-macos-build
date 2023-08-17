@@ -226,8 +226,8 @@ google.com##h1:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Not
 
 ! inside.com.tw
 ! remove
-inside.com.tw##^.ad-content
-inside.com.tw##.ad-content
+inside.com.tw##^div.ad-content
+inside.com.tw##div.ad-content
 inside.com.tw##^.post_list_item-ad
 inside.com.tw##.post_list_item-ad
 inside.com.tw##^.post_toolbox
