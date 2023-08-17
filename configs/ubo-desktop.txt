@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-07-09
+! Last updated: 2023-08-18
 
 ! universal rules
 ! outline
@@ -204,19 +204,9 @@ fandom.com###WikiaMainContent:style(padding: 1em !important)
 
 ! github.com
 ! style
-github.com##.react-code-cell:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.react-code-text:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.text-mono:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##.blob-code-inner:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.blob-code:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.blob-num:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.commit-tease-sha:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##textarea:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##code:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##pre:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##tt:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##kbd:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##samp:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 github.com##.markdown-body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
