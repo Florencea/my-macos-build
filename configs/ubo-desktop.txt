@@ -598,7 +598,7 @@ techbang.com##^script:has-text(facebook)
 techbang.com##^script:has-text(NREUM)
 techbang.com##^script:has-text(googletagservices)
 techbang.com##^script:has-text(guoshipartners.com)
-techbang.com##script:has-text(carousel-images)
+techbang.com##^script:has-text(carousel-images)
 techbang.com##^script[src*='trvdp.com']
 techbang.com##^script[src*='sync']
 techbang.com##^script[src*='anymind360']
