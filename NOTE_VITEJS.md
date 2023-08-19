@@ -23,8 +23,9 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `18.17.1`
-- `npm`: `9.6.7`
+- `node`: `20.5.1`
+- `npm`: `9.8.0`
+- `pnpm`: `8.6.12`
 
 ```json
 {
@@ -58,7 +59,7 @@
 ## CLI
 
 ```sh
-npm -y create vite@latest vite-app -- --template react-ts
+pnpm create vite@latest vite-app --template react-ts
 ```
 
 ```sh
@@ -66,7 +67,7 @@ cd vite-app
 ```
 
 ```sh
-npm i -D --save \
+pnpm add -D --save \
 @types/node@latest \
 @types/react@latest \
 @types/react-dom@latest \
@@ -94,7 +95,7 @@ autoprefixer@latest
 ```
 
 ```sh
-npx tailwindcss init -p --ts
+pnpm exec tailwindcss init -p --ts
 ```
 
 ```sh
@@ -191,6 +192,7 @@ save=true
 ```ignore
 /public
 /dist
+pnpm-lock.yaml
 ```
 
 ### `index.html`
