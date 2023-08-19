@@ -19,7 +19,6 @@ fi
 # variables and path
 export CLICOLOR=1
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 
 # prompt
 autoload -Uz vcs_info
@@ -49,3 +48,11 @@ alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# pnpm
+export PNPM_HOME="/Users/$USER/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
