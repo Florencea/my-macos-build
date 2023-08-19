@@ -22,8 +22,7 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `20.5.1`
-- `npm`: `9.8.0`
+- `node`: `18.17.1`
 - `pnpm`: `8.6.12`
 
 ```json
@@ -135,17 +134,6 @@ PROXY_SERVER="http://localhost:5173/"
 ```ignore
 /public
 /dist
-```
-
-### `.npmrc`
-
-```npmrc
-audit=false
-fund=false
-loglevel=error
-update-notifier=false
-engine-strict=true
-save=true
 ```
 
 ### `.prettierignore`

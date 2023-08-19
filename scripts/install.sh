@@ -93,10 +93,9 @@ echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
-printf "pnpm install-completion fish\n"
-printf "pnpm install-completion zsh\n"
-printf "pnpm env use --global latest\n"
+"$HOME/Library/pnpm/pnpm" install-completion fish
+"$HOME/Library/pnpm/pnpm" install-completion zsh
+"$HOME/Library/pnpm/pnpm" env use --global lts
 brew install rsync
 brew install python
 python3 -m pip install --upgrade pip
