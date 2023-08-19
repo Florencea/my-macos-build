@@ -163,10 +163,9 @@ import js from "@eslint/js";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
+import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import reactJsx from "eslint-plugin-react/configs/jsx-runtime.js";
-import reactRecommended from "eslint-plugin-react/configs/recommended.js";
 import globals from "globals";
 
 export default [
@@ -177,27 +176,26 @@ export default [
       parser: tsParser,
     },
     plugins: {
+      react,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "@typescript-eslint": tsPlugin,
     },
     rules: {
       ...js.configs.recommended.rules,
-      ...tsPlugin.configs.recommended.rules,
+      ...tsPlugin.configs["recommended"].rules,
+      ...tsPlugin.configs["stylistic"].rules,
+      ...react.configs["recommended"].rules,
+      ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": "warn",
     },
-  },
-  {
-    ...reactRecommended,
-    files: ["**/*.{ts,tsx}"],
     settings: {
       react: {
         version: "detect",
       },
     },
   },
-  reactJsx,
   prettier,
 ];
 ```
