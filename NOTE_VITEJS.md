@@ -8,13 +8,12 @@
   - [FILES](#files)
     - [`.env`](#env)
     - [`.eslintignore`](#eslintignore)
-    - [`.eslintrc.cjs`](#eslintrccjs)
     - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
+    - [`eslint.config.js`](#eslintconfigjs)
     - [`index.html`](#indexhtml)
     - [`package.json`](#packagejson)
     - [`tailwind.config.ts`](#tailwindconfigts)
-    - [`tsconfig.node.json`](#tsconfignodejson)
     - [`vite.config.ts`](#viteconfigts)
     - [`src/main.tsx`](#srcmaintsx)
     - [`src/vite-env.d.ts`](#srcvite-envdts)
@@ -30,14 +29,15 @@
 ```json
 {
   "@ant-design/cssinjs": "1.16.2",
-  "@generouted/react-router": "1.15.4",
-  "@types/node": "20.5.0",
+  "@eslint/js": "8.47.0",
+  "@generouted/react-router": "1.15.5",
+  "@types/node": "20.5.1",
   "@types/react": "18.2.20",
   "@types/react-dom": "18.2.7",
   "@typescript-eslint/eslint-plugin": "6.4.0",
   "@typescript-eslint/parser": "6.4.0",
   "@vitejs/plugin-react": "4.0.4",
-  "antd": "5.8.3",
+  "antd": "5.8.4",
   "autoprefixer": "10.4.15",
   "dayjs": "1.11.9",
   "eslint": "8.47.0",
@@ -45,6 +45,7 @@
   "eslint-plugin-react": "7.33.2",
   "eslint-plugin-react-hooks": "4.6.0",
   "eslint-plugin-react-refresh": "0.4.3",
+  "globals": "13.21.0",
   "postcss": "8.4.28",
   "prettier": "3.0.2",
   "react": "18.2.0",
@@ -134,7 +135,6 @@ PROXY_SERVER="http://localhost:5173/"
 ```ignore
 /public
 /dist
-.eslintrc.cjs
 ```
 
 ### `.npmrc`
@@ -251,22 +251,6 @@ export default {
   },
   plugins: [],
 } satisfies Config;
-```
-
-### `tsconfig.node.json`
-
-```json
-{
-  "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "strictNullChecks": true
-  },
-  "include": ["vite.config.ts"]
-}
 ```
 
 ### `vite.config.ts`
