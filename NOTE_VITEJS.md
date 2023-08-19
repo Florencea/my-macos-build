@@ -82,6 +82,8 @@ antd@latest \
 @ant-design/cssinjs@latest \
 dayjs@latest \
 eslint@latest \
+@eslint/js \
+globals \
 @typescript-eslint/eslint-plugin@latest \
 @typescript-eslint/parser@latest \
 eslint-plugin-react@latest \
@@ -99,7 +101,7 @@ pnpm exec tailwindcss init -p --ts
 ```
 
 ```sh
-rm -rf src/assets src/App.css src/App.tsx src/index.css
+rm -rf src/assets src/App.css src/App.tsx src/index.css .eslintrc.cjs
 ```
 
 ```sh
@@ -107,7 +109,7 @@ mkdir src/pages
 ```
 
 ```sh
-touch .env .eslintignore .prettierignore .npmrc 'src/pages/[...all].tsx' src/pages/index.tsx
+touch .env .eslintignore .prettierignore eslint.config.js .npmrc 'src/pages/[...all].tsx' src/pages/index.tsx
 ```
 
 ```sh
@@ -135,47 +137,6 @@ PROXY_SERVER="http://localhost:5173/"
 .eslintrc.cjs
 ```
 
-### `.eslintrc.cjs`
-
-```js
-module.exports = {
-  root: true,
-  env: { browser: true, es2020: true, node: true },
-  settings: {
-    react: {
-      version: "detect",
-    },
-  },
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/strict-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
-    "prettier",
-  ],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-  ignorePatterns: ["tailwind.config.ts", "postcss.config.js"],
-  plugins: ["react-refresh"],
-  rules: {
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
-  },
-};
-```
-
 ### `.npmrc`
 
 ```npmrc
@@ -193,6 +154,52 @@ save=true
 /public
 /dist
 pnpm-lock.yaml
+```
+
+### `eslint.config.js`
+
+```js
+import js from "@eslint/js";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import prettier from "eslint-config-prettier";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import reactJsx from "eslint-plugin-react/configs/jsx-runtime.js";
+import reactRecommended from "eslint-plugin-react/configs/recommended.js";
+import globals from "globals";
+
+export default [
+  {
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      globals: globals.browser,
+      parser: tsParser,
+    },
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      "@typescript-eslint": tsPlugin,
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...tsPlugin.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      "react-refresh/only-export-components": "warn",
+    },
+  },
+  {
+    ...reactRecommended,
+    files: ["**/*.{ts,tsx}"],
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+  },
+  reactJsx,
+  prettier,
+];
 ```
 
 ### `index.html`
@@ -221,7 +228,7 @@ pnpm-lock.yaml
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs --report-unused-disable-directives . && tsc",
+    "lint": "eslint --report-unused-disable-directives . && tsc",
     "format": "prettier '**/*' --write --ignore-unknown --cache"
   }
 }
