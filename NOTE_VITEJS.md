@@ -8,7 +8,6 @@
   - [FILES](#files)
     - [`.env`](#env)
     - [`.eslintignore`](#eslintignore)
-    - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
     - [`eslint.config.js`](#eslintconfigjs)
     - [`index.html`](#indexhtml)
