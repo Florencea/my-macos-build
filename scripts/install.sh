@@ -156,8 +156,6 @@ curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/confi
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
 "$HOME/Library/pnpm/pnpm" install-completion fish
 "$HOME/Library/pnpm/pnpm" install-completion zsh
-print_step "Brew install cli tools: pnpm: install NodeJS LTS"
-"$HOME/Library/pnpm/pnpm" env use --global lts
 print_step "Brew install cli tools: rsync"
 brew install rsync
 print_step "Brew install cli tools: python"
@@ -174,6 +172,14 @@ print_step "Reset launchpad"
   defaults write com.apple.dock ResetLaunchPad -bool true
   killall Dock
 )
+
+print_step "fish: update completion"
+printf "Please execute commands below:\n"
+printf "\nfish_update_completions\n"
+
+print_step "pnpm: install NodeJS LTS"
+printf "Please execute commands below:\n"
+printf "\npnpm env use --global lts\n"
 
 print_step "Clear Install Script"
 (
