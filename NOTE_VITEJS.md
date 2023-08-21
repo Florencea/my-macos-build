@@ -21,7 +21,7 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `18.17.1`
+- `node`: `20.5.1`, `18.17.1`
 - `pnpm`: `8.6.12`
 
 ```json
