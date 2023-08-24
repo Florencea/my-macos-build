@@ -184,7 +184,7 @@ elle.com##.vertical-ad
 
 ! faceboook.com
 ! allow
-@@||facebook.com/ajax/bnzai$1p
+@@||facebook.com/ajax$1p
 
 ! fandom.com
 ! remove
