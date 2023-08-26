@@ -27,18 +27,18 @@
 ```json
 {
   "@ant-design/cssinjs": "1.16.2",
-  "@eslint/js": "8.47.0",
-  "@generouted/react-router": "1.15.5",
-  "@types/node": "20.5.1",
-  "@types/react": "18.2.20",
+  "@eslint/js": "8.48.0",
+  "@generouted/react-router": "1.15.7",
+  "@types/node": "20.5.6",
+  "@types/react": "18.2.21",
   "@types/react-dom": "18.2.7",
-  "@typescript-eslint/eslint-plugin": "6.4.0",
-  "@typescript-eslint/parser": "6.4.0",
+  "@typescript-eslint/eslint-plugin": "6.4.1",
+  "@typescript-eslint/parser": "6.4.1",
   "@vitejs/plugin-react": "4.0.4",
   "antd": "5.8.4",
   "autoprefixer": "10.4.15",
   "dayjs": "1.11.9",
-  "eslint": "8.47.0",
+  "eslint": "8.48.0",
   "eslint-config-prettier": "9.0.0",
   "eslint-plugin-react": "7.33.2",
   "eslint-plugin-react-hooks": "4.6.0",
@@ -50,7 +50,7 @@
   "react-dom": "18.2.0",
   "react-router-dom": "6.15.0",
   "tailwindcss": "3.3.3",
-  "typescript": "5.1.6",
+  "typescript": "5.2.2",
   "vite": "4.4.9"
 }
 ```
