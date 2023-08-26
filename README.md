@@ -2,7 +2,6 @@
 
 ## Quick Links
 
-- [Vite Note](NOTE_VITEJS.md)
 - [Media Note](NOTE_MEDIA.md)
 - [Fenix Note](NOTE_FENIX.md)
 - [Firefox Note](NOTE_FIREFOX.md)
