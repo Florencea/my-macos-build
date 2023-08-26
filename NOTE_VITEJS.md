@@ -8,7 +8,6 @@
   - [FILES](#files)
     - [`.env`](#env)
     - [`.eslintignore`](#eslintignore)
-    - [`.npmrc`](#npmrc)
     - [`.prettierignore`](#prettierignore)
     - [`eslint.config.js`](#eslintconfigjs)
     - [`index.html`](#indexhtml)
@@ -22,19 +21,19 @@
 
 ## TESTED PACKAGE VERSION
 
-- `node`: `18.17.1`
-- `npm`: `9.6.7`
+- `node`: `20.5.1`
+- `pnpm`: `8.6.12`
 
 ```json
 {
   "@ant-design/cssinjs": "1.16.2",
   "@eslint/js": "8.47.0",
-  "@generouted/react-router": "1.15.6",
-  "@types/node": "20.5.3",
-  "@types/react": "18.2.21",
+  "@generouted/react-router": "1.15.5",
+  "@types/node": "20.5.1",
+  "@types/react": "18.2.20",
   "@types/react-dom": "18.2.7",
-  "@typescript-eslint/eslint-plugin": "6.4.1",
-  "@typescript-eslint/parser": "6.4.1",
+  "@typescript-eslint/eslint-plugin": "6.4.0",
+  "@typescript-eslint/parser": "6.4.0",
   "@vitejs/plugin-react": "4.0.4",
   "antd": "5.8.4",
   "autoprefixer": "10.4.15",
@@ -59,7 +58,7 @@
 ## CLI
 
 ```sh
-npm create -y vite@latest vite-app -- --template react-ts
+pnpm create vite@latest vite-app --template react-ts
 ```
 
 ```sh
@@ -67,7 +66,7 @@ cd vite-app
 ```
 
 ```sh
-npm i -D --save \
+pnpm add -D --save \
 @types/node@latest \
 @types/react@latest \
 @types/react-dom@latest \
@@ -97,7 +96,7 @@ autoprefixer@latest
 ```
 
 ```sh
-npx tailwindcss init -p --ts
+pnpm exec tailwindcss init -p --ts
 ```
 
 ```sh
@@ -136,22 +135,12 @@ PROXY_SERVER="http://localhost:5173/"
 /dist
 ```
 
-### `.npmrc`
-
-```npmrc
-audit=false
-fund=false
-loglevel=error
-update-notifier=false
-engine-strict=true
-save=true
-```
-
 ### `.prettierignore`
 
 ```ignore
 /public
 /dist
+pnpm-lock.yaml
 ```
 
 ### `eslint.config.js`
