@@ -4,6 +4,7 @@
   - [Useful commands](#useful-commands)
     - [Install Rosetta2](#install-rosetta2)
     - [Reset LaunchPad](#reset-launchpad)
+    - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
     - [Disable Window Animations](#disable-window-animations)
     - [Generate SSH Key](#generate-ssh-key)
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
@@ -22,6 +23,12 @@ softwareupdate --install-rosetta
 
 ```sh
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
+```
+
+### Disable macOS popup showing accented characters when holding down a key
+
+```sh
+defaults write -g ApplePressAndHoldEnabled -bool false
 ```
 
 ### Disable Window Animations
