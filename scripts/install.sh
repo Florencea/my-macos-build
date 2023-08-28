@@ -150,12 +150,9 @@ brew install nano
 print_step "Brew install cli tools: nanorc"
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-print_step "Brew install cli tools: pnpm"
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
-"$HOME/Library/pnpm/pnpm" install-completion fish
-"$HOME/Library/pnpm/pnpm" install-completion zsh
+print_step "Brew install cli tools: node@18"
+brew install node@18
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
 print_step "Brew install cli tools: rsync"
 brew install rsync
 print_step "Brew install cli tools: python"
@@ -176,10 +173,6 @@ print_step "Reset launchpad"
 print_step "fish: update completion"
 printf "Please execute commands below:\n"
 printf "\nfish_update_completions\n"
-
-print_step "pnpm: install NodeJS latest"
-printf "Please execute commands below:\n"
-printf "\npnpm env use --global latest\n"
 
 print_step "Clear Install Script"
 (
