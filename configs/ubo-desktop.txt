@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-08-24
+! Last updated: 2023-08-30
 
 ! universal rules
 ! outline
@@ -211,9 +211,6 @@ fandom.com###WikiaMainContent:style(padding: 1em !important)
 
 ! github.com
 ! style
-github.com##.react-code-text:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.text-mono:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
-github.com##.blob-code-inner:style(font-family: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace !important)
 github.com##body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 github.com##.markdown-body:style(font-family: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important)
 
