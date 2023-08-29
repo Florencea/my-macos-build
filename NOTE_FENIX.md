@@ -154,7 +154,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 96 ~ 106)
+- Comment this part (Line 98 ~ 108)
 - see [For #23076 - Clean up unneeded FeatureFlags](https://github.com/Florencea/firefox-android/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
@@ -188,7 +188,7 @@ var showUnifiedSearchFeature by lazyFeatureFlagPreference(
 
 - `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
 
-- Enable `about:config` (Line 60)
+- Enable `about:config` (Line 61)
 
 ```kotlin
 .aboutConfigEnabled(true)
