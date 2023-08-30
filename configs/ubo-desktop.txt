@@ -13,6 +13,10 @@
 anime1.me##^div[id^=ad-]
 anime1.me##div[id^=ad-]
 
+! ant.design
+! remove
+ant.design##+js(trusted-set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, $currentDate$)
+
 ! books.com.tw
 ! remove
 books.com.tw##.header_pop
