@@ -72,8 +72,8 @@ brew tap homebrew/cask-versions
 print_step "Brew update taps: homebrew/cask-fonts"
 brew tap homebrew/cask-fonts
 
-print_step "Brew install fonts: font-jetbrains-mono"
-brew install --cask font-jetbrains-mono
+print_step "Brew install fonts: font-sf-mono-for-powerline"
+brew install --cask font-sf-mono-for-powerline
 
 print_step "Brew install fonts: font-inter"
 brew install --cask font-inter
