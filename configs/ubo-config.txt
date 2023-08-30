@@ -1,16 +1,16 @@
 {
-  "timeStamp": 1693401315647,
+  "timeStamp": 1693416970847,
   "version": "1.51.0",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
+    "externalLists": "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "ignoreGenericCosmeticFilters": true,
     "importedLists": [
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt",
-      "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt"
+      "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt"
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
@@ -54,7 +54,7 @@
     "ublock-annoyances",
     "CHN-0",
     "JPN-1",
-    "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/all_search_engines/global.txt",
+    "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-dark.min.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt"
