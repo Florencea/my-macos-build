@@ -246,7 +246,7 @@
 	<key>columnCount</key>
 	<integer>120</integer>
 	<key>name</key>
-	<string>GitHub</string>
+	<string>GitHub Dark</string>
 	<key>noWarnProcesses</key>
 	<array>
 		<dict>
