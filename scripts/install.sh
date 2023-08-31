@@ -71,7 +71,7 @@ brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install node@18
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true" >~/.npmrc
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\nprefer-offline=true\n" >~/.npmrc
 brew install rsync
 brew install python
 python3 -m pip install --upgrade pip
