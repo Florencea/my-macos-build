@@ -213,8 +213,9 @@ techbang.com##div[class^=ad]
 techbang.com##div[id*=crazy_ad]
 techbang.com###sidebar
 techbang.com##.headline
-techbang.com##.article > :not(.content):not(.header)
-techbang.com##div:has(> .google-dfp)
+techbang.com##.article > :not(.content):not(.header):not(.article-wrapper)
+techbang.com###topShare
+techbang.com##div:has(> .google-dfp):not(.main-content)
 techbang.com##.main-content:style(width: 100% !important)
 techbang.com##.main-content:style(float: none !important)
 techbang.com##.inner-content:style(width: 100% !important)
