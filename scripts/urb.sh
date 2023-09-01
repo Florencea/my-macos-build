@@ -3,7 +3,7 @@
 SCRIPT_HOME=$1
 CONFIG_HOME=$2
 
-FILE_LIST="ubo-desktop ubo-mobile ubo-dark ubo-light-mobile ubo-dark-mobile"
+FILE_LIST="ubo-desktop ubo-mobile"
 
 printf 'Update ubo-rules...'
 
