@@ -1,6 +1,12 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-09-01
+! Last updated: 2023-09-02
+
+! chrome origin trail 
+@@*$permissions=browsing-topics=(),from=~localhost
+@@*$permissions=idle-detection=(),from=~localhost
+@@*$permissions=join-ad-interest-group=(),from=~localhost
+@@*$permissions=run-ad-auction=(),from=~localhost
 
 ! addons
 *##.sp-separator
