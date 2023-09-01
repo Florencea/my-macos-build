@@ -171,6 +171,67 @@ val homeAction = BrowserToolbar.Button(
 browserToolbarView.view.addNavigationAction(homeAction)
 ```
 
+- Comment this part (Line 112 ~ 134)
+
+```kotlin
+val readerModeAction =
+    BrowserToolbar.ToggleButton(
+        image = AppCompatResources.getDrawable(
+            context,
+            R.drawable.ic_readermode,
+        )!!,
+        imageSelected =
+        AppCompatResources.getDrawable(
+            context,
+            R.drawable.ic_readermode_selected,
+        )!!,
+        contentDescription = context.getString(R.string.browser_menu_read),
+        contentDescriptionSelected = context.getString(R.string.browser_menu_read_close),
+        visible = {
+            readerModeAvailable && !reviewQualityCheckAvailable
+        },
+        selected = getCurrentTab()?.let {
+            activity?.components?.core?.store?.state?.findTab(it.id)?.readerState?.active
+        } ?: false,
+        listener = browserToolbarInteractor::onReaderModePressed,
+    )
+
+browserToolbarView.view.addPageAction(readerModeAction)
+```
+
+- Comment this part (Line 144 ~ 163)
+
+```kotlin
+readerViewFeature.set(
+            feature = components.strictMode.resetAfter(StrictMode.allowThreadDiskReads()) {
+                ReaderViewFeature(
+                    context,
+                    components.core.engine,
+                    components.core.store,
+                    binding.readerViewControlsBar,
+                ) { available, active ->
+                    if (available) {
+                        ReaderMode.available.record(NoExtras())
+                    }
+
+                    readerModeAvailable = available
+                    readerModeAction.setSelected(active)
+                    safeInvalidateBrowserToolbarView()
+                }
+            },
+            owner = this,
+            view = view,
+        )
+```
+
+- Change Line 421
+
+```kotlin
+return readerViewFeature.onBackPressed() || super.onBackPressed()
+->
+return super.onBackPressed()
+```
+
 - `fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt`
 - Change Line 1631 `featureFlag = false`
 - see [Bug 1816004 - Remove unused unifiedSearchFeature and notificationPrePermissionPromptEnabled feature flags](https://github.com/Florencea/firefox-android/commit/2dee46be18d91da5697e51516ad38efc2643c678)
