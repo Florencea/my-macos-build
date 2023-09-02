@@ -56,6 +56,9 @@ elle.com##.feed-block-ad-column
 ! feedly.com
 feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-color: #121212 !important)
 
+! github.com
+github.com##.code-navigation-cursor:style(display: none !important)
+
 ! google.com
 ||google.*/search$removeparam=gs_lcrp
 ||google.*/search$removeparam=ie
