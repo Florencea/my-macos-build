@@ -36,6 +36,9 @@ else
 fi
 
 brew tap homebrew/cask-versions
+brew tap homebrew/cask-fonts
+
+brew install --cask font-jetbrains-mono
 
 brew install zsh
 brew install zsh-autosuggestions
