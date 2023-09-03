@@ -399,6 +399,7 @@ thenewslens.com##.article-body-container .WhyNeedKnow .title:matches-media((pref
 thenewslens.com##.article-body-container .WhyNeedKnow .export:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
 thenewslens.com##.article-body-container .WhyNeedKnow .export:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 thenewslens.com##.article-mask-box::before:style(background: none !important)
+thenewslens.com##.article-content-body div:style(background-color: transparent !important)
 
 ! [SITE] vitejs.dev
 vitejs.dev##.VPDocAsideSponsors
