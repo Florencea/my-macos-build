@@ -1,8 +1,8 @@
 ! Title: ubo Florencea Font
 ! Description: Custom font styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-09-02
+! Last updated: 2023-09-03
 
-! css variable
+! CSS variable
 *##html:style(--ubo-custom-font-sans-serif: "Inter V", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##html:style(--ubo-custom-font-monospace: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace)
 
@@ -17,35 +17,40 @@
 ! render
 *##body:style(-webkit-font-smoothing: auto !important)
 *##body:style(-moz-osx-font-smoothing: auto !important)
+! outline
+*##a:style(outline: none !important)
+*##input:style(outline: none !important)
+*##select:style(outline: none !important)
+*##button:style(outline: none !important)
 
-! addons
+! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! bitbucket.org
+! [SITE] bitbucket.org
 bitbucket.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! books.com.tw
+! [SITE] books.com.tw
 books.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! coolpc.com.tw
+! [SITE] coolpc.com.tw
 coolpc.com.tw##*:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! cool3c.com
+! [SITE] cool3c.com
 cool3c.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! dmhy.org
+! [SITE] dmhy.org
 dmhy.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! e-hentai.org
+! [SITE] e-hentai.org
 e-hentai.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! exhentai.org
+! [SITE] exhentai.org
 exhentai.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! fandom.com
+! [SITE] fandom.com
 fandom.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! github.com
+! [SITE] github.com
 github.com###read-only-cursor-text-area:style(font-family: var(--ubo-custom-font-monospace) !important)
 github.com##.react-code-text:style(font-family: var(--ubo-custom-font-monospace) !important)
 github.com##.text-mono:style(font-family: var(--ubo-custom-font-monospace) !important)
@@ -53,7 +58,7 @@ github.com##.blob-code-inner:style(font-family: var(--ubo-custom-font-monospace)
 github.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 github.com##.markdown-body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! google.com
+! [SITE] google.com
 google.com##.g:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##.g h3:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##.std:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -63,28 +68,28 @@ google.com##html:style(font-family: var(--ubo-custom-font-sans-serif) !important
 google.com##input:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##h1:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! inside.com.tw
+! [SITE] inside.com.tw
 inside.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! www.ithome.com.tw
+! [SITE] www.ithome.com.tw
 www.ithome.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! macrumors.com
+! [SITE] macrumors.com
 macrumors.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! nyaa.si
+! [SITE] nyaa.si
 nyaa.si##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! pts.org.tw
+! [SITE] pts.org.tw
 pts.org.tw##.post-article:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! techbang.com
+! [SITE] techbang.com
 techbang.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! twnic.tw
+! [SITE] twnic.tw
 twnic.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! xfastest.com
+! [SITE] xfastest.com
 xfastest.com##html:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 xfastest.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 xfastest.com##cite:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -106,5 +111,3 @@ xfastest.com##.vw-review-item-title:style(font-family: var(--ubo-custom-font-san
 xfastest.com##.vw-pagination-load-more:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 xfastest.com##.vw-copyright:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 xfastest.com##.type-post p:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
-

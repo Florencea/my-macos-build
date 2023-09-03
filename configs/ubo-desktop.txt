@@ -1,29 +1,44 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-09-02
+! Last updated: 2023-09-03
 
-! chrome origin trail 
+! CSS variable
+! bg
+*##html:style(--ubo-custom-firefox-bg-dark: #2b2a32)
+*##html:style(--ubo-custom-firefox-bg-light: #f9f9fb)
+! text
+*##html:style(--ubo-custom-firefox-text-dark: #fbfbfd)
+*##html:style(--ubo-custom-firefox-text-light: #1a191f)
+! input-bg
+*##html:style(--ubo-custom-firefox-bg-input-dark: #43424a)
+*##html:style(--ubo-custom-firefox-bg-input-light: #f0f0f4)
+
+! [CHROME]
+! Supress Chrome toptics origin trial console error
 @@*$permissions=browsing-topics=(),from=~localhost
 @@*$permissions=idle-detection=(),from=~localhost
 @@*$permissions=join-ad-interest-group=(),from=~localhost
 @@*$permissions=run-ad-auction=(),from=~localhost
 
-! addons
+! [ADDONS]
+! Make AutoPager settings and divider invisible
 *##.sp-separator
 *###sp-fw-container:style(opacity: 0.1 !important)
 *###sp-fw-container:hover:style(opacity: 1 !important)
 
-! anime1.me
+! [SITE] anime1.me
+! Auto dismiss notify banner
 anime1.me##+js(set-local-storage-item, 0501_notifybar_dismiss, 1)
 anime1.me##div[id^=ad-]
 
-! ant.design
+! [SITE] ant.design
+! Auto dismiss notify banner
 ant.design##+js(trusted-set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, $currentDate$)
 
-! books.com.tw
+! [SITE] books.com.tw
 books.com.tw##.header_pop
 
-! cool3c.com
+! [SITE] cool3c.com
 cool3c.com##body > :not(div#main)
 cool3c.com###body > .row:has(> .col-12 > .index-sticky)
 cool3c.com##body[class^=page-article] #main #body > :not(.row:nth-child(2))
@@ -36,34 +51,41 @@ cool3c.com###footer
 cool3c.com###main:style(padding: 0 !important)
 cool3c.com###main:style(transition: none !important)
 
-! dmhy.org
+! [SITE] dmhy.org
 dmhy.org##.announce
 dmhy.org##div.clear:has(a[href='/topics/add'])
 dmhy.org##.user-sidebar > div.ui-corner-all.box:nth-of-type(4)
 dmhy.org##a[href*=mypikpak]
 
 ! exhentai.org
+! Make gallery title visible on hover
 exhentai.org##.gl4t:hover:style(max-height: none !important)
 
-! elle.com
+! [SITE] elle.com
 elle.com##.leaderboard-ad
 elle.com##.breaker-ad
 elle.com##.feed-block-ad-column
 
-! faceboook.com
+! [SITE] faceboook.com
+! Allow Facebook tracking in 1p to prevent bot detecting
 @@||facebook.com/ajax$1p
 
-! feedly.com
-feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-color: #121212 !important)
+! [SITE] feedly.com
+! CSS variable
+feedly.com##html:style(--ubo-custom-feedly-bg-dark: #121212)
+! Avoid flashing when loading in Dark theme
+feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-feedly-bg-dark) !important)
 
-! github.com
+! [SITE] github.com
+! If customize font, code-navigation-cursor would go wrong position, so disable it.
 github.com##.code-navigation-cursor:style(display: none !important)
 
-! google.com
+! [SITE] google.com
+! Remove useless google params
 ||google.*/search$removeparam=gs_lcrp
 ||google.*/search$removeparam=ie
 
-! inside.com.tw
+! [SITE] inside.com.tw
 inside.com.tw##div.ad-content
 inside.com.tw##.post_toolbox
 inside.com.tw##.content > .infinite_article
@@ -73,7 +95,11 @@ inside.com.tw##.Independent_study_down
 inside.com.tw##.js_nav > :not(.js_header)
 
 
-! www.ithome.com.tw
+! [SITE] www.ithome.com.tw
+! CSS variable
+www.ithome.com.tw##html:style(--ubo-custom-ithome-color-link-dark: #66ccff)
+www.ithome.com.tw##html:style(--ubo-custom-ithome-color-link-light: #1badf8)
+! Rules
 www.ithome.com.tw##body > :not(.main-container)
 www.ithome.com.tw##[id*='block-block-']
 www.ithome.com.tw##[id*='block-views-hot-news-block-']
@@ -90,7 +116,10 @@ www.ithome.com.tw##h1.page-header:style(text-align: left !important)
 www.ithome.com.tw##h1.page-header:style(padding-top: 3rem !important)
 www.ithome.com.tw##.content:style(padding-left: 0 !important)
 www.ithome.com.tw##.content:style(margin: 0 1rem !important)
-www.ithome.com.tw##.img-wrapper > div:style(border: 1px solid #ededed !important)
+www.ithome.com.tw##.img-wrapper .caption:style(padding: 6px 0 !important)
+www.ithome.com.tw##.img-wrapper .caption:style(background-color: transparent !important)
+www.ithome.com.tw##.img-wrapper .caption:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##.img-wrapper .caption:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 www.ithome.com.tw##.view-content:style(display: flex !important)
 www.ithome.com.tw##.view-content:style(justify-content: space-around !important)
 www.ithome.com.tw##.view-content:style(flex-wrap: wrap !important)
@@ -98,6 +127,7 @@ www.ithome.com.tw##.row-fluid .span4:style(width: 400px !important)
 www.ithome.com.tw##.row-fluid .span4:style(flex-shrink: 0 !important)
 www.ithome.com.tw##.row-fluid .span4:style(margin: 1rem 0 !important)
 www.ithome.com.tw##.channel-item:style(height: auto !important)
+www.ithome.com.tw##.channel-item:style(background-color: transparent !important)
 www.ithome.com.tw##.channel-item:style(max-height: 600px !important)
 www.ithome.com.tw##.channel-item .title:style(font-size: 1rem !important)
 www.ithome.com.tw##.channel-item .title:style(font-weight: 400 !important)
@@ -106,34 +136,44 @@ www.ithome.com.tw##.channel-item .title:style(display: block !important)
 www.ithome.com.tw##.channel-item .title:style(margin-bottom: 2rem !important)
 www.ithome.com.tw##.post-at:style(display: block !important)
 www.ithome.com.tw##.photo img:style(width: 100% !important)
-www.ithome.com.tw##.pagination ul:style(box-shadow: none !important)
-www.ithome.com.tw##.pagination ul > li > a:style(padding: 20px 30px !important)
-www.ithome.com.tw##.pagination ul > li > a:style(margin: 0 2rem !important)
-www.ithome.com.tw##.pagination ul > li > a:style(border: 1px solid #ddd !important)
 www.ithome.com.tw###block-views-view-news-expert-profile:style(margin: auto !important)
-www.ithome.com.tw##body:matches-media((prefers-color-scheme: light)):style(background-color: #f7f7f7 !important)
-www.ithome.com.tw##body:matches-media((prefers-color-scheme: dark)):style(background-color: #2b2a32 !important)
-www.ithome.com.tw##body:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-www.ithome.com.tw##.main-container:matches-media((prefers-color-scheme: dark)):style(background-color: #2b2a32 !important)
-www.ithome.com.tw##.page-node .page-header:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-www.ithome.com.tw##.submitted:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-www.ithome.com.tw##.submitted .created:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-www.ithome.com.tw##.submitted .pub-wording:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-www.ithome.com.tw##p span:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-www.ithome.com.tw##a:matches-media((prefers-color-scheme: dark)):style(color: #66ccff !important)
-www.ithome.com.tw##a span:matches-media((prefers-color-scheme: dark)):style(color: #66ccff !important)
-www.ithome.com.tw##a:hover:matches-media((prefers-color-scheme: dark)):style(border-color: #66ccff !important)
-www.ithome.com.tw##h2 > span:matches-media((prefers-color-scheme: dark)):style(color: #e77e7e !important)
-www.ithome.com.tw##h3 > span:matches-media((prefers-color-scheme: dark)):style(color: #e77e7e !important)
-www.ithome.com.tw##h2 > strong:matches-media((prefers-color-scheme: dark)):style(color: #e77e7e !important)
-www.ithome.com.tw##h3 > strong:matches-media((prefers-color-scheme: dark)):style(color: #e77e7e !important)
-www.ithome.com.tw##blockquote p:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
+www.ithome.com.tw##body:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+www.ithome.com.tw##body:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+www.ithome.com.tw##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##body:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##.main-container:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+www.ithome.com.tw##.main-container:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+www.ithome.com.tw##.page-node .page-header:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##.page-node .page-header:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##.submitted:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##.submitted:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##.submitted .created:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##.submitted .created:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##.submitted .pub-wording:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##.submitted .pub-wording:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##p span:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##p span:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##blockquote p:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##blockquote p:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##.summary:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+www.ithome.com.tw##.summary:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+www.ithome.com.tw##a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-ithome-color-link-dark) !important)
+www.ithome.com.tw##a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-ithome-color-link-light) !important)
+www.ithome.com.tw##a span:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-ithome-color-link-dark) !important)
+www.ithome.com.tw##a span:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-ithome-color-link-light) !important)
+www.ithome.com.tw##a:hover:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-ithome-color-link-dark) !important)
+www.ithome.com.tw##a:hover:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-ithome-color-link-light) !important)
 www.ithome.com.tw##p > img:matches-media((prefers-color-scheme: dark)):style(width: 100% !important)
 www.ithome.com.tw##p > img:matches-media((prefers-color-scheme: dark)):style(height: auto !important)
 www.ithome.com.tw##p > img:matches-media((prefers-color-scheme: dark)):style(display: block !important)
 www.ithome.com.tw##p > img:matches-media((prefers-color-scheme: dark)):style(margin: 0 auto !important)
+www.ithome.com.tw##.pagination ul:style(box-shadow: none !important)
+www.ithome.com.tw##.pagination > ul > li > a:style(border: none !important)
+www.ithome.com.tw##.pagination > ul > li > a:style(background-color: transparent !important)
+www.ithome.com.tw##.pagination > ul > li > a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-ithome-color-link-dark) !important)
+www.ithome.com.tw##.pagination > ul > li > a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-ithome-color-link-light) !important)
 
-! macrumors.com
+! [SITE] macrumors.com
 macrumors.com###featured_slider
 macrumors.com##.sidebarblock
 macrumors.com##.slick-inline-search-panel
@@ -142,17 +182,21 @@ macrumors.com##div[class^=trending--]
 macrumors.com##div[class^=headline--]
 macrumors.com##div[class^=widget--]:has(h2:has-text(Page))
 
-! mobile01.com
+! [SITE] mobile01.com
 mobile01.com##div[id^=div-gpt-ad-]
 
-! mui.com
+! [SITE] mui.com
 mui.com##div:has(> div:has(> a[data-ga-event-category="sponsor"]))
 mui.com##p.description.ad
 
-! frommuji.muji.tw
+! [SITE] frommuji.muji.tw
 frommuji.muji.tw##p:style(line-height: 2rem !important)
 
-! pts.org.tw
+! [SITE] pts.org.tw
+! CSS variable
+pts.org.tw##html:style(--ubo-custom-pts-link-light: var(--primary-color))
+pts.org.tw##html:style(--ubo-custom-pts-link-dark: #83c1fc)
+! Rules
 pts.org.tw##body > .container
 pts.org.tw##.embed-responsive:has(iframe)
 pts.org.tw##.share-list
@@ -176,6 +220,7 @@ pts.org.tw##.raw-html-embed
 pts.org.tw##.tag-list
 pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關)))
 pts.org.tw##.cookie-flex
+! Styles
 pts.org.tw##body > .container > .row:style(justify-content: center !important)
 pts.org.tw##body > .container > .row > .col-lg-6:style(padding-bottom: 30px !important)
 pts.org.tw##body > .article-main-info > .container > .row > .col-lg-8 > .figure:style(margin-top: 24px !important)
@@ -193,29 +238,79 @@ pts.org.tw##.container > .row > .col-lg-8:style(max-width: 100% !important)
 pts.org.tw##.container > .row > .col-lg-8:style(min-width: 396px !important)
 pts.org.tw##.article-main-info:style(margin-bottom: 0 !important)
 pts.org.tw##.article-main-info:style(padding:2.5rem 0 2rem 0 !important)
-pts.org.tw##body .post-article:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body p:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body li:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body h1:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body h2:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body h3:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body h4:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body h5:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body h6:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body table:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa)
-pts.org.tw##body .img-talk:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
-pts.org.tw##.post-article a:matches-media((prefers-color-scheme: dark)):style(color: #83c1fc !important)
-pts.org.tw##.post-article a:matches-media((prefers-color-scheme: dark)):hover:style(border-color: #83c1fc !important)
-pts.org.tw##.post-article .articleimg:matches-media((prefers-color-scheme: dark)):style(color: #83c1fc !important)
-pts.org.tw##body:matches-media((prefers-color-scheme: dark)):style(background-color: #2b2a32 !important)
-pts.org.tw##.post-article ul:matches-media((prefers-color-scheme: dark)):style(background-color: #2b2a32 !important)
-pts.org.tw##.post-article figcaption:matches-media((prefers-color-scheme: dark)):style(color: #f8f9fa !important)
+pts.org.tw##body .post-article:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##body .post-article:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##body p:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body p:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body li:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body li:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body h1:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body h1:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body h2:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body h2:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body h3:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body h3:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body h4:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body h4:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body h5:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body h5:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body h6:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body h6:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body table:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark))
+pts.org.tw##body table:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light))
+pts.org.tw##body .img-talk:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##body .img-talk:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.post-article a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-pts-link-dark) !important)
+pts.org.tw##.post-article a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-pts-link-light) !important)
+pts.org.tw##.post-article a:matches-media((prefers-color-scheme: dark)):hover:style(border-color: var(--ubo-custom-pts-link-dark) !important)
+pts.org.tw##.post-article a:matches-media((prefers-color-scheme: light)):hover:style(border-color: var(--ubo-custom-pts-link-light) !important)
+pts.org.tw##.post-article .articleimg:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-pts-link-dark) !important)
+pts.org.tw##.post-article .articleimg:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-pts-link-light) !important)
+pts.org.tw##body:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##body:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##body:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.post-article ul:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##.post-article ul:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##.post-article figcaption:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.post-article figcaption:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.home-breaking-news:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##.home-breaking-news:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##.project-subtitle:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.project-subtitle:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.instant-box a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.instant-box a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.news-info:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.news-info:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.news-info:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##.news-info:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##.home-editor-recommend-area h2 a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.home-editor-recommend-area h2 a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.editor-first-content:style(background-color: transparent !important)
+pts.org.tw##.home-story-area:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##.home-story-area:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##.home-story-area h2 a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.home-story-area h2 a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.home-breaking-video:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##.home-breaking-video:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##.home-breaking-video .video-title span:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.home-breaking-video .video-title span:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.video-news a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.video-news a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.home-most-area:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+pts.org.tw##.home-most-area:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+pts.org.tw##.most-list li a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##.most-list li a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+pts.org.tw##.most-news-rank:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-pts-link-dark) !important)
+pts.org.tw##.most-news-rank:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-pts-link-light) !important)
+pts.org.tw##time:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+pts.org.tw##time:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 
-! sogi.com.tw
+! [SITE] sogi.com.tw
 sogi.com.tw##div:has(> [class*=ad-])
 sogi.com.tw##.social-holder
 
-! techbang.com
+! [SITE] techbang.com
 techbang.com##.nav-header-holder > :not(.site-logo)
 techbang.com##.float-top
 techbang.com##div[class^=ad]
@@ -242,7 +337,7 @@ techbang.com##.post-main > .article:style(max-width: 796px !important)
 techbang.com##.article > .content > h2:style(border: 0 !important)
 techbang.com##label.caption:style(border: 0 !important)
 
-! thenewslens.com
+! [SITE] thenewslens.com
 thenewslens.com##[class^=ad-]
 thenewslens.com##.newsMessage-wrap
 thenewslens.com##.js-subscription-wrapper
@@ -257,12 +352,12 @@ thenewslens.com###infinite-article-recommend-section
 thenewslens.com##.fb-comment-box
 thenewslens.com##.social-btns
 
-! vitejs.dev
+! [SITE] vitejs.dev
 vitejs.dev##.VPDocAsideSponsors
 vitejs.dev##.VPDocAsideCarbonAds
 vitejs.dev##.viteconf
 
-! xfastest.com
+! [SITE] xfastest.com
 xfastest.com##.vw-page-wrapper > div:not(.container):not(#vwspc-section-2)
 xfastest.com##footer > .vw-site-footer-sidebars
 xfastest.com###wpfront-scroll-top-container
@@ -284,7 +379,6 @@ xfastest.com##footer:style(font-weight: 400 !important)
 xfastest.com##.vw-post-content > p:style(font-size: 1rem !important)
 xfastest.com##.vw-post-content > p:style(line-height: 2.11 !important)
 xfastest.com##.vw-post-content > p:style(margin: 40px auto !important)
-xfastest.com##.vw-post-content > p:style(color: #404040 !important)
 xfastest.com##.vw-post-content > p:style(letter-spacing: 0.6px !important)
 xfastest.com##.vw-post-content > p:style(white-space: pre-wrap !important)
 xfastest.com##.vw-post-content a:style(cursor: pointer !important)
