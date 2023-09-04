@@ -3,7 +3,7 @@
 ! Last updated: 2023-09-04
 
 ! CSS variable
-*##html:style(--ubo-custom-font-sans-serif: "Roboto Flex", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+*##html:style(--ubo-custom-font-sans-serif: "Inter Variable", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##html:style(--ubo-custom-font-monospace: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace)
 
 ! global
