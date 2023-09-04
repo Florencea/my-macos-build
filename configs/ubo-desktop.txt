@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-09-03
+! Last updated: 2023-09-04
 
 ! CSS variable
 ! bg
@@ -360,6 +360,8 @@ thenewslens.com##footer
 thenewslens.com##.article-infoBot-box
 thenewslens.com##.navigation-content
 thenewslens.com##.author-description
+thenewslens.com##.article-content blockquote.quote::before
+thenewslens.com##.article-content blockquote.quote::after
 ! Styles
 thenewslens.com##a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-tnl-link-dark) !important)
 thenewslens.com##a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-tnl-link-light) !important)
@@ -400,6 +402,10 @@ thenewslens.com##.article-body-container .WhyNeedKnow .export:matches-media((pre
 thenewslens.com##.article-body-container .WhyNeedKnow .export:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 thenewslens.com##.article-mask-box::before:style(background: none !important)
 thenewslens.com##.article-content-body div:style(background-color: transparent !important)
+thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-tnl-link-dark) !important)
+thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-tnl-link-light) !important)
+thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-tnl-link-dark) !important)
+thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-tnl-link-light) !important)
 
 ! [SITE] vitejs.dev
 vitejs.dev##.VPDocAsideSponsors
