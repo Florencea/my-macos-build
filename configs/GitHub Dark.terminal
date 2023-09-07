@@ -242,7 +242,7 @@
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
 	</data>
 	<key>UseBrightBold</key>
-	<false/>
+	<true/>
 	<key>columnCount</key>
 	<integer>120</integer>
 	<key>name</key>
