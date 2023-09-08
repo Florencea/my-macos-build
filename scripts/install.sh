@@ -74,11 +74,9 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
-"$HOME/Library/pnpm/pnpm" install-completion fish
-"$HOME/Library/pnpm/pnpm" install-completion zsh
+brew install fnm
+eval "$(fnm env)"
+fnm use --install-if-missing 18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >~/.npmrc
 brew install rsync
 brew install python

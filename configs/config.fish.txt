@@ -25,9 +25,5 @@ alias rec="sh $SCRIPT_HOME/rec.sh"
 alias rea="sh $SCRIPT_HOME/rea.sh"
 alias re4="sh $SCRIPT_HOME/re4.sh"
 alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
-# pnpm
-set -gx PNPM_HOME "/Users/$USER/Library/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
+# fnm
+fnm env | source
