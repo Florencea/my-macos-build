@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin
-! Last updated: 2023-09-04
+! Last updated: 2023-09-10
 
 ! CSS variable
 ! bg
@@ -362,6 +362,7 @@ thenewslens.com##.navigation-content
 thenewslens.com##.author-description
 thenewslens.com##.article-content blockquote.quote::before
 thenewslens.com##.article-content blockquote.quote::after
+thenewslens.com###privacy-wrap
 ! Styles
 thenewslens.com##a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-tnl-link-dark) !important)
 thenewslens.com##a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-tnl-link-light) !important)
