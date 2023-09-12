@@ -1,5 +1,5 @@
 ! Title: ubo Florencea Mobile
-! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile
+! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
 ! Last updated: 2023-09-03
 
 ! Note: These rules are optimized for Firefox
