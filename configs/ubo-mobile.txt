@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2023-09-03
+! Last updated: 2023-09-13
 
 ! Note: These rules are optimized for Firefox
 
@@ -16,14 +16,210 @@
 *##html:style(--ubo-custom-firefox-bg-input-light: #f0f0f4)
 
 ! [SITE] exhentai.org
+! CSS variable
+exhentai.org##html:style(--ubo-custom-firefox-eh-fontsize: 24px)
+! Font size
+exhentai.org##body:style(font-size: var(--ubo-custom-firefox-eh-fontsize) !important)
+exhentai.org###searchbox:style(font-size: var(--ubo-custom-firefox-eh-fontsize) !important)
+! body
+exhentai.org##body:style(background: var(--ubo-custom-firefox-bg-dark) !important)
+exhentai.org##body:style(padding: 0 !important)
+exhentai.org##body:style(width: 100% !important)
+! input
+exhentai.org##input[type=text]:style(margin: 0 !important)
+exhentai.org##input[type=text]:style(padding: 2rem 2rem !important)
+exhentai.org##input[type=text]:style(box-sizing: border-box !important)
+exhentai.org##input[type=text]:style(border: none !important)
+exhentai.org##input[type=text]:style(border-radius: 0 !important)
+exhentai.org##input[type=text]:style(line-height: unset !important)
+exhentai.org##input[type=text]:style(appearance: none !important)
+exhentai.org##input[type=text]:style(font-size: 2rem !important)
+exhentai.org##input[type=text]:style(color: var(--ubo-custom-firefox-text-dark) !important)
+exhentai.org##input[type=text]:style(background-color: var(--ubo-custom-firefox-bg-input-dark) !important)
+exhentai.org##input[type=text]:style(max-width: 100% !important)
+! wrapper
+exhentai.org##div.ido:style(padding: 0 !important)
+exhentai.org##div.ido:style(margin: 0 !important)
+exhentai.org##div.ido:style(border: 0 !important)
+exhentai.org##div.ido:style(width: 100% !important)
+exhentai.org##div.ido:style(min-width: auto !important)
+exhentai.org##div.ido:style(max-width: 100vw !important)
+exhentai.org##div.ido:style(background: var(--ubo-custom-firefox-bg-dark) !important)
+exhentai.org##div.ido > div:style(width: 100% !important)
+! Nav bar
+exhentai.org###nb:style(font-size: 1.5em !important)
+exhentai.org###nb:style(min-height: auto !important)
+exhentai.org###nb:style(max-height: unset !important)
+exhentai.org###nb:style(overflow: auto !important)
+exhentai.org###nb:style(min-width: auto !important)
+exhentai.org###nb:style(max-width: unset !important)
+exhentai.org###nb:style(width: 100% !important)
+exhentai.org###nb:style(padding: 0 !important)
+exhentai.org###nb:style(justify-content: center !important)
+exhentai.org###nb:style(gap: 0.8rem !important)
+exhentai.org###nb:style(font-weight: normal !important)
+exhentai.org###nb > div:style(background-image: none !important)
+exhentai.org###nb > div:style(padding: 0 !important)
+exhentai.org###nb a:style(display: block !important)
+exhentai.org###nb a:style(padding: 1.5rem !important)
+exhentai.org###nb > div:has(>a:not([href="https://exhentai.org/"]):not([href="https://exhentai.org/favorites.php"]))
+! Search Table
+exhentai.org##table.itc
+exhentai.org##h1.ih
+exhentai.org##div.idi:style(width: auto !important)
+exhentai.org##div.idi:style(margin: 0 !important)
+exhentai.org##div.idi:style(padding: 0 !important)
+exhentai.org##div.idi:style(border: none !important)
+! Search Box
+exhentai.org###searchbox > form > div:style(padding: 0 !important)
+exhentai.org###searchbox > form > div:nth-child(4)
+exhentai.org###searchbox > form > div:nth-child(3) > :not(#f_search)
+exhentai.org###searchbox > form > div:nth-child(3):style(padding: 0 2rem 2rem 2rem !important)
+exhentai.org###searchbox > form > div:nth-child(3):style(box-sizing: border-box !important)
+exhentai.org###f_search:style(width: 100% !important)
+exhentai.org###f_search:style(max-width: 100vw !important)
+! Search Result
+exhentai.org##div.ido > div:last-child:has(div.itg) > :not(div.itg)
+! grid
+exhentai.org##div.itg:style(grid-template-columns: repeat(3,1fr) !important)
+!exhentai.org##div.itg:style(grid-template-columns: repeat(5,1fr) !important)
+exhentai.org##div.itg:style(width: 100% !important)
+exhentai.org##div.itg:style(border: none !important)
+exhentai.org##div.itg:style(margin: 0 !important)
+exhentai.org##div.itg:style(gap: 1rem !important)
+exhentai.org##.gl1t:style(min-width: auto !important)
+exhentai.org##.gl1t:style(max-width: unset !important)
+exhentai.org##.gl1t:style(min-height: auto !important)
+exhentai.org##.gl1t:style(background: transparent !important)
+exhentai.org##.gl1t:style(border: none !important)
+exhentai.org##.gl1t:style(justify-content: space-between !important)
+exhentai.org##.gl1t:style(padding: 0 !important)
+exhentai.org##.gl1t > a:remove-attr(target)
+exhentai.org##.gl3t:style(margin: 0 !important)
+exhentai.org##.gl3t:style(border: 0 !important)
+exhentai.org##.gl3t:style(border-radius: 0 !important)
+exhentai.org##.gl3t:style(width: auto !important)
+exhentai.org##.gl3t:style(height: auto !important)
+exhentai.org##.gl3t > a:remove-attr(target)
+exhentai.org##.gl3t > a > img:style(top: unset !important)
+exhentai.org##.gl3t > a > img:style(width: 100% !important)
+exhentai.org##.gl3t > a > img:style(height: auto !important)
+exhentai.org##.gl3t > a > img:style(max-height: 345px !important)
+exhentai.org##.gl3t > a > img:style(object-fit: contain !important)
+! grid footer
+exhentai.org##.gldown
+exhentai.org##.gl5t:style(flex-wrap: wrap !important)
+exhentai.org##.gl5t:style(margin: 0 !important)
+exhentai.org##.gl5t:style(height: 46px !important)
+!exhentai.org##.gl5t:style(height: 92px !important)
+exhentai.org##.gl5t > div:style(width: 100% !important)
+exhentai.org##.gl5t > div:nth-child(1) > div:nth-child(2):style(font-size: 8pt !important)
+exhentai.org##.gl5t > div:nth-child(2) > div:nth-child(2):style(font-size: 8pt !important)
+! favorites
+exhentai.org##div.ido > h1
+exhentai.org##div.ido > div:has(>.fp)
+exhentai.org##form[action="https://exhentai.org/favorites.php"] > div > input:not([name=f_search])
+exhentai.org##.searchnav > div:not(:has(#favact))
+exhentai.org##div.dp
+! Gallery Info
+exhentai.org##h1#gn:style(font-size: 2rem !important)
+exhentai.org##h1#gj:style(font-size: 1.5rem !important)
+exhentai.org##div.gm:style(max-width: 100% !important)
+exhentai.org##div.gm:style(margin: 0 !important)
+exhentai.org##div.gm:style(padding: 0 !important)
+exhentai.org##div.gm:style(border: none !important)
+exhentai.org##h1#gj:style(border: none !important)
+exhentai.org##div#gleft
+exhentai.org##div#gd2:style(width: 100% !important)
+exhentai.org##div#gmid:style(width: 100% !important)
+exhentai.org##div#gmid:style(height: auto !important)
+exhentai.org###tagmenu_new
+exhentai.org##.gtb
+exhentai.org###gdo
+exhentai.org###gwrd
+exhentai.org##div#gdt:style(width: 100% !important)
+exhentai.org##div#gdt:style(max-width: 100% !important)
+exhentai.org##div#gdt:style(min-width: unset !important)
+exhentai.org##div#gdt:style(border: none !important)
+exhentai.org##div#gdt:style(background: transparent !important)
+exhentai.org##div.gm:style(background: transparent !important)
+exhentai.org##div#gd2:style(background: transparent !important)
+exhentai.org##div#gmid:style(background: transparent !important)
+exhentai.org##div#gmid:style(float: none !important)
+exhentai.org##div#gmid:style(display: flex !important)
+exhentai.org##div#gmid:style(justify-content: space-between !important)
+exhentai.org##div#gd5
+exhentai.org##div#gd3:style(float: none !important)
+exhentai.org##div#gd4:style(float: none !important)
+exhentai.org##div#gd4:style(border: none !important)
+exhentai.org##div#gd4:style(flex-grow: 1 !important)
+exhentai.org##div#gd4:style(display: flex !important)
+exhentai.org##div#gd4:style(flex-direction: column !important)
+exhentai.org###tagmenu_act:style(width: fit-content !important)
+exhentai.org###tagmenu_act:style(height: auto !important)
+exhentai.org###tagmenu_act:style(font-size: 1.5rem !important)
+exhentai.org###tagmenu_act:style(float: none !important)
+exhentai.org###tagmenu_act:style(position: absolute !important)
+exhentai.org###tagmenu_act:style(bottom: 0.5rem !important)
+exhentai.org###tagmenu_act:style(display: flex)
+exhentai.org###tagmenu_act:style(flex-wrap: nowrap !important)
+exhentai.org###tagmenu_act:style(flex-shrink: 0 !important)
+exhentai.org###tagmenu_act:style(overflow-x: scroll !important)
+exhentai.org###tagmenu_act:style(gap: 0.5rem !important)
+exhentai.org###tagmenu_act:style(padding: 0 !important)
+exhentai.org###tagmenu_act > img
+exhentai.org###tagmenu_act > a:style(display: block !important)
+exhentai.org###tagmenu_act > a:style(font-size: 1.5rem !important)
+exhentai.org###tagmenu_act > a:style(border: none !important)
+exhentai.org###tagmenu_act > a:style(border-radius: 0 !important)
+exhentai.org###tagmenu_act > a:style(padding: 0.5rem 1rem !important)
+exhentai.org###tagmenu_act > a:style(box-sizing: border-box !important)
+exhentai.org###tagmenu_act > a:style(min-width: fit-content !important)
+exhentai.org###tagmenu_act > a:style(background: var(--ubo-custom-firefox-bg-input-dark) !important)
+exhentai.org###tagmenu_act > a:not([onclick="tag_show_galleries(); return false"]):not([onclick="tag_define(); return false"])
+exhentai.org###taglist:style(height: auto !important)
+exhentai.org###taglist:style(flex-grow: 1 !important)
+exhentai.org###taglist:style(font-size: 1.5rem !important)
+exhentai.org###taglist:style(margin-bottom: 64px !important)
+exhentai.org###taglist td.tc:style(vertical-align: middle !important)
+exhentai.org###taglist div[class^=gt]:style(font-size: 1.5rem !important)
+exhentai.org###taglist div[class^=gt]:style(border: none !important)
+exhentai.org###taglist div[class^=gt]:style(border-radius: 0 !important)
+exhentai.org###taglist div[class^=gt]:style(padding: 0.5rem 1rem !important)
+exhentai.org###taglist div[class^=gt]:style(margin: 0 !important)
+exhentai.org###taglist div[class^=gt]:has(a):style(background: transparent !important)
+exhentai.org###taglist div[class^=gt] > a[style="color: blue;"]:style(color: var(--ubo-custom-firefox-text-dark) !important)
+exhentai.org###taglist div[class^=gt] > a[style="color: blue;"]:style(text-decoration: underline !important)
+! Comments
+exhentai.org##.c1:style(font-size: 1.5rem !important)
+exhentai.org##.c2:style(padding: 0.5rem !important)
+exhentai.org##.c2:style(box-sizing: border-box !important)
+exhentai.org##.c4
+exhentai.org##.c6:style(font-size: 2rem !important)
+exhentai.org##.c6:style(line-height: 2 !important)
+exhentai.org##.c6:style(padding: 1rem !important)
+exhentai.org##.c6:style(box-sizing: border-box !important)
+exhentai.org##.c5:style(width: auto !important)
+exhentai.org###postnewcomment
 ! Make gallery readable on mobile device
 exhentai.org###i1:style(max-width: 100% !important)
 exhentai.org###i1:style(width: 100% !important)
-exhentai.org###i3 a:style(pointer-events: none !important)
+exhentai.org###i1:style(border: none !important)
+exhentai.org###i1:style(padding: 0 !important)
+exhentai.org###i1:style(margin: 0 !important)
+exhentai.org###i1:style(background: transparent !important)
+exhentai.org###i2
+exhentai.org###i3 a:remove-attr(onclick)
+exhentai.org###i3 a:remove-attr(href)
 exhentai.org###i3 img:style(height: auto !important)
 exhentai.org###i3 img:style(max-height: none !important)
 exhentai.org###i3 img:style(max-width: 100% !important)
 exhentai.org###i3 img:style(width: 100% !important)
+exhentai.org###i3 img:style(margin: 0 !important)
+exhentai.org###i4
+exhentai.org###i5
+exhentai.org###i6
+exhentai.org###i7
 
 ! [SITE] manhuaren.com
 manhuaren.com##^.ad-top
@@ -636,3 +832,4 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(opacity: 0 !important)
 18av.tv##span.sun-search_input_group:style(position: relative !important)
 18av.tv##span.sun-search_input_group:style(width: 100% !important)
 18av.tv##span.top_list_block_hide:style(top: 0 !important)
+
