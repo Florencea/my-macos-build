@@ -32,8 +32,8 @@ anime1.me##+js(set-local-storage-item, 0501_notifybar_dismiss, 1)
 anime1.me##div[id^=ad-]
 
 ! [SITE] ant.design
-! Auto dismiss notify banner
-ant.design##+js(trusted-set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, $currentISODate$)
+! Auto dismiss notify banner (any value above current year, MAX 32767)
+ant.design##+js(set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, 9999)
 
 ! [SITE] books.com.tw
 books.com.tw##.header_pop
