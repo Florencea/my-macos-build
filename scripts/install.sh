@@ -76,7 +76,8 @@ brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install fnm
 eval "$(fnm env)"
-fnm use --install-if-missing 18
+fnm install --lts
+fnm default lts-latest
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >~/.npmrc
 brew install rsync
 brew install python
