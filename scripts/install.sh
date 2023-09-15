@@ -27,6 +27,8 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
+git config --global diff.lockb.textconv bun
+git config --global diff.lockb.binary true
 
 if [ -d "$HOME/.ssh" ]; then
   echo "$HOME/.ssh exist, skip ssh key generation"
@@ -63,6 +65,8 @@ brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
 brew install bash
+brew tap oven-sh/bun
+brew install bun
 brew install curl
 brew install deno
 brew install ffmpeg

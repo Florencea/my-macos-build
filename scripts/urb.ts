@@ -13,7 +13,7 @@ const isLastUpdated = (s: string) => s.includes("Last updated:");
 const isTitle = (s: string) => s.includes("Title:");
 
 const loadFile = async (path: string) => {
-  const s = await Deno.readTextFile(path);
+  const s = await Bun.file(path).text();
   return s.split("\n").filter(notNL);
 };
 
@@ -74,9 +74,9 @@ const getOutputRules = (ss: string[], path: string) =>
 const getOutputFileName = (path: string) => `${path.split(".")[0]}.min.txt`;
 
 const main = async () => {
-  const path = Deno.args[0];
+  const path = Bun.argv[2];
   const ss = await loadFile(path);
-  await Deno.writeTextFile(getOutputFileName(path), getOutputRules(ss, path));
+  await Bun.write(getOutputFileName(path), getOutputRules(ss, path));
 };
 
 main();
