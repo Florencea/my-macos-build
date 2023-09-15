@@ -234,6 +234,8 @@
 	</data>
 	<key>UseBrightBold</key>
 	<true/>
+	<key>WindowTitle</key>
+	<string>~</string>
 	<key>columnCount</key>
 	<integer>120</integer>
 	<key>name</key>
