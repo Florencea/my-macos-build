@@ -46,7 +46,7 @@ const getStyleMap = (ss: string[]) => {
 const getCombinedStyles = (ss: string[]) => {
   const sMap = getStyleMap(ss);
   return Array.from(sMap.keys()).map(
-    (k) => `${k}:style(${(sMap.get(k) ?? []).join("; ")})`
+    (k) => `${k}:style(${(sMap.get(k) ?? []).join("; ")})`,
   );
 };
 
