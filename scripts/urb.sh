@@ -9,7 +9,7 @@ printf 'Update ubo-rules...'
 
 for FILE in ${FILE_LIST}; do
   cd "$HOME"
-  python3 "$SCRIPT_HOME/urb.py" "$CONFIG_HOME/$FILE.txt"
+  deno run --allow-read --allow-write "$SCRIPT_HOME/urb.ts" "$CONFIG_HOME/$FILE.txt"
   cd "$CONFIG_HOME" || exit
   git add "$FILE.txt"
   git add "$FILE.min.txt"
