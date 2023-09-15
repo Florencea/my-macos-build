@@ -79,7 +79,7 @@ eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
 export PATH="$(npm config get prefix)/bin:$PATH"
-curl -qL https://www.npmjs.com/install.sh | sh
+curl -fsSL https://www.npmjs.com/install.sh | sh
 npm doctor
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >~/.npmrc
 brew install rsync
