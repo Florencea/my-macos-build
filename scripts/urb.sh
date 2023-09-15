@@ -9,12 +9,12 @@ printf 'Update ubo-rules...'
 
 for FILE in ${FILE_LIST}; do
   cd "$HOME"
-  bun run "$SCRIPT_HOME/urb.ts" "$CONFIG_HOME/$FILE.txt"
-  # cd "$CONFIG_HOME" || exit
-  # git add "$FILE.txt"
-  # git add "$FILE.min.txt"
+  bun run "$SCRIPT_HOME/urb.js" "$CONFIG_HOME/$FILE.txt"
+  cd "$CONFIG_HOME" || exit
+  git add "$FILE.txt"
+  git add "$FILE.min.txt"
 done
-# git commit -q -m "feat: update ubo-rules by urb"
-# git push -q
+git commit -q -m "feat: update ubo-rules by urb"
+git push -q
 
 echo "done."
