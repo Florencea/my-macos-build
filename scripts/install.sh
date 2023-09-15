@@ -64,6 +64,7 @@ brew install --cask visual-studio-code
 
 brew install bash
 brew install curl
+brew install deno
 brew install ffmpeg
 brew install gcc
 brew install git
