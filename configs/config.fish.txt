@@ -27,3 +27,4 @@ alias re4="sh $SCRIPT_HOME/re4.sh"
 alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
 # fnm
 fnm env | source
+fish_add_path "$(npm config get prefix)/bin"
