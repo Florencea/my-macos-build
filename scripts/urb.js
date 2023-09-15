@@ -1,6 +1,3 @@
-import { readFile, writeFile } from "node:fs/promises";
-import { argv } from "node:process";
-
 /**
  * Check if current rule is `! comment`
  * @param {string} s
@@ -56,7 +53,7 @@ const isTitle = (s) => s.includes("Title:");
  * @returns {Promise<string[]>}
  */
 const loadFile = async (path) => {
-  const s = await readFile(path, { encoding: "utf-8" });
+  const s = await Bun.file(path).text();
   return s.split("\n").filter(notNL);
 };
 
@@ -170,11 +167,9 @@ const getOutputFileName = (path) => `${path.split(".")[0]}.min.txt`;
  * main function
  */
 const main = async () => {
-  const path = argv[2];
+  const path = Bun.argv[2];
   const ss = await loadFile(path);
-  await writeFile(getOutputFileName(path), getOutputRules(ss, path), {
-    encoding: "utf-8",
-  });
+  await Bun.write(getOutputFileName(path), getOutputRules(ss, path));
 };
 
 main();
