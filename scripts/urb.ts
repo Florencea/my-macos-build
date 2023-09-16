@@ -3,56 +3,56 @@
  * @param {string} s
  * @returns {boolean}
  */
-const isComment = (s) => s[0] === "!";
+const isComment = (s: string): boolean => s[0] === "!";
 
 /**
  * Check if current rule is `:style()` rule
  * @param {string} s
  * @returns {boolean}
  */
-const isStyle = (s) => s.includes(":style(");
+const isStyle = (s: string): boolean => s.includes(":style(");
 
 /**
  * Check if current rule is remove rule
  * @param {string} s
  * @returns {boolean}
  */
-const isRule = (s) => !isComment(s) && !isStyle(s);
+const isRule = (s: string): boolean => !isComment(s) && !isStyle(s);
 
 /**
  * Check if current text not newline \n
  * @param {string} s
  * @returns {boolean}
  */
-const notNL = (s) => s !== "\n";
+const notNL = (s: string): boolean => s !== "\n";
 
 /**
  * Check if current rule is `! Description:` comment
  * @param {string} s
  * @returns {boolean}
  */
-const isDescription = (s) => s.includes("Description:");
+const isDescription = (s: string): boolean => s.includes("Description:");
 
 /**
  * Check if current rule is `! Last updated:` comment
  * @param {string} s
  * @returns boolean
  */
-const isLastUpdated = (s) => s.includes("Last updated:");
+const isLastUpdated = (s: string) => s.includes("Last updated:");
 
 /**
  * Check if current rule is `! Title:` comment
  * @param {string} s
  * @returns {boolean}
  */
-const isTitle = (s) => s.includes("Title:");
+const isTitle = (s: string): boolean => s.includes("Title:");
 
 /**
  * load input file and split to lines
  * @param {string} path Input file path
  * @returns {Promise<string[]>}
  */
-const loadFile = async (path) => {
+const loadFile = async (path: string): Promise<string[]> => {
   const s = await Bun.file(path).text();
   return s.split("\n").filter(notNL);
 };
@@ -63,7 +63,7 @@ const loadFile = async (path) => {
  * @param {string} timeStamp Current time string in ISO8601 format
  * @returns {string[]} meta comments
  */
-const getMeta = (ss, timeStamp) =>
+const getMeta = (ss: string[], timeStamp: string): string[] =>
   ss
     .map((s) => {
       return isTitle(s)
@@ -80,21 +80,22 @@ const getMeta = (ss, timeStamp) =>
  * @param {string[]} ss Raw Rules
  * @returns {string[]} remove rules
  */
-const getRules = (ss) => ss.filter(isRule);
+const getRules = (ss: string[]): string[] => ss.filter(isRule);
 
 /**
  * Get style rules from raw rules
  * @param {string[]} ss Raw Rules
  * @returns {string[]} style rules
  */
-const getStyles = (ss) => ss.filter(isStyle).map((s) => `${s}|`);
+const getStyles = (ss: string[]): string[] =>
+  ss.filter(isStyle).map((s) => `${s}|`);
 
 /**
  * Get style map from raw rules
  * @param {string[]} ss Raw Rules
- * @returns {Map<string, string>} Style Map
+ * @returns {Map<string, string[]>} Style Map
  */
-const getStyleMap = (ss) => {
+const getStyleMap = (ss: string[]): Map<string, string[]> => {
   const sMap = new Map();
   ss.forEach((s) => {
     const [k, v] = s.split(":style(");
@@ -109,7 +110,7 @@ const getStyleMap = (ss) => {
  * @param {string[]} ss Raw Rules
  * @returns {string[]} Combined styles
  */
-const getCombinedStyles = (ss) => {
+const getCombinedStyles = (ss: string[]): string[] => {
   const sMap = getStyleMap(ss);
   return Array.from(sMap.keys()).map(
     (k) => `${k}:style(${(sMap.get(k) ?? []).join("; ")})`,
@@ -121,7 +122,7 @@ const getCombinedStyles = (ss) => {
  * @param {string} path Input file path
  * @returns {string} mobile header or empty string
  */
-const getMobileHeader = (path) =>
+const getMobileHeader = (path: string): string =>
   path.includes("mobile") ? "!#if env_mobile" : "";
 
 /**
@@ -129,22 +130,23 @@ const getMobileHeader = (path) =>
  * @param {string} path Input file path
  * @returns {string} mobile footer or empty string
  */
-const getMobileFooter = (path) => (path.includes("mobile") ? "!#endif" : "");
+const getMobileFooter = (path: string): string =>
+  path.includes("mobile") ? "!#endif" : "";
 
 /**
  * Get current timestamp
  * @returns {string} Current time string in ISO8601 format
  */
-const getTimeStamp = () =>
+const getTimeStamp = (): string =>
   new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString();
 
 /**
  * Get final processed rules
  * @param {string[]} ss Raw Rules
  * @param {string} path Input file path
- * @returns {string[]} output rules
+ * @returns {string} output rules
  */
-const getOutputRules = (ss, path) =>
+const getOutputRules = (ss: string[], path: string): string =>
   [
     ...getMeta(ss, getTimeStamp()),
     getMobileHeader(path),
@@ -161,7 +163,8 @@ const getOutputRules = (ss, path) =>
  * @param {string} path Input file path
  * @returns {string} Output file path
  */
-const getOutputFileName = (path) => `${path.split(".")[0]}.min.txt`;
+const getOutputFileName = (path: string): string =>
+  `${path.split(".")[0]}.min.txt`;
 
 /**
  * Combine rules for all input files
@@ -169,7 +172,7 @@ const getOutputFileName = (path) => `${path.split(".")[0]}.min.txt`;
  * @param {string[]} ff Input files
  * @returns {Promise<string[][]>} Array<[Input File, Ouput file]>
  */
-const combineRules = (d, ff) =>
+const combineRules = (d: string, ff: string[]): Promise<string[][]> =>
   Promise.all(
     ff
       .map((f) => `${d}/${f}`)
@@ -186,7 +189,7 @@ const combineRules = (d, ff) =>
  * @param {string} d file directory
  * @param {string[][]} fo Array<[Input File, Ouput file]>
  */
-const addRules = (d, fo) =>
+const addRules = (d: string, fo: string[][]) =>
   fo.map(([f, o]) => {
     Bun.spawnSync({
       cwd: d,
@@ -202,7 +205,7 @@ const addRules = (d, fo) =>
  * Make a git commit
  * @param {string} d file directory
  */
-const commitRules = (d) =>
+const commitRules = (d: string) =>
   Bun.spawnSync({
     cwd: d,
     cmd: ["git", "commit", "-qm", "feat: update ubo-rules by urb"],
@@ -212,7 +215,7 @@ const commitRules = (d) =>
  * Make a git push
  * @param {string} d file directory
  */
-const pushRules = async (d) =>
+const pushRules = async (d: string) =>
   Bun.spawnSync({
     cwd: d,
     cmd: ["git", "push", "-q"],
@@ -223,7 +226,7 @@ const pushRules = async (d) =>
  * @param {string} c contnt
  * @param {boolean} n with newline, default: `true`
  */
-const logger = async (c, n = true) => {
+const logger = async (c: string, n: boolean = true) => {
   await Bun.write(Bun.stdout, `${c}${n ? "\n" : ""}`);
 };
 

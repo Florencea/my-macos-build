@@ -7,7 +7,7 @@ import { join } from "node:path";
  * @param {string[]} c contnt
  * @param {boolean} n with newline, default: `true`
  */
-const logger = async (c, n = true) => {
+const logger = async (c: string[], n: boolean = true) => {
   await Bun.write(Bun.stdout, `${c.join("\n").trimEnd()}${n ? "\n" : ""}`);
 };
 
@@ -16,7 +16,7 @@ const logger = async (c, n = true) => {
  * @param {string} p File path
  * @returns {Promise<boolean>} if file exist
  */
-const isFileExist = async (p) => {
+const isFileExist = async (p: string): Promise<boolean> => {
   const file = Bun.file(p);
   const e = await file.exists();
   return e;
@@ -27,7 +27,7 @@ const isFileExist = async (p) => {
  * @param {string} s source path
  * @param {string} d destination path
  */
-const copyFile = async (s, d) => {
+const copyFile = async (s: string, d: string) => {
   if (await isFileExist(s)) {
     await Bun.write(d, Bun.file(s));
   }
@@ -37,7 +37,7 @@ const copyFile = async (s, d) => {
  * Remove File
  * @param {string} f file to remove
  */
-const removeFile = async (f) => {
+const removeFile = async (f: string) => {
   if (await isFileExist(f)) {
     await unlink(f);
   }
@@ -50,7 +50,11 @@ const removeFile = async (f) => {
  * @param {string} pe pattern for target file end
  * @returns {Promise<string?>} file path or `null`
  */
-const findFileInDir = async (td, ps, pe) => {
+const findFileInDir = async (
+  td: string,
+  ps: string,
+  pe: string,
+): Promise<string | null> => {
   const f = (await readdir(td, { withFileTypes: true }))
     .filter(
       (f) => !f.isDirectory() && f.name.startsWith(ps) && f.name.endsWith(pe),
@@ -68,7 +72,7 @@ const findFileInDir = async (td, ps, pe) => {
  * @param {string} d file directory
  * @param {string} f file
  */
-const addBackup = (d, f) =>
+const addBackup = (d: string, f: string) =>
   Bun.spawnSync({
     cwd: d,
     cmd: ["git", "add", f],
@@ -79,7 +83,7 @@ const addBackup = (d, f) =>
  * @param {string} d file directory
  * @param {string} f file name
  */
-const commitBackup = (d, f) =>
+const commitBackup = (d: string, f: string) =>
   Bun.spawnSync({
     cwd: d,
     cmd: ["git", "commit", "-qm", `feat: update ${f} by ubk`],
@@ -89,7 +93,7 @@ const commitBackup = (d, f) =>
  * Make a git push
  * @param {string} d file directory
  */
-const pushBackup = async (d) =>
+const pushBackup = async (d: string) =>
   Bun.spawnSync({
     cwd: d,
     cmd: ["git", "push", "-q"],
@@ -102,7 +106,7 @@ const pushBackup = async (d) =>
  * @param {string} d Backup directory
  * @param {string} f file name in backup
  */
-const backup = async (ps, pe, d, f) => {
+const backup = async (ps: string, pe: string, d: string, f: string) => {
   const td = join(homedir(), "Downloads");
   const ff = await findFileInDir(td, ps, pe);
   if (ff) {

@@ -7,7 +7,7 @@ import { join } from "node:path";
  * @param {string} p File/Dir path
  * @returns {Promise<boolean>} if file or directory exist
  */
-const isInodeExist = async (p) => {
+const isInodeExist = async (p: string): Promise<boolean> => {
   const file = Bun.file(p);
   return file.size > 0;
 };
@@ -17,7 +17,7 @@ const isInodeExist = async (p) => {
  * @param {string} c contnt
  * @param {boolean} n with newline, default: `false`
  */
-const logger = async (c, n = false) => {
+const logger = async (c: string, n: boolean = false) => {
   await Bun.write(Bun.stdout, `${c}${n ? "\n" : ""}`);
 };
 
@@ -25,7 +25,7 @@ const logger = async (c, n = false) => {
  * Sync git projects
  * @param {string} c codespace path
  */
-const syncGitProjects = async (c) => {
+const syncGitProjects = async (c: string) => {
   (await readdir(c, { withFileTypes: true }))
     .filter((f) => f.isDirectory())
     .map((f) => f.name)

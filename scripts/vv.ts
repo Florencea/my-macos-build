@@ -7,7 +7,7 @@ import { exit } from "node:process";
  * @param {string[]} aa args
  * @returns {boolean} if every args exist
  */
-const isExistArgs = (aa) => aa.every(Boolean);
+const isExistArgs = (aa: string[]): boolean => aa.every(Boolean);
 
 /**
  * Check if args match length
@@ -15,14 +15,14 @@ const isExistArgs = (aa) => aa.every(Boolean);
  * @param {number} n Length of current args
  * @returns {boolean} if args match length
  */
-const isLenMatchArgs = (aa, n) => aa.length === n;
+const isLenMatchArgs = (aa: string[], n: number): boolean => aa.length === n;
 
 /**
  * Check if file exist
  * @param {string} p File path
  * @returns {Promise<boolean>} if file exist
  */
-const isFileExist = async (p) => {
+const isFileExist = async (p: string): Promise<boolean> => {
   const file = Bun.file(p);
   const e = await file.exists();
   return e;
@@ -32,7 +32,7 @@ const isFileExist = async (p) => {
  * Check if file exist, or end process
  * @param {string} p File path
  */
-const checkFileExist = async (p) => {
+const checkFileExist = async (p: string) => {
   const e = await isFileExist(p);
   if (!e) {
     await logger([`File: ${p} do not exist.`]);
@@ -45,7 +45,7 @@ const checkFileExist = async (p) => {
  * @param {string[]} c contnt
  * @param {boolean} n with newline, default: `true`
  */
-const logger = async (c, n = true) => {
+const logger = async (c: string[], n: boolean = true) => {
   await Bun.write(Bun.stdout, `${c.join("\n").trimEnd()}${n ? "\n" : ""}`);
 };
 
@@ -55,7 +55,7 @@ const logger = async (c, n = true) => {
  * @param {string[]} u Cmd usage when error
  * @returns {Promise<string[]>} args
  */
-const getArgs = async (n, u) => {
+const getArgs = async (n: number, u: string[]): Promise<string[]> => {
   const aa = Bun.argv.slice(3);
   if (isLenMatchArgs(aa, n) && isExistArgs(aa)) {
     return aa;
@@ -69,7 +69,7 @@ const getArgs = async (n, u) => {
  * Get current date string for file name
  * @returns {string} Date string without comma and whitespace
  */
-const getDateStrForFile = () =>
+const getDateStrForFile = (): string =>
   new Intl.DateTimeFormat("lt-LT", {
     timeZone: "Asia/Taipei",
     year: "numeric",
@@ -88,7 +88,7 @@ const getDateStrForFile = () =>
  * @param {string} f file
  * @returns {Promise<string>} file size
  */
-const getFileSize = async (f) => {
+const getFileSize = async (f: string): Promise<string> => {
   if (await isFileExist(f)) {
     const s = Bun.file(f).size;
     const ONE_KB = 1000;
@@ -98,6 +98,8 @@ const getFileSize = async (f) => {
     } else {
       return `${(s / ONE_KB).toFixed(0)} KB`;
     }
+  } else {
+    return "";
   }
 };
 
@@ -106,7 +108,7 @@ const getFileSize = async (f) => {
  * @param {string} s source path
  * @param {string} d destination path
  */
-const copyFile = async (s, d) => {
+const copyFile = async (s: string, d: string) => {
   if (await isFileExist(s)) {
     await Bun.write(d, Bun.file(s));
   }
@@ -116,7 +118,7 @@ const copyFile = async (s, d) => {
  * Remove Files
  * @param {string[]} df files to remove
  */
-const removeFiles = (df) =>
+const removeFiles = (df: string[]) =>
   Promise.all(
     df.map(async (f) => {
       if (await isFileExist(f)) {
@@ -131,7 +133,7 @@ const removeFiles = (df) =>
  * @param {string[]} df files to remove if failed
  * @returns {Promise<boolean>} if success
  */
-const ffmpeg = async (args, df) => {
+const ffmpeg = async (args: string[], df: string[]): Promise<boolean> => {
   const p = Bun.spawnSync({
     cmd: ["ffmpeg", "-hide_banner", "-loglevel", "error", ...args],
   });
@@ -139,7 +141,7 @@ const ffmpeg = async (args, df) => {
     return true;
   } else {
     await removeFiles(df);
-    await logger([p.stderr]);
+    await logger([p.stderr.toString()]);
     return false;
   }
 };
@@ -148,7 +150,7 @@ const ffmpeg = async (args, df) => {
  * MP4-Encoder: encode mkv (hevc) to mp4
  * @param {string} cmd current cmd (for usage string)
  */
-const mp4Encoder = async (cmd) => {
+const mp4Encoder = async (cmd: string) => {
   const u = [
     "encode mkv (hevc) to mp4",
     `Usage: ${cmd} [input.mkv]`,
@@ -170,7 +172,7 @@ const mp4Encoder = async (cmd) => {
  * ASS-Combiner: combile `.cht.ass` to mkv
  * @param {string} cmd current cmd (for usage string)
  */
-const assCombiner = async (cmd) => {
+const assCombiner = async (cmd: string) => {
   const u = [
     "combile .cht.ass to mkv",
     `Usage: ${cmd} [input_dir]`,
@@ -217,7 +219,7 @@ const assCombiner = async (cmd) => {
  * Re-Encoder: re-encode a mp4
  * @param {string} cmd current cmd (for usage string)
  */
-const reEncoder = async (cmd) => {
+const reEncoder = async (cmd: string) => {
   const u = [
     "re-encode a mp4",
     `Usage: ${cmd} [input_file]`,
@@ -242,7 +244,7 @@ const reEncoder = async (cmd) => {
  * @param {number} fps FPS for gif
  * @param {number} w width for gif
  */
-const gifMaker = async (cmd, fps, w) => {
+const gifMaker = async (cmd: string, fps: number, w: number) => {
   const u = [
     "Gif Maker",
     `Usage: ${cmd} [input_file] [from(hh:mm:ss or sec)] [during(sec)]`,

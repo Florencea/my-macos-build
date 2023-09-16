@@ -35,11 +35,11 @@ CONFIG_HOME="$CODE_BASE/configs"
 alias ll='ls -lh'
 alias la='ls -lah'
 alias mmb="code $CODE_BASE"
-alias ebk="bun run $SCRIPT_HOME/ebk.js $CONFIG_HOME"
-alias ua="bun run $SCRIPT_HOME/ua.js $CODE_SPACE"
-alias urb="bun run $SCRIPT_HOME/urb.js $CONFIG_HOME"
-alias vv="bun run $SCRIPT_HOME/vv.js"
-alias clall="bun run $SCRIPT_HOME/clall.js"
+alias ebk="bun run $SCRIPT_HOME/ebk.ts $CONFIG_HOME"
+alias ua="bun run $SCRIPT_HOME/ua.ts $CODE_SPACE"
+alias urb="bun run $SCRIPT_HOME/urb.ts $CONFIG_HOME"
+alias vv="bun run $SCRIPT_HOME/vv.ts"
+alias clall="bun run $SCRIPT_HOME/clall.ts"
 alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
 
 # plugins
