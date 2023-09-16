@@ -50,7 +50,7 @@ const cloneRepos = async (rr) => {
         cmd: ["git", "clone", "-q", r],
         stdout: "pipe",
         stderr: "pipe",
-        onExit: async (pp, exitCode, signalCode, error) => {
+        onExit: async (pp, exitCode) => {
           if (exitCode === 0) {
             GLOBAL_FINISHED_COUNT += 1;
             await logger(
