@@ -1,4 +1,5 @@
 import { unlink } from "node:fs/promises";
+import { join } from "node:path";
 import { exit } from "node:process";
 
 /**
@@ -83,6 +84,35 @@ const getDateStrForFile = () =>
     .replace(/\D/g, "");
 
 /**
+ * Get file size
+ * @param {string} f file
+ * @returns {Promise<string>} file size
+ */
+const getFileSize = async (f) => {
+  if (await isFileExist(f)) {
+    const s = Bun.file(f).size;
+    const ONE_KB = 1000;
+    const ONE_MB = 1000 * 1000;
+    if (s > ONE_MB) {
+      return `${(s / ONE_MB).toFixed(1)} MB`;
+    } else {
+      return `${(s / ONE_KB).toFixed(0)} KB`;
+    }
+  }
+};
+
+/**
+ * Copy file
+ * @param {string} s source path
+ * @param {string} d destination path
+ */
+const copyFile = async (s, d) => {
+  if (await isFileExist(s)) {
+    await Bun.write(d, Bun.file(s));
+  }
+};
+
+/**
  * Remove Files
  * @param {string[]} df files to remove
  */
@@ -115,6 +145,98 @@ const ffmpeg = async (args, df) => {
 };
 
 /**
+ * MP4-Encoder: encode mkv (hevc) to mp4
+ * @param {string} cmd current cmd (for usage string)
+ */
+const mp4Encoder = async (cmd) => {
+  const u = [
+    "encode mkv (hevc) to mp4",
+    `Usage: ${cmd} [input.mkv]`,
+    `       ${cmd} \'input.mkv\'`,
+  ];
+  const [i] = await getArgs(1, u);
+  await checkFileExist(i);
+  const o = i.replaceAll(".mkv", ".mp4");
+  const success = await ffmpeg(
+    ["-i", i, "-c:v", "copy", "-c:a", "copy", "-tag:v", "hvc1", o],
+    [o],
+  );
+  if (success) {
+    await removeFiles([i]);
+  }
+};
+
+/**
+ * ASS-Combiner: combile `.cht.ass` to mkv
+ * @param {string} cmd current cmd (for usage string)
+ */
+const assCombiner = async (cmd) => {
+  const u = [
+    "combile .cht.ass to mkv",
+    `Usage: ${cmd} [input_dir]`,
+    `       ${cmd} \'input\'`,
+  ];
+  const [od] = await getArgs(1, u);
+  const d = od.replaceAll("/", "");
+  const iv = join(d, `${d}.mkv`);
+  const ia = join(d, `${d}.cht.ass`);
+  await checkFileExist(iv);
+  await checkFileExist(ia);
+  const o = join(d, `temp_${d}.mkv`);
+  const success = await ffmpeg(
+    [
+      "-i",
+      iv,
+      "-i",
+      ia,
+      "-c:v",
+      "copy",
+      "-c:a",
+      "copy",
+      "-c:s",
+      "copy",
+      "-map",
+      "0:0",
+      "-map",
+      "0:1",
+      "-map",
+      "1:0",
+      "-disposition:s:0",
+      "default",
+      o,
+    ],
+    [o],
+  );
+  if (success) {
+    await copyFile(o, iv);
+    await removeFiles([o]);
+  }
+};
+
+/**
+ * Re-Encoder: re-encode a mp4
+ * @param {string} cmd current cmd (for usage string)
+ */
+const reEncoder = async (cmd) => {
+  const u = [
+    "re-encode a mp4",
+    `Usage: ${cmd} [input_file]`,
+    `       ${cmd} 'input.mp4'`,
+  ];
+  const [i] = await getArgs(1, u);
+  await checkFileExist(i);
+  const o = `temp_${i}`;
+  const success = await ffmpeg(
+    ["-i", i, "-vcodec", "copy", "-acodec", "copy", o],
+    [o],
+  );
+  if (success) {
+    await copyFile(o, i);
+    await removeFiles([o]);
+  }
+};
+
+/**
  * Gif Maker
  * @param {string} cmd current cmd (for usage string)
  * @param {number} fps FPS for gif
@@ -122,6 +244,7 @@ const ffmpeg = async (args, df) => {
  */
 const gifMaker = async (cmd, fps, w) => {
   const u = [
+    "Gif Maker",
     `Usage: ${cmd} [input_file] [from(hh:mm:ss or sec)] [during(sec)]`,
     `       ${cmd} 'input.mp4' 01:02:08 11.0`,
   ];
@@ -143,7 +266,7 @@ const gifMaker = async (cmd, fps, w) => {
     [o],
   );
   if (success) {
-    await logger([o]);
+    await logger([`${o} ${await getFileSize(o)}`]);
   }
 };
 
@@ -160,16 +283,23 @@ const main = async () => {
       await gifMaker(cmd, 24, 480);
       break;
     case "rec":
-      await logger(["under developing..."]);
+      await reEncoder(cmd);
       break;
     case "rea":
-      await logger(["under developing..."]);
+      await assCombiner(cmd);
       break;
     case "re4":
-      await logger(["under developing..."]);
+      await mp4Encoder(cmd);
       break;
     default:
-      await logger(["Unknown commands"]);
+      await logger([
+        "vv available commands:",
+        "mkgif:  Gif Maker (12fps)",
+        "mkgifv: Gif Maker (24fps)",
+        "rec:    Re-Encoder: re-encode a mp4",
+        "rea:    ASS-Combiner: combile .cht.ass to mkv",
+        "re4:    MP4-Encoder: encode mkv (hevc) to mp4",
+      ]);
       break;
   }
 };
