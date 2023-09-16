@@ -59,6 +59,7 @@ const brewUpgrade = () =>
     cwd: homedir(),
     cmd: ["brew", "upgrade"],
     stdout: "inherit",
+    stderr: "inherit",
   });
 
 /**
