@@ -164,12 +164,84 @@ const getOutputRules = (ss, path) =>
 const getOutputFileName = (path) => `${path.split(".")[0]}.min.txt`;
 
 /**
+ * Combine rules for all input files
+ * @param {string} d file directory
+ * @param {string[]} ff Input files
+ * @returns {Promise<string[][]>} Array<[Input File, Ouput file]>
+ */
+const combineRules = (d, ff) =>
+  Promise.all(
+    ff
+      .map((f) => `${d}/${f}`)
+      .map(async (f) => {
+        const ss = await loadFile(f);
+        const o = getOutputFileName(f);
+        await Bun.write(o, getOutputRules(ss, f));
+        return [f, o];
+      }),
+  );
+
+/**
+ * Add files to git
+ * @param {string} d file directory
+ * @param {string[][]} fo Array<[Input File, Ouput file]>
+ */
+const addRules = (d, fo) =>
+  fo.map(([f, o]) => {
+    Bun.spawnSync({
+      cwd: d,
+      cmd: ["git", "add", f],
+    });
+    Bun.spawnSync({
+      cwd: d,
+      cmd: ["git", "add", o],
+    });
+  });
+
+/**
+ * Make a git commit
+ * @param {string} d file directory
+ */
+const commitRules = (d) =>
+  Bun.spawnSync({
+    cwd: d,
+    cmd: ["git", "commit", "-qm", "feat: update ubo-rules by urb"],
+  });
+
+/**
+ * Make a git push
+ * @param {string} d file directory
+ */
+const pushRules = async (d) =>
+  Bun.spawnSync({
+    cwd: d,
+    cmd: ["git", "push", "-q"],
+  });
+
+/**
+ * Logger
+ * @param {string} c contnt
+ * @param {boolean} n with newline, default: `true`
+ */
+const logger = async (c, n = true) => {
+  await Bun.write(Bun.stdout, `${c}${n ? "\n" : ""}`);
+};
+
+/**
  * main function
  */
 const main = async () => {
-  const path = Bun.argv[2];
-  const ss = await loadFile(path);
-  await Bun.write(getOutputFileName(path), getOutputRules(ss, path));
+  await logger("Update ubo-rules...", false);
+  const d = Bun.argv[2];
+  const fo = await combineRules(d, [
+    "ubo-desktop.txt",
+    "ubo-mobile.txt",
+    "ubo-font.txt",
+  ]);
+  addRules(d, fo);
+  commitRules(d);
+  pushRules(d);
+  await logger("done");
 };
 
 main();
