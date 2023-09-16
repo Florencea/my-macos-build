@@ -115,14 +115,15 @@ const ffmpeg = async (args, df) => {
 };
 
 /**
- * mkgif
+ * Gif Maker
+ * @param {string} cmd current cmd (for usage string)
  * @param {number} fps FPS for gif
  * @param {number} w width for gif
  */
-const mkgif = async (fps, w) => {
+const gifMaker = async (cmd, fps, w) => {
   const u = [
-    "Usage: mkgif [input_file] [from(hh:mm:ss or sec)] [during(sec)]",
-    "       mkgif 'input.mp4' 01:02:08 11.0",
+    `Usage: ${cmd} [input_file] [from(hh:mm:ss or sec)] [during(sec)]`,
+    `       ${cmd} 'input.mp4' 01:02:08 11.0`,
   ];
   const [i, ss, t] = await getArgs(3, u);
   await checkFileExist(i);
@@ -150,12 +151,13 @@ const mkgif = async (fps, w) => {
  * main function
  */
 const main = async () => {
-  switch (Bun.argv[2]) {
+  const cmd = Bun.argv[2];
+  switch (cmd) {
     case "mkgif":
-      await mkgif(12, 480);
+      await gifMaker(cmd, 12, 480);
       break;
     case "mkgifv":
-      await mkgif(24, 480);
+      await gifMaker(cmd, 24, 480);
       break;
     case "rec":
       await logger(["under developing..."]);
