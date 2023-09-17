@@ -84,7 +84,7 @@ const replaceFileExt = (path: string, ext: string) => {
 
 /**
  * Multi line logger
- * @param contents contnts to print
+ * @param contents contents to print
  * @param withNewline print `\n` at content end, default: `true`
  */
 const logger = async (contents: string[], withNewline: boolean = true) => {
