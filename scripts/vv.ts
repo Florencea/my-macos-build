@@ -97,11 +97,14 @@ const logger = async (contents: string[], withNewline: boolean = true) => {
 /**
  * Get args from `Bun.argv`
  * @param len Length of args
- * @param usage Cmd usage shows when args length does not match
+ * @param usage Cmd usage shows when args length does not match or any empty arg exist
  * @returns args
  * ```ts
+ * // $ vv mkgif a b c
  * const args = getArgs(3, ["..."]);
  * // [a, b, c]
+ *
+ * // $ vv mkgif a b c
  * const args = getArgs(2, ["..."]);
  * // print ["..."] and exit current process
  * ```
