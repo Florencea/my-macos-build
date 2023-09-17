@@ -147,6 +147,25 @@ const ffmpeg = async (args: string[], df: string[]): Promise<boolean> => {
 };
 
 /**
+ * yt-dlp factory function
+ * @param {string[]} args yt-dlp args
+ * @param {string[]} df files to remove if failed
+ * @returns {Promise<boolean>} if success
+ */
+const ytdlp = async (args: string[], df: string[]): Promise<boolean> => {
+  const p = Bun.spawnSync({
+    cmd: ["yt-dlp", ...args],
+  });
+  if (p.success) {
+    return true;
+  } else {
+    await removeFiles(df);
+    await logger([p.stderr.toString()]);
+    return false;
+  }
+};
+
+/**
  * MP4-Encoder: encode mkv (hevc) to mp4
  * @param {string} cmd current cmd (for usage string)
  */
@@ -273,11 +292,68 @@ const gifMaker = async (cmd: string, fps: number, w: number) => {
 };
 
 /**
+ * YouTube Gif Maker
+ * @param {string} cmd current cmd (for usage string)
+ * @param {number} fps FPS for gif
+ * @param {number} w width for gif
+ */
+const ytGifMaker = async (cmd: string, fps: number, w: number) => {
+  const u = [
+    "YouTube Gif Maker",
+    `Usage: ${cmd} [video_link] [from(hh:mm:ss or sec)] [during(sec)]`,
+    `       ${cmd} 'https://www.youtube.com/watch?v=JoSY6AWKqHs' 00:01:59 2`,
+  ];
+  const [v, ss, t] = await getArgs(3, u);
+  const temp = `ytgif_${getDateStrForFile()}.mp4`;
+  const successDl = await ytdlp(
+    [
+      v,
+      "-f",
+      "mp4",
+      "--downloader",
+      "ffmpeg",
+      "--downloader-args",
+      `ffmpeg_i:-ss ${ss} -t ${t}`,
+      "-o",
+      temp,
+    ],
+    [temp],
+  );
+  if (successDl) {
+    const o = `${getDateStrForFile()}_fps${fps}.gif`;
+    const success = await ffmpeg(
+      [
+        "-ss",
+        "0",
+        "-t",
+        t,
+        "-i",
+        temp,
+        "-filter_complex",
+        `[0:v] fps=${fps},scale=w=${w}:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1`,
+        o,
+      ],
+      [o],
+    );
+    if (success) {
+      removeFiles([temp]);
+      await logger([`${o} ${await getFileSize(o)}`]);
+    }
+  }
+};
+
+/**
  * main function
  */
 const main = async () => {
   const cmd = Bun.argv[2];
   switch (cmd) {
+    case "ytgif":
+      await ytGifMaker(cmd, 12, 480);
+      break;
+    case "ytgifv":
+      await ytGifMaker(cmd, 24, 480);
+      break;
     case "mkgif":
       await gifMaker(cmd, 12, 480);
       break;
@@ -296,6 +372,8 @@ const main = async () => {
     default:
       await logger([
         "vv available commands:",
+        "ytgif:  YouTube Gif Maker (12fps)",
+        "ytgifv: YouTube Gif Maker (24fps)",
         "mkgif:  Gif Maker (12fps)",
         "mkgifv: Gif Maker (24fps)",
         "rec:    Re-Encoder: re-encode a mp4",
