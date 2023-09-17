@@ -4,48 +4,48 @@ import { join } from "node:path";
 
 /**
  * Check if file or directory exist
- * @param {string} p File/Dir path
- * @returns {Promise<boolean>} if file or directory exist
+ * @param path File/Dir path
+ * @returns if file or directory exist
  */
-const isInodeExist = async (p: string): Promise<boolean> => {
-  const file = Bun.file(p);
+const isInodeExist = async (path: string) => {
+  const file = Bun.file(path);
   return file.size > 0;
 };
 
 /**
- * Logger
- * @param {string} c contnt
- * @param {boolean} n with newline, default: `false`
+ * Single line logger
+ * @param content content to print
+ * @param withNewline print `\n` at content end, default: `false`
  */
-const logger = async (c: string, n: boolean = false) => {
-  await Bun.write(Bun.stdout, `${c}${n ? "\n" : ""}`);
+const logger = async (content: string, withNewline: boolean = false) => {
+  await Bun.write(Bun.stdout, `${content}${withNewline ? "\n" : ""}`);
 };
 
 /**
  * Sync git projects
- * @param {string} c codespace path
+ * @param codeSpacePath codespace path
  */
-const syncGitProjects = async (c: string) => {
-  (await readdir(c, { withFileTypes: true }))
-    .filter((f) => f.isDirectory())
-    .map((f) => f.name)
-    .map(async (d) => {
-      const cwd = join(c, d);
-      const g = join(cwd, ".git");
-      if (await isInodeExist(g)) {
-        const p = await Bun.spawn({
+const syncGitProjects = async (codeSpacePath: string) => {
+  (await readdir(codeSpacePath, { withFileTypes: true }))
+    .filter((inode) => inode.isDirectory())
+    .map((dir) => dir.name)
+    .map(async (projectDir) => {
+      const cwd = join(codeSpacePath, projectDir);
+      const gitDir = join(cwd, ".git");
+      if (await isInodeExist(gitDir)) {
+        const p = Bun.spawn({
           cwd,
           cmd: ["git", "pull", "--all"],
           stdout: "pipe",
           stderr: "pipe",
         });
-        const o = await new Response(p.stdout).text();
-        const e = await new Response(p.stderr).text();
-        if (o) {
-          await logger(`Syncing \x1b[1m${d}\x1b[0m ${o}`);
+        const stdoutText = await new Response(p.stdout).text();
+        const stderrText = await new Response(p.stderr).text();
+        if (stdoutText) {
+          await logger(`Syncing \x1b[1m${projectDir}\x1b[0m ${stdoutText}`);
         }
-        if (e) {
-          await logger(`Syncing \x1b[1m${d}\x1b[0m \n${e}`);
+        if (stderrText) {
+          await logger(`Syncing \x1b[1m${projectDir}\x1b[0m \n${stderrText}`);
         }
       }
     });
