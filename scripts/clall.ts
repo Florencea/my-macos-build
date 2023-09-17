@@ -258,66 +258,67 @@ let GLOBAL_FINISHED_COUNT = 0;
 let GLOBAL_ALL_COUNT = 0;
 
 /**
- * Logger
- * @param {string} c contnt
- * @param {boolean} n with newline, default: `false`
+ * Single line logger
+ * @param content content to print
+ * @param withNewline print `\n` at content end, default: `false`
  */
-const logger = async (c: string, n: boolean = false) => {
-  await Bun.write(Bun.stdout, `${c}${n ? "\n" : ""}`);
+const logger = async (content: string, withNewline: boolean = false) => {
+  await Bun.write(Bun.stdout, `${content}${withNewline ? "\n" : ""}`);
 };
 
 /**
- * Get Repository url list
- * @param {string} t GitHub Access Token
+ * Get Repository clone urls and names
+ * @param token GitHub Access Token
+ * @returns Array<[repo name, repo ssh_url]>
  *
  * GitHub docs here: https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
  */
-const getReopList = async (t: string) => {
-  const res = await fetch(
+const getCloneUrls = async (token: string) => {
+  const response = await fetch(
     "https://api.github.com/user/repos?type=owner&per_page=100",
     {
       method: "GET",
       headers: {
         Accept: "application/vnd.github+json",
-        Authorization: `Bearer ${t}`,
+        Authorization: `Bearer ${token}`,
         "X-GitHub-Api-Version": "2022-11-28",
       },
     },
   );
-  const d = await res.json<GitHubAPISchema>();
-  GLOBAL_ALL_COUNT = d.length;
-  return d.map((r) => r.ssh_url);
+  const repositories = await response.json<GitHubAPISchema>();
+  GLOBAL_ALL_COUNT = repositories.length;
+  return repositories.map((repo) => [repo.name, repo.ssh_url]);
 };
 
 /**
  * Clone Repositories
- * @param {string[]} rr Repository list
+ * @param repoInfos Array<[repo name, repo ssh_url]>
  */
-const cloneRepos = async (rr: string[]) => {
+const cloneRepos = async (repoInfos: string[][]) => {
   await logger(`remote: ${GLOBAL_ALL_COUNT} repositories to clone...`, true);
   await Promise.all(
-    rr.map(async (r) => {
-      const d = r.split("/").pop()?.replaceAll(".git", "");
-      const p = Bun.spawn({
-        cmd: ["git", "clone", "-q", r],
+    repoInfos.map(async (repoInfo) => {
+      const [repoName, cloneUrl] = repoInfo;
+      const gitProc = Bun.spawn({
+        cmd: ["git", "clone", "-q", cloneUrl],
         stdout: "pipe",
         stderr: "pipe",
-        onExit: async (pp, exitCode) => {
+        onExit: async (gitProcLocal, exitCode) => {
           if (exitCode === 0) {
             GLOBAL_FINISHED_COUNT += 1;
             await logger(
-              `complete: \x1b[1m${d}\x1b[0m (${GLOBAL_FINISHED_COUNT}/${GLOBAL_ALL_COUNT})`,
+              `complete: \x1b[1m${repoName}\x1b[0m (${GLOBAL_FINISHED_COUNT}/${GLOBAL_ALL_COUNT})`,
               true,
             );
           } else {
-            const e = await new Response(
-              pp.stderr as ReadableStream<Uint8Array>,
+            const stderrText = await new Response(
+              gitProcLocal.stderr as ReadableStream<Uint8Array>,
             ).text();
-            await logger(e);
+            await logger(stderrText);
           }
         },
       });
-      await p.exited;
+      await gitProc.exited;
     }),
   );
 };
@@ -326,8 +327,8 @@ const cloneRepos = async (rr: string[]) => {
  * main function
  */
 const main = async () => {
-  const rr = await getReopList(Bun.argv[2]);
-  await cloneRepos(rr);
+  const repoInfos = await getCloneUrls(Bun.argv[2]);
+  await cloneRepos(repoInfos);
 };
 
 main();
