@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, statSync, unlinkSync } from "node:fs";
 import { join, parse } from "node:path";
-import { argv, exit, stdout } from "node:process";
+import { argv, exit } from "node:process";
 
 /**
  * Check if args exist (not `null`, `undefined`, `""`)
@@ -83,10 +83,9 @@ const replaceFileExt = (path: string, ext: string) => {
 /**
  * Multi line logger
  * @param contents contents to print
- * @param withNewline print `\n` at content end, default: `true`
  */
-const print = (contents: string[], withNewline: boolean = true) => {
-  stdout.write(`${contents.join("\n").trimEnd()}${withNewline ? "\n" : ""}`);
+const print = (contents: string[]) => {
+  console.info(contents.join("\n").trimEnd());
 };
 
 /**
