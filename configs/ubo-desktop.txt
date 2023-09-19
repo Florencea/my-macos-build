@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2023-09-18
+! Last updated: 2023-09-19
 
 ! CSS variable
 ! bg
