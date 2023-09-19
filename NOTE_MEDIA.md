@@ -1,10 +1,19 @@
 # Media Note
 
 - [Media Note](#media-note)
+  - [Execute Media Scripts from remote](#execute-media-scripts-from-remote)
   - [Hardware Accelerated Encoding on Apple Silicon](#hardware-accelerated-encoding-on-apple-silicon)
   - [Software Encoding Commands](#software-encoding-commands)
   - [Make GIF](#make-gif)
   - [Downlaod Full Album from YTMusic](#downlaod-full-album-from-ytmusic)
+
+## Execute Media Scripts from remote
+
+- If [deno](https://deno.com/) already installed.
+
+```sh
+deno run -A 'https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/vv.ts'
+```
 
 ## Hardware Accelerated Encoding on Apple Silicon
 
