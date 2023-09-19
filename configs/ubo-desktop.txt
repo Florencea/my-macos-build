@@ -488,12 +488,12 @@ news.ycombinator.com##form
 ! reset
 news.ycombinator.com##body:style(margin: 0 !important)
 ! font size
-news.ycombinator.com##td:style(font-size: 16px !important)
+news.ycombinator.com##td:style(font-size: 14px !important)
 news.ycombinator.com##td:style(line-height: 1.5em !important)
 news.ycombinator.com##td:style(height: auto !important)
-news.ycombinator.com##.pagetop:style(font-size: 16px !important)
+news.ycombinator.com##.pagetop:style(font-size: 14px !important)
 news.ycombinator.com##.pagetop:style(line-height: 1.5em !important)
-news.ycombinator.com##.comment:style(font-size: 16px !important)
+news.ycombinator.com##.comment:style(font-size: 14px !important)
 news.ycombinator.com##.comment:style(line-height: 1.5em !important)
 ! font family and decoration
 news.ycombinator.com##td:style(font-family: var(--ubo-custom-font-sans-serif) !important)
