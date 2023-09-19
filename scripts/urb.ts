@@ -1,3 +1,8 @@
+import { spawnSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join, parse } from "node:path";
+import { argv } from "node:process";
+
 /**
  * Check if current line is `! comment`
  * @param line line to check
@@ -44,10 +49,8 @@ const isTitle = (line: string) => line.includes("Title:");
  * load input file and split to lines
  * @param path Input file path
  */
-const loadFile = async (path: string) => {
-  const s = await Bun.file(path).text();
-  return s.split("\n").filter(notNL);
-};
+const loadFile = (path: string) =>
+  readFileSync(path, { encoding: "utf-8" }).split("\n").filter(notNL);
 
 /**
  * Get meta comments from lines
@@ -155,7 +158,10 @@ const getOutputRules = (lines: string[], path: string) =>
  * @param path Input file path
  * @returns Output file path
  */
-const getCombinedFilePath = (path: string) => `${path.split(".")[0]}.min.txt`;
+const getCombinedFilePath = (path: string) => {
+  const p = parse(path);
+  return join(p.dir, `${p.name}.min.txt`);
+};
 
 /**
  * Combine rules for all input files
@@ -164,73 +170,52 @@ const getCombinedFilePath = (path: string) => `${path.split(".")[0]}.min.txt`;
  * @returns Array<[Input file path, Combined file path]>
  */
 const combineRules = (cwd: string, files: string[]) =>
-  Promise.all(
-    files
-      .map((file) => `${cwd}/${file}`)
-      .map(async (inputFilePath) => {
-        const inputLines = await loadFile(inputFilePath);
-        const combinedFilePath = getCombinedFilePath(inputFilePath);
-        await Bun.write(
-          combinedFilePath,
-          getOutputRules(inputLines, inputFilePath),
-        );
-        return [inputFilePath, combinedFilePath];
-      }),
-  );
+  files
+    .map((file) => join(cwd, file))
+    .map((inputFilePath) => {
+      const inputLines = loadFile(inputFilePath);
+      const combinedFilePath = getCombinedFilePath(inputFilePath);
+      writeFileSync(
+        combinedFilePath,
+        getOutputRules(inputLines, inputFilePath),
+      );
+      return [inputFilePath, combinedFilePath];
+    });
 
 /**
  * Add files to git
  * @param cwd current working directory
  * @param filePairs Array<[Input file path, Combined file path]>
  */
-const addRules = (cwd: string, filePairs: string[][]) =>
+const addRules = (cwd: string, filePairs: string[][]) => {
   filePairs.map(([inputFile, outputFile]) => {
-    Bun.spawnSync({
-      cwd,
-      cmd: ["git", "add", inputFile],
-    });
-    Bun.spawnSync({
-      cwd,
-      cmd: ["git", "add", outputFile],
-    });
+    spawnSync("git", ["add", inputFile], { cwd });
+    spawnSync("git", ["add", outputFile], { cwd });
   });
+};
 
 /**
  * Make a git commit
  * @param cwd current working directory
  */
-const commitRules = (cwd: string) =>
-  Bun.spawnSync({
-    cwd,
-    cmd: ["git", "commit", "-qm", "feat: update ubo-rules by urb"],
-  });
+const commitRules = (cwd: string) => {
+  spawnSync("git", ["commit", "-qm", "feat: update ubo-rules by urb"], { cwd });
+};
 
 /**
  * Make a git push
  * @param cwd current working directory
  */
-const pushRules = async (cwd: string) =>
-  Bun.spawnSync({
-    cwd,
-    cmd: ["git", "push", "-q"],
-  });
-
-/**
- * Single line logger
- * @param content content to print
- * @param withNewline print `\n` at content end, default: `true`
- */
-const logger = async (content: string, withNewline: boolean = true) => {
-  await Bun.write(Bun.stdout, `${content}${withNewline ? "\n" : ""}`);
+const pushRules = (cwd: string) => {
+  spawnSync("git", ["push", "-q"], { cwd });
 };
 
 /**
  * main function
  */
-const main = async () => {
-  await logger("Update ubo-rules...", false);
-  const cwd = Bun.argv[2];
-  const filePairs = await combineRules(cwd, [
+const main = () => {
+  const cwd = argv[2];
+  const filePairs = combineRules(cwd, [
     "ubo-desktop.txt",
     "ubo-mobile.txt",
     "ubo-font.txt",
@@ -238,7 +223,6 @@ const main = async () => {
   addRules(cwd, filePairs);
   commitRules(cwd);
   pushRules(cwd);
-  await logger("done");
 };
 
 main();
