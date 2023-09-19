@@ -1,3 +1,6 @@
+import { spawn } from "node:child_process";
+import { argv, stdout } from "node:process";
+
 type GitHubAPISchema = GitHubRepoSchema[];
 
 interface GitHubRepoSchema {
@@ -262,8 +265,8 @@ let GLOBAL_ALL_COUNT = 0;
  * @param content content to print
  * @param withNewline print `\n` at content end, default: `false`
  */
-const logger = async (content: string, withNewline: boolean = false) => {
-  await Bun.write(Bun.stdout, `${content}${withNewline ? "\n" : ""}`);
+const print = (content: string, withNewline: boolean = false) => {
+  stdout.write(`${content}${withNewline ? "\n" : ""}`);
 };
 
 /**
@@ -294,41 +297,33 @@ const getCloneUrls = async (token: string) => {
  * Clone Repositories
  * @param repoInfos Array<[repo name, repo ssh_url]>
  */
-const cloneRepos = async (repoInfos: string[][]) => {
-  await logger(`remote: ${GLOBAL_ALL_COUNT} repositories to clone...`, true);
-  await Promise.all(
-    repoInfos.map(async (repoInfo) => {
-      const [repoName, cloneUrl] = repoInfo;
-      const gitProc = Bun.spawn({
-        cmd: ["git", "clone", "-q", cloneUrl],
-        stdout: "pipe",
-        stderr: "pipe",
-        onExit: async (gitProcLocal, exitCode) => {
-          if (exitCode === 0) {
-            GLOBAL_FINISHED_COUNT += 1;
-            await logger(
-              `complete: \x1b[1m${repoName}\x1b[0m (${GLOBAL_FINISHED_COUNT}/${GLOBAL_ALL_COUNT})`,
-              true,
-            );
-          } else {
-            const stderrText = await new Response(
-              gitProcLocal.stderr as ReadableStream<Uint8Array>,
-            ).text();
-            await logger(stderrText);
-          }
-        },
-      });
-      await gitProc.exited;
-    }),
-  );
+const cloneRepos = (repoInfos: string[][]) => {
+  print(`remote: ${GLOBAL_ALL_COUNT} repositories to clone...`, true);
+  repoInfos.map((repoInfo) => {
+    const [repoName, cloneUrl] = repoInfo;
+    const p = spawn("git", ["clone", "--progress", cloneUrl], {});
+    p.stderr.on("data", (data) => {
+      const dataText: string = data.toString();
+      if (
+        dataText.includes("處理 delta 中: 100%") &&
+        dataText.includes("完成")
+      ) {
+        GLOBAL_FINISHED_COUNT += 1;
+        print(
+          `complete: \x1b[1m${repoName}\x1b[0m (${GLOBAL_FINISHED_COUNT}/${GLOBAL_ALL_COUNT})`,
+          true,
+        );
+      }
+    });
+  });
 };
 
 /**
  * main function
  */
 const main = async () => {
-  const repoInfos = await getCloneUrls(Bun.argv[2]);
-  await cloneRepos(repoInfos);
+  const repoInfos = await getCloneUrls(argv[2]);
+  cloneRepos(repoInfos);
 };
 
 main();
