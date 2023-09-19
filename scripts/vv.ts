@@ -1,6 +1,7 @@
-import { unlink } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { copyFileSync, existsSync, statSync, unlinkSync } from "node:fs";
 import { join, parse } from "node:path";
-import { exit } from "node:process";
+import { argv, exit, stdout } from "node:process";
 
 /**
  * Check if args exist (not `null`, `undefined`, `""`)
@@ -22,15 +23,15 @@ const isLenMatchArgs = (args: string[], len: number) => args.length === len;
  * @param path File path
  * @returns if file exist
  */
-const isFileExist = (path: string) => Bun.file(path).exists();
+const isFileExist = (path: string) => existsSync(path);
 
 /**
  * Check if file exist, if not, exit current process
  * @param path File path
  */
-const checkFileExistOrAbort = async (path: string) => {
-  if (!(await isFileExist(path))) {
-    await logger([`File: ${path} do not exist.`]);
+const checkFileExistOrAbort = (path: string) => {
+  if (!isFileExist(path)) {
+    print([`File: ${path} do not exist.`]);
     exit(0);
   }
 };
@@ -41,22 +42,19 @@ const checkFileExistOrAbort = async (path: string) => {
  * @returns if file video codec is HEVC
  */
 const checkFileCodecIsHevc = (path: string) => {
-  const ffprobeProc = Bun.spawnSync({
-    cmd: [
-      "ffprobe",
-      "-v",
-      "error",
-      "-select_streams",
-      "v:0",
-      "-show_entries",
-      "stream=codec_name",
-      "-of",
-      "default=noprint_wrappers=1:nokey=1",
-      path,
-    ],
-  });
-  if (ffprobeProc.success) {
-    return ffprobeProc.stdout.toString().trim().toLowerCase() === "hevc";
+  const { status, stdout } = spawnSync("ffprobe", [
+    "-v",
+    "error",
+    "-select_streams",
+    "v:0",
+    "-show_entries",
+    "stream=codec_name",
+    "-of",
+    "default=noprint_wrappers=1:nokey=1",
+    path,
+  ]);
+  if (status === 0) {
+    return stdout.toString().trim().toLowerCase() === "hevc";
   } else {
     return false;
   }
@@ -87,15 +85,12 @@ const replaceFileExt = (path: string, ext: string) => {
  * @param contents contents to print
  * @param withNewline print `\n` at content end, default: `true`
  */
-const logger = async (contents: string[], withNewline: boolean = true) => {
-  await Bun.write(
-    Bun.stdout,
-    `${contents.join("\n").trimEnd()}${withNewline ? "\n" : ""}`,
-  );
+const print = (contents: string[], withNewline: boolean = true) => {
+  stdout.write(`${contents.join("\n").trimEnd()}${withNewline ? "\n" : ""}`);
 };
 
 /**
- * Get args from `Bun.argv`
+ * Get args from argv
  * @param len Length of args
  * @param usage Cmd usage shows when args length does not match or any empty arg exist
  * @returns args
@@ -109,12 +104,12 @@ const logger = async (contents: string[], withNewline: boolean = true) => {
  * // print ["..."] and exit current process
  * ```
  */
-const getArgs = async (len: number, usage: string[]): Promise<string[]> => {
-  const args = Bun.argv.slice(3);
+const getArgs = (len: number, usage: string[]) => {
+  const args = argv.slice(3);
   if (isLenMatchArgs(args, len) && isExistArgs(args)) {
     return args;
   } else {
-    await logger(usage);
+    print(usage);
     exit(0);
   }
 };
@@ -142,12 +137,12 @@ const getDateStrForFile = () =>
  * @param path file path
  * @returns Readable file size string (return `""` if file not exist)
  */
-const getFileSize = async (path: string): Promise<string> => {
-  if (await isFileExist(path)) {
+const getFileSize = (path: string) => {
+  if (isFileExist(path)) {
     /**
      * file size in bytes
      */
-    const size = Bun.file(path).size;
+    const { size } = statSync(path);
     const ONE_GB = 1000 * 1000 * 1000;
     const ONE_MB = 1000 * 1000;
     const ONE_KB = 1000;
@@ -168,9 +163,9 @@ const getFileSize = async (path: string): Promise<string> => {
  * @param source source path
  * @param destination destination path
  */
-const copyFile = async (source: string, destination: string) => {
-  if (await isFileExist(source)) {
-    await Bun.write(destination, Bun.file(source));
+const copyFileIfExist = (source: string, destination: string) => {
+  if (isFileExist(source)) {
+    copyFileSync(source, destination);
   }
 };
 
@@ -178,14 +173,12 @@ const copyFile = async (source: string, destination: string) => {
  * Remove multi files
  * @param paths files to remove
  */
-const removeFiles = async (paths: string[]) => {
-  await Promise.all(
-    paths.map(async (path) => {
-      if (await isFileExist(path)) {
-        await unlink(path);
-      }
-    }),
-  );
+const removeFiles = (paths: string[]) => {
+  paths.map((path) => {
+    if (isFileExist(path)) {
+      unlinkSync(path);
+    }
+  });
 };
 
 /**
@@ -194,15 +187,18 @@ const removeFiles = async (paths: string[]) => {
  * @param filesToClear files to remove if failed
  * @returns if the operation success
  */
-const ffmpeg = async (args: string[], filesToClear: string[] = []) => {
-  const ffmpegProc = Bun.spawnSync({
-    cmd: ["ffmpeg", "-hide_banner", "-loglevel", "error", ...args],
-  });
-  if (ffmpegProc.success) {
+const ffmpeg = (args: string[], filesToClear: string[] = []) => {
+  const { status, stderr } = spawnSync("ffmpeg", [
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    ...args,
+  ]);
+  if (status === 0) {
     return true;
   } else {
-    await removeFiles(filesToClear);
-    await logger([ffmpegProc.stderr.toString()]);
+    removeFiles(filesToClear);
+    print([stderr.toString()]);
     return false;
   }
 };
@@ -213,15 +209,13 @@ const ffmpeg = async (args: string[], filesToClear: string[] = []) => {
  * @param filesToClear files to remove if failed
  * @returns if the operation success
  */
-const ytdlp = async (args: string[], filesToClear: string[] = []) => {
-  const ytdlpProc = Bun.spawnSync({
-    cmd: ["yt-dlp", ...args],
-  });
-  if (ytdlpProc.success) {
+const ytdlp = (args: string[], filesToClear: string[] = []) => {
+  const { status, stderr } = spawnSync("yt-dlp", args);
+  if (status === 0) {
     return true;
   } else {
-    await removeFiles(filesToClear);
-    await logger([ytdlpProc.stderr.toString()]);
+    removeFiles(filesToClear);
+    print([stderr.toString()]);
     return false;
   }
 };
@@ -230,16 +224,16 @@ const ytdlp = async (args: string[], filesToClear: string[] = []) => {
  * MP4-Packager: change video container to mp4
  * @param cmd current cmd (for print usage string)
  */
-const mp4Packager = async (cmd: string) => {
+const mp4Packager = (cmd: string) => {
   const usage = [
     "change video container to mp4",
     `Usage: ${cmd} [input.mkv]`,
     `       ${cmd} \'input.mkv\'`,
   ];
-  const [inputFilePath] = await getArgs(1, usage);
-  await checkFileExistOrAbort(inputFilePath);
+  const [inputFilePath] = getArgs(1, usage);
+  checkFileExistOrAbort(inputFilePath);
   const outputFilePath = replaceFileExt(inputFilePath, "mp4");
-  const success = await ffmpeg(
+  const success = ffmpeg(
     [
       "-i",
       inputFilePath,
@@ -253,7 +247,7 @@ const mp4Packager = async (cmd: string) => {
     [outputFilePath],
   );
   if (success) {
-    await removeFiles([inputFilePath]);
+    removeFiles([inputFilePath]);
   }
 };
 
@@ -261,19 +255,19 @@ const mp4Packager = async (cmd: string) => {
  * ASS-Combiner: combile `.cht.ass` to mkv
  * @param cmd current cmd (for usage string)
  */
-const assCombiner = async (cmd: string) => {
+const assCombiner = (cmd: string) => {
   const usage = [
     "combile .cht.ass to mkv",
     `Usage: ${cmd} [input_dir]`,
     `       ${cmd} \'input\'`,
   ];
-  const [targetDir] = await getArgs(1, usage);
+  const [targetDir] = getArgs(1, usage);
   const inputVideo = join(targetDir, replaceFileExt(targetDir, "mkv"));
   const inputAss = join(targetDir, replaceFileExt(targetDir, "cht.ass"));
-  await checkFileExistOrAbort(inputVideo);
-  await checkFileExistOrAbort(inputAss);
+  checkFileExistOrAbort(inputVideo);
+  checkFileExistOrAbort(inputAss);
   const outputFile = join(targetDir, replaceFileExt(targetDir, "temp.mkv"));
-  const success = await ffmpeg(
+  const success = ffmpeg(
     [
       "-i",
       inputVideo,
@@ -298,8 +292,8 @@ const assCombiner = async (cmd: string) => {
     [outputFile],
   );
   if (success) {
-    await copyFile(outputFile, inputVideo);
-    await removeFiles([outputFile]);
+    copyFileIfExist(outputFile, inputVideo);
+    removeFiles([outputFile]);
   }
 };
 
@@ -307,22 +301,22 @@ const assCombiner = async (cmd: string) => {
  * Re-Encoder: re-encode a mp4
  * @param cmd current cmd (for usage string)
  */
-const reEncoder = async (cmd: string) => {
+const reEncoder = (cmd: string) => {
   const usage = [
     "re-encode a mp4",
     `Usage: ${cmd} [input_file]`,
     `       ${cmd} 'input.mp4'`,
   ];
-  const [inputFile] = await getArgs(1, usage);
-  await checkFileExistOrAbort(inputFile);
+  const [inputFile] = getArgs(1, usage);
+  checkFileExistOrAbort(inputFile);
   const outputFile = replaceFileExt(inputFile, "temp.mp4");
-  const success = await ffmpeg(
+  const success = ffmpeg(
     ["-i", inputFile, "-vcodec", "copy", "-acodec", "copy", outputFile],
     [outputFile],
   );
   if (success) {
-    await copyFile(outputFile, inputFile);
-    await removeFiles([outputFile]);
+    copyFileIfExist(outputFile, inputFile);
+    removeFiles([outputFile]);
   }
 };
 
@@ -332,16 +326,16 @@ const reEncoder = async (cmd: string) => {
  * @param fps FPS for gif
  * @param width width for gif
  */
-const gifMaker = async (cmd: string, fps: number, width: number) => {
+const gifMaker = (cmd: string, fps: number, width: number) => {
   const usage = [
     "Gif Maker",
     `Usage: ${cmd} [input_file] [from(hh:mm:ss or sec)] [during(sec)]`,
     `       ${cmd} 'input.mp4' 01:02:08 11.0`,
   ];
-  const [inputFile, start, duration] = await getArgs(3, usage);
-  await checkFileExistOrAbort(inputFile);
+  const [inputFile, start, duration] = getArgs(3, usage);
+  checkFileExistOrAbort(inputFile);
   const outputFile = `${getDateStrForFile()}_fps${fps}.gif`;
-  const success = await ffmpeg(
+  const success = ffmpeg(
     [
       "-ss",
       start,
@@ -356,7 +350,7 @@ const gifMaker = async (cmd: string, fps: number, width: number) => {
     [outputFile],
   );
   if (success) {
-    await logger([`${outputFile} ${await getFileSize(outputFile)}`]);
+    print([`${outputFile} ${getFileSize(outputFile)}`]);
   }
 };
 
@@ -366,15 +360,15 @@ const gifMaker = async (cmd: string, fps: number, width: number) => {
  * @param fps FPS for gif
  * @param width width for gif
  */
-const ytGifMaker = async (cmd: string, fps: number, width: number) => {
+const ytGifMaker = (cmd: string, fps: number, width: number) => {
   const usage = [
     "YouTube Gif Maker",
     `Usage: ${cmd} [video_link] [from(hh:mm:ss or sec)] [during(sec)]`,
     `       ${cmd} 'https://www.youtube.com/watch?v=JoSY6AWKqHs' 00:01:59 2`,
   ];
-  const [url, start, duration] = await getArgs(3, usage);
+  const [url, start, duration] = getArgs(3, usage);
   const tempFile = `ytgif_${getDateStrForFile()}.mp4`;
-  const successDownload = await ytdlp(
+  const successDownload = ytdlp(
     [
       url,
       "-f",
@@ -390,7 +384,7 @@ const ytGifMaker = async (cmd: string, fps: number, width: number) => {
   );
   if (successDownload) {
     const outputFile = `${getDateStrForFile()}_fps${fps}.gif`;
-    const success = await ffmpeg(
+    const success = ffmpeg(
       [
         "-ss",
         "0",
@@ -406,7 +400,7 @@ const ytGifMaker = async (cmd: string, fps: number, width: number) => {
     );
     if (success) {
       removeFiles([tempFile]);
-      await logger([`${outputFile} ${await getFileSize(outputFile)}`]);
+      print([`${outputFile} ${getFileSize(outputFile)}`]);
     }
   }
 };
@@ -414,32 +408,32 @@ const ytGifMaker = async (cmd: string, fps: number, width: number) => {
 /**
  * main function
  */
-const main = async () => {
-  const cmd = Bun.argv[2];
+const main = () => {
+  const cmd = argv[2];
   switch (cmd) {
     case "ytgif":
-      await ytGifMaker(cmd, 12, 480);
+      ytGifMaker(cmd, 12, 480);
       break;
     case "ytgifv":
-      await ytGifMaker(cmd, 24, 480);
+      ytGifMaker(cmd, 24, 480);
       break;
     case "mkgif":
-      await gifMaker(cmd, 12, 480);
+      gifMaker(cmd, 12, 480);
       break;
     case "mkgifv":
-      await gifMaker(cmd, 24, 480);
+      gifMaker(cmd, 24, 480);
       break;
     case "rec":
-      await reEncoder(cmd);
+      reEncoder(cmd);
       break;
     case "rea":
-      await assCombiner(cmd);
+      assCombiner(cmd);
       break;
     case "re4":
-      await mp4Packager(cmd);
+      mp4Packager(cmd);
       break;
     default:
-      await logger([
+      print([
         "vv available commands:",
         "ytgif:  YouTube Gif Maker (12fps)",
         "ytgifv: YouTube Gif Maker (24fps)",
