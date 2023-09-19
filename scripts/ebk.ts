@@ -1,34 +1,25 @@
-import { readdir, unlink } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { copyFileSync, existsSync, readdirSync, unlinkSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { argv } from "node:process";
 
 /**
- * Single line logger
- * @param content content to print
- * @param withNewline print `\n` at content end, default: `true`
+ * Multi line logger
+ * @param contents contents to print
  */
-const logger = async (content: string[], withNewline: boolean = true) => {
-  await Bun.write(
-    Bun.stdout,
-    `${content.join("\n").trimEnd()}${withNewline ? "\n" : ""}`,
-  );
+const print = (contents: string[]) => {
+  console.info(contents.join("\n").trimEnd());
 };
-
-/**
- * Check if file exist
- * @param path File path
- * @returns if file exist
- */
-const isFileExist = async (path: string) => Bun.file(path).exists();
 
 /**
  * Copy file from source to destination
  * @param {string} source source path
  * @param {string} destination destination path
  */
-const copyFile = async (source: string, destination: string) => {
-  if (await isFileExist(source)) {
-    await Bun.write(destination, Bun.file(source));
+const copyFile = (source: string, destination: string) => {
+  if (existsSync(source)) {
+    copyFileSync(source, destination);
   }
 };
 
@@ -36,9 +27,9 @@ const copyFile = async (source: string, destination: string) => {
  * Remove File
  * @param path file to remove
  */
-const removeFile = async (path: string) => {
-  if (await isFileExist(path)) {
-    await unlink(path);
+const removeFile = (path: string) => {
+  if (existsSync(path)) {
+    unlinkSync(path);
   }
 };
 
@@ -49,12 +40,12 @@ const removeFile = async (path: string) => {
  * @param patternEnd pattern for target file end
  * @returns file path or `null`
  */
-const findFileInDir = async (
+const findFileInDir = (
   dir: string,
   patternStart: string,
   patternEnd: string,
 ) => {
-  const file = (await readdir(dir, { withFileTypes: true }))
+  const file = readdirSync(dir, { withFileTypes: true })
     .filter(
       (inode) =>
         !inode.isDirectory() &&
@@ -74,32 +65,28 @@ const findFileInDir = async (
  * @param cwd current working directory
  * @param file file
  */
-const addBackup = (cwd: string, file: string) =>
-  Bun.spawnSync({
-    cwd,
-    cmd: ["git", "add", file],
-  });
+const addBackup = (cwd: string, file: string) => {
+  spawnSync("git", ["add", file], { cwd });
+};
 
 /**
  * Make a git commit
  * @param cwd current working directory
  * @param fileName file name for commit message
  */
-const commitBackup = (cwd: string, fileName: string) =>
-  Bun.spawnSync({
+const commitBackup = (cwd: string, fileName: string) => {
+  spawnSync("git", ["commit", "-qm", `feat: update ${fileName} by ubk`], {
     cwd,
-    cmd: ["git", "commit", "-qm", `feat: update ${fileName} by ubk`],
   });
+};
 
 /**
  * Make a git push
  * @param cwd file directory
  */
-const pushBackup = async (cwd: string) =>
-  Bun.spawnSync({
-    cwd,
-    cmd: ["git", "push", "-q"],
-  });
+const pushBackup = (cwd: string) => {
+  spawnSync("git", ["push", "-q"], { cwd });
+};
 
 /**
  * Backup file in user's download directory
@@ -108,26 +95,22 @@ const pushBackup = async (cwd: string) =>
  * @param backupDir Backup directory
  * @param backupFileName file name in backup directory
  */
-const backup = async (
+const backup = (
   patternStart: string,
   patternEnd: string,
   backupDir: string,
   backupFileName: string,
 ) => {
   const targetDir = join(homedir(), "Downloads");
-  const targetFilePath = await findFileInDir(
-    targetDir,
-    patternStart,
-    patternEnd,
-  );
+  const targetFilePath = findFileInDir(targetDir, patternStart, patternEnd);
   if (targetFilePath) {
-    await logger([
+    print([
       `Backup Configuration: ${targetFilePath}`,
       `     --> ${backupFileName}`,
     ]);
     const backupFilePath = join(backupDir, backupFileName);
-    await copyFile(targetFilePath, backupFilePath);
-    await removeFile(targetFilePath);
+    copyFile(targetFilePath, backupFilePath);
+    removeFile(targetFilePath);
     addBackup(backupDir, backupFileName);
     commitBackup(backupDir, backupFileName);
     pushBackup(backupDir);
@@ -137,11 +120,11 @@ const backup = async (
 /**
  * main funcion
  */
-const main = async () => {
-  const backupDir = Bun.argv[2];
-  await backup("my-ublock-backup", ".txt", backupDir, "ubo-config.txt");
-  await backup("tampermonkey-backup-", ".zip", backupDir, "userscript.zip");
-  await backup("tongwentang-", "json", backupDir, "tongwentang.json");
+const main = () => {
+  const backupDir = argv[2];
+  backup("my-ublock-backup", ".txt", backupDir, "ubo-config.txt");
+  backup("tampermonkey-backup-", ".zip", backupDir, "userscript.zip");
+  backup("tongwentang-", "json", backupDir, "tongwentang.json");
 };
 
 main();
