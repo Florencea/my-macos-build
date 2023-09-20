@@ -9,7 +9,7 @@
 
 ## Execute Media Scripts from remote
 
-- **Note:** [`ffmpeg`](https://ffmpeg.org) and [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) required.
+- **Note:** [`ffmpeg`](https://ffmpeg.org) and [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) required in PATH.
 - Use [Node.js](https://nodejs.org/en)
 
 ```sh
