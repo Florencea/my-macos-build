@@ -90,6 +90,8 @@ python3 -m pip install --upgrade pip
 brew install wget
 brew install yt-dlp/taps/yt-dlp
 
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+
 defaults write com.apple.dock ResetLaunchPad -bool true
 killall Dock
 rm "$0"
