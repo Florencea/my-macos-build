@@ -1,4 +1,6 @@
 {
   "name": "my-macos-build",
-  "bin": "./scripts/vvx.mjs"
+  "bin": {
+    "vv": "./scripts/vvx.mjs"
+  }
 }
