@@ -27,3 +27,5 @@ alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
 # fnm
 fnm env | source
 fish_add_path "$(npm config get prefix)/bin"
+# rustup
+fish_add_path "$HOME/.cargo/bin"

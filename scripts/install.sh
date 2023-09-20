@@ -97,6 +97,9 @@ brew install docker-compose
 colima template --editor ls
 yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
 
+brew install rustup-init
+rustup-init -y --no-modify-path
+
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 
 defaults write com.apple.dock ResetLaunchPad -bool true

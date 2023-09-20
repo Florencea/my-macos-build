@@ -51,3 +51,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # fnm
 eval "$(fnm env)"
 export PATH="$(npm config get prefix)/bin:$PATH"
+
+# rustup
+export PATH="$HOME/.cargo/bin:$PATH"
