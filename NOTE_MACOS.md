@@ -8,8 +8,6 @@
     - [Disable Window Animations](#disable-window-animations)
     - [Generate SSH Key](#generate-ssh-key)
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
-    - [Rust Installation](#rust-installation)
-    - [Colima Installation](#colima-installation)
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
 
 ## Useful commands
@@ -17,7 +15,7 @@
 ### Install Rosetta2
 
 ```sh
-softwareupdate --install-rosetta
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
 ```
 
 ### Reset LaunchPad
@@ -51,54 +49,6 @@ cat .ssh/id_ed25519.pub | pbcopy
 sudo nano /etc/pam.d/sudo
 # Add this at line 2
 auth       sufficient     pam_tid.so
-```
-
-### Rust Installation
-
-```sh
-# For fish shell
-curl https://sh.rustup.rs | sh
-set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
-mkdir -p ~/.config/fish/completions
-# Open new shell
-rustup completions fish > ~/.config/fish/completions/rustup.fish
-```
-
-### Colima Installation
-
-```sh
-# Install colima, docker, docker-compose
-brew install colima docker docker-compose
-# Edit colima defalt config
-colima template --editor code
-```
-
-```yaml
-# Default: 2
-cpu: 8
-# Default: 2
-memory: 8
-# Default: host
-arch: aarch64
-# Default: []
-  dns:
-    - 8.8.8.8
-    - 8.8.4.4
-# Default: qemu
-vmType: vz
-# Default: false
-rosetta: true
-# Default: virtiofs (for vz), sshfs (for qemu)
-mountType: virtiofs
-```
-
-```sh
-# start colima
-colima start
-# check colima status
-colima status
-# stop colima
-colima stop
 ```
 
 ### Remove Quarantine Attributes
