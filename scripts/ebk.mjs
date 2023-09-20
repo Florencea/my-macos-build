@@ -6,9 +6,9 @@ import { argv } from "node:process";
 
 /**
  * Multi line logger
- * @param contents contents to print
+ * @param {string[]} contents contents to print
  */
-const print = (contents: string[]) => {
+const print = (contents) => {
   console.info(contents.join("\n").trimEnd());
 };
 
@@ -17,7 +17,7 @@ const print = (contents: string[]) => {
  * @param {string} source source path
  * @param {string} destination destination path
  */
-const copyFile = (source: string, destination: string) => {
+const copyFile = (source, destination) => {
   if (existsSync(source)) {
     copyFileSync(source, destination);
   }
@@ -25,9 +25,9 @@ const copyFile = (source: string, destination: string) => {
 
 /**
  * Remove File
- * @param path file to remove
+ * @param {string} path file to remove
  */
-const removeFile = (path: string) => {
+const removeFile = (path) => {
   if (existsSync(path)) {
     unlinkSync(path);
   }
@@ -35,16 +35,12 @@ const removeFile = (path: string) => {
 
 /**
  * Find file in directory
- * @param dir Target directory
- * @param patternStart pattern for target file start
- * @param patternEnd pattern for target file end
+ * @param {string} dir Target directory
+ * @param {string} patternStart pattern for target file start
+ * @param {string} patternEnd pattern for target file end
  * @returns file path or `null`
  */
-const findFileInDir = (
-  dir: string,
-  patternStart: string,
-  patternEnd: string,
-) => {
+const findFileInDir = (dir, patternStart, patternEnd) => {
   const file = readdirSync(dir, { withFileTypes: true })
     .filter(
       (inode) =>
@@ -62,19 +58,19 @@ const findFileInDir = (
 
 /**
  * Add file to git
- * @param cwd current working directory
- * @param file file
+ * @param {string} cwd current working directory
+ * @param {string} file file
  */
-const addBackup = (cwd: string, file: string) => {
+const addBackup = (cwd, file) => {
   spawnSync("git", ["add", file], { cwd });
 };
 
 /**
  * Make a git commit
- * @param cwd current working directory
- * @param fileName file name for commit message
+ * @param {string} cwd current working directory
+ * @param {string} fileName file name for commit message
  */
-const commitBackup = (cwd: string, fileName: string) => {
+const commitBackup = (cwd, fileName) => {
   spawnSync("git", ["commit", "-qm", `feat: update ${fileName} by ubk`], {
     cwd,
   });
@@ -82,25 +78,20 @@ const commitBackup = (cwd: string, fileName: string) => {
 
 /**
  * Make a git push
- * @param cwd file directory
+ * @param {string} cwd file directory
  */
-const pushBackup = (cwd: string) => {
+const pushBackup = (cwd) => {
   spawnSync("git", ["push", "-q"], { cwd });
 };
 
 /**
  * Backup file in user's download directory
- * @param patternStart pattern for target file start
- * @param patternEnd pattern for target file end
- * @param backupDir Backup directory
- * @param backupFileName file name in backup directory
+ * @param {string} patternStart pattern for target file start
+ * @param {string} patternEnd pattern for target file end
+ * @param {string} backupDir Backup directory
+ * @param {string} backupFileName file name in backup directory
  */
-const backup = (
-  patternStart: string,
-  patternEnd: string,
-  backupDir: string,
-  backupFileName: string,
-) => {
+const backup = (patternStart, patternEnd, backupDir, backupFileName) => {
   const targetDir = join(homedir(), "Downloads");
   const targetFilePath = findFileInDir(targetDir, patternStart, patternEnd);
   if (targetFilePath) {
