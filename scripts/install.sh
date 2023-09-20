@@ -83,12 +83,19 @@ brew install fnm
 eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >~/.npmrc
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
 brew install rsync
 brew install python
 python3 -m pip install --upgrade pip
 brew install wget
 brew install yt-dlp/taps/yt-dlp
+brew install yq
+
+brew install colima
+brew install docker
+brew install docker-compose
+colima template --editor ls
+yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
 
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 
