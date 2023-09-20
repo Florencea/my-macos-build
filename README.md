@@ -9,7 +9,7 @@
 
 ## Execute Media Scripts (vv) from remote
 
-- Use [Node.js](https://nodejs.org/en) already installed.
+- Use [Node.js](https://nodejs.org/en)
 
 ```sh
 npx -y github:Florencea/my-macos-build
