@@ -407,7 +407,7 @@ const ytGifMaker = (cmd, fps, width) => {
 /**
  * main function
  */
-const main = () => {
+export const main = () => {
   const cmd = argv[2];
   switch (cmd) {
     case "ytgif":
