@@ -5,31 +5,31 @@ import { argv, exit } from "node:process";
 
 /**
  * Check if args exist (not `null`, `undefined`, `""`)
- * @param args args
+ * @param {string[]} args args
  * @returns if every args exist
  */
-const isExistArgs = (args: string[]) => args.every(Boolean);
+const isExistArgs = (args) => args.every(Boolean);
 
 /**
  * Check if args match length
- * @param args args
- * @param len Length of current args
+ * @param {string[]} args args
+ * @param {len} len Length of current args
  * @returns if args match length
  */
-const isLenMatchArgs = (args: string[], len: number) => args.length === len;
+const isLenMatchArgs = (args, len) => args.length === len;
 
 /**
  * Check if file exist
- * @param path File path
+ * @param {string} path File path
  * @returns if file exist
  */
-const isFileExist = (path: string) => existsSync(path);
+const isFileExist = (path) => existsSync(path);
 
 /**
  * Check if file exist, if not, exit current process
- * @param path File path
+ * @param {string} path File path
  */
-const checkFileExistOrAbort = (path: string) => {
+const checkFileExistOrAbort = (path) => {
   if (!isFileExist(path)) {
     print([`File: ${path} do not exist.`]);
     exit(0);
@@ -38,10 +38,10 @@ const checkFileExistOrAbort = (path: string) => {
 
 /**
  * Check if file video codec is HEVC
- * @param path File path
+ * @param {string} path File path
  * @returns if file video codec is HEVC
  */
-const checkFileCodecIsHevc = (path: string) => {
+const checkFileCodecIsHevc = (path) => {
   const { status, stdout } = spawnSync("ffprobe", [
     "-v",
     "error",
@@ -62,8 +62,8 @@ const checkFileCodecIsHevc = (path: string) => {
 
 /**
  * Replace file extenstion
- * @param path File path
- * @param ext File ext to replace, ex: `mp4`
+ * @param {string} path File path
+ * @param {string} ext File ext to replace, ex: `mp4`
  * @returns replaced file path
  * @example
  * ```ts
@@ -75,23 +75,23 @@ const checkFileCodecIsHevc = (path: string) => {
  * // "/User/Downloads/1.mp4"
  * ```
  */
-const replaceFileExt = (path: string, ext: string) => {
+const replaceFileExt = (path, ext) => {
   const parsedPath = parse(path);
   return join(parsedPath.dir, `${parsedPath.name}.${ext}`);
 };
 
 /**
  * Multi line logger
- * @param contents contents to print
+ * @param {string[]} contents contents to print
  */
-const print = (contents: string[]) => {
+const print = (contents) => {
   console.info(contents.join("\n").trimEnd());
 };
 
 /**
  * Get args from argv
- * @param len Length of args
- * @param usage Cmd usage shows when args length does not match or any empty arg exist
+ * @param {number} len Length of args
+ * @param {string[]} usage Cmd usage shows when args length does not match or any empty arg exist
  * @returns args
  * ```ts
  * // $ vv mkgif a b c
@@ -103,7 +103,7 @@ const print = (contents: string[]) => {
  * // print ["..."] and exit current process
  * ```
  */
-const getArgs = (len: number, usage: string[]) => {
+const getArgs = (len, usage) => {
   const args = argv.slice(3);
   if (isLenMatchArgs(args, len) && isExistArgs(args)) {
     return args;
@@ -133,10 +133,10 @@ const getDateStrForFile = () =>
 
 /**
  * Get human readable file size Ex: `1.5 GB`, `2.1 MB`, `322 KB`
- * @param path file path
+ * @param {string} path file path
  * @returns Readable file size string (return `""` if file not exist)
  */
-const getFileSize = (path: string) => {
+const getFileSize = (path) => {
   if (isFileExist(path)) {
     /**
      * file size in bytes
@@ -159,10 +159,10 @@ const getFileSize = (path: string) => {
 
 /**
  * Copy file from source to destination
- * @param source source path
- * @param destination destination path
+ * @param {string} source source path
+ * @param {string} destination destination path
  */
-const copyFileIfExist = (source: string, destination: string) => {
+const copyFileIfExist = (source, destination) => {
   if (isFileExist(source)) {
     copyFileSync(source, destination);
   }
@@ -170,9 +170,9 @@ const copyFileIfExist = (source: string, destination: string) => {
 
 /**
  * Remove multi files
- * @param paths files to remove
+ * @param {string[]} paths files to remove
  */
-const removeFiles = (paths: string[]) => {
+const removeFiles = (paths) => {
   paths.map((path) => {
     if (isFileExist(path)) {
       unlinkSync(path);
@@ -182,11 +182,11 @@ const removeFiles = (paths: string[]) => {
 
 /**
  * ffmpeg factory function
- * @param args ffmpeg args
- * @param filesToClear files to remove if failed
+ * @param {string[]} args ffmpeg args
+ * @param {string[]} filesToClear files to remove if failed
  * @returns if the operation success
  */
-const ffmpeg = (args: string[], filesToClear: string[] = []) => {
+const ffmpeg = (args, filesToClear = []) => {
   const { status, stderr } = spawnSync("ffmpeg", [
     "-hide_banner",
     "-loglevel",
@@ -204,11 +204,11 @@ const ffmpeg = (args: string[], filesToClear: string[] = []) => {
 
 /**
  * yt-dlp factory function
- * @param args yt-dlp args
- * @param filesToClear files to remove if failed
+ * @param {string[]} args yt-dlp args
+ * @param {string[]} filesToClear files to remove if failed
  * @returns if the operation success
  */
-const ytdlp = (args: string[], filesToClear: string[] = []) => {
+const ytdlp = (args, filesToClear = []) => {
   const { status, stderr } = spawnSync("yt-dlp", args);
   if (status === 0) {
     return true;
@@ -221,9 +221,9 @@ const ytdlp = (args: string[], filesToClear: string[] = []) => {
 
 /**
  * MP4-Packager: change video container to mp4
- * @param cmd current cmd (for print usage string)
+ * @param {string} cmd current cmd (for print usage string)
  */
-const mp4Packager = (cmd: string) => {
+const mp4Packager = (cmd) => {
   const usage = [
     "change video container to mp4",
     `Usage: ${cmd} [input.mkv]`,
@@ -252,9 +252,9 @@ const mp4Packager = (cmd: string) => {
 
 /**
  * ASS-Combiner: combile `.cht.ass` to mkv
- * @param cmd current cmd (for usage string)
+ * @param {string} cmd current cmd (for usage string)
  */
-const assCombiner = (cmd: string) => {
+const assCombiner = (cmd) => {
   const usage = [
     "combile .cht.ass to mkv",
     `Usage: ${cmd} [input_dir]`,
@@ -298,9 +298,9 @@ const assCombiner = (cmd: string) => {
 
 /**
  * Re-Encoder: re-encode a mp4
- * @param cmd current cmd (for usage string)
+ * @param {string} cmd current cmd (for usage string)
  */
-const reEncoder = (cmd: string) => {
+const reEncoder = (cmd) => {
   const usage = [
     "re-encode a mp4",
     `Usage: ${cmd} [input_file]`,
@@ -321,11 +321,11 @@ const reEncoder = (cmd: string) => {
 
 /**
  * Gif Maker
- * @param cmd current cmd (for usage string)
- * @param fps FPS for gif
- * @param width width for gif
+ * @param {string} cmd current cmd (for usage string)
+ * @param {number} fps FPS for gif
+ * @param {number} width width for gif
  */
-const gifMaker = (cmd: string, fps: number, width: number) => {
+const gifMaker = (cmd, fps, width) => {
   const usage = [
     "Gif Maker",
     `Usage: ${cmd} [input_file] [from(hh:mm:ss or sec)] [during(sec)]`,
@@ -355,11 +355,11 @@ const gifMaker = (cmd: string, fps: number, width: number) => {
 
 /**
  * YouTube Gif Maker
- * @param cmd current cmd (for usage string)
- * @param fps FPS for gif
- * @param width width for gif
+ * @param {string} cmd current cmd (for usage string)
+ * @param {number} fps FPS for gif
+ * @param {number} width width for gif
  */
-const ytGifMaker = (cmd: string, fps: number, width: number) => {
+const ytGifMaker = (cmd, fps, width) => {
   const usage = [
     "YouTube Gif Maker",
     `Usage: ${cmd} [video_link] [from(hh:mm:ss or sec)] [during(sec)]`,
