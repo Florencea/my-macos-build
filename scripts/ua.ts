@@ -33,7 +33,7 @@ const syncGitProjects = (codeSpacePath: string) => {
  * brew upgrade
  */
 const brewUpgrade = () => {
-  spawnSync("brew", ["upgrade"], { cwd: homedir() });
+  spawnSync("brew", ["upgrade"], { cwd: homedir(), stdio: "inherit" });
 };
 
 /**
