@@ -12,7 +12,7 @@
 - Use [Node.js](https://nodejs.org/en) already installed.
 
 ```sh
-npx -y run-url 'https://raw.githubusercontent.com/Florencea/my-macos-build/main/scripts/vv.mjs'
+npx -y github:Florencea/my-macos-build
 ```
 
 - Use [deno](https://deno.com/)
