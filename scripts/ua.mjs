@@ -6,9 +6,9 @@ import { argv, stdout } from "node:process";
 
 /**
  * Sync git projects
- * @param codeSpacePath codespace path
+ * @param {string} codeSpacePath codespace path
  */
-const syncGitProjects = (codeSpacePath: string) => {
+const syncGitProjects = (codeSpacePath) => {
   readdirSync(codeSpacePath, { withFileTypes: true })
     .filter((inode) => inode.isDirectory())
     .map((dir) => dir.name)
