@@ -94,13 +94,21 @@ brew install yq
 brew install colima
 brew install docker
 brew install docker-compose
-colima template --editor ls
-yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
+if [ -d "$HOME/.colima/_templates/default.yaml" ]; then
+  echo "$HOME/.colima/_templates/default.yaml exist, skip template generation"
+else
+  colima template --editor ls
+  yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
+fi
 
-brew install rustup-init
-rustup-init -y --no-modify-path
+if ! command -v rustup-init &>/dev/null; then
+  brew install rustup-init
+  rustup-init -y --no-modify-path
+else
+  echo "rustup-init exist, skip Rust installation"
+fi
 
-/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+/usr/bin/pgrep -q oahd && echo "rosetta2 exist, skip installation" || /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 
 defaults write com.apple.dock ResetLaunchPad -bool true
 killall Dock
