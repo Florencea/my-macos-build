@@ -5,60 +5,60 @@ import { argv } from "node:process";
 
 /**
  * Check if current line is `! comment`
- * @param line line to check
+ * @param {string} line line to check
  */
-const isComment = (line: string) => line[0] === "!";
+const isComment = (line) => line[0] === "!";
 
 /**
  * Check if current line is `:style()` rule
- * @param line line to check
+ * @param {string} line line to check
  */
-const isStyle = (line: string) => line.includes(":style(");
+const isStyle = (line) => line.includes(":style(");
 
 /**
  * Check if current line is remove rule
- * @param line line to check
+ * @param {string} line line to check
  */
-const isRule = (line: string) => !isComment(line) && !isStyle(line);
+const isRule = (line) => !isComment(line) && !isStyle(line);
 
 /**
  * Check if current text not newline \n
- * @param text text to check
+ * @param {string} text text to check
  */
-const notNL = (text: string) => text !== "\n";
+const notNL = (text) => text !== "\n";
 
 /**
  * Check if current line is `! Description:` comment
- * @param line line to check
+ * @param {string} line line to check
  */
-const isDescription = (line: string) => line.includes("Description:");
+const isDescription = (line) => line.includes("Description:");
 
 /**
  * Check if current line is `! Last updated:` comment
- * @param line line to check
+ * @param {string} line line to check
  */
-const isLastUpdated = (line: string) => line.includes("Last updated:");
+const isLastUpdated = (line) => line.includes("Last updated:");
 
 /**
  * Check if current line is `! Title:` comment
- * @param line line to check
+ * @param {string} line line to check
  */
-const isTitle = (line: string) => line.includes("Title:");
+const isTitle = (line) => line.includes("Title:");
 
 /**
  * load input file and split to lines
- * @param path Input file path
+ * @param {string} path Input file path
  */
-const loadFile = (path: string) =>
+const loadFile = (path) =>
   readFileSync(path, { encoding: "utf-8" }).split("\n").filter(notNL);
 
 /**
  * Get meta comments from lines
- * @param lines Lines
- * @param timeStamp Current time string in ISO8601 format
- * @returns meta comments
+ * @param {string[]} lines Lines
+ * @param {string} timeStamp Current time string in ISO8601 format
+ * @return meta comments
  */
-const getMeta = (lines: string[], timeStamp: string) =>
+const getMeta = (lines, timeStamp) =>
   lines
     .map((line) => {
       return isTitle(line)
@@ -72,26 +72,25 @@ const getMeta = (lines: string[], timeStamp: string) =>
 
 /**
  * Get remove rules from lines
- * @param lines Lines
- * @returns remove rules
+ * @param {string} lines Lines
+ * @return remove rules
  */
-const getRules = (lines: string[]) => lines.filter(isRule);
+const getRules = (lines) => lines.filter(isRule);
 
 /**
  * Get style rules from raw lines
- * @param lines Lines
- * @returns style rules
+ * @param {string[]} lines Lines
+ * @return style rules
  */
-const getStyles = (lines: string[]) =>
-  lines.filter(isStyle).map((line) => `${line}|`);
+const getStyles = (lines) => lines.filter(isStyle).map((line) => `${line}|`);
 
 /**
  * Get style map from lines
- * @param lines Lines
- * @returns Style Map
+ * @param {string[]} lines Lines
+ * @return {Map<string, string[]>} Style Map
  */
-const getStyleMap = (lines: string[]) => {
-  const styleMap = new Map<string, string[]>();
+const getStyleMap = (lines) => {
+  const styleMap = new Map();
   lines.forEach((line) => {
     const [entity, style] = line.split(":style(");
     const oldStyles = styleMap.get(entity) ?? [];
@@ -102,10 +101,10 @@ const getStyleMap = (lines: string[]) => {
 
 /**
  * Get combined styles from lines
- * @param lines Lines
- * @returns Combined styles
+ * @param {string[]} lines Lines
+ * @return Combined styles
  */
-const getCombinedStyles = (lines: string[]) => {
+const getCombinedStyles = (lines) => {
   const styleMap = getStyleMap(lines);
   return Array.from(styleMap.keys()).map(
     (entity) => `${entity}:style(${(styleMap.get(entity) ?? []).join("; ")})`,
@@ -114,34 +113,33 @@ const getCombinedStyles = (lines: string[]) => {
 
 /**
  * Get mobile header
- * @param path Input file path
- * @returns mobile header or empty string
+ * @param {string} path Input file path
+ * @return mobile header or empty string
  */
-const getMobileHeader = (path: string) =>
+const getMobileHeader = (path) =>
   path.includes("mobile") ? "!#if env_mobile" : "";
 
 /**
  * Get mobile footer
- * @param path Input file path
- * @returns mobile footer or empty string
+ * @param {string} path Input file path
+ * @return mobile footer or empty string
  */
-const getMobileFooter = (path: string) =>
-  path.includes("mobile") ? "!#endif" : "";
+const getMobileFooter = (path) => (path.includes("mobile") ? "!#endif" : "");
 
 /**
  * Get current timestamp
- * @returns Current local time string in ISO8601 format
+ * @return Current local time string in ISO8601 format
  */
 const getTimeStamp = () =>
   new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString();
 
 /**
  * Get final processed rule lines
- * @param lines Lines
- * @param path Input file path
- * @returns output line string
+ * @param {string[]} lines Lines
+ * @param {string} path Input file path
+ * @return output line string
  */
-const getOutputRules = (lines: string[], path: string) =>
+const getOutputRules = (lines, path) =>
   [
     ...getMeta(lines, getTimeStamp()),
     getMobileHeader(path),
@@ -155,21 +153,21 @@ const getOutputRules = (lines: string[], path: string) =>
 
 /**
  * Get output file path
- * @param path Input file path
- * @returns Output file path
+ * @param {string} path Input file path
+ * @return Output file path
  */
-const getCombinedFilePath = (path: string) => {
+const getCombinedFilePath = (path) => {
   const p = parse(path);
   return join(p.dir, `${p.name}.min.txt`);
 };
 
 /**
  * Combine rules for all input files
- * @param cwd current working directory
- * @param files Input file names
- * @returns Array<[Input file path, Combined file path]>
+ * @param {string} cwd current working directory
+ * @param {string[]} files Input file names
+ * @return Array<[Input file path, Combined file path]>
  */
-const combineRules = (cwd: string, files: string[]) =>
+const combineRules = (cwd, files) =>
   files
     .map((file) => join(cwd, file))
     .map((inputFilePath) => {
@@ -184,10 +182,10 @@ const combineRules = (cwd: string, files: string[]) =>
 
 /**
  * Add files to git
- * @param cwd current working directory
- * @param filePairs Array<[Input file path, Combined file path]>
+ * @param {string} cwd current working directory
+ * @param {string[][]} filePairs Array<[Input file path, Combined file path]>
  */
-const addRules = (cwd: string, filePairs: string[][]) => {
+const addRules = (cwd, filePairs) => {
   filePairs.map(([inputFile, outputFile]) => {
     spawnSync("git", ["add", inputFile], { cwd });
     spawnSync("git", ["add", outputFile], { cwd });
@@ -196,17 +194,17 @@ const addRules = (cwd: string, filePairs: string[][]) => {
 
 /**
  * Make a git commit
- * @param cwd current working directory
+ * @param {string} cwd current working directory
  */
-const commitRules = (cwd: string) => {
+const commitRules = (cwd) => {
   spawnSync("git", ["commit", "-qm", "feat: update ubo-rules by urb"], { cwd });
 };
 
 /**
  * Make a git push
- * @param cwd current working directory
+ * @param {string} cwd current working directory
  */
-const pushRules = (cwd: string) => {
+const pushRules = (cwd) => {
   spawnSync("git", ["push", "-q"], { cwd });
 };
 
