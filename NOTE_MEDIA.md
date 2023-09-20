@@ -141,7 +141,7 @@ ffmpeg
 
 ## Make GIF
 
-- [make-gif.sh](../scripts/make-gif.sh)
+- [vv.mjs](../scripts/vv.mjs) `mkgif`, `mkgifv`
 
 ```sh
 ffmpeg
