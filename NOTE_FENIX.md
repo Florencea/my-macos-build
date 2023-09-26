@@ -45,7 +45,7 @@ key0
 ### 3. Clone Release Tag
 
 ```sh
-git clone --depth 1 --branch fenix-v117.0 git@github.com:Florencea/firefox-android.git
+git clone --depth 1 --branch fenix-v118.0 git@github.com:Florencea/firefox-android.git
 ```
 
 ### 4. Edit Files
@@ -154,7 +154,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 98 ~ 108)
+- Comment this part (Line 99 ~ 109)
 - Disable home button
 - See [For #23076 - Clean up unneeded FeatureFlags](https://github.com/Florencea/firefox-android/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
@@ -172,7 +172,7 @@ val homeAction = BrowserToolbar.Button(
 browserToolbarView.view.addNavigationAction(homeAction)
 ```
 
-- Comment this part (Line 112 ~ 134)
+- Comment this part (Line 113 ~ 135)
 - Disable reader button
 
 ```kotlin
@@ -201,7 +201,7 @@ val readerModeAction =
 browserToolbarView.view.addPageAction(readerModeAction)
 ```
 
-- Comment this part (Line 144 ~ 163)
+- Comment this part (Line 145 ~ 164)
 
 ```kotlin
 readerViewFeature.set(
@@ -226,7 +226,7 @@ readerViewFeature.set(
         )
 ```
 
-- Change Line 421
+- Change Line 426
 
 ```kotlin
 return readerViewFeature.onBackPressed() || super.onBackPressed()
@@ -251,7 +251,7 @@ var showUnifiedSearchFeature by lazyFeatureFlagPreference(
 
 - `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
 
-- Enable `about:config` (Line 61)
+- Enable `about:config` (Line 116)
 
 ```kotlin
 .aboutConfigEnabled(true)
