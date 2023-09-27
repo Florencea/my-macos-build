@@ -13,6 +13,7 @@
 
 ### 1. Fork Repository
 
+- [FORK HERE](https://github.com/mozilla-mobile/firefox-android/fork)
 - <https://github.com/mozilla-mobile/firefox-android>
 
 ### 2. Add Repository Secrets
