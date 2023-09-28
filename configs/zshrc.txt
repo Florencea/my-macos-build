@@ -35,7 +35,6 @@ CONFIG_HOME="$CODE_BASE/configs"
 SCRIPT_RUNNER="bun run"
 export PATH="$CODE_BASE/cli:$PATH"
 alias urb="$SCRIPT_RUNNER $SCRIPT_HOME/urb.mjs $CONFIG_HOME"
-alias vv="$SCRIPT_RUNNER $SCRIPT_HOME/vv.mjs"
 alias clall="$SCRIPT_RUNNER $SCRIPT_HOME/clall.mjs"
 
 # plugins

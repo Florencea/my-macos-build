@@ -1,7 +1,9 @@
-import { spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, statSync, unlinkSync } from "node:fs";
-import { join, parse } from "node:path";
-import { argv, exit } from "node:process";
+#!/usr/bin/env node
+
+const { spawnSync } = require("node:child_process");
+const { copyFileSync, existsSync, statSync, unlinkSync } = require("node:fs");
+const { join, parse } = require("node:path");
+const { argv, exit } = require("node:process");
 
 /**
  * Check if args exist (not `null`, `undefined`, `""`)
@@ -407,7 +409,7 @@ const ytGifMaker = (cmd, fps, width) => {
 /**
  * main function
  */
-export const main = () => {
+const main = () => {
   const cmd = argv[2];
   switch (cmd) {
     case "ytgif":
