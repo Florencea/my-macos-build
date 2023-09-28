@@ -1,7 +1,8 @@
-import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
-import { join, parse } from "node:path";
-import { argv } from "node:process";
+#!/usr/bin/env node
+
+const { spawnSync } = require("node:child_process");
+const { readFileSync, writeFileSync } = require("node:fs");
+const { join, parse } = require("node:path");
 
 /**
  * Check if current line is `! comment`
@@ -212,15 +213,15 @@ const pushRules = (cwd) => {
  * main function
  */
 const main = () => {
-  const cwd = argv[2];
-  const filePairs = combineRules(cwd, [
+  const configDir = join(__dirname, "..", "configs");
+  const filePairs = combineRules(configDir, [
     "ubo-desktop.txt",
     "ubo-mobile.txt",
     "ubo-font.txt",
   ]);
-  addRules(cwd, filePairs);
-  commitRules(cwd);
-  pushRules(cwd);
+  addRules(configDir, filePairs);
+  commitRules(configDir);
+  pushRules(configDir);
 };
 
 main();

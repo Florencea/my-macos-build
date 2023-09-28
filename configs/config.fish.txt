@@ -19,7 +19,6 @@ set CONFIG_HOME "$CODE_BASE/configs"
 set SCRIPT_RUNNER "bun run"
 # user cli
 fish_add_path "$CODE_BASE/cli"
-alias urb="$SCRIPT_RUNNER $SCRIPT_HOME/urb.mjs $CONFIG_HOME"
 alias clall="$SCRIPT_RUNNER $SCRIPT_HOME/clall.mjs"
 # fnm
 fnm env | source
