@@ -241,15 +241,15 @@ function pushRules(cwd) {
  * main function
  */
 function main() {
-  const configDir = join(__dirname, "..", "configs");
-  const filePairs = combineRules(configDir, [
+  const rulesDir = join(__dirname, "..", "rules");
+  const filePairs = combineRules(rulesDir, [
     "ubo-desktop.txt",
     "ubo-mobile.txt",
     "ubo-font.txt",
   ]);
-  addRules(configDir, filePairs);
-  commitRules(configDir);
-  pushRules(configDir);
+  addRules(rulesDir, filePairs);
+  commitRules(rulesDir);
+  pushRules(rulesDir);
 }
 
 main();
