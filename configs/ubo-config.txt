@@ -1,15 +1,15 @@
 {
-  "timeStamp": 1695918059950,
+  "timeStamp": 1695924926320,
   "version": "1.52.2",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-font.min.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.min.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.min.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.min.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "ignoreGenericCosmeticFilters": true,
     "importedLists": [
-      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
-      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-font.min.txt",
-      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt",
+      "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.min.txt",
+      "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.min.txt",
+      "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.min.txt",
       "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt"
     ],
     "popupPanelSections": 63,
@@ -55,9 +55,9 @@
     "CHN-0",
     "JPN-1",
     "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
-    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-desktop.min.txt",
-    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-font.min.txt",
-    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/ubo-mobile.min.txt"
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.min.txt",
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.min.txt",
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.min.txt"
   ],
   "hiddenSettings": {
     "cloudStorageCompression": false
