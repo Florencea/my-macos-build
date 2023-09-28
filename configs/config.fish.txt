@@ -20,7 +20,6 @@ set SCRIPT_RUNNER "bun run"
 # user cli
 fish_add_path "$CODE_BASE/cli"
 alias ebk="$SCRIPT_RUNNER $SCRIPT_HOME/ebk.mjs $CONFIG_HOME"
-alias ua="$SCRIPT_RUNNER $SCRIPT_HOME/ua.mjs $CODE_SPACE"
 alias urb="$SCRIPT_RUNNER $SCRIPT_HOME/urb.mjs $CONFIG_HOME"
 alias vv="$SCRIPT_RUNNER $SCRIPT_HOME/vv.mjs"
 alias clall="$SCRIPT_RUNNER $SCRIPT_HOME/clall.mjs"
