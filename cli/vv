@@ -10,7 +10,9 @@ const { argv, exit } = require("node:process");
  * @param {string[]} args args
  * @returns if every args exist
  */
-const isExistArgs = (args) => args.every(Boolean);
+function isExistArgs(args) {
+  return args.every(Boolean);
+}
 
 /**
  * Check if args match length
@@ -18,32 +20,36 @@ const isExistArgs = (args) => args.every(Boolean);
  * @param {len} len Length of current args
  * @returns if args match length
  */
-const isLenMatchArgs = (args, len) => args.length === len;
+function isLenMatchArgs(args, len) {
+  return args.length === len;
+}
 
 /**
  * Check if file exist
  * @param {string} path File path
  * @returns if file exist
  */
-const isFileExist = (path) => existsSync(path);
+function isFileExist(path) {
+  return existsSync(path);
+}
 
 /**
  * Check if file exist, if not, exit current process
  * @param {string} path File path
  */
-const checkFileExistOrAbort = (path) => {
+function checkFileExistOrAbort(path) {
   if (!isFileExist(path)) {
     print([`File: ${path} do not exist.`]);
     exit(0);
   }
-};
+}
 
 /**
  * Check if file video codec is HEVC
  * @param {string} path File path
  * @returns if file video codec is HEVC
  */
-const checkFileCodecIsHevc = (path) => {
+function checkFileCodecIsHevc(path) {
   const { status, stdout } = spawnSync("ffprobe", [
     "-v",
     "error",
@@ -60,7 +66,7 @@ const checkFileCodecIsHevc = (path) => {
   } else {
     return false;
   }
-};
+}
 
 /**
  * Replace file extenstion
@@ -77,18 +83,18 @@ const checkFileCodecIsHevc = (path) => {
  * // "/User/Downloads/1.mp4"
  * ```
  */
-const replaceFileExt = (path, ext) => {
+function replaceFileExt(path, ext) {
   const parsedPath = parse(path);
   return join(parsedPath.dir, `${parsedPath.name}.${ext}`);
-};
+}
 
 /**
  * Multi line logger
  * @param {string[]} contents contents to print
  */
-const print = (contents) => {
+function print(contents) {
   console.info(contents.join("\n").trimEnd());
-};
+}
 
 /**
  * Get args from argv
@@ -105,7 +111,7 @@ const print = (contents) => {
  * // print ["..."] and exit current process
  * ```
  */
-const getArgs = (len, usage) => {
+function getArgs(len, usage) {
   const args = argv.slice(3);
   if (isLenMatchArgs(args, len) && isExistArgs(args)) {
     return args;
@@ -113,14 +119,14 @@ const getArgs = (len, usage) => {
     print(usage);
     exit(0);
   }
-};
+}
 
 /**
  * Get current date string for unique file name
  * @returns Date string without comma and whitespace. Ex: `20230918011637`
  */
-const getDateStrForFile = () =>
-  new Intl.DateTimeFormat("lt-LT", {
+function getDateStrForFile() {
+  return new Intl.DateTimeFormat("lt-LT", {
     timeZone: "Asia/Taipei",
     year: "numeric",
     month: "2-digit",
@@ -132,13 +138,14 @@ const getDateStrForFile = () =>
   })
     .format(new Date())
     .replace(/\D/g, "");
+}
 
 /**
  * Get human readable file size Ex: `1.5 GB`, `2.1 MB`, `322 KB`
  * @param {string} path file path
  * @returns Readable file size string (return `""` if file not exist)
  */
-const getFileSize = (path) => {
+function getFileSize(path) {
   if (isFileExist(path)) {
     /**
      * file size in bytes
@@ -157,30 +164,30 @@ const getFileSize = (path) => {
   } else {
     return "";
   }
-};
+}
 
 /**
  * Copy file from source to destination
  * @param {string} source source path
  * @param {string} destination destination path
  */
-const copyFileIfExist = (source, destination) => {
+function copyFileIfExist(source, destination) {
   if (isFileExist(source)) {
     copyFileSync(source, destination);
   }
-};
+}
 
 /**
  * Remove multi files
  * @param {string[]} paths files to remove
  */
-const removeFiles = (paths) => {
+function removeFiles(paths) {
   paths.map((path) => {
     if (isFileExist(path)) {
       unlinkSync(path);
     }
   });
-};
+}
 
 /**
  * ffmpeg factory function
@@ -188,7 +195,7 @@ const removeFiles = (paths) => {
  * @param {string[]} filesToClear files to remove if failed
  * @returns if the operation success
  */
-const ffmpeg = (args, filesToClear = []) => {
+function ffmpeg(args, filesToClear = []) {
   const { status, stderr } = spawnSync("ffmpeg", [
     "-hide_banner",
     "-loglevel",
@@ -202,7 +209,7 @@ const ffmpeg = (args, filesToClear = []) => {
     print([stderr.toString()]);
     return false;
   }
-};
+}
 
 /**
  * yt-dlp factory function
@@ -210,7 +217,7 @@ const ffmpeg = (args, filesToClear = []) => {
  * @param {string[]} filesToClear files to remove if failed
  * @returns if the operation success
  */
-const ytdlp = (args, filesToClear = []) => {
+function ytdlp(args, filesToClear = []) {
   const { status, stderr } = spawnSync("yt-dlp", args);
   if (status === 0) {
     return true;
@@ -219,13 +226,13 @@ const ytdlp = (args, filesToClear = []) => {
     print([stderr.toString()]);
     return false;
   }
-};
+}
 
 /**
  * MP4-Packager: change video container to mp4
  * @param {string} cmd current cmd (for print usage string)
  */
-const mp4Packager = (cmd) => {
+function mp4Packager(cmd) {
   const usage = [
     "change video container to mp4",
     `Usage: ${cmd} [input.mkv]`,
@@ -250,13 +257,13 @@ const mp4Packager = (cmd) => {
   if (success) {
     removeFiles([inputFilePath]);
   }
-};
+}
 
 /**
  * ASS-Combiner: combile `.cht.ass` to mkv
  * @param {string} cmd current cmd (for usage string)
  */
-const assCombiner = (cmd) => {
+function assCombiner(cmd) {
   const usage = [
     "combile .cht.ass to mkv",
     `Usage: ${cmd} [input_dir]`,
@@ -296,13 +303,13 @@ const assCombiner = (cmd) => {
     copyFileIfExist(outputFile, inputVideo);
     removeFiles([outputFile]);
   }
-};
+}
 
 /**
  * Re-Encoder: re-encode a mp4
  * @param {string} cmd current cmd (for usage string)
  */
-const reEncoder = (cmd) => {
+function reEncoder(cmd) {
   const usage = [
     "re-encode a mp4",
     `Usage: ${cmd} [input_file]`,
@@ -319,7 +326,7 @@ const reEncoder = (cmd) => {
     copyFileIfExist(outputFile, inputFile);
     removeFiles([outputFile]);
   }
-};
+}
 
 /**
  * Gif Maker
@@ -327,7 +334,7 @@ const reEncoder = (cmd) => {
  * @param {number} fps FPS for gif
  * @param {number} width width for gif
  */
-const gifMaker = (cmd, fps, width) => {
+function gifMaker(cmd, fps, width) {
   const usage = [
     "Gif Maker",
     `Usage: ${cmd} [input_file] [from(hh:mm:ss or sec)] [during(sec)]`,
@@ -353,7 +360,7 @@ const gifMaker = (cmd, fps, width) => {
   if (success) {
     print([`${outputFile} ${getFileSize(outputFile)}`]);
   }
-};
+}
 
 /**
  * YouTube Gif Maker
@@ -361,7 +368,7 @@ const gifMaker = (cmd, fps, width) => {
  * @param {number} fps FPS for gif
  * @param {number} width width for gif
  */
-const ytGifMaker = (cmd, fps, width) => {
+function ytGifMaker(cmd, fps, width) {
   const usage = [
     "YouTube Gif Maker",
     `Usage: ${cmd} [video_link] [from(hh:mm:ss or sec)] [during(sec)]`,
@@ -404,12 +411,12 @@ const ytGifMaker = (cmd, fps, width) => {
       print([`${outputFile} ${getFileSize(outputFile)}`]);
     }
   }
-};
+}
 
 /**
  * main function
  */
-const main = () => {
+function main() {
   const cmd = argv[2];
   switch (cmd) {
     case "ytgif":
@@ -446,6 +453,6 @@ const main = () => {
       ]);
       break;
   }
-};
+}
 
 main();
