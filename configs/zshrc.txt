@@ -15,35 +15,22 @@ if type brew &>/dev/null; then
     compinit
   fi
 fi
-
 # variables and path
 export CLICOLOR=1
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-
+export PATH="$HOME/Codespaces/my-macos-build/cli:$PATH"
 # prompt
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' %F{6}(%b)%f'
 setopt PROMPT_SUBST
 PROMPT='%F{2}%~%f${vcs_info_msg_0_} '
-
-# alias
-CODE_SPACE="$HOME/Codespaces"
-CODE_BASE="$CODE_SPACE/my-macos-build"
-SCRIPT_HOME="$CODE_BASE/scripts"
-CONFIG_HOME="$CODE_BASE/configs"
-SCRIPT_RUNNER="bun run"
-export PATH="$CODE_BASE/cli:$PATH"
-alias clall="$SCRIPT_RUNNER $SCRIPT_HOME/clall.mjs"
-
 # plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
-source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
+source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plug>
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
 # fnm
 eval "$(fnm env)"
 export PATH="$(npm config get prefix)/bin:$PATH"
-
 # rustup
 export PATH="$HOME/.cargo/bin:$PATH"

@@ -1,0 +1,37 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### Check if curl installed
+if ! [ -x "$(command -v curl)" ]; then
+  echo "curl is not installed" >&2
+  exit 1
+fi
+
+### Check if jq installed
+if ! [ -x "$(command -v jq)" ]; then
+  echo "jq is not installed" >&2
+  exit 1
+fi
+
+### Check if git installed
+if ! [ -x "$(command -v git)" ]; then
+  echo "git is not installed" >&2
+  exit 1
+fi
+
+### GitHub Access Token
+TOKEN="${1:-TOKEN}"
+
+repo_list=$(curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" -s "https://api.github.com/user/repos?type=owner&per_page=100" | jq .[].ssh_url | sed -e 's/^"//' -e 's/"$//')
+repo_list_len=$(expr $(wc -w <<<"$repo_list"))
+tmpfile="$(mktemp -t "$(basename $0)")"
+finished=1
+echo "0" >"$tmpfile"
+for repo in $repo_list; do
+  repo_name="$(basename "$repo" .git)"
+  git clone --quiet "$repo" && finished_new=$(expr $(cat "$tmpfile") + 1) && echo "$finished_new" >"$tmpfile" && printf "Clone [%s/%s] \033[1m%s\033[0m ok\n" "$(cat "$tmpfile")" "$repo_list_len" "$repo_name" &
+done
+wait
+rm -f "$tmpfile"
