@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### Check if VSCode installed
+if ! [ -x "$(command -v code)" ]; then
+  echo "VSCode is not installed" >&2
+  exit 1
+fi
+
+code "$0/../../"

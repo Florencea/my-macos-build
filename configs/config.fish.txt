@@ -17,13 +17,13 @@ set CODE_BASE "$CODE_SPACE/my-macos-build"
 set SCRIPT_HOME "$CODE_BASE/scripts"
 set CONFIG_HOME "$CODE_BASE/configs"
 set SCRIPT_RUNNER "bun run"
-alias mmb="code $CODE_BASE"
+# user cli
+fish_add_path "$CODE_BASE/cli"
 alias ebk="$SCRIPT_RUNNER $SCRIPT_HOME/ebk.mjs $CONFIG_HOME"
 alias ua="$SCRIPT_RUNNER $SCRIPT_HOME/ua.mjs $CODE_SPACE"
 alias urb="$SCRIPT_RUNNER $SCRIPT_HOME/urb.mjs $CONFIG_HOME"
 alias vv="$SCRIPT_RUNNER $SCRIPT_HOME/vv.mjs"
 alias clall="$SCRIPT_RUNNER $SCRIPT_HOME/clall.mjs"
-alias rsl="defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock"
 # fnm
 fnm env | source
 fish_add_path "$(npm config get prefix)/bin"

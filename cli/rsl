@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+defaults write com.apple.dock ResetLaunchPad -bool true
+killall Dock
