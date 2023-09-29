@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### file to check
+FILE=$1
+
+### Check if file exist
+if ! [ -f "$FILE" ]; then
+  printf "File: \033[1m$FILE\033[0m not exist\n" >&2
+  exit 1
+fi

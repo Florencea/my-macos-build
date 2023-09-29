@@ -24,6 +24,9 @@ chkarg "$DURATION" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
 ### Check cmd exist
 chkcmd "ffmpeg"
 
+### Check file exist
+chkfile "$INPUT_FILE"
+
 ### fps
 FPS=12
 ### width

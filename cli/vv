@@ -419,16 +419,12 @@ function ytGifMaker(cmd, fps, width) {
 function main() {
   const cmd = argv[2];
   switch (cmd) {
-    case "rea":
-      assCombiner(cmd);
-      break;
     case "re4":
       mp4Packager(cmd);
       break;
     default:
       print([
         "vv available commands:",
-        "rea:    ASS-Combiner: combile .cht.ass to mkv",
         "re4:    MP4-Packager: change video container to mp4",
       ]);
       break;

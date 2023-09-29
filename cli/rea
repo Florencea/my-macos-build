@@ -1,0 +1,53 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="ASS-Combiner: combile .cht.ass to mkv"
+### Usage
+USAGE="[input_dir]"
+### Example
+EXAMPLE="'input'"
+
+### Args
+INPUT_DIR=$1
+
+### Check args exist
+chkarg "$INPUT_DIR" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "ffmpeg"
+
+### Check directory exist
+chkdir "$INPUT_DIR"
+
+cd "$INPUT_DIR"
+
+### Input file
+INPUT_FILE="$(basename "$(pwd)").mkv"
+### Input ass
+INPUT_ASS="$(basename "$(pwd)").cht.ass"
+
+### Check file exist
+chkfile "$INPUT_FILE"
+chkfile "$INPUT_ASS"
+
+### Temp File
+TMPFILE="$(mktemp -t "$(basename $0)").mkv"
+
+ffmpeg -hide_banner \
+  -loglevel error \
+  -i "$INPUT_FILE" \
+  -i "$INPUT_ASS" \
+  -c:v copy \
+  -c:a copy \
+  -c:s copy \
+  -map 0:0 \
+  -map 0:1 \
+  -map 1:0 \
+  -disposition:s:0 default \
+  "$TMPFILE"
+
+mv "$TMPFILE" "$INPUT_FILE"
