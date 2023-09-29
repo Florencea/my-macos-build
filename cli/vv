@@ -419,12 +419,6 @@ function ytGifMaker(cmd, fps, width) {
 function main() {
   const cmd = argv[2];
   switch (cmd) {
-    case "ytgif":
-      ytGifMaker(cmd, 12, 480);
-      break;
-    case "ytgifv":
-      ytGifMaker(cmd, 24, 480);
-      break;
     case "rec":
       reEncoder(cmd);
       break;
@@ -437,8 +431,6 @@ function main() {
     default:
       print([
         "vv available commands:",
-        "ytgif:  YouTube Gif Maker (12fps)",
-        "ytgifv: YouTube Gif Maker (24fps)",
         "rec:    Re-Encoder: re-encode a mp4",
         "rea:    ASS-Combiner: combile .cht.ass to mkv",
         "re4:    MP4-Packager: change video container to mp4",
