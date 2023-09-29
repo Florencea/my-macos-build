@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### file to check
+FILE=$1
+
+### Check file exist
+chkfile "$FILE"
+
+### Check if file extension is mkv
+if [[ $FILE == *.mkv ]]; then
+  true
+else
+  false
+fi

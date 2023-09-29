@@ -1,0 +1,48 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="MP4-Packager: change video container to mp4"
+### Usage
+USAGE="[input.mkv]"
+### Example
+EXAMPLE="'input.mkv'"
+
+### Args
+INPUT_FILE=$1
+
+### Check args exist
+chkarg "$INPUT_FILE" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "ffmpeg"
+
+### Check file exist
+chkfile "$INPUT_FILE"
+
+### Temp File
+TMPFILE="$(mktemp -t "$(basename $0)").mp4"
+
+if chkmkv "$INPUT_FILE"; then
+  if chkhevc "$INPUT_FILE"; then
+    ffmpeg -hide_banner \
+      -loglevel error \
+      -i "$INPUT_FILE" \
+      -c:v copy \
+      -c:a copy \
+      -tag:v hvc1 \
+      "$TMPFILE"
+  else
+    ffmpeg -hide_banner \
+      -loglevel error \
+      -i "$INPUT_FILE" \
+      -c:v copy \
+      -c:a copy \
+      "$TMPFILE"
+  fi
+  mv "$TMPFILE" "${INPUT_FILE%.mkv}.mp4"
+  rm -f "$INPUT_FILE"
+fi

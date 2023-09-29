@@ -1,19 +1,10 @@
 # Media Note
 
 - [Media Note](#media-note)
-  - [Execute Media Scripts from remote](#execute-media-scripts-from-remote)
   - [Hardware Accelerated Encoding on Apple Silicon](#hardware-accelerated-encoding-on-apple-silicon)
   - [Software Encoding Commands](#software-encoding-commands)
   - [Make GIF](#make-gif)
   - [Downlaod Full Album from YTMusic](#downlaod-full-album-from-ytmusic)
-
-## Execute Media Scripts from remote
-
-- **Note:** [`Node.js`](https://nodejs.org/en), [`ffmpeg`](https://ffmpeg.org) and [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) required in PATH.
-
-```sh
-npx -y github:Florencea/my-macos-build
-```
 
 ## Hardware Accelerated Encoding on Apple Silicon
 
@@ -134,8 +125,6 @@ ffmpeg
 ```
 
 ## Make GIF
-
-- [vv.mjs](../scripts/vv.mjs) `mkgif`, `mkgifv`
 
 ```sh
 ffmpeg

@@ -27,7 +27,7 @@ setopt PROMPT_SUBST
 PROMPT='%F{2}%~%f${vcs_info_msg_0_} '
 # plugins
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
-source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plug>
+source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # fnm
 eval "$(fnm env)"

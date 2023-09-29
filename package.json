@@ -1,4 +1,0 @@
-{
-  "name": "my-macos-build",
-  "bin": "./cli/vv"
-}
