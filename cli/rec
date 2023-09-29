@@ -1,0 +1,33 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="Re-Encoder: re-encode a mp4"
+### Usage
+USAGE="[input_file]"
+### Example
+EXAMPLE="'input.mp4'"
+
+### Args
+INPUT_FILE=$1
+
+### Check args exist
+chkarg "$INPUT_FILE" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "ffmpeg"
+
+### Temp File
+TMPFILE="$(mktemp -t "$(basename $0)").mp4"
+
+ffmpeg -hide_banner \
+  -loglevel error \
+  -i "$INPUT_FILE" \
+  -vcodec copy \
+  -acodec copy \
+  "$TMPFILE"
+
+mv "$TMPFILE" "$INPUT_FILE"
