@@ -1,19 +1,9 @@
 #! /usr/bin/env bash
 set -o errexit
-set -o nounset
 set -o pipefail
 
-### Check if Homebrew installed
-if ! [ -x "$(command -v brew)" ]; then
-  echo "Homebrew is not installed" >&2
-  exit 1
-fi
-
-### Check if git installed
-if ! [ -x "$(command -v git)" ]; then
-  echo "git is not installed" >&2
-  exit 1
-fi
+chkcmd "brew"
+chkcmd "git"
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"

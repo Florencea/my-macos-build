@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="Gif Maker (12fps)"
+### Usage
+USAGE="[input_file] [from(hh:mm:ss or sec)] [during(sec)]"
+### Example
+EXAMPLE="'input.mp4' 01:02:08 11.0"
+
+### Args
+INPUT_FILE=$1
+START=$2
+DURATION=$3
+
+### Check args exist
+chkarg "$INPUT_FILE" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+chkarg "$START" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+chkarg "$DURATION" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "ffmpeg"
+
+### fps
+FPS=12
+### width
+WIDTH=480
+### Output file
+OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_fps$FPS.gif"
+
+ffmpeg -hide_banner \
+  -loglevel error \
+  -ss "$START" \
+  -t "$DURATION" \
+  -i "$INPUT_FILE" \
+  -filter_complex "[0:v] fps=$FPS,scale=w=$WIDTH:h=-1,split [a][b];[a] palettegen=stats_mode=single [p];[b][p] paletteuse=new=1" \
+  "$OUTPUT_FILE"
+
+printf "%s " "$OUTPUT_FILE"
+ls -lh "$OUTPUT_FILE" | awk -F " " {'print $5'}

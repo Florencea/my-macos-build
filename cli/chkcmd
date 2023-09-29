@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### cmd to check
+CMD=$1
+
+### Check if cmd installed
+if ! [ -x "$(command -v "$CMD")" ]; then
+  echo "$CMD is not installed" >&2
+  exit 1
+fi

@@ -425,12 +425,6 @@ function main() {
     case "ytgifv":
       ytGifMaker(cmd, 24, 480);
       break;
-    case "mkgif":
-      gifMaker(cmd, 12, 480);
-      break;
-    case "mkgifv":
-      gifMaker(cmd, 24, 480);
-      break;
     case "rec":
       reEncoder(cmd);
       break;
@@ -445,8 +439,6 @@ function main() {
         "vv available commands:",
         "ytgif:  YouTube Gif Maker (12fps)",
         "ytgifv: YouTube Gif Maker (24fps)",
-        "mkgif:  Gif Maker (12fps)",
-        "mkgifv: Gif Maker (24fps)",
         "rec:    Re-Encoder: re-encode a mp4",
         "rea:    ASS-Combiner: combile .cht.ass to mkv",
         "re4:    MP4-Packager: change video container to mp4",

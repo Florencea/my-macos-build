@@ -1,13 +1,8 @@
 #! /usr/bin/env bash
 set -o errexit
-set -o nounset
 set -o pipefail
 
-### Check if git installed
-if ! [ -x "$(command -v git)" ]; then
-  echo "git is not installed" >&2
-  exit 1
-fi
+chkcmd "git"
 
 RULE_DIR="$(dirname "$(dirname $0)")/rules"
 git add "$RULE_DIR/ubo-desktop.txt"

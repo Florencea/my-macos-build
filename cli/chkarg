@@ -1,0 +1,22 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### Arg to check
+ARG=$1
+### Cmd
+CMD="\033[1m$2\033[0m"
+### Description
+DESC=$3
+### Usage
+USAGE=$4
+### Example
+EXAMPLE=$5
+
+if [ -z "$ARG" ]; then
+  printf "$CMD: $DESC\n" >&2
+  printf "Usage: $CMD $USAGE\n" >&2
+  printf "       $CMD $EXAMPLE\n" >&2
+  exit 1
+fi
