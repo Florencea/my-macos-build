@@ -149,9 +149,35 @@ ffmpeg
 ## Downlaod Full Album from YTMusic
 
 ```sh
-yt-dlp -f bestaudio --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\"" --extract-audio --embed-thumbnail --embed-metadata --parse-metadata 'playlist_index:%(meta_track)s' --convert-thumbnails jpg -o "%(playlist_index)s %(title)s.%(ext)s" --cookies-from-browser <BROWSER> <URL>
+yt-dlp
+  --no-warnings
+  --progress
+  -f bestaudio
+  --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\""
+  --extract-audio
+  --embed-thumbnail
+  --embed-metadata
+  --parse-metadata 'playlist_index:%(meta_track)s'
+  --convert-thumbnails jpg
+  --print before_dl:"[%(playlist_index)s/%(playlist_count)s]: %(playlist_index)s %(title)s"
+  -o "%(playlist_index)s %(title)s.%(ext)s"
+  --cookies-from-browser <BROWSER>
+  <URL>
 ```
 
 ```sh
-yt-dlp -f bestaudio --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\"" --extract-audio --embed-thumbnail --embed-metadata --parse-metadata 'playlist_index:%(meta_track)s' --convert-thumbnails jpg -o "%(playlist_index)s %(title)s.%(ext)s" --cookies-from-browser chrome 'https://music.youtube.com/playlist?list=OLAK5uy_l23NWV6DZh0-0g8A-A-bpvJfRTIamU0-8'
+yt-dlp
+  --no-warnings
+  --progress
+  -f bestaudio
+  --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\""
+  --extract-audio
+  --embed-thumbnail
+  --embed-metadata
+  --parse-metadata 'playlist_index:%(meta_track)s'
+  --convert-thumbnails jpg
+  --print before_dl:"[%(playlist_index)s/%(playlist_count)s]: %(playlist_index)s %(title)s"
+  -o "%(playlist_index)s %(title)s.%(ext)s"
+  --cookies-from-browser chrome
+  'https://music.youtube.com/playlist?list=OLAK5uy_mkYbYGnRqE3zD-9Cy3lA8C5oE7FzEbarg'
 ```
