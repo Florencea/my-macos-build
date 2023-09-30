@@ -90,10 +90,7 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-brew install fnm
-eval "$(fnm env)"
-fnm install --lts
-fnm default lts-latest
+brew install node@18
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
 brew install rsync
 brew install python

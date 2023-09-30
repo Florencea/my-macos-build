@@ -7,6 +7,7 @@
     - [Deno](#deno)
     - [Colima](#colima)
     - [Rust](#rust)
+    - [fnm](#fnm)
   - [Useful commands](#useful-commands)
     - [Reset LaunchPad](#reset-launchpad)
     - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
@@ -135,6 +136,35 @@ export PATH="$HOME/.cargo/bin:$PATH"
 rm -rf .cargo .rustup
 brew uninstall --zap rustup-init
 brew autoremove
+```
+
+### fnm
+
+- <https://github.com/Schniz/fnm>
+
+```sh
+# Installation
+brew install fnm
+# Add fish shell config
+printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >> $HOME/.config/fish/config.fish
+# Add zsh config
+printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >> $HOME/.zshrc
+```
+
+```sh
+# Uninstallation
+# Remove fish shell config
+# fnm
+fnm env | source
+fish_add_path "$(npm config get prefix)/bin"
+# Remove zsh config
+# fnm
+eval "$(fnm env)"
+export PATH="$(npm config get prefix)/bin:$PATH"
+# Remove fnm
+brew uninstall --zap fnm
+brew autoremove
+rm -rf "$HOME/Library/Application Support/fnm" "$HOME/Library/Caches/fnm_multishells"
 ```
 
 ## Useful commands
