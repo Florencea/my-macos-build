@@ -18,6 +18,7 @@ fi
 # variables and path
 export CLICOLOR=1
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 export PATH="$HOME/Codespaces/my-macos-build/cli:$PATH"
 # prompt
 autoload -Uz vcs_info
@@ -29,8 +30,3 @@ PROMPT='%F{2}%~%f${vcs_info_msg_0_} '
 source '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-# fnm
-eval "$(fnm env)"
-export PATH="$(npm config get prefix)/bin:$PATH"
-# rustup
-export PATH="$HOME/.cargo/bin:$PATH"

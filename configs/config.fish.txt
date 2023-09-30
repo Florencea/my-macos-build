@@ -10,9 +10,5 @@ end
 fish_add_path "/opt/homebrew/bin"
 fish_add_path "/opt/homebrew/sbin"
 fish_add_path "/opt/homebrew/opt/curl/bin"
+fish_add_path "/opt/homebrew/opt/node@18/bin"
 fish_add_path "$HOME/Codespaces/my-macos-build/cli"
-# fnm
-fnm env | source
-fish_add_path "$(npm config get prefix)/bin"
-# rustup
-fish_add_path "$HOME/.cargo/bin"
