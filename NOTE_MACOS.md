@@ -5,6 +5,7 @@
     - [Rosetta2](#rosetta2)
     - [Bun](#bun)
     - [Deno](#deno)
+    - [Colima](#colima)
   - [Useful commands](#useful-commands)
     - [Reset LaunchPad](#reset-launchpad)
     - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
@@ -26,6 +27,7 @@
 - <https://bun.sh/>
 
 ```sh
+# Installation
 brew tap oven-sh/bun
 brew install bun
 # VSCode
@@ -35,14 +37,52 @@ git config --global diff.lockb.textconv bun
 git config --global diff.lockb.binary true
 ```
 
+```sh
+# Uninstallation
+git config --global --unset diff.lockb.textconv
+git config --global --unset diff.lockb.binary
+code --uninstall-extension oven.bun-vscode
+brew uninstall --zap bun
+brew untap oven-sh/bun
+brew autoremove
+```
+
 ### Deno
 
 - <https://deno.com/>
 
 ```sh
+# Installation
 brew install deno
 # VSCode
 code --install-extension denoland.vscode-deno
+```
+
+```sh
+# Uninstallation
+code --uninstall-extension denoland.vscode-deno
+brew uninstall --zap deno
+brew autoremove
+```
+
+### Colima
+
+- <https://github.com/abiosoft/colima>
+
+```sh
+# Installation
+brew install colima
+brew install docker
+brew install docker-compose
+colima template --editor ls
+yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
+```
+
+```sh
+# Uninstallation
+brew uninstall --zap colima
+brew autoremove
+rm -rf .colima .docker .lima
 ```
 
 ## Useful commands

@@ -102,17 +102,6 @@ brew install wget
 brew install yt-dlp/taps/yt-dlp
 brew install yq
 
-### Install colima
-brew install colima
-brew install docker
-brew install docker-compose
-if [ -d "$HOME/.colima/_templates/default.yaml" ]; then
-  echo "$HOME/.colima/_templates/default.yaml exist, skip template generation"
-else
-  colima template --editor ls
-  yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
-fi
-
 ### Install rust toolchain
 if ! command -v rustup-init &>/dev/null; then
   brew install rustup-init
@@ -120,9 +109,6 @@ if ! command -v rustup-init &>/dev/null; then
 else
   echo "rustup-init exist, skip Rust installation"
 fi
-
-### Install Rosetta2
-/usr/bin/pgrep -q oahd && echo "rosetta2 exist, skip installation" || /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 
 ### Reset LaunchPad
 defaults write com.apple.dock ResetLaunchPad -bool true
