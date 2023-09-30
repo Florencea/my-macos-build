@@ -1,8 +1,10 @@
 # macOS Note
 
 - [macOS Note](#macos-note)
+  - [Installations](#installations)
+    - [Rosetta2](#rosetta2)
+    - [Bun](#bun)
   - [Useful commands](#useful-commands)
-    - [Install Rosetta2](#install-rosetta2)
     - [Reset LaunchPad](#reset-launchpad)
     - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
     - [Disable Window Animations](#disable-window-animations)
@@ -10,13 +12,29 @@
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
 
-## Useful commands
+## Installations
 
-### Install Rosetta2
+### Rosetta2
 
 ```sh
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 ```
+
+### Bun
+
+- <https://bun.sh/>
+
+```sh
+brew tap oven-sh/bun
+brew install bun
+# VSCode
+code --install-extension oven.bun-vscode
+# git
+git config --global diff.lockb.textconv bun
+git config --global diff.lockb.binary true
+```
+
+## Useful commands
 
 ### Reset LaunchPad
 
