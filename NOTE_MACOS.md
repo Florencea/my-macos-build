@@ -4,6 +4,7 @@
   - [Installations](#installations)
     - [Rosetta2](#rosetta2)
     - [Bun](#bun)
+    - [Deno](#deno)
   - [Useful commands](#useful-commands)
     - [Reset LaunchPad](#reset-launchpad)
     - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
@@ -32,6 +33,16 @@ code --install-extension oven.bun-vscode
 # git
 git config --global diff.lockb.textconv bun
 git config --global diff.lockb.binary true
+```
+
+### Deno
+
+- <https://deno.com/>
+
+```sh
+brew install deno
+# VSCode
+code --install-extension denoland.vscode-deno
 ```
 
 ## Useful commands
