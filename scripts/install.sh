@@ -102,14 +102,6 @@ brew install wget
 brew install yt-dlp/taps/yt-dlp
 brew install yq
 
-### Install rust toolchain
-if ! command -v rustup-init &>/dev/null; then
-  brew install rustup-init
-  rustup-init -y --no-modify-path
-else
-  echo "rustup-init exist, skip Rust installation"
-fi
-
 ### Reset LaunchPad
 defaults write com.apple.dock ResetLaunchPad -bool true
 killall Dock

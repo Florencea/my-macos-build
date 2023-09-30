@@ -6,6 +6,7 @@
     - [Bun](#bun)
     - [Deno](#deno)
     - [Colima](#colima)
+    - [Rust](#rust)
   - [Useful commands](#useful-commands)
     - [Reset LaunchPad](#reset-launchpad)
     - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
@@ -83,6 +84,57 @@ yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4
 brew uninstall --zap colima
 brew autoremove
 rm -rf .colima .docker .lima
+```
+
+### Rust
+
+- <https://www.rust-lang.org/zh-TW/>
+
+```sh
+# Installation
+brew install rustup-init
+rustup-init -y --no-modify-path
+# Add fish shell config
+printf "# rustup\nfish_add_path \"\$HOME/.cargo/bin\"\n" >> $HOME/.config/fish/config.fish
+# Add zsh config
+printf "# rustup\nexport PATH=\"\$HOME/.cargo/bin:\$PATH\"\n" >> $HOME/.zshrc
+# VSCode
+code --install-extension rust-lang.rust-analyzer
+code --install-extension tamasfe.even-better-toml
+# VSCode Config
+{
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  }
+}
+```
+
+```sh
+# Uninstallation
+# Remove VSCode Config
+{
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  }
+}
+code --uninstall-extension rust-lang.rust-analyzer
+code --uninstall-extension tamasfe.even-better-toml
+# Remove fish shell config
+# rustup
+fish_add_path "$HOME/.cargo/bin"
+# Remove zsh config
+# rustup
+export PATH="$HOME/.cargo/bin:$PATH"
+# Remove all rust toolchain
+rm -rf .cargo .rustup
+brew uninstall --zap rustup-init
+brew autoremove
 ```
 
 ## Useful commands
