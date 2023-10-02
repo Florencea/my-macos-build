@@ -192,6 +192,8 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 ```sh
 ssh-keygen -t ed25519
 cat .ssh/id_ed25519.pub | pbcopy
+# One liner
+ssh-keygen -q -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519" && cat "$HOME/.ssh/id_ed25519.pub"
 ```
 
 ### Use Touch ID for sudo Commands
