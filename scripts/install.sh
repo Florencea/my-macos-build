@@ -37,14 +37,6 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
 
-### Generate SSH Key
-if [ -d "$HOME/.ssh" ]; then
-  echo "$HOME/.ssh exist, skip ssh key generation"
-else
-  cd "$HOME"
-  ssh-keygen -q -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519" && cat "$HOME/.ssh/id_ed25519.pub"
-fi
-
 ### Update Homebrew taps
 brew tap homebrew/cask-versions
 brew tap homebrew/cask-fonts
