@@ -15,6 +15,7 @@
     - [Generate SSH Key](#generate-ssh-key)
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
+    - [Set DNS Servers](#set-dns-servers)
 
 ## Installations
 
@@ -206,6 +207,19 @@ auth       sufficient     pam_tid.so
 
 ### Remove Quarantine Attributes
 
-```bash
+```sh
 sudo xattr -r -d com.apple.quarantine <FILE>
+```
+
+### Set DNS Servers
+
+```sh
+# List network interfaces
+networksetup -listallnetworkservices
+# Remove DNS servers by set to empty (no quote)
+networksetup -setdnsservers <SERVICE> empty
+networksetup -setdnsservers 'Wi-Fi' empty
+# Set DNS Servers (split by space)
+networksetup -setdnsservers <SERVICE> [<DNS_SERVERS>]
+networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '2001:4860:4860::8844'
 ```
