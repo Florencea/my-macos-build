@@ -69,8 +69,6 @@ brew install curl
 brew install ffmpeg
 brew install gcc
 brew install git
-brew install git-lfs
-git lfs install
 brew install jq
 brew install mtr
 brew install nano
