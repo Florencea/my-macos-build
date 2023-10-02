@@ -45,12 +45,6 @@ brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
 brew install --cask font-inter
 
-### Install zsh
-brew install zsh
-brew install zsh-autosuggestions
-brew install zsh-fast-syntax-highlighting
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
-
 ### Install fish
 brew install fish
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
@@ -90,6 +84,7 @@ python3 -m pip install --upgrade pip
 brew install wget
 brew install yt-dlp/taps/yt-dlp
 brew install yq
+brew install zsh
 
 ### Reset LaunchPad
 defaults write com.apple.dock ResetLaunchPad -bool true
