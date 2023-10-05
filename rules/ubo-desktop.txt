@@ -83,6 +83,7 @@ github.com##.code-navigation-cursor:style(display: none !important)
 ! [SITE] google.com
 ! Allow google 1p data reports
 @@||google.com^$1p
+@@||csp.withgoogle.com^$domain=google.com
 ! Remove useless google params
 ||google.*/search$removeparam=gs_lcrp
 ||google.*/search$removeparam=ie
