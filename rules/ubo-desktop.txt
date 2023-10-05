@@ -81,7 +81,7 @@ feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-c
 github.com##.code-navigation-cursor:style(display: none !important)
 
 ! [SITE] google.com
-! Allow google 1p data report
+! Allow google 1p data reports
 @@||google.com^$1p
 ! Remove useless google params
 ||google.*/search$removeparam=gs_lcrp
