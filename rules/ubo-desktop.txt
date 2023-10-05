@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2023-09-22
+! Last updated: 2023-10-06
 
 ! CSS variable
 ! bg
@@ -81,6 +81,8 @@ feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-c
 github.com##.code-navigation-cursor:style(display: none !important)
 
 ! [SITE] google.com
+! Allow google 1p data report
+@@||google.com^$1p
 ! Remove useless google params
 ||google.*/search$removeparam=gs_lcrp
 ||google.*/search$removeparam=ie
