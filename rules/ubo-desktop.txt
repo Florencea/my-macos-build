@@ -35,6 +35,10 @@ anime1.me##div[id^=ad-]
 ! Auto dismiss notify banner (any value above current year, MAX 32767)
 ant.design##+js(set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, 9999)
 
+! [SITE] apple.com
+! Allow apple 1p data reports
+@@||apple.com^$1p
+
 ! [SITE] books.com.tw
 books.com.tw##.header_pop
 
