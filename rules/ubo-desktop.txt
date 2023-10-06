@@ -77,9 +77,11 @@ feedly.com##html:style(--ubo-custom-feedly-bg-dark: #121212)
 feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-feedly-bg-dark) !important)
 
 ! [SITE] github.com
+! Allow github 1p data reports
+
 ! If customize font, code-navigation-cursor would go wrong position, so disable it.
 github.com##.code-navigation-cursor:style(display: none !important)
-
+@@||github.com^$1p
 ! [SITE] google.com
 ! Allow google 1p data reports
 @@||google.com^$1p
@@ -178,6 +180,7 @@ www.ithome.com.tw##.pagination > ul > li > a:matches-media((prefers-color-scheme
 
 ! [SITE] macrumors.com
 macrumors.com###featured_slider
+macrumors.com##.tertiary
 macrumors.com##.sidebarblock
 macrumors.com##.slick-inline-search-panel
 macrumors.com##div[class^=social--]
