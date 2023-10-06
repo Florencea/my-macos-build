@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1696607508658,
+  "timeStamp": 1696608545003,
   "version": "1.52.2",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -30,6 +30,7 @@
     "easylist",
     "adguard-spyware-url",
     "block-lan",
+    "easyprivacy",
     "urlhaus-1",
     "curben-phishing",
     "dpollock-0",
