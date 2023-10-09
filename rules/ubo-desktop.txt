@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2023-10-08
+! Last updated: 2023-10-09
 
 ! CSS variable
 ! bg
@@ -35,10 +35,6 @@ anime1.me##div[id^=ad-]
 ! Auto dismiss notify banner (any value above current year, MAX 32767)
 ant.design##+js(set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, 9999)
 
-! [SITE] apple.com
-! Allow apple 1p data reports
-@@||apple.com^$1p
-
 ! [SITE] books.com.tw
 books.com.tw##.header_pop
 
@@ -70,10 +66,6 @@ elle.com##.leaderboard-ad
 elle.com##.breaker-ad
 elle.com##.feed-block-ad-column
 
-! [SITE] faceboook.com
-! Allow Facebook tracking in 1p to prevent bot detecting
-@@||facebook.com/ajax$1p
-
 ! [SITE] feedly.com
 ! CSS variable
 feedly.com##html:style(--ubo-custom-feedly-bg-dark: #121212)
@@ -81,15 +73,10 @@ feedly.com##html:style(--ubo-custom-feedly-bg-dark: #121212)
 feedly.com##.home:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-feedly-bg-dark) !important)
 
 ! [SITE] github.com
-! Allow github 1p data reports
-@@||github.com^$1p
 ! If customize font, code-navigation-cursor would go wrong position, so disable it.
 github.com##.code-navigation-cursor:style(display: none !important)
 
 ! [SITE] google.com
-! Allow google 1p data reports
-@@||google.com^$1p
-@@||csp.withgoogle.com^$domain=google.com
 ! Remove useless google params
 ||google.*/search$removeparam=gs_lcrp
 ||google.*/search$removeparam=ie
