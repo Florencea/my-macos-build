@@ -13,13 +13,6 @@
 *##html:style(--ubo-custom-firefox-bg-input-dark: #43424a)
 *##html:style(--ubo-custom-firefox-bg-input-light: #f0f0f4)
 
-! [CHROME]
-! Supress Chrome toptics origin trial console error
-@@*$permissions=browsing-topics=(),from=~localhost
-@@*$permissions=idle-detection=(),from=~localhost
-@@*$permissions=join-ad-interest-group=(),from=~localhost
-@@*$permissions=run-ad-auction=(),from=~localhost
-
 ! [ADDONS]
 ! Make AutoPager settings and divider invisible
 *##.sp-separator
