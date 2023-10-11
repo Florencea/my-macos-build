@@ -1,16 +1,15 @@
 {
-  "timeStamp": 1696703551166,
+  "timeStamp": 1697044078243,
   "version": "1.52.2",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://malware-filter.gitlab.io/pup-filter/pup-filter.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "ignoreGenericCosmeticFilters": true,
     "importedLists": [
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt",
-      "https://malware-filter.gitlab.io/pup-filter/pup-filter.txt",
       "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt"
     ],
     "popupPanelSections": 63,
@@ -54,7 +53,6 @@
     "ublock-annoyances",
     "CHN-0",
     "JPN-1",
-    "https://malware-filter.gitlab.io/pup-filter/pup-filter.txt",
     "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt",
