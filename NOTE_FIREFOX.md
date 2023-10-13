@@ -44,6 +44,12 @@ Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/118.0 Firefox/118.0
 }
 ```
 
+- `about:config`
+
+```sh
+toolkit.legacyUserProfileCustomizations.stylesheets true
+```
+
 - Restart Firefox
 
 ## `about:config`
