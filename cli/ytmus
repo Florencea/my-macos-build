@@ -1,0 +1,36 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="Youtube Music Downloader"
+### Usage
+USAGE="[song_url]"
+### Example
+EXAMPLE="'https://music.youtube.com/watch?v=dSeW7qZuMl0&si=ek3ENxoDCbS43QeS'"
+
+### Args
+URL=$1
+
+### Check args exist
+chkarg "$URL" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "yt-dlp"
+
+yt-dlp \
+  --no-warnings \
+  --progress \
+  -f bestaudio \
+  --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\"" \
+  --extract-audio \
+  --embed-thumbnail \
+  --embed-metadata \
+  --parse-metadata 'playlist_index:%(meta_track)s' \
+  --convert-thumbnails jpg \
+  --print before_dl:"[download] %(title)s.%(ext)s" \
+  -o "%(title)s.%(ext)s" \
+  --cookies-from-browser chrome \
+  "$URL"
