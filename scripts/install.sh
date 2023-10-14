@@ -75,6 +75,15 @@ brew install --cask visual-studio-code
 brew install bash
 brew install curl
 brew install ffmpeg
+brew install fnm
+eval "$(fnm env)"
+fnm install --lts
+fnm use lts-latest
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
+printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >>$HOME/.config/fish/config.fish
+printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
+curl -fsSL https://www.npmjs.com/install.sh | sh
+npm doctor
 brew install gcc
 brew install git
 brew install jq
@@ -82,8 +91,6 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-brew install node@18
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
 brew install rsync
 brew install python
 python3 -m pip install --upgrade pip
