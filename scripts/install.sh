@@ -78,11 +78,12 @@ brew install ffmpeg
 brew install fnm
 eval "$(fnm env)"
 fnm install --lts
-fnm use lts-latest
+fnm default lts-latest
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
 printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >>$HOME/.config/fish/config.fish
 printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
-curl -fsSL https://www.npmjs.com/install.sh | sh
+export PATH="$(npm config get prefix)/bin:$PATH"
+npm install --audit false --fund false --loglevel error --progress false --global true npm
 npm doctor
 brew install gcc
 brew install git
