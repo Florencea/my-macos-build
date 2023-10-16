@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2023-10-14
+! Last updated: 2023-10-16
 
 ! CSS variable
 ! bg
@@ -27,6 +27,7 @@ anime1.me##div[id^=ad-]
 ! [SITE] ant.design
 ! Auto dismiss notify banner (any value above current year, MAX 32767)
 ant.design##+js(set-local-storage-item, ANT_DESIGN_DO_NOT_OPEN_MIRROR_MODAL, 9999)
+ant.design##+js(set-local-storage-item, ANT_DESIGN_NOT_SHOW_BANNER, 9999)
 
 ! [SITE] books.com.tw
 books.com.tw##.header_pop
