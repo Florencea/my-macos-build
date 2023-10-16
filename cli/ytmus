@@ -25,6 +25,25 @@ yt-dlp \
   --progress \
   -f bestaudio \
   --extract-audio \
+  --embed-metadata \
+  --parse-metadata "title:%(meta_title)s" \
+  --parse-metadata ":(?P<meta_date>)" \
+  --parse-metadata ":(?P<meta_description>)" \
+  --parse-metadata ":(?P<meta_synopsis>)" \
+  --parse-metadata ":(?P<meta_purl>)" \
+  --parse-metadata ":(?P<meta_comment>)" \
+  --parse-metadata ":(?P<meta_track>)" \
+  --parse-metadata ":(?P<meta_genre>)" \
+  --parse-metadata ":(?P<meta_artist>)" \
+  --parse-metadata ":(?P<meta_genre>)" \
+  --parse-metadata ":(?P<meta_album>)" \
+  --parse-metadata ":(?P<meta_album_artist>)" \
+  --parse-metadata ":(?P<meta_disc>)" \
+  --parse-metadata ":(?P<meta_show>)" \
+  --parse-metadata ":(?P<meta_season_number>)" \
+  --parse-metadata ":(?P<meta_episode_id>)" \
+  --parse-metadata ":(?P<meta_episode_sort>)" \
+  --parse-metadata ":(?P<meta_language>)" \
   --print before_dl:"[download] %(title)s.%(ext)s" \
   -o "%(title)s.%(ext)s" \
   --cookies-from-browser chrome \
