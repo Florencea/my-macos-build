@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+CMD_DIR="$(dirname $0)"
+cd "$CMD_DIR"
+ls
