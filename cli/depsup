@@ -1,0 +1,24 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### Check cmd exist
+chkcmd "git"
+chkcmd "npm"
+
+### Check is node project exist
+chkfile package.json
+chkfile package-lock.json
+
+## Check node_modules exist
+chkdir node_modules
+
+### Upgrade packages
+npm outdated
+npm update --save
+
+### Add to git
+git add package.json
+git add package-lock.json
+git commit -m "deps: up"
+git push

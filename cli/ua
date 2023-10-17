@@ -2,6 +2,7 @@
 set -o errexit
 set -o pipefail
 
+### Check cmd exist
 chkcmd "brew"
 chkcmd "curl"
 chkcmd "fnm"
