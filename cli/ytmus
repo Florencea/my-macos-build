@@ -33,7 +33,6 @@ yt-dlp \
   --parse-metadata ":(?P<meta_purl>)" \
   --parse-metadata ":(?P<meta_comment>)" \
   --parse-metadata ":(?P<meta_track>)" \
-  --parse-metadata ":(?P<meta_genre>)" \
   --parse-metadata ":(?P<meta_artist>)" \
   --parse-metadata ":(?P<meta_genre>)" \
   --parse-metadata ":(?P<meta_album>)" \
