@@ -32,6 +32,7 @@ if ! [ "$LATEST_NPM_VERSION" = "$CURRENT_NPM_VERSION" ]; then
   printf "Latest npm version: \033[1;36m$LATEST_NPM_VERSION\033[0m, local: \033[1;31m$CURRENT_NPM_VERSION\033[0m\n"
   printf "Installing \033[1;36mnpm $LATEST_NPM_VERSION\033[0m\n"
   npm install --audit false --fund false --loglevel error --progress false --global true npm
+  export PATH="$(npm config get prefix)/bin:$PATH"
   printf "Run \033[1;36mnpm doctor\033[0m\n\n"
   npm doctor
   echo ""
