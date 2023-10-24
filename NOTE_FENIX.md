@@ -158,11 +158,12 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 101 ~ 123)
+- Comment this part (Line 100 ~ 123)
 - Disable home button
 - See [For #23076 - Clean up unneeded FeatureFlags](https://github.com/Florencea/firefox-android/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
+val isPrivate = (activity as HomeActivity).browsingModeManager.mode.isPrivate
 val leadingAction = if (isPrivate && context.settings().feltPrivateBrowsingEnabled) {
     BrowserToolbar.Button(
         imageDrawable = AppCompatResources.getDrawable(
