@@ -158,25 +158,37 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 ```
 
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
-- Comment this part (Line 99 ~ 109)
+- Comment this part (Line 101 ~ 123)
 - Disable home button
 - See [For #23076 - Clean up unneeded FeatureFlags](https://github.com/Florencea/firefox-android/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
-val homeAction = BrowserToolbar.Button(
-    imageDrawable = AppCompatResources.getDrawable(
-        context,
-        R.drawable.mozac_ic_home
-    )!!,
-    contentDescription = context.getString(R.string.browser_toolbar_home),
-    iconTintColorResource = ThemeManager.resolveAttribute(R.attr.primaryText, context),
-    listener = browserToolbarInteractor::onHomeButtonClicked
-)
+val leadingAction = if (isPrivate && context.settings().feltPrivateBrowsingEnabled) {
+    BrowserToolbar.Button(
+        imageDrawable = AppCompatResources.getDrawable(
+            context,
+            R.drawable.mozac_ic_data_clearance_24,
+        )!!,
+        contentDescription = context.getString(R.string.browser_toolbar_erase),
+        iconTintColorResource = ThemeManager.resolveAttribute(R.attr.textPrimary, context),
+        listener = browserToolbarInteractor::onEraseButtonClicked,
+    )
+} else {
+    BrowserToolbar.Button(
+        imageDrawable = AppCompatResources.getDrawable(
+            context,
+            R.drawable.mozac_ic_home_24,
+        )!!,
+        contentDescription = context.getString(R.string.browser_toolbar_home),
+        iconTintColorResource = ThemeManager.resolveAttribute(R.attr.textPrimary, context),
+        listener = browserToolbarInteractor::onHomeButtonClicked,
+    )
+}
 
-browserToolbarView.view.addNavigationAction(homeAction)
+browserToolbarView.view.addNavigationAction(leadingAction)
 ```
 
-- Comment this part (Line 113 ~ 135)
+- Comment this part (Line 127 ~ 149)
 - Disable reader button
 
 ```kotlin
@@ -205,7 +217,7 @@ val readerModeAction =
 browserToolbarView.view.addPageAction(readerModeAction)
 ```
 
-- Comment this part (Line 145 ~ 164)
+- Comment this part (Line 159 ~ 178)
 
 ```kotlin
 readerViewFeature.set(
@@ -230,7 +242,7 @@ readerViewFeature.set(
         )
 ```
 
-- Change Line 426
+- Change Line 436
 
 ```kotlin
 return readerViewFeature.onBackPressed() || super.onBackPressed()
@@ -239,7 +251,7 @@ return super.onBackPressed()
 ```
 
 - `fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt`
-- Change Line 1631 `featureFlag = false`
+- Change Line 1655 `featureFlag = false`
 - see [Bug 1816004 - Remove unused unifiedSearchFeature and notificationPrePermissionPromptEnabled feature flags](https://github.com/Florencea/firefox-android/commit/2dee46be18d91da5697e51516ad38efc2643c678)
 
 ```kotlin
