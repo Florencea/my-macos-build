@@ -253,12 +253,8 @@ return super.onBackPressed()
 
 - `fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt`
 - Change Line 1655 `featureFlag = false`
-- see [Bug 1816004 - Remove unused unifiedSearchFeature and notificationPrePermissionPromptEnabled feature flags](https://github.com/Florencea/firefox-android/commit/2dee46be18d91da5697e51516ad38efc2643c678)
 
 ```kotlin
-/**
-  * Indicates if the Unified Search feature should be visible.
-  */
 var showUnifiedSearchFeature by lazyFeatureFlagPreference(
     key = appContext.getPreferenceKey(R.string.pref_key_show_unified_search_2),
     default = { FxNimbus.features.unifiedSearch.value().enabled },
@@ -272,6 +268,46 @@ var showUnifiedSearchFeature by lazyFeatureFlagPreference(
 ```kotlin
 var shouldShowVoiceSearch by booleanPreference(
     appContext.getPreferenceKey(R.string.pref_key_show_voice_search),
+    default = false,
+)
+```
+
+- Change Line 380 `default = false`
+- Disable History Suggestions
+
+```kotlin
+val shouldShowHistorySuggestions by booleanPreference(
+    appContext.getPreferenceKey(R.string.pref_key_search_browsing_history),
+    default = false,
+)
+```
+
+- Change Line 390 `default = false`
+- Disable SyncedTabs Suggestions
+
+```kotlin
+val shouldShowSyncedTabsSuggestions by booleanPreference(
+    appContext.getPreferenceKey(R.string.pref_key_search_synced_tabs),
+    default = false,
+)
+```
+
+- Change Line 395 `default = false`
+- Disable Clipboard Suggestions
+
+```kotlin
+val shouldShowClipboardSuggestions by booleanPreference(
+    appContext.getPreferenceKey(R.string.pref_key_show_clipboard_suggestions),
+    default = false,
+)
+```
+
+- Change Line 989 `default = false`
+- Disable Search Suggestions
+
+```kotlin
+val shouldShowSearchSuggestions by booleanPreference(
+    appContext.getPreferenceKey(R.string.pref_key_show_search_suggestions),
     default = false,
 )
 ```
