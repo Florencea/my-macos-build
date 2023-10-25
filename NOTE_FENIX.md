@@ -1,22 +1,29 @@
 # Fenix Note
 
 - [Fenix Note](#fenix-note)
-  - [Cloud Build Guide](#cloud-build-guide)
-    - [1. Fork Repository](#1-fork-repository)
-    - [2. Add Repository Secrets](#2-add-repository-secrets)
-    - [3. Clone Release Tag](#3-clone-release-tag)
-    - [4. Edit Files](#4-edit-files)
-    - [5. Force push to `main` branch](#5-force-push-to-main-branch)
-    - [6. Use GitHub Actions to Build](#6-use-github-actions-to-build)
+  - [1. Fork Repository](#1-fork-repository)
+  - [2. Add Repository Secrets](#2-add-repository-secrets)
+  - [3. Clone Release Tag](#3-clone-release-tag)
+  - [4. Edit Files](#4-edit-files)
+    - [4-1. Add GitHub Action script](#4-1-add-github-action-script)
+    - [4-2. Add Android SDK installaton script](#4-2-add-android-sdk-installaton-script)
+    - [4-3. Change Default AMO Collections and speedup build](#4-3-change-default-amo-collections-and-speedup-build)
+    - [4-4. Disable features in FeatureFlag](#4-4-disable-features-in-featureflag)
+    - [4-5. Remove Home Button, Reader Button](#4-5-remove-home-button-reader-button)
+    - [4-6. Change Default Settings](#4-6-change-default-settings)
+    - [4-7. Enable config, Disable Safe Browsing](#4-7-enable-config-disable-safe-browsing)
+    - [4-8. Disable Progress Bar](#4-8-disable-progress-bar)
+    - [4-9. Customize Deafult Search Engine](#4-9-customize-deafult-search-engine)
+    - [4-10. Disable Unsless Settings](#4-10-disable-unsless-settings)
+  - [5. Force push to `main` branch](#5-force-push-to-main-branch)
+  - [6. Use GitHub Actions to Build](#6-use-github-actions-to-build)
 
-## Cloud Build Guide
-
-### 1. Fork Repository
+## 1. Fork Repository
 
 - [FORK HERE](https://github.com/mozilla-mobile/firefox-android/fork)
 - <https://github.com/mozilla-mobile/firefox-android>
 
-### 2. Add Repository Secrets
+## 2. Add Repository Secrets
 
 - **Note: Only for personal use, this key is different from upstream!**
 - `ANDROID_SIGNING_KEY`
@@ -43,18 +50,18 @@ key0
 123456
 ```
 
-### 3. Clone Release Tag
+## 3. Clone Release Tag
 
 ```sh
 git clone --depth 1 --branch fenix-v119.0 git@github.com:Florencea/firefox-android.git
 ```
 
-### 4. Edit Files
+## 4. Edit Files
 
-- Add GitHub Action script
+### 4-1. Add GitHub Action script
+
 - `rm .github/workflows/*.yml`
 - `touch .github/workflows/release.yml`
-- Could delete all other actions in `.github/workflows`
 
 ```yml
 name: Release Automation
@@ -105,7 +112,8 @@ jobs:
           path: ${{ steps.sign_app.outputs.signedFile }}
 ```
 
-- Add Android SDK installaton script from iceraven
+### 4-2. Add Android SDK installaton script
+
 - `mkdir automation`
 - `touch automation/install-sdk.sh`
 - `chmod 755 automation/install-sdk.sh`
@@ -140,8 +148,9 @@ echo "sdk.dir=${ANDROID_SDK_ROOT}" >>local.properties
 
 ```
 
+### 4-3. Change Default AMO Collections and speedup build
+
 - `app/build.gradle`
-- Change Default AMO Collections and speedup build
 
 ```bash
 buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\"" -> buildConfigField "String", "AMO_COLLECTION_USER", "\"17496363\""
@@ -149,18 +158,20 @@ applicationIdSuffix ".firefox" -> applicationIdSuffix ".firefox_custom"
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 ```
 
+### 4-4. Disable features in FeatureFlag
+
 - `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
-- Disable features (as needed)
 
 ```kotlin
 const val pullToRefreshEnabled = false
 return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").contains(langTag)
 ```
 
+### 4-5. Remove Home Button, Reader Button
+
 - `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
+
 - Comment this part (Line 100 ~ 123)
-- Disable home button
-- See [For #23076 - Clean up unneeded FeatureFlags](https://github.com/Florencea/firefox-android/commit/76fb147ed87c32f37b6b92db1a0d0b3541308d86)
 
 ```kotlin
 val isPrivate = (activity as HomeActivity).browsingModeManager.mode.isPrivate
@@ -190,7 +201,6 @@ browserToolbarView.view.addNavigationAction(leadingAction)
 ```
 
 - Comment this part (Line 127 ~ 149)
-- Disable reader button
 
 ```kotlin
 val readerModeAction =
@@ -251,26 +261,9 @@ return readerViewFeature.onBackPressed() || super.onBackPressed()
 return super.onBackPressed()
 ```
 
+### 4-6. Change Default Settings
+
 - `fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt`
-- Change Line 1655 `featureFlag = false`
-
-```kotlin
-var showUnifiedSearchFeature by lazyFeatureFlagPreference(
-    key = appContext.getPreferenceKey(R.string.pref_key_show_unified_search_2),
-    default = { FxNimbus.features.unifiedSearch.value().enabled },
-    featureFlag = false,
-)
-```
-
-- Change Line 1183 `featureFlag = false`
-- Disable voice Search
-
-```kotlin
-var shouldShowVoiceSearch by booleanPreference(
-    appContext.getPreferenceKey(R.string.pref_key_show_voice_search),
-    default = false,
-)
-```
 
 - Change Line 380 `default = false`
 - Disable History Suggestions
@@ -322,6 +315,29 @@ val shouldAutocompleteInAwesomebar by booleanPreference(
 )
 ```
 
+- Change Line 1183 `featureFlag = false`
+- Disable Voice Search
+
+```kotlin
+var shouldShowVoiceSearch by booleanPreference(
+    appContext.getPreferenceKey(R.string.pref_key_show_voice_search),
+    default = false,
+)
+```
+
+- Change Line 1655 `featureFlag = false`
+- Disable Unified Search
+
+```kotlin
+var showUnifiedSearchFeature by lazyFeatureFlagPreference(
+    key = appContext.getPreferenceKey(R.string.pref_key_show_unified_search_2),
+    default = { FxNimbus.features.unifiedSearch.value().enabled },
+    featureFlag = false,
+)
+```
+
+### 4-7. Enable config, Disable Safe Browsing
+
 - `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
 
 - Enable `about:config` (Line 116)
@@ -330,7 +346,7 @@ val shouldAutocompleteInAwesomebar by booleanPreference(
 .aboutConfigEnabled(true)
 ```
 
-- Disable safebrowsing, Replace whole `if` block under comments
+- Disable Safebrowsing, Replace whole `if` block under comments
 
 ```kotlin
 // Add safebrowsing providers for China
@@ -343,8 +359,9 @@ runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
 runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 ```
 
+### 4-8. Disable Progress Bar
+
 - `app/src/main/res/drawable/progress_gradient.xml`
-- Disable progress bar by set color to transparent
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -377,8 +394,9 @@ runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 </layer-list>
 ```
 
+### 4-9. Customize Deafult Search Engine
+
 - `android-components/components/feature/search/src/main/assets/searchplugins/google-b-m.xml`
-- Customize Deafult Search Engine
 
 ```xml
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
@@ -420,8 +438,9 @@ internal const val GOOGLE_ID = "not-google"
 }
 ```
 
+### 4-10. Disable Unsless Settings
+
 - `fenix/app/src/main/res/xml/preferences.xml`
-- Disable Search Settings
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -650,10 +669,10 @@ internal const val GOOGLE_ID = "not-google"
 </androidx.preference.PreferenceScreen>
 ```
 
-### 5. Force push to `main` branch
+## 5. Force push to `main` branch
 
 ```bash
 git push -uf origin HEAD:main
 ```
 
-### 6. Use GitHub Actions to Build
+## 6. Use GitHub Actions to Build
