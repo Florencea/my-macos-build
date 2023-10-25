@@ -337,7 +337,6 @@ internal const val GOOGLE_ID = "not-google"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.Preference
-        app:isPreferenceVisible="false"
         android:key="@string/pref_key_sign_in"
         android:layout="@layout/sign_in_preference"
         android:summary="@string/preferences_sign_in_description_2"
@@ -345,7 +344,6 @@ internal const val GOOGLE_ID = "not-google"
         app:allowDividerBelow="false" />
 
     <androidx.preference.SwitchPreference
-        app:isPreferenceVisible="false"
         android:key="@string/pref_key_allow_domestic_china_fxa_server"
         android:title="@string/preferences_allow_domestic_china_fxa_server"
         android:defaultValue="true"/>
