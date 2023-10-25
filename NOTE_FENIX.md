@@ -14,7 +14,7 @@
     - [4-7. Enable config, Disable Safe Browsing](#4-7-enable-config-disable-safe-browsing)
     - [4-8. Disable Progress Bar](#4-8-disable-progress-bar)
     - [4-9. Customize Deafult Search Engine](#4-9-customize-deafult-search-engine)
-    - [4-10. Disable Unsless Settings](#4-10-disable-unsless-settings)
+    - [4-10. Disable Useless Settings](#4-10-disable-useless-settings)
   - [5. Force push to `main` branch](#5-force-push-to-main-branch)
   - [6. Use GitHub Actions to Build](#6-use-github-actions-to-build)
 
@@ -150,7 +150,7 @@ echo "sdk.dir=${ANDROID_SDK_ROOT}" >>local.properties
 
 ### 4-3. Change Default AMO Collections and speedup build
 
-- `app/build.gradle`
+- `fenix/app/build.gradle`
 
 ```bash
 buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\"" -> buildConfigField "String", "AMO_COLLECTION_USER", "\"17496363\""
@@ -160,7 +160,7 @@ include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 
 ### 4-4. Disable features in FeatureFlag
 
-- `app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
+- `fenix/app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
 
 ```kotlin
 const val pullToRefreshEnabled = false
@@ -169,7 +169,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 
 ### 4-5. Remove Home Button, Reader Button
 
-- `app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
+- `fenix/app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
 
 - Comment this part (Line 100 ~ 123)
 
@@ -338,7 +338,7 @@ var showUnifiedSearchFeature by lazyFeatureFlagPreference(
 
 ### 4-7. Enable config, Disable Safe Browsing
 
-- `app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
+- `fenix/app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
 
 - Enable `about:config` (Line 116)
 
@@ -361,7 +361,7 @@ runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
 
 ### 4-8. Disable Progress Bar
 
-- `app/src/main/res/drawable/progress_gradient.xml`
+- `fenix/app/src/main/res/drawable/progress_gradient.xml`
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -438,7 +438,7 @@ internal const val GOOGLE_ID = "not-google"
 }
 ```
 
-### 4-10. Disable Unsless Settings
+### 4-10. Disable Useless Settings
 
 - `fenix/app/src/main/res/xml/preferences.xml`
 
