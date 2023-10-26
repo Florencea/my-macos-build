@@ -591,7 +591,9 @@ key0
 ```yml
 name: Release Automation
 on:
-  push: [main]
+  push:
+    branches:
+      - "main"
   workflow_dispatch:
 jobs:
   release-automation:
@@ -607,12 +609,14 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-      - name: Install Android SDK with pieces Gradle skips
-        run: ./automation/install-sdk.sh
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
       - name: Inspect memory
         run: free -m
       - name: Create version name
         run: echo "VERSION_NAME=$(cat version.txt)" >> $GITHUB_ENV
+      - name: Setup release directory
+        run: echo "RELEASE_DIR=fenix/app/build/outputs/apk/fenix/release/" >> $GITHUB_ENV
       - name: Build release variant of app
         uses: gradle/gradle-build-action@v2
         env:
@@ -623,53 +627,43 @@ jobs:
           arguments: app:assembleRelease -x app:lintVitalAnalyzeFenixRelease -x app:lintVitalReportFenixRelease -x app:lintVitalFenixRelease -PversionName=${{ env.VERSION_NAME }} --stacktrace
       - name: Create signed APKs
         uses: ilharp/sign-android-release@v1
-        id: sign_app
         with:
-          releaseDir: fenix/app/build/outputs/apk/fenix/release/
+          releaseDir: ${{ env.RELEASE_DIR }}
           signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
           keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           buildToolsVersion: 33.0.0
-      - name: Archive arm64 apk
+      - name: Rename APKs
+        run: |
+          if [ -f "${{ env.RELEASE_DIR }}app-fenix-arm64-v8a-release-unsigned-signed.apk" ]; then mv ${{ env.RELEASE_DIR }}app-fenix-arm64-v8a-release-unsigned-signed.apk ${{ env.RELEASE_DIR }}/fenix-custom-arm64-v8a-v${{ env.VERSION_NAME }}.apk; else echo "not find arm64-v8a release"; fi
+          if [ -f "${{ env.RELEASE_DIR }}app-fenix-armeabi-v7a-release-unsigned-signed.apk" ]; then mv ${{ env.RELEASE_DIR }}app-fenix-armeabi-v7a-release-unsigned-signed.apk ${{ env.RELEASE_DIR }}/fenix-custom-armeabi-v7a-v${{ env.VERSION_NAME }}.apk; else echo "not find armeabi-v7a release"; fi
+          if [ -f "${{ env.RELEASE_DIR }}app-fenix-x86-release-unsigned-signed.apk" ]; then mv ${{ env.RELEASE_DIR }}app-fenix-x86-release-unsigned-signed.apk ${{ env.RELEASE_DIR }}/fenix-custom-x86-v${{ env.VERSION_NAME }}.apk; else echo "not find x86 release"; fi
+          if [ -f "${{ env.RELEASE_DIR }}app-fenix-x86_64-release-unsigned-signed.apk" ]; then mv ${{ env.RELEASE_DIR }}app-fenix-x86_64-release-unsigned-signed.apk ${{ env.RELEASE_DIR }}/fenix-custom-x86_64-v${{ env.VERSION_NAME }}.apk; else echo "not find x86_64 release"; fi
+      - name: Archive arm64-v8a apk
         uses: actions/upload-artifact@v3
         with:
-          name: app-fenix-arm64-v8a-release.apk
-          path: ${{ steps.sign_app.outputs.signedFile }}
-```
-
-- `mkdir automation`
-- `touch automation/install-sdk.sh`
-- `chmod 755 automation/install-sdk.sh`
-
-```sh
-#!/usr/bin/env bash
-# Install the Android SDK and all the parts Gradle doesn't figure out to install itself
-
-# Install the SDK
-mkdir -p $HOME/android-sdk/android-sdk-linux
-pushd $HOME/android-sdk/android-sdk-linux
-mkdir -p licenses
-echo "8933bad161af4178b1185d1a37fbf41ea5269c55" >>licenses/android-sdk-license
-echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >>licenses/android-sdk-license
-echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" >>licenses/android-sdk-license
-if [ ! -e cmdline-tools ]; then
-  mkdir -p cmdline-tools
-  pushd cmdline-tools
-  wget --quiet "$(curl -s https://developer.android.com/studio | grep -oP "https://dl.google.com/android/repository/commandlinetools-linux-[0-9]+_latest.zip")"
-  unzip commandlinetools-linux-*_latest.zip
-  mv cmdline-tools tools
-  popd
-fi
-popd
-export ANDROID_SDK_ROOT=$HOME/android-sdk/android-sdk-linux
-
-# Install the weirdly missing NDK
-${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin/sdkmanager "ndk;26.1.10909125"
-
-# Point the build at the tools
-echo "sdk.dir=${ANDROID_SDK_ROOT}" >>local.properties
-
+          name: fenix-custom-arm64-v8a-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}/fenix-custom-arm64-v8a-v${{ env.VERSION_NAME }}.apk
+          if-no-files-found: ignore
+      - name: Archive armeabi-v7a apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: fenix-custom-armeabi-v7a-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}/fenix-custom-armeabi-v7a-v${{ env.VERSION_NAME }}.apk
+          if-no-files-found: ignore
+      - name: Archive x86 apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: fenix-custom-x86-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}/fenix-custom-x86-v${{ env.VERSION_NAME }}.apk
+          if-no-files-found: ignore
+      - name: Archive x86_64 apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: fenix-custom-x86_64-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}/fenix-custom-x86_64-v${{ env.VERSION_NAME }}.apk
+          if-no-files-found: ignore
 ```
 
 ### 4-A-3. Use GitHub Actions to Build: Force push to `main` branch
