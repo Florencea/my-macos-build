@@ -599,32 +599,22 @@ jobs:
   release-automation:
     name: Build App
     runs-on: ubuntu-latest
+    container: mingc/android-build-box:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: temurin
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-      - name: Inspect memory
-        run: free -m
       - name: Create version name
         run: echo "VERSION_NAME=$(cat version.txt)" >> $GITHUB_ENV
       - name: Setup release directory
         run: echo "RELEASE_DIR=fenix/app/build/outputs/apk/fenix/release/" >> $GITHUB_ENV
       - name: Build release variant of app
-        uses: gradle/gradle-build-action@v2
-        env:
-          GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g -Xms1g -Xmx3g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr"
-        with:
-          gradle-home-cache-cleanup: true
-          build-root-directory: fenix
-          arguments: app:assembleRelease -x app:lintVitalAnalyzeFenixRelease -x app:lintVitalReportFenixRelease -x app:lintVitalFenixRelease -PversionName=${{ env.VERSION_NAME }} --stacktrace
+        run: |
+          cd fenix
+          git config --global --add safe.directory /__w/firefox-android/firefox-android
+          free -m
+          ./gradlew app:assembleRelease -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=2g -Xms1g -Xmx3g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dev/stderr" -x app:lintVitalAnalyzeFenixRelease -x app:lintVitalReportFenixRelease -x app:lintVitalFenixRelease -PversionName=${{ env.VERSION_NAME }} --stacktrace
       - name: Create signed APKs
         uses: ilharp/sign-android-release@v1
         with:
@@ -644,25 +634,25 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: fenix-custom-arm64-v8a-v${{ env.VERSION_NAME }}.apk
-          path: ${{ env.RELEASE_DIR }}/fenix-custom-arm64-v8a-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}fenix-custom-arm64-v8a-v${{ env.VERSION_NAME }}.apk
           if-no-files-found: ignore
       - name: Archive armeabi-v7a apk
         uses: actions/upload-artifact@v3
         with:
           name: fenix-custom-armeabi-v7a-v${{ env.VERSION_NAME }}.apk
-          path: ${{ env.RELEASE_DIR }}/fenix-custom-armeabi-v7a-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}fenix-custom-armeabi-v7a-v${{ env.VERSION_NAME }}.apk
           if-no-files-found: ignore
       - name: Archive x86 apk
         uses: actions/upload-artifact@v3
         with:
           name: fenix-custom-x86-v${{ env.VERSION_NAME }}.apk
-          path: ${{ env.RELEASE_DIR }}/fenix-custom-x86-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}fenix-custom-x86-v${{ env.VERSION_NAME }}.apk
           if-no-files-found: ignore
       - name: Archive x86_64 apk
         uses: actions/upload-artifact@v3
         with:
           name: fenix-custom-x86_64-v${{ env.VERSION_NAME }}.apk
-          path: ${{ env.RELEASE_DIR }}/fenix-custom-x86_64-v${{ env.VERSION_NAME }}.apk
+          path: ${{ env.RELEASE_DIR }}fenix-custom-x86_64-v${{ env.VERSION_NAME }}.apk
           if-no-files-found: ignore
 ```
 
