@@ -742,7 +742,7 @@ node "$KEY_JS"
 
 /opt/android-sdk/build-tools/33.0.0/apksigner sign --ks "$KEY_PATH" --ks-key-alias key0 --ks-pass pass:123456 --key-pass pass:123456 --out "$SIGNED_APK_PATH" "$APK_PATH"
 
-echo "Signed apk in fenix/$APK_PATH"
+echo "Signed apk in fenix/$SIGNED_APK_PATH"
 ```
 
 ### 4-C-2. Build on Docker: Build App
