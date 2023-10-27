@@ -76,11 +76,6 @@ brew install --cask visual-studio-code
 ### Install cli tools
 brew install bash
 brew install curl
-brew install colima
-brew install docker
-brew install docker-compose
-colima template --editor ls
-yq -i '.cpu=8 | .memory=8 | .arch="aarch64" | .network.dns|=["8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"] | .vmType="vz" | .rosetta=true | .mountType="virtiofs"' "$HOME/.colima/_templates/default.yaml"
 brew install ffmpeg
 brew install fnm
 eval "$(fnm env)"
