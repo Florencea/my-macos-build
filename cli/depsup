@@ -13,6 +13,11 @@ chkfile package-lock.json
 ## Check node_modules exist
 chkdir node_modules
 
+### Check Major version
+set +o errexit
+npm outdated
+set -o errexit
+
 ### Upgrade packages
 npm update --save
 
