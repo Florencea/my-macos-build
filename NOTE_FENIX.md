@@ -234,6 +234,13 @@ var showUnifiedSearchFeature by lazyFeatureFlagPreference(
 .aboutConfigEnabled(true)
 ```
 
+- Enable install Addons in web store (Line 117-118)
+
+```kotlin
+.extensionsProcessEnabled(true)
+.extensionsWebAPIEnabled(true)
+```
+
 - Disable Safebrowsing, Replace whole `if` block under comments
 
 ```kotlin
