@@ -30,7 +30,7 @@ TMPFILE="$(mktemp -t "$(basename $0)")"
 
 yt-dlp "$URL" \
   --quiet \
-  -f mp4 \
+  -f 134 \
   --downloader \
   ffmpeg \
   --downloader-args \
