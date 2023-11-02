@@ -77,19 +77,18 @@ brew install --cask visual-studio-code
 brew install bash
 brew install curl
 brew install ffmpeg
+brew install jq
 brew install fnm
 eval "$(fnm env)"
-fnm install --lts
-fnm default lts-latest
+TARGET_NODE_VERSION="v18"
+LATEST_TARGET_NODE_VERSION="$(curl -fsSL https://nodejs.org/download/release/index.json | jq -cr 'last( sort_by( .date | split("-") | map(tonumber) ) | .[] | select(.version | startswith("v18"))) | .version')"
+fnm install "$LATEST_TARGET_NODE_VERSION"
+fnm default "$LATEST_TARGET_NODE_VERSION"
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
 printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >>$HOME/.config/fish/config.fish
 printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
-export PATH="$(npm config get prefix)/bin:$PATH"
-npm install --audit false --fund false --loglevel error --progress false --global true npm
-npm doctor
 brew install gcc
 brew install git
-brew install jq
 brew install mtr
 brew install nano
 brew install nanorc
