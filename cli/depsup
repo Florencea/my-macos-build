@@ -16,6 +16,7 @@ chkdir node_modules
 ### Check Major version
 set +o errexit
 npm outdated
+COMMIT_MSG_BODY="$(npm outdated --json | jq -cr 'to_entries[] | select( .value.current != .value.wanted ) | "- \(.key) \(.value.current) -> \(.value.wanted)" ')"
 set -o errexit
 
 ### Upgrade packages
@@ -24,7 +25,7 @@ npm update --save
 ### Add to git
 git add package.json
 git add package-lock.json
-git commit -m "deps: up"
+git commit -m "fix(deps): update all non-major dependencies" -m "$COMMIT_MSG_BODY" -m "by depsup script"
 git push
 
 ### Check Major version again
