@@ -4,31 +4,28 @@ set -o pipefail
 
 ### Check cmd exist
 chkcmd "git"
-chkcmd "npm"
+chkcmd "pnpm"
 
 ### Check is node project exist
 chkfile package.json
-chkfile package-lock.json
-
-## Check node_modules exist
-chkdir node_modules
+chkfile pnpm-lock.yaml
 
 ### Check Major version
 set +o errexit
-npm outdated
-COMMIT_MSG_BODY="$(npm outdated --json | jq -cr 'to_entries[] | select( .value.current != .value.wanted ) | "- \(.key) \(.value.current) -> \(.value.wanted)" ')"
+pnpm outdated
+COMMIT_MSG_BODY="$(pnpm outdated --compatible --format json | jq -cr 'to_entries[] | select( .value.current != .value.latest ) | "- \(.key) \(.value.current) -> \(.value.latest)" ')"
 set -o errexit
 
 if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   ### Upgrade packages
-  npm update --save
+  pnpm update
 
   ### Add to git
   git add package.json
-  git add package-lock.json
+  git add pnpm-lock.yaml
   git commit -m "fix(deps): update all non-major dependencies" -m "$COMMIT_MSG_BODY" -m "by depsup script"
   git push
 
   ### Check Major version again
-  npm outdated
+  pnpm outdated
 fi
