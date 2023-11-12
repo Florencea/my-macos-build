@@ -90,7 +90,9 @@ npm doctor
 corepack enable
 corepack prepare pnpm@latest --activate
 pnpm install-completion fish &>/dev/null
+printf "# alias\nalias pn=\"pnpm\"" >>$HOME/.config/fish/config.fish
 pnpm install-completion zsh &>/dev/null
+printf "# alias\nalias pn=\"pnpm\"" >>$HOME/.zshrc
 brew install gcc
 brew install git
 brew install jq
