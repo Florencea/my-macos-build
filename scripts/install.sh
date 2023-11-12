@@ -81,7 +81,6 @@ brew install fnm
 eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
-printf "audit=false\nfund=false\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
 printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >>$HOME/.config/fish/config.fish
 printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
 export PATH="$(npm config get prefix)/bin:$PATH"
@@ -90,9 +89,7 @@ npm doctor
 corepack enable
 corepack prepare pnpm@latest --activate
 pnpm install-completion fish &>/dev/null
-printf "# alias\nalias pn=\"pnpm\"" >>$HOME/.config/fish/config.fish
 pnpm install-completion zsh &>/dev/null
-printf "# alias\nalias pn=\"pnpm\"" >>$HOME/.zshrc
 brew install gcc
 brew install git
 brew install jq
