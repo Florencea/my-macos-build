@@ -62,6 +62,8 @@ LATEST_PNPM_VERSION="$(npm view pnpm@latest version)"
 if ! [ "$CURRENT_PNPM_VERSION" = "$LATEST_PNPM_VERSION" ]; then
   printf "Latest pnpm version: \033[1;36m$LATEST_PNPM_VERSION\033[0m, local: \033[1;31m$CURRENT_PNPM_VERSION\033[0m, install from remote\n"
   corepack prepare pnpm@latest --activate &>/dev/null
+  pnpm install-completion fish &>/dev/null
+  pnpm install-completion zsh &>/dev/null
 fi
 
 ### Print current node/npm/pnpm version

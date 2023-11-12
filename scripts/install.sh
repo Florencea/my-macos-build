@@ -89,6 +89,8 @@ npm install --audit false --fund false --loglevel error --progress false --globa
 npm doctor
 corepack enable
 corepack prepare pnpm@latest --activate
+pnpm install-completion fish &>/dev/null
+pnpm install-completion zsh &>/dev/null
 brew install gcc
 brew install git
 brew install jq
