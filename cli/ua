@@ -11,6 +11,7 @@ chkcmd "jq"
 chkcmd "node"
 chkcmd "npm"
 chkcmd "npx"
+chkcmd "corepack"
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"
@@ -54,10 +55,20 @@ if ! [ -z "$NODE_UPDATED" ]; then
   fi
 fi
 
-### Print current node/npm version
+### update pnpm
+corepack enable
+CURRENT_PNPM_VERSION="$(pnpm -v)"
+LATEST_PNPM_VERSION="$(npm view pnpm@latest version)"
+if ! [ "$CURRENT_PNPM_VERSION" = "$LATEST_PNPM_VERSION" ]; then
+  printf "Latest pnpm version: \033[1;36m$LATEST_PNPM_VERSION\033[0m, local: \033[1;31m$CURRENT_PNPM_VERSION\033[0m, install from remote\n"
+  corepack prepare pnpm@latest --activate &>/dev/null
+fi
+
+### Print current node/npm/pnpm version
 CURRENT_LOCAL_VERSION="$(node -v)"
 CURRENT_NPM_VERSION="$(npm -v)"
-printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
+CURRENT_PNPM_VERSION="$(pnpm -v)"
+printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m, pnpm: \033[1;32m$CURRENT_PNPM_VERSION\033[0m\n\n"
 
 ### Sync git projects
 cd "$(dirname $0)"

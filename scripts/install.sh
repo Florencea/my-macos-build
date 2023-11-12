@@ -87,6 +87,8 @@ printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin
 export PATH="$(npm config get prefix)/bin:$PATH"
 npm install --audit false --fund false --loglevel error --progress false --global true npm
 npm doctor
+corepack enable
+corepack prepare pnpm@latest --activate
 brew install gcc
 brew install git
 brew install jq
