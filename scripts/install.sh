@@ -98,7 +98,7 @@ brew install rsync
 brew install python
 python3 -m pip install --upgrade pip
 brew install wget
-brew install yt-dlp/taps/yt-dlp
+brew install yt-dlp
 brew install yq
 brew install zsh
 
