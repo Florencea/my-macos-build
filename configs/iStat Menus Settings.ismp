@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>build</key>
-	<string>1224</string>
+	<string>1230</string>
 	<key>license</key>
 	<dict>
 		<key>email</key>
@@ -241,8 +241,6 @@
 				<key>format</key>
 				<array>
 					<array>
-						<string>yyyy</string>
-						<string>'年'</string>
 						<string>M</string>
 						<string>'月'</string>
 						<string>d</string>
@@ -267,16 +265,16 @@
 		<key>Zarya-TLE</key>
 		<dict>
 			<key>time</key>
-			<real>1695709240.772104</real>
+			<real>1699985001.7956982</real>
 			<key>tle</key>
 			<string>ISS (ZARYA)             
-1 25544U 98067A   23268.90695314  .00020709  00000+0  37398-3 0  9998
-2 25544  51.6420 189.6406 0005969  58.7305 344.2294 15.49673750417413</string>
+1 25544U 98067A   23318.50989808  .00015161  00000+0  27969-3 0  9993
+2 25544  51.6429 303.9579 0000883 289.3004 213.8193 15.49318641425101</string>
 		</dict>
 		<key>language</key>
 		<string>zh-TW</string>
 	</dict>
 	<key>version</key>
-	<string>6.72</string>
+	<string>6.73</string>
 </dict>
 </plist>
