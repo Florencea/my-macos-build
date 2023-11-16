@@ -44,13 +44,16 @@ set +o errexit
 NPM_ENGINE_SATISFIED="$(npx -y semver -r "$LATEST_NPM_NODE_ENGINE" "$LOCAL_NODE_VERSION")"
 set -o errexit
 CURRENT_NPM_VERSION="$(npm -v)"
-if ! [ -z "$NODE_UPDATED" ]; then
-  if [ -z "$NPM_ENGINE_SATISFIED" ]; then
-    printf "Latest npm needs Node.js \033[1;36m$LATEST_NPM_NODE_ENGINE\033[0m, use bundled npm\n"
-  elif ! [ "$LATEST_NPM_VERSION" = "$CURRENT_NPM_VERSION" ]; then
+
+if ! [ -z "$NPM_ENGINE_SATISFIED" ]; then
+  if ! [ "$LATEST_NPM_VERSION" = "$CURRENT_NPM_VERSION" ]; then
     printf "Latest npm version: \033[1;36m$LATEST_NPM_VERSION\033[0m, local: \033[1;31m$CURRENT_NPM_VERSION\033[0m, install from remote\n"
     npm install --audit false --fund false --loglevel silent --progress false --global true npm
     export PATH="$(npm config get prefix)/bin:$PATH"
+  fi
+else
+  if ! [ -z "$NODE_UPDATED" ]; then
+    printf "Latest npm needs Node.js \033[1;36m$LATEST_NPM_NODE_ENGINE\033[0m, use bundled npm\n"
   fi
 fi
 
