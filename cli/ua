@@ -18,7 +18,7 @@ brew upgrade
 
 ### Update Node.js
 ### Change this line for perfer version "lts"
-PERFER_NODEJS_VERSION="lts"
+PERFER_NODEJS_VERSION="18"
 ###
 NODEJS_INFO="$(curl -fsSL https://nodejs.org/download/release/index.json)"
 PERFER_NODEJS_REMOTE_VERSION="$(echo $NODEJS_INFO | jq -cr --arg NODE_V "$PERFER_NODEJS_VERSION" 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .version | startswith($NODE_V) ) | .version )')"
