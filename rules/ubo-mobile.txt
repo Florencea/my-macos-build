@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2023-09-29
+! Last updated: 2023-11-20
 
 ! Note: These rules are optimized for Firefox
 
@@ -474,6 +474,7 @@ wnacg.com##.imgBox li .ImgA img:style(border: none !important)
 wnacg.com##.imgBox li .ImgA img:style(box-shadow: none !important)
 wnacg.com##.imgBox li .ImgA img:style(height: 16em !important)
 wnacg.com##.imgBox li .ImgA img:style(object-fit: cover !important)
+wnacg.com##.imgBox li .ImgA img:style(border-radius: 0 !important)
 wnacg.com##.imgBox li .ImgA img[src='loading.jpg']:style(filter: brightness(12%) !important)
 wnacg.com##.imgBox li .ImgA img[src='loading.jpg']:style(min-height: 250px !important)
 wnacg.com##.imgBox li .ImgA:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
@@ -483,6 +484,8 @@ wnacg.com##.imgBox li .txtA:matches-media((prefers-color-scheme: light)):style(c
 wnacg.com##.imgBox li .txtA:style(font-size: 1em !important)
 wnacg.com##.imgBox li .txtA:style(height: 5em !important)
 wnacg.com##.imgBox li .txtA:style(line-height: 1.25em !important)
+wnacg.com##.imgBox li .info:style(overflow: unset !important)
+wnacg.com##.imgBox li .info:style(word-break: keep-all !important)
 wnacg.com##.imgBox:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
 wnacg.com##.imgBox:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
 wnacg.com##.imgBox:style(margin: 0 !important)
@@ -573,6 +576,7 @@ wnacg.com##html:style(font-size: 12px)
 wnacg.com##img[src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"]:style(visibility: hidden)
 wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(height: 158px !important)
 wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(opacity: 0 !important)
+wnacg.com###classify_container > li::before:style(content: none !important)
 
 ! [SITE] 18av.tv
 18av.tv##^body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"])
