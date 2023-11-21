@@ -324,7 +324,7 @@
       "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBFeGhlbnRhaSDlhKrljJbohbPmnKwKLy8gQG5hbWVzcGFjZSAgICBWaW9sZW50bW9ua2V5IFNjcmlwdHMKLy8gQHZlcnNpb24gICAgICAyMDIzLjA5LjEzCi8vIEBtYXRjaCAgICAgICAgaHR0cHM6Ly9leGhlbnRhaS5vcmcvKgovLyA9PS9Vc2VyU2NyaXB0PT0KCnRyeSB7CiAgY29uc3QgZGlzcGxheVZhbHVlID0gZG9jdW1lbnQ/LnF1ZXJ5U2VsZWN0b3IoIm9wdGlvblt2YWx1ZT0ndCddIik/LnBhcmVudEVsZW1lbnQ/LnZhbHVlOwogIGNvbnN0IGlzVGh1bWJuYWlsRGlzcGxheSA9IGRpc3BsYXlWYWx1ZSA9PT0gInQiOwogIGlmKGRpc3BsYXlWYWx1ZSAmJiAhaXNUaHVtYm5haWxEaXNwbGF5KSB7CiAgICBjb25zdCBjdXJyZW50VXJsID0gbmV3IFVSTChkb2N1bWVudC5sb2NhdGlvbik7CiAgICBjdXJyZW50VXJsLnNlYXJjaFBhcmFtcy5hcHBlbmQoImlubGluZV9zZXQiLCAiZG1fdCIpOwogICAgZG9jdW1lbnQubG9jYXRpb24gPSBjdXJyZW50VXJsOwogIH0KfSBjYXRjaCB7fQo="
     },
     {
-      "name": "Inter Font Loader",
+      "name": "External Font Loader",
       "options": {
         "check_for_updates": false,
         "comment": null,
@@ -360,7 +360,7 @@
       "enabled": true,
       "position": 7,
       "uuid": "05bf019b-ceae-4096-999d-afe998e7072f",
-      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBJbnRlciBGb250IExvYWRlcgovLyBAbmFtZXNwYWNlICAgIFZpb2xlbnRtb25rZXkgU2NyaXB0cwovLyBAdmVyc2lvbiAgICAgIDIwMjMuMTEuMjEKLy8gQGluY2x1ZGUgICAgICBodHRwKgovLyA9PS9Vc2VyU2NyaXB0PT0KCnRyeXsKICAgIGNvbnN0IGxpbmsgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJsaW5rIik7CiAgICBsaW5rLnJlbCA9ICJzdHlsZXNoZWV0IjsKICAgIGxpbmsuaHJlZiA9ICJodHRwczovL3JzbXMubWUvaW50ZXIvaW50ZXIuY3NzIjsKICAgIGRvY3VtZW50LmhlYWQucHJlcGVuZChsaW5rKTsKfSBjYXRjaCB7fQ=="
+      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBFeHRlcm5hbCBGb250IExvYWRlcgovLyBAbmFtZXNwYWNlICAgIFZpb2xlbnRtb25rZXkgU2NyaXB0cwovLyBAdmVyc2lvbiAgICAgIDIwMjMuMTEuMjEKLy8gQGluY2x1ZGUgICAgICBodHRwKgovLyA9PS9Vc2VyU2NyaXB0PT0KCnRyeSB7CglbImh0dHBzOi8vcnNtcy5tZS9pbnRlci9pbnRlci5jc3MiLAoJCSJodHRwczovL2ZvbnRzLmNkbmZvbnRzLmNvbS9jc3MvamV0YnJhaW5zLW1vbm8iCgldLmZvckVhY2goKGhyZWYpID0+IHsKCQljb25zdCBsaW5rID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgibGluayIpOwoJCWxpbmsucmVsID0gInN0eWxlc2hlZXQiOwoJCWxpbmsuaHJlZiA9IGhyZWY7CgkJZG9jdW1lbnQuaGVhZC5wcmVwZW5kKGxpbmspOwoJfSk7Cn0gY2F0Y2gge30="
     }
   ],
   "settings": {
