@@ -59,7 +59,7 @@ return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").co
 
 - `fenix/app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
 
-- Comment this part (Line 100 ~ 123)
+- Comment this part (Line 105 ~ 128)
 
 ```kotlin
 val isPrivate = (activity as HomeActivity).browsingModeManager.mode.isPrivate
@@ -88,7 +88,7 @@ val leadingAction = if (isPrivate && context.settings().feltPrivateBrowsingEnabl
 browserToolbarView.view.addNavigationAction(leadingAction)
 ```
 
-- Comment this part (Line 127 ~ 149)
+- Comment this part (Line 132 ~ 154)
 
 ```kotlin
 val readerModeAction =
@@ -116,7 +116,7 @@ val readerModeAction =
 browserToolbarView.view.addPageAction(readerModeAction)
 ```
 
-- Comment this part (Line 159 ~ 178)
+- Comment this part (Line 165 ~ 184)
 
 ```kotlin
 readerViewFeature.set(
@@ -141,7 +141,7 @@ readerViewFeature.set(
         )
 ```
 
-- Change Line 436
+- Change Line 499
 
 ```kotlin
 return readerViewFeature.onBackPressed() || super.onBackPressed()
@@ -153,7 +153,7 @@ return super.onBackPressed()
 
 - `fenix/app/src/main/java/org/mozilla/fenix/utils/Settings.kt`
 
-- Change Line 380 `default = false`
+- Change Line 382 `default = false`
 - Disable History Suggestions
 
 ```kotlin
@@ -163,7 +163,7 @@ val shouldShowHistorySuggestions by booleanPreference(
 )
 ```
 
-- Change Line 390 `default = false`
+- Change Line 392 `default = false`
 - Disable SyncedTabs Suggestions
 
 ```kotlin
@@ -173,7 +173,7 @@ val shouldShowSyncedTabsSuggestions by booleanPreference(
 )
 ```
 
-- Change Line 395 `default = false`
+- Change Line 397 `default = false`
 - Disable Clipboard Suggestions
 
 ```kotlin
@@ -183,7 +183,7 @@ val shouldShowClipboardSuggestions by booleanPreference(
 )
 ```
 
-- Change Line 989 `default = false`
+- Change Line 997 `default = false`
 - Disable Search Suggestions
 
 ```kotlin
@@ -193,7 +193,7 @@ val shouldShowSearchSuggestions by booleanPreference(
 )
 ```
 
-- Change Line 994 `default = false`
+- Change Line 1002 `default = false`
 - Disable Autocomplete In Awesomebar
 
 ```kotlin
@@ -203,7 +203,7 @@ val shouldAutocompleteInAwesomebar by booleanPreference(
 )
 ```
 
-- Change Line 1183 `featureFlag = false`
+- Change Line 1189 `featureFlag = false`
 - Disable Voice Search
 
 ```kotlin
@@ -213,7 +213,7 @@ var shouldShowVoiceSearch by booleanPreference(
 )
 ```
 
-- Change Line 1655 `featureFlag = false`
+- Change Line 1663 `featureFlag = false`
 - Disable Unified Search
 
 ```kotlin
@@ -234,11 +234,10 @@ var showUnifiedSearchFeature by lazyFeatureFlagPreference(
 .aboutConfigEnabled(true)
 ```
 
-- Enable install Addons in web store (Line 117-118)
+- Enable install Addons in web store (Line 117)
 
 ```kotlin
 .extensionsProcessEnabled(true)
-.extensionsWebAPIEnabled(true)
 ```
 
 - Disable Safebrowsing, Replace whole `if` block under comments
