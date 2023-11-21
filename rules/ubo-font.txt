@@ -3,15 +3,15 @@
 ! Last updated: 2023-11-21
 
 ! CSS variable
-*##html:style(--ubo-custom-font-sans-serif: "Inter Variable", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+*##html:style(--ubo-custom-font-sans-serif: InterVariable, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##html:style(--ubo-custom-font-monospace: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace)
 *##html:style(--ubo-custom-font-feature: "calt", "dlig", "ss01", "cv05", "cv08", "tnum", "opsz")
 
 ! global
-*##html:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-*##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-*##input:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-*##textarea:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+*##html:style(font-family: var(--ubo-custom-font-sans-serif))
+*##body:style(font-family: var(--ubo-custom-font-sans-serif))
+*##input:style(font-family: var(--ubo-custom-font-sans-serif))
+*##textarea:style(font-family: var(--ubo-custom-font-sans-serif))
 *##code:style(font-family: var(--ubo-custom-font-monospace) !important)
 *##kbd:style(font-family: var(--ubo-custom-font-monospace) !important)
 *##pre:style(font-family: var(--ubo-custom-font-monospace) !important)
@@ -30,6 +30,9 @@
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+
+! [SITE] 9to5google.com
+9to5google.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] bitbucket.org
 bitbucket.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -71,6 +74,7 @@ google.com###result-stats:style(font-family: var(--ubo-custom-font-sans-serif) !
 google.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##html:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##input:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+google.com##textarea:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##h1:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] inside.com.tw
@@ -82,11 +86,18 @@ www.ithome.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !im
 ! [SITE] macrumors.com
 macrumors.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
+! [SITE] nextjs.org
+nextjs.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+
 ! [SITE] nyaa.si
 nyaa.si##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] pts.org.tw
 pts.org.tw##.post-article:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+
+! [SITE] react.dev
+react.dev##.font-text:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+react.dev##.font-display:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] techbang.com
 techbang.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
