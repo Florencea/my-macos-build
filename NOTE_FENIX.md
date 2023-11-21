@@ -203,7 +203,7 @@ val shouldAutocompleteInAwesomebar by booleanPreference(
 )
 ```
 
-- Change Line 1189 `featureFlag = false`
+- Change Line 1189 `default = false`
 - Disable Voice Search
 
 ```kotlin
@@ -213,13 +213,13 @@ var shouldShowVoiceSearch by booleanPreference(
 )
 ```
 
-- Change Line 1663 `featureFlag = false`
+- Change Line 1662 `default = false`, 1663 `featureFlag = false`
 - Disable Unified Search
 
 ```kotlin
 var showUnifiedSearchFeature by lazyFeatureFlagPreference(
     key = appContext.getPreferenceKey(R.string.pref_key_show_unified_search_2),
-    default = { FxNimbus.features.unifiedSearch.value().enabled },
+    default = { false },
     featureFlag = false,
 )
 ```
