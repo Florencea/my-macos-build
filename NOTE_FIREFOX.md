@@ -18,7 +18,7 @@ Mozilla/5.0 (Android <ANDROID_VERSION>; Mobile; rv:109.0) Gecko/<FIREFOX_MAJOR_V
 - Example
 
 ```text
-Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/119.0 Firefox/119.0
+Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/120.0 Firefox/120.0
 ```
 
 ### Google Pixel 7a
