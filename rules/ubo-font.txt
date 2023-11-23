@@ -3,7 +3,7 @@
 ! Last updated: 2023-11-23
 
 ! CSS variable
-*##html:style(--ubo-custom-font-sans-serif: Inter, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
+*##html:style(--ubo-custom-font-sans-serif: InterVariable, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##html:style(--ubo-custom-font-monospace: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace)
 
 ! global
@@ -23,6 +23,8 @@
 *##input:style(outline: none !important)
 *##select:style(outline: none !important)
 *##button:style(outline: none !important)
+! fix chrome font-feature-settings
+*##html:style(font-feature-settings: 'liga' 1, 'calt' 1)
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
