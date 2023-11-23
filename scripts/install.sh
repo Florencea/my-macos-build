@@ -87,6 +87,9 @@ printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"
 printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
 export PATH="$(npm config get prefix)/bin:$PATH"
 npm install --audit false --fund false --loglevel error --progress false --global true npm
+if [ -x "$(command -v corepack)" ]; then
+  corepack enable
+fi
 brew install gcc
 brew install git
 brew install jq

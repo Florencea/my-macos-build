@@ -60,7 +60,11 @@ else
   fi
 fi
 
-### Print current node/npm version
+if [ -x "$(command -v corepack)" ]; then
+  corepack enable
+fi
+
+### Print current node/npm/yarn version
 CURRENT_LOCAL_VERSION="$(node -v)"
 CURRENT_NPM_VERSION="$(npm -v)"
 printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
