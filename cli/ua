@@ -36,34 +36,7 @@ elif ! [ "$PERFER_NODEJS_REMOTE_VERSION" = "$CURRENT_LOCAL_VERSION" ]; then
   fnm install "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
   fnm default "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
   fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
-  NODE_UPDATED="true"
 fi
-
-### Update npm
-LATEST_NPM_VERSION="$(npm view npm@latest version)"
-LATEST_NPM_NODE_ENGINE="$(npm view --json npm@latest engines | jq -cr '.node')"
-LOCAL_NODE_VERSION="$(node -v)"
-set +o errexit
-NPM_ENGINE_SATISFIED="$(npx -y semver -r "$LATEST_NPM_NODE_ENGINE" "$LOCAL_NODE_VERSION")"
-set -o errexit
-CURRENT_NPM_VERSION="$(npm -v)"
-
-if ! [ -z "$NPM_ENGINE_SATISFIED" ]; then
-  if ! [ "$LATEST_NPM_VERSION" = "$CURRENT_NPM_VERSION" ]; then
-    printf "Latest npm version: \033[1;36m$LATEST_NPM_VERSION\033[0m, local: \033[1;31m$CURRENT_NPM_VERSION\033[0m, install from remote\n"
-    npm install --audit false --fund false --loglevel silent --progress false --global true npm
-    export PATH="$(npm config get prefix)/bin:$PATH"
-  fi
-else
-  if ! [ -z "$NODE_UPDATED" ]; then
-    printf "Latest npm needs Node.js \033[1;36m$LATEST_NPM_NODE_ENGINE\033[0m, use bundled npm\n"
-  fi
-fi
-
-### Print current node/npm/yarn version
-CURRENT_LOCAL_VERSION="$(node -v)"
-CURRENT_NPM_VERSION="$(npm -v)"
-printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
 
 ### Sync git projects
 cd "$(dirname $0)"
