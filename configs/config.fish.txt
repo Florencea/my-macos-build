@@ -10,4 +10,5 @@ end
 fish_add_path "/opt/homebrew/bin"
 fish_add_path "/opt/homebrew/sbin"
 fish_add_path "/opt/homebrew/opt/curl/bin"
+fish_add_path "/opt/homebrew/opt/node@20/bin"
 fish_add_path "$HOME/Codespaces/my-macos-build/cli"

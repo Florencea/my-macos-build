@@ -4,39 +4,11 @@ set -o pipefail
 
 ### Check cmd exist
 chkcmd "brew"
-chkcmd "curl"
-chkcmd "fnm"
 chkcmd "git"
-chkcmd "jq"
-chkcmd "node"
-chkcmd "npm"
-chkcmd "npx"
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"
 brew upgrade
-
-### Update Node.js
-### Change this line for perfer version "lts"
-PERFER_NODEJS_VERSION="lts"
-###
-NODEJS_INFO="$(curl -fsSL https://nodejs.org/download/release/index.json)"
-PERFER_NODEJS_REMOTE_VERSION="$(echo $NODEJS_INFO | jq -cr --arg NODE_V "$PERFER_NODEJS_VERSION" 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .version | startswith($NODE_V) ) | .version )')"
-LATEST_LTS_VERSION="$(echo $NODEJS_INFO | jq -cr 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .lts ) | .version )')"
-if [ "$PERFER_NODEJS_VERSION" = "lts" ]; then
-  PERFER_NODEJS_REMOTE_VERSION="$LATEST_LTS_VERSION"
-fi
-CURRENT_LOCAL_VERSION="$(node -v)"
-if [ "$PERFER_NODEJS_REMOTE_VERSION" = "null" ]; then
-  LATEST_CURRENT_VERSION="$(echo $NODEJS_INFO | jq -cr 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | .version )')"
-  printf "Perfer Node.js version: \033[1;31m$PERFER_NODEJS_VERSION\033[0m, no remote verions match\n"
-  printf "Latest LTS: \033[1;36m$LATEST_LTS_VERSION\033[0m, Current: \033[1;36m$LATEST_CURRENT_VERSION\033[0m\n"
-elif ! [ "$PERFER_NODEJS_REMOTE_VERSION" = "$CURRENT_LOCAL_VERSION" ]; then
-  printf "Perfer Node.js version: \033[1;32m$PERFER_NODEJS_VERSION\033[0m, remote: \033[1;36m$PERFER_NODEJS_REMOTE_VERSION\033[0m, local: \033[1;31m$CURRENT_LOCAL_VERSION\033[0m, install from remote\n"
-  fnm install "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
-  fnm default "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
-  fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
-fi
 
 ### Sync git projects
 cd "$(dirname $0)"
