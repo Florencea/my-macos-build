@@ -25,10 +25,10 @@
 *##select:style(outline: none !important)
 *##button:style(outline: none !important)
 ! font feature
-*##html:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
-*##body:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
-*##input:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
-*##textarea:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##html:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##body:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##input:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##textarea:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
