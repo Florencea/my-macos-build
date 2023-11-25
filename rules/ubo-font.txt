@@ -8,27 +8,16 @@
 *##html:style(--ubo-custom-font-feature: "calt", "dlig", "cv05", "cv08", "opsz")
 
 ! global
-*##html:style(font-family: var(--ubo-custom-font-sans-serif))
-*##body:style(font-family: var(--ubo-custom-font-sans-serif))
-*##input:style(font-family: var(--ubo-custom-font-sans-serif))
-*##textarea:style(font-family: var(--ubo-custom-font-sans-serif))
-*##code:style(font-family: var(--ubo-custom-font-monospace) !important)
-*##kbd:style(font-family: var(--ubo-custom-font-monospace) !important)
-*##pre:style(font-family: var(--ubo-custom-font-monospace) !important)
-*##samp:style(font-family: var(--ubo-custom-font-monospace) !important)
+*##:is(html, body, input, textarea):style(font-family: var(--ubo-custom-font-sans-serif))
+*##:is(code, kbd, pre, samp):style(font-family: var(--ubo-custom-font-monospace) !important)
 ! render
 *##body:style(-webkit-font-smoothing: auto !important)
 *##body:style(-moz-osx-font-smoothing: auto !important)
 ! outline
-*##a:style(outline: none !important)
-*##input:style(outline: none !important)
-*##select:style(outline: none !important)
-*##button:style(outline: none !important)
+*##:is(a, input, select, button):style(outline: none !important)
 ! font feature
-*##html:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
-*##body:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
-*##input:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
-*##textarea:matches-css(font-family: var(--ubo-custom-font-sans-serif)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##:is(code, kbd, pre, samp):style(font-feature-settings: normal !important)
+*##:not(:is(code, kbd, pre, samp)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -101,6 +90,10 @@ pts.org.tw##.post-article:style(font-family: var(--ubo-custom-font-sans-serif) !
 react.dev##.font-text:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 react.dev##.font-display:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
+! [SITE] stackoverflow.com
+stackoverflow.com##body:style(--ff-sans: var(--ubo-custom-font-sans-serif) !important)
+stackoverflow.com##body:style(--ff-mono: var(--ubo-custom-font-monospace) !important)
+
 ! [SITE] techbang.com
 techbang.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
@@ -129,3 +122,4 @@ xfastest.com##.vw-review-item-title:style(font-family: var(--ubo-custom-font-san
 xfastest.com##.vw-pagination-load-more:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 xfastest.com##.vw-copyright:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 xfastest.com##.type-post p:style(font-family: var(--ubo-custom-font-sans-serif) !important)
+
