@@ -27,6 +27,8 @@
 ! font feature
 *##html:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
 *##body:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##input:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
+*##textarea:style(font-feature-settings: var(--ubo-custom-font-feature) !important)
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
