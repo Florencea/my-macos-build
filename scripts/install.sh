@@ -49,6 +49,10 @@ git config --global core.ignorecase false
 brew tap homebrew/cask-versions
 brew tap homebrew/cask-fonts
 
+## Install essential fonts
+brew install --cask font-jetbrains-mono
+brew install --cask font-inter
+
 ### Install fish
 brew install fish
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
