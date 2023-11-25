@@ -235,6 +235,56 @@
       ]
     },
     {
+      "name": "關鍵評論網 優化腳本",
+      "options": {
+        "check_for_updates": false,
+        "comment": null,
+        "compat_foreach": false,
+        "compat_metadata": false,
+        "compat_powerful_this": null,
+        "compat_wrappedjsobject": false,
+        "compatopts_for_requires": true,
+        "noframes": null,
+        "override": {
+          "merge_connects": true,
+          "merge_excludes": true,
+          "merge_includes": true,
+          "merge_matches": true,
+          "orig_connects": [],
+          "orig_excludes": [],
+          "orig_includes": [],
+          "orig_matches": ["https://www.thenewslens.com/article/*"],
+          "orig_noframes": null,
+          "orig_run_at": "document-idle",
+          "use_blockers": [],
+          "use_connects": [],
+          "use_excludes": [],
+          "use_includes": [],
+          "use_matches": []
+        },
+        "run_at": null,
+        "sandbox": null,
+        "tab_types": null,
+        "unwrap": null
+      },
+      "storage": { "ts": 1700412032388, "data": {} },
+      "enabled": true,
+      "position": 5,
+      "uuid": "04055fe2-225e-4a1b-a6b7-819b780f85db",
+      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICDpl5zpjbXoqZXoq5bntrIg5YSq5YyW6IWz5pysCi8vIEBuYW1lc3BhY2UgICAgVmlvbGVudG1vbmtleSBTY3JpcHRzCi8vIEBtYXRjaCAgICAgICBodHRwczovL3d3dy50aGVuZXdzbGVucy5jb20vYXJ0aWNsZS8qCi8vIEByZXF1aXJlIGh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHZpb2xlbnRtb25rZXkvZG9tQDIKLy8gQGdyYW50ICAgICAgIG5vbmUKLy8gQHZlcnNpb24gICAgIDIwMjMuMDkuMDMKLy8gPT0vVXNlclNjcmlwdD09Cgpjb25zdCB0YXJnZXRFbGVtZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignbGkuYWxsLXJlYWQnKQpjb25zdCBjdXJyZW50UGF0aG5hbWUgPSB3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUKY29uc3QgaXNGdWxscGFnZSA9IGN1cnJlbnRQYXRobmFtZS5pbmNsdWRlcygnL2Z1bGxwYWdlJykKaWYodGFyZ2V0RWxlbWVudCAmJiAhaXNGdWxscGFnZSl7CiAgICBjb25zdCBmdWxsUGFnZVBhdGhuYW1lID0gYCR7Y3VycmVudFBhdGhuYW1lfS9mdWxscGFnZWAKICAgIHdpbmRvdy5sb2NhdGlvbi5yZXBsYWNlKGZ1bGxQYWdlUGF0aG5hbWUpCn0=",
+      "requires": [
+        {
+          "meta": {
+            "name": "dom@2",
+            "url": "https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2",
+            "ts": 1700412032387,
+            "mimetype": "text/plain"
+          },
+          "source": "LyoqCiAqIE1pbmlmaWVkIGJ5IGpzRGVsaXZyIHVzaW5nIFRlcnNlciB2NS4xOS4yLgogKiBPcmlnaW5hbCBmaWxlOiAvbnBtL0B2aW9sZW50bW9ua2V5L2RvbUAyLjEuNS9kaXN0L2luZGV4LmpzCiAqCiAqIERvIE5PVCB1c2UgU1JJIHdpdGggZHluYW1pY2FsbHkgZ2VuZXJhdGVkIGZpbGVzISBNb3JlIGluZm9ybWF0aW9uOiBodHRwczovL3d3dy5qc2RlbGl2ci5jb20vdXNpbmctc3JpLXdpdGgtZHluYW1pYy1maWxlcwogKi8KLyohIEB2aW9sZW50bW9ua2V5L2RvbSB2Mi4xLjUgfCBJU0MgTGljZW5zZSAqLwohZnVuY3Rpb24oZSl7InVzZSBzdHJpY3QiOwovKiEgQGdlcmEybGQvanN4LWRvbSB2Mi4yLjIgfCBJU0MgTGljZW5zZSAqL2NvbnN0IHQ9MSxuPTIscj0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLG89Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiLGk9e3Nob3c6byxhY3R1YXRlOm8saHJlZjpvfSxzPWU9PiJzdHJpbmciPT10eXBlb2YgZXx8Im51bWJlciI9PXR5cGVvZiBlLGM9ZT0+KG51bGw9PWU/dm9pZCAwOmUudnR5cGUpPT09dCx1PWU9PihudWxsPT1lP3ZvaWQgMDplLnZ0eXBlKT09PW47ZnVuY3Rpb24gbChlLHIsLi4ubyl7cmV0dXJuIGZ1bmN0aW9uKGUscil7bGV0IG87aWYoInN0cmluZyI9PXR5cGVvZiBlKW89dDtlbHNle2lmKCJmdW5jdGlvbiIhPXR5cGVvZiBlKXRocm93IG5ldyBFcnJvcigiSW52YWxpZCBWTm9kZSB0eXBlIik7bz1ufXJldHVybnt2dHlwZTpvLHR5cGU6ZSxwcm9wczpyfX0oZSxyPU9iamVjdC5hc3NpZ24oe30scix7Y2hpbGRyZW46MT09PW8ubGVuZ3RoP29bMF06b30pKX1mdW5jdGlvbiBhKGUpe3JldHVybiBlLmNoaWxkcmVufWNvbnN0IGY9e2lzU3ZnOiExfTtmdW5jdGlvbiBkKGUsdCl7QXJyYXkuaXNBcnJheSh0KXx8KHQ9W3RdKSwodD10LmZpbHRlcihCb29sZWFuKSkubGVuZ3RoJiZlLmFwcGVuZCguLi50KX1jb25zdCBwPXtjbGFzc05hbWU6ImNsYXNzIixsYWJlbEZvcjoiZm9yIn07ZnVuY3Rpb24gZyhlLHQsbixyKXtpZih0PXBbdF18fHQsITA9PT1uKWUuc2V0QXR0cmlidXRlKHQsIiIpO2Vsc2UgaWYoITE9PT1uKWUucmVtb3ZlQXR0cmlidXRlKHQpO2Vsc2V7Y29uc3Qgbz1yP2lbdF06dm9pZCAwO3ZvaWQgMCE9PW8/ZS5zZXRBdHRyaWJ1dGVOUyhvLHQsbik6ZS5zZXRBdHRyaWJ1dGUodCxuKX19ZnVuY3Rpb24gdihlLHQpe3JldHVybiBBcnJheS5pc0FycmF5KGUpP2UubWFwKChlPT52KGUsdCkpKS5yZWR1Y2UoKChlLHQpPT5lLmNvbmNhdCh0KSksW10pOm0oZSx0KX1mdW5jdGlvbiBtKGUsdD1mKXtpZihudWxsPT1lfHwiYm9vbGVhbiI9PXR5cGVvZiBlKXJldHVybiBudWxsO2lmKGUgaW5zdGFuY2VvZiBOb2RlKXJldHVybiBlO2lmKHUoZSkpe2NvbnN0e3R5cGU6bixwcm9wczpyfT1lO2lmKG49PT1hKXtjb25zdCBlPWRvY3VtZW50LmNyZWF0ZURvY3VtZW50RnJhZ21lbnQoKTtpZihyLmNoaWxkcmVuKXtkKGUsdihyLmNoaWxkcmVuLHQpKX1yZXR1cm4gZX1yZXR1cm4gbShuKHIpLHQpfWlmKHMoZSkpcmV0dXJuIGRvY3VtZW50LmNyZWF0ZVRleHROb2RlKGAke2V9YCk7aWYoYyhlKSl7bGV0IG47Y29uc3R7dHlwZTpvLHByb3BzOml9PWU7aWYodC5pc1N2Z3x8InN2ZyIhPT1vfHwodD1PYmplY3QuYXNzaWduKHt9LHQse2lzU3ZnOiEwfSkpLG49dC5pc1N2Zz9kb2N1bWVudC5jcmVhdGVFbGVtZW50TlMocixvKTpkb2N1bWVudC5jcmVhdGVFbGVtZW50KG8pLGZ1bmN0aW9uKGUsdCxuKXtmb3IoY29uc3QgciBpbiB0KWlmKCJrZXkiIT09ciYmImNoaWxkcmVuIiE9PXImJiJyZWYiIT09cilpZigiZGFuZ2Vyb3VzbHlTZXRJbm5lckhUTUwiPT09cillLmlubmVySFRNTD10W3JdLl9faHRtbDtlbHNlIGlmKCJpbm5lckhUTUwiPT09cnx8InRleHRDb250ZW50Ij09PXJ8fCJpbm5lclRleHQiPT09cnx8InZhbHVlIj09PXImJlsidGV4dGFyZWEiLCJzZWxlY3QiXS5pbmNsdWRlcyhlLnRhZ05hbWUpKXtjb25zdCBuPXRbcl07bnVsbCE9biYmKGVbcl09bil9ZWxzZSByLnN0YXJ0c1dpdGgoIm9uIik/ZVtyLnRvTG93ZXJDYXNlKCldPXRbcl06ZyhlLHIsdFtyXSxuLmlzU3ZnKX0obixpLHQpLGkuY2hpbGRyZW4pe2xldCBlPXQ7dC5pc1N2ZyYmImZvcmVpZ25PYmplY3QiPT09byYmKGU9T2JqZWN0LmFzc2lnbih7fSxlLHtpc1N2ZzohMX0pKTtjb25zdCByPXYoaS5jaGlsZHJlbixlKTtudWxsIT1yJiZkKG4scil9Y29uc3R7cmVmOnN9PWk7cmV0dXJuImZ1bmN0aW9uIj09dHlwZW9mIHMmJnMobiksbn10aHJvdyBuZXcgRXJyb3IoIm1vdW50OiBJbnZhbGlkIFZub2RlISIpfWZ1bmN0aW9uIGgoZSl7cmV0dXJuIG0oZSl9dmFyIHk7Y29uc3QgYj1PYmplY3QuYXNzaWduKCJ1bmRlZmluZWQiIT10eXBlb2YgVk0mJihudWxsPT0oeT1WTSk/dm9pZCAwOnkudmVyc2lvbnMpfHx7fSx7ZG9tOiIyLjEuNSJ9KTtlLkZyYWdtZW50PWEsZS5jcmVhdGVFbGVtZW50PWwsZS5nZXRFbGVtZW50c0J5WFBhdGg9ZnVuY3Rpb24oZSx0PWRvY3VtZW50KXtjb25zdCBuPWRvY3VtZW50LmV2YWx1YXRlKGUsdCxudWxsLFhQYXRoUmVzdWx0LkFOWV9UWVBFLG51bGwpLHI9W107bGV0IG87Zm9yKDtvPW4uaXRlcmF0ZU5leHQoKTspci5wdXNoKG8pO3JldHVybiByfSxlLmdldFRleHRWYWx1ZXM9ZnVuY3Rpb24gZSh0KXtyZXR1cm4gdC5ub2RlVHlwZT09PU5vZGUuVEVYVF9OT0RFP1t0Lm5vZGVWYWx1ZV06dC5ub2RlVHlwZSE9PU5vZGUuRUxFTUVOVF9OT0RFfHxbInNjcmlwdCIsInN0eWxlIl0uaW5jbHVkZXModC50YWdOYW1lLnRvTG93ZXJDYXNlKCkpP1tdOkFycmF5LmZyb20odC5jaGlsZE5vZGVzKS5mbGF0TWFwKGUpfSxlLmg9bCxlLmhtPWZ1bmN0aW9uKC4uLmUpe3JldHVybiBoKGwoLi4uZSkpfSxlLm09aCxlLm1vdW50RG9tPWgsZS5vYnNlcnZlPWZ1bmN0aW9uKGUsdCxuKXtjb25zdCByPW5ldyBNdXRhdGlvbk9ic2VydmVyKCgoZSxuKT0+e3QoZSxuKSYmbygpfSkpO3Iub2JzZXJ2ZShlLE9iamVjdC5hc3NpZ24oe2NoaWxkTGlzdDohMCxzdWJ0cmVlOiEwfSxuKSk7Y29uc3Qgbz0oKT0+ci5kaXNjb25uZWN0KCk7cmV0dXJuIG99LGUudmVyc2lvbnM9Yn0odGhpcy5WTT10aGlzLlZNfHx7fSk7Ci8vIyBzb3VyY2VNYXBwaW5nVVJMPS9zbS81NzQ0ZmM4NDAyZjhkY2I1MzFkN2E4YTdhY2Q3MjNlZmNiZTFjYzUzNjI3ZDg3NGY3YzMzMGIwZDUwMzZkMTE1Lm1hcA=="
+        }
+      ]
+    },
+    {
       "name": "Exhentai 優化腳本",
       "options": {
         "check_for_updates": false,
@@ -269,7 +319,7 @@
       },
       "storage": { "ts": 1700412032389, "data": {} },
       "enabled": true,
-      "position": 5,
+      "position": 6,
       "uuid": "b808da23-430a-4460-b1e7-e9900d766237",
       "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBFeGhlbnRhaSDlhKrljJbohbPmnKwKLy8gQG5hbWVzcGFjZSAgICBWaW9sZW50bW9ua2V5IFNjcmlwdHMKLy8gQHZlcnNpb24gICAgICAyMDIzLjA5LjEzCi8vIEBtYXRjaCAgICAgICAgaHR0cHM6Ly9leGhlbnRhaS5vcmcvKgovLyA9PS9Vc2VyU2NyaXB0PT0KCnRyeSB7CiAgY29uc3QgZGlzcGxheVZhbHVlID0gZG9jdW1lbnQ/LnF1ZXJ5U2VsZWN0b3IoIm9wdGlvblt2YWx1ZT0ndCddIik/LnBhcmVudEVsZW1lbnQ/LnZhbHVlOwogIGNvbnN0IGlzVGh1bWJuYWlsRGlzcGxheSA9IGRpc3BsYXlWYWx1ZSA9PT0gInQiOwogIGlmKGRpc3BsYXlWYWx1ZSAmJiAhaXNUaHVtYm5haWxEaXNwbGF5KSB7CiAgICBjb25zdCBjdXJyZW50VXJsID0gbmV3IFVSTChkb2N1bWVudC5sb2NhdGlvbik7CiAgICBjdXJyZW50VXJsLnNlYXJjaFBhcmFtcy5hcHBlbmQoImlubGluZV9zZXQiLCAiZG1fdCIpOwogICAgZG9jdW1lbnQubG9jYXRpb24gPSBjdXJyZW50VXJsOwogIH0KfSBjYXRjaCB7fQo="
     }
