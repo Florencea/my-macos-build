@@ -5,7 +5,6 @@
 ! CSS variable
 *##html:style(--ubo-custom-font-sans-serif: InterVariable, system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##html:style(--ubo-custom-font-monospace: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace)
-*##html:style(--ubo-custom-font-feature: "opsz")
 
 ! global
 *##:is(html, body, input, textarea):style(font-family: var(--ubo-custom-font-sans-serif))
@@ -15,9 +14,6 @@
 *##body:style(-moz-osx-font-smoothing: auto !important)
 ! outline
 *##:is(a, input, select, button):style(outline: none !important)
-! font feature
-*##:is(code, kbd, pre, samp):style(font-feature-settings: normal !important)
-*##:not(:is(code, kbd, pre, samp)):style(font-feature-settings: var(--ubo-custom-font-feature) !important)
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
