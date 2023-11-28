@@ -4,6 +4,7 @@
 
 - [Media Note](NOTE_MEDIA.md)
 - [Firefox Note](NOTE_FIREFOX.md)
+- [Fenix Note](NOTE_FENIX.md)
 - [macOS Note](NOTE_MACOS.md)
 
 ## Extension Configs
