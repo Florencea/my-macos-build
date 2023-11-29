@@ -150,12 +150,16 @@
       "options": {
         "check_for_updates": false,
         "comment": null,
-        "compat_foreach": false,
-        "compat_metadata": false,
-        "compat_powerful_this": null,
-        "compat_wrappedjsobject": false,
         "compatopts_for_requires": true,
+        "compat_wrappedjsobject": false,
+        "compat_metadata": false,
+        "compat_foreach": false,
+        "compat_powerful_this": null,
+        "sandbox": null,
         "noframes": null,
+        "unwrap": null,
+        "run_at": null,
+        "tab_types": null,
         "override": {
           "merge_connects": true,
           "merge_excludes": true,
@@ -172,17 +176,13 @@
           "use_excludes": [],
           "use_includes": [],
           "use_matches": []
-        },
-        "run_at": null,
-        "sandbox": null,
-        "tab_types": null,
-        "unwrap": null
+        }
       },
       "storage": { "ts": 1700412032384, "data": {} },
       "enabled": true,
       "position": 3,
       "uuid": "ba6cb105-578f-440c-a2f3-b7841caca041",
-      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICB3bmFjZyDlhKrljJbohbPmnKwKLy8gQG5hbWVzcGFjZSAgICAgVmlvbGVudG1vbmtleSBTY3JpcHRzCi8vIEB2ZXJzaW9uICAgICAgMjAyMy4wOC4zMQovLyBAbWF0Y2ggICAgICAgIGh0dHBzOi8vd25hY2cuY29tLyoKLy8gPT0vVXNlclNjcmlwdD09CgokKCdoZWFkJykuYXBwZW5kKAogICc8c3R5bGU+QG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTogbGlnaHQpeyAuYmdIaWdobGlnaHR7YmFja2dyb3VuZC1jb2xvcjogI2YwZjBmNCAhaW1wb3J0YW50O30gfUBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspeyAuYmdIaWdobGlnaHR7YmFja2dyb3VuZC1jb2xvcjogIzMzMzEzYyAhaW1wb3J0YW50O30gfTwvc3R5bGU+JwopCgokKCcuSW1nQScpLmVhY2goZnVuY3Rpb24gKCkgewogICQodGhpcykuYXR0cih7CiAgICBocmVmOiBgL3Bob3Rvcy0kewogICAgICBwYXJzZUludCgKICAgICAgICAkKHRoaXMpLnNpYmxpbmdzKCcuaW5mbycpLnRleHQoKS5zcGxpdCgn5by1JylbMF0uc3BsaXQoJyAnKS5wb3AoKQogICAgICApID4gMTAKICAgICAgICA/ICdzbGlkZScKICAgICAgICA6ICdsaXN0JwogICAgfS1haWQtJHskKHRoaXMpLmF0dHIoJ2hyZWYnKS5zcGxpdCgnLScpWzNdfWAsCiAgICB0YXJnZXQ6ICdfYmxhbmsnCiAgfSkKICBjb25zdCBpbWcgPSAkKHRoaXMpLmZpbmQoJ2ltZycpCiAgY29uc3QgY2ZzcmMgPSBpbWcuYXR0cignZGF0YS1jZnNyYycpCiAgaWYoY2ZzcmMpewogICAgICBpbWcuYXR0cih7IHNyYzogY2ZzcmMgfSkKICB9Cn0pCgokKCcubmF2ID4gbGkgPiBhJykuZWFjaChmdW5jdGlvbiAoKSB7CiAgJCh0aGlzKS50b2dnbGVDbGFzcygKICAgICdiZ0hpZ2hsaWdodCcsCiAgICAkKHRoaXMpLmF0dHIoJ2hyZWYnKSA9PT0gd2luZG93LmxvY2F0aW9uLnBhdGhuYW1lCiAgKQp9KQoKJCgnLmljb24uc2VyY2gnKS5jbGljaygoKSA9PiB7CiAgaWYgKCQoJyNzZXJDaCcpLmNzcygnZGlzcGxheScpID09PSAnYmxvY2snKSB7CiAgICAkKCcjc2VhcklucHV0JykuZm9jdXMoKQogIH0KfSkKCndpbmRvdy5oZWFkU2VyY2ggPSAoKSA9PiB7fQp3aW5kb3cuaG90VGFnID0gKCkgPT4ge30Kd2luZG93LnNlcmNoQWN0aW9uID0gKCkgPT4gJCgnZm9ybScpLnN1Ym1pdCgp"
+      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICB3bmFjZyDlhKrljJbohbPmnKwKLy8gQG5hbWVzcGFjZSAgICAgVmlvbGVudG1vbmtleSBTY3JpcHRzCi8vIEB2ZXJzaW9uICAgICAgMjAyMy4xMS4yOQovLyBAbWF0Y2ggICAgICAgIGh0dHBzOi8vd25hY2cuY29tLyoKLy8gPT0vVXNlclNjcmlwdD09CgokKCdoZWFkJykuYXBwZW5kKAogICc8c3R5bGU+QG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTogbGlnaHQpeyAuYmdIaWdobGlnaHR7YmFja2dyb3VuZC1jb2xvcjogI2YwZjBmNCAhaW1wb3J0YW50O30gfUBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspeyAuYmdIaWdobGlnaHR7YmFja2dyb3VuZC1jb2xvcjogIzMzMzEzYyAhaW1wb3J0YW50O30gfTwvc3R5bGU+JwopCgokKCcuSW1nQScpLmVhY2goZnVuY3Rpb24gKCkgewogICQodGhpcykuYXR0cih7CiAgICBocmVmOiBgL3Bob3Rvcy1saXN0LWFpZC0keyQodGhpcykuYXR0cignaHJlZicpLnNwbGl0KCctJylbM119YCwKICAgIHRhcmdldDogJ19ibGFuaycKICB9KQogIGNvbnN0IGltZyA9ICQodGhpcykuZmluZCgnaW1nJykKICBjb25zdCBjZnNyYyA9IGltZy5hdHRyKCdkYXRhLWNmc3JjJykKICBpZihjZnNyYyl7CiAgICAgIGltZy5hdHRyKHsgc3JjOiBjZnNyYyB9KQogIH0KfSkKCiQoJy5uYXYgPiBsaSA+IGEnKS5lYWNoKGZ1bmN0aW9uICgpIHsKICAkKHRoaXMpLnRvZ2dsZUNsYXNzKAogICAgJ2JnSGlnaGxpZ2h0JywKICAgICQodGhpcykuYXR0cignaHJlZicpID09PSB3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUKICApCn0pCgokKCcuaWNvbi5zZXJjaCcpLmNsaWNrKCgpID0+IHsKICBpZiAoJCgnI3NlckNoJykuY3NzKCdkaXNwbGF5JykgPT09ICdibG9jaycpIHsKICAgICQoJyNzZWFySW5wdXQnKS5mb2N1cygpCiAgfQp9KQoKd2luZG93LmhlYWRTZXJjaCA9ICgpID0+IHt9CndpbmRvdy5ob3RUYWcgPSAoKSA9PiB7fQp3aW5kb3cuc2VyY2hBY3Rpb24gPSAoKSA9PiAkKCdmb3JtJykuc3VibWl0KCk="
     },
     {
       "name": "漫畫人優化腳本",
