@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2023-10-16
+! Last updated: 2023-11-29
 
 ! CSS variable
 ! bg
@@ -212,6 +212,7 @@ pts.org.tw##.raw-html-embed
 pts.org.tw##.tag-list
 pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關)))
 pts.org.tw##.cookie-flex
+pts.org.tw##.article-title + div:has(>div>span>time)
 ! Styles
 pts.org.tw##body > .container > .row:style(justify-content: center !important)
 pts.org.tw##body > .container > .row > .col-lg-6:style(padding-bottom: 30px !important)
