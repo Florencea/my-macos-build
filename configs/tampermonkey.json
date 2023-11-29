@@ -322,45 +322,6 @@
       "position": 6,
       "uuid": "b808da23-430a-4460-b1e7-e9900d766237",
       "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBFeGhlbnRhaSDlhKrljJbohbPmnKwKLy8gQG5hbWVzcGFjZSAgICBWaW9sZW50bW9ua2V5IFNjcmlwdHMKLy8gQHZlcnNpb24gICAgICAyMDIzLjA5LjEzCi8vIEBtYXRjaCAgICAgICAgaHR0cHM6Ly9leGhlbnRhaS5vcmcvKgovLyA9PS9Vc2VyU2NyaXB0PT0KCnRyeSB7CiAgY29uc3QgZGlzcGxheVZhbHVlID0gZG9jdW1lbnQ/LnF1ZXJ5U2VsZWN0b3IoIm9wdGlvblt2YWx1ZT0ndCddIik/LnBhcmVudEVsZW1lbnQ/LnZhbHVlOwogIGNvbnN0IGlzVGh1bWJuYWlsRGlzcGxheSA9IGRpc3BsYXlWYWx1ZSA9PT0gInQiOwogIGlmKGRpc3BsYXlWYWx1ZSAmJiAhaXNUaHVtYm5haWxEaXNwbGF5KSB7CiAgICBjb25zdCBjdXJyZW50VXJsID0gbmV3IFVSTChkb2N1bWVudC5sb2NhdGlvbik7CiAgICBjdXJyZW50VXJsLnNlYXJjaFBhcmFtcy5hcHBlbmQoImlubGluZV9zZXQiLCAiZG1fdCIpOwogICAgZG9jdW1lbnQubG9jYXRpb24gPSBjdXJyZW50VXJsOwogIH0KfSBjYXRjaCB7fQo="
-    },
-    {
-      "name": "External Font Loader",
-      "options": {
-        "check_for_updates": false,
-        "comment": null,
-        "compatopts_for_requires": true,
-        "compat_wrappedjsobject": false,
-        "compat_metadata": false,
-        "compat_foreach": false,
-        "compat_powerful_this": null,
-        "sandbox": null,
-        "noframes": null,
-        "unwrap": null,
-        "run_at": null,
-        "tab_types": null,
-        "override": {
-          "merge_connects": true,
-          "merge_excludes": true,
-          "merge_includes": true,
-          "merge_matches": true,
-          "orig_connects": [],
-          "orig_excludes": [],
-          "orig_includes": ["http*"],
-          "orig_matches": [],
-          "orig_noframes": null,
-          "orig_run_at": "document-idle",
-          "use_blockers": [],
-          "use_connects": [],
-          "use_excludes": [],
-          "use_includes": [],
-          "use_matches": []
-        }
-      },
-      "storage": { "ts": 1700888800373, "data": {} },
-      "enabled": true,
-      "position": 7,
-      "uuid": "05bf019b-ceae-4096-999d-afe998e7072f",
-      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICBFeHRlcm5hbCBGb250IExvYWRlcgovLyBAbmFtZXNwYWNlICAgIFZpb2xlbnRtb25rZXkgU2NyaXB0cwovLyBAdmVyc2lvbiAgICAgIDIwMjMuMTEuMjUKLy8gQGluY2x1ZGUgICAgICBodHRwKgovLyA9PS9Vc2VyU2NyaXB0PT0KCnRyeSB7CiAgICBjb25zdCBpc01vYmlsZSA9IC9pUGhvbmV8aVBhZHxpUG9kfEFuZHJvaWQvaS50ZXN0KG5hdmlnYXRvci51c2VyQWdlbnQpOwogICAgaWYoaXNNb2JpbGUpewogICAgICAgIFsiaHR0cHM6Ly9yc21zLm1lL2ludGVyL2ludGVyLmNzcyIsCiAgICAgICAgICJodHRwczovL2ZvbnRzLmNkbmZvbnRzLmNvbS9jc3MvamV0YnJhaW5zLW1vbm8iCiAgICAgICAgXS5mb3JFYWNoKChocmVmKSA9PiB7CiAgICAgICAgICAgIGNvbnN0IGxpbmsgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJsaW5rIik7CiAgICAgICAgICAgIGxpbmsucmVsID0gInN0eWxlc2hlZXQiOwogICAgICAgICAgICBsaW5rLmhyZWYgPSBocmVmOwogICAgICAgICAgICBkb2N1bWVudC5oZWFkLnByZXBlbmQobGluayk7CiAgICAgICAgfSk7CiAgICB9Cn0gY2F0Y2gge30="
     }
   ],
   "settings": {
