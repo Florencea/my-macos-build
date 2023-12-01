@@ -1,14 +1,13 @@
 {
-  "timeStamp": 1701266985431,
+  "timeStamp": 1701445679079,
   "version": "1.53.0",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "ignoreGenericCosmeticFilters": true,
     "importedLists": [
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
-      "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt",
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
       "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt"
@@ -57,7 +56,6 @@
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
     "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
-    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt"
   ],
   "hiddenSettings": {
