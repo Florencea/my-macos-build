@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2023-11-25
+! Last updated: 2023-12-04
 
 ! Note: These rules are optimized for Firefox
 
@@ -276,7 +276,7 @@ manhuaren.com##.winnextchapter:style(width: 100vw !important)
 wnacg.com##^body > .UnderPage > :not(section):not(script)
 wnacg.com##^#divAD
 wnacg.com##^.sh
-wnacg.com##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.UnderPage)
+wnacg.com##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.UnderPage):not(script)
 wnacg.com##^.Introduct > :not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
 wnacg.com##^[href="/S1z"]
 wnacg.com##^#Subscribe
@@ -302,13 +302,17 @@ wnacg.com##^#img_load
 ! Clear useless scripts
 wnacg.com##^script:has-text(GoogleAnalyticsObject)
 wnacg.com##^script:has-text(tips)
+wnacg.com##^script:has-text(yandex)
+wnacg.com##^script:has-text(videoID)
 wnacg.com##^script[src*='cnzz']
 wnacg.com##^script[src*='search']
 ! Elements cannot remove from initial DOM
 wnacg.com##.show
+wnacg.com###shareBox
 ! Style
 wnacg.com###classify_container img[src="https://wnacg.com/loading.jpg"]:style(height: 238px !important)
 wnacg.com###classify_container img[src="https://wnacg.com/loading.jpg"]:style(opacity: 0 !important)
+wnacg.com###img_list:style(line-height: 0 !important)
 wnacg.com###img_list span:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
 wnacg.com###img_list span:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 wnacg.com###img_list:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
