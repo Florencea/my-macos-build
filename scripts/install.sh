@@ -13,14 +13,6 @@ else
   echo "File modefied, skip Set TouchID for sudo commands"
 fi
 
-### Set Default DNS Servers
-services=$(networksetup -listallnetworkservices | grep 'Wi-Fi\|Ethernet\|USB')
-while read -r service; do
-  echo "Setting Google DNS for $service"
-  networksetup -setdnsservers "$service" empty
-  networksetup -setdnsservers "$service" '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '2001:4860:4860::8844'
-done <<<"$services"
-
 ### Install Homebrew
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
