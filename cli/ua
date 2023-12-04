@@ -16,8 +16,7 @@ brew upgrade
 
 ### Update Node.js
 ### Change this line for perfer version (start by 'v', ex: v18, v20)
-### checklist: perfer version by electron (stable)
-PERFER_NODEJS_VERSION="v18"
+PERFER_NODEJS_VERSION="v20"
 ###
 NODEJS_INFO="$(curl -fsSL https://nodejs.org/download/release/index.json)"
 PERFER_NODEJS_REMOTE_VERSION="$(echo $NODEJS_INFO | jq -cr --arg NODE_V "$PERFER_NODEJS_VERSION" 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .version | startswith($NODE_V) ) | .version )')"
@@ -34,6 +33,11 @@ elif ! [ "$PERFER_NODEJS_REMOTE_VERSION" = "$CURRENT_LOCAL_VERSION" ]; then
   fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
   NODE_UPDATED="true"
 fi
+
+### Print current node/npm version
+CURRENT_LOCAL_VERSION="$(node -v)"
+CURRENT_NPM_VERSION="$(npm -v)"
+printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
 
 ### Sync git projects
 cd "$(dirname $0)"
