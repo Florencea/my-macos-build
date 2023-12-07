@@ -5,15 +5,18 @@ set -o pipefail
 ### Check cmd exist
 chkcmd "git"
 chkcmd "npm"
+chkcmd "npx"
 
 ### Check is node project exist
 chkfile package.json
 chkfile package-lock.json
 
-## Check node_modules exist
-chkdir node_modules
+### Sync node_modules
+git pull --quiet
+rm -rf node_modules
+npm ci
 
-### Check Major version
+### Check version
 set +o errexit
 npm outdated
 COMMIT_MSG_BODY="$(npm outdated --json | jq -cr 'to_entries[] | select( .value.current != .value.wanted ) | "- \(.key) \(.value.current) -> \(.value.wanted)" ')"
@@ -21,14 +24,14 @@ set -o errexit
 
 if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   ### Upgrade packages
-  npm update --save
+  npx -y npm-check-updates -p npm -t semver --install always -u
 
   ### Add to git
-  git add package.json
   git add package-lock.json
+  git add package.json
   git commit -m "fix(deps): update all non-major dependencies" -m "$COMMIT_MSG_BODY" -m "by depsup script"
   git push
 
-  ### Check Major version again
+  ### Check version again
   npm outdated
 fi
