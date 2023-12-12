@@ -151,7 +151,7 @@
     "updateLangAttr": true
   },
   "menu": {
-    "enabled": false,
+    "enabled": true,
     "group": {
       "textarea": {
         "s2t": true,
@@ -164,7 +164,7 @@
     }
   },
   "meta": {
-    "update": 1701707304097
+    "update": 1702397424342
   },
   "version": 2,
   "word": {
