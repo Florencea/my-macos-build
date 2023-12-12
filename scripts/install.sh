@@ -3,14 +3,6 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-### Set DNS
-services=$(networksetup -listallnetworkservices | grep 'Wi-Fi\|Ethernet\|USB')
-while read -r service; do
-  echo "Setting Cloudflare DNS for $service"
-  networksetup -setdnsservers "$service" empty
-  networksetup -setdnsservers "$service" '1.1.1.1' '1.0.0.1' '2606:4700:4700::1111' '2606:4700:4700::1001'
-done <<<"$services"
-
 ### Use Touch ID for sudo Commands
 if ! (cat /etc/pam.d/sudo | grep 'pam_tid.so'); then
   echo "Set TouchID for sudo commands"
@@ -30,6 +22,11 @@ else
   echo "Homebrew exist, skip Homebrew installation"
 fi
 
+### Install Cloudflare Warp
+brew install --cask cloudflare-warp
+### Remove this line after Cloudflare Warp install
+exit 0
+
 ### Setup SFMono fonts
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 ### Disable Window Animations
@@ -44,8 +41,6 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
-
-### Install Cloudflare Warp
 
 ### Update Homebrew taps
 brew tap homebrew/cask-versions
@@ -69,6 +64,7 @@ brew install --cask google-chrome
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
+brew install --cask mos
 brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
@@ -100,13 +96,6 @@ brew install wget
 brew install yt-dlp
 brew install yq
 brew install zsh
-
-### Reset DNS
-services=$(networksetup -listallnetworkservices | grep 'Wi-Fi\|Ethernet\|USB')
-while read -r service; do
-  echo "Reset DNS for $service"
-  networksetup -setdnsservers "$service" empty
-done <<<"$services"
 
 ### Reset LaunchPad
 defaults write com.apple.dock ResetLaunchPad -bool true
