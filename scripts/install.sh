@@ -3,6 +3,14 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+### Set DNS
+services=$(networksetup -listallnetworkservices | grep 'Wi-Fi\|Ethernet\|USB')
+while read -r service; do
+  echo "Setting Cloudflare DNS for $service"
+  networksetup -setdnsservers "$service" empty
+  networksetup -setdnsservers "$service" '1.1.1.1' '1.0.0.1' '2606:4700:4700::1111' '2606:4700:4700::1001'
+done <<<"$services"
+
 ### Use Touch ID for sudo Commands
 if ! (cat /etc/pam.d/sudo | grep 'pam_tid.so'); then
   echo "Set TouchID for sudo commands"
@@ -36,6 +44,8 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
+
+### Install Cloudflare Warp
 
 ### Update Homebrew taps
 brew tap homebrew/cask-versions
@@ -90,6 +100,13 @@ brew install wget
 brew install yt-dlp
 brew install yq
 brew install zsh
+
+### Reset DNS
+services=$(networksetup -listallnetworkservices | grep 'Wi-Fi\|Ethernet\|USB')
+while read -r service; do
+  echo "Reset DNS for $service"
+  networksetup -setdnsservers "$service" empty
+done <<<"$services"
 
 ### Reset LaunchPad
 defaults write com.apple.dock ResetLaunchPad -bool true
