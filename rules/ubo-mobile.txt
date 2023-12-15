@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2023-12-04
+! Last updated: 2023-12-16
 
 ! Note: These rules are optimized for Firefox
 
@@ -844,7 +844,7 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.tv##span.top_list_block_hide:style(top: 0 !important)
 
 ! [SITE] uukanshu.com
-uukanshu.com##^#searchbox
-uukanshu.com##^.share_top
+uukanshu.net##^#searchbox
+uukanshu.net##^.share_top
 
 !#endif
