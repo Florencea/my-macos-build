@@ -16,6 +16,9 @@
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
     - [Set DNS Servers](#set-dns-servers)
+  - [Firefox](#firefox)
+    - [DevTools Device Profile](#devtools-device-profile)
+    - [Google Pixel 7a](#google-pixel-7a)
 
 ## Installations
 
@@ -223,3 +226,24 @@ networksetup -setdnsservers 'Wi-Fi' empty
 networksetup -setdnsservers <SERVICE> [<DNS_SERVERS>]
 networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '2001:4860:4860::8844'
 ```
+
+## Firefox
+
+### DevTools Device Profile
+
+- Android Browser User Agent
+
+```text
+Mozilla/5.0 (Android <ANDROID_VERSION>; Mobile; rv:109.0) Gecko/<FIREFOX_MAJOR_VERSION>.0 Firefox/<FIREFOX_MAJOR_VERSION>.0
+```
+
+- Example
+
+```text
+Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/120.0 Firefox/120.0
+```
+
+### Google Pixel 7a
+
+- Screen: `414 x 794`
+- DPR: `2.608695652173913`
