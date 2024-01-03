@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="Youtube Video Cliper"
+### Usage
+USAGE="[video_link] [from(hh:mm:ss or sec)] [during(sec)]"
+### Example
+EXAMPLE="'https://www.youtube.com/watch?v=JoSY6AWKqHs' 00:01:59 2"
+
+### Args
+URL=$1
+START=$2
+DURATION=$3
+
+### Check args exist
+chkarg "$URL" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+chkarg "$START" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+chkarg "$DURATION" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "yt-dlp"
+
+### Temp File
+TMPFILE="$(mktemp -t "$(basename $0)")"
+### Output file
+OUTPUT_FILE="$(date +"%Y%m%d%H%M%S").mp4"
+
+yt-dlp "$URL" \
+  --quiet \
+  -f mp4 \
+  --downloader \
+  ffmpeg \
+  --downloader-args \
+  "ffmpeg_i:-ss $START -t $DURATION" \
+  --force-overwrites \
+  -o \
+  "$TMPFILE"
+
+cp "$TMPFILE" "$OUTPUT_FILE"
