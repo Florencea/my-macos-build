@@ -4,6 +4,7 @@
 
 ! Note: These rules are optimized for Firefox
 
+!#if env_mobile
 
 ! CSS variable
 ! bg
@@ -809,3 +810,5 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 ! [SITE] uukanshu.com
 uukanshu.net##^#searchbox
 uukanshu.net##^.share_top
+
+!#endif
