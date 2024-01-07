@@ -1,10 +1,9 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2023-12-27
+! Last updated: 2024-01-07
 
 ! Note: These rules are optimized for Firefox
 
-!#if env_mobile
 
 ! CSS variable
 ! bg
@@ -583,7 +582,7 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(opacity: 0 !important)
 wnacg.com###classify_container > li::before:style(content: none !important)
 
 ! [SITE] 18av.tv
-18av.tv##^body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"])
+18av.tv##^body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"]):not(div.plyr_width):not(style):not(link)
 18av.tv##^div.container > :not(div.contents)
 18av.tv##^div.container > div.contents > :not(div.content)
 18av.tv##^div.container > div.contents > div.content > :not(div.archive-title):not(div.posts):not(div.pagination-row):not(span.content_18h_wpcg):not(script)
@@ -793,24 +792,20 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.tv##span.sun-search_input_group:style(width: 100% !important)
 18av.tv##span.top_list_block_hide:style(top: 0 !important)
 ! player
-streamfastpro.com##html:style(--plyr-control-spacing: 28px)
-streamfastpro.com##html:style(--plyr-control-icon-size: 48px)
-streamfastpro.com##html:style(--plyr-range-thumb-height: 36px)
-streamfastpro.com##.plyr__control[data-plyr="rewind"]
-streamfastpro.com##.plyr__control[data-plyr="fast-forward"]
-streamfastpro.com##.plyr__volume
-streamfastpro.com##.plyr__menu
-streamfastpro.com##.plyr__control--overlaid
-streamfastpro.com##body:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
-streamfastpro.com##body:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
-streamfastpro.com##body:style(height: 100vh !important)
-streamfastpro.com##body:style(margin: 0 !important)
-streamfastpro.com##body:style(display: flex !important)
-streamfastpro.com##body:style(flex-direction: column !important)
-streamfastpro.com##body:style(justify-content: center !important)
+18av.tv##html:style(--plyr-control-spacing: 28px)
+18av.tv##html:style(--plyr-control-icon-size: 48px)
+18av.tv##html:style(--plyr-range-thumb-height: 36px)
+18av.tv##.plyr__control[data-plyr="rewind"]
+18av.tv##.plyr__control[data-plyr="fast-forward"]
+18av.tv##.plyr__volume
+18av.tv##.plyr__menu
+18av.tv##.plyr__control--overlaid
+18av.tv##body:has(>.plyr_width):style(height: 100vh !important)
+18av.tv##body:has(>.plyr_width):style(margin: 0 !important)
+18av.tv##body:has(>.plyr_width):style(display: flex !important)
+18av.tv##body:has(>.plyr_width):style(flex-direction: column !important)
+18av.tv##body:has(>.plyr_width):style(justify-content: center !important)
 
 ! [SITE] uukanshu.com
 uukanshu.net##^#searchbox
 uukanshu.net##^.share_top
-
-!#endif
