@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+### file to check
+FILE=$1
+
+### Check file exist
+chkfile "$FILE"
+
+### Check if file codec is opus
+CODEC="$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 $FILE)"
+
+if [ "$CODEC" = "opus" ]; then
+  true
+else
+  false
+fi

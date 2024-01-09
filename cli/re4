@@ -25,14 +25,19 @@ chkfile "$INPUT_FILE"
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)").mp4"
+### Audio codec
+ACODEC="copy"
 
 if chkmkv "$INPUT_FILE"; then
+  if chkopus "$INPUT_FILE"; then
+    ACODEC="aac"
+  fi
   if chkhevc "$INPUT_FILE"; then
     ffmpeg -hide_banner \
       -loglevel error \
       -i "$INPUT_FILE" \
       -c:v copy \
-      -c:a copy \
+      -c:a "$ACODEC" \
       -tag:v hvc1 \
       "$TMPFILE"
   else
@@ -40,7 +45,7 @@ if chkmkv "$INPUT_FILE"; then
       -loglevel error \
       -i "$INPUT_FILE" \
       -c:v copy \
-      -c:a copy \
+      -c:a "$ACODEC" \
       "$TMPFILE"
   fi
   mv "$TMPFILE" "${INPUT_FILE%.mkv}.mp4"
