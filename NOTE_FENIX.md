@@ -135,6 +135,16 @@ return readerViewFeature.onBackPressed() || super.onBackPressed()
 return super.onBackPressed()
 ```
 
+- `fenix/app/src/main/java/org/mozilla/fenix/search/SearchDialogFragment.kt`
+
+- Prevent QR Search Button disappear, change Line 833
+
+```kotlin
+searchEngine?.isGeneral == true || searchEngine?.type == SearchEngine.Type.CUSTOM
+->
+searchEngine?.isGeneral == true || searchEngine?.type == SearchEngine.Type.CUSTOM || true
+```
+
 ### 3-3. Disable Progress Bar
 
 - `fenix/app/src/main/res/drawable/progress_gradient.xml`
