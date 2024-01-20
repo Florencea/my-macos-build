@@ -5,11 +5,8 @@
   - [2. Clone Release Tag](#2-clone-release-tag)
   - [3. Edit Files](#3-edit-files)
     - [3-1. Change Default AMO Collections and speedup build](#3-1-change-default-amo-collections-and-speedup-build)
-    - [3-2. Disable features in FeatureFlag](#3-2-disable-features-in-featureflag)
-    - [3-3. Remove Home Button](#3-3-remove-home-button)
-    - [3-4. Enable config, Disable Safe Browsing](#3-4-enable-config-disable-safe-browsing)
-    - [3-5. Disable Progress Bar](#3-5-disable-progress-bar)
-    - [3-6. Customize Deafult Search Engine](#3-6-customize-deafult-search-engine)
+    - [3-2. Remove Home Button and Reader Button](#3-2-remove-home-button-and-reader-button)
+    - [3-3. Disable Progress Bar](#3-3-disable-progress-bar)
   - [4-A. Use GitHub Actions to Build](#4-a-use-github-actions-to-build)
     - [4-A-1. Use GitHub Actions to Build: Add Repository Secrets](#4-a-1-use-github-actions-to-build-add-repository-secrets)
     - [4-A-2. Use GitHub Actions to Build: Add Build Actions and Scripts](#4-a-2-use-github-actions-to-build-add-build-actions-and-scripts)
@@ -44,16 +41,7 @@ applicationIdSuffix ".firefox" -> applicationIdSuffix ".firefox_custom"
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 ```
 
-### 3-2. Disable features in FeatureFlag
-
-- `fenix/app/src/main/java/org/mozilla/fenix/FeatureFlags.kt`
-
-```kotlin
-const val pullToRefreshEnabled = false
-return listOf("en-US", "en-CA").contains(langTag) -> return listOf("nothing").contains(langTag)
-```
-
-### 3-3. Remove Home Button
+### 3-2. Remove Home Button and Reader Button
 
 - `fenix/app/src/main/java/org/mozilla/fenix/browser/BrowserFragment.kt`
 
@@ -86,30 +74,68 @@ val leadingAction = if (isPrivate && context.settings().feltPrivateBrowsingEnabl
 browserToolbarView.view.addNavigationAction(leadingAction)
 ```
 
-### 3-4. Enable config, Disable Safe Browsing
-
-- `fenix/app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
-
-- Enable `about:config` (Line 136)
+- Comment this part (Line 126 ~ 148)
 
 ```kotlin
-.aboutConfigEnabled(true)
+val readerModeAction =
+    BrowserToolbar.ToggleButton(
+        image = AppCompatResources.getDrawable(
+            context,
+            R.drawable.ic_readermode,
+        )!!,
+        imageSelected =
+        AppCompatResources.getDrawable(
+            context,
+            R.drawable.ic_readermode_selected,
+        )!!,
+        contentDescription = context.getString(R.string.browser_menu_read),
+        contentDescriptionSelected = context.getString(R.string.browser_menu_read_close),
+        visible = {
+            readerModeAvailable && !reviewQualityCheckAvailable
+        },
+        selected = getCurrentTab()?.let {
+            activity?.components?.core?.store?.state?.findTab(it.id)?.readerState?.active
+        } ?: false,
+        listener = browserToolbarInteractor::onReaderModePressed,
+    )
+
+browserToolbarView.view.addPageAction(readerModeAction)
 ```
 
-- Disable Safebrowsing, Replace whole `if` block under comments
+- Comment this part (Line 159 ~ 178)
 
 ```kotlin
-// Add safebrowsing providers for China
-val o = SafeBrowsingProvider
-    .from(ContentBlocking.GOOGLE_SAFE_BROWSING_PROVIDER)
-    .getHashUrl("")
-    .updateUrl("")
-    .build()
-runtimeSettings.contentBlocking.setSafeBrowsingProviders(o)
-runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
+readerViewFeature.set(
+    feature = components.strictMode.resetAfter(StrictMode.allowThreadDiskReads()) {
+        ReaderViewFeature(
+            context,
+            components.core.engine,
+            components.core.store,
+            binding.readerViewControlsBar,
+        ) { available, active ->
+            if (available) {
+                ReaderMode.available.record(NoExtras())
+            }
+
+            readerModeAvailable = available
+            readerModeAction.setSelected(active)
+            safeInvalidateBrowserToolbarView()
+        }
+    },
+    owner = this,
+    view = view,
+)
 ```
 
-### 3-5. Disable Progress Bar
+- Change Line 490
+
+```kotlin
+return readerViewFeature.onBackPressed() || super.onBackPressed()
+->
+return super.onBackPressed()
+```
+
+### 3-3. Disable Progress Bar
 
 - `fenix/app/src/main/res/drawable/progress_gradient.xml`
 
@@ -142,50 +168,6 @@ runtimeSettings.contentBlocking.setSafeBrowsingPhishingTable("goog-phish-proto")
         </scale>
     </item>
 </layer-list>
-```
-
-### 3-6. Customize Deafult Search Engine
-
-- `android-components/components/feature/search/src/main/assets/searchplugins/google-b-m.xml`
-
-```xml
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-
-<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/">
-<ShortName>Google</ShortName>
-<InputEncoding>UTF-8</InputEncoding>
-<Image width="16" height="16">data:image/png;base64,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</Image>
-<!-- <Url type="application/x-suggestions+json" method="GET" template="https://www.google.com/complete/search?client=firefox&amp;q={searchTerms}"/> -->
-<Url type="text/html" method="GET" template="https://www.google.com/search">
-  <Param name="q" value="{searchTerms}"/>
-  <!-- <Param name="ie" value="utf-8"/> -->
-  <!-- <Param name="oe" value="utf-8"/> -->
-  <!-- <Param name="client" value="firefox-b-m"/> -->
-</Url>
-<SearchForm>https://www.google.com</SearchForm>
-</SearchPlugin>
-```
-
-- `android-components/components/feature/search/src/main/java/mozilla/components/feature/search/storage/SearchEngineReader.kt`
-- Make Custom Google Search External (line 26)
-
-```kotlin
-internal const val GOOGLE_ID = "not-google"
-```
-
-- `android-components/components/feature/search/src/main/assets/search/list.json`
-- Make Search Engine List only Google (line 918)
-
-```json
-{
-  "zh-TW": {
-    "default": {
-      "visibleDefaultEngines": ["google-b-m"]
-    }
-  }
-}
 ```
 
 ## 4-A. Use GitHub Actions to Build
