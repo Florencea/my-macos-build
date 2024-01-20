@@ -51,7 +51,7 @@ dmhy.org##div.clear:has(a[href='/topics/add'])
 dmhy.org##.user-sidebar > div.ui-corner-all.box:nth-of-type(4)
 dmhy.org##a[href*=mypikpak]
 
-! exhentai.org
+! [SITE] exhentai.org
 ! Make gallery title visible on hover
 exhentai.org##.gl4t:hover:style(max-height: none !important)
 
