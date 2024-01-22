@@ -1,5 +1,7 @@
 # Fenix Note
 
+- **_Not update frequently_**
+
 - [Fenix Note](#fenix-note)
   - [1. Fork Repository](#1-fork-repository)
   - [2. Clone Release Tag](#2-clone-release-tag)
