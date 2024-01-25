@@ -1,6 +1,7 @@
 # Fenix Note
 
 - **_Not update frequently_**
+- Last update: Fenix v122.0
 
 - [Fenix Note](#fenix-note)
   - [1. Fork Repository](#1-fork-repository)
@@ -28,7 +29,7 @@
 ## 2. Clone Release Tag
 
 ```sh
-git clone --depth 1 --branch fenix-v121.0 git@github.com:Florencea/firefox-android.git
+git clone --depth 1 --branch fenix-v122.0 git@github.com:Florencea/firefox-android.git
 ```
 
 ## 3. Edit Files
@@ -139,7 +140,7 @@ return super.onBackPressed()
 
 - `fenix/app/src/main/java/org/mozilla/fenix/search/SearchDialogFragment.kt`
 
-- Prevent QR Search Button disappear, change Line 833
+- Prevent QR Search Button disappear, change Line 834
 
 ```kotlin
 searchEngine?.isGeneral == true || searchEngine?.type == SearchEngine.Type.CUSTOM
