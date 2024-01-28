@@ -28,7 +28,7 @@ if ! [ "$COMMIT_MSG_BODY" = "" ]; then
 
   ### Sync lockfile
   rm -rf node_modules
-  rm -r package-lock.json
+  rm -f package-lock.json
   npm i
 
   ### Add to git
