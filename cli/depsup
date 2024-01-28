@@ -24,7 +24,12 @@ set -o errexit
 
 if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   ### Upgrade packages
-  npx -y npm-check-updates -p npm -t semver --install always -u
+  npx -y npm-check-updates -p npm -t semver --install never -u
+
+  ### Sync lockfile
+  rm -rf node_modules
+  rm -r package-lock.json
+  npm i
 
   ### Add to git
   git add package-lock.json
