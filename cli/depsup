@@ -11,20 +11,17 @@ chkcmd "npx"
 chkfile package.json
 chkfile package-lock.json
 
-### Sync node_modules
+### Sync project
 git pull --quiet
-rm -rf node_modules
-npm ci
 
 ### Check version
-set +o errexit
-npm outdated
-COMMIT_MSG_BODY="$(npm outdated --json | jq -cr 'to_entries[] | select( .value.current != .value.wanted ) | "- \(.key) \(.value.current) -> \(.value.wanted)" ')"
-set -o errexit
+COMMIT_MSG_BODY="$(npx -y npm-check-updates@latest -p npm -t semver --install never | sed "1,2d; $d" | sed "$ d")"
+
+echo "$COMMIT_MSG_BODY"
 
 if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   ### Upgrade packages
-  npx -y npm-check-updates -p npm -t semver --install never -u
+  npx -y npm-check-updates@latest -p npm -t semver --install never -u
 
   ### Sync lockfile
   rm -rf node_modules
@@ -38,5 +35,5 @@ if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   git push
 
   ### Check version again
-  npm outdated
+  npx -y npm-check-updates@latest -p npm -t semver --install never
 fi
