@@ -17,11 +17,11 @@ git pull --quiet
 ### Check version
 COMMIT_MSG_BODY="$(npx -y npm-check-updates@latest -p npm -t semver --install never | sed "1,2d; $d" | sed "$ d")"
 
-echo "$COMMIT_MSG_BODY"
+printf "\n$COMMIT_MSG_BODY\n\n"
 
 if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   ### Upgrade packages
-  npx -y npm-check-updates@latest -p npm -t semver --install never -u
+  npx -y npm-check-updates@latest -p npm -t semver --install never --loglevel silent -u
 
   ### Sync lockfile
   rm -rf node_modules
@@ -36,4 +36,7 @@ if ! [ "$COMMIT_MSG_BODY" = "" ]; then
 
   ### Check version again
   npx -y npm-check-updates@latest -p npm -t semver --install never
+else
+  ### Sync node_modules
+  npm ci
 fi
