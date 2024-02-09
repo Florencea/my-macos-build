@@ -111,7 +111,7 @@
       "name": "18av 優化腳本",
       "options": {
         "check_for_updates": false,
-        "user_modified": 1707504427258,
+        "user_modified": 1707504587795,
         "comment": null,
         "compatopts_for_requires": true,
         "compat_wrappedjsobject": false,
@@ -131,7 +131,7 @@
           "orig_connects": [],
           "orig_excludes": [],
           "orig_includes": [],
-          "orig_matches": ["https://18av.*"],
+          "orig_matches": ["https://18av.mm-cg.com/*"],
           "orig_noframes": null,
           "orig_run_at": "document-idle",
           "use_blockers": [],
@@ -145,7 +145,7 @@
       "enabled": true,
       "position": 2,
       "uuid": "f6ad5dbd-844b-409d-8436-2a28f5f4d5d7",
-      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICAxOGF2IOWEquWMluiFs+acrAovLyBAZGVzY3JpcHRpb24gIDE4YXYg5YSq5YyW6IWz5pysCi8vIEBuYW1lc3BhY2UgICAgVmlvbGVudG1vbmtleSBTY3JpcHRzCi8vIEB2ZXJzaW9uICAgICAgMjAyNC4wMi4xMAovLyBAbWF0Y2ggICAgICAgIGh0dHBzOi8vMThhdi4qCi8vIEByZXF1aXJlIGh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHZpb2xlbnRtb25rZXkvZG9tQDIKLy8gPT0vVXNlclNjcmlwdD09Cgp0cnkgewogICQoJy5wb3N0IGEnKS5lYWNoKGZ1bmN0aW9uKCkgewogICAgJCh0aGlzKS5hdHRyKHsKICAgICAgdGFyZ2V0OiAnX2JsYW5rJwogICAgfSk7CiAgfSkKICAkKCcuY29uIGEnKS5lYWNoKGZ1bmN0aW9uKCkgewogICAgJCh0aGlzKS5yZW1vdmVBdHRyKCdocmVmJyk7CiAgICAkKHRoaXMpLnJlbW92ZUF0dHIoJ3RhcmdldCcpOwogIH0pCiAgY29uc3QgdGFyZ2V0SWZyYW1lID0gJCgnLnZpZGVvLXJvdyA+IGlmcmFtZScpOwogIGlmICh0YXJnZXRJZnJhbWUgJiYgdGFyZ2V0SWZyYW1lLmF0dHIoInNyYyIpKSB7CiAgICB3aW5kb3cubG9jYXRpb24ucmVwbGFjZSh0YXJnZXRJZnJhbWUuYXR0cigic3JjIikpOwogIH0KICAkKCcuYnV0X2VubGFyZ2UnKS5jbGljayhmdW5jdGlvbigpIHsKICAgIHdpbmRvdy5zY3JvbGxUbyh7CiAgICAgIHRvcDogMAogICAgfSk7CiAgfSkKfSBjYXRjaCB7fQo=",
+      "source": "Ly8gPT1Vc2VyU2NyaXB0PT0KLy8gQG5hbWUgICAgICAgICAxOGF2IOWEquWMluiFs+acrAovLyBAZGVzY3JpcHRpb24gIDE4YXYg5YSq5YyW6IWz5pysCi8vIEBuYW1lc3BhY2UgICAgVmlvbGVudG1vbmtleSBTY3JpcHRzCi8vIEB2ZXJzaW9uICAgICAgMjAyNC4wMi4xMAovLyBAbWF0Y2ggICAgICAgIGh0dHBzOi8vMThhdi5tbS1jZy5jb20vKgovLyBAcmVxdWlyZSBodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0B2aW9sZW50bW9ua2V5L2RvbUAyCi8vID09L1VzZXJTY3JpcHQ9PQoKdHJ5IHsKICAkKCcucG9zdCBhJykuZWFjaChmdW5jdGlvbigpIHsKICAgICQodGhpcykuYXR0cih7CiAgICAgIHRhcmdldDogJ19ibGFuaycKICAgIH0pOwogIH0pCiAgJCgnLmNvbiBhJykuZWFjaChmdW5jdGlvbigpIHsKICAgICQodGhpcykucmVtb3ZlQXR0cignaHJlZicpOwogICAgJCh0aGlzKS5yZW1vdmVBdHRyKCd0YXJnZXQnKTsKICB9KQogIGNvbnN0IHRhcmdldElmcmFtZSA9ICQoJy52aWRlby1yb3cgPiBpZnJhbWUnKTsKICBpZiAodGFyZ2V0SWZyYW1lICYmIHRhcmdldElmcmFtZS5hdHRyKCJzcmMiKSkgewogICAgd2luZG93LmxvY2F0aW9uLnJlcGxhY2UodGFyZ2V0SWZyYW1lLmF0dHIoInNyYyIpKTsKICB9CiAgJCgnLmJ1dF9lbmxhcmdlJykuY2xpY2soZnVuY3Rpb24oKSB7CiAgICB3aW5kb3cuc2Nyb2xsVG8oewogICAgICB0b3A6IDAKICAgIH0pOwogIH0pCn0gY2F0Y2gge30K",
       "requires": [
         {
           "meta": {
