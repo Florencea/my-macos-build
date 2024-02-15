@@ -35,7 +35,7 @@ if ! [ "$COMMIT_MSG_BODY" = "" ]; then
   git push
 
   ### Check version again
-  npx -y npm-check-updates@latest -p npm -t semver --install never
+  npx -y npm-check-updates@latest -p npm -t latest --install never
 else
   ### Sync node_modules
   npm ci
