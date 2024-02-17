@@ -14,29 +14,40 @@ chkfile package-lock.json
 ### Sync project
 git pull --quiet
 
+### Clear project
+rm -rf node_modules
+rm -f package-lock.json
+
 ### Check version
-COMMIT_MSG_BODY="$(npx -y npm-check-updates@latest -p npm -t semver --install never | sed "1,2d; $d" | sed "$ d")"
+PACKEGES_TO_UPDATE_MSG="$(npx -y npm-check-updates@latest -p npm -t semver --install never | sed "1,2d; $d" | sed "$ d")"
+PACKEGES_TO_UPDATE="$(npx -y npm-check-updates@latest -p npm -t semver --install never --jsonUpgraded | jq -cr 'to_entries | map("\(.key)@\(.value|tostring)") | .[]')"
 
-printf "\n$COMMIT_MSG_BODY\n\n"
-
-if ! [ "$COMMIT_MSG_BODY" = "" ]; then
-  ### Upgrade packages
-  npx -y npm-check-updates@latest -p npm -t semver --install never --loglevel silent -u
-
-  ### Sync lockfile
-  rm -rf node_modules
-  rm -f package-lock.json
-  npm i
-
-  ### Add to git
-  git add package-lock.json
-  git add package.json
-  git commit -m "fix(deps): update all non-major dependencies" -m "$COMMIT_MSG_BODY" -m "by depsup script"
-  git push
-
-  ### Check version again
-  npx -y npm-check-updates@latest -p npm -t latest --install never
+readarray -t <<<$PACKEGES_TO_UPDATE_MSG
+if ! [ "$PACKEGES_TO_UPDATE" = "" ]; then
+  ### If any packages need update, one updated packaed per commit/push(for ci)
+  IDX=0
+  for PACKAGE in $PACKEGES_TO_UPDATE; do
+    echo " ${MAPFILE[$IDX]}"
+    npm install "$PACKAGE" --package-lock-only --ignore-scripts --loglevel silent
+    git add package-lock.json
+    git add package.json
+    git commit -q -m "chore(deps): update dependency ${MAPFILE[$IDX]}"
+    git push -q
+    IDX=$(expr $IDX + 1)
+  done
 else
-  ### Sync node_modules
-  npm ci
+  ### If no package needs update, sync lockfile
+  npm install --package-lock-only --ignore-scripts --loglevel silent
+
+  ### If lockfile updated, add to git
+  if [ "$(git status --short)" != "" ]; then
+    git add package-lock.json
+    git commit -q -m "chore(deps): Update dependencies that are not directly dependent"
+    git push -q
+  fi
 fi
+
+### Check version again
+npx -y npm-check-updates@latest -p npm -t latest --install never
+### install packages
+npm ci
