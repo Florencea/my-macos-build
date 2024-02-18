@@ -24,6 +24,7 @@ chkarg "$DURATION" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
 ### Check cmd exist
 chkcmd "mkgif"
 chkcmd "yt-dlp"
+chkcmd "ffmpeg"
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)")"
