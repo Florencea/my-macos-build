@@ -5,7 +5,7 @@ set -o pipefail
 ### cmd
 CMD=$(basename "$0")
 ### Description
-DESC="Clone all GitHub REPOsitories"
+DESC="Clone all GitHub Repositories"
 ### Usage
 USAGE="[GITHUB_ACCESS_TOKEN]"
 ### Example
