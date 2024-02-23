@@ -3,12 +3,6 @@
     "enabled": true,
     "rules": [
       {
-        "id": "f911baf8b7d0d",
-        "pattern": "bsky.app",
-        "regexp": null,
-        "target": "s2t"
-      },
-      {
         "id": "1ce7628b1978",
         "pattern": "cn.vitest.dev",
         "regexp": null,
@@ -164,7 +158,7 @@
     }
   },
   "meta": {
-    "update": 1708529673583
+    "update": 1708673111209
   },
   "version": 2,
   "word": {
