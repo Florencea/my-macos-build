@@ -7,7 +7,7 @@
   - [1. Fork Repository](#1-fork-repository)
   - [2. Clone Release Tag](#2-clone-release-tag)
   - [3. Edit Files](#3-edit-files)
-    - [3-1. Change Default AMO Collections and speedup build](#3-1-change-default-amo-collections-and-speedup-build)
+    - [3-1. Speedup build](#3-1-speedup-build)
     - [3-2. Remove Home Button and Reader Button](#3-2-remove-home-button-and-reader-button)
   - [4 Build on macOS](#4-build-on-macos)
     - [4-1. Build on macOS: Add Build script](#4-1-build-on-macos-add-build-script)
@@ -26,12 +26,11 @@ git clone --depth 1 --branch fenix-v123.0 git@github.com:Florencea/firefox-andro
 
 ## 3. Edit Files
 
-### 3-1. Change Default AMO Collections and speedup build
+### 3-1. Speedup build
 
 - `fenix/app/build.gradle`
 
 ```bash
-buildConfigField "String", "AMO_COLLECTION_USER", "\"mozilla\"" -> buildConfigField "String", "AMO_COLLECTION_USER", "\"17496363\""
 include "x86", "armeabi-v7a", "arm64-v8a", "x86_64" -> include "arm64-v8a"
 ```
 
