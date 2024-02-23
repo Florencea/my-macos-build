@@ -22,10 +22,20 @@ else
   echo "Homebrew exist, skip Homebrew installation"
 fi
 
+### Install Wireguard
+brew install wireguard-tools
+cp $HOME/Private/config/wg0.conf /opt/homebrew/etc/wireguard/wg0.conf
+sudo cp $HOME/Private/config/com.wireguard.wg0.plist /Library/LaunchDaemons/com.wireguard.wg0.plist
+sudo launchctl enable system/com.wireguard.wg0
+sudo launchctl bootstrap system /Library/LaunchDaemons/com.wireguard.wg0.plist
+sudo wg show
+
+### Below For Normal User
 ### Install Cloudflare Warp
-brew install --cask cloudflare-warp
+#brew install --cask cloudflare-warp
 ### Remove this line after Cloudflare Warp install
-exit 0
+#exit 0
+### Above For Normal User
 
 ### Setup SFMono fonts
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
