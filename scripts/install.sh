@@ -26,6 +26,7 @@ fi
 brew install wireguard-tools
 cp $HOME/Private/config/wg0.conf /opt/homebrew/etc/wireguard/wg0.conf
 sudo cp $HOME/Private/config/com.wireguard.wg0.plist /Library/LaunchDaemons/com.wireguard.wg0.plist
+sudo chown root:wheel /Library/LaunchDaemons/com.wireguard.wg0.plist
 sudo launchctl enable system/com.wireguard.wg0
 sudo launchctl bootstrap system /Library/LaunchDaemons/com.wireguard.wg0.plist
 sudo wg show
