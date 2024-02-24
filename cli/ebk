@@ -27,9 +27,9 @@ function backup() {
   fi
 }
 
-### Backup and format tampermonkey json
-### Usage: backuptm <FILE_PATTERN> <FILE_NAME>
-function backuptm() {
+### Backup and format json
+### Usage: backupjson <FILE_PATTERN> <FILE_NAME>
+function backupjson() {
   CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
   FILE_PATTERN=$1
   FILE_NAME=$2
@@ -37,7 +37,7 @@ function backuptm() {
   if [ -f "$FILE_BACKUP" ]; then
     mv "$FILE_BACKUP" "$CONFIG_HOME/$FILE_NAME"
     cd "$CONFIG_HOME" || exit
-    npx -y prettier --log-level error --write "$FILE_NAME"
+    npx -y prettier@latest --log-level error --write "$FILE_NAME"
     git add "$FILE_NAME"
     echo ""
     printf "Find Configuration: %s\n" "$FILE_BACKUP"
@@ -51,5 +51,6 @@ function backuptm() {
 }
 
 backup "my-ublock-backup*.txt" "ubo-config.txt"
-backuptm "tampermonkey-backup-*.txt" "tampermonkey.json"
-backup "tongwentang-*.json" "tongwentang.json"
+backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
+backupjson "tongwentang-*.json" "tongwentang.json"
+backupjson "PrivacyBadger_user_data-*.json" "privacybadger.json"
