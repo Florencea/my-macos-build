@@ -53,4 +53,3 @@ function backupjson() {
 backup "my-ublock-backup*.txt" "ubo-config.txt"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
 backupjson "tongwentang-*.json" "tongwentang.json"
-backupjson "PrivacyBadger_user_data-*.json" "privacybadger.json"
