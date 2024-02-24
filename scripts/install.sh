@@ -30,7 +30,6 @@ sudo cp $HOME/Private/config/com.wireguard.wg0.plist /Library/LaunchDaemons/com.
 sudo chown root:wheel /Library/LaunchDaemons/com.wireguard.wg0.plist
 sudo launchctl enable system/com.wireguard.wg0
 sudo launchctl bootstrap system /Library/LaunchDaemons/com.wireguard.wg0.plist
-sudo wg show
 
 ### Below For Normal User
 ### Install Cloudflare Warp
@@ -103,7 +102,6 @@ brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
 brew install rsync
 brew install python
-python3 -m pip install --upgrade pip
 brew install wget
 brew install yt-dlp
 brew install yq
