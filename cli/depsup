@@ -19,8 +19,8 @@ rm -rf node_modules
 rm -f package-lock.json
 
 ### Check version
-PACKEGES_TO_UPDATE_MSG="$(npx -y npm-check-updates -p npm -t semver --install never | sed "1,2d; $d" | sed "$ d")"
-PACKEGES_TO_UPDATE="$(npx -y npm-check-updates -p npm -t semver --install never --jsonUpgraded | jq -cr 'to_entries | map("\(.key)@\(.value|tostring)") | .[]')"
+PACKEGES_TO_UPDATE_MSG="$(npx -y npm-check-updates -p npm -t minor --install never | sed "1,2d; $d" | sed "$ d")"
+PACKEGES_TO_UPDATE="$(npx -y npm-check-updates -p npm -t minor --install never --jsonUpgraded | jq -cr 'to_entries | map("\(.key)@\(.value|tostring)") | .[]')"
 
 readarray -t <<<$PACKEGES_TO_UPDATE_MSG
 if ! [ "$PACKEGES_TO_UPDATE" = "" ]; then
