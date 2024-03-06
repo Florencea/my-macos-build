@@ -1,7 +1,7 @@
 # Fenix Note
 
 - **_Not update frequently_**
-- Last update: Fenix v123.0
+- Last update: Fenix v123.1.0
 
 - [Fenix Note](#fenix-note)
   - [1. Fork Repository](#1-fork-repository)
@@ -9,6 +9,8 @@
   - [3. Edit Files](#3-edit-files)
     - [3-1. Speedup build](#3-1-speedup-build)
     - [3-2. Remove Home Button and Reader Button](#3-2-remove-home-button-and-reader-button)
+    - [3-3. Disable Progress Bar](#3-3-disable-progress-bar)
+    - [3-4 Enable `about:config`](#3-4-enable-aboutconfig)
   - [4 Build on macOS](#4-build-on-macos)
     - [4-1. Build on macOS: Add Build script](#4-1-build-on-macos-add-build-script)
     - [4-2. Build on macOS: Build App](#4-2-build-on-macos-build-app)
@@ -136,6 +138,49 @@ return super.onBackPressed()
 searchEngine?.isGeneral == true || searchEngine?.type == SearchEngine.Type.CUSTOM
 ->
 searchEngine?.isGeneral == true || searchEngine?.type == SearchEngine.Type.CUSTOM || true
+```
+
+### 3-3. Disable Progress Bar
+
+- `fenix/app/src/main/res/drawable/progress_gradient.xml`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#002b2a32" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <corners
+                    android:bottomLeftRadius="0dp"
+                    android:bottomRightRadius="8dp"
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="8dp"/>
+                <gradient
+                    android:angle="45"
+                    android:centerColor="#002b2a32"
+                    android:endColor="#002b2a32"
+                    android:startColor="#002b2a32" />
+            </shape>
+        </scale>
+    </item>
+</layer-list>
+```
+
+### 3-4 Enable `about:config`
+
+- `fenix/app/src/main/java/org/mozilla/fenix/gecko/GeckoProvider.kt`
+
+```kotlin
+.aboutConfigEnabled(true)
 ```
 
 ## 4 Build on macOS
