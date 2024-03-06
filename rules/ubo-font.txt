@@ -7,7 +7,7 @@
 *##html:style(--ubo-custom-font-monospace: JetBrains Mono, Consolas, Liberation Mono, Menlo, monospace)
 
 ! global
-*##:is(html, body, input, textarea):style(font-family: var(--ubo-custom-font-sans-serif) !important)
+*##:is(html, body, input, textarea):style(font-family: var(--ubo-custom-font-sans-serif))
 *##:is(code, kbd, pre, samp):style(font-family: var(--ubo-custom-font-monospace) !important)
 ! render
 *##body:style(-webkit-font-smoothing: auto !important)
