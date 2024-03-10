@@ -493,8 +493,6 @@ news.ycombinator.com##html:style(--ubo-custom-hn-cae-dark: #888888)
 news.ycombinator.com##html:style(--ubo-custom-hn-cbe-dark: #828282)
 news.ycombinator.com##html:style(--ubo-custom-hn-cce-dark: #737373)
 news.ycombinator.com##html:style(--ubo-custom-hn-cdd-dark: #5a5a5a)
-! remove
-news.ycombinator.com##form
 ! reset
 news.ycombinator.com##body:style(margin: 0 !important)
 ! font size
@@ -606,3 +604,69 @@ news.ycombinator.com##.cce a:link:matches-media((prefers-color-scheme: dark)):st
 news.ycombinator.com##.cdd:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-hn-cdd-dark) !important)
 news.ycombinator.com##.cdd a:link:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-hn-cdd-dark) !important)
 
+! [SITE] hn.algolia.com
+! base css varible
+hn.algolia.com##html:style(--ubo-custom-hn-primary-dark: #662900)
+hn.algolia.com##html:style(--ubo-custom-hn-primary-light: #ff6600)
+hn.algolia.com##html:style(--ubo-custom-hn-dim-dark: #9d9d9e)
+hn.algolia.com##html:style(--ubo-custom-hn-dim-light: #9390a3)
+! remove
+hn.algolia.com##.PoweredBy
+! styles
+! header
+hn.algolia.com##.SearchHeader_search:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-hn-primary-dark) !important)
+hn.algolia.com##.SearchHeader_search:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-hn-primary-light) !important)
+hn.algolia.com##.SearchHeader_label:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.SearchHeader_label:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.SearchHeader_settings a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.SearchHeader_settings a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+! search filter
+hn.algolia.com##.SearchFilters:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+hn.algolia.com##.SearchFilters:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+hn.algolia.com##.SearchFilters:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.SearchFilters:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Dropdown_list li button:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+hn.algolia.com##.Dropdown_list li button:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+hn.algolia.com##.Dropdown_list li button:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Dropdown_list li button:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+! search input
+hn.algolia.com##.SearchHeader .SearchInput:style(padding: 16px 16px 16px 54px !important)
+hn.algolia.com##.SearchHeader .SearchInput:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-input-dark) !important)
+hn.algolia.com##.SearchHeader .SearchInput:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-input-light) !important)
+hn.algolia.com##.SearchHeader .SearchInput:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.SearchHeader .SearchInput:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Dropdown_label:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Dropdown_label:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+! search setting
+hn.algolia.com##.Settings:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+hn.algolia.com##.Settings:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+hn.algolia.com##.Settings h2:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Settings h2:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Settings label:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Settings label:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Settings_actions button:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-hn-primary-dark) !important)
+hn.algolia.com##.Settings_actions button:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-hn-primary-light) !important)
+! body
+hn.algolia.com##body:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+hn.algolia.com##body:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+hn.algolia.com##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##body:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Story_title a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Story_title a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Story_meta a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-hn-dim-dark) !important)
+hn.algolia.com##.Story_meta a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-hn-dim-light) !important)
+hn.algolia.com##.Story_comment:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Story_comment:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.SearchResults:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+hn.algolia.com##.SearchResults:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+! pagination
+hn.algolia.com##.Pagination:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
+hn.algolia.com##.Pagination:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
+hn.algolia.com##.Pagination_item button:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-hn-dim-dark) !important)
+hn.algolia.com##.Pagination_item button:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-hn-dim-light) !important)
+hn.algolia.com##.Pagination_item button:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-hn-dim-dark) !important)
+hn.algolia.com##.Pagination_item button:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-hn-dim-light) !important)
+hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
+hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-firefox-text-dark) !important)
+hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-firefox-text-light) !important)
