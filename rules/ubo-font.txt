@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Font
 ! Description: Custom font styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2024-03-07
+! Last updated: 2024-03-11
 
 ! CSS variable
 *##html:style(--ubo-custom-font-sans-serif: "Inter Variable", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
@@ -8,16 +8,13 @@
 
 ! global
 *##:is(html, body, input, textarea):style(font-family: var(--ubo-custom-font-sans-serif))
-*##:is(code, kbd, pre, samp):style(font-family: var(--ubo-custom-font-monospace) !important)
+*##:is(code, kbd, pre, samp):style(font-family: var(--ubo-custom-font-monospace))
 ! render
 *##body:style(-webkit-font-smoothing: auto !important)
 *##body:style(-moz-osx-font-smoothing: auto !important)
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
-! [SITE] 9to5google.com
-9to5google.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] bitbucket.org
 bitbucket.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -71,18 +68,11 @@ www.ithome.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !im
 ! [SITE] macrumors.com
 macrumors.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! [SITE] nextjs.org
-nextjs.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
 ! [SITE] nyaa.si
 nyaa.si##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] pts.org.tw
 pts.org.tw##.post-article:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
-! [SITE] react.dev
-react.dev##.font-text:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-react.dev##.font-display:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] stackoverflow.com
 stackoverflow.com##body:style(--ff-sans: var(--ubo-custom-font-sans-serif) !important)
