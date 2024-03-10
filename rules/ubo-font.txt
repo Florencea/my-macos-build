@@ -41,6 +41,7 @@ exhentai.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !importa
 fandom.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] github.com
+github.com##:is(code, kbd, pre, samp):style(font-family: var(--ubo-custom-font-monospace) !important)
 github.com###read-only-cursor-text-area:style(font-family: var(--ubo-custom-font-monospace) !important)
 github.com##.react-code-text:style(font-family: var(--ubo-custom-font-monospace) !important)
 github.com##.text-mono:style(font-family: var(--ubo-custom-font-monospace) !important)
