@@ -495,6 +495,8 @@ news.ycombinator.com##html:style(--ubo-custom-hn-cce-dark: #737373)
 news.ycombinator.com##html:style(--ubo-custom-hn-cdd-dark: #5a5a5a)
 ! reset
 news.ycombinator.com##body:style(margin: 0 !important)
+news.ycombinator.com##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
+news.ycombinator.com##body:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 ! font size
 news.ycombinator.com##td:style(font-size: 14px !important)
 news.ycombinator.com##td:matches-media((min-width: 640px)):style(font-size: 16px !important)
