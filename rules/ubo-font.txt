@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Font
 ! Description: Custom font styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2024-03-11
+! Last updated: 2024-03-15
 
 ! CSS variable
 *##html:style(--ubo-custom-font-sans-serif: "Inter Variable", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
@@ -78,6 +78,9 @@ pts.org.tw##.post-article:style(font-family: var(--ubo-custom-font-sans-serif) !
 ! [SITE] stackoverflow.com
 stackoverflow.com##body:style(--ff-sans: var(--ubo-custom-font-sans-serif) !important)
 stackoverflow.com##body:style(--ff-mono: var(--ubo-custom-font-monospace) !important)
+
+! [SITE] swr.vercel.app
+swr.vercel.app##html:style(font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1 !important)
 
 ! [SITE] techbang.com
 techbang.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
