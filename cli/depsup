@@ -14,17 +14,15 @@ chkfile package-lock.json
 ### Sync project
 git pull --quiet
 
-### Clear project
-rm -rf node_modules
-rm -f package-lock.json
-
 ### Check version
 PACKEGES_TO_UPDATE_MSG="$(npx -y npm-check-updates -p npm -t minor --install never | sed "1,2d; $d" | sed "$ d")"
 PACKEGES_TO_UPDATE="$(npx -y npm-check-updates -p npm -t minor --install never --jsonUpgraded | jq -cr 'to_entries | map("\(.key)@\(.value|tostring)") | .[]')"
 
 readarray -t <<<$PACKEGES_TO_UPDATE_MSG
 if ! [ "$PACKEGES_TO_UPDATE" = "" ]; then
-  ### If any packages need update, one updated packaed per commit/push(for ci)
+  ### If any packages need update, one updated package per commit/push(for ci)
+  rm -rf node_modules
+  rm -f package-lock.json
   IDX=0
   for PACKAGE in $PACKEGES_TO_UPDATE; do
     echo " ${MAPFILE[$IDX]}"
@@ -37,6 +35,8 @@ if ! [ "$PACKEGES_TO_UPDATE" = "" ]; then
   done
 else
   ### If no package needs update, sync lockfile
+  rm -rf node_modules
+  rm -f package-lock.json
   npm install --package-lock-only --ignore-scripts --loglevel silent
 
   ### If lockfile updated, add to git
