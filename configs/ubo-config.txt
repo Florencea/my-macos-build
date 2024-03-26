@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1710008032203,
+  "timeStamp": 1711462387424,
   "version": "1.56.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -51,7 +51,6 @@
     "fanboy-cookiemonster",
     "ublock-cookies-easylist",
     "fanboy-thirdparty_social",
-    "ublock-annoyances",
     "CHN-0",
     "JPN-1",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
