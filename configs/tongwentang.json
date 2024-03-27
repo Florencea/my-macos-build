@@ -3,8 +3,8 @@
     "enabled": true,
     "rules": [
       {
-        "id": "1ce7628b1978",
-        "pattern": "cn.vitest.dev",
+        "id": "18b81ade7a7fc",
+        "pattern": "cn.electron-vite.org",
         "regexp": null,
         "target": "s2t"
       },
@@ -158,7 +158,7 @@
     }
   },
   "meta": {
-    "update": 1708673111209
+    "update": 1711516405107
   },
   "version": 2,
   "word": {
