@@ -1,10 +1,9 @@
 {
-  "timeStamp": 1711803289007,
+  "timeStamp": 1711808584136,
   "version": "1.56.0",
   "userSettings": {
     "contextMenuEnabled": false,
     "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-desktop.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
-    "hyperlinkAuditingDisabled": false,
     "ignoreGenericCosmeticFilters": true,
     "importedLists": [
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
@@ -70,6 +69,6 @@
   ],
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
   "urlFilteringString": "",
-  "hostnameSwitchesString": "no-large-media: behind-the-scene false",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
   "userFilters": ""
 }
