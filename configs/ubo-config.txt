@@ -1,7 +1,8 @@
 {
-  "timeStamp": 1711728961383,
+  "timeStamp": 1711803289007,
   "version": "1.56.0",
   "userSettings": {
+    "contextMenuEnabled": false,
     "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-desktop.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "hyperlinkAuditingDisabled": false,
     "ignoreGenericCosmeticFilters": true,
