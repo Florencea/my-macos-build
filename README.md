@@ -11,4 +11,3 @@
 
 - [uBlock Origin Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/ubo-config.txt)
 - [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey.json)
-- [Immersive Translate Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/immersive-translate.txt)
