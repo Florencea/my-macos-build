@@ -35,7 +35,7 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 defaults write -g ApplePressAndHoldEnabled -bool false
 ### Setup git config
 git config --global user.name "Florencea"
-git config --global user.email "florencea@longshun.eco"
+git config --global user.email "florencea@gmail.com"
 git config --global core.editor "nano"
 git config --global init.defaultBranch main
 git config --global pull.rebase false
