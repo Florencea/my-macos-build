@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>build</key>
-	<string>1230</string>
+	<string>1238</string>
 	<key>license</key>
 	<dict>
 		<key>email</key>
@@ -19,13 +19,13 @@
 				<key>key</key>
 				<string>100</string>
 				<key>uuid</key>
-				<string>237C338E-E52A-4697-9D2E-1D9F8EACDFB1</string>
+				<string>36816E54-421A-420B-BD31-E94F2EC52CC4</string>
 			</dict>
 			<dict>
 				<key>key</key>
-				<string>13</string>
+				<string>1</string>
 				<key>uuid</key>
-				<string>E9DD24BC-103B-4B9F-B77F-6A00B2CF78A2</string>
+				<string>66449473-C60F-40D8-ABC3-5B475EBC7DB7</string>
 			</dict>
 		</array>
 		<key>Disks_MenubarItems</key>
@@ -34,7 +34,7 @@
 				<key>boot</key>
 				<true/>
 				<key>key</key>
-				<string>3EDDAFF2-96A3-41CC-A6C4-906628DF3280</string>
+				<string>E511BF4F-6657-4CD9-BADF-E2AC63A9F0FD</string>
 				<key>name</key>
 				<string>Macintosh HD</string>
 			</dict>
@@ -137,19 +137,21 @@
 				<key>key</key>
 				<string>100</string>
 				<key>uuid</key>
-				<string>06CFA652-92F7-4885-AB6D-DB2512256DC6</string>
+				<string>FC765E7C-8913-49DA-BD7D-785DB518D306</string>
 			</dict>
 			<dict>
 				<key>key</key>
-				<string>6</string>
+				<string>1</string>
 				<key>uuid</key>
-				<string>2EDFF3D4-6FEC-4103-80EE-49F52EB89F3D</string>
+				<string>2586CFDC-FEBC-4654-85E5-1A95BF72890D</string>
 			</dict>
 		</array>
 		<key>MenubarSkinColor-Dark</key>
 		<integer>8</integer>
 		<key>MenubarSkinColor-Light</key>
 		<integer>7</integer>
+		<key>MenubarTheme</key>
+		<integer>0</integer>
 		<key>Migrated_6.0</key>
 		<true/>
 		<key>Migrated_6.22</key>
@@ -164,6 +166,8 @@
 		<true/>
 		<key>Network_DropdownCombineBandwidth</key>
 		<integer>0</integer>
+		<key>Network_DropdownOrderDisabled</key>
+		<string></string>
 		<key>Notifications-Enabled</key>
 		<false/>
 		<key>Notifications-Items</key>
@@ -221,11 +225,11 @@
 		<true/>
 		<key>StatusItems-Order</key>
 		<array>
+			<integer>4</integer>
 			<integer>7</integer>
 			<integer>1</integer>
 			<integer>2</integer>
 			<integer>3</integer>
-			<integer>4</integer>
 		</array>
 		<key>Theme-SeperateStyles</key>
 		<true/>
@@ -242,10 +246,8 @@
 				<array>
 					<array>
 						<string>M</string>
-						<string>'月'</string>
+						<string>'/'</string>
 						<string>d</string>
-						<string>'日 '</string>
-						<string>EE</string>
 						<string>' '</string>
 						<string>HH</string>
 						<string>':'</string>
@@ -265,11 +267,11 @@
 		<key>Zarya-TLE</key>
 		<dict>
 			<key>time</key>
-			<real>1700756950.771035</real>
+			<real>1713746145.530972</real>
 			<key>tle</key>
 			<string>ISS (ZARYA)             
-1 25544U 98067A   23327.46956112  .00023791  00000+0  42965-3 0  9991
-2 25544  51.6432 259.6101 0000751 340.3860 132.4250 15.49595723426496</string>
+1 25544U 98067A   24112.84099594  .00033810  00000+0  58509-3 0  9992
+2 25544  51.6406 234.7970 0004770  86.2536  52.0715 15.50603416449800</string>
 		</dict>
 		<key>language</key>
 		<string>zh-TW</string>
