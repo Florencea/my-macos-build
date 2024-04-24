@@ -5,8 +5,6 @@
 ! CSS variable
 *##html:style(--ubo-custom-font-sans-serif: "Inter Variable", system-ui, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
 *##html:style(--ubo-custom-font-monospace: "JetBrains Mono", Consolas, Liberation Mono, Menlo, monospace)
-*##html:style(--ubo-custom-font-feature: "ss06" 0)
-
 
 ! global
 *##:is(html, body, input, textarea):style(font-family: var(--ubo-custom-font-sans-serif))
@@ -14,8 +12,6 @@
 ! render
 *##body:style(-webkit-font-smoothing: auto !important)
 *##body:style(-moz-osx-font-smoothing: auto !important)
-! font-feature
-*##:is(html):style(font-feature-settings: var(--ubo-custom-font-feature))
 
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -82,6 +78,9 @@ pts.org.tw##.post-article:style(font-family: var(--ubo-custom-font-sans-serif) !
 ! [SITE] stackoverflow.com
 stackoverflow.com##body:style(--ff-sans: var(--ubo-custom-font-sans-serif) !important)
 stackoverflow.com##body:style(--ff-mono: var(--ubo-custom-font-monospace) !important)
+
+! [SITE] swc.rs
+swc.rs##html:style(font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1 !important)
 
 ! [SITE] swr.vercel.app
 swr.vercel.app##html:style(font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1 !important)
