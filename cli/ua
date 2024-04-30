@@ -12,7 +12,7 @@ chkcmd "node"
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"
-brew upgrade
+HOMEBREW_NO_ENV_HINTS=1 brew upgrade
 
 ### Update Node.js
 ### Change this line for perfer version (start by 'v', ex: v18, v20)
