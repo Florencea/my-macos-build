@@ -3,7 +3,13 @@
     "enabled": true,
     "rules": [
       {
-        "id": "0db5fa2797b5d",
+        "id": "ae559dec8c658",
+        "pattern": "cn.vitest.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "b349f330a8824",
         "pattern": "cn.electron-vite.org",
         "regexp": null,
         "target": "s2t"
@@ -158,7 +164,7 @@
     }
   },
   "meta": {
-    "update": 1714352066402
+    "update": 1714466759334
   },
   "version": 2,
   "word": {
