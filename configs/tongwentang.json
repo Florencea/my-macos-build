@@ -3,8 +3,8 @@
     "enabled": true,
     "rules": [
       {
-        "id": "ae559dec8c658",
-        "pattern": "cn.vitest.dev",
+        "id": "57be557565ecd",
+        "pattern": "h3yun.com",
         "regexp": null,
         "target": "s2t"
       },
@@ -164,7 +164,7 @@
     }
   },
   "meta": {
-    "update": 1714466759334
+    "update": 1715224837822
   },
   "version": 2,
   "word": {
