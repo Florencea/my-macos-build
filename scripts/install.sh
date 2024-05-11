@@ -43,7 +43,6 @@ git config --global core.quotepath false
 git config --global core.ignorecase false
 
 ### Update Homebrew taps
-brew tap homebrew/cask-versions
 brew tap homebrew/cask-fonts
 
 ### Install essential fonts
