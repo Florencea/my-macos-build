@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>build</key>
-	<string>1238</string>
+	<string>1239</string>
 	<key>license</key>
 	<dict>
 		<key>email</key>
@@ -226,7 +226,6 @@
 		<key>StatusItems-Order</key>
 		<array>
 			<integer>4</integer>
-			<integer>7</integer>
 			<integer>1</integer>
 			<integer>2</integer>
 			<integer>3</integer>
@@ -267,11 +266,11 @@
 		<key>Zarya-TLE</key>
 		<dict>
 			<key>time</key>
-			<real>1713746145.530972</real>
+			<real>1715481102.5268769</real>
 			<key>tle</key>
 			<string>ISS (ZARYA)             
-1 25544U 98067A   24112.84099594  .00033810  00000+0  58509-3 0  9992
-2 25544  51.6406 234.7970 0004770  86.2536  52.0715 15.50603416449800</string>
+1 25544U 98067A   24132.86946778  .00060294  00000+0  10116-2 0  9998
+2 25544  51.6377 135.4420 0003185 156.2980 276.2584 15.51218265452919</string>
 		</dict>
 		<key>language</key>
 		<string>zh-TW</string>
