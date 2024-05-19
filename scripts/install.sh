@@ -42,9 +42,6 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
 
-### Update Homebrew taps
-brew tap homebrew/cask-fonts
-
 ### Install essential fonts
 brew install --cask font-jetbrains-mono
 brew install --cask font-inter
