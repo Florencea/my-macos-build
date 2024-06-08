@@ -3,12 +3,6 @@
     "enabled": true,
     "rules": [
       {
-        "id": "57be557565ecd",
-        "pattern": "h3yun.com",
-        "regexp": null,
-        "target": "s2t"
-      },
-      {
         "id": "b349f330a8824",
         "pattern": "cn.electron-vite.org",
         "regexp": null,
@@ -164,7 +158,7 @@
     }
   },
   "meta": {
-    "update": 1715224837822
+    "update": 1717860446231
   },
   "version": 2,
   "word": {
