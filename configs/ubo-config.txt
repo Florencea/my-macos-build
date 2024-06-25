@@ -1,17 +1,16 @@
 {
-  "timeStamp": 1717860048320,
+  "timeStamp": 1719278428689,
   "version": "1.58.0",
   "userSettings": {
     "advancedUserEnabled": true,
     "contextMenuEnabled": false,
-    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt\nhttps://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt",
     "ignoreGenericCosmeticFilters": true,
     "importedLists": [
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
       "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt",
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
-      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt",
-      "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt"
+      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt"
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
@@ -55,7 +54,6 @@
     "CHN-0",
     "JPN-1",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
-    "https://raw.githubusercontent.com/quenhus/uBlock-Origin-dev-filter/main/dist/google/global.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
     "https://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt"
