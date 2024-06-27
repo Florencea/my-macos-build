@@ -9,9 +9,10 @@
 ## Hardware Accelerated Encoding on Apple Silicon
 
 - <https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/efece4442f3f583f7d04f98ef5168dfd08eaca5c>
+- <https://trac.ffmpeg.org/wiki/HWAccelIntro#VideoToolbox>
 - `-q:v` could be set 0 to 100, higher is better(larger file)
-- Test on Macbook Pro 16" (M1 Pro, 2021), FFmpeg 6.0
-  - Input H.264 AVC 1280 x 720
+- Test on Macbook Pro 14" (M3, 2023), FFmpeg 7.0.1
+  - Input H.264 AVC 1280 x 720 from youtube
   - use `hevc_videotoolbox`
 
 ```sh
@@ -26,13 +27,13 @@ ffmpeg
 
 | Quality  | Speed | Size  | Description                                                               |
 | -------- | ----- | ----- | ------------------------------------------------------------------------- |
-| original | -     | 258MB | Baseline                                                                  |
-| `0`      | 14x   | 115MB | Under baseline. Subtitles are legible but charactor faces looks very bad. |
-| `15`     | 14x   | 155MB | Under baseline. Motion frames looks pixelated.                            |
-| `25`     | 14x   | 211MB | Under baseline. But unconspicuous unless complex motion frames.           |
-| `40`     | 14x   | 296MB | Tell differences only when watching complex motion frames simultaneously. |
-| `45`     | 14x   | 330MB | Visually consistent.                                                      |
-| `100`    | 16x   | 4.4GB | Visually consistent.                                                      |
+| original | -     | 157MB | Baseline                                                                  |
+| `0`      | 15x   | 169MB | Under baseline. Subtitles are legible but charactor faces looks very bad. |
+| `15`     | 15x   | 168MB | Under baseline. Motion frames looks pixelated.                            |
+| `25`     | 15x   | 166MB | Under baseline. But unconspicuous unless complex motion frames.           |
+| `40`     | 15x   | 200MB | Tell differences only when watching complex motion frames simultaneously. |
+| `45`     | 15x   | 231MB | Visually consistent.                                                      |
+| `100`    | 17x   | 3.7GB | Visually consistent.                                                      |
 
 ## Software Encoding Commands
 
