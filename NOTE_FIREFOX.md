@@ -2,6 +2,7 @@
 
 - [Firefox Note](#firefox-note)
   - [DevTools Device Profile](#devtools-device-profile)
+    - [Google Pixel 8 pro](#google-pixel-8-pro)
     - [Google Pixel 7a](#google-pixel-7a)
     - [Google Pixel 4a](#google-pixel-4a)
   - [Customize Appearance](#customize-appearance)
@@ -20,6 +21,11 @@ Mozilla/5.0 (Android 10; Mobile; rv:109.0) Gecko/<FIREFOX_MAJOR_VERSION>.0 Firef
 ```text
 Mozilla/5.0 (Android 10; Mobile; rv:109.0) Gecko/122.0 Firefox/122.0
 ```
+
+### Google Pixel 8 pro
+
+- Screen: `448 x 997`
+- DPR: `3`
 
 ### Google Pixel 7a
 
