@@ -79,6 +79,7 @@ printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-s
 printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >>$HOME/.config/fish/config.fish
 printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
 brew install gcc
+brew install gifski
 brew install git
 brew install jq
 brew install mtr
