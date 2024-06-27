@@ -126,6 +126,8 @@ ffmpeg
 
 ## Make GIF
 
+- Recommend to use [gifski](https://github.com/ImageOptim/gifski) instead
+
 ```sh
 ffmpeg
   -hide_banner
