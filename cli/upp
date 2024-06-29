@@ -15,8 +15,8 @@ chkfile package-lock.json
 git pull --quiet
 
 ### Check version
-PACKEGES_TO_UPDATE_MSG="$(npx -y npm-check-updates -p npm -t minor --install never | sed "1,2d; $d" | sed "$ d")"
-PACKEGES_TO_UPDATE="$(npx -y npm-check-updates -p npm -t minor --install never --jsonUpgraded | jq -cr 'to_entries | map("\(.key)@\(.value|tostring)") | .[]')"
+PACKEGES_TO_UPDATE_MSG="$(npx -y npm-check-updates@latest -p npm -t minor --install never | sed "1,2d; $d" | sed "$ d")"
+PACKEGES_TO_UPDATE="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded | jq -cr 'to_entries | map("\(.key)@\(.value|tostring)") | .[]')"
 
 readarray -t <<<$PACKEGES_TO_UPDATE_MSG
 if ! [ "$PACKEGES_TO_UPDATE" = "" ]; then
@@ -48,6 +48,6 @@ else
 fi
 
 ### Check version again
-npx -y npm-check-updates -p npm -t latest --install never
+npx -y npm-check-updates@latest -p npm -t latest --install never
 ### install packages
 npm ci

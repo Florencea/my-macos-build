@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### Check cmd exist
+chkcmd "npm"
+chkcmd "npx"
+
+### Check is node project exist
+chkfile package.json
+
+### Check package to update
+npx -y npm-check-updates@latest -p npm -t latest --install never
