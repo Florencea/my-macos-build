@@ -23,7 +23,7 @@ chkcmd "yt-dlp"
 yt-dlp \
   --no-warnings \
   --progress \
-  -f bestaudio \
+  -f 141 \
   --extract-audio \
   --embed-metadata \
   --parse-metadata "title:%(meta_title)s" \

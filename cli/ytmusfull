@@ -23,7 +23,7 @@ chkcmd "yt-dlp"
 yt-dlp \
   --no-warnings \
   --progress \
-  -f bestaudio \
+  -f 141 \
   --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\"" \
   --extract-audio \
   --embed-thumbnail \
