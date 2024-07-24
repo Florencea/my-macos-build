@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2024-03-11
+! Last updated: 2024-07-24
 
 ! Note: These rules are optimized for Firefox
 
@@ -243,6 +243,7 @@ manhuaren.com##^.win-pay-cross
 manhuaren.com##^script:has-text(cnzz)
 manhuaren.com##^script:has-text(mhrsta)
 manhuaren.com##^script:has-text(download-cross)
+manhuaren.com##^script:has-text(_hmt)
 soman.com##^script:has-text(cnzz)
 ! Style
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
@@ -304,8 +305,11 @@ wnacg.com##^script:has-text(GoogleAnalyticsObject)
 wnacg.com##^script:has-text(tips)
 wnacg.com##^script:has-text(yandex)
 wnacg.com##^script:has-text(videoID)
+wnacg.com##^script:has-text(lazyload)
 wnacg.com##^script[src*='cnzz']
 wnacg.com##^script[src*='search']
+wnacg.com##^script[src*='pstatp']
+wnacg.com##^script[src*='cloudflareinsights']
 ! Elements cannot remove from initial DOM
 wnacg.com##.show
 wnacg.com###shareBox
@@ -623,6 +627,7 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##^script:has-text(Maskcg_removeBox)
 18av.mm-cg.com##^script[src*='googletagmanager']
 18av.mm-cg.com##^script[src*='realsrv']
+18av.mm-cg.com##^script[src*='popunder1000']
 ||18av.mm-cg.com/31M/background/NR.gif$image
 ||18av.mm-cg.com/31M/background/NL.gif$image
 ||18av.mm-cg.com/mmad.js$script
@@ -809,9 +814,7 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##body:has(>.plyr_width):style(display: flex !important)
 18av.mm-cg.com##body:has(>.plyr_width):style(flex-direction: column !important)
 18av.mm-cg.com##body:has(>.plyr_width):style(justify-content: center !important)
-
-! [SITE] uukanshu.com
-zhaoshuyuan.com##^#searchbox
-zhaoshuyuan.com##^.share_top
+! preview
+18av.mm-cg.com##video.thumb:style(pointer-events: none)
 
 !#endif
