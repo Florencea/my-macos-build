@@ -54,7 +54,7 @@ mkdir -p "$HOME/.config/fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
 ### Install apps
-brew install --cask istat-menus
+brew install --cask istat-menus@6
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 brew install --cask google-chrome
 brew install --cask iina

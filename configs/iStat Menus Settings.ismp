@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>build</key>
-	<string>1239</string>
+	<string>1238</string>
 	<key>license</key>
 	<dict>
 		<key>email</key>
@@ -19,13 +19,13 @@
 				<key>key</key>
 				<string>100</string>
 				<key>uuid</key>
-				<string>36816E54-421A-420B-BD31-E94F2EC52CC4</string>
+				<string>5BDE3B5D-547D-45BE-B546-A6F0ED8E63BB</string>
 			</dict>
 			<dict>
 				<key>key</key>
 				<string>1</string>
 				<key>uuid</key>
-				<string>66449473-C60F-40D8-ABC3-5B475EBC7DB7</string>
+				<string>0D42798B-0B68-4AE1-8658-52021BB69D0F</string>
 			</dict>
 		</array>
 		<key>Disks_MenubarItems</key>
@@ -34,7 +34,7 @@
 				<key>boot</key>
 				<true/>
 				<key>key</key>
-				<string>E511BF4F-6657-4CD9-BADF-E2AC63A9F0FD</string>
+				<string>3EDDAFF2-96A3-41CC-A6C4-906628DF3280</string>
 				<key>name</key>
 				<string>Macintosh HD</string>
 			</dict>
@@ -57,78 +57,7 @@
 		<key>DropdownTheme-Light</key>
 		<integer>2</integer>
 		<key>FanControl_Sets</key>
-		<array>
-			<dict>
-				<key>model</key>
-				<string>MacBookPro18,1</string>
-				<key>name</key>
-				<string>中</string>
-				<key>speeds</key>
-				<array>
-					<dict>
-						<key>fan</key>
-						<string>F0Ac</string>
-						<key>high</key>
-						<integer>4296</integer>
-						<key>low</key>
-						<integer>1499</integer>
-						<key>percentage</key>
-						<integer>50</integer>
-						<key>speed</key>
-						<integer>2897</integer>
-					</dict>
-					<dict>
-						<key>fan</key>
-						<string>F1Ac</string>
-						<key>high</key>
-						<integer>4744</integer>
-						<key>low</key>
-						<integer>1499</integer>
-						<key>percentage</key>
-						<integer>50</integer>
-						<key>speed</key>
-						<integer>3121</integer>
-					</dict>
-				</array>
-				<key>uuid</key>
-				<string>4FD06A6A-33D6-49B6-9379-E3E0CB14A77B</string>
-			</dict>
-			<dict>
-				<key>model</key>
-				<string>MacBookPro18,1</string>
-				<key>name</key>
-				<string>高</string>
-				<key>speeds</key>
-				<array>
-					<dict>
-						<key>fan</key>
-						<string>F0Ac</string>
-						<key>high</key>
-						<integer>4296</integer>
-						<key>low</key>
-						<integer>1499</integer>
-						<key>percentage</key>
-						<integer>100</integer>
-						<key>speed</key>
-						<integer>4296</integer>
-					</dict>
-					<dict>
-						<key>fan</key>
-						<string>F1Ac</string>
-						<key>high</key>
-						<integer>4744</integer>
-						<key>low</key>
-						<integer>1499</integer>
-						<key>percentage</key>
-						<integer>100</integer>
-						<key>speed</key>
-						<integer>4744</integer>
-					</dict>
-				</array>
-				<key>uuid</key>
-				<string>5A7820E7-8E12-4F41-A9EF-74D545380D90</string>
-			</dict>
-		</array>
+		<array/>
 		<key>Memory_DisplayFormat</key>
 		<integer>0</integer>
 		<key>Memory_MenubarMode</key>
@@ -137,13 +66,13 @@
 				<key>key</key>
 				<string>100</string>
 				<key>uuid</key>
-				<string>FC765E7C-8913-49DA-BD7D-785DB518D306</string>
+				<string>BD4BC7F4-9892-424B-9DB6-C5985403BACB</string>
 			</dict>
 			<dict>
 				<key>key</key>
 				<string>1</string>
 				<key>uuid</key>
-				<string>2586CFDC-FEBC-4654-85E5-1A95BF72890D</string>
+				<string>FB69B45F-FD85-40D3-9CB7-CF39279EBA2F</string>
 			</dict>
 		</array>
 		<key>MenubarSkinColor-Dark</key>
@@ -166,8 +95,6 @@
 		<true/>
 		<key>Network_DropdownCombineBandwidth</key>
 		<integer>0</integer>
-		<key>Network_DropdownOrderDisabled</key>
-		<string></string>
 		<key>Notifications-Enabled</key>
 		<false/>
 		<key>Notifications-Items</key>
@@ -225,10 +152,11 @@
 		<true/>
 		<key>StatusItems-Order</key>
 		<array>
-			<integer>4</integer>
+			<integer>7</integer>
 			<integer>1</integer>
 			<integer>2</integer>
 			<integer>3</integer>
+			<integer>4</integer>
 		</array>
 		<key>Theme-SeperateStyles</key>
 		<true/>
@@ -245,8 +173,10 @@
 				<array>
 					<array>
 						<string>M</string>
-						<string>'/'</string>
+						<string>'月'</string>
 						<string>d</string>
+						<string>'日 '</string>
+						<string>EE</string>
 						<string>' '</string>
 						<string>HH</string>
 						<string>':'</string>
@@ -266,11 +196,11 @@
 		<key>Zarya-TLE</key>
 		<dict>
 			<key>time</key>
-			<real>1715481102.5268769</real>
+			<real>1722474996.622056</real>
 			<key>tle</key>
 			<string>ISS (ZARYA)             
-1 25544U 98067A   24132.86946778  .00060294  00000+0  10116-2 0  9998
-2 25544  51.6377 135.4420 0003185 156.2980 276.2584 15.51218265452919</string>
+1 25544U 98067A   24213.90256772  .00036721  00000+0  66014-3 0  9998
+2 25544  51.6377  93.7862 0005973 147.7965 320.0621 15.49475947465485</string>
 		</dict>
 		<key>language</key>
 		<string>zh-TW</string>
