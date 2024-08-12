@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1723425243193,
+  "timeStamp": 1723474121397,
   "version": "1.59.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -14,6 +14,7 @@
     ],
     "popupPanelSections": 63,
     "prefetchingDisabled": false,
+    "suspendUntilListsAreLoaded": true,
     "userFiltersTrusted": true,
     "webrtcIPAddressHidden": true
   },
@@ -50,6 +51,7 @@
     "adguard-other-annoyances",
     "adguard-popup-overlays",
     "adguard-widgets",
+    "ublock-annoyances",
     "CHN-0",
     "JPN-1",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
