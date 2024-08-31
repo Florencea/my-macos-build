@@ -61,7 +61,6 @@ brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
 brew install --cask logi-options+
-brew install --cask c0re100-qbittorrent
 brew install --cask visual-studio-code
 
 ### Rosetta2
