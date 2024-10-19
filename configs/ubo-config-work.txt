@@ -1,0 +1,70 @@
+{
+  "timeStamp": 1729345911582,
+  "version": "1.60.0",
+  "userSettings": {
+    "contextMenuEnabled": false,
+    "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt",
+    "ignoreGenericCosmeticFilters": true,
+    "importedLists": [
+      "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
+      "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt",
+      "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
+      "https://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt"
+    ],
+    "prefetchingDisabled": false,
+    "suspendUntilListsAreLoaded": true,
+    "userFiltersTrusted": true,
+    "webrtcIPAddressHidden": true
+  },
+  "selectedFilterLists": [
+    "user-filters",
+    "ublock-filters",
+    "ublock-badware",
+    "ublock-privacy",
+    "ublock-quick-fixes",
+    "ublock-unbreak",
+    "easylist",
+    "adguard-generic",
+    "adguard-mobile",
+    "easyprivacy",
+    "adguard-spyware",
+    "adguard-spyware-url",
+    "urlhaus-1",
+    "curben-phishing",
+    "plowe-0",
+    "dpollock-0",
+    "fanboy-cookiemonster",
+    "ublock-cookies-easylist",
+    "adguard-cookies",
+    "ublock-cookies-adguard",
+    "fanboy-social",
+    "adguard-social",
+    "fanboy-thirdparty_social",
+    "easylist-chat",
+    "easylist-newsletters",
+    "easylist-notifications",
+    "easylist-annoyances",
+    "adguard-mobile-app-banners",
+    "adguard-other-annoyances",
+    "adguard-popup-overlays",
+    "adguard-widgets",
+    "ublock-annoyances",
+    "CHN-0",
+    "JPN-1",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
+    "https://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt",
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt"
+  ],
+  "hiddenSettings": {
+    "cloudStorageCompression": false
+  },
+  "whitelist": [
+    "chrome-extension-scheme",
+    "moz-extension-scheme"
+  ],
+  "dynamicFilteringString": "",
+  "urlFilteringString": "",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
+  "userFilters": ""
+}
