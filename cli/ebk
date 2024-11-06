@@ -52,5 +52,6 @@ function backupjson() {
 
 backup "my-ublock-backup*.txt" "ubo-config.txt"
 backup "wmy-ublock-backup*.txt" "ubo-config-work.txt"
+backup "immersive-translate-config*.txt" "immersive-translate-config.txt"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
 backupjson "tongwentang-*.json" "tongwentang.json"
