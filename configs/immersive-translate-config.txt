@@ -21,17 +21,20 @@
     "web3",
     "bilingual-mix"
   ],
+  "customAiAssistants": [],
   "enableInputTranslation": false,
   "enableInputTranslationWithoutTriggerKey": false,
   "generalRule": {
     "subtitleRule.add": {
+      "disabled": true,
       "youtubeAutoEnableSubtitle": false
     }
   },
   "inputTranslationService": "inherit",
   "interfaceLanguage": "zh-TW",
   "isChangedAlwaysTranslatedUrls": false,
-  "localUpdatedAt": "2024-11-06T09:10:26.506Z",
+  "loadingTheme": "none",
+  "localUpdatedAt": "2024-11-07T07:50:42.457Z",
   "modifiedBySystem": true,
   "mouseHoverTranslationService": "inherit",
   "pcFloatBall": {
@@ -89,5 +92,5 @@
       "news.ycombinator.com"
     ]
   },
-  "updatedAt": "2024-11-06T09:10:26.506Z"
+  "updatedAt": "2024-11-07T07:50:42.457Z"
 }
