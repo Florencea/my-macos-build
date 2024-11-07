@@ -32,9 +32,9 @@
   },
   "inputTranslationService": "inherit",
   "interfaceLanguage": "zh-TW",
-  "isChangedAlwaysTranslatedUrls": false,
+  "isChangedAlwaysTranslatedUrls": true,
   "loadingTheme": "none",
-  "localUpdatedAt": "2024-11-07T07:50:42.457Z",
+  "localUpdatedAt": "2024-11-07T08:31:50.331Z",
   "modifiedBySystem": true,
   "mouseHoverTranslationService": "inherit",
   "pcFloatBall": {
@@ -83,14 +83,8 @@
   "translationUrlPattern": {
     "excludeMatches": [],
     "matches": [
-      "twitter.com",
-      "x.com",
-      "www.reddit.com",
-      "www.kadaza.com",
-      "en.wikipedia.org",
-      "*.medium.com",
       "news.ycombinator.com"
     ]
   },
-  "updatedAt": "2024-11-07T07:50:42.457Z"
+  "updatedAt": "2024-11-07T08:31:50.331Z"
 }
