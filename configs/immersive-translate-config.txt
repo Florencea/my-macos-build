@@ -27,14 +27,16 @@
   "generalRule": {
     "subtitleRule.add": {
       "disabled": true,
+      "showQuickButton": false,
       "youtubeAutoEnableSubtitle": false
     }
   },
   "inputTranslationService": "inherit",
   "interfaceLanguage": "zh-TW",
   "isChangedAlwaysTranslatedUrls": true,
+  "isShowContextMenu": true,
   "loadingTheme": "none",
-  "localUpdatedAt": "2024-11-07T08:31:50.331Z",
+  "localUpdatedAt": "2024-11-19T05:48:17.608Z",
   "modifiedBySystem": true,
   "mouseHoverTranslationService": "inherit",
   "pcFloatBall": {
@@ -55,6 +57,7 @@
     "upgradeShowLimit": 50,
     "upgradeVisible": true
   },
+  "sameLangCheck": false,
   "subtitleTranslateService": "inherit",
   "targetLanguage": "zh-TW",
   "translationMode": "translation",
@@ -86,5 +89,5 @@
       "news.ycombinator.com"
     ]
   },
-  "updatedAt": "2024-11-07T08:31:50.331Z"
+  "updatedAt": "2024-11-19T05:48:17.608Z"
 }
