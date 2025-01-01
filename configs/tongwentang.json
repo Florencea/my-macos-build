@@ -3,6 +3,12 @@
     "enabled": true,
     "rules": [
       {
+        "id": "6d4e92397f93b",
+        "pattern": "cn.vite.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
         "id": "c98c9f61aad37",
         "pattern": "cn.vitest.dev",
         "regexp": null,
@@ -158,7 +164,7 @@
     }
   },
   "meta": {
-    "update": 1733191138502
+    "update": 1735744023489
   },
   "version": 2,
   "word": {
