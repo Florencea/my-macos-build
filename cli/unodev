@@ -18,20 +18,25 @@ cd "../../"
 for PROJECT in $(ls .); do
   cd "$PROJECT"
   if [ -d .git ]; then
-    if [ -f package.json ]; then
-      OLD_NODE_VERSION="$(npm pkg get engines.node)"
-      NODE_VERSION="$(node -v | sed 's/^v//')"
-      npm pkg set engines.node="$NODE_VERSION"
-      ### If node version change, add to git
-      if [ "$(git status --short)" != "" ]; then
-        ### if exist .nvmrc, remove it
-        if [ -f .nvmrc ]; then
-          git rm .nvmrc
+    ### If exist .node-version change, skip it
+    if [ ! -f .node-version ]; then
+      if [ -f package.json ]; then
+        OLD_NODE_VERSION="$(npm pkg get engines.node)"
+        NODE_VERSION="$(node -v | sed 's/^v//')"
+        npm pkg set engines.node="$NODE_VERSION"
+        ### If node version change, add to git
+        if [ "$(git status --short)" != "" ]; then
+          ### if exist .nvmrc, remove it
+          if [ -f .nvmrc ]; then
+            git rm .nvmrc
+          fi
+          git add package.json && git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION" && git push -q &>/dev/null && printf "engines.node \033[1;31m%s\033[0m -> \033[1;36m%s\033[0m \033[1m%s\033[0m\n" "$OLD_NODE_VERSION" "$NODE_VERSION" "$PROJECT" &
+        else
+          printf "engines.node \033[1;32m%s\033[0m \033[1m%s\033[0m\n" "$OLD_NODE_VERSION" "$PROJECT"
         fi
-        git add package.json && git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION" && git push -q &>/dev/null && printf "engines.node \033[1;31m%s\033[0m -> \033[1;36m%s\033[0m \033[1m%s\033[0m\n" "$OLD_NODE_VERSION" "$NODE_VERSION" "$PROJECT" &
-      else
-        printf "engines.node \033[1;32m%s\033[0m \033[1m%s\033[0m\n" "$OLD_NODE_VERSION" "$PROJECT"
       fi
+    else
+      printf "exist .node-version \033[1;32m%s\033[0m \033[1m%s\033[0mskip.\n" "$PROJECT"
     fi
   fi
   cd "../"
