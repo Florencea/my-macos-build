@@ -154,17 +154,17 @@
     "enabled": false,
     "group": {
       "textarea": {
-        "s2t": true,
-        "t2s": true
+        "s2t": false,
+        "t2s": false
       },
       "webpage": {
-        "s2t": true,
-        "t2s": true
+        "s2t": false,
+        "t2s": false
       }
     }
   },
   "meta": {
-    "update": 1735744023489
+    "update": 1737471278858
   },
   "version": 2,
   "word": {
