@@ -2,5 +2,18 @@
 set -o errexit
 set -o pipefail
 
-defaults write com.apple.dock ResetLaunchPad -bool true
+# Get the macOS version
+macos_version=$(sw_vers -productVersion)
+
+# Parse major and minor versions
+major=$(echo "$macos_version" | awk -F '.' '{print $1}')
+minor=$(echo "$macos_version" | awk -F '.' '{print $2}')
+
+# Check if macOS version is >= 15.2
+if [[ $major -gt 15 || ($major -eq 15 && $minor -ge 2) ]]; then
+  rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
+else
+  defaults write com.apple.dock ResetLaunchPad -bool true
+fi
+
 killall Dock
