@@ -34,9 +34,9 @@
   "inputTranslationService": "inherit",
   "interfaceLanguage": "zh-TW",
   "isChangedAlwaysTranslatedUrls": true,
-  "isShowContextMenu": true,
+  "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2024-11-19T05:48:17.608Z",
+  "localUpdatedAt": "2025-02-08T05:42:25.101Z",
   "modifiedBySystem": true,
   "mouseHoverTranslationService": "inherit",
   "pcFloatBall": {
@@ -89,5 +89,5 @@
       "news.ycombinator.com"
     ]
   },
-  "updatedAt": "2024-11-19T05:48:17.608Z"
+  "updatedAt": "2025-02-08T05:42:25.101Z"
 }
