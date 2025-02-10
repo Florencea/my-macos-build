@@ -54,8 +54,7 @@ mkdir -p "$HOME/.config/fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
 ### Install apps
-brew install --cask istat-menus@6
-defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
+brew install --cask stats
 brew install --cask c0re100-qbittorrent
 brew install --cask google-chrome
 brew install --cask iina
@@ -71,6 +70,7 @@ brew install --cask visual-studio-code
 brew install bash
 brew install curl
 brew install ffmpeg
+# Node.js
 brew install fnm
 eval "$(fnm env)"
 fnm install --lts
@@ -94,7 +94,14 @@ brew install yq
 brew install zsh
 
 ### Reset LaunchPad
-defaults write com.apple.dock ResetLaunchPad -bool true
+macos_version=$(sw_vers -productVersion)
+major=$(echo "$macos_version" | awk -F '.' '{print $1}')
+minor=$(echo "$macos_version" | awk -F '.' '{print $2}')
+if [[ $major -gt 15 || ($major -eq 15 && $minor -ge 2) ]]; then
+  rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
+else
+  defaults write com.apple.dock ResetLaunchPad -bool true
+fi
 killall Dock
 ### Clear script
 rm "$0"

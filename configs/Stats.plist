@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>3DC6A2DA-AC84-4065-A46C-EF14179A7C1A_details</key>
+	<false/>
+	<key>Battery_state</key>
+	<false/>
+	<key>CPU_barChart_position</key>
+	<integer>0</integer>
+	<key>CPU_bar_chart_box</key>
+	<false/>
+	<key>CPU_bar_chart_color</key>
+	<string>monochrome</string>
+	<key>CPU_bar_chart_label</key>
+	<true/>
+	<key>CPU_clustersGroup</key>
+	<false/>
+	<key>CPU_hyperhreading</key>
+	<false/>
+	<key>CPU_label_position</key>
+	<integer>4</integer>
+	<key>CPU_lineChart_position</key>
+	<integer>5</integer>
+	<key>CPU_mini_position</key>
+	<integer>1</integer>
+	<key>CPU_oneView</key>
+	<true/>
+	<key>CPU_pieChart_position</key>
+	<integer>2</integer>
+	<key>CPU_pie_chart_label</key>
+	<true/>
+	<key>CPU_pie_chart_monochrome</key>
+	<true/>
+	<key>CPU_splitValue</key>
+	<false/>
+	<key>CPU_tachometer_position</key>
+	<integer>3</integer>
+	<key>CPU_usagePerCore</key>
+	<false/>
+	<key>CPU_widget</key>
+	<string>bar_chart</string>
+	<key>Clock_list</key>
+	<data>
+	W3sibmFtZSI6IueVtuWcsOaZgumWkyIsInR6IjoibG9jYWwiLCJlbmFibGVkIjp0cnVl
+	LCJmb3JtYXQiOiJ5eXl55bm0TeaciGTml6UgSEg6bW0iLCJpZCI6IkMwODVDNjhELUIw
+	ODktNDQ3RC1CQzAyLUI3MTU0MjFGMTNBQyJ9XQ==
+	</data>
+	<key>Clock_sensors_monospacedFont</key>
+	<true/>
+	<key>Clock_state</key>
+	<true/>
+	<key>CombinedModules</key>
+	<false/>
+	<key>Disk_barChart_position</key>
+	<integer>3</integer>
+	<key>Disk_label_position</key>
+	<integer>2</integer>
+	<key>Disk_memory_position</key>
+	<integer>5</integer>
+	<key>Disk_mini_position</key>
+	<integer>1</integer>
+	<key>Disk_networkChart_position</key>
+	<integer>6</integer>
+	<key>Disk_pieChart_position</key>
+	<integer>4</integer>
+	<key>Disk_processes</key>
+	<integer>8</integer>
+	<key>Disk_removable</key>
+	<true/>
+	<key>Disk_speed_icon</key>
+	<string>none</string>
+	<key>Disk_speed_monochrome</key>
+	<true/>
+	<key>Disk_speed_position</key>
+	<integer>0</integer>
+	<key>Disk_updateInterval</key>
+	<integer>1</integer>
+	<key>Disk_widget</key>
+	<string>speed</string>
+	<key>GPU_state</key>
+	<false/>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{800, 448}</string>
+	<key>NSNavPanelExpandedStateForSaveMode</key>
+	<true/>
+	<key>NSOSPLastRootDirectory</key>
+	<data>
+	Ym9vawQDAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AEA
+	AAQAAAADAwAAAAQAAAUAAAABAQAAVXNlcnMAAAAJAAAAAQEAAGZsb3JlbmNlYQAAAAkA
+	AAABAQAARG93bmxvYWRzAAAADAAAAAEGAAAQAAAAIAAAADQAAAAIAAAABAMAAPBBAAAA
+	AAAACAAAAAQDAAB9aAAAAAAAAAgAAAAEAwAAsGgAAAAAAAAMAAAAAQYAAFwAAABsAAAA
+	fAAAAAgAAAAABAAAQcZjyEAAAAAYAAAAAQIAAAIAAAAAAAAAHwIAAAAAAAAfAgAAAAAA
+	AAAAAAABBQAACAAAAAQDAAABAAAAAAAAAAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTov
+	Ly8MAAAAAQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAIAAAAAAQAAEHGnIUn
+	AAAAJAAAAAEBAABBMDY4RDNFQi02MDE4LTRGRTgtODM2MS1DOTIyRUREREFDNjYYAAAA
+	AQIAAIEAAAABAAAA7xMAAAEAAADvEwAAAQAAAAEAAAABAQAALwAAAAwAAAABAQAA5LiL
+	6LyJ6aCF55uuMAAAAAECAABkbmliAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	AABmbndkAgAAAAAAAADwAAAA/v///wEAAAAAAAAAEwAAAAQQAABIAAAAAAAAAAUQAACM
+	AAAAAAAAABAQAACwAAAAAAAAAEAQAACgAAAAAAAAAAIgAACEAQAAAAAAAAUgAAD0AAAA
+	AAAAABAgAAAEAQAAAAAAABEgAAA4AQAAAAAAABIgAAAYAQAAAAAAABMgAAAoAQAAAAAA
+	ACAgAABkAQAAAAAAADAgAADQAAAAAAAAAAHAAADYAAAAAAAAABHAAAAgAAAAAAAAABLA
+	AADoAAAAAAAAAAHQAADQAAAAAAAAABDQAAAEAAAAAAAAABfwAACQAQAAAAAAACLwAACk
+	AQAAAAAAAA==
+	</data>
+	<key>NSStatusItem Preferred Position CPU</key>
+	<real>581</real>
+	<key>NSStatusItem Preferred Position Clock</key>
+	<real>78</real>
+	<key>NSStatusItem Preferred Position Disk</key>
+	<real>460</real>
+	<key>NSStatusItem Preferred Position Network</key>
+	<real>385</real>
+	<key>NSStatusItem Preferred Position RAM</key>
+	<real>535</real>
+	<key>NSStatusItem Restore Position Battery</key>
+	<integer>627</integer>
+	<key>NSStatusItem Restore Position Battery_battery</key>
+	<integer>272</integer>
+	<key>NSStatusItem Restore Position Disk_mini</key>
+	<integer>385</integer>
+	<key>NSStatusItem Restore Position Disk_speed</key>
+	<integer>385</integer>
+	<key>NSStatusItem Restore Position Network_speed</key>
+	<integer>314</integer>
+	<key>NSStatusItem Restore Position RAM_pie_chart</key>
+	<integer>456</integer>
+	<key>NSWindow Frame NSNavPanelAutosaveName</key>
+	<string>500 522 800 448 0 0 1800 1125 </string>
+	<key>Network_ICMPHost</key>
+	<string>168.95.1.1</string>
+	<key>Network_publicIPRefreshInterval</key>
+	<string>hour</string>
+	<key>Network_speed_icon</key>
+	<string>none</string>
+	<key>Network_speed_monochrome</key>
+	<true/>
+	<key>RAM_barChart_position</key>
+	<integer>0</integer>
+	<key>RAM_bar_chart_box</key>
+	<false/>
+	<key>RAM_bar_chart_color</key>
+	<string>monochrome</string>
+	<key>RAM_bar_chart_frame</key>
+	<false/>
+	<key>RAM_bar_chart_label</key>
+	<true/>
+	<key>RAM_label_position</key>
+	<integer>6</integer>
+	<key>RAM_lineChart_position</key>
+	<integer>2</integer>
+	<key>RAM_memory_position</key>
+	<integer>7</integer>
+	<key>RAM_mini_color</key>
+	<string>monochrome</string>
+	<key>RAM_mini_position</key>
+	<integer>1</integer>
+	<key>RAM_pieChart_position</key>
+	<integer>5</integer>
+	<key>RAM_pie_chart_label</key>
+	<true/>
+	<key>RAM_pie_chart_monochrome</key>
+	<true/>
+	<key>RAM_tachometer_position</key>
+	<integer>4</integer>
+	<key>RAM_text_position</key>
+	<integer>3</integer>
+	<key>RAM_widget</key>
+	<string>bar_chart</string>
+	<key>Sensors_state</key>
+	<false/>
+	<key>clock_C085C68D-B089-447D-BC02-B715421F13AC_popupState</key>
+	<false/>
+	<key>runAtLoginInitialized</key>
+	<true/>
+	<key>setupProcess</key>
+	<true/>
+	<key>telemetry</key>
+	<false/>
+	<key>updater_check_ts</key>
+	<integer>1738835305</integer>
+	<key>version</key>
+	<string>2.11.29</string>
+</dict>
+</plist>

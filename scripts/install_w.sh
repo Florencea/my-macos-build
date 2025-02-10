@@ -54,8 +54,7 @@ mkdir -p "$HOME/.config/fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
 ### Install apps
-brew install --cask istat-menus@6
-defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
+brew install --cask stats
 brew install --cask c0re100-qbittorrent
 brew install --cask google-chrome
 brew install --cask dingtalk
@@ -78,6 +77,7 @@ brew install --cask visual-studio-code
 brew install bash
 brew install curl
 brew install ffmpeg
+# Node.js
 brew install fnm
 eval "$(fnm env)"
 fnm install --lts
@@ -99,9 +99,29 @@ brew install wget
 brew install yt-dlp
 brew install yq
 brew install zsh
+# Google Cloud SDK https://cloud.google.com/storage/docs/gsutil_install
+SDK_PATH="/Developer/_sdks"
+SDK_ROOT="$HOME$SDK_PATH"
+SDK_FILE="$SDK_ROOT/google-cloud-sdk.tar.gz"
+brew install python@3.12
+mkdir -p "$SDK_ROOT"
+curl -o "$SDK_FILE" -L "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-darwin-arm.tar.gz"
+tar xzf "$SDK_FILE" -C "$SDK_ROOT/"
+rm "$SDK_FILE"
+printf "# Python 3.12 for Google Cloud SDK\nset -gx CLOUDSDK_PYTHON \"/opt/homebrew/opt/python@3.12/libexec/bin/python3\"\n# The next line updates PATH for the Google Cloud SDK.\nif [ -f \"\$HOME$SDK_PATH/google-cloud-sdk/path.fish.inc\" ]; . \"\$HOME$SDK_PATH/google-cloud-sdk/path.fish.inc\"; end\n" >>$HOME/.config/fish/config.fish
+printf "# Google Cloud SDK\nexport CLOUDSDK_PYTHON=\"/opt/homebrew/opt/python@3.12/libexec/bin/python3\"\nif [ -f \"\$HOME$SDK_PATH/google-cloud-sdk/path.zsh.inc\" ]; then . \"\$HOME$SDK_PATH/google-cloud-sdk/path.zsh.inc\"; fi\n" >>$HOME/.zshrc
+export CLOUDSDK_PYTHON="/opt/homebrew/opt/python@3.12/libexec/bin/python3"
+sh "$HOME/Developer/_sdks/google-cloud-sdk/install.sh" -q --install-python=false
 
 ### Reset LaunchPad
-defaults write com.apple.dock ResetLaunchPad -bool true
+macos_version=$(sw_vers -productVersion)
+major=$(echo "$macos_version" | awk -F '.' '{print $1}')
+minor=$(echo "$macos_version" | awk -F '.' '{print $2}')
+if [[ $major -gt 15 || ($major -eq 15 && $minor -ge 2) ]]; then
+  rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
+else
+  defaults write com.apple.dock ResetLaunchPad -bool true
+fi
 killall Dock
 ### Clear script
 rm "$0"
