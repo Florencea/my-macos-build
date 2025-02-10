@@ -68,6 +68,8 @@
 	<integer>8</integer>
 	<key>Disk_removable</key>
 	<true/>
+	<key>Disk_speed_displayValue</key>
+	<string>io</string>
 	<key>Disk_speed_icon</key>
 	<string>none</string>
 	<key>Disk_speed_monochrome</key>
@@ -80,53 +82,71 @@
 	<string>speed</string>
 	<key>GPU_state</key>
 	<false/>
+	<key>LaunchAtLoginNext</key>
+	<true/>
 	<key>NSNavPanelExpandedSizeForSaveMode</key>
 	<string>{800, 448}</string>
 	<key>NSNavPanelExpandedStateForSaveMode</key>
 	<true/>
 	<key>NSOSPLastRootDirectory</key>
 	<data>
-	Ym9vawQDAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AEA
+	Ym9va0gDAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAIA
 	AAQAAAADAwAAAAQAAAUAAAABAQAAVXNlcnMAAAAJAAAAAQEAAGZsb3JlbmNlYQAAAAkA
-	AAABAQAARG93bmxvYWRzAAAADAAAAAEGAAAQAAAAIAAAADQAAAAIAAAABAMAAPBBAAAA
-	AAAACAAAAAQDAAB9aAAAAAAAAAgAAAAEAwAAsGgAAAAAAAAMAAAAAQYAAFwAAABsAAAA
-	fAAAAAgAAAAABAAAQcZjyEAAAAAYAAAAAQIAAAIAAAAAAAAAHwIAAAAAAAAfAgAAAAAA
-	AAAAAAABBQAACAAAAAQDAAABAAAAAAAAAAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTov
-	Ly8MAAAAAQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAIAAAAAAQAAEHGnIUn
-	AAAAJAAAAAEBAABBMDY4RDNFQi02MDE4LTRGRTgtODM2MS1DOTIyRUREREFDNjYYAAAA
-	AQIAAIEAAAABAAAA7xMAAAEAAADvEwAAAQAAAAEAAAABAQAALwAAAAwAAAABAQAA5LiL
-	6LyJ6aCF55uuMAAAAAECAABkbmliAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	AABmbndkAgAAAAAAAADwAAAA/v///wEAAAAAAAAAEwAAAAQQAABIAAAAAAAAAAUQAACM
-	AAAAAAAAABAQAACwAAAAAAAAAEAQAACgAAAAAAAAAAIgAACEAQAAAAAAAAUgAAD0AAAA
-	AAAAABAgAAAEAQAAAAAAABEgAAA4AQAAAAAAABIgAAAYAQAAAAAAABMgAAAoAQAAAAAA
-	ACAgAABkAQAAAAAAADAgAADQAAAAAAAAAAHAAADYAAAAAAAAABHAAAAgAAAAAAAAABLA
-	AADoAAAAAAAAAAHQAADQAAAAAAAAABDQAAAEAAAAAAAAABfwAACQAQAAAAAAACLwAACk
-	AQAAAAAAAA==
+	AAABAQAARGV2ZWxvcGVyAAAADgAAAAEBAABteS1tYWNvcy1idWlsZAAABwAAAAEBAABj
+	b25maWdzABQAAAABBgAAEAAAACAAAAA0AAAASAAAAGAAAAAIAAAABAMAAF9CAAAAAAAA
+	CAAAAAQDAADQagAAAAAAAAgAAAAEAwAA8dABAAAAAAAIAAAABAMAAHnRAQAAAAAACAAA
+	AAQDAACc0QEAAAAAABQAAAABBgAAjAAAAJwAAACsAAAAvAAAAMwAAAAIAAAAAAQAAEHG
+	rRqKbCFGGAAAAAECAAACAAAAAAAAAB8CAAAAAAAAHwIAAAAAAAAAAAAAAQUAAAgAAAAE
+	AwAAAwAAAAAAAAAEAAAAAwMAAPUBAAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNp
+	bnRvc2ggSEQIAAAABAMAAACQgpbnAAAACAAAAAAEAABBxpyFJwAAACQAAAABAQAANjM3
+	MkY1RTQtNDkzMi00MDQyLTg3MEItMDkzQTMwMEM4NEU4GAAAAAECAACBAAAAAQAAAO8T
+	AAABAAAA7xMAAAEAAAABAAAAAQEAAC8AAAAwAAAAAQIAAGRuaWIAAAAAAQAAAAAAAAAA
+	AAAAAAAAAAAAAAAAAAAAAAAAAHJkbGYCAAAAAAAAAPAAAAD+////AQAAAAAAAAATAAAA
+	BBAAAHAAAAAAAAAABRAAANwAAAAAAAAAEBAAAAgBAAAAAAAAQBAAAPgAAAAAAAAAAiAA
+	ANwBAAAAAAAABSAAAEwBAAAAAAAAECAAAFwBAAAAAAAAESAAAJABAAAAAAAAEiAAAHAB
+	AAAAAAAAEyAAAIABAAAAAAAAICAAALwBAAAAAAAAMCAAACgBAAAAAAAAAcAAADABAAAA
+	AAAAEcAAACAAAAAAAAAAEsAAAEABAAAAAAAAAdAAACgBAAAAAAAAENAAAAQAAAAAAAAA
+	F/AAAGAAAAAAAAAAIvAAAOgBAAAAAAAA
 	</data>
 	<key>NSStatusItem Preferred Position CPU</key>
-	<real>581</real>
+	<real>528</real>
 	<key>NSStatusItem Preferred Position Clock</key>
+	<real>78</real>
+	<key>NSStatusItem Preferred Position Clock_sensors</key>
 	<real>78</real>
 	<key>NSStatusItem Preferred Position Disk</key>
 	<real>460</real>
+	<key>NSStatusItem Preferred Position Disk_speed</key>
+	<real>429</real>
 	<key>NSStatusItem Preferred Position Network</key>
 	<real>385</real>
+	<key>NSStatusItem Preferred Position Network_speed</key>
+	<real>365</real>
 	<key>NSStatusItem Preferred Position RAM</key>
 	<real>535</real>
+	<key>NSStatusItem Preferred Position RAM_bar_chart</key>
+	<real>493</real>
 	<key>NSStatusItem Restore Position Battery</key>
 	<integer>627</integer>
 	<key>NSStatusItem Restore Position Battery_battery</key>
 	<integer>272</integer>
 	<key>NSStatusItem Restore Position Disk_mini</key>
 	<integer>385</integer>
-	<key>NSStatusItem Restore Position Disk_speed</key>
-	<integer>385</integer>
-	<key>NSStatusItem Restore Position Network_speed</key>
-	<integer>314</integer>
 	<key>NSStatusItem Restore Position RAM_pie_chart</key>
 	<integer>456</integer>
+	<key>NSToolbar Configuration eu.exelban.Stats.Settings.Toolbar</key>
+	<dict>
+		<key>TB Display Mode</key>
+		<integer>1</integer>
+		<key>TB Icon Size Mode</key>
+		<integer>1</integer>
+		<key>TB Is Shown</key>
+		<true/>
+		<key>TB Size Mode</key>
+		<integer>1</integer>
+	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>500 522 800 448 0 0 1800 1125 </string>
+	<string>628 640 800 448 0 0 2056 1285 </string>
 	<key>Network_ICMPHost</key>
 	<string>168.95.1.1</string>
 	<key>Network_publicIPRefreshInterval</key>
@@ -175,11 +195,15 @@
 	<true/>
 	<key>setupProcess</key>
 	<true/>
+	<key>support_ts</key>
+	<integer>1739195585</integer>
 	<key>telemetry</key>
 	<false/>
+	<key>telemetry_id</key>
+	<string>36BB8BE0-8F17-4AFD-88A7-5F38DE114AA0</string>
 	<key>updater_check_ts</key>
-	<integer>1738835305</integer>
+	<integer>1739201035</integer>
 	<key>version</key>
-	<string>2.11.29</string>
+	<string>2.11.30</string>
 </dict>
 </plist>
