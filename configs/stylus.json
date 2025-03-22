@@ -149,6 +149,10 @@
         "domains": ["elle.com"]
       },
       {
+        "code": "a[aria-label=\"廣告商\"],\ndiv:has(>div>div>div>div>div>div>div>a[aria-label=\"廣告商\"]) {\n    display: none !important;\n}",
+        "domains": ["www.facebook.com"]
+      },
+      {
         "code": "body {\n    font-family: var(--ubo-custom-font-sans-serif) !important;\n}",
         "domains": ["fandom.com"]
       },
@@ -229,9 +233,9 @@
         "domains": ["hn.algolia.com"]
       }
     ],
-    "updateDate": 1742542325320,
+    "updateDate": 1742650874237,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1742542325320,
+    "_rev": 1742650874238,
     "id": 1
   },
   {
