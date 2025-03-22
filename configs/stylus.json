@@ -149,7 +149,7 @@
         "domains": ["elle.com"]
       },
       {
-        "code": "a[aria-label=\"廣告商\"],\ndiv:has(>div>div>div>div>div>div>div>a[aria-label=\"廣告商\"]) {\n    display: none !important;\n}",
+        "code": "a[aria-label=\"廣告商\"],\na[aria-labelledby^=\"«\"],\ndiv:has(>div>div>div>div>div>div>div>a[aria-label=\"廣告商\"]),\ndiv:has(>div>div>div>div>div>div>div>a[aria-labelledby^=\"«\"]) {\n    display: none !important;\n}",
         "domains": ["www.facebook.com"]
       },
       {
@@ -233,9 +233,9 @@
         "domains": ["hn.algolia.com"]
       }
     ],
-    "updateDate": 1742650874237,
+    "updateDate": 1742672556151,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1742650874238,
+    "_rev": 1742672556151,
     "id": 1
   },
   {
@@ -262,7 +262,7 @@
     ],
     "updateDate": 1737866659813,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1742531986993,
+    "_rev": 1742657137526,
     "id": 2
   }
 ]
