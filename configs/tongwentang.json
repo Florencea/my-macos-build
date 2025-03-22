@@ -3,6 +3,18 @@
     "enabled": true,
     "rules": [
       {
+        "id": "4863598d3d0bb",
+        "pattern": "ant-design-mobile.antgroup.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "e6802755cfe73",
+        "pattern": "ant-design-x.antgroup.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
         "id": "6d4e92397f93b",
         "pattern": "cn.vite.dev",
         "regexp": null,
@@ -164,7 +176,7 @@
     }
   },
   "meta": {
-    "update": 1737471278858
+    "update": 1742654773646
   },
   "version": 2,
   "word": {
