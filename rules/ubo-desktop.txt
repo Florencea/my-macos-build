@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2025-02-18
+! Last updated: 2025-03-29
 
 ! CSS variable
 ! bg
@@ -213,6 +213,8 @@ pts.org.tw##.tag-list
 pts.org.tw##.container:has(div:has(h3.section-title:has-text(相關)))
 pts.org.tw##.cookie-flex
 pts.org.tw##.article-title + div:has(>div>span>time)
+pts.org.tw##div[x-data=privacyAlert]
+pts.org.tw##div:has(>a[href='https://news.pts.org.tw/member_promo'])
 ! Styles
 pts.org.tw##body > .container > .row:style(justify-content: center !important)
 pts.org.tw##body > .container > .row > .col-lg-6:style(padding-bottom: 30px !important)
@@ -417,11 +419,6 @@ thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-
 thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-tnl-link-light) !important)
 thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-tnl-link-dark) !important)
 thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-tnl-link-light) !important)
-
-! [SITE] vitejs.dev
-vitejs.dev##.VPDocAsideSponsors
-vitejs.dev##.VPDocAsideCarbonAds
-vitejs.dev##.viteconf
 
 ! [SITE] xfastest.com
 xfastest.com##.vw-page-wrapper > div:not(.container):not(#vwspc-section-2)
@@ -672,3 +669,4 @@ hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-sch
 hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-firefox-text-dark) !important)
 hn.algolia.com##.Pagination_item-current button:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-firefox-text-light) !important)
+
