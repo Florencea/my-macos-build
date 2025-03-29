@@ -1,7 +1,8 @@
 {
-  "timeStamp": 1729345911582,
-  "version": "1.60.0",
+  "timeStamp": 1743257378826,
+  "version": "1.62.0",
   "userSettings": {
+    "advancedUserEnabled": true,
     "contextMenuEnabled": false,
     "externalLists": "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt\nhttps://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt",
     "ignoreGenericCosmeticFilters": true,
@@ -11,6 +12,7 @@
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
       "https://raw.githubusercontent.com/Florencea/my-macos-build/main/rules/ubo-font.txt"
     ],
+    "popupPanelSections": 63,
     "prefetchingDisabled": false,
     "suspendUntilListsAreLoaded": true,
     "userFiltersTrusted": true,
@@ -29,6 +31,7 @@
     "easyprivacy",
     "adguard-spyware",
     "adguard-spyware-url",
+    "block-lan",
     "urlhaus-1",
     "curben-phishing",
     "plowe-0",
@@ -63,7 +66,7 @@
     "chrome-extension-scheme",
     "moz-extension-scheme"
   ],
-  "dynamicFilteringString": "",
+  "dynamicFilteringString": "login.dingtalk.com 127.0.0.1 * allow",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
   "userFilters": ""
