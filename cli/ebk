@@ -50,7 +50,7 @@ function backupjson() {
   fi
 }
 
-backup "my-ublock-backup*.txt" "ubo-config-ff.txt"
+backup "my-ublock-backup*.txt" "ubo-config.txt"
 backup "immersive-translate-config*.txt" "immersive-translate-config.txt"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
 backupjson "tongwentang-*.json" "tongwentang.json"
