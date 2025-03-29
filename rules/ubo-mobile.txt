@@ -580,7 +580,8 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##div.footer
 18av.mm-cg.com##body > div.main:has(> div.container > div.contents > div.content > div.archive-title > h1:has-text(隨機主題))
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > :not(div.archive-title):not(center):not(script)
-18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > :not(span.dwlink)
+18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2
+!18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > :not(span.dwlink)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.right
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div.archive-title:not(:has(h1))
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div#dz_video > div#player-wrap > :not(img)
@@ -694,9 +695,6 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink > a:style(text-decoration: none !important)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink:style(bottom: unset !important)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > span.dwlink:style(position: relative !important)
-18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row:style(height: auto !important)
-18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row:style(margin: 0 !important)
-18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row:style(padding: 0 !important)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div#dz_video:style(height: auto !important)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div.archive-title > h1:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div.archive-title > h1:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
@@ -790,4 +788,3 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##video.thumb:style(pointer-events: none)
 
 !#endif
-
