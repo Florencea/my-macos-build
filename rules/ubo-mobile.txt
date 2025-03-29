@@ -265,8 +265,8 @@ manhuaren.com##.winnextchapter:style(left: 0 !important)
 manhuaren.com##.winnextchapter:style(margin: 0 !important)
 manhuaren.com##.winnextchapter:style(top: 0 !important)
 manhuaren.com##.winnextchapter:style(width: 100vw !important)
-manhuaren.com##.manga-list-2:style(padding-bottom: 60px !important)
-manhuaren.com##.detail-list-comment:style(padding-bottom: 60px !important)
+manhuaren.com##.manga-list-2:style(margin-bottom: 60px !important)
+manhuaren.com##.detail-list-comment:style(margin-bottom: 60px !important)
 
 ! [SITE] wnacg.com
 wnacg.com##body > .UnderPage > :not(section):not(script)
