@@ -1,8 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2024-07-24
-
-! Note: These rules are optimized for Firefox
+! Last updated: 2025-03-29
 
 !#if env_mobile
 
@@ -224,27 +222,21 @@ exhentai.org###i6
 exhentai.org###i7
 
 ! [SITE] manhuaren.com
-manhuaren.com##^.ad-top
-manhuaren.com##^.ad-top-info
-manhuaren.com##^#index-ad
-manhuaren.com##^.index-bottom-ad
-manhuaren.com##^.banner-bottom
-manhuaren.com##^.detail-ad-con
-manhuaren.com##^.view-bottom-bar
-manhuaren.com##^.adform_2
-manhuaren.com##^#lb-win
-manhuaren.com##^.guide
-manhuaren.com##^body > a
-manhuaren.com##^.win-pay-btn-group
-manhuaren.com##^.win-pay-logo-con
-manhuaren.com##^.win-pay-title2
-manhuaren.com##^.win-pay-cross
-! Clear useless scripts
-manhuaren.com##^script:has-text(cnzz)
-manhuaren.com##^script:has-text(mhrsta)
-manhuaren.com##^script:has-text(download-cross)
-manhuaren.com##^script:has-text(_hmt)
-soman.com##^script:has-text(cnzz)
+manhuaren.com##.ad-top
+manhuaren.com##.ad-top-info
+manhuaren.com###index-ad
+manhuaren.com##.index-bottom-ad
+manhuaren.com##.banner-bottom
+manhuaren.com##.detail-ad-con
+manhuaren.com##.view-bottom-bar
+manhuaren.com##.adform_2
+manhuaren.com###lb-win
+manhuaren.com##.guide
+manhuaren.com##body > a
+manhuaren.com##.win-pay-btn-group
+manhuaren.com##.win-pay-logo-con
+manhuaren.com##.win-pay-title2
+manhuaren.com##.win-pay-cross
 ! Style
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
@@ -274,43 +266,32 @@ manhuaren.com##.winnextchapter:style(top: 0 !important)
 manhuaren.com##.winnextchapter:style(width: 100vw !important)
 
 ! [SITE] wnacg.com
-wnacg.com##^body > .UnderPage > :not(section):not(script)
-wnacg.com##^#divAD
-wnacg.com##^.sh
-wnacg.com##^body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.UnderPage):not(script)
-wnacg.com##^.Introduct > :not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
-wnacg.com##^[href="/S1z"]
-wnacg.com##^#Subscribe
-wnacg.com##^.nobor
-wnacg.com##^.pageLine > img
-wnacg.com##^.block-pagination > .page > span:not(.prev):not(.next)
-wnacg.com##^.block-pagination > .page > a
-wnacg.com##^.subNav li:not(.last)
-wnacg.com##^.openBtn
-wnacg.com##^.Sub_H2 .icon
-wnacg.com##^.nav li:not(:has(a[href='/albums.html'])):not(:has(a[href='/category.html']))
-wnacg.com##^.header .icon.head
-wnacg.com##^.subHeader .iconHome
-wnacg.com##^.subHeader .iconHome
-wnacg.com##^.logo > a > img
-wnacg.com##^.Sub_H2:not(.classify) > a
-wnacg.com##^.Introduct_Sub .pic
-wnacg.com##^.Introduct .sub_r .txtItme
-wnacg.com##^body > .bottom
-wnacg.com##^.imgBox:nth-of-type(6)
-wnacg.com##^#classTit > li:nth-of-type(4)
-wnacg.com##^#img_load
-! Clear useless scripts
-wnacg.com##^script:has-text(GoogleAnalyticsObject)
-wnacg.com##^script:has-text(tips)
-wnacg.com##^script:has-text(yandex)
-wnacg.com##^script:has-text(videoID)
-wnacg.com##^script:has-text(lazyload)
-wnacg.com##^script[src*='cnzz']
-wnacg.com##^script[src*='search']
-wnacg.com##^script[src*='pstatp']
-wnacg.com##^script[src*='cloudflareinsights']
-! Elements cannot remove from initial DOM
+wnacg.com##body > .UnderPage > :not(section):not(script)
+wnacg.com###divAD
+wnacg.com##.sh
+wnacg.com##body > :not(.header):not(.nav):not(.imgBox):not(.bottom):not(.block-pagination):not(.classBox):not([src*='classify']):not(.Introduct):not(#img_list):not(#img_load):not(#page_scale):not(#shareBox):not(.UnderPage):not(script)
+wnacg.com##.Introduct > :not(.Introduct_Sub):not(.txtDesc):not(.openBtn)
+wnacg.com##[href="/S1z"]
+wnacg.com###Subscribe
+wnacg.com##.nobor
+wnacg.com##.pageLine > img
+wnacg.com##.block-pagination > .page > span:not(.prev):not(.next)
+wnacg.com##.block-pagination > .page > a
+wnacg.com##.subNav li:not(.last)
+wnacg.com##.openBtn
+wnacg.com##.Sub_H2 .icon
+wnacg.com##.nav li:not(:has(a[href='/albums.html'])):not(:has(a[href='/category.html']))
+wnacg.com##.header .icon.head
+wnacg.com##.subHeader .iconHome
+wnacg.com##.subHeader .iconHome
+wnacg.com##.logo > a > img
+wnacg.com##.Sub_H2:not(.classify) > a
+wnacg.com##.Introduct_Sub .pic
+wnacg.com##.Introduct .sub_r .txtItme
+wnacg.com##body > .bottom
+wnacg.com##.imgBox:has(> .Sub_H2 > a[href='/albums-index-cate-19.html'])
+wnacg.com###classTit > li:nth-of-type(4)
+wnacg.com###img_load
 wnacg.com##.show
 wnacg.com###shareBox
 ! Style
@@ -376,7 +357,7 @@ wnacg.com##.block-pagination > .page > span:style(display: block !important)
 wnacg.com##.block-pagination > .page > span:style(flex: 1 !important)
 wnacg.com##.block-pagination > .page > span:style(height: auto !important)
 wnacg.com##.block-pagination > .page > span:style(line-height: 6rem !important)
-wnacg.com##.block-pagination > .page > span:style(max-width: 180px !important)
+wnacg.com##.block-pagination > .page > span:style(max-width: calc(100svw - 1rem) !important)
 wnacg.com##.block-pagination > .page > span:style(width: auto !important)
 wnacg.com##.block-pagination > .page:style(display: flex !important)
 wnacg.com##.block-pagination > .page:style(gap: 1rem !important)
@@ -587,47 +568,38 @@ wnacg.com##img[src="https://wnacg.com/loading.jpg"]:style(opacity: 0 !important)
 wnacg.com###classify_container > li::before:style(content: none !important)
 
 ! [SITE] 18av.mm-cg.com
-18av.mm-cg.com##^body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"]):not(div.plyr_width):not(style):not(link)
-18av.mm-cg.com##^div.container > :not(div.contents)
-18av.mm-cg.com##^div.container > div.contents > :not(div.content)
-18av.mm-cg.com##^div.container > div.contents > div.content > :not(div.archive-title):not(div.posts):not(div.pagination-row):not(span.content_18h_wpcg):not(script)
-18av.mm-cg.com##^div.content:has(> div.archive-title > a > h1:has-text(中文字幕))
-18av.mm-cg.com##^div.content:has(> div.archive-title > a > h1:has-text(同人))
-18av.mm-cg.com##^div.content:has(> div.archive-title > a > h1:has-text(自拍))
-18av.mm-cg.com##^div.archive-title > span.more
-18av.mm-cg.com##^div.post > div.con > div.meta
-18av.mm-cg.com##^div.footer
-18av.mm-cg.com##^body > div.main:has(> div.container > div.contents > div.content > div.archive-title > h1:has-text(隨機主題))
-18av.mm-cg.com##^div.main > div.container_small > div.video-wrap > div.left > :not(div.archive-title):not(center):not(script)
-18av.mm-cg.com##^div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > :not(span.dwlink)
-18av.mm-cg.com##^div.main > div.container_small > div.video-wrap > div.right
-18av.mm-cg.com##^div.main > div.container_small > div.video-wrap > div.left > div.archive-title:not(:has(h1))
-18av.mm-cg.com##^div.main > div.container_small > div.video-wrap > div.left > div#dz_video > div#player-wrap > :not(img)
-18av.mm-cg.com##^div.htmleaf-container > div.animenu > ul.animenu__nav
-18av.mm-cg.com##^div.htmleaf-container > div.animenu > span.animenu__top_content > button.animenu__toggle
-18av.mm-cg.com##^div.htmleaf-container > div.animenu > span.animenu__top_content > span.animenu__top_l
-18av.mm-cg.com##^div.htmleaf-container > div.animenu > span.animenu__top_content > span.animenu__top_r > div.sun_search_form_container > form > span.sun-search_input_group > span.sun_input_group_btn
-18av.mm-cg.com##^span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(寫真))
-18av.mm-cg.com##^span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(小說))
-18av.mm-cg.com##^span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(自拍))
-18av.mm-cg.com##^#cover_information
-18av.mm-cg.com##^#suncover
-18av.mm-cg.com##^#coverclose_top
-18av.mm-cg.com##^#coverclose_bottom
-! Elements cannot remove from initial DOM
+18av.mm-cg.com##body > :not(div.htmleaf-container):not(div.main):not(script):not(div[align="center"]):not(div.plyr_width):not(style):not(link)
+18av.mm-cg.com##div.container > :not(div.contents)
+18av.mm-cg.com##div.container > div.contents > :not(div.content)
+18av.mm-cg.com##div.container > div.contents > div.content > :not(div.archive-title):not(div.posts):not(div.pagination-row):not(span.content_18h_wpcg):not(script)
+18av.mm-cg.com##div.content:has(> div.archive-title > a > h1:has-text(中文字幕))
+18av.mm-cg.com##div.content:has(> div.archive-title > a > h1:has-text(同人))
+18av.mm-cg.com##div.content:has(> div.archive-title > a > h1:has-text(自拍))
+18av.mm-cg.com##div.archive-title > span.more
+18av.mm-cg.com##div.post > div.con > div.meta
+18av.mm-cg.com##div.footer
+18av.mm-cg.com##body > div.main:has(> div.container > div.contents > div.content > div.archive-title > h1:has-text(隨機主題))
+18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > :not(div.archive-title):not(center):not(script)
+18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > div#mvspan_2 > div.video-row > :not(span.dwlink)
+18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.right
+18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div.archive-title:not(:has(h1))
+18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > div#dz_video > div#player-wrap > :not(img)
+18av.mm-cg.com##div.htmleaf-container > div.animenu > ul.animenu__nav
+18av.mm-cg.com##div.htmleaf-container > div.animenu > span.animenu__top_content > button.animenu__toggle
+18av.mm-cg.com##div.htmleaf-container > div.animenu > span.animenu__top_content > span.animenu__top_l
+18av.mm-cg.com##div.htmleaf-container > div.animenu > span.animenu__top_content > span.animenu__top_r > div.sun_search_form_container > form > span.sun-search_input_group > span.sun_input_group_btn
+18av.mm-cg.com##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(中文字幕))
+18av.mm-cg.com##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(寫真))
+18av.mm-cg.com##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(小說))
+18av.mm-cg.com##span.sun-search_input_group > div.sun_input_group_dropdown > ul.sun_input_group__child > li:has(a:has-text(自拍))
+18av.mm-cg.com###cover_information
+18av.mm-cg.com###suncover
+18av.mm-cg.com###coverclose_top
+18av.mm-cg.com###coverclose_bottom
 18av.mm-cg.com##div.main > div.container_small > div.video-wrap > div.left > center > span#mvspan_1
 18av.mm-cg.com##div.archive-title > div.bread_nav
 18av.mm-cg.com##div#show_cg_html > p
 18av.mm-cg.com##span.sun_input_group_btn
-! Clear useless scripts
-18av.mm-cg.com##^script:has-text(gtag)
-18av.mm-cg.com##^script:has-text(_Hasync)
-18av.mm-cg.com##^script:has-text(cnzz)
-18av.mm-cg.com##^script:has-text(ad_idzone)
-18av.mm-cg.com##^script:has-text(Maskcg_removeBox)
-18av.mm-cg.com##^script[src*='googletagmanager']
-18av.mm-cg.com##^script[src*='realsrv']
-18av.mm-cg.com##^script[src*='popunder1000']
 ||18av.mm-cg.com/31M/background/NR.gif$image
 ||18av.mm-cg.com/31M/background/NL.gif$image
 ||18av.mm-cg.com/mmad.js$script
@@ -818,3 +790,4 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##video.thumb:style(pointer-events: none)
 
 !#endif
+
