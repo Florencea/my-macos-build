@@ -784,6 +784,11 @@ wnacg.com###classify_container > li::before:style(content: none !important)
 18av.mm-cg.com##body:has(>.plyr_width):style(display: flex !important)
 18av.mm-cg.com##body:has(>.plyr_width):style(flex-direction: column !important)
 18av.mm-cg.com##body:has(>.plyr_width):style(justify-content: center !important)
+18av.mm-cg.com##.plyr__controls .plyr__controls__item:nth-child(2):matches-media((max-width: 500px)):style(display: block !important)
+18av.mm-cg.com##.plyr__controls .plyr__controls__item:nth-child(2):matches-media((max-width: 500px)):style(flex-shrink: 0 !important)
+18av.mm-cg.com##.plyr__controls .plyr__controls__item:nth-child(2):matches-media((max-width: 500px)):style(width: auto !important)
+18av.mm-cg.com##.plyr__controls .plyr__progress__container:matches-media((max-width: 500px)):style(position: relative !important)
+18av.mm-cg.com##.plyr__controls .plyr__progress__container:matches-media((max-width: 500px)):style(bottom: auto !important)
 ! preview
 18av.mm-cg.com##video.thumb:style(pointer-events: none)
 
