@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2025-03-29
+! Last updated: 2025-03-30
 
 !#if env_mobile
 
@@ -237,6 +237,7 @@ manhuaren.com##.win-pay-btn-group
 manhuaren.com##.win-pay-logo-con
 manhuaren.com##.win-pay-title2
 manhuaren.com##.win-pay-cross
+manhuaren.com##.loading
 ! Style
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
@@ -264,6 +265,8 @@ manhuaren.com##.winnextchapter:style(left: 0 !important)
 manhuaren.com##.winnextchapter:style(margin: 0 !important)
 manhuaren.com##.winnextchapter:style(top: 0 !important)
 manhuaren.com##.winnextchapter:style(width: 100vw !important)
+manhuaren.com##.manga-list-2:style(padding-bottom: 60px !important)
+manhuaren.com##.detail-list-comment:style(padding-bottom: 60px !important)
 
 ! [SITE] wnacg.com
 wnacg.com##body > .UnderPage > :not(section):not(script)
