@@ -1,0 +1,93 @@
+{
+  "aiAssistantIds": [
+    "paraphrase",
+    "twitter",
+    "tech",
+    "reddit",
+    "paper",
+    "news",
+    "music",
+    "medical",
+    "legal",
+    "github",
+    "game",
+    "ecommerce",
+    "financial",
+    "fiction",
+    "ao3",
+    "ebook",
+    "fiction",
+    "design",
+    "web3",
+    "bilingual-mix"
+  ],
+  "customAiAssistants": [],
+  "enableInputTranslation": false,
+  "enableInputTranslationWithoutTriggerKey": false,
+  "generalRule": {
+    "subtitleRule.add": {
+      "disabled": true,
+      "showQuickButton": false,
+      "youtubeAutoEnableSubtitle": false
+    }
+  },
+  "inputTranslationService": "inherit",
+  "interfaceLanguage": "zh-TW",
+  "isChangedAlwaysTranslatedUrls": true,
+  "isShowContextMenu": false,
+  "loadingTheme": "none",
+  "localUpdatedAt": "2025-02-08T05:42:25.101Z",
+  "modifiedBySystem": true,
+  "mouseHoverTranslationService": "inherit",
+  "pcFloatBall": {
+    "afterInstalledAt": "2023-10-28",
+    "blockUrls": [
+      "*immersivetranslate.com/preview",
+      "*.immersivetranslate.com/download-subtitle*"
+    ],
+    "clickType": "translate",
+    "enable": false,
+    "fixedPosition": "right",
+    "guideBlockUrls": [
+      "https://onboarding.immersivetranslate.com*",
+      "https://immersivetranslate.com/accounts/login*",
+      "https://immersivetranslate.cn/accounts/login*"
+    ],
+    "isPc": true,
+    "upgradeShowLimit": 50,
+    "upgradeVisible": true
+  },
+  "sameLangCheck": false,
+  "subtitleTranslateService": "inherit",
+  "targetLanguage": "zh-TW",
+  "translationMode": "translation",
+  "translationService": "google",
+  "translationServiceChangedbyUserAt": "2024-11-05T01:08:44.357Z",
+  "translationServices": {
+    "bing": {
+      "visible": false
+    },
+    "claude": {
+      "visible": false
+    },
+    "deepl": {
+      "visible": false
+    },
+    "gemini": {
+      "visible": false
+    },
+    "openai": {
+      "visible": false
+    },
+    "yandex": {
+      "visible": false
+    }
+  },
+  "translationUrlPattern": {
+    "excludeMatches": [],
+    "matches": [
+      "news.ycombinator.com"
+    ]
+  },
+  "updatedAt": "2025-02-08T05:42:25.101Z"
+}
