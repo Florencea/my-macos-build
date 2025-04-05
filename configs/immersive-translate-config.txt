@@ -36,7 +36,7 @@
   "isChangedAlwaysTranslatedUrls": true,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-02-08T05:42:25.101Z",
+  "localUpdatedAt": "2025-04-05T17:13:02.205Z",
   "modifiedBySystem": true,
   "mouseHoverTranslationService": "inherit",
   "pcFloatBall": {
@@ -86,8 +86,10 @@
   "translationUrlPattern": {
     "excludeMatches": [],
     "matches": [
-      "news.ycombinator.com"
+      "news.ycombinator.com",
+      "www.macrumors.com",
+      "9to5google.com"
     ]
   },
-  "updatedAt": "2025-02-08T05:42:25.101Z"
+  "updatedAt": "2025-04-05T17:13:02.205Z"
 }
