@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1743391367536,
+  "timeStamp": 1745549657008,
   "version": "1.62.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -69,5 +69,5 @@
   "dynamicFilteringString": "login.dingtalk.com 127.0.0.1 * allow",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
-  "userFilters": "@@||g.alicdn.com/alilog/mlog/aplus_v2.js$xhr,domain=oa.dingtalk.com"
+  "userFilters": "@@||g.alicdn.com/alilog/mlog/aplus_v2.js"
 }
