@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2025-03-30
+! Last updated: 2025-05-31
 
 !#if env_mobile
 
@@ -222,9 +222,9 @@ exhentai.org###i6
 exhentai.org###i7
 
 ! [SITE] manhuaren.com
-manhuaren.com##.ad-top
-manhuaren.com##.ad-top-info
-manhuaren.com###index-ad
+manhuaren.com##.manga-top
+manhuaren.com##.manga-top-info
+manhuaren.com###index-manga-go
 manhuaren.com##.index-bottom-ad
 manhuaren.com##.banner-bottom
 manhuaren.com##.detail-ad-con
