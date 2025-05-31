@@ -188,6 +188,17 @@ mui.com##p.description.ad
 ! [SITE] frommuji.muji.tw
 frommuji.muji.tw##p:style(line-height: 2rem !important)
 
+! [SITE] nebula.zyxel.com
+! Rules
+nebula.zyxel.com##nui-banner:has(.license-banner)
+! Styles
+nebula.zyxel.com##html body:style(font-weight: 400 !important)
+nebula.zyxel.com##body:style(--mdc-list-list-item-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-option-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mdc-dialog-supporting-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-form-field-container-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-select-trigger-text-weight: 400 !important)
+
 ! [SITE] pts.org.tw
 ! CSS variable
 pts.org.tw##html:style(--ubo-custom-pts-link-light: var(--primary-color))
