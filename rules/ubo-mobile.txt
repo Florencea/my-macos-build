@@ -222,6 +222,7 @@ exhentai.org###i6
 exhentai.org###i7
 
 ! [SITE] manhuaren.com
+manhuaren.com##.ad-top
 manhuaren.com##.manga-top
 manhuaren.com##.manga-top-info
 manhuaren.com###index-manga-go
@@ -238,6 +239,7 @@ manhuaren.com##.win-pay-logo-con
 manhuaren.com##.win-pay-title2
 manhuaren.com##.win-pay-cross
 manhuaren.com##.loading
+manhuaren.com##.comment-input
 ! Style
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)

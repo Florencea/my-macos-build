@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2025-03-29
+! Last updated: 2025-05-31
 
 ! CSS variable
 ! bg
@@ -12,6 +12,10 @@
 ! input-bg
 *##html:style(--ubo-custom-firefox-bg-input-dark: #43424a)
 *##html:style(--ubo-custom-firefox-bg-input-light: #f0f0f4)
+
+! [SCRIPTS]
+! Enable nessessary scripts
+@@||g.alicdn.com/alilog/mlog/aplus_v2.js
 
 ! [ADDONS]
 ! Make AutoPager settings and divider invisible
