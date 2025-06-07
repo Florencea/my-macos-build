@@ -43,7 +43,7 @@
       "manage.newUI.sort": "title,asc",
       "manage.searchMode": "meta",
       "editor.options": {},
-      "editor.toc.expanded": true,
+      "editor.toc.expanded": false,
       "editor.options.expanded": true,
       "editor.options.style.expanded": false,
       "editor.lint.expanded": false,
@@ -193,6 +193,10 @@
         "domains": ["frommuji.muji.tw"]
       },
       {
+        "code": "nui-banner:has(.license-banner) {\n    display: none !important;\n}\nhtml body {\n    font-weight: 400 !important;\n}\nbody {\n    --mdc-list-list-item-label-text-weight: 400 !important;\n    --mat-option-label-text-weight: 400 !important;\n    --mdc-dialog-supporting-text-weight: 400 !important;\n    --mat-form-field-container-text-weight: 400 !important;\n    --mat-select-trigger-text-weight: 400 !important;\n}",
+        "domains": ["nebula.zyxel.com"]
+      },
+      {
         "code": "body {\n    font-family: var(--ubo-custom-font-sans-serif) !important;\n}",
         "domains": ["nyaa.si"]
       },
@@ -233,9 +237,9 @@
         "domains": ["hn.algolia.com"]
       }
     ],
-    "updateDate": 1749314701958,
+    "updateDate": 1749315292194,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1749314701958,
+    "_rev": 1749315292195,
     "id": 1
   },
   {
