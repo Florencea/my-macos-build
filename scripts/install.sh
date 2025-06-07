@@ -65,10 +65,7 @@ brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
 brew install --cask logi-options+
-brew install --cask microsoft-auto-update
-brew install --cask microsoft-excel
-brew install --cask microsoft-powerpoint
-brew install --cask microsoft-word
+brew install --cask parallels
 brew install --cask tailscale
 brew install --cask visual-studio-code
 
