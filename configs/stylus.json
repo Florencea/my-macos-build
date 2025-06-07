@@ -43,7 +43,7 @@
       "manage.newUI.sort": "title,asc",
       "manage.searchMode": "meta",
       "editor.options": {},
-      "editor.toc.expanded": false,
+      "editor.toc.expanded": true,
       "editor.options.expanded": true,
       "editor.options.style.expanded": false,
       "editor.lint.expanded": false,
@@ -137,7 +137,7 @@
         "domains": ["cool3c.com"]
       },
       {
-        "code": ".announce,\ndiv.clear:has(a[href='/topics/add']),\n.user-sidebar > div.ui-corner-all.box:nth-of-type(4),\na[href*=mypikpak] {\n    display: none !important;\n}\nbody {\n    font-family: var(--ubo-custom-font-sans-serif) !important;\n}",
+        "code": ".announce,\ndiv.clear:has(a[href='/topics/add']),\n.user-sidebar > div.ui-corner-all.box:nth-of-type(4),\na[href*=mypikpak],\na.download-pp {\n    display: none !important;\n}\nbody {\n    font-family: var(--ubo-custom-font-sans-serif) !important;\n}",
         "domains": ["dmhy.org"]
       },
       {
@@ -233,9 +233,9 @@
         "domains": ["hn.algolia.com"]
       }
     ],
-    "updateDate": 1742672556151,
+    "updateDate": 1749314701958,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1742672556151,
+    "_rev": 1749314701958,
     "id": 1
   },
   {
@@ -262,7 +262,7 @@
     ],
     "updateDate": 1737866659813,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1742657137526,
+    "_rev": 1749314626833,
     "id": 2
   }
 ]
