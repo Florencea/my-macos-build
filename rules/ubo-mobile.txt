@@ -1,6 +1,7 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2025-05-31
+! Last updated: 2025-07-02
+
 
 !#if env_mobile
 
@@ -240,6 +241,7 @@ manhuaren.com##.win-pay-title2
 manhuaren.com##.win-pay-cross
 manhuaren.com##.loading
 manhuaren.com##.comment-input
+manhuaren.com###tck-wrap
 ! Style
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
 manhuaren.com###cp_img:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
@@ -282,10 +284,10 @@ wnacg.com##.nobor
 wnacg.com##.pageLine > img
 wnacg.com##.block-pagination > .page > span:not(.prev):not(.next)
 wnacg.com##.block-pagination > .page > a
-wnacg.com##.subNav li:not(.last)
+wnacg.com##.subNav li
 wnacg.com##.openBtn
 wnacg.com##.Sub_H2 .icon
-wnacg.com##.nav li:not(:has(a[href='/albums.html'])):not(:has(a[href='/category.html']))
+wnacg.com##.nav
 wnacg.com##.header .icon.head
 wnacg.com##.subHeader .iconHome
 wnacg.com##.subHeader .iconHome
@@ -553,8 +555,6 @@ wnacg.com##body > .UnderPage:matches-media((prefers-color-scheme: light)):style(
 wnacg.com##body:has(.Introduct):style(display: flex !important)
 wnacg.com##body:has(.Introduct):style(flex-direction: column !important)
 wnacg.com##body:has(.Introduct):style(height: 100vh !important)
-wnacg.com##body:has(.Introduct):style(padding-bottom: 0 !important)
-wnacg.com##body:has(.classBox):style(padding-bottom: 0 !important)
 wnacg.com##body:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
 wnacg.com##body:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
 wnacg.com##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
