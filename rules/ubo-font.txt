@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Font
 ! Description: Custom font styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2024-12-04
+! Last updated: 2025-07-07
 
 ! CSS variable
 *##html:style(--ubo-custom-font-sans-serif: "Inter Variable", "PingFang TC", "Noto Sans", Roboto, "Segoe UI", system-ui, "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")
@@ -16,17 +16,11 @@
 ! [ADDONS]
 *###sp-prefs-setup:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! [SITE] bitbucket.org
-bitbucket.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
 ! [SITE] books.com.tw
 books.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] coolpc.com.tw
 coolpc.com.tw##*:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
-! [SITE] cool3c.com
-cool3c.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
 ! [SITE] dmhy.org
 dmhy.org##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
@@ -60,9 +54,6 @@ google.com##input:style(font-family: var(--ubo-custom-font-sans-serif) !importan
 google.com##textarea:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 google.com##h1:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
-! [SITE] inside.com.tw
-inside.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
 ! [SITE] www.ithome.com.tw
 www.ithome.com.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 
@@ -90,27 +81,4 @@ techbang.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !importa
 
 ! [SITE] twnic.tw
 twnic.tw##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-
-! [SITE] xfastest.com
-xfastest.com##html:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##body:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##cite:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##h1:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##h2:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##h3:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##h4:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##h5:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##h6:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-header-font:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-post-box.vw-post-format-link a:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-social-counter-count:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-page-navigation-pagination:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.page-numbers:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com###wp-calendar caption:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-accordion-header-text:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-tab-title:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-review-item-title:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-pagination-load-more:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.vw-copyright:style(font-family: var(--ubo-custom-font-sans-serif) !important)
-xfastest.com##.type-post p:style(font-family: var(--ubo-custom-font-sans-serif) !important)
 

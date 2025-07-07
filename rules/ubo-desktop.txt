@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2025-06-07
+! Last updated: 2025-07-07
 
 ! CSS variable
 ! bg
@@ -36,19 +36,6 @@ ant.design##+js(set-local-storage-item, ANT_DESIGN_NOT_SHOW_BANNER, 9999)
 ! [SITE] books.com.tw
 books.com.tw##.header_pop
 
-! [SITE] cool3c.com
-cool3c.com##body > :not(div#main)
-cool3c.com###body > .row:has(> .col-12 > .index-sticky)
-cool3c.com##body[class^=page-article] #main #body > :not(.row:nth-child(2))
-cool3c.com##section.comment-area
-cool3c.com##div.social-bar
-cool3c.com##.article > :not(.content):not(.deputation)
-cool3c.com##.block.search
-cool3c.com##.block.readmore
-cool3c.com###footer
-cool3c.com###main:style(padding: 0 !important)
-cool3c.com###main:style(transition: none !important)
-
 ! [SITE] dmhy.org
 dmhy.org##.announce
 dmhy.org##div.clear:has(a[href='/topics/add'])
@@ -79,16 +66,6 @@ github.com##.code-navigation-cursor:style(display: none !important)
 ||google.*/search$removeparam=dpr
 ||google.*/search$removeparam=gs_lcrp
 ||google.*/search$removeparam=ie
-
-! [SITE] inside.com.tw
-inside.com.tw##div.ad-content
-inside.com.tw##.post_toolbox
-inside.com.tw##.content > .infinite_article
-inside.com.tw##.hero
-inside.com.tw##.Independent_study
-inside.com.tw##.Independent_study_down
-inside.com.tw##.js_nav > :not(.js_header)
-inside.com.tw##.no_isLogin
 
 ! [SITE] www.ithome.com.tw
 ! CSS variable
@@ -363,119 +340,6 @@ techbang.com##.post-main:style(padding-top: 2rem !important)
 techbang.com##.post-main > .article:style(max-width: 796px !important)
 techbang.com##.article > .content > h2:style(border: 0 !important)
 techbang.com##label.caption:style(border: 0 !important)
-
-! [SITE] thenewslens.com
-! CSS variable
-thenewslens.com##html:style(--ubo-custom-tnl-link-light: #153b5f)
-thenewslens.com##html:style(--ubo-custom-tnl-link-dark: #83c1fc)
-! Rules
-thenewslens.com##[class^=ad-]
-thenewslens.com##.newsMessage-wrap
-thenewslens.com##.js-subscription-wrapper
-thenewslens.com##div[id^=taboola-]
-thenewslens.com##.msg-anchor-point
-thenewslens.com##.op-social
-thenewslens.com##.function-box
-thenewslens.com##.member-function
-thenewslens.com##.alert-bubble
-thenewslens.com##.infinite-post-section
-thenewslens.com###infinite-article-recommend-section
-thenewslens.com##.fb-comment-box
-thenewslens.com##.social-btns
-thenewslens.com##.tnl-header
-thenewslens.com##footer
-thenewslens.com##.article-infoBot-box
-thenewslens.com##.navigation-content
-thenewslens.com##.author-description
-thenewslens.com##.article-content blockquote.quote::before
-thenewslens.com##.article-content blockquote.quote::after
-thenewslens.com###privacy-wrap
-! Styles
-thenewslens.com##a:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-tnl-link-dark) !important)
-thenewslens.com##a:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-tnl-link-light) !important)
-thenewslens.com##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##body:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##body:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
-thenewslens.com##body:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
-thenewslens.com##.article-body-container .article-main-box:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
-thenewslens.com##.article-body-container .article-main-box:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
-thenewslens.com##.article-content:style(border: none !important)
-thenewslens.com##.article-content:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-content:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-content figure:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-content figure:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-content figure figcaption:style(border: none !important)
-thenewslens.com##.article-header-container .article-title-box:style(border: none !important)
-thenewslens.com##.article-header-container .article-title-box:matches-media((prefers-color-scheme: dark)):style(background-color: var(--ubo-custom-firefox-bg-dark) !important)
-thenewslens.com##.article-header-container .article-title-box:matches-media((prefers-color-scheme: light)):style(background-color: var(--ubo-custom-firefox-bg-light) !important)
-thenewslens.com##.article-header-container .article-title-box .article-info:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-header-container .article-title-box .article-info:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-body-container .article-main-box:style(box-shadow: none !important)
-thenewslens.com##.article-body-container .article-main-box:style(border: none !important)
-thenewslens.com##.article-body-container .article-main-box:style(max-width: 100% !important)
-thenewslens.com##.article-body-container .article-main-box:style(margin: 0 !important)
-thenewslens.com##.article-body-container .article-main-box:style(padding: 0 1.5em !important)
-thenewslens.com##.article-body-container .article-infoTop-box:style(float: none !important)
-thenewslens.com##.article-body-container .article-infoTop-box:style(width: auto !important)
-thenewslens.com##.article-body-container .article-infoTop-box .article-author:style(background-color: transparent !important)
-thenewslens.com##.article-body-container .article-infoTop-box .article-author:style(border: none !important)
-thenewslens.com##.article-body-container .article-infoTop-box .article-author:style(padding: 16px 24px 16px 24px !important)
-thenewslens.com##.article-body-container .article-infoTop-box:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-body-container .article-infoTop-box:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-body-container .WhyNeedKnow:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-body-container .WhyNeedKnow:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-body-container .WhyNeedKnow .title:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-body-container .WhyNeedKnow .title:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-body-container .WhyNeedKnow .export:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
-thenewslens.com##.article-body-container .WhyNeedKnow .export:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
-thenewslens.com##.article-mask-box::before:style(background: none !important)
-thenewslens.com##.article-content-body div:style(background-color: transparent !important)
-thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: dark)):style(border-color: var(--ubo-custom-tnl-link-dark) !important)
-thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: light)):style(border-color: var(--ubo-custom-tnl-link-light) !important)
-thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-tnl-link-dark) !important)
-thenewslens.com##.article-content blockquote.quote:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-tnl-link-light) !important)
-
-! [SITE] xfastest.com
-xfastest.com##.vw-page-wrapper > div:not(.container):not(#vwspc-section-2)
-xfastest.com##footer > .vw-site-footer-sidebars
-xfastest.com###wpfront-scroll-top-container
-xfastest.com##.widget_vw_widget_social_counter
-xfastest.com##.vw-top-bar-breaking-social
-xfastest.com##.vw-about-author
-xfastest.com##.vw-related-posts
-xfastest.com##.vw-post-box-inner > :not(.vw-post-box-title)
-xfastest.com##.vw-main-post > :not(.entry-title):not(.vw-post-meta):not(.vw-post-content)
-xfastest.com##.vw-page-content > :not(.vw-main-post):not(.vw-page-title-box):not(.vw-post-loop):not(.vw-page-navigation)
-xfastest.com##.vw-post-content > p:has(.fluid-width-video-wrapper)
-xfastest.com##.vw-post-content > blockquote:has(.fluid-width-video-wrapper)
-xfastest.com##.code-block
-! style
-xfastest.com##html:style(font-size: 18px !important)
-xfastest.com##body:style(font-weight: 400 !important)
-xfastest.com##.type-post p:style(font-weight: 400 !important)
-xfastest.com##footer:style(font-weight: 400 !important)
-xfastest.com##.vw-post-content > p:style(font-size: 1rem !important)
-xfastest.com##.vw-post-content > p:style(line-height: 2.11 !important)
-xfastest.com##.vw-post-content > p:style(margin: 40px auto !important)
-xfastest.com##.vw-post-content > p:style(letter-spacing: 0.6px !important)
-xfastest.com##.vw-post-content > p:style(white-space: pre-wrap !important)
-xfastest.com##.vw-post-content a:style(cursor: pointer !important)
-xfastest.com##.vw-post-meta a:style(cursor: pointer !important)
-xfastest.com##.vw-post-meta a i:style(cursor: pointer !important)
-xfastest.com##.vw-post-meta a span:style(cursor: pointer !important)
-xfastest.com##.vw-post-meta a img:style(cursor: pointer !important)
-xfastest.com##.vw-post-meta time:style(cursor: pointer !important)
-xfastest.com##.entry-title:style(font-size: 2.33rem !important)
-xfastest.com##.entry-title:style(line-height: 1.38 !important)
-xfastest.com##.vw-menu li:style(cursor: pointer !important)
-xfastest.com##.vw-menu li a:style(cursor: pointer !important)
-xfastest.com##.vw-menu li a span:style(cursor: pointer !important)
-xfastest.com##.vw-post-box .vw-post-box-title a:style(cursor: pointer !important)
-xfastest.com##.vw-post-box .wp-post-image:style(cursor: pointer !important)
-xfastest.com##.vw-post-box:style(cursor: pointer !important)
-xfastest.com##.vw-logo-link > img:style(cursor: pointer !important)
-xfastest.com##.vw-page-navigation-pagination > a.page-numbers:style(cursor: pointer !important)
-xfastest.com##.vw-page-navigation-pagination > a.page-numbers > i:style(cursor: pointer !important)
 
 ! [SITE] news.ycombinator.com
 ! base css varible
