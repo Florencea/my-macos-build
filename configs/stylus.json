@@ -185,6 +185,10 @@
         "domains": ["nebula.zyxel.com"]
       },
       {
+        "code": "#mob-bot-share,\n.kadence-conversion-wrap {\n    display: none !important;\n}",
+        "domains": ["newsmarket.com.tw"]
+      },
+      {
         "code": "body {\n    font-family: var(--ubo-custom-font-sans-serif) !important;\n}",
         "domains": ["nyaa.si"]
       },
@@ -225,9 +229,9 @@
         "domains": ["hn.algolia.com"]
       }
     ],
-    "updateDate": 1752339270238,
+    "updateDate": 1752341081339,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1752339270238,
+    "_rev": 1752341081339,
     "id": 1
   },
   {
