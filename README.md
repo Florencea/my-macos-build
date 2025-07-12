@@ -2,9 +2,8 @@
 
 ## Quick Links
 
-- [Media Note](NOTE_MEDIA.md)
-- [Firefox Note](NOTE_FIREFOX.md)
 - [macOS Note](NOTE_MACOS.md)
+- [Media Note](NOTE_MEDIA.md)
 
 ## Extension Configs
 

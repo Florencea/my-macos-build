@@ -16,6 +16,8 @@
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
     - [Set DNS Servers](#set-dns-servers)
+  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
+    - [Google Pixel 8 pro](#google-pixel-8-pro)
 
 ## Installations
 
@@ -223,3 +225,22 @@ networksetup -setdnsservers 'Wi-Fi' empty
 networksetup -setdnsservers <SERVICE> [<DNS_SERVERS>]
 networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '2001:4860:4860::8844'
 ```
+
+## Microsoft Edge for DevTools Device Profile
+
+- Android Browser User Agent
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/VERSION.0.0.0 Mobile Safari/537.36 EdgA/VERSION.0.0.0
+```
+
+- Example
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36 EdgA/140.0.0.0
+```
+
+### Google Pixel 8 pro
+
+- Screen: `448 x 997`
+- DPR: `3`
