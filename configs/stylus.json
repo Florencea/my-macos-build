@@ -91,7 +91,7 @@
       "hotkey._execute_browser_action": "",
       "hotkey.openManage": "",
       "hotkey.styleDisableAll": "",
-      "sync.enabled": "none",
+      "sync.enabled": "google",
       "iconset": -1,
       "badgeDisabled": "#8B0000",
       "badgeNormal": "#006666",
@@ -118,7 +118,7 @@
     "name": "ubo style Desktop",
     "sections": [
       {
-        "code": ":root {\n    --ubo-custom-firefox-bg-dark: #2b2a32;\n    --ubo-custom-firefox-bg-light: #f9f9fb;\n    --ubo-custom-firefox-text-dark: #fbfbfd;\n    --ubo-custom-firefox-text-light: #1a191f;\n    --ubo-custom-firefox-bg-input-dark: #43424a;\n    --ubo-custom-firefox-bg-input-light: #f0f0f4;\n    --ubo-custom-font-sans-serif: \"Inter Variable\", \"PingFang TC\", \"Noto Sans\", Roboto, \"Segoe UI\", system-ui, \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --ubo-custom-font-monospace: \"JetBrains Mono\", \"Cascadia Code\", Consolas, Liberation Mono, Menlo, monospace;\n}\n\n.sp-separator {\n    display: none !important;\n}\n\n#sp-fw-container {\n    opacity: 0.1 !important;\n}\n\n#sp-fw-container:hover {\n    opacity: 1 !important;\n}\n\nbody {\n    -webkit-font-smoothing: auto !important;\n    -moz-osx-font-smoothing: auto !important;\n}\n#sp-prefs-setup {\n    font-family: var(--ubo-custom-font-sans-serif) !important\n}"
+        "code": ":root {\n    --ubo-custom-firefox-bg-dark: #2b2a32;\n    --ubo-custom-firefox-bg-light: #f9f9fb;\n    --ubo-custom-firefox-text-dark: #fbfbfd;\n    --ubo-custom-firefox-text-light: #1a191f;\n    --ubo-custom-firefox-bg-input-dark: #43424a;\n    --ubo-custom-firefox-bg-input-light: #f0f0f4;\n    --ubo-custom-font-sans-serif: \"PingFang TC\", \"Noto Sans\", Roboto, \"Segoe UI\", system-ui, \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --ubo-custom-font-monospace: \"JetBrains Mono\", \"Cascadia Code\", Consolas, Liberation Mono, Menlo, monospace;\n}\n\n.sp-separator {\n    display: none !important;\n}\n\n#sp-fw-container {\n    opacity: 0.1 !important;\n}\n\n#sp-fw-container:hover {\n    opacity: 1 !important;\n}\n\nbody {\n    -webkit-font-smoothing: auto !important;\n    -moz-osx-font-smoothing: auto !important;\n}\n#sp-prefs-setup {\n    font-family: var(--ubo-custom-font-sans-serif) !important\n}"
       },
       {
         "code": ".header_pop {\n    display: none !important;\n}\nbody {\n    font-family: var(--ubo-custom-font-sans-serif) !important;\n}",
@@ -209,9 +209,9 @@
         "domains": ["hn.algolia.com"]
       }
     ],
-    "updateDate": 1752559668050,
+    "updateDate": 1752564652872,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1752559668050,
+    "_rev": 1752564652872,
     "id": 1
   },
   {
