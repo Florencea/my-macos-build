@@ -166,25 +166,19 @@
   },
   "translationUrlPattern": {
     "excludeMatches": [],
-    "matches": [
-      "news.ycombinator.com",
-      "www.macrumors.com",
-      "9to5google.com"
-    ]
+    "matches": ["news.ycombinator.com", "www.macrumors.com", "9to5google.com"]
   },
   "updatedAt": "2025-07-15T06:10:10.881Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-07-15T06:11:05.060Z",
+    "exportedAt": "2025-07-15T06:13:44.892Z",
     "data": [
       {
         "id": "default",
         "name": "預設術語庫",
         "author": "self",
         "description": "預設常見術語庫，包含常見術語",
-        "matches": [
-          "*"
-        ],
+        "matches": ["*"],
         "glossaries": [
           {
             "k": "LLM",
