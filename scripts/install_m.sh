@@ -42,10 +42,6 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
 
-### Install essential fonts
-brew install --cask font-jetbrains-mono
-brew install --cask font-inter
-
 ### Install fish
 brew install fish
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
