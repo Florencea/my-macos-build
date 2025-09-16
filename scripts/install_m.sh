@@ -30,7 +30,7 @@ exit 0
 ### Setup SFMono fonts
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 ### Disable Window Animations
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+# defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 ### Disable macOS popup showing accented characters when holding down a key
 defaults write -g ApplePressAndHoldEnabled -bool false
 ### Setup git config
