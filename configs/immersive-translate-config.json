@@ -1,37 +1,22 @@
 {
-  "aiAssistantIds": [
-    "paragraph-summarizer-expert",
-    "plain-english",
-    "twitter",
-    "tech",
-    "reddit",
-    "paper",
-    "news",
-    "music",
-    "medical",
-    "legal",
-    "github",
-    "game",
-    "ecommerce",
-    "financial",
-    "fiction",
-    "ao3",
-    "ebook",
-    "design",
-    "paraphrase",
-    "bilingual-mix",
-    "web3"
-  ],
+  "aiAssistantIds": [],
+  "autoSync": false,
   "customAiAssistants": [],
   "enableInputTranslation": false,
   "enableInputTranslationWithoutTriggerKey": false,
   "generalRule": {
+    "aiWriting.add": {
+      "enable": false
+    },
     "imageRule.add": {
       "enableMangaFloatBall": false,
       "enableMouseHover": false
     },
     "subtitleRule.add": {
       "disabled": true,
+      "filterAmbientSounds": false,
+      "humanPreferred": false,
+      "meetingAutoEnableSubtitle": false,
       "showQuickButton": false,
       "youtubeAutoEnableSubtitle": false
     }
@@ -42,7 +27,7 @@
   "isChangedAlwaysTranslatedUrls": true,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-07-15T06:10:10.881Z",
+  "localUpdatedAt": "2025-09-20T15:08:10.909Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -96,14 +81,15 @@
     "upgradeVisible": true
   },
   "sameLangCheck": false,
+  "sameLangTranslationTheme": "none",
   "subtitleTranslateService": "inherit",
   "targetLanguage": "zh-TW",
   "translationMode": "translation",
   "translationService": "google",
   "translationServiceChangedbyUserAt": "2024-11-05T01:08:44.357Z",
   "translationServiceExpanded": {
-    "custom": false,
-    "max": false
+    "custom": true,
+    "max": true
   },
   "translationServices": {
     "bing": {
@@ -153,11 +139,17 @@
       "migrateFrom": "openai",
       "visible": false
     },
+    "qwen-mt-pro": {
+      "visible": false
+    },
     "yandex": {
       "visible": false
     },
     "yandex-free": {
       "migrateFrom": "yandex",
+      "visible": false
+    },
+    "zhipu-air-pro": {
       "visible": false
     },
     "zhipu-pro": {
@@ -168,10 +160,10 @@
     "excludeMatches": [],
     "matches": ["news.ycombinator.com", "www.macrumors.com", "9to5google.com"]
   },
-  "updatedAt": "2025-07-15T06:10:10.881Z",
+  "updatedAt": "2025-09-20T15:08:10.909Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-07-15T06:13:44.892Z",
+    "exportedAt": "2025-09-20T15:08:54.756Z",
     "data": [
       {
         "id": "default",
@@ -190,7 +182,7 @@
           }
         ],
         "order": 0,
-        "active": true
+        "active": false
       }
     ]
   }
