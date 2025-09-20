@@ -17,7 +17,7 @@
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
     - [Set DNS Servers](#set-dns-servers)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
-    - [Google Pixel 8 pro](#google-pixel-8-pro)
+    - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
 
 ## Installations
 
@@ -237,10 +237,10 @@ Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome
 - Example
 
 ```text
-Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36 EdgA/140.0.0.0
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36 EdgA/142.0.0.0
 ```
 
-### Google Pixel 8 pro
+### Google Pixel 10 pro XL
 
-- Screen: `448 x 997`
+- Screen: `448 x 998`
 - DPR: `3`
