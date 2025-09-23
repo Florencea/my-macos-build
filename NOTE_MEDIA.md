@@ -27,7 +27,7 @@ ffmpeg
 
 | Quality  | Speed | Size  | Description                                                               |
 | -------- | ----- | ----- | ------------------------------------------------------------------------- |
-| original | -     | 157MB | Baseline                                                                  |
+| original | -     | 157MB | Baseline.                                                                 |
 | `0`      | 15x   | 169MB | Under baseline. Subtitles are legible but charactor faces looks very bad. |
 | `15`     | 15x   | 168MB | Under baseline. Motion frames looks pixelated.                            |
 | `25`     | 15x   | 166MB | Under baseline. But unconspicuous unless complex motion frames.           |
