@@ -1,0 +1,198 @@
+{
+  "filter": {
+    "enabled": true,
+    "rules": [
+      {
+        "id": "4863598d3d0bb",
+        "pattern": "ant-design-mobile.antgroup.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "e6802755cfe73",
+        "pattern": "ant-design-x.antgroup.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "6d4e92397f93b",
+        "pattern": "cn.vite.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "c98c9f61aad37",
+        "pattern": "cn.vitest.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "c3fe005dfbdbe",
+        "pattern": "www.pnpm.cn",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "9a95f256dae4e",
+        "pattern": "cn.windicss.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "d8d7cc8eee3c7",
+        "pattern": "www.eggjs.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "18a64a520fb15",
+        "pattern": "www.coder.work",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "03602a005ad56",
+        "pattern": "exhentai.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "f5ef1fa77735e",
+        "pattern": "share.dmhy.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "6debc637392fe",
+        "pattern": "beforweb.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "354570054d188",
+        "pattern": "vuejs.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "543d0a5276cca",
+        "pattern": "web.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "d8d1527ce1d3",
+        "pattern": "csdn.net",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "a5d700cbba4a1",
+        "pattern": "swr.vercel.app",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "e22cd4250f76f",
+        "pattern": "zhihu.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "5f392e36bbacf",
+        "pattern": "infoq.cn",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "82eb87f5f4d19",
+        "pattern": "antv.vision",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "c68f5da92cbb9",
+        "pattern": "ahooks.js.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "be9e8ea943a1f",
+        "pattern": "umijs.org",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "ac8787ee378be",
+        "pattern": "bbs.pceva.com.cn",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "46b8ac89bbe26",
+        "pattern": "juejin.cn",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "1d24c34efbcec",
+        "pattern": "mui.com",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "1f419fc370c04",
+        "pattern": "cn.vitejs.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
+        "id": "a518e6c3137ce",
+        "pattern": "ant.design",
+        "regexp": null,
+        "target": "s2t"
+      }
+    ]
+  },
+  "general": {
+    "autoConvert": "disabled",
+    "browserAction": "s2t",
+    "debugMode": false,
+    "defaultTarget": "s2t",
+    "spaMode": true,
+    "updateLangAttr": true
+  },
+  "menu": {
+    "enabled": false,
+    "group": {
+      "textarea": {
+        "s2t": false,
+        "t2s": false
+      },
+      "webpage": {
+        "s2t": false,
+        "t2s": false
+      }
+    }
+  },
+  "meta": {
+    "update": 1742654773646
+  },
+  "version": 2,
+  "word": {
+    "custom": {
+      "s2t": {},
+      "t2s": {}
+    },
+    "default": {
+      "s2t": {
+        "char": true,
+        "phrase": false
+      },
+      "t2s": {
+        "char": true,
+        "phrase": true
+      }
+    }
+  }
+}
