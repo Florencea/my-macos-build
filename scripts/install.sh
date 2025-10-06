@@ -91,8 +91,9 @@ brew install mtr
 brew install nano
 brew install nanorc
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
-brew install rsync
 brew install python
+brew install rsync
+brew install shfmt
 brew install wget
 brew install yt-dlp
 brew install yq
