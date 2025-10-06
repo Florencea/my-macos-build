@@ -15,14 +15,16 @@ function copy() {
     cp "$FILE_PATH" "$CONFIG_HOME/$FILE_NAME"
     cd "$CONFIG_HOME" || exit
     git add "$FILE_NAME"
-    echo ""
-    printf "Copy Configuration: %s\n" "$FILE_PATH"
-    printf "     --> %s\n\n" "$FILE_NAME"
-    printf "Backup..."
-    git commit -q -m "feat: Update config $FILE_NAME by ebk"
-    git push -q
-    echo "done."
-    echo ""
+    if ! [ -z "$(git status --porcelain)" ]; then
+      echo ""
+      printf "Copy Configuration: %s\n" "$FILE_PATH"
+      printf "     --> %s\n\n" "$FILE_NAME"
+      printf "Backup..."
+      git commit -q -m "feat: Update config $FILE_NAME by ebk"
+      git push -q
+      echo "done."
+      echo ""
+    fi
   fi
 }
 
