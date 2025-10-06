@@ -5,6 +5,27 @@ set -o pipefail
 chkcmd "git"
 chkcmd "npx"
 
+### Copy config
+### Usage: copy <FILE_PATH> <FILE_NAME>
+function copy() {
+  CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
+  FILE_PATH=$1
+  FILE_NAME=$2
+  if [ -f "$FILE_PATH" ]; then
+    cp "$FILE_PATH" "$CONFIG_HOME/$FILE_NAME"
+    cd "$CONFIG_HOME" || exit
+    git add "$FILE_NAME"
+    echo ""
+    printf "Copy Configuration: %s\n" "$FILE_PATH"
+    printf "     --> %s\n\n" "$FILE_NAME"
+    printf "Backup..."
+    git commit -q -m "feat: Update config $FILE_NAME by ebk"
+    git push -q
+    echo "done."
+    echo ""
+  fi
+}
+
 ### Backup config
 ### Usage: backup <FILE_PATTERN> <FILE_NAME>
 function backup() {
@@ -50,6 +71,7 @@ function backupjson() {
   fi
 }
 
+copy "$HOME/.config/zed/settings.json" "settings.json"
 backup "my-ublock-backup*.txt" "ubo-config.txt"
 backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
