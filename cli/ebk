@@ -15,7 +15,7 @@ function copy() {
     cp "$FILE_PATH" "$CONFIG_HOME/$FILE_NAME"
     cd "$CONFIG_HOME" || exit
     git add "$FILE_NAME"
-    if [ -z "$(git status --porcelain)" ]; then
+    if ! [ -z "$(git status --porcelain)" ]; then
       echo ""
       printf "Copy Configuration: %s\n" "$FILE_PATH"
       printf "     --> %s\n\n" "$FILE_NAME"
