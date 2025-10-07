@@ -11,8 +11,10 @@
   "icon_theme": "Material Icon Theme",
   "disable_ai": true,
   "terminal": {
-    "font_family": "JetBrains Mono",
-    "blinking": "on"
+    "blinking": "on",
+    "font_features": {
+      "calt": true
+    }
   },
   "base_keymap": "VSCode",
   "multi_cursor_modifier": "cmd_or_ctrl",
