@@ -16,7 +16,7 @@ HOMEBREW_NO_ENV_HINTS=1 brew upgrade
 
 ### Update Node.js
 ### Change this line for perfer version (start by 'v', ex: v20, v24)
-PERFER_NODEJS_VERSION="v24"
+PERFER_NODEJS_VERSION="v22"
 ###
 NODEJS_INFO="$(curl -fsSL https://nodejs.org/download/release/index.json)"
 PERFER_NODEJS_REMOTE_VERSION="$(echo $NODEJS_INFO | jq -cr --arg NODE_V "$PERFER_NODEJS_VERSION" 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .version | startswith($NODE_V) ) | .version )')"
