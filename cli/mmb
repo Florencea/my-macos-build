@@ -2,6 +2,6 @@
 set -o errexit
 set -o pipefail
 
-chkcmd "zed"
+chkcmd "code"
 
-zed "$0/../../"
+code "$0/../../"
