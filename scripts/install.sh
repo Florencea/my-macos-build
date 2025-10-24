@@ -66,8 +66,6 @@ brew install --cask kekaexternalhelper
 brew install --cask logi-options+
 brew install --cask tailscale
 brew install --cask visual-studio-code
-mkdir -p "$HOME/.config/zed"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/settings.json -o "$HOME/.config/zed/settings.json"
 
 ### Rosetta2
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
