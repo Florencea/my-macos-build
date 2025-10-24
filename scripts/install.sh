@@ -96,6 +96,9 @@ brew install yt-dlp
 brew install yq
 brew install zsh
 
+### Disable Window Animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
 major=$(echo "$macos_version" | awk -F '.' '{print $1}')

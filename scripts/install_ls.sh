@@ -113,6 +113,9 @@ printf "# Google Cloud SDK\nexport CLOUDSDK_PYTHON=\"/opt/homebrew/opt/python@3.
 export CLOUDSDK_PYTHON="/opt/homebrew/opt/python@3.12/libexec/bin/python3"
 sh "$HOME/Developer/_sdks/google-cloud-sdk/install.sh" -q --install-python=false
 
+### Disable Window Animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
 major=$(echo "$macos_version" | awk -F '.' '{print $1}')
