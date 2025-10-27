@@ -12,6 +12,9 @@
       "enableMangaFloatBall": false,
       "enableMouseHover": false
     },
+    "selectionTranslation.add": {
+      "enable": false
+    },
     "subtitleRule.add": {
       "disabled": true,
       "filterAmbientSounds": false,
@@ -27,7 +30,7 @@
   "isChangedAlwaysTranslatedUrls": true,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-09-20T15:08:10.909Z",
+  "localUpdatedAt": "2025-10-27T16:11:32.173Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -160,10 +163,10 @@
     "excludeMatches": [],
     "matches": ["news.ycombinator.com", "www.macrumors.com", "9to5google.com"]
   },
-  "updatedAt": "2025-09-20T15:08:10.909Z",
+  "updatedAt": "2025-10-27T16:11:32.173Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-09-20T15:08:54.756Z",
+    "exportedAt": "2025-10-27T16:11:42.684Z",
     "data": [
       {
         "id": "default",
@@ -182,7 +185,7 @@
           }
         ],
         "order": 0,
-        "active": false
+        "active": true
       }
     ]
   }
