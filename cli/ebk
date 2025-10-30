@@ -3,7 +3,7 @@ set -o errexit
 set -o pipefail
 
 chkcmd "git"
-chkcmd "npx"
+chkcmd "jq"
 
 ### Copy config
 ### Usage: copy <FILE_PATH> <FILE_NAME>
@@ -58,9 +58,10 @@ function backupjson() {
   FILE_NAME=$2
   FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
   if [ -f "$FILE_BACKUP" ]; then
-    mv "$FILE_BACKUP" "$CONFIG_HOME/$FILE_NAME"
+    mv "$FILE_BACKUP" "$CONFIG_HOME/temp.json"
     cd "$CONFIG_HOME" || exit
-    npx -y @biomejs/biome@latest format --write "$FILE_NAME" --files-max-size=1000000000 --log-level=error >/dev/null 2>&1
+    jq . temp.json >"$FILE_NAME"
+    rm temp.json
     git add "$FILE_NAME"
     echo ""
     printf "Find Configuration: %s\n" "$FILE_BACKUP"
