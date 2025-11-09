@@ -175,6 +175,9 @@ rm -rf "$HOME/Library/Application Support/fnm" "$HOME/Library/Caches/fnm_multish
 ### Reset LaunchPad
 
 ```sh
+# macos >= 15
+rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad;killall Dock
+# macos < 15
 defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
 ```
 
