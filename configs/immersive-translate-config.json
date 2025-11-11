@@ -20,17 +20,23 @@
       "filterAmbientSounds": false,
       "humanPreferred": false,
       "meetingAutoEnableSubtitle": false,
+      "preTranslation": false,
       "showQuickButton": false,
       "youtubeAutoEnableSubtitle": false
+    },
+    "ytAsrConfig.add": {
+      "enable": false
     }
   },
   "h5FloatBallMainBtnTooltipShownCount": 1,
   "inputTranslationService": "inherit",
   "interfaceLanguage": "zh-TW",
   "isChangedAlwaysTranslatedUrls": true,
+  "isEnableGuideTips": false,
+  "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-10-27T16:11:32.173Z",
+  "localUpdatedAt": "2025-11-11T18:13:28.832Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -132,6 +138,9 @@
       "migrateFrom": "gemini",
       "visible": false
     },
+    "kimi-max": {
+      "visible": false
+    },
     "openai": {
       "visible": false
     },
@@ -143,6 +152,9 @@
       "visible": false
     },
     "qwen-mt-pro": {
+      "visible": false
+    },
+    "qwen-pro": {
       "visible": false
     },
     "yandex": {
@@ -161,19 +173,25 @@
   },
   "translationUrlPattern": {
     "excludeMatches": [],
-    "matches": ["news.ycombinator.com", "www.macrumors.com", "9to5google.com"]
+    "matches": [
+      "news.ycombinator.com",
+      "www.macrumors.com",
+      "9to5google.com"
+    ]
   },
-  "updatedAt": "2025-10-27T16:11:32.173Z",
+  "updatedAt": "2025-11-11T18:13:28.832Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-10-27T16:11:42.684Z",
+    "exportedAt": "2025-11-11T18:13:37.309Z",
     "data": [
       {
         "id": "default",
         "name": "預設術語庫",
         "author": "self",
         "description": "預設常見術語庫，包含常見術語",
-        "matches": ["*"],
+        "matches": [
+          "*"
+        ],
         "glossaries": [
           {
             "k": "LLM",
@@ -185,7 +203,7 @@
           }
         ],
         "order": 0,
-        "active": true
+        "active": false
       }
     ]
   }
