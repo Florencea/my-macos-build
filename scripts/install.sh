@@ -22,10 +22,10 @@ else
   echo "Homebrew exist, skip Homebrew installation"
 fi
 
-### Install Cloudflare Warp
-brew install --cask cloudflare-warp
+### Install Cloudflare Warp. Uncomment this line if the connection is poor
+# brew install --cask cloudflare-warp
 ## Remove this line after Cloudflare Warp install
-exit 0
+# exit 0
 
 ### Setup SFMono fonts
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
