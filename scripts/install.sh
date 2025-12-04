@@ -29,7 +29,10 @@ fi
 
 ### Setup SFMono fonts
 cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
+### Disable macOS popup showing accented characters when holding down a key
 defaults write -g ApplePressAndHoldEnabled -bool false
+### Disable Window Animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 ### Setup git config
 git config --global user.name "Florencea"
 git config --global user.email "bearflorencea@gmail.com"
