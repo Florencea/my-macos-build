@@ -3,6 +3,12 @@
     "enabled": true,
     "rules": [
       {
+        "id": "04a8c9519f71f8",
+        "pattern": "zh-hans.react.dev",
+        "regexp": null,
+        "target": "s2t"
+      },
+      {
         "id": "4863598d3d0bb",
         "pattern": "ant-design-mobile.antgroup.com",
         "regexp": null,
@@ -176,7 +182,7 @@
     }
   },
   "meta": {
-    "update": 1742654773646
+    "update": 1765247421538
   },
   "version": 2,
   "word": {
