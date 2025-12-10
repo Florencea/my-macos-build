@@ -18,6 +18,8 @@
     - [Set DNS Servers](#set-dns-servers)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
+      - [Full](#full)
+      - [High](#high)
 
 ## Installations
 
@@ -245,5 +247,12 @@ Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome
 
 ### Google Pixel 10 pro XL
 
+#### Full
+
 - Screen: `448 x 998`
 - DPR: `3`
+
+#### High
+
+- Screen: `444 x 987`
+- DPR: `2.4375`
