@@ -244,7 +244,7 @@
     ],
     "updateDate": 1764341082750,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1764341082750,
+    "_rev": 1764567861068,
     "id": 1
   },
   {
@@ -263,7 +263,7 @@
         ]
       },
       {
-        "code": "@container style(--is-mobile: true) {\n    .manga-top,\n    .manga-top-info,\n    #index-ad,\n    .index-bottom-ad,\n    .banner-bottom,\n    .detail-ad-con,\n    .view-bottom-bar,\n    .adform_2,\n    #lb-win,\n    .guide,\n    body > a,\n    .win-pay-btn-group,\n    .win-pay-logo-con,\n    .win-pay-title2,\n    .win-pay-cross,\n    .loading,\n    .comment-input,\n    #tck-wrap {\n        display: none !important;\n    }\n    #cp_img {\n        height: calc(100vh - 60px) !important;\n        padding-top: 60px !important;\n    }\n    .closenextchapter {\n        display: block !important;\n        width: 50% !important;\n    }\n    .mask {\n        background-color: rgba(0, 0, 0, 0) !important;\n        filter: blur(10px) !important;\n        opacity: 1 !important;\n    }\n    .win-pay-chapter {\n        align-items: center !important;\n        background-color: rgba(43, 42, 50, 0.6) !important;\n        color: #fff !important;\n        display: flex !important;\n        flex-grow: 1 !important;\n        height: 100vh !important;\n        justify-content: center !important;\n        margin: 0 !important;\n        text-decoration: none !important;\n        vertical-align: middle !important;\n    }\n    .winnextchapter {\n        background-color: transparent !important;\n        display: flex;\n        height: 100vh !important;\n        left: 0 !important;\n        margin: 0 !important;\n        top: 0 !important;\n        width: 100vw !important;\n    }\n    body {\n        font-family: var(--stylus-font-sans-serif) !important;\n        padding-bottom: 60px !important;\n    }\n}\n#cp_img,\nbody:has(#cp_img) {\n    background-color: var(--stylus-bg-dark) !important;\n}",
+        "code": "@container style(--is-mobile: true) {\n    .manga-top,\n    .manga-top-info,\n    #index-ad,\n    .index-bottom-ad,\n    .banner-bottom,\n    .detail-ad-con,\n    .view-bottom-bar,\n    .adform_2,\n    #lb-win,\n    .guide,\n    body > a,\n    .win-pay-btn-group,\n    .win-pay-logo-con,\n    .win-pay-title2,\n    .win-pay-cross,\n    .loading,\n    .comment-input,\n    #tck-wrap {\n        display: none !important;\n    }\n    #cp_img {\n        height: calc(100vh - 60px) !important;\n        padding-top: 60px !important;\n    }\n    .closenextchapter {\n        display: block !important;\n        width: 50% !important;\n    }\n    .mask {\n        background-color: rgba(0, 0, 0, 0) !important;\n        filter: blur(10px) !important;\n        opacity: 1 !important;\n    }\n    .win-pay-chapter {\n        align-items: center !important;\n        background-color: rgba(43, 42, 50, 0.6) !important;\n        color: #fff !important;\n        display: flex !important;\n        flex-grow: 1 !important;\n        height: 100vh !important;\n        justify-content: center !important;\n        margin: 0 !important;\n        text-decoration: none !important;\n        vertical-align: middle !important;\n    }\n    .winnextchapter {\n        background-color: transparent !important;\n        display: flex;\n        height: 100vh !important;\n        left: 0 !important;\n        margin: 0 !important;\n        top: 0 !important;\n        width: 100vw !important;\n    }\n    body {\n        font-family: var(--stylus-font-sans-serif) !important;\n        padding-bottom: 80px !important;\n    }\n}\n#cp_img,\nbody:has(#cp_img) {\n    background-color: var(--stylus-bg-dark) !important;\n}",
         "domains": [
           "manhuaren.com"
         ]
@@ -281,9 +281,9 @@
         ]
       }
     ],
-    "updateDate": 1764533194298,
+    "updateDate": 1765360873966,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1764533194298,
+    "_rev": 1765360873966,
     "id": 2
   }
 ]
