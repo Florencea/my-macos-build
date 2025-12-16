@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "colorize_brackets": true,
   "buffer_font_family": "JetBrains Mono",
   "icon_theme": "Material Icon Theme",
   "disable_ai": true,
@@ -47,11 +48,12 @@
     "file_icons": true
   },
   "auto_install_extensions": {
+    "astro": true,
     "html": true,
     "material-icon-theme": true,
     "prisma": true,
-    "github-theme": true,
     "basher": true,
-    "github-actions": true
+    "github-actions": true,
+    "github-theme": true
   }
 }
