@@ -13,7 +13,6 @@
       "show-badge": true,
       "styleViaASS": false,
       "styleViaXhr": false,
-      "urlInstaller": true,
       "windowPosition": {},
       "compactWidth": 850,
       "config.autosave": true,
@@ -101,7 +100,6 @@
       "popup.search.globals": false,
       "popupWidth": 246,
       "popupWidthMax": 280,
-      "updateInterval": 24,
       "updateOnlyEnabled": false
     },
     "order": {
@@ -115,7 +113,7 @@
   {
     "enabled": true,
     "installDate": 1735716344902,
-    "name": "ubo style Desktop",
+    "name": "ubo style desktop",
     "sections": [
       {
         "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: \"Inter Variable\", \"PingFang TC\", \"Noto Sans\", Roboto, \"Segoe UI\", system-ui, \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --stylus-font-monospace: \"JetBrains Mono\", \"Cascadia Code\", \"SF Mono\", Consolas, Liberation Mono, Menlo, monospace;\n}\n.sp-separator {\n    display: none !important;\n}\nbody {\n    -webkit-font-smoothing: auto !important;\n    -moz-osx-font-smoothing: auto !important;\n}\n"
@@ -242,9 +240,9 @@
         ]
       }
     ],
-    "updateDate": 1764341082750,
+    "updateDate": 1766338654936,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1764567861068,
+    "_rev": 1766338654936,
     "id": 1
   },
   {
@@ -283,7 +281,7 @@
     ],
     "updateDate": 1765370895377,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1765370895377,
+    "_rev": 1766324402537,
     "id": 2
   }
 ]
