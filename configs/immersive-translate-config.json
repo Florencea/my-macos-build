@@ -36,7 +36,7 @@
   "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-11-11T18:13:28.832Z",
+  "localUpdatedAt": "2025-12-28T18:08:38.781Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -176,13 +176,14 @@
     "matches": [
       "news.ycombinator.com",
       "www.macrumors.com",
-      "9to5google.com"
+      "9to5google.com",
+      "ploum.net"
     ]
   },
-  "updatedAt": "2025-11-11T18:13:28.832Z",
+  "updatedAt": "2025-12-28T18:08:38.781Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-11-11T18:13:37.309Z",
+    "exportedAt": "2025-12-28T18:08:52.115Z",
     "data": [
       {
         "id": "default",
@@ -203,7 +204,7 @@
           }
         ],
         "order": 0,
-        "active": false
+        "active": true
       }
     ]
   }
