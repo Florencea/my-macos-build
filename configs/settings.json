@@ -14,38 +14,38 @@
   "terminal": {
     "blinking": "on",
     "font_features": {
-      "calt": true
-    }
+      "calt": true,
+    },
   },
   "base_keymap": "VSCode",
   "multi_cursor_modifier": "cmd_or_ctrl",
   "minimap": {
-    "show": "auto"
+    "show": "auto",
   },
   "linked_edits": true,
   "tab_size": 2,
   "file_types": {
     "dotenv": [".env*"],
-    "GitHub Actions": [".github/workflows/*.yml", ".github/workflows/*.yaml"]
+    "GitHub Actions": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
   },
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "ui_font_size": 14,
   "buffer_font_size": 12,
   "theme": {
     "mode": "system",
     "light": "Github Light",
-    "dark": "Github Dark"
+    "dark": "Github Dark",
   },
   "git": {
     "inline_blame": {
-      "enabled": false
-    }
+      "enabled": false,
+    },
   },
   "tabs": {
-    "file_icons": true
+    "file_icons": true,
   },
   "auto_install_extensions": {
     "astro": true,
@@ -54,6 +54,6 @@
     "prisma": true,
     "basher": true,
     "github-actions": true,
-    "github-theme": true
-  }
+    "github-theme": true,
+  },
 }
