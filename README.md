@@ -2,6 +2,7 @@
 
 ## Quick Links
 
+- [Firefox Note](NOTE_FIREFOX.md)
 - [macOS Note](NOTE_MACOS.md)
 - [Media Note](NOTE_MEDIA.md)
 
