@@ -36,5 +36,5 @@ Mozilla/5.0 (Android 16; Mobile; rv:146.0) Gecko/146.0 Firefox/146.0
 
 #### High
 
-- Screen: `444 x 987`
-- DPR: `2.4375`
+- Screen: `450 x 853`
+- DPR: `2.4`
