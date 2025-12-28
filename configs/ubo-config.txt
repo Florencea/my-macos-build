@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1766173475298,
+  "timeStamp": 1766946614441,
   "version": "1.68.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -42,6 +42,7 @@
     "fanboy-social",
     "adguard-social",
     "fanboy-thirdparty_social",
+    "fanboy-ai-suggestions",
     "easylist-chat",
     "easylist-newsletters",
     "easylist-notifications",
@@ -55,8 +56,8 @@
     "JPN-1",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
     "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-desktop.txt",
-    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt",
-    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt"
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-font.txt",
+    "https://github.com/Florencea/my-macos-build/raw/main/rules/ubo-mobile.txt"
   ],
   "hiddenSettings": {
     "cloudStorageCompression": false
