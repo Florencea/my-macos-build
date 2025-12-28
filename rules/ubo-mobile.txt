@@ -1,7 +1,6 @@
 ! Title: ubo Florencea Mobile
 ! Description: Custom styles by Florencea Bear, for uBlock Origin Mobile 1.52.0+
-! Last updated: 2025-07-02
-
+! Last updated: 2025-12-29
 
 !#if env_mobile
 
@@ -293,6 +292,11 @@ wnacg.com##.subHeader .iconHome
 wnacg.com##.subHeader .iconHome
 wnacg.com##.logo > a > img
 wnacg.com##.Sub_H2:not(.classify) > a
+wnacg.com##^.imgBox>div:not(.classify)
+wnacg.com##^.imgBox>script
+wnacg.com##^.classBox>script
+wnacg.com##^.classBox>noscript
+wnacg.com##^div.sh
 wnacg.com##.Introduct_Sub .pic
 wnacg.com##.Introduct .sub_r .txtItme
 wnacg.com##body > .bottom
@@ -301,6 +305,7 @@ wnacg.com###classTit > li:nth-of-type(4)
 wnacg.com###img_load
 wnacg.com##.show
 wnacg.com###shareBox
+wnacg.com##^li.cate-0
 ! Style
 wnacg.com###classify_container img[src="https://wnacg.com/loading.jpg"]:style(height: 238px !important)
 wnacg.com###classify_container img[src="https://wnacg.com/loading.jpg"]:style(opacity: 0 !important)
