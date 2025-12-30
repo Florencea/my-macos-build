@@ -1,6 +1,7 @@
 {
   "aiAssistantIds": [],
   "autoSync": false,
+  "conflictNeedConfirm": true,
   "customAiAssistants": [],
   "enableInputTranslation": false,
   "enableInputTranslationWithoutTriggerKey": false,
@@ -36,7 +37,7 @@
   "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-12-28T18:08:38.781Z",
+  "localUpdatedAt": "2025-12-30T17:49:24.735Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -177,13 +178,14 @@
       "news.ycombinator.com",
       "www.macrumors.com",
       "9to5google.com",
-      "ploum.net"
+      "ploum.net",
+      "developer.apple.com"
     ]
   },
-  "updatedAt": "2025-12-28T18:08:38.781Z",
+  "updatedAt": "2025-12-30T17:49:24.735Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-12-28T18:08:52.115Z",
+    "exportedAt": "2025-12-30T17:49:35.495Z",
     "data": [
       {
         "id": "default",
