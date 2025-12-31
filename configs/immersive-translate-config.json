@@ -37,7 +37,7 @@
   "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-12-30T17:49:24.735Z",
+  "localUpdatedAt": "2025-12-31T13:25:01.856Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -179,13 +179,14 @@
       "www.macrumors.com",
       "9to5google.com",
       "ploum.net",
-      "developer.apple.com"
+      "developer.apple.com",
+      "blog.cloudflare.com"
     ]
   },
-  "updatedAt": "2025-12-30T17:49:24.735Z",
+  "updatedAt": "2025-12-31T13:25:01.856Z",
   "terms": {
     "version": 1,
-    "exportedAt": "2025-12-30T17:49:35.495Z",
+    "exportedAt": "2025-12-31T16:36:35.366Z",
     "data": [
       {
         "id": "default",
