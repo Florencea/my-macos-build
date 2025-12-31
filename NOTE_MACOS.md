@@ -16,6 +16,7 @@
     - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
     - [Set DNS Servers](#set-dns-servers)
+    - [Clear DNS Cache](#clear-dns-cache)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -229,6 +230,12 @@ networksetup -setdnsservers 'Wi-Fi' empty
 # Set DNS Servers (split by space)
 networksetup -setdnsservers <SERVICE> [<DNS_SERVERS>]
 networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '2001:4860:4860::8844'
+```
+
+### Clear DNS Cache
+
+```sh
+sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 ```
 
 ## Microsoft Edge for DevTools Device Profile
