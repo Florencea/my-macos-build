@@ -1,15 +1,16 @@
 # Firefox Note
 
 - [Firefox Note](#firefox-note)
-  - [about:config](#about-config)
-  - [Firefox DevTools Device Profile](#firefox-devTools-device-profile)
+  - [Configuration Tweaks](#configuration-tweaks)
+  - [Firefox DevTools Device Profile](#firefox-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
       - [High](#high)
 
-## about:config
+## Configuration Tweaks
 
 ```text
+# about:config
 browser.translations.enable false
 ```
 

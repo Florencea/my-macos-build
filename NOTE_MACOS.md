@@ -17,10 +17,6 @@
     - [Remove Quarantine Attributes](#remove-quarantine-attributes)
     - [Set DNS Servers](#set-dns-servers)
     - [Clear DNS Cache](#clear-dns-cache)
-  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
-    - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
-      - [Full](#full)
-      - [High](#high)
 
 ## Installations
 
@@ -237,29 +233,3 @@ networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '
 ```sh
 sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 ```
-
-## Microsoft Edge for DevTools Device Profile
-
-- Android Browser User Agent
-
-```text
-Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/VERSION.0.0.0 Mobile Safari/537.36 EdgA/VERSION.0.0.0
-```
-
-- Example
-
-```text
-Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36 EdgA/142.0.0.0
-```
-
-### Google Pixel 10 pro XL
-
-#### Full
-
-- Screen: `448 x 998`
-- DPR: `3`
-
-#### High
-
-- Screen: `444 x 987`
-- DPR: `2.4375`
