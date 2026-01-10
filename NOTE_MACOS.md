@@ -10,6 +10,7 @@
   - [Remove Quarantine Attributes](#remove-quarantine-attributes)
   - [Set DNS Servers](#set-dns-servers)
   - [Clear DNS Cache](#clear-dns-cache)
+  - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
 
 ## Install Rosetta2
 
@@ -78,4 +79,15 @@ networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '
 
 ```sh
 sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+```
+
+## Force Homebrew use ipv4 only
+
+```sh
+# Create curl config
+echo "-4" > ~/.homebrew_curlrc
+# Add into fish config
+echo 'set -gx HOMEBREW_CURLRC "$HOME/.homebrew_curlrc"' >> ~/.config/fish/config.fish
+# Reload config or open a new terminal window
+source ~/.config/fish/config.fish
 ```
