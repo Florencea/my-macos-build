@@ -127,7 +127,7 @@
         ]
       },
       {
-        "code": "* {\n    font-family: var(--stylus-font-sans-serif) !important\n}",
+        "code": "* {\n    font-family: var(--stylus-font-sans-serif) !important\n}\n/* #doc,\nspan#Psu,\ndiv#hid {\n    display: none !important;\n} */",
         "domains": [
           "coolpc.com.tw"
         ]
@@ -194,7 +194,7 @@
         ]
       },
       {
-        "code": "nui-banner:has(.license-banner) {\n    display: none !important;\n}\nhtml body {\n    font-weight: 400 !important;\n}\nbody {\n    --mdc-list-list-item-label-text-weight: 400 !important;\n    --mat-option-label-text-weight: 400 !important;\n    --mdc-dialog-supporting-text-weight: 400 !important;\n    --mat-form-field-container-text-weight: 400 !important;\n    --mat-select-trigger-text-weight: 400 !important;\n}",
+        "code": "nui-banner:has(.license-banner) {\n    display: none !important;\n}\nhtml body,\nh3.mat-mdc-list-base,\nh3.menu-text-color-default,\nh3.menu-text-color-hover,\n.mat-h5,\n.mat-typography .mat-h5,\n.mat-typography h5,\n.mat-h6,\n.mat-typography .mat-h6,\n.mat-typography h6,\n.nui-support-information.link {\n    font-weight: 400 !important;\n}\nbody {\n    --mat-button-toggle-label-text-weight: 400 !important;\n    --mat-dialog-supporting-text-weight: 400 !important;\n    --mat-form-field-container-text-weight: 400 !important;\n    --mat-form-field-filled-label-text-weight: 400 !important;\n    --mat-list-list-item-label-text-weight: 400 !important;\n    --mat-list-list-item-supporting-text-weight: 400 !important;\n    --mat-option-label-text-weight: 400 !important;\n    --mat-radio-label-text-weight: 400 !important;\n    --mat-select-trigger-text-weight: 400 !important;\n    --mat-stepper-header-label-text-weight: 400 !important;\n    --mat-table-row-item-label-text-weight: 400 !important;\n    --mat-table-footer-supporting-text-weight: 400 !important;\n    --mat-tooltip-supporting-text-weight: 400 !important;\n}",
         "domains": [
           "nebula.zyxel.com"
         ]
@@ -242,9 +242,9 @@
         ]
       }
     ],
-    "updateDate": 1766338654936,
+    "updateDate": 1768411131158,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1767664365061,
+    "_rev": 1768411131158,
     "id": 1
   },
   {
