@@ -2,6 +2,8 @@
 
 - [Firefox Note](#firefox-note)
   - [Configuration Tweaks](#configuration-tweaks)
+  - [Custom CSS](#custom-css)
+    - [Fix GitHub icon issue in Dark mode](#fix-github-icon-issue-in-dark-mode)
   - [Firefox DevTools Device Profile](#firefox-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -9,9 +11,27 @@
 
 ## Configuration Tweaks
 
-```text
+```sh
 # about:config
+# Disable translation
 browser.translations.enable false
+# Enable Custom CSS
+toolkit.legacyUserProfileCustomizations.stylesheets true
+```
+
+## Custom CSS
+
+### Fix GitHub icon issue in Dark mode
+
+- Open Profile Folder
+- mkdir `chrome`
+
+```css
+@media (prefers-color-scheme: dark) {
+  .bookmark-item[label="GitHub"] .toolbarbutton-icon {
+    filter: invert(100%);
+  }
+}
 ```
 
 ## Firefox DevTools Device Profile
