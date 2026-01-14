@@ -1,0 +1,41 @@
+# Firefox Note
+
+- [Firefox Note](#firefox-note)
+  - [Configuration Tweaks](#configuration-tweaks)
+  - [Firefox DevTools Device Profile](#firefox-devtools-device-profile)
+    - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
+      - [Full](#full)
+      - [High](#high)
+
+## Configuration Tweaks
+
+```text
+# about:config
+browser.translations.enable false
+```
+
+## Firefox DevTools Device Profile
+
+- Android Browser User Agent
+
+```text
+Mozilla/5.0 (Android 16; Mobile; rv:VERSION.0) Gecko/VERSION.0 Firefox/VERSION.0
+```
+
+- Example
+
+```text
+Mozilla/5.0 (Android 16; Mobile; rv:146.0) Gecko/146.0 Firefox/146.0
+```
+
+### Google Pixel 10 pro XL
+
+#### Full
+
+- Screen: `448 x 998`
+- DPR: `3`
+
+#### High
+
+- Screen: `450 x 853`
+- DPR: `2.4`
