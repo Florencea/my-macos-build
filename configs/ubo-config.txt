@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1768385655515,
+  "timeStamp": 1768390020283,
   "version": "1.68.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -42,6 +42,7 @@
     "fanboy-social",
     "adguard-social",
     "fanboy-thirdparty_social",
+    "fanboy-ai-suggestions",
     "easylist-chat",
     "easylist-newsletters",
     "easylist-notifications",
