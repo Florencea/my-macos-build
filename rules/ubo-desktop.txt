@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2025-07-07
+! Last updated: 2026-01-14
 
 ! CSS variable
 ! bg
@@ -374,7 +374,7 @@ news.ycombinator.com##body:style(margin: 0 !important)
 news.ycombinator.com##body:matches-media((prefers-color-scheme: dark)):style(color: var(--ubo-custom-firefox-text-dark) !important)
 news.ycombinator.com##body:matches-media((prefers-color-scheme: light)):style(color: var(--ubo-custom-firefox-text-light) !important)
 ! font size
-news.ycombinator.com##td:style(font-size: 14px !important)
+news.ycombinator.com##td:style(font-size: 14px)
 news.ycombinator.com##td:matches-media((min-width: 640px)):style(font-size: 16px !important)
 news.ycombinator.com##td:style(line-height: 1.5em !important)
 news.ycombinator.com##td:style(height: auto !important)
