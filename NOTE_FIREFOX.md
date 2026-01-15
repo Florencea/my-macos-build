@@ -25,6 +25,7 @@ toolkit.legacyUserProfileCustomizations.stylesheets true
 
 - Open Profile Folder
 - mkdir `chrome`
+- Add `userChrome.css`
 
 ```css
 @media (prefers-color-scheme: dark) {
