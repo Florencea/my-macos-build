@@ -127,7 +127,7 @@
         ]
       },
       {
-        "code": "* {\n    font-family: var(--stylus-font-sans-serif) !important\n}\n/* #doc,\nspan#Psu,\ndiv#hid {\n    display: none !important;\n} */",
+        "code": "* {\n    font-family: var(--stylus-font-sans-serif) !important\n}",
         "domains": [
           "coolpc.com.tw"
         ]
@@ -242,9 +242,9 @@
         ]
       }
     ],
-    "updateDate": 1768411131158,
+    "updateDate": 1768490471348,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1768411131158,
+    "_rev": 1768490471349,
     "id": 1
   },
   {
