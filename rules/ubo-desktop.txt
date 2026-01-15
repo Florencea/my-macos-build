@@ -1,6 +1,6 @@
 ! Title: ubo Florencea Desktop
 ! Description: Custom styles by Florencea Bear, for uBlock Origin 1.52.0+
-! Last updated: 2026-01-14
+! Last updated: 2026-01-15
 
 ! CSS variable
 ! bg
@@ -170,11 +170,29 @@ frommuji.muji.tw##p:style(line-height: 2rem !important)
 nebula.zyxel.com##nui-banner:has(.license-banner)
 ! Styles
 nebula.zyxel.com##html body:style(font-weight: 400 !important)
-nebula.zyxel.com##body:style(--mdc-list-list-item-label-text-weight: 400 !important)
-nebula.zyxel.com##body:style(--mat-option-label-text-weight: 400 !important)
-nebula.zyxel.com##body:style(--mdc-dialog-supporting-text-weight: 400 !important)
+nebula.zyxel.com##h3.mat-mdc-list-base:style(font-weight: 400 !important)
+nebula.zyxel.com##h3.menu-text-color-default:style(font-weight: 400 !important)
+nebula.zyxel.com##h3.menu-text-color-hover:style(font-weight: 400 !important)
+nebula.zyxel.com##.mat-h5:style(font-weight: 400 !important)
+nebula.zyxel.com##.mat-typography .mat-h5:style(font-weight: 400 !important)
+nebula.zyxel.com##.mat-typography h5:style(font-weight: 400 !important)
+nebula.zyxel.com##.mat-h6:style(font-weight: 400 !important)
+nebula.zyxel.com##.mat-typography .mat-h6:style(font-weight: 400 !important)
+nebula.zyxel.com##.mat-typography h6:style(font-weight: 400 !important)
+nebula.zyxel.com##.nui-support-information.link:style(font-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-button-toggle-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-dialog-supporting-text-weight: 400 !important)
 nebula.zyxel.com##body:style(--mat-form-field-container-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-form-field-filled-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-list-list-item-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-list-list-item-supporting-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-option-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-radio-label-text-weight: 400 !important)
 nebula.zyxel.com##body:style(--mat-select-trigger-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-stepper-header-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-table-row-item-label-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-table-footer-supporting-text-weight: 400 !important)
+nebula.zyxel.com##body:style(--mat-tooltip-supporting-text-weight: 400 !important)
 
 ! [SITE] pts.org.tw
 ! CSS variable
