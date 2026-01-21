@@ -85,7 +85,7 @@ sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 
 ```sh
 # Create curl config
-echo "-4" > ~/.homebrew_curlrc
+echo "--ipv4" > ~/.homebrew_curlrc
 # Add into fish config
 echo 'set -gx HOMEBREW_CURLRC "$HOME/.homebrew_curlrc"' >> ~/.config/fish/config.fish
 # Reload config or open a new terminal window
