@@ -11,6 +11,10 @@
   - [Set DNS Servers](#set-dns-servers)
   - [Clear DNS Cache](#clear-dns-cache)
   - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
+  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
+    - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
+      - [Full](#full)
+      - [High](#high)
 
 ## Install Rosetta2
 
@@ -91,3 +95,29 @@ echo 'set -gx HOMEBREW_CURLRC "$HOME/.homebrew_curlrc"' >> ~/.config/fish/config
 # Reload config or open a new terminal window
 source ~/.config/fish/config.fish
 ```
+
+## Microsoft Edge for DevTools Device Profile
+
+- Android Browser User Agent
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/VERSION.0.0.0 Mobile Safari/537.36 EdgA/VERSION.0.0.0
+```
+
+- Example
+
+```text
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36 EdgA/143.0.0.0
+```
+
+### Google Pixel 10 pro XL
+
+#### Full
+
+- Screen: `448 x 998`
+- DPR: `3`
+
+#### High
+
+- Screen: `444 x 987`
+- DPR: `2.4375`
