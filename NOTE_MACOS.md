@@ -11,6 +11,7 @@
   - [Set DNS Servers](#set-dns-servers)
   - [Clear DNS Cache](#clear-dns-cache)
   - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
+  - [Apple CDN Alias](#apple-cdn-alias)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -94,6 +95,13 @@ echo "--ipv4" > ~/.homebrew_curlrc
 echo 'set -gx HOMEBREW_CURLRC "$HOME/.homebrew_curlrc"' >> ~/.config/fish/config.fish
 # Reload config or open a new terminal window
 source ~/.config/fish/config.fish
+```
+
+## Apple CDN Alias
+
+```sh
+is1-ssl.mzstatic.com -> CNAME mzstatic.com.edgekey.net (Fast, at Taiwan)
+                     -> CANME h3.apis.apple.map.fastly.net (Slow, at JP or SG)
 ```
 
 ## Microsoft Edge for DevTools Device Profile
