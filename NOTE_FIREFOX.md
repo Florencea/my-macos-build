@@ -8,6 +8,7 @@
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
       - [High](#high)
+  - [Access `about:config` on Firefox Android](#access-aboutconfig-on-firefox-android)
 
 ## Configuration Tweaks
 
@@ -60,3 +61,9 @@ Mozilla/5.0 (Android 16; Mobile; rv:147.0) Gecko/147.0 Firefox/147.0
 
 - Screen: `450 x 853`
 - DPR: `2.4`
+
+## Access `about:config` on Firefox Android
+
+```text
+chrome://geckoview/content/config.xhtml
+```
