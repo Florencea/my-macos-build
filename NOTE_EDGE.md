@@ -41,4 +41,4 @@ Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome
 #### High
 
 - Screen: `444 x 987`
-- DPR: `2.4375`
+- DPR: `2.44`
