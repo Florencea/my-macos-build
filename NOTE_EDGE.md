@@ -11,6 +11,14 @@
 
 ```sh
 # Terminal
+# Disable Picture in Picture
+defaults write com.microsoft.Edge PictureInPictureOverlayEnabled -bool false
+# Enable Picture in Picture
+defaults delete com.microsoft.Edge PictureInPictureOverlayEnabled
+```
+
+```sh
+# Terminal
 # Disable QUIC
 defaults write com.microsoft.Edge QuicAllowed -bool false
 # Enable QUIC
