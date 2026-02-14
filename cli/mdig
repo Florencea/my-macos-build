@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### cmd
+CMD=$(basename "$0")
+### Description
+DESC="Multi-dig: Check A records on different DNS server at once."
+### Usage
+USAGE="[domain]"
+### Example
+EXAMPLE="'is1-ssl.mzstatic.com'"
+
+### Args
+DOMAIN=$1
+
+### Check args exist
+chkarg "$DOMAIN" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+
+### Check cmd exist
+chkcmd "dig"
+
+DNS_SERVERS=("Google|8.8.8.8" "Cloudflare|1.1.1.1" "Hinet|168.95.192.1" "Hinet|168.95.1.1" "Quad101|101.101.101.101")
+
+for SERVER in "${DNS_SERVERS[@]}"; do
+  IFS='|' read -ra ADDR <<<"$SERVER"
+  SERVER_NAME=${ADDR[0]}
+  SERVER_IP=${ADDR[1]}
+  printf "\033[1m%s\033[0m %s\n" "$SERVER_NAME" "$SERVER_IP"
+  dig "@$SERVER_IP" "$DOMAIN" +noall +answer +stats | awk '/IN\tA/ {print $NF} /Query time/ {print "time: "$4, "ms"}'
+  echo ""
+done
