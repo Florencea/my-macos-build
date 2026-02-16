@@ -14,6 +14,8 @@
 
 ### Picture in Picture
 
+- <https://learn.microsoft.com/zh-tw/deployedge/microsoft-edge-browser-policies/pictureinpictureoverlayenabled>
+
 ```sh
 # Disable Picture in Picture
 defaults write com.microsoft.Edge PictureInPictureOverlayEnabled -bool false
@@ -22,6 +24,9 @@ defaults delete com.microsoft.Edge PictureInPictureOverlayEnabled
 ```
 
 ### DNS over HTTPS
+
+- <https://learn.microsoft.com/zh-tw/DeployEdge/microsoft-edge-browser-policies/dnsoverhttpsmode>
+- <https://learn.microsoft.com/zh-tw/DeployEdge/microsoft-edge-browser-policies/dnsoverhttpstemplates>
 
 ```sh
 # Enable DNS over HTTPS
@@ -33,6 +38,8 @@ defaults delete com.microsoft.Edge DnsOverHttpsTemplates
 ```
 
 ### QUIC
+
+- <https://learn.microsoft.com/zh-tw/deployedge/microsoft-edge-browser-policies/quicallowed>
 
 ```sh
 # Disable QUIC
