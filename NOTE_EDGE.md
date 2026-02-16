@@ -2,6 +2,9 @@
 
 - [Edge Note](#edge-note)
   - [Configuration Tweaks](#configuration-tweaks)
+    - [Picture in Picture](#picture-in-picture)
+    - [DNS over HTTPS](#dns-over-https)
+    - [QUIC](#quic)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -9,16 +12,29 @@
 
 ## Configuration Tweaks
 
+### Picture in Picture
+
 ```sh
-# Terminal
 # Disable Picture in Picture
 defaults write com.microsoft.Edge PictureInPictureOverlayEnabled -bool false
 # Enable Picture in Picture
 defaults delete com.microsoft.Edge PictureInPictureOverlayEnabled
 ```
 
+### DNS over HTTPS
+
 ```sh
-# Terminal
+# Enable DNS over HTTPS
+defaults write com.microsoft.Edge DnsOverHttpsMode -string secure
+defaults write com.microsoft.Edge DnsOverHttpsTemplates -string https://dns.google/dns-query{?dns}
+# Disable DNS over HTTPS
+defaults delete com.microsoft.Edge DnsOverHttpsMode
+defaults delete com.microsoft.Edge DnsOverHttpsTemplates
+```
+
+### QUIC
+
+```sh
 # Disable QUIC
 defaults write com.microsoft.Edge QuicAllowed -bool false
 # Enable QUIC
