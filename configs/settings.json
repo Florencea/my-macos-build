@@ -12,7 +12,7 @@
     "hide_root": false,
     "bold_folder_labels": true,
     "indent_size": 16.0,
-    "entry_spacing": "standard"
+    "entry_spacing": "standard",
   },
   "colorize_brackets": true,
   "buffer_font_family": "JetBrains Mono",
@@ -62,5 +62,16 @@
     "basher": true,
     "github-actions": true,
     "github-theme": true,
+  },
+  "lsp": {
+    "vscode-css-language-server": {
+      "settings": {
+        "css": {
+          "lint": {
+            "unknownAtRules": "ignore",
+          },
+        },
+      },
+    },
   },
 }
