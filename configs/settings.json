@@ -56,12 +56,14 @@
   },
   "auto_install_extensions": {
     "astro": true,
-    "html": true,
-    "material-icon-theme": true,
-    "prisma": true,
     "basher": true,
+    "git-firefly": true,
     "github-actions": true,
     "github-theme": true,
+    "html": true,
+    "log": true,
+    "material-icon-theme": true,
+    "prisma": true,
   },
   "lsp": {
     "vscode-css-language-server": {
