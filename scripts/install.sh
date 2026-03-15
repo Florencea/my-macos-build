@@ -42,12 +42,13 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
 
-### Install fish
-brew install fish
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
-mkdir -p "$HOME/.config/fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
+### Install Zsh
+brew install zsh
+brew install zsh-autosuggestions
+brew install zsh-syntax-highlighting
+echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/zsh
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
 
 ### Install essential fonts
 brew install --cask font-jetbrains-mono
@@ -80,7 +81,6 @@ eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
-printf "# fnm\nfnm env | source\nfish_add_path \"\$(npm config get prefix)/bin\"\n" >>$HOME/.config/fish/config.fish
 printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
 brew install gcc
 brew install gifski
