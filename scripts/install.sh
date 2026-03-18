@@ -94,7 +94,6 @@ brew install shfmt
 brew install wget
 brew install yt-dlp
 brew install yq
-brew install zsh
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
