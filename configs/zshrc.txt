@@ -1,25 +1,26 @@
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/sbin:$PATH"
-export PATH="/opt/homebrew/opt/bash/bin:$PATH"
-export PATH="/opt/homebrew/opt/zsh/bin:$PATH"
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="$HOME/Developer/my-macos-build/cli:$PATH"
+typeset -U path
+path=(
+  /opt/homebrew/{bin,sbin}
+  /opt/homebrew/opt/{bash,zsh,curl}/bin
+  "$HOME/Developer/my-macos-build/cli"
+  $path
+)
 
 autoload -Uz compinit
-compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m-1) ]]; then
+  compinit
+else
+  compinit -C
+fi
 zstyle ':completion:*' menu select
 
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' (%b)'
-
 setopt PROMPT_SUBST
 PROMPT='%F{green}%~%F{cyan}${vcs_info_msg_0_}%f '
 
-if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
+eval "$(fnm env --use-on-cd)"
 
-if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+[[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

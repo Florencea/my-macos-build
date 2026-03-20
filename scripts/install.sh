@@ -75,7 +75,6 @@ eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
 printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
-printf "# fnm\neval \"\$(fnm env)\"\nexport PATH=\"\$(npm config get prefix)/bin:\$PATH\"\n" >>$HOME/.zshrc
 brew install gcc
 brew install gifski
 brew install git

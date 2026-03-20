@@ -1,15 +1,27 @@
-# variables
-set -gx fish_greeting
-# prompt
+set -g fish_greeting
+
+fish_add_path --prepend --move \
+    /opt/homebrew/bin \
+    /opt/homebrew/sbin \
+    /opt/homebrew/opt/bash/bin \
+    /opt/homebrew/opt/zsh/bin \
+    /opt/homebrew/opt/curl/bin \
+    "$HOME/Developer/my-macos-build/cli"
+
+set -g __fish_git_prompt_show_informative_status 1
+set -g __fish_git_prompt_showdirety_state 1
+
 function fish_prompt
-  echo -n (set_color green)(prompt_pwd -D 9999)
-  echo -n (set_color cyan)(fish_git_prompt)
-  echo -n (set_color normal)' '
+    set_color green
+    echo -n (string replace "$HOME" "~" $PWD)
+    
+    set_color cyan
+    fish_git_prompt
+    
+    set_color normal
+    echo -n ' '
 end
-# path
-fish_add_path "/opt/homebrew/bin"
-fish_add_path "/opt/homebrew/sbin"
-fish_add_path "/opt/homebrew/opt/bash/bin"
-fish_add_path "/opt/homebrew/opt/zsh/bin"
-fish_add_path "/opt/homebrew/opt/curl/bin"
-fish_add_path "$HOME/Developer/my-macos-build/cli"
+
+if command -v fnm > /dev/null
+    fnm env --use-on-cd --shell fish | source
+end
