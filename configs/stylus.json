@@ -13,6 +13,7 @@
       "show-badge": true,
       "styleViaASS": false,
       "styleViaXhr": false,
+      "urlInstaller": true,
       "windowPosition": {},
       "compactWidth": 850,
       "config.autosave": true,
@@ -100,6 +101,7 @@
       "popup.search.globals": false,
       "popupWidth": 246,
       "popupWidthMax": 280,
+      "updateInterval": 24,
       "updateOnlyEnabled": false
     },
     "order": {
@@ -153,12 +155,6 @@
         "code": ":root {\n    --stylus-feedly-bg-dark: #121212;\n}\n\n@media (prefers-color-scheme: dark) {\n    .home {\n        background-color: var(--stylus-feedly-bg-dark) !important;\n    }\n}",
         "domains": [
           "feedly.com"
-        ]
-      },
-      {
-        "code": ".code-navigation-cursor {\n    display: none !important;\n}",
-        "domains": [
-          "github.com"
         ]
       },
       {
@@ -228,9 +224,9 @@
         ]
       }
     ],
-    "updateDate": 1773868913891,
+    "updateDate": 1774510335063,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1773868913891,
+    "_rev": 1774510335063,
     "id": 1
   },
   {
@@ -269,7 +265,7 @@
     ],
     "updateDate": 1773868982730,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1773868982730,
+    "_rev": 1774312021990,
     "id": 2
   }
 ]
