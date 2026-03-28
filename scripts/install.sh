@@ -42,20 +42,23 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
 
-### Install Zsh
-brew install zsh
-brew install zsh-autosuggestions
-brew install zsh-syntax-highlighting
-echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/zsh
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
+### Install fish
+brew install fish
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+mkdir -p "$HOME/.config/fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
+
+### Install essential fonts
+brew install --cask font-jetbrains-mono
+brew install --cask font-inter
 
 ### Install apps
 brew install --cask istat-menus@6
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 brew install --cask 1password
 brew install --cask c0re100-qbittorrent
-brew install --cask google-chrome
+brew install --cask microsoft-edge
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
@@ -89,6 +92,7 @@ brew install shfmt
 brew install wget
 brew install yt-dlp
 brew install yq
+brew install zsh
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
