@@ -78,7 +78,7 @@ brew install fnm
 eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\n" >"$HOME/.npmrc"
+printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\nmin-release-age=7\nignore-scripts=true" >"$HOME/.npmrc"
 brew install gcc
 brew install gifski
 brew install git
