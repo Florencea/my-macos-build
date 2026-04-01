@@ -5,12 +5,12 @@ set -o pipefail
 ### Check cmd exist
 chkcmd "git"
 chkcmd "node"
-chkcmd "npm"
+chkcmd "pnpm"
 
 ### Print current node/npm version
 CURRENT_LOCAL_VERSION="$(node -v)"
-CURRENT_NPM_VERSION="$(npm -v)"
-printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
+CURRENT_PNPM_VERSION="$(pnpm -v)"
+printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, pnpm: \033[1;32m$CURRENT_PNPM_VERSION\033[0m\n\n"
 
 ### Sync git projects
 cd "$(dirname $0)"
@@ -23,7 +23,7 @@ for PROJECT in $(ls .); do
       if [ -f package.json ]; then
         OLD_NODE_VERSION="$(npm pkg get engines.node)"
         NODE_VERSION="$(node -v | sed 's/^v//')"
-        npm pkg set engines.node="$NODE_VERSION"
+        pnpm pkg set engines.node="$NODE_VERSION"
         ### If node version change, add to git
         if [ "$(git status --short)" != "" ]; then
           ### if exist .nvmrc, remove it

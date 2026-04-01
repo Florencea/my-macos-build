@@ -73,12 +73,6 @@ brew install --cask visual-studio-code
 brew install bash
 brew install curl
 brew install ffmpeg
-# Node.js
-brew install fnm
-eval "$(fnm env)"
-fnm install --lts
-fnm default lts-latest
-printf "audit=false\nfund=false\nloglevel=error\nupdate-notifier=false\nengine-strict=true\nsave=true\nignore-scripts=true" >"$HOME/.npmrc"
 brew install gcc
 brew install gifski
 brew install git
@@ -94,6 +88,14 @@ brew install wget
 brew install yt-dlp
 brew install yq
 brew install zsh
+
+# Node.js
+curl -fsSL https://get.pnpm.io/install.sh | SHELL=$(which fish) sh -
+export PNPM_HOME="$HOME/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+pnpm env use --global lts
+mkdir -p ~/.config/fish/completions
+pnpm completion fish >~/.config/fish/completions/pnpm.fish
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
