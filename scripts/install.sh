@@ -91,7 +91,7 @@ brew install yq
 brew install zsh
 
 # Node.js
-curl -fsSL https://get.pnpm.io/install.sh | SHELL=$(which zsh) sh -
+curl -fsSL https://get.pnpm.io/install.sh | env ZDOTDIR=/tmp SHELL=$(which zsh) sh -
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 pnpm env use --global lts
