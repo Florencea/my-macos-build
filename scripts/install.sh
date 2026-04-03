@@ -43,12 +43,13 @@ git config --global core.quotepath false
 git config --global core.ignorecase false
 git config --global bash.showDirtyState false
 
-### Install fish
-brew install fish
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/fish
-mkdir -p "$HOME/.config/fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
+## Install Zsh
+brew install zsh
+brew install zsh-autosuggestions
+brew install zsh-syntax-highlighting
+echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/zsh
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
 
 ### Install essential fonts
 brew install --cask font-jetbrains-mono
@@ -90,12 +91,12 @@ brew install yq
 brew install zsh
 
 # Node.js
-curl -fsSL https://get.pnpm.io/install.sh | SHELL=$(which fish) sh -
+curl -fsSL https://get.pnpm.io/install.sh | SHELL=$(which zsh) sh -
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 pnpm env use --global lts
-mkdir -p ~/.config/fish/completions
-pnpm completion fish >~/.config/fish/completions/pnpm.fish
+mkdir -p ~/.zsh/completions
+pnpm completion zsh >~/.zsh/completions/_pnpm
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
