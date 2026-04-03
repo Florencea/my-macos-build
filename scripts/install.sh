@@ -27,8 +27,6 @@ brew install --cask cloudflare-warp
 ## Remove this line after Cloudflare Warp install
 exit 0
 
-### Setup SFMono fonts
-cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 ### Disable macOS popup showing accented characters when holding down a key
 defaults write -g ApplePressAndHoldEnabled -bool false
 ### Disable Window Animations
@@ -50,10 +48,6 @@ brew install zsh-syntax-highlighting
 echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
 chsh -s /opt/homebrew/bin/zsh
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
-
-### Install essential fonts
-brew install --cask font-jetbrains-mono
-brew install --cask font-inter
 
 ### Install apps
 brew install --cask istat-menus@6
