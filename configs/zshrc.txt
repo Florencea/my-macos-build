@@ -1,9 +1,14 @@
 export COLORTERM=truecolor
 export TERM=xterm-256color
 
+setopt EXTENDED_GLOB
+
+export PNPM_HOME="$HOME/Library/pnpm"
+
 typeset -U path
 typeset -T PATH path
 path=(
+    "$PNPM_HOME"
     /opt/homebrew/bin
     /opt/homebrew/sbin
     /opt/homebrew/opt/bash/bin
@@ -14,10 +19,21 @@ path=(
 )
 export PATH
 
+fpath=(~/.zsh/completions $fpath)
+
+autoload -Uz compinit
+
+_comp_path="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -n "$_comp_path"(#qN.mh+24) ]]; then
+    compinit
+    { zcompile "$_comp_path" } &!
+else
+    compinit -C
+fi
+
 autoload -Uz vcs_info
 
 zstyle ':vcs_info:*' enable git
-
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' get-revision true
 
@@ -26,10 +42,10 @@ zstyle ':vcs_info:git:*' actionformats ' %F{cyan}(%b|%a%c%u)%f'
 zstyle ':vcs_info:git:*' stagedstr '%F{green}●%f'
 zstyle ':vcs_info:git:*' unstagedstr '%F{red}●%f'
 
-precmd() { vcs_info }
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
 
 setopt PROMPT_SUBST
-
 PROMPT='%F{green}%~%f${vcs_info_msg_0_} '
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
@@ -44,6 +60,7 @@ ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#bc3fbc'
 ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#f14c4c'
 ZSH_HIGHLIGHT_STYLES[path]='fg=#0dbc79'
 ZSH_HIGHLIGHT_STYLES[comment]='fg=#666666'
+ZSH_HIGHLIGHT_STYLES[assign]='fg=#29b8db'
 ZSH_HIGHLIGHT_STYLES[history-search-backward]='bg=#276782'
 
 if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
