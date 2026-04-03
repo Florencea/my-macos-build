@@ -82,7 +82,6 @@ brew install shfmt
 brew install wget
 brew install yt-dlp
 brew install yq
-brew install zsh
 
 # Node.js
 curl -fsSL https://get.pnpm.io/install.sh | env ZDOTDIR=/tmp SHELL=$(which zsh) sh -
