@@ -1,3 +1,4 @@
+export LANG="zh_TW.UTF-8"
 export COLORTERM=truecolor
 export TERM=xterm-256color
 
@@ -19,6 +20,9 @@ path=(
 )
 export PATH
 
+if [[ -d /opt/homebrew/share/zsh-completions ]]; then
+  fpath=(/opt/homebrew/share/zsh-completions $fpath)
+fi
 fpath=(~/.zsh/completions $fpath)
 
 autoload -Uz compinit
@@ -30,6 +34,18 @@ if [[ -n "$_comp_path"(#qN.mh+24) ]]; then
 else
     compinit -C
 fi
+
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%z'
+zstyle ':completion:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*' group-name ''
+
+bindkey '^[[A' history-search-backward # 上方向鍵
+bindkey '^[[B' history-search-forward  # 下方向鍵
 
 autoload -Uz vcs_info
 
@@ -63,10 +79,14 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=#666666'
 ZSH_HIGHLIGHT_STYLES[assign]='fg=#29b8db'
 ZSH_HIGHLIGHT_STYLES[history-search-backward]='bg=#276782'
 
-if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_PATH="/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+if [[ -f "$ZSH_AUTOSUGGEST_PATH" ]]; then
+    source "$ZSH_AUTOSUGGEST_PATH"
+    [[ ! -f "${ZSH_AUTOSUGGEST_PATH}.zwc" ]] && { zcompile "$ZSH_AUTOSUGGEST_PATH" } &!
 fi
 
-if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_PATH="/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if [[ -f "$ZSH_HIGHLIGHT_PATH" ]]; then
+    source "$ZSH_HIGHLIGHT_PATH"
+    [[ ! -f "${ZSH_HIGHLIGHT_PATH}.zwc" ]] && { zcompile "$ZSH_HIGHLIGHT_PATH" } &!
 fi
