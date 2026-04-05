@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+set -o errexit
+set -o pipefail
+
+### Check cmd exist
+chkcmd "pnpm"
+
+printf "\033[31mSecurity Policy: 'npm' execution blocked. Use 'pnpm' instead.\033[0m\n" >&2
+exit 1
