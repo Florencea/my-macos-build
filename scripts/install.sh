@@ -97,6 +97,8 @@ export PATH="$PNPM_HOME:$PATH"
 pnpm env use --global lts
 mkdir -p ~/.config/fish/completions
 pnpm completion fish >~/.config/fish/completions/pnpm.fish
+# Disable npm execute scripts
+npm config set ignore-scripts true -g
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
