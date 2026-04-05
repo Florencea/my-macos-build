@@ -38,6 +38,16 @@ else
     compinit -C
 fi
 
+local custom_cli_dir="$HOME/Developer/my-macos-build/cli"
+if [[ -d "$custom_cli_dir" ]]; then
+    local -a my_cmds
+    my_cmds=("$custom_cli_dir"/*(N:t))
+    
+    if (( ${#my_cmds[@]} > 0 )); then
+        compdef _files "${my_cmds[@]}"
+    fi
+fi
+
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 
@@ -53,9 +63,8 @@ zstyle ':completion:*:options' auto-description '%z'
 zstyle ':completion:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*' group-name ''
 
-# 讓上下方向鍵可以根據目前已經輸入的字串去搜尋歷史紀錄 (同 Fish)
-bindkey '^[[A' history-search-backward # 上方向鍵
-bindkey '^[[B' history-search-forward  # 下方向鍵
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
 
 autoload -Uz vcs_info
 
