@@ -44,6 +44,7 @@ git config --global bash.showDirtyState false
 ## Install Zsh
 brew install zsh
 brew install zsh-autosuggestions
+brew install zsh-completions
 brew install zsh-syntax-highlighting
 echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
 chsh -s /opt/homebrew/bin/zsh
