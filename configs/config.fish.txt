@@ -1,0 +1,12 @@
+set -g fish_greeting
+
+set -gx PNPM_HOME "/Users/florencea/Library/pnpm"
+
+fish_add_path -g --prepend --move \
+    /opt/homebrew/bin \
+    /opt/homebrew/sbin \
+    /opt/homebrew/opt/bash/bin \
+    /opt/homebrew/opt/zsh/bin \
+    /opt/homebrew/opt/curl/bin \
+    "$HOME/Developer/my-macos-build/cli" \
+    "$PNPM_HOME"

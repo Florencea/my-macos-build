@@ -27,6 +27,8 @@ brew install --cask cloudflare-warp
 ## Remove this line after Cloudflare Warp install
 exit 0
 
+### Setup SFMono fonts
+cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 ### Disable macOS popup showing accented characters when holding down a key
 defaults write -g ApplePressAndHoldEnabled -bool false
 ### Disable Window Animations
@@ -39,16 +41,19 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 git config --global core.ignorecase false
-git config --global bash.showDirtyState false
 
-## Install Zsh
-brew install zsh
-brew install zsh-autosuggestions
-brew install zsh-completions
-brew install zsh-syntax-highlighting
-echo "/opt/homebrew/bin/zsh" | sudo tee -a /etc/shells
-chsh -s /opt/homebrew/bin/zsh
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/zshrc.txt -o "$HOME/.zshrc"
+### Install fish
+brew install fish
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+mkdir -p "$HOME/.config/functions"
+mkdir -p "$HOME/.config/fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
+
+### Install essential fonts
+brew install --cask font-jetbrains-mono
+brew install --cask font-inter
 
 ### Install apps
 brew install --cask istat-menus@6
@@ -83,14 +88,15 @@ brew install shfmt
 brew install wget
 brew install yt-dlp
 brew install yq
+brew install zsh
 
 # Node.js
-curl -fsSL https://get.pnpm.io/install.sh | env ZDOTDIR=/tmp SHELL=$(which zsh) sh -
+curl -fsSL https://get.pnpm.io/install.sh | env ZDOTDIR=/tmp SHELL=$(which fish) sh -
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 pnpm env use --global lts
-mkdir -p ~/.zsh/completions
-pnpm completion zsh >~/.zsh/completions/_pnpm
+mkdir -p ~/.config/fish/completions
+pnpm completion fish >~/.config/fish/completions/pnpm.fish
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)
