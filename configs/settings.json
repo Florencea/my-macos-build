@@ -1,0 +1,113 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "ui_font_family": "Inter Variable",
+  "auto_install_extensions": {
+    "astro": true,
+    "basher": true,
+    "git-firefly": true,
+    "github-actions": true,
+    "github-theme": true,
+    "html": true,
+    "material-icon-theme": true,
+    "mdx": true,
+    "prisma": true,
+  },
+  "base_keymap": "VSCode",
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_size": 12,
+  "colorize_brackets": true,
+  "disable_ai": true,
+  "file_types": {
+    "dotenv": [".env*"],
+    "GitHub Actions": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
+  },
+  "format_on_save": "on",
+  "git": {
+    "inline_blame": {
+      "enabled": false,
+    },
+  },
+  "icon_theme": "Material Icon Theme",
+  "indent_guides": {
+    "coloring": "fixed",
+  },
+  "languages": {
+    "CSS": {
+      "language_servers": [
+        "tailwindcss-intellisense-css",
+        "!vscode-css-language-server",
+      ],
+    },
+    "Shell Script": {
+      "formatter": {
+        "external": {
+          "arguments": ["--filename", "{buffer_path}", "--indent", "2"],
+          "command": "shfmt",
+        },
+      },
+    },
+  },
+  "linked_edits": true,
+  "lsp": {
+    "mdx-analyzer": {
+      "initialization_options": {
+        "typescript": {
+          "enabled": true,
+        },
+      },
+    },
+    "vscode-css-language-server": {
+      "settings": {
+        "css": {
+          "lint": {
+            "unknownAtRules": "ignore",
+          },
+        },
+      },
+    },
+  },
+  "minimap": {
+    "show": "auto",
+  },
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "prettier": {
+    "allowed": true,
+  },
+  "project_panel": {
+    "bold_folder_labels": true,
+    "entry_spacing": "standard",
+    "hide_hidden": false,
+    "hide_root": false,
+    "indent_size": 16.0,
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "tab_size": 2,
+  "tabs": {
+    "file_icons": true,
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "terminal": {
+    "blinking": "on",
+    "font_features": {
+      "calt": true,
+    },
+  },
+  "theme": {
+    "dark": "GitHub Dark",
+    "light": "GitHub Light",
+    "mode": "system",
+  },
+  "ui_font_size": 14,
+}
