@@ -46,8 +46,8 @@ git config --global core.ignorecase false
 brew install fish
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 chsh -s /opt/homebrew/bin/fish
-mkdir -p "$HOME/.config/functions"
 mkdir -p "$HOME/.config/fish"
+mkdir -p "$HOME/.config/fish/functions"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
