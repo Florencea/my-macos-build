@@ -7,7 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "ui_font_family": "Inter Variable",
   "auto_install_extensions": {
     "astro": true,
     "basher": true,
@@ -15,6 +14,7 @@
     "github-actions": true,
     "github-theme": true,
     "html": true,
+    "ini": true,
     "material-icon-theme": true,
     "mdx": true,
     "prisma": true,
@@ -44,6 +44,14 @@
         "tailwindcss-intellisense-css",
         "!vscode-css-language-server",
       ],
+    },
+    "Git Ignore": {
+      "formatter": {
+        "external": {
+          "arguments": ["--filename", "{buffer_path}"],
+          "command": "shfmt",
+        },
+      },
     },
     "Shell Script": {
       "formatter": {
@@ -109,5 +117,6 @@
     "light": "GitHub Light",
     "mode": "system",
   },
+  "ui_font_family": "Inter Variable",
   "ui_font_size": 14,
 }
