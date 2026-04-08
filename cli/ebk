@@ -74,7 +74,6 @@ function backupjson() {
   fi
 }
 
-copy "$HOME/.config/zed/settings.json" "settings.json"
 backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
 backupjson "stylus-*.json" "stylus.json"
