@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadDisplayName</key>
+            <string>Microsoft Edge Pure Developer Config</string>
+            <key>PayloadIdentifier</key>
+            <string>com.microsoft.Edge.custom.config</string>
+            <key>PayloadType</key>
+            <string>com.microsoft.Edge</string>
+            <key>PayloadUUID</key>
+            <string>A1B2C3D4-E5F6-7890-1234-567890ABCDEF</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            
+            <key>BuiltInDnsClientEnabled</key>
+            <false/>
+            <key>TrackingPrevention</key>
+            <integer>2</integer>
+            
+            <key>ShowMicrosoftRewards</key>
+            <false/>
+            <key>AlternateErrorPagesEnabled</key>
+            <false/>
+            <key>EdgeCollectionsEnabled</key>
+            <false/>
+            <key>SplitScreenEnabled</key>
+            <false/>
+            <key>PerformanceDetectorEnabled</key>
+            <false/>
+            <key>EdgeShoppingAssistantEnabled</key>
+            <false/>
+            <key>ShowRecommendationsEnabled</key>
+            <false/>
+            <key>HideFirstRunExperience</key>
+            <true/>
+            <key>ShowFirstRunExperience</key>
+            <false/>
+            <key>PasswordManagerEnabled</key>
+            <false/>
+            <key>DiagnosticData</key>
+            <integer>0</integer>
+            <key>PersonalizationReportingEnabled</key>
+            <false/>
+            <key>PictureInPictureOverlayEnabled</key>
+            <false/>
+            <key>PictureInPictureEnabled</key>
+            <false/>
+
+            <key>TabServicesEnabled</key>
+            <false/>
+            <key>TabOrganizationSuggestionsEnabled</key>
+            <false/>
+            <key>SleepingTabsEnabled</key>
+            <false/>
+            <key>EfficiencyModeEnabled</key>
+            <false/>
+            <key>IntensiveWakeUpThrottlingEnabled</key>
+            <false/>
+
+            <key>HubsSidebarEnabled</key>
+            <false/>
+            <key>EdgeOpenInSidebarEnabled</key>
+            <false/>
+            <key>StandaloneHubsSidebarEnabled</key>
+            <false/>
+            <key>SearchInSidebarEnabled</key>
+            <false/>
+            <key>EdgeCopilotEnabled</key>
+            <false/>
+            <key>Microsoft365CopilotChatIconEnabled</key>
+            <false/>
+            <key>MathSolverEnabled</key>
+            <false/>
+            <key>DropEnabled</key>
+            <false/>
+            <key>PinBrowserEssentialsToolbarButton</key>
+            <false/>
+            <key>EdgeFollowEnabled</key>
+            <false/>
+            
+            <key>SpellcheckEnabled</key>
+            <false/>
+            <key>TranslateEnabled</key>
+            <false/>
+            <key>TextPredictionEnabled</key>
+            <false/>
+            <key>ComposeInlineEnabled</key>
+            <false/>
+            
+            <key>NewTabPageContentEnabled</key>
+            <false/>
+            <key>NewTabPageQuickLinksEnabled</key>
+            <false/>
+            <key>NewTabPageAllowedBackgroundTypes</key>
+            <integer>3</integer>
+            
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Configures Microsoft Edge to remove all UI bloat, disable sidebars completely, and optimize for developers.</string>
+    <key>PayloadDisplayName</key>
+    <string>Microsoft Edge Profile</string>
+    <key>PayloadIdentifier</key>
+    <string>com.microsoft.Edge.profile</string>
+    <key>PayloadOrganization</key>
+    <string>Personal Dev Environment</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>09876543-210A-BCDE-F123-4567890ABCDE</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
