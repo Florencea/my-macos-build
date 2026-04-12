@@ -30,11 +30,17 @@ chkfile "$INPUT_FILE"
 ### Output file
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_clip.mp4"
 
-ffmpeg -hide_banner \
+ffmpeg -y -hide_banner \
   -loglevel error \
   -ss "$START" \
-  -t "$DURATION" \
   -i "$INPUT_FILE" \
+  -t "$DURATION" \
+  -map 0:v:0 \
+  -map 0:a:0 \
+  -c:v copy \
+  -c:a aac \
+  -map_chapters -1 \
+  -movflags +faststart \
   "$OUTPUT_FILE"
 
 printf "%s " "$OUTPUT_FILE"

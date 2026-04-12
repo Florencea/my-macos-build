@@ -26,11 +26,17 @@ chkfile "$INPUT_FILE"
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)").mp4"
 
-ffmpeg -hide_banner \
+ffmpeg -y \
+  -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
-  -vcodec copy \
-  -acodec copy \
+  -map 0:v:0 \
+  -map 0:a \
+  -map 0:s? \
+  -c copy \
+  -c:s mov_text \
+  -movflags +faststart \
+  -f mp4 \
   "$TMPFILE"
 
 mv "$TMPFILE" "$INPUT_FILE"

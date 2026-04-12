@@ -27,27 +27,34 @@ cd "$INPUT_DIR"
 
 ### Input file
 INPUT_FILE="$(basename "$(pwd)").mkv"
-### Input ass
-INPUT_ASS="$(basename "$(pwd)").cht.ass"
+### Input cht ass
+INPUT_ASS_TW="$(basename "$(pwd)").cht.ass"
+### Input chs ass
+INPUT_ASS_CN="$(basename "$(pwd)").chs.ass"
 
 ### Check file exist
 chkfile "$INPUT_FILE"
-chkfile "$INPUT_ASS"
+chkfile "$INPUT_ASS_TW"
+chkfile "$INPUT_ASS_CN"
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)").mkv"
 
-ffmpeg -hide_banner \
+ffmpeg -y \
+  -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
-  -i "$INPUT_ASS" \
-  -c:v copy \
-  -c:a copy \
-  -c:s copy \
-  -map 0:0 \
-  -map 0:1 \
-  -map 1:0 \
+  -i "$INPUT_ASS_TW" \
+  -i "$INPUT_ASS_CN" \
+  -map 0:v \
+  -map 0:a \
+  -map 1:s \
+  -map 2:s \
+  -c copy \
+  -metadata:s:s:0 language=chi -metadata:s:s:0 title="繁體中文" \
+  -metadata:s:s:1 language=chi -metadata:s:s:1 title="簡體中文" \
   -disposition:s:0 default \
+  -disposition:s:1 0 \
   "$TMPFILE"
 
 mv "$TMPFILE" "$INPUT_FILE"

@@ -22,32 +22,30 @@ chkcmd "yt-dlp"
 
 RAW_ALBUM_TITLE=$(yt-dlp \
   --no-warnings \
-  --flat-playlist \
-  --playlist-end 1 \
-  --print "%(playlist_title)s" \
-  --cookies-from-browser chrome \
+  --playlist-items 1 \
+  --print "%(album|playlist_title)s" \
+  --cookies-from-browser edge \
   "$URL")
+
+DISPLAY_ALBUM_TITLE=$(echo "$RAW_ALBUM_TITLE" | sed -E 's/^(Album|EP|Single) - //')
 
 DL_DIR="ytalb_$(date +"%Y%m%d%H%M%S")"
 
-DISPLAY_ALBUM_TITLE="${RAW_ALBUM_TITLE/Album - /""}"
-
-printf "Download \033[1m$DISPLAY_ALBUM_TITLE\033[0m\nTo directory: \033[1m$DL_DIR\033[0m\n"
-
-mkdir "$DL_DIR"
-cd "$DL_DIR"
+printf "Downloading: \033[36m%s\033[0m\n" "$DISPLAY_ALBUM_TITLE"
+printf "To directory: \033[33m%s\033[0m\n\n" "$DL_DIR"
 
 yt-dlp \
   --no-warnings \
   --progress \
-  -f bestaudio \
-  --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\"" \
+  -f "141/140/bestaudio[ext=m4a]" \
   --extract-audio \
+  --audio-format m4a \
   --embed-thumbnail \
+  --convert-thumbnails jpg \
+  --ppa "ThumbnailsConvertor+FFmpeg_o:-vf crop=ih:ih" \
   --embed-metadata \
   --parse-metadata 'playlist_index:%(meta_track)s' \
-  --convert-thumbnails jpg \
-  --print before_dl:"[%(playlist_index)s/%(playlist_count)s]: %(playlist_index)s %(title)s" \
-  -o "%(playlist_index)s %(title)s.%(ext)s" \
-  --cookies-from-browser chrome \
+  --print before_dl:"[%(playlist_index)02d/%(playlist_count)02d] %(title)s" \
+  -o "$DL_DIR/%(playlist_index)02d - %(title)s.%(ext)s" \
+  --cookies-from-browser edge \
   "$URL"

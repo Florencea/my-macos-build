@@ -29,7 +29,7 @@ chkcmd "gifski"
 chkfile "$INPUT_FILE"
 
 ### quality
-QUALITY=100
+QUALITY=85
 ### fps
 FPS=12
 ### width
@@ -42,11 +42,10 @@ ffmpeg -hide_banner \
   -ss "$START" \
   -t "$DURATION" \
   -i "$INPUT_FILE" \
+  -vf "fps=$FPS,scale=$WIDTH:-1:flags=lanczos" \
   -f yuv4mpegpipe - |
   gifski -q \
-    -r "$FPS" \
     -Q "$QUALITY" \
-    -W "$WIDTH" \
     -o "$OUTPUT_FILE" -
 
 printf "%s " "$OUTPUT_FILE"

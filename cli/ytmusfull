@@ -23,14 +23,15 @@ chkcmd "yt-dlp"
 yt-dlp \
   --no-warnings \
   --progress \
-  -f 141 \
-  --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop=\"'if(gt(ih,iw),iw,ih)':'if(gt(iw,ih),ih,iw)'\"" \
+  -f "141/140/bestaudio[ext=m4a]" \
   --extract-audio \
+  --audio-format m4a \
   --embed-thumbnail \
+  --convert-thumbnails jpg \
+  --ppa "ThumbnailsConvertor+FFmpeg_o:-c:v mjpeg -vf crop='min(iw,ih)':'min(iw,ih)'" \
   --embed-metadata \
   --parse-metadata 'playlist_index:%(meta_track)s' \
-  --convert-thumbnails jpg \
   --print before_dl:"[download] %(title)s.%(ext)s" \
   -o "%(title)s.%(ext)s" \
-  --cookies-from-browser chrome \
+  --cookies-from-browser edge \
   "$URL"

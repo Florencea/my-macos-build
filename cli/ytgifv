@@ -22,23 +22,30 @@ chkarg "$START" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
 chkarg "$DURATION" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
 
 ### Check cmd exist
-chkcmd "mkgifv"
 chkcmd "yt-dlp"
 chkcmd "ffmpeg"
 
-### Temp File
-TMPFILE="$(mktemp -t "$(basename $0)")"
+### quality
+QUALITY=85
+### fps
+FPS=24
+### width
+WIDTH=480
+### Output file
+OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_v.gif"
 
-yt-dlp "$URL" \
-  --quiet \
-  -f 134 \
-  --downloader \
-  ffmpeg \
-  --downloader-args \
-  "ffmpeg_i:-ss $START -t $DURATION" \
-  --force-overwrites \
-  -o \
-  "$TMPFILE"
+STREAM_URL=$(yt-dlp -g -f "bestvideo[height<=480]" -S "vcodec:h264" "$URL" 2>/dev/null)
 
-mkgifv "$TMPFILE" 00:00:00 "$DURATION"
-rm -f "$TMPFILE"
+ffmpeg -y -hide_banner \
+  -loglevel error \
+  -ss "$START" \
+  -i "$STREAM_URL" \
+  -t "$DURATION" \
+  -vf "fps=$FPS,scale=$WIDTH:-1:flags=lanczos" \
+  -f yuv4mpegpipe - |
+  gifski -q \
+    -Q "$QUALITY" \
+    -o "$OUTPUT_FILE" -
+
+printf "%s " "$OUTPUT_FILE"
+ls -lh "$OUTPUT_FILE" | awk -F " " {'print $5'}
