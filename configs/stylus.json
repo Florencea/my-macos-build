@@ -118,7 +118,7 @@
     "name": "ubo style desktop",
     "sections": [
       {
-        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: \"Inter Variable\", \"PingFang TC\", \"Noto Sans\", Roboto, \"Segoe UI\", system-ui, \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --stylus-font-monospace: \"JetBrains Mono\", \"Cascadia Code\", \"SF Mono\", Consolas, Liberation Mono, Menlo, monospace;\n}\n.sp-separator {\n    display: none !important;\n}\nbody {\n    -webkit-font-smoothing: auto !important;\n    -moz-osx-font-smoothing: auto !important;\n}\n"
+        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: \"Inter Variable\", \"PingFang TC\", \"Noto Sans\", Roboto, \"Segoe UI\", system-ui, \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --stylus-font-monospace: \"JetBrains Mono\", \"Cascadia Code\", \"SF Mono\", Consolas, Liberation Mono, Menlo, monospace;\n}\n.sp-separator {\n    display: none !important;\n}\nbody {\n    -webkit-font-smoothing: antialiased !important;\n    -moz-osx-font-smoothing: grayscale !important;\n    text-rendering: optimizeLegibility !important;\n}"
       },
       {
         "code": ".header_pop {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
@@ -242,9 +242,9 @@
         ]
       }
     ],
-    "updateDate": 1773122024447,
+    "updateDate": 1776021507281,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1775369543555,
+    "_rev": 1776021507281,
     "id": 1
   },
   {
@@ -283,7 +283,7 @@
     ],
     "updateDate": 1771205908126,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1775369543555,
+    "_rev": 1776019194556,
     "id": 2
   }
 ]
