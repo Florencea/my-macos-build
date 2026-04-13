@@ -13,7 +13,6 @@
       "show-badge": true,
       "styleViaASS": false,
       "styleViaXhr": false,
-      "urlInstaller": true,
       "windowPosition": {},
       "compactWidth": 850,
       "config.autosave": true,
@@ -62,7 +61,7 @@
         "indent_size": 4,
         "newline_after_open_brace": false,
         "newline_before_close_brace": true,
-        "newline_before_open_brace": true,
+        "newline_before_open_brace": false,
         "newline_between_properties": true,
         "newline_between_rules": false,
         "preserve_newlines": true,
@@ -103,7 +102,6 @@
       "popup.search.globals": false,
       "popupWidth": 246,
       "popupWidthMax": 280,
-      "updateInterval": 24,
       "updateOnlyEnabled": false
     },
     "order": {
@@ -135,7 +133,7 @@
         ]
       },
       {
-        "code": ".announce,\ndiv.clear:has(a[href='/topics/add']),\n.user-sidebar > div.ui-corner-all.box:nth-of-type(4),\na.download-pp,\na.download-xl{\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
+        "code": ".announce,\ndiv.clear:has(a[href='/topics/add']),\n.user-sidebar > div.ui-corner-all.box:nth-of-type(4),\na.download-pp,\na.download-xl {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
         "domains": [
           "dmhy.org"
         ]
@@ -244,9 +242,9 @@
         ]
       }
     ],
-    "updateDate": 1776094539366,
+    "updateDate": 1776097767851,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1776094539366,
+    "_rev": 1776097767851,
     "id": 1
   },
   {
@@ -285,7 +283,7 @@
     ],
     "updateDate": 1776096620388,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1776096620389,
+    "_rev": 1776097721127,
     "id": 2
   }
 ]
