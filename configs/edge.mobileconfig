@@ -17,9 +17,11 @@
             <integer>1</integer>
             
             <key>BuiltInDnsClientEnabled</key>
-            <false/>
+            <true/>
+            <key>DnsOverHttpsMode</key>
+            <string>off</string>
             <key>TrackingPrevention</key>
-            <integer>2</integer>
+            <integer>0</integer>
             
             <key>ShowMicrosoftRewards</key>
             <false/>
@@ -68,7 +70,7 @@
             <key>StandaloneHubsSidebarEnabled</key>
             <false/>
             <key>SearchInSidebarEnabled</key>
-            <false/>
+            <integer>0</integer>
             <key>EdgeCopilotEnabled</key>
             <false/>
             <key>Microsoft365CopilotChatIconEnabled</key>
