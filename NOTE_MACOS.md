@@ -12,6 +12,7 @@
   - [Clear DNS Cache](#clear-dns-cache)
   - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
   - [Apple CDN Alias](#apple-cdn-alias)
+  - [X CDN Alias](#x-cdn-alias)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -102,6 +103,15 @@ source ~/.config/fish/config.fish
 ```sh
 is1-ssl.mzstatic.com -> CNAME mzstatic.com.edgekey.net (Fast, at Taiwan)
                      -> CANME h3.apis.apple.map.fastly.net (Slow, at JP or SG)
+```
+
+## X CDN Alias
+
+```sh
+abs.twimg.com -> CNAME abs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
+              -> CANME twimg.twitter.map.fastly.net (Slow, at SG)
+pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
+              -> CANME dualstack.twimg.twitter.map.fastly.net  (Slow, at SG)
 ```
 
 ## Microsoft Edge for DevTools Device Profile
