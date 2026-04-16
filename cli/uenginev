@@ -25,11 +25,8 @@ for PROJECT in $(ls .); do
   if [ -d .git ]; then
     ### If exist .node-version change, skip it
     if [[ ! -f .node-version ]]; then
-      if [[ -f package.json && -f pnpm-workspace.yaml ]]; then
-        OLD_NODE_VERSION="$(pnpm config get --location=project nodeVersion)"
-
-        # Update nodeVersion in pnpm-workspace.yaml
-        pnpm config set --location=project nodeVersion "$NODE_VERSION"
+      if [[ -f package.json ]]; then
+        OLD_NODE_VERSION="$(jq -r '.engines.node // ""' package.json)"
 
         # Use jq update package.json
         TMP_PKG=$(mktemp)
@@ -37,7 +34,7 @@ for PROJECT in $(ls .); do
 
         ### If files changed, add to git
         if [ "$(git status --short)" != "" ]; then
-          git add pnpm-workspace.yaml package.json
+          git add package.json
           git commit -q -m "chore(node): update exact engines (node $NODE_VERSION, pnpm $PNPM_VERSION)"
           git push -q &>/dev/null &
           printf "Updated \033[1;31m%s\033[0m -> \033[1;36m%s\033[0m (pnpm \033[1;36m%s\033[0m) \033[1m%s\033[0m\n" "$OLD_NODE_VERSION" "$NODE_VERSION" "$PNPM_VERSION" "$PROJECT"
