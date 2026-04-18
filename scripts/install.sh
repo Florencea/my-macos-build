@@ -47,9 +47,12 @@ brew install fish
 echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 chsh -s /opt/homebrew/bin/fish
 mkdir -p "$HOME/.config/fish"
+mkdir -p "$HOME/.config/fish/conf.d"
 mkdir -p "$HOME/.config/fish/functions"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/config.fish.txt -o "$HOME/.config/fish/config.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/00-paths.fish.txt -o "$HOME/.config/fish/conf.d/00-paths.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/fnm.fish.txt -o "$HOME/.config/fish/conf.d/fnm.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
 ### Install essential fonts
 brew install --cask font-jetbrains-mono
@@ -74,6 +77,17 @@ brew install --cask visual-studio-code
 brew install bash
 brew install curl
 brew install ffmpeg
+# Node.js
+brew install fnm
+eval "$(fnm env)"
+fnm install --lts
+fnm default lts-latest
+npm config set ignore-scripts true
+npm config set engine-strict true
+npm config set save-exact true
+npm config set fund false
+npm config set audit false
+npm config set prefer-offline true
 brew install gcc
 brew install gifski
 brew install git
@@ -89,18 +103,6 @@ brew install wget
 brew install yt-dlp
 brew install yq
 brew install zsh
-
-# Node.js
-curl -fsSL https://get.pnpm.io/install.sh | env ZDOTDIR=/tmp SHELL=$(which fish) sh -
-export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-pnpm env use --global lts
-mkdir -p ~/.config/fish/completions
-pnpm completion fish >~/.config/fish/completions/pnpm.fish
-# npm security configs
-npm config set ignore-scripts true
-npm config set save-exact true
-npm config set engine-strict true
 
 ### Reset LaunchPad
 macos_version=$(sw_vers -productVersion)

@@ -5,21 +5,14 @@ set -o pipefail
 ### Check cmd exist
 chkcmd "brew"
 chkcmd "curl"
+chkcmd "fnm"
 chkcmd "git"
 chkcmd "jq"
-chkcmd "pnpm"
 chkcmd "node"
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"
 HOMEBREW_NO_ENV_HINTS=1 brew upgrade
-
-### Update pnpm
-CURRENT_PNPM_VERSION="$(pnpm -v)"
-pnpm self-update &>/dev/null
-if ! [ "$CURRENT_PNPM_VERSION" = "$(pnpm -v)" ]; then
-  printf "\nUpdate pnpm \033[1;31m%s\033[0m -> \033[1;36m%s\033[0m\n" "$CURRENT_PNPM_VERSION" "$(pnpm -v)"
-fi
 
 ### Update Node.js
 ### Change this line for perfer version (start by 'v', ex: v20, v24)
@@ -35,15 +28,16 @@ if [ "$PERFER_NODEJS_REMOTE_VERSION" = "null" ]; then
   printf "Latest LTS: \033[1;36m$LATEST_LTS_VERSION\033[0m, Current: \033[1;36m$LATEST_CURRENT_VERSION\033[0m\n"
 elif ! [ "$PERFER_NODEJS_REMOTE_VERSION" = "$CURRENT_LOCAL_VERSION" ]; then
   printf "Perfer Node.js version: \033[1;32m$PERFER_NODEJS_VERSION\033[0m, remote: \033[1;36m$PERFER_NODEJS_REMOTE_VERSION\033[0m, local: \033[1;31m$CURRENT_LOCAL_VERSION\033[0m, install from remote\n"
-  pnpm env use --global "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
-  pnpm env remove --global "$CURRENT_LOCAL_VERSION" &>/dev/null
+  fnm install "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
+  fnm default "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
+  fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
   NODE_UPDATED="true"
 fi
 
-### Print current node/pnpm version
+### Print current node/npm version
 CURRENT_LOCAL_VERSION="$(node -v)"
-CURRENT_PNPM_VERSION="$(pnpm -v)"
-printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, pnpm: \033[1;32m$CURRENT_PNPM_VERSION\033[0m\n\n"
+CURRENT_NPM_VERSION="$(npm -v)"
+printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
 
 ### Sync git projects
 cd "$(dirname $0)"

@@ -1,6 +1,6 @@
-set -g fish_greeting
-
-set -gx PNPM_HOME "/Users/florencea/Library/pnpm"
+set -gx HOMEBREW_PREFIX "/opt/homebrew"
+set -gx HOMEBREW_CELLAR "/opt/homebrew/Cellar"
+set -gx HOMEBREW_REPOSITORY "/opt/homebrew"
 
 fish_add_path -g --prepend --move \
     /opt/homebrew/bin \
@@ -8,5 +8,4 @@ fish_add_path -g --prepend --move \
     /opt/homebrew/opt/bash/bin \
     /opt/homebrew/opt/zsh/bin \
     /opt/homebrew/opt/curl/bin \
-    "$HOME/Developer/my-macos-build/cli" \
-    "$PNPM_HOME"
+    "$HOME/Developer/my-macos-build/cli"
