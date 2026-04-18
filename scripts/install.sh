@@ -82,12 +82,12 @@ brew install fnm
 eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
-npm config set ignore-scripts true
-npm config set engine-strict true
-npm config set save-exact true
-npm config set fund false
 npm config set audit false
+npm config set engine-strict true
+npm config set fund false
+npm config set ignore-scripts true
 npm config set prefer-offline true
+npm config set save-exact true
 brew install gcc
 brew install gifski
 brew install git
