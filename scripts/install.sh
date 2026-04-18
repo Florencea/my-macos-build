@@ -63,7 +63,7 @@ brew install --cask istat-menus@6
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 brew install --cask 1password
 brew install --cask c0re100-qbittorrent
-brew install --cask google-chrome
+brew install --cask microsoft-edge
 brew install --cask iina
 brew install --cask keka
 brew install --cask kekaexternalhelper
@@ -82,7 +82,7 @@ brew install fnm
 eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
-npm config set audit false engine-strict true fund false ignore-scripts true prefer-offline true save-exact true
+npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
 brew install gcc
 brew install gifski
 brew install git
