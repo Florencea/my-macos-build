@@ -1,0 +1,21 @@
+{
+  "version": "2026.422.1301",
+  "autoReload": false,
+  "showBlockedCount": false,
+  "rulesets": [
+    "-ublock-filters",
+    "-easyprivacy",
+    "-pgl",
+    "-ublock-badware",
+    "-urlhaus-full",
+    "-jpn-1"
+  ],
+  "filteringModes": {
+    "none": [],
+    "basic": [],
+    "optimal": [
+      "all-urls"
+    ],
+    "complete": []
+  }
+}
