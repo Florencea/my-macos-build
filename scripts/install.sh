@@ -27,6 +27,8 @@ brew install --cask cloudflare-warp
 ## Remove this line after Cloudflare Warp install
 exit 0
 
+## Setup SFMono fonts
+cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 ### Disable macOS popup showing accented characters when holding down a key
 defaults write -g ApplePressAndHoldEnabled -bool false
 ### Disable Window Animations
@@ -50,6 +52,10 @@ curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/confi
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/fnm.fish.txt -o "$HOME/.config/fish/conf.d/fnm.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish.txt -o "$HOME/.config/fish/config.fish"
+
+### Install essential fonts
+brew install --cask font-jetbrains-mono
+brew install --cask font-inter
 
 ### Install apps
 brew install --cask istat-menus@6
