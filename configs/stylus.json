@@ -118,7 +118,7 @@
     "name": "ubo style desktop",
     "sections": [
       {
-        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: \"Inter Variable\", \"PingFang TC\", \"Noto Sans\", Roboto, \"Segoe UI\", system-ui, \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --stylus-font-monospace: \"JetBrains Mono\", \"Cascadia Code\", \"SF Mono\", Consolas, Liberation Mono, Menlo, monospace;\n}\n* {\n    text-rendering: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
+        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: \"Inter Variable\", \"Inter\", system-ui, \"PingFang TC\", \"Noto Sans TC\", sans-serif, \"Apple Color Emoji\", \"Noto Color Emoji\";\n    --stylus-font-monospace: \"JetBrains Mono\", ui-monospace, \"Cascadia Code\", monospace;\n}\n* {\n    text-rendering: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
       },
       {
         "code": ".header_pop {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
@@ -242,9 +242,9 @@
         ]
       }
     ],
-    "updateDate": 1776097767851,
+    "updateDate": 1777660859703,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1777591079695,
+    "_rev": 1777660859703,
     "id": 1
   },
   {
