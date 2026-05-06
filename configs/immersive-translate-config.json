@@ -31,13 +31,13 @@
   },
   "h5FloatBallMainBtnTooltipShownCount": 1,
   "inputTranslationService": "inherit",
-  "interfaceLanguage": "zh-TW",
+  "interfaceLanguage": "zh-CN",
   "isChangedAlwaysTranslatedUrls": true,
   "isEnableGuideTips": false,
   "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2025-12-31T16:56:37.398Z",
+  "localUpdatedAt": "2026-05-06T15:22:11.962Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -96,7 +96,7 @@
   "targetLanguage": "zh-TW",
   "translationMode": "translation",
   "translationService": "google",
-  "translationServiceChangedbyUserAt": "2024-11-05T01:08:44.357Z",
+  "translationServiceChangedbyUserAt": "2026-05-06T15:22:11.962Z",
   "translationServiceExpanded": {
     "custom": true,
     "max": true
@@ -182,10 +182,13 @@
       "blog.cloudflare.com"
     ]
   },
-  "updatedAt": "2025-12-31T16:56:37.398Z",
+  "updatedAt": "2026-05-06T15:22:11.962Z",
+  "userTranslationServices": {
+    "translationService": "google-free"
+  },
   "terms": {
     "version": 1,
-    "exportedAt": "2025-12-31T16:56:45.093Z",
+    "exportedAt": "2026-05-06T15:22:21.231Z",
     "data": [
       {
         "id": "default",
