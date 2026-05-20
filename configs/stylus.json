@@ -187,9 +187,9 @@
         ]
       },
       {
-        "code": ".g,\n.g h3,\n.g div,\n.g span,\n.std,\n#result-stats,\nbody,\nhtml,\ninput,\ntextarea,\nh1 {\n    font-family: var(--stylus-font-sans-serif) !important;\n}\n/* gemini */\n:where(.theme-host):where(.variable-context) {\n    --gem-sys-typography-markdown-type-scale--p-line-height: 1.75rem;\n    --gem-sys-typography-markdown-type-scale--p-font-tracking: 0.03em;\n}",
+        "code": ":where(.theme-host):where(.variable-context) {\n    --gem-sys-typography-markdown-type-scale--p-line-height: 1.75rem;\n    --gem-sys-typography-markdown-type-scale--p-font-tracking: 0.03em;\n}",
         "domains": [
-          "google.com"
+          "gemini.google.com"
         ]
       },
       {
@@ -259,7 +259,7 @@
         ]
       }
     ],
-    "updateDate": 1779306012303,
+    "updateDate": 1779306133171,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
     "_rev": 1777660859703,
     "id": 1
