@@ -170,7 +170,7 @@
         ]
       },
       {
-        "code": ":where(.theme-host):where(.variable-context) {\n    --gem-sys-typography-markdown-type-scale--p-line-height: 1.75rem;\n    --gem-sys-typography-markdown-type-scale--p-font-tracking: 0.03em;\n}",
+        "code": ":where(.theme-host):where(.variable-context) {\n    --gem-sys-typography-markdown-type-scale--p-line-height: 1.75rem;\n}",
         "domains": [
           "gemini.google.com"
         ]
@@ -242,9 +242,9 @@
         ]
       }
     ],
-    "updateDate": 1779470249173,
+    "updateDate": 1779472722682,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1779472163914,
+    "_rev": 1779472722682,
     "id": 1
   },
   {
