@@ -3,8 +3,6 @@
     "settings": {
       "disableAll": false,
       "exposeIframes": false,
-      "exposeIframes.sites": "",
-      "exposeIframes.sitesOnly": false,
       "exposeStyleName": false,
       "keepAlive": 0,
       "keepAliveIdle": false,
@@ -12,16 +10,9 @@
       "openEditInWindow": false,
       "openEditInWindow.popup": false,
       "patchCsp": false,
-      "patchCsp.sites": "",
-      "patchCsp.sitesOnly": false,
       "show-badge": true,
       "styleViaASS": false,
-      "styleViaASS.sites": "",
-      "styleViaASS.sitesOnly": false,
       "styleViaXhr": false,
-      "styleViaXhr.sites": "",
-      "styleViaXhr.sitesOnly": false,
-      "urlInstaller": true,
       "windowPosition": {},
       "compactWidth": 850,
       "config.autosave": true,
@@ -101,7 +92,6 @@
       "hotkey._execute_browser_action": "",
       "hotkey.openManage": "",
       "hotkey.styleDisableAll": "",
-      "hotkey.toggleTab": "",
       "sync.enabled": "none",
       "iconset": -1,
       "badgeDisabled": "#8B0000",
@@ -110,15 +100,8 @@
       "headerWidth.install": 200,
       "headerWidth.manage": 200,
       "popup.search.globals": false,
-      "popup.sidePanel": false,
-      "popup.sidePanel.config": -1,
-      "popup.sidePanel.editor": false,
-      "popup.sidePanel.finder": false,
-      "popup.sidePanel.manager": false,
-      "popup.sidePanel.options": true,
       "popupWidth": 246,
       "popupWidthMax": 280,
-      "updateInterval": 24,
       "updateOnlyEnabled": false
     },
     "order": {
@@ -261,7 +244,7 @@
     ],
     "updateDate": 1779470249173,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1777660859703,
+    "_rev": 1779472163914,
     "id": 1
   },
   {
@@ -300,7 +283,7 @@
     ],
     "updateDate": 1776099458376,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1777591079695,
+    "_rev": 1779472163914,
     "id": 2
   }
 ]
