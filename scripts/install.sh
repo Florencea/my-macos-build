@@ -55,7 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/confi
 
 ### Install essential fonts
 brew install --cask font-jetbrains-mono
-brew install --cask font-source-han-sans-vf
+brew install --cask font-inter
 
 ### Install apps
 brew install --cask istat-menus@6
