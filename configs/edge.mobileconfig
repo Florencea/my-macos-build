@@ -15,11 +15,144 @@
             <string>A1B2C3D4-E5F6-7890-1234-567890ABCDEF</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
-            
-            <key>EdgeCollectionsEnabled</key>
+
+            <!-- 隱私、安全性與網路 -->
+
+            <!-- 強制將所有不安全的 HTTP 請求升級為加密的 HTTPS -->
+            <key>HttpsOnlyMode</key>
+            <string>force_enabled</string>
+            <!-- 啟用瀏覽器內建的 DNS 解析用戶端 -->
+            <key>BuiltInDnsClientEnabled</key>
+            <true/>
+            <!-- 強制開啟 DoH (DNS over HTTPS)，不允許降級為傳統明文 DNS -->
+            <key>DnsOverHttpsMode</key>
+            <string>secure</string>
+            <!-- 指定 DoH 的查詢範本（此處設定為 Google DNS） -->
+            <key>DnsOverHttpsTemplates</key>
+            <string>https://dns.google/dns-query{?dns}</string>
+            <!-- 開啟嚴格型防追蹤保護 (Strict Tracking Prevention) -->
+            <key>TrackingPrevention</key>
+            <integer>2</integer>
+            <!-- 啟用對詐騙、恐嚇網頁的 SmartScreen 惡意阻擋與回報機制 -->
+            <key>ScarewareBlockerProtectionEnabled</key>
+            <true/>
+            <key>ScarewareBlockerBlocksDetectedSitesEnabled</key>
+            <true/>
+            <key>ScarewareBlockerSendDetectedSitesToSmartScreenEnabled</key>
+            <true/>
+
+            <!-- 側邊欄與 AI 工具 -->
+
+            <!-- 徹底關閉、拔除右側的常駐側邊欄總管 -->
+            <key>HubsSidebarEnabled</key>
+            <false/>
+            <key>EdgeOpenInSidebarEnabled</key>
+            <false/>
+            <key>StandaloneHubsSidebarEnabled</key>
+            <false/>
+            <key>SearchInSidebarEnabled</key>
+            <integer>0</integer>
+            <!-- 停用 Edge 內建的 Copilot 與 M365 聊天圖示 -->
+            <key>EdgeCopilotEnabled</key>
+            <false/>
+            <key>Microsoft365CopilotChatIconEnabled</key>
             <false/>
             <key>CopilotMode</key>
             <false/>
+            <!-- 關閉側邊欄衍生小工具：數學求解器與跨裝置傳輸 (Drop) -->
+            <key>MathSolverEnabled</key>
+            <false/>
+            <key>DropEnabled</key>
+            <false/>
+            <!-- 隱藏工具列上的「瀏覽器精要 (Browser Essentials)」效能愛心按鈕 -->
+            <key>PinBrowserEssentialsToolbarButton</key>
+            <false/>
+            <!-- 停用追蹤網站與創作者的功能 -->
+            <key>EdgeFollowEnabled</key>
+            <false/>
+
+            <!-- 新分頁與首次啟動行為 -->
+
+            <!-- 隱藏並直接跳過安裝或更新後的首次啟動歡迎與導覽畫面 -->
+            <key>HideFirstRunExperience</key>
+            <true/>
+            <key>ShowFirstRunExperience</key>
+            <false/>
+            <!-- 關閉新分頁 (NTP) 上的微軟新聞資訊流內容 -->
+            <key>NewTabPageContentEnabled</key>
+            <false/>
+            <!-- 關閉新分頁上的常用網站快捷圖示 -->
+            <key>NewTabPageQuickLinksEnabled</key>
+            <false/>
+            <!-- 限制新分頁的背景類型（通常用於封鎖動態桌布，強制純淨背景） -->
+            <key>NewTabPageAllowedBackgroundTypes</key>
+            <integer>3</integer>
+
+            <!-- 效能、分頁與核心引擎 -->
+
+            <!-- 保持 JavaScript 的即時編譯 (JIT) 與優化器開啟，確保日常與開發時的腳本執行效能 -->
+            <key>DefaultJavaScriptJitSetting</key>
+            <integer>1</integer>
+            <key>DefaultJavaScriptOptimizerSetting</key>
+            <integer>1</integer>
+            <!-- 關閉內建的效能檢測與割裂畫面的 Split Screen 功能 -->
+            <key>PerformanceDetectorEnabled</key>
+            <false/>
+            <key>SplitScreenEnabled</key>
+            <false/>
+            <!-- 關閉睡眠分頁與效率模式（避免開發中的分頁在背景被系統自動節流、凍結） -->
+            <key>SleepingTabsEnabled</key>
+            <false/>
+            <key>EfficiencyModeEnabled</key>
+            <false/>
+            <key>IntensiveWakeUpThrottlingEnabled</key>
+            <false/>
+            <!-- 關閉分頁相關的 AI 建議與分頁群組整合服務 -->
+            <key>TabServicesEnabled</key>
+            <false/>
+            <key>TabOrganizationSuggestionsEnabled</key>
+            <false/>
+
+            <!-- 語言、輸入輔助與系統整合 -->
+
+            <!-- 關閉內建的拼字檢查、翻譯功能、文字預測與 AI 內聯寫作 (Compose) -->
+            <key>SpellcheckEnabled</key>
+            <false/>
+            <key>TranslateEnabled</key>
+            <false/>
+            <key>TextPredictionEnabled</key>
+            <false/>
+            <key>ComposeInlineEnabled</key>
+            <false/>
+            <!-- 關閉內建的畫中畫 (PiP) 功能及其懸浮按鈕覆蓋層 -->
+            <key>PictureInPictureEnabled</key>
+            <false/>
+            <key>PictureInPictureOverlayEnabled</key>
+            <false/>
+
+            <!-- 微軟加值服務與遙測 -->
+
+            <!-- 關閉診斷與遙測資料上傳（0 代表最嚴格的完全不回傳） -->
+            <key>DiagnosticData</key>
+            <integer>0</integer>
+            <!-- 關閉微軟積分活動、個人化推薦與購物/比價助手 -->
+            <key>ShowMicrosoftRewards</key>
+            <false/>
+            <key>EdgeShoppingAssistantEnabled</key>
+            <false/>
+            <key>ShowRecommendationsEnabled</key>
+            <false/>
+            <key>PersonalizationReportingEnabled</key>
+            <false/>
+            <!-- 關閉替代錯誤頁面（避免找不到網頁時被引導至微軟自家的 Bing 搜尋建議） -->
+            <key>AlternateErrorPagesEnabled</key>
+            <false/>
+            <!-- 關閉內建的密碼管理器與收藏夾 (Collections) 功能 -->
+            <key>PasswordManagerEnabled</key>
+            <false/>
+            <key>EdgeCollectionsEnabled</key>
+            <false/>
+
         </dict>
     </array>
     <key>PayloadDescription</key>

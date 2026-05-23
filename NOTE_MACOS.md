@@ -13,9 +13,6 @@
   - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
   - [Apple CDN Alias](#apple-cdn-alias)
   - [X CDN Alias](#x-cdn-alias)
-  - [Microsoft Edge Policies](#microsoft-edge-policies)
-    - [Disable Copilot](#disable-copilot)
-    - [Disable Collections](#disable-collections)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -115,24 +112,6 @@ abs.twimg.com -> CNAME abs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
               -> CANME twimg.twitter.map.fastly.net (Slow, at SG)
 pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
               -> CANME dualstack.twimg.twitter.map.fastly.net  (Slow, at SG)
-```
-
-## Microsoft Edge Policies
-
-- [edge.mobileconfig](configs/edge.mobileconfig)
-
-### Disable Copilot
-
-```xml
-<key>CopilotMode</key>
-<false/>
-```
-
-### Disable Collections
-
-```xml
-<key>EdgeCollectionsEnabled</key>
-<false/>
 ```
 
 ## Microsoft Edge for DevTools Device Profile
