@@ -13,6 +13,9 @@
       "enableMangaFloatBall": false,
       "enableMouseHover": false
     },
+    "inputConfig.add": {
+      "autoLanguageEnable": false
+    },
     "selectionTranslation.add": {
       "enable": false
     },
@@ -37,7 +40,7 @@
   "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2026-05-19T16:25:10.751Z",
+  "localUpdatedAt": "2026-05-23T05:15:25.798Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -132,6 +135,9 @@
     "deepseek-pro": {
       "visible": false
     },
+    "free-model": {
+      "visible": false
+    },
     "gemini": {
       "visible": false
     },
@@ -171,6 +177,9 @@
     "zhipu-air-pro": {
       "visible": false
     },
+    "zhipu-max": {
+      "visible": false
+    },
     "zhipu-pro": {
       "visible": false
     }
@@ -185,13 +194,13 @@
       "blog.cloudflare.com"
     ]
   },
-  "updatedAt": "2026-05-19T16:25:10.751Z",
+  "updatedAt": "2026-05-23T05:15:25.798Z",
   "userTranslationServices": {
     "translationService": "google-free"
   },
   "terms": {
     "version": 1,
-    "exportedAt": "2026-05-19T16:25:21.387Z",
+    "exportedAt": "2026-05-23T05:16:47.417Z",
     "data": [
       {
         "id": "default",
