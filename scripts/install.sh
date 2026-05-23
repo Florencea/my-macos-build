@@ -68,9 +68,6 @@ brew install --cask keka
 brew install --cask logi-options+
 brew install --cask visual-studio-code
 
-### Rosetta2
-/usr/sbin/softwareupdate --install-rosetta --agree-to-license
-
 ### Install cli tools
 brew install bash
 brew install curl
