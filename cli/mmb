@@ -5,4 +5,4 @@ set -o pipefail
 ### Check cmd exist
 chkcmd "antigravity-ide"
 
-code "$0/../../"
+antigravity-ide "$0/../../"
