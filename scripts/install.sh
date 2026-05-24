@@ -22,17 +22,8 @@ else
   echo "Homebrew exist, skip Homebrew installation"
 fi
 
-### Install Cloudflare Warp
-brew install --cask cloudflare-warp
-## Remove this line after Cloudflare Warp install
-exit 0
-
-## Setup SFMono fonts
-cp -R /System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts/
 ### Disable macOS popup showing accented characters when holding down a key
 defaults write -g ApplePressAndHoldEnabled -bool false
-### Disable Window Animations
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 ### Setup git config
 git config --global user.name "Florencea"
 git config --global user.email "bearflorencea@gmail.com"
@@ -55,18 +46,17 @@ curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/confi
 
 ### Install essential fonts
 brew install --cask font-jetbrains-mono
-brew install --cask font-inter
 
 ### Install apps
 brew install --cask istat-menus@6
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 brew install --cask 1password
+brew install --cask antigravity-ide
 brew install --cask c0re100-qbittorrent
+brew install --cask cloudflare-warp
 brew install --cask google-chrome
 brew install --cask iina
-brew install --cask keka
 brew install --cask logi-options+
-brew install --cask visual-studio-code
 
 ### Install cli tools
 brew install bash
