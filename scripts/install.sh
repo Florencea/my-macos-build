@@ -17,7 +17,7 @@ fi
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 else
   echo "Homebrew exist, skip Homebrew installation"
 fi
@@ -74,10 +74,9 @@ brew install curl
 brew install ffmpeg
 # Node.js
 brew install fnm
-eval "$(fnm env)"
 fnm install --lts
 fnm default lts-latest
-npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
+fnm exec --using=lts-latest npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
 brew install gcc
 brew install gifski
 brew install git
