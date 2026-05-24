@@ -3,6 +3,6 @@ set -o errexit
 set -o pipefail
 
 ### Check cmd exist
-chkcmd "code"
+chkcmd "antigravity-ide"
 
 code "$0/../../"
