@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
-
 ### Args
 INPUT_DIR=${1:-}
 
@@ -20,10 +19,16 @@ if [ -z "$INPUT_DIR" ]; then
 fi
 
 # Check commands
-command -v ffmpeg &> /dev/null || { echo "ffmpeg is not installed" >&2; exit 1; }
+command -v ffmpeg &>/dev/null || {
+  echo "ffmpeg is not installed" >&2
+  exit 1
+}
 
 # Check directories
-[ -d "$INPUT_DIR" ] || { echo "Directory $INPUT_DIR not exist" >&2; exit 1; }
+[ -d "$INPUT_DIR" ] || {
+  echo "Directory $INPUT_DIR not exist" >&2
+  exit 1
+}
 
 cd "$INPUT_DIR"
 
@@ -35,9 +40,18 @@ INPUT_ASS_TW="$(basename "$(pwd)").cht.ass"
 INPUT_ASS_CN="$(basename "$(pwd)").chs.ass"
 
 # Check files
-[ -f "$INPUT_FILE" ] || { echo "File $INPUT_FILE not exist" >&2; exit 1; }
-[ -f "$INPUT_ASS_TW" ] || { echo "File $INPUT_ASS_TW not exist" >&2; exit 1; }
-[ -f "$INPUT_ASS_CN" ] || { echo "File $INPUT_ASS_CN not exist" >&2; exit 1; }
+[ -f "$INPUT_FILE" ] || {
+  echo "File $INPUT_FILE not exist" >&2
+  exit 1
+}
+[ -f "$INPUT_ASS_TW" ] || {
+  echo "File $INPUT_ASS_TW not exist" >&2
+  exit 1
+}
+[ -f "$INPUT_ASS_CN" ] || {
+  echo "File $INPUT_ASS_CN not exist" >&2
+  exit 1
+}
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)").mkv"

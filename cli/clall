@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: clall [GITHUB_ACCESS_TOKEN]
 # Example: clall ghp_000000000000000000000000000000000000
 
-
 ### Args
 TOKEN=${1:-}
 
@@ -20,9 +19,18 @@ if [ -z "$TOKEN" ]; then
 fi
 
 # Check commands
-command -v curl &> /dev/null || { echo "curl is not installed" >&2; exit 1; }
-command -v jq &> /dev/null || { echo "jq is not installed" >&2; exit 1; }
-command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
+command -v curl &>/dev/null || {
+  echo "curl is not installed" >&2
+  exit 1
+}
+command -v jq &>/dev/null || {
+  echo "jq is not installed" >&2
+  exit 1
+}
+command -v git &>/dev/null || {
+  echo "git is not installed" >&2
+  exit 1
+}
 
 REPO_LIST=$(curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" -s "https://api.github.com/user/repos?type=owner&per_page=100" | jq .[].ssh_url | sed -e 's/^"//' -e 's/"$//')
 read -ra REPOS <<<"$REPO_LIST"

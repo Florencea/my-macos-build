@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: rec [input_file]
 # Example: rec 'input.mp4'
 
-
 ### Args
 INPUT_FILE=${1:-}
 
@@ -20,10 +19,16 @@ if [ -z "$INPUT_FILE" ]; then
 fi
 
 # Check commands
-command -v ffmpeg &> /dev/null || { echo "ffmpeg is not installed" >&2; exit 1; }
+command -v ffmpeg &>/dev/null || {
+  echo "ffmpeg is not installed" >&2
+  exit 1
+}
 
 # Check files
-[ -f "$INPUT_FILE" ] || { echo "File $INPUT_FILE not exist" >&2; exit 1; }
+[ -f "$INPUT_FILE" ] || {
+  echo "File $INPUT_FILE not exist" >&2
+  exit 1
+}
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)").mp4"

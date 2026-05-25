@@ -7,7 +7,7 @@ set -o pipefail
 macos_version=$(sw_vers -productVersion)
 
 # Parse major and minor versions
-IFS='.' read -r major minor _ <<< "$macos_version"
+IFS='.' read -r major minor _ <<<"$macos_version"
 
 # Check if macOS version is >= 15.2
 if [[ $major -gt 15 || ($major -eq 15 && $minor -ge 2) ]]; then

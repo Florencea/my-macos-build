@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: ytgifv [video_id] [from(hh:mm:ss or sec)] [during(sec)]
 # Example: ytgifv JoSY6AWKqHs 00:01:59 2
 
-
 ### Args
 URL=${1:-}
 START=${2:-}
@@ -22,8 +21,14 @@ if [ -z "$DURATION" ]; then
 fi
 
 # Check commands
-command -v yt-dlp &> /dev/null || { echo "yt-dlp is not installed" >&2; exit 1; }
-command -v ffmpeg &> /dev/null || { echo "ffmpeg is not installed" >&2; exit 1; }
+command -v yt-dlp &>/dev/null || {
+  echo "yt-dlp is not installed" >&2
+  exit 1
+}
+command -v ffmpeg &>/dev/null || {
+  echo "ffmpeg is not installed" >&2
+  exit 1
+}
 
 ### quality
 QUALITY=85

@@ -3,8 +3,14 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
-command -v jq &> /dev/null || { echo "jq is not installed" >&2; exit 1; }
+command -v git &>/dev/null || {
+  echo "git is not installed" >&2
+  exit 1
+}
+command -v jq &>/dev/null || {
+  echo "jq is not installed" >&2
+  exit 1
+}
 
 ### Copy config
 ### Usage: copy <FILE_PATH> <FILE_NAME>

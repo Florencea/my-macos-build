@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: mkgifv [input_file] [from(hh:mm:ss or sec)] [during(sec)]
 # Example: mkgifv 'input.mp4' 01:02:08 11.0
 
-
 ### Args
 INPUT_FILE=${1:-}
 START=${2:-}
@@ -22,11 +21,20 @@ if [ -z "$DURATION" ]; then
 fi
 
 # Check commands
-command -v ffmpeg &> /dev/null || { echo "ffmpeg is not installed" >&2; exit 1; }
-command -v gifski &> /dev/null || { echo "gifski is not installed" >&2; exit 1; }
+command -v ffmpeg &>/dev/null || {
+  echo "ffmpeg is not installed" >&2
+  exit 1
+}
+command -v gifski &>/dev/null || {
+  echo "gifski is not installed" >&2
+  exit 1
+}
 
 # Check files
-[ -f "$INPUT_FILE" ] || { echo "File $INPUT_FILE not exist" >&2; exit 1; }
+[ -f "$INPUT_FILE" ] || {
+  echo "File $INPUT_FILE not exist" >&2
+  exit 1
+}
 
 ### quality
 QUALITY=85

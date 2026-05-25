@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: ytmusfull [song_id]
 # Example: ytmusfull dSeW7qZuMl0
 
-
 ### Args
 URL=${1:-}
 
@@ -20,7 +19,10 @@ if [ -z "$URL" ]; then
 fi
 
 # Check commands
-command -v yt-dlp &> /dev/null || { echo "yt-dlp is not installed" >&2; exit 1; }
+command -v yt-dlp &>/dev/null || {
+  echo "yt-dlp is not installed" >&2
+  exit 1
+}
 
 yt-dlp \
   --no-warnings \

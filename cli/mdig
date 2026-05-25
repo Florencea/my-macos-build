@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: mdig [domain]
 # Example: mdig 'is1-ssl.mzstatic.com'
 
-
 ### Args
 DOMAIN=${1:-}
 
@@ -20,7 +19,10 @@ if [ -z "$DOMAIN" ]; then
 fi
 
 # Check commands
-command -v dig &> /dev/null || { echo "dig is not installed" >&2; exit 1; }
+command -v dig &>/dev/null || {
+  echo "dig is not installed" >&2
+  exit 1
+}
 
 DNS_SERVERS=("Google|8.8.8.8" "Cloudflare|1.1.1.1" "Hinet|168.95.192.1" "Hinet|168.95.1.1" "System|127.0.0.1")
 

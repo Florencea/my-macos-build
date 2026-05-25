@@ -4,9 +4,18 @@ set -o nounset
 set -o pipefail
 
 # Check commands
-command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
-command -v node &> /dev/null || { echo "node is not installed" >&2; exit 1; }
-command -v npm &> /dev/null || { echo "npm is not installed" >&2; exit 1; }
+command -v git &>/dev/null || {
+  echo "git is not installed" >&2
+  exit 1
+}
+command -v node &>/dev/null || {
+  echo "node is not installed" >&2
+  exit 1
+}
+command -v npm &>/dev/null || {
+  echo "npm is not installed" >&2
+  exit 1
+}
 
 ### Print current node/npm version
 CURRENT_LOCAL_VERSION="$(node -v)"
