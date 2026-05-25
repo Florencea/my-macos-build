@@ -29,6 +29,7 @@ BOLD=$'\033[1m'
 GREEN=$'\033[1;32m'
 CYAN=$'\033[1;36m'
 RED=$'\033[31m'
+YELLOW=$'\033[1;33m'
 DIM=$'\033[90m'
 RESET=$'\033[0m'
 
@@ -146,16 +147,25 @@ for key in "${a_order[@]}"; do
     ipv4=$(<"$TEMP_DIR/${idx}_ipv4")
     a_time=$(<"$TEMP_DIR/${idx}_a_time")
 
-    if [[ -n "$ipv4" ]]; then
-      desc="${BOLD}${name}${RESET} ${DIM}(${ipv4})${RESET}"
+    if [[ "$name" == "System" ]]; then
+      desc="${YELLOW}${name}${RESET}"
+      if [[ -n "$a_time" ]]; then
+        printf "  - %s ${YELLOW}[%s ms]${RESET}\n" "$desc" "$a_time"
+      else
+        printf "  - %s\n" "$desc"
+      fi
     else
-      desc="${BOLD}${name}${RESET}"
-    fi
+      if [[ -n "$ipv4" ]]; then
+        desc="${BOLD}${name}${RESET} ${DIM}(${ipv4})${RESET}"
+      else
+        desc="${BOLD}${name}${RESET}"
+      fi
 
-    if [[ -n "$a_time" ]]; then
-      printf "  - %s ${DIM}[%s ms]${RESET}\n" "$desc" "$a_time"
-    else
-      printf "  - %s\n" "$desc"
+      if [[ -n "$a_time" ]]; then
+        printf "  - %s ${DIM}[%s ms]${RESET}\n" "$desc" "$a_time"
+      else
+        printf "  - %s\n" "$desc"
+      fi
     fi
   done
   echo ""
@@ -170,16 +180,25 @@ for key in "${aaaa_order[@]}"; do
     ipv6=$(<"$TEMP_DIR/${idx}_ipv6")
     aaaa_time=$(<"$TEMP_DIR/${idx}_aaaa_time")
 
-    if [[ -n "$ipv6" ]]; then
-      desc="${BOLD}${name}${RESET} ${DIM}(${ipv6})${RESET}"
+    if [[ "$name" == "System" ]]; then
+      desc="${YELLOW}${name}${RESET}"
+      if [[ -n "$aaaa_time" ]]; then
+        printf "  - %s ${YELLOW}[%s ms]${RESET}\n" "$desc" "$aaaa_time"
+      else
+        printf "  - %s\n" "$desc"
+      fi
     else
-      desc="${BOLD}${name}${RESET}"
-    fi
+      if [[ -n "$ipv6" ]]; then
+        desc="${BOLD}${name}${RESET} ${DIM}(${ipv6})${RESET}"
+      else
+        desc="${BOLD}${name}${RESET}"
+      fi
 
-    if [[ -n "$aaaa_time" ]]; then
-      printf "  - %s ${DIM}[%s ms]${RESET}\n" "$desc" "$aaaa_time"
-    else
-      printf "  - %s\n" "$desc"
+      if [[ -n "$aaaa_time" ]]; then
+        printf "  - %s ${DIM}[%s ms]${RESET}\n" "$desc" "$aaaa_time"
+      else
+        printf "  - %s\n" "$desc"
+      fi
     fi
   done
   echo ""
