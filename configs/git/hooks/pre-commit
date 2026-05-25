@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# 偵測是否由 Antigravity AI Agent 執行提交
+# 當 Antigravity 執行背景指令時，環境變數中會帶有 ANTIGRAVITY_AGENT=1
+if [ "${ANTIGRAVITY_AGENT:-}" = "1" ]; then
+  echo -e "\n\033[1;31m[ERROR] Git Commit 被拒絕！\033[0m"
+  echo -e "\033[1;33m原因：偵測到此提交是由 Antigravity AI 助理發起。\033[0m"
+  echo -e "根據專案根目錄的 \033[1;32m.cursorrules\033[0m 規範："
+  echo -e "  - \033[1mAI 助理不可直接執行 git commit 指令\033[0m。"
+  echo -e "  - 請將修改的檔案進行 git add 暫存，並將 commit 指令輸出給使用者手動執行。\n"
+  exit 1
+fi

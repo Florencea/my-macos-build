@@ -34,6 +34,12 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 
+# Global Git Hooks setup for AI agents restriction
+mkdir -p "$HOME/.config/git/hooks"
+curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/git/hooks/pre-commit" -o "$HOME/.config/git/hooks/pre-commit"
+chmod +x "$HOME/.config/git/hooks/pre-commit"
+git config --global core.hooksPath "$HOME/.config/git/hooks"
+
 # Fish shell
 brew install fish
 if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
