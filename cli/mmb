@@ -1,8 +1,9 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### Check cmd exist
-chkcmd "antigravity-ide"
+# Check commands
+command -v antigravity-ide &> /dev/null || { echo "antigravity-ide is not installed" >&2; exit 1; }
 
 antigravity-ide "$0/../../"

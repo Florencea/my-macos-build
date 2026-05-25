@@ -1,13 +1,14 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### Check cmd exist
-chkcmd "npm"
-chkcmd "npx"
+# Check commands
+command -v npm &> /dev/null || { echo "npm is not installed" >&2; exit 1; }
+command -v npx &> /dev/null || { echo "npx is not installed" >&2; exit 1; }
 
 ### Check is node project exist
-chkfile package.json
+[ -f "package.json" ] || { echo "File package.json not exist" >&2; exit 1; }
 
 ### Check package to update
 npx -y npm-check-updates@latest -p npm -t latest --install never

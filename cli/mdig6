@@ -1,24 +1,26 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### cmd
-CMD=$(basename "$0")
-### Description
-DESC="Multi-dig-ipv6: Check AAAA records on different DNS server at once."
-### Usage
-USAGE="[domain]"
-### Example
-EXAMPLE="'is1-ssl.mzstatic.com'"
+# Description: Multi-dig-ipv6: Check AAAA records on different DNS server at once.
+# Usage: mdig6 [domain]
+# Example: mdig6 'is1-ssl.mzstatic.com'
+
 
 ### Args
-DOMAIN=$1
+DOMAIN=${1:-}
 
-### Check args exist
-chkarg "$DOMAIN" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+# Check arguments
+if [ -z "$DOMAIN" ]; then
+  printf "\033[1mmdig6\033[0m: Multi-dig-ipv6: Check AAAA records on different DNS server at once.\n" >&2
+  printf "Usage: \033[1mmdig6\033[0m [domain]\n" >&2
+  printf "       \033[1mmdig6\033[0m 'is1-ssl.mzstatic.com'\n" >&2
+  exit 1
+fi
 
-### Check cmd exist
-chkcmd "dig"
+# Check commands
+command -v dig &> /dev/null || { echo "dig is not installed" >&2; exit 1; }
 
 DNS_SERVERS=("Google|8.8.8.8" "Cloudflare|1.1.1.1" "Hinet|168.95.192.1" "Hinet|168.95.1.1" "System|127.0.0.1")
 

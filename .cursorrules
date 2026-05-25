@@ -1,13 +1,25 @@
 # Agent Instructions & Guidelines
 
 ## Language & Localization
+
 - **Thinking Process**: Always perform all thinking and reasoning processes in **Traditional Chinese (Taiwan / 繁體中文（台灣）)**.
 - **Responses**: Always respond to the user in **Traditional Chinese (Taiwan / 繁體中文（台灣）)**.
 
 ## Development & Git Workflow
+
 - **Git Commit Restrictions**:
   - Do **NOT** run the `git commit` command directly.
   - **Reason**: The local environment has Git signing enabled via 1Password SSH Agent, which fails in background/non-interactive agent shells.
   - **Required Workflow**:
     1. Run `git add <files>` to stage the modified files.
     2. Output the exact `git commit -m "..."` command to the user, allowing them to review and execute it locally.
+
+## CLI Scripts Maintenance
+
+When adding or modifying custom scripts in the `cli/` directory, the Agent MUST adhere to the following architecture rules:
+
+- **No External Dependencies**: Do NOT create or rely on external dependency scripts for checking arguments, commands, or files. Keep every script 100% standalone. Use native Bash inline checks (e.g., `command -v ...` or `[ -f ... ]`).
+- **Metadata Headers**: Always include English metadata comments directly below the `set` commands: `# Description:`, `# Usage:`, `# Example:`.
+- **Bash Safety**: Always include `set -o errexit`, `set -o nounset`, `set -o pipefail`. Always use default parameter expansion like `${1:-}` to prevent unbound variable errors.
+- **Fish Completions (`configs/fish/completions/`)**: If a new script is added, you MUST create a corresponding `.fish` completion script. If the script only takes text/URLs, disable file completions using `complete -c [cmd] -f`. For mixed arguments, use `-n '__fish_is_first_arg' -F` appropriately.
+- **Install Script (`scripts/install.sh`)**: If a new script is added (and its `.fish` completion is created) or removed, you MUST update the `for comp in ...` download list in `scripts/install.sh` to ensure it is correctly installed on a new machine.

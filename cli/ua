@@ -1,14 +1,15 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### Check cmd exist
-chkcmd "brew"
-chkcmd "curl"
-chkcmd "fnm"
-chkcmd "git"
-chkcmd "jq"
-chkcmd "node"
+# Check commands
+command -v brew &> /dev/null || { echo "brew is not installed" >&2; exit 1; }
+command -v curl &> /dev/null || { echo "curl is not installed" >&2; exit 1; }
+command -v fnm &> /dev/null || { echo "fnm is not installed" >&2; exit 1; }
+command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
+command -v jq &> /dev/null || { echo "jq is not installed" >&2; exit 1; }
+command -v node &> /dev/null || { echo "node is not installed" >&2; exit 1; }
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"

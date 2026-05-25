@@ -1,15 +1,16 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### Check cmd exist
-chkcmd "git"
-chkcmd "npm"
-chkcmd "npx"
+# Check commands
+command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
+command -v npm &> /dev/null || { echo "npm is not installed" >&2; exit 1; }
+command -v npx &> /dev/null || { echo "npx is not installed" >&2; exit 1; }
 
 ### Check is node project exist
-chkfile package.json
-chkfile package-lock.json
+[ -f "package.json" ] || { echo "File package.json not exist" >&2; exit 1; }
+[ -f "package-lock.json" ] || { echo "File package-lock.json not exist" >&2; exit 1; }
 
 ### Sync project
 git pull --quiet
@@ -31,7 +32,7 @@ if ! [ "$PACKEGES_TO_UPDATE" = "" ]; then
     git add package.json
     git commit -q -m "chore(deps): update dependency ${MAPFILE[$IDX]}"
     git push -q
-    IDX=$(expr $IDX + 1)
+    IDX=$((IDX + 1))
   done
 else
   ### If no package needs update, sync lockfile

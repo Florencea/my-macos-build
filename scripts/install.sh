@@ -46,10 +46,16 @@ fi
 mkdir -p "$HOME/.config/fish"
 mkdir -p "$HOME/.config/fish/conf.d"
 mkdir -p "$HOME/.config/fish/functions"
+mkdir -p "$HOME/.config/fish/completions"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/00-paths.fish.txt -o "$HOME/.config/fish/conf.d/00-paths.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/fnm.fish.txt -o "$HOME/.config/fish/conf.d/fnm.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish.txt -o "$HOME/.config/fish/config.fish"
+
+for comp in clall ebk mdig mdig6 mkclp mkgif mkgifv mmb rea rec rsl ua unodev up upp ytalb ytclp ytgif ytgifv ytmus ytmusfull; do
+  curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/completions/$comp.fish" -o "$HOME/.config/fish/completions/$comp.fish" &
+done
+wait
 
 # Essential casks
 brew install --cask font-jetbrains-mono istat-menus@6 || true

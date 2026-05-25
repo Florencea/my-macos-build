@@ -1,31 +1,31 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### cmd
-CMD=$(basename "$0")
-### Description
-DESC="Clip Maker"
-### Usage
-USAGE="[input_file] [from(hh:mm:ss or sec)] [during(sec)]"
-### Example
-EXAMPLE="'input.mp4' 01:02:08 11.0"
+# Description: Clip Maker
+# Usage: mkclp [input_file] [from(hh:mm:ss or sec)] [during(sec)]
+# Example: mkclp 'input.mp4' 01:02:08 11.0
+
 
 ### Args
-INPUT_FILE=$1
-START=$2
-DURATION=$3
+INPUT_FILE=${1:-}
+START=${2:-}
+DURATION=${3:-}
 
-### Check args exist
-chkarg "$INPUT_FILE" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
-chkarg "$START" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
-chkarg "$DURATION" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+# Check arguments
+if [ -z "$DURATION" ]; then
+  printf "\033[1mmkclp\033[0m: Clip Maker\n" >&2
+  printf "Usage: \033[1mmkclp\033[0m [input_file] [from(hh:mm:ss or sec)] [during(sec)]\n" >&2
+  printf "       \033[1mmkclp\033[0m 'input.mp4' 01:02:08 11.0\n" >&2
+  exit 1
+fi
 
-### Check cmd exist
-chkcmd "ffmpeg"
+# Check commands
+command -v ffmpeg &> /dev/null || { echo "ffmpeg is not installed" >&2; exit 1; }
 
-### Check file exist
-chkfile "$INPUT_FILE"
+# Check files
+[ -f "$INPUT_FILE" ] || { echo "File $INPUT_FILE not exist" >&2; exit 1; }
 
 ### Output file
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_clip.mp4"

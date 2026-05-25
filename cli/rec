@@ -1,27 +1,29 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### cmd
-CMD=$(basename "$0")
-### Description
-DESC="Re-Encoder: re-encode a mp4"
-### Usage
-USAGE="[input_file]"
-### Example
-EXAMPLE="'input.mp4'"
+# Description: Re-Encoder: re-encode a mp4
+# Usage: rec [input_file]
+# Example: rec 'input.mp4'
+
 
 ### Args
-INPUT_FILE=$1
+INPUT_FILE=${1:-}
 
-### Check args exist
-chkarg "$INPUT_FILE" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+# Check arguments
+if [ -z "$INPUT_FILE" ]; then
+  printf "\033[1mrec\033[0m: Re-Encoder: re-encode a mp4\n" >&2
+  printf "Usage: \033[1mrec\033[0m [input_file]\n" >&2
+  printf "       \033[1mrec\033[0m 'input.mp4'\n" >&2
+  exit 1
+fi
 
-### Check cmd exist
-chkcmd "ffmpeg"
+# Check commands
+command -v ffmpeg &> /dev/null || { echo "ffmpeg is not installed" >&2; exit 1; }
 
-### Check file exist
-chkfile "$INPUT_FILE"
+# Check files
+[ -f "$INPUT_FILE" ] || { echo "File $INPUT_FILE not exist" >&2; exit 1; }
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename $0)").mp4"

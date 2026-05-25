@@ -1,21 +1,22 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-chkcmd "git"
-chkcmd "jq"
+command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
+command -v jq &> /dev/null || { echo "jq is not installed" >&2; exit 1; }
 
 ### Copy config
 ### Usage: copy <FILE_PATH> <FILE_NAME>
 function copy() {
   CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
-  FILE_PATH=$1
-  FILE_NAME=$2
+  FILE_PATH=${1:-}
+  FILE_NAME=${2:-}
   if [ -f "$FILE_PATH" ]; then
     cp "$FILE_PATH" "$CONFIG_HOME/$FILE_NAME"
     cd "$CONFIG_HOME" || exit
     git add "$FILE_NAME"
-    if ! [ -z "$(git status --porcelain)" ]; then
+    if [ -n "$(git status --porcelain)" ]; then
       echo ""
       printf "Copy Configuration: %s\n" "$FILE_PATH"
       printf "     --> %s\n\n" "$FILE_NAME"
@@ -32,8 +33,8 @@ function copy() {
 ### Usage: backup <FILE_PATTERN> <FILE_NAME>
 function backup() {
   CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
-  FILE_PATTERN=$1
-  FILE_NAME=$2
+  FILE_PATTERN=${1:-}
+  FILE_NAME=${2:-}
   FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
   if [ -f "$FILE_BACKUP" ]; then
     mv "$FILE_BACKUP" "$CONFIG_HOME/$FILE_NAME"
@@ -54,8 +55,8 @@ function backup() {
 ### Usage: backupjson <FILE_PATTERN> <FILE_NAME>
 function backupjson() {
   CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
-  FILE_PATTERN=$1
-  FILE_NAME=$2
+  FILE_PATTERN=${1:-}
+  FILE_NAME=${2:-}
   FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
   if [ -f "$FILE_BACKUP" ]; then
     mv "$FILE_BACKUP" "$CONFIG_HOME/temp.json"

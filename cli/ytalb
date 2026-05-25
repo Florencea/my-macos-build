@@ -1,24 +1,26 @@
 #! /usr/bin/env bash
 set -o errexit
+set -o nounset
 set -o pipefail
 
-### cmd
-CMD=$(basename "$0")
-### Description
-DESC="Youtube Music Album Downloader"
-### Usage
-USAGE="[playlist_url]"
-### Example
-EXAMPLE="'https://music.youtube.com/playlist?list=OLAK5uy_mkYbYGnRqE3zD-9Cy3lA8C5oE7FzEbarg'"
+# Description: Youtube Music Album Downloader
+# Usage: ytalb [playlist_url]
+# Example: ytalb 'https://music.youtube.com/playlist?list=OLAK5uy_mkYbYGnRqE3zD-9Cy3lA8C5oE7FzEbarg'
+
 
 ### Args
-URL=$1
+URL=${1:-}
 
-### Check args exist
-chkarg "$URL" "$CMD" "$DESC" "$USAGE" "$EXAMPLE"
+# Check arguments
+if [ -z "$URL" ]; then
+  printf "\033[1mytalb\033[0m: Youtube Music Album Downloader\n" >&2
+  printf "Usage: \033[1mytalb\033[0m [playlist_url]\n" >&2
+  printf "       \033[1mytalb\033[0m 'https://music.youtube.com/playlist?list=OLAK5uy_mkYbYGnRqE3zD-9Cy3lA8C5oE7FzEbarg'\n" >&2
+  exit 1
+fi
 
-### Check cmd exist
-chkcmd "yt-dlp"
+# Check commands
+command -v yt-dlp &> /dev/null || { echo "yt-dlp is not installed" >&2; exit 1; }
 
 RAW_ALBUM_TITLE=$(yt-dlp \
   --no-warnings \
