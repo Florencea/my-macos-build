@@ -4,51 +4,67 @@ set -o nounset
 set -o pipefail
 
 # Check commands
-command -v brew &> /dev/null || { echo "brew is not installed" >&2; exit 1; }
-command -v curl &> /dev/null || { echo "curl is not installed" >&2; exit 1; }
-command -v fnm &> /dev/null || { echo "fnm is not installed" >&2; exit 1; }
-command -v git &> /dev/null || { echo "git is not installed" >&2; exit 1; }
-command -v jq &> /dev/null || { echo "jq is not installed" >&2; exit 1; }
-command -v node &> /dev/null || { echo "node is not installed" >&2; exit 1; }
+command -v brew &>/dev/null || {
+  echo "brew is not installed" >&2
+  exit 1
+}
+command -v fnm &>/dev/null || {
+  echo "fnm is not installed" >&2
+  exit 1
+}
+command -v git &>/dev/null || {
+  echo "git is not installed" >&2
+  exit 1
+}
+command -v node &>/dev/null || {
+  echo "node is not installed" >&2
+  exit 1
+}
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"
 HOMEBREW_NO_ENV_HINTS=1 brew upgrade
 
 ### Update Node.js
-### Change this line for perfer version (start by 'v', ex: v20, v24)
-PERFER_NODEJS_VERSION="v24"
+### Change this line for preferred version (start by 'v', ex: v20, v24)
+PREFERRED_NODEJS_VERSION="v24"
 ###
-NODEJS_INFO="$(curl -fsSL https://nodejs.org/download/release/index.json)"
-PERFER_NODEJS_REMOTE_VERSION="$(echo $NODEJS_INFO | jq -cr --arg NODE_V "$PERFER_NODEJS_VERSION" 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .version | startswith($NODE_V) ) | .version )')"
-LATEST_LTS_VERSION="$(echo $NODEJS_INFO | jq -cr 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | select( .lts ) | .version )')"
-CURRENT_LOCAL_VERSION="$(node -v)"
-if [ "$PERFER_NODEJS_REMOTE_VERSION" = "null" ]; then
-  LATEST_CURRENT_VERSION="$(echo $NODEJS_INFO | jq -cr 'last( sort_by( .version | split("v") | .[1] | split(".") | map(tonumber) ) | .[] | .version )')"
-  printf "Perfer Node.js version: \033[1;31m$PERFER_NODEJS_VERSION\033[0m, no remote verions match\n"
-  printf "Latest LTS: \033[1;36m$LATEST_LTS_VERSION\033[0m, Current: \033[1;36m$LATEST_CURRENT_VERSION\033[0m\n"
-elif ! [ "$PERFER_NODEJS_REMOTE_VERSION" = "$CURRENT_LOCAL_VERSION" ]; then
-  printf "Perfer Node.js version: \033[1;32m$PERFER_NODEJS_VERSION\033[0m, remote: \033[1;36m$PERFER_NODEJS_REMOTE_VERSION\033[0m, local: \033[1;31m$CURRENT_LOCAL_VERSION\033[0m, install from remote\n"
-  fnm install "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
-  fnm default "$PERFER_NODEJS_REMOTE_VERSION" &>/dev/null
-  fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
-  NODE_UPDATED="true"
+if PREFERRED_NODEJS_REMOTE_VERSION="$(fnm list-remote --filter "$PREFERRED_NODEJS_VERSION" --latest 2>/dev/null)" && [ -n "$PREFERRED_NODEJS_REMOTE_VERSION" ]; then
+  # Strip LTS nickname (e.g. "v24.16.0 (Krypton)" -> "v24.16.0")
+  PREFERRED_NODEJS_REMOTE_VERSION="${PREFERRED_NODEJS_REMOTE_VERSION%% *}"
+  CURRENT_LOCAL_VERSION="$(node -v)"
+  if [ "$PREFERRED_NODEJS_REMOTE_VERSION" != "$CURRENT_LOCAL_VERSION" ]; then
+    printf "Preferred Node.js version: \033[1;32m$PREFERRED_NODEJS_VERSION\033[0m, remote: \033[1;36m$PREFERRED_NODEJS_REMOTE_VERSION\033[0m, local: \033[1;31m$CURRENT_LOCAL_VERSION\033[0m, install from remote\n"
+    fnm install "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
+    fnm default "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
+    fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
+    NODE_UPDATED="true"
+  fi
+else
+  printf "Warning: Failed to fetch remote Node.js version for $PREFERRED_NODEJS_VERSION. Skipping Node.js update.\n" >&2
 fi
 
 ### Print current node/npm version
-CURRENT_LOCAL_VERSION="$(node -v)"
-CURRENT_NPM_VERSION="$(npm -v)"
+if [ "${NODE_UPDATED:-false}" = "true" ]; then
+  CURRENT_LOCAL_VERSION="$(fnm exec --using="$PREFERRED_NODEJS_REMOTE_VERSION" node -v)"
+  CURRENT_NPM_VERSION="$(fnm exec --using="$PREFERRED_NODEJS_REMOTE_VERSION" npm -v)"
+else
+  CURRENT_LOCAL_VERSION="$(node -v)"
+  CURRENT_NPM_VERSION="$(npm -v)"
+fi
 printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
 
 ### Sync git projects
-cd "$(dirname $0)"
-cd "../../"
-for PROJECT in $(ls .); do
-  cd "$PROJECT"
-  if [ -d .git ]; then
-    git pull --all --quiet && printf "Sync \033[1m%s\033[0m ok\n" "$PROJECT" &
-  fi
-  cd "../"
-done
+SCRIPT_PATH="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
+PROJECTS_DIR="$(cd "$SCRIPT_PATH/../.." && pwd)"
 
-wait
+if cd "$PROJECTS_DIR"; then
+  for PROJECT in */; do
+    [ -d "$PROJECT" ] || continue
+    PROJECT="${PROJECT%/}"
+    if [ -d "$PROJECT/.git" ]; then
+      git -C "$PROJECT" pull --all --quiet && printf "Sync \033[1m%s\033[0m ok\n" "$PROJECT" &
+    fi
+  done
+  wait
+fi
