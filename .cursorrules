@@ -1,2 +1,13 @@
-Please always respond to the user and perform all thinking/reasoning processes in Traditional Chinese (繁體中文).
-所有的思考推導過程與最終回覆，請一律使用繁體中文（台灣）。
+# Agent Instructions & Guidelines
+
+## Language & Localization
+- **Thinking Process**: Always perform all thinking and reasoning processes in **Traditional Chinese (Taiwan / 繁體中文（台灣）)**.
+- **Responses**: Always respond to the user in **Traditional Chinese (Taiwan / 繁體中文（台灣）)**.
+
+## Development & Git Workflow
+- **Git Commit Restrictions**:
+  - Do **NOT** run the `git commit` command directly.
+  - **Reason**: The local environment has Git signing enabled via 1Password SSH Agent, which fails in background/non-interactive agent shells.
+  - **Required Workflow**:
+    1. Run `git add <files>` to stage the modified files.
+    2. Output the exact `git commit -m "..."` command to the user, allowing them to review and execute it locally.
