@@ -3,17 +3,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Get the macOS version
-macos_version=$(sw_vers -productVersion)
+# Description: Reset macOS Launchpad layout and restart Dock
+# Usage: rsl
+# Example: rsl
 
-# Parse major and minor versions
-IFS='.' read -r major minor _ <<<"$macos_version"
-
-# Check if macOS version is >= 15.2
-if [[ $major -gt 15 || ($major -eq 15 && $minor -ge 2) ]]; then
-  rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
-else
-  defaults write com.apple.dock ResetLaunchPad -bool true
-fi
+rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
 
 killall Dock
