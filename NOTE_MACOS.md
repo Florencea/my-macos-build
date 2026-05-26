@@ -8,6 +8,7 @@
   - [Generate SSH Key](#generate-ssh-key)
   - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
   - [Remove Quarantine Attributes](#remove-quarantine-attributes)
+  - [Fix `foxundermoon.shell-format` issue](#fix-foxundermoonshell-format-issue)
   - [Set DNS Servers](#set-dns-servers)
   - [Clear DNS Cache](#clear-dns-cache)
   - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
@@ -66,6 +67,12 @@ auth       sufficient     pam_tid.so
 
 ```sh
 sudo xattr -r -d com.apple.quarantine <FILE>
+```
+
+## Fix `foxundermoon.shell-format` issue
+
+```sh
+curl --output-dir "$HOME/.antigravity-ide/extensions/foxundermoon.shell-format-7.2.8-universal/dist" -O "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm"
 ```
 
 ## Set DNS Servers
