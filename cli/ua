@@ -3,6 +3,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Description: Upgrade Homebrew formulas, update Node.js (via fnm), and sync all git repositories in workspace
+# Usage: ua
+# Example: ua
+
 # Check commands
 command -v brew &>/dev/null || {
   echo "brew is not installed" >&2
@@ -29,11 +33,11 @@ HOMEBREW_NO_ENV_HINTS=1 brew upgrade
 ### Change this line for preferred version (start by 'v', ex: v20, v24)
 PREFERRED_NODEJS_VERSION="v24"
 ###
-if PREFERRED_NODEJS_REMOTE_VERSION="$(fnm list-remote --filter "$PREFERRED_NODEJS_VERSION" --latest 2>/dev/null)" && [ -n "$PREFERRED_NODEJS_REMOTE_VERSION" ]; then
+if PREFERRED_NODEJS_REMOTE_VERSION="$(fnm list-remote --filter "$PREFERRED_NODEJS_VERSION" --latest 2>/dev/null)" && [[ -n "$PREFERRED_NODEJS_REMOTE_VERSION" ]]; then
   # Strip LTS nickname (e.g. "v24.16.0 (Krypton)" -> "v24.16.0")
   PREFERRED_NODEJS_REMOTE_VERSION="${PREFERRED_NODEJS_REMOTE_VERSION%% *}"
   CURRENT_LOCAL_VERSION="$(node -v)"
-  if [ "$PREFERRED_NODEJS_REMOTE_VERSION" != "$CURRENT_LOCAL_VERSION" ]; then
+  if [[ "$PREFERRED_NODEJS_REMOTE_VERSION" != "$CURRENT_LOCAL_VERSION" ]]; then
     printf "Preferred Node.js version: \033[1;32m$PREFERRED_NODEJS_VERSION\033[0m, remote: \033[1;36m$PREFERRED_NODEJS_REMOTE_VERSION\033[0m, local: \033[1;31m$CURRENT_LOCAL_VERSION\033[0m, install from remote\n"
     fnm install "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
     fnm default "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
@@ -45,7 +49,7 @@ else
 fi
 
 ### Print current node/npm version
-if [ "${NODE_UPDATED:-false}" = "true" ]; then
+if [[ "${NODE_UPDATED:-false}" == "true" ]]; then
   CURRENT_LOCAL_VERSION="$(fnm exec --using="$PREFERRED_NODEJS_REMOTE_VERSION" node -v)"
   CURRENT_NPM_VERSION="$(fnm exec --using="$PREFERRED_NODEJS_REMOTE_VERSION" npm -v)"
 else
@@ -60,9 +64,9 @@ PROJECTS_DIR="$(cd "$SCRIPT_PATH/../.." && pwd)"
 
 if cd "$PROJECTS_DIR"; then
   for PROJECT in */; do
-    [ -d "$PROJECT" ] || continue
+    [[ -d "$PROJECT" ]] || continue
     PROJECT="${PROJECT%/}"
-    if [ -d "$PROJECT/.git" ]; then
+    if [[ -d "$PROJECT/.git" ]]; then
       git -C "$PROJECT" pull --all --quiet && printf "Sync \033[1m%s\033[0m ok\n" "$PROJECT" &
     fi
   done

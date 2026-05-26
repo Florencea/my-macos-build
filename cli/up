@@ -3,6 +3,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Description: Check for Node.js package updates in the current directory
+# Usage: up
+# Example: up
+
 # Check commands
 command -v npm &>/dev/null || {
     echo "npm is not installed" >&2
@@ -14,7 +18,7 @@ command -v npx &>/dev/null || {
 }
 
 ### Check is node project exist
-[ -f "package.json" ] || {
+[[ -f "package.json" ]] || {
     echo "File package.json not exist" >&2
     exit 1
 }

@@ -3,6 +3,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Description: Backup and sync browser extension configuration files
+# Usage: ebk
+# Example: ebk
+
 command -v git &>/dev/null || {
   echo "git is not installed" >&2
   exit 1
@@ -18,11 +22,11 @@ function copy() {
   CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
   FILE_PATH=${1:-}
   FILE_NAME=${2:-}
-  if [ -f "$FILE_PATH" ]; then
+  if [[ -f "$FILE_PATH" ]]; then
     cp "$FILE_PATH" "$CONFIG_HOME/$FILE_NAME"
     cd "$CONFIG_HOME" || exit
     git add "$FILE_NAME"
-    if [ -n "$(git status --porcelain)" ]; then
+    if [[ -n "$(git status --porcelain)" ]]; then
       echo ""
       printf "Copy Configuration: %s\n" "$FILE_PATH"
       printf "     --> %s\n\n" "$FILE_NAME"
@@ -42,7 +46,7 @@ function backup() {
   FILE_PATTERN=${1:-}
   FILE_NAME=${2:-}
   FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
-  if [ -f "$FILE_BACKUP" ]; then
+  if [[ -f "$FILE_BACKUP" ]]; then
     mv "$FILE_BACKUP" "$CONFIG_HOME/$FILE_NAME"
     cd "$CONFIG_HOME" || exit
     git add "$FILE_NAME"
@@ -64,7 +68,7 @@ function backupjson() {
   FILE_PATTERN=${1:-}
   FILE_NAME=${2:-}
   FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
-  if [ -f "$FILE_BACKUP" ]; then
+  if [[ -f "$FILE_BACKUP" ]]; then
     mv "$FILE_BACKUP" "$CONFIG_HOME/temp.json"
     cd "$CONFIG_HOME" || exit
     jq . temp.json >"$FILE_NAME"

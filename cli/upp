@@ -24,11 +24,11 @@ for cmd in git npm npx jq; do
 done
 
 # 2. Check project files
-[ -f "package.json" ] || {
+[[ -f "package.json" ]] || {
   echo "Error: File package.json does not exist" >&2
   exit 1
 }
-[ -f "package-lock.json" ] || {
+[[ -f "package-lock.json" ]] || {
   echo "Error: File package-lock.json does not exist" >&2
   exit 1
 }
@@ -41,7 +41,7 @@ git pull --quiet
 log "Checking for minor updates..."
 NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
-if [ -z "$NCU_JSON" ] || [ "$NCU_JSON" = "{}" ]; then
+if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
   # Check for major updates (read-only)
   log "Checking for major updates..."
   npx -y npm-check-updates@latest -p npm -t latest --install never
@@ -142,7 +142,7 @@ git push -q
 log "Cleaning lockfile..."
 npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
 
-if [ -n "$(git status --short package-lock.json)" ]; then
+if [[ -n "$(git status --short package-lock.json)" ]]; then
   git add package-lock.json
   git commit -q -m "chore(deps): sync and clean lockfile"
   git push -q

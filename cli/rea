@@ -11,7 +11,7 @@ set -o pipefail
 INPUT_DIR=${1:-}
 
 # Check arguments
-if [ -z "$INPUT_DIR" ]; then
+if [[ -z "$INPUT_DIR" ]]; then
   printf "\033[1mrea\033[0m: ASS-Combiner: combile .cht.ass to mkv\n" >&2
   printf "Usage: \033[1mrea\033[0m [input_dir]\n" >&2
   printf "       \033[1mrea\033[0m 'input'\n" >&2
@@ -25,7 +25,7 @@ command -v ffmpeg &>/dev/null || {
 }
 
 # Check directories
-[ -d "$INPUT_DIR" ] || {
+[[ -d "$INPUT_DIR" ]] || {
   echo "Directory $INPUT_DIR not exist" >&2
   exit 1
 }
@@ -40,15 +40,15 @@ INPUT_ASS_TW="$(basename "$(pwd)").cht.ass"
 INPUT_ASS_CN="$(basename "$(pwd)").chs.ass"
 
 # Check files
-[ -f "$INPUT_FILE" ] || {
+[[ -f "$INPUT_FILE" ]] || {
   echo "File $INPUT_FILE not exist" >&2
   exit 1
 }
-[ -f "$INPUT_ASS_TW" ] || {
+[[ -f "$INPUT_ASS_TW" ]] || {
   echo "File $INPUT_ASS_TW not exist" >&2
   exit 1
 }
-[ -f "$INPUT_ASS_CN" ] || {
+[[ -f "$INPUT_ASS_CN" ]] || {
   echo "File $INPUT_ASS_CN not exist" >&2
   exit 1
 }

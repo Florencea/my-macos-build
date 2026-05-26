@@ -35,24 +35,24 @@ PROJECTS_DIR="$(cd "$SCRIPT_PATH/../.." && pwd)"
 
 if cd "$PROJECTS_DIR"; then
   for PROJECT in */; do
-    [ -d "$PROJECT" ] || continue
+    [[ -d "$PROJECT" ]] || continue
     PROJECT="${PROJECT%/}"
     
     # Skip hidden folders
     [[ "$PROJECT" == .* ]] && continue
 
-    if [ -d "$PROJECT/.git" ]; then
-      if [ ! -f "$PROJECT/.node-version" ]; then
-        if [ -f "$PROJECT/package.json" ]; then
+    if [[ -d "$PROJECT/.git" ]]; then
+      if [[ ! -f "$PROJECT/.node-version" ]]; then
+        if [[ -f "$PROJECT/package.json" ]]; then
           # Fast read using node -e with absolute path to avoid slow npm pkg get
           OLD_NODE_VERSION=$(node -e "try { console.log(require('${PROJECTS_DIR}/${PROJECT}/package.json').engines.node || '') } catch(e) {}")
           
-          if [ "$OLD_NODE_VERSION" != "$NODE_VERSION" ]; then
+          if [[ "$OLD_NODE_VERSION" != "$NODE_VERSION" ]]; then
             (
               cd "$PROJECT"
               npm pkg set engines.node="$NODE_VERSION"
               
-              if [ -n "$(git status --short)" ]; then
+              if [[ -n "$(git status --short)" ]]; then
                 git add package.json
                 if git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION"; then
                   if git push -q &>/dev/null; then
