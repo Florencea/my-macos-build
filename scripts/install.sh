@@ -78,6 +78,33 @@ brew install --cask \
   google-chrome \
   logi-options+ || true
 
+# Antigravity IDE Configuration
+echo "Configuring Antigravity IDE..."
+AG_USER_DIR="$HOME/Library/Application Support/Antigravity IDE/User"
+mkdir -p "$AG_USER_DIR"
+if [ ! -f "$AG_USER_DIR/settings.json" ]; then
+  echo "{}" > "$AG_USER_DIR/settings.json"
+fi
+if [ ! -f "$AG_USER_DIR/keybindings.json" ]; then
+  echo "[]" > "$AG_USER_DIR/keybindings.json"
+fi
+
+AG_CLI=""
+if command -v agy-ide &>/dev/null; then
+  AG_CLI="agy-ide"
+elif command -v antigravity-ide &>/dev/null; then
+  AG_CLI="antigravity-ide"
+elif [ -x "/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide" ]; then
+  AG_CLI="/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
+fi
+
+if [ -n "$AG_CLI" ]; then
+  echo "Installing thotam.antigravity-sync..."
+  "$AG_CLI" --install-extension thotam.antigravity-sync 2>&1 | grep -v "depends on antigravityAnalytics" || true
+else
+  echo "Warning: Antigravity IDE CLI not found, skipping extension installation."
+fi
+
 # CLI tools
 brew install \
   bash \
