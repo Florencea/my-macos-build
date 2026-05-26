@@ -119,7 +119,8 @@
       "popupWidth": 246,
       "popupWidthMax": 280,
       "updateInterval": 24,
-      "updateOnlyEnabled": false
+      "updateOnlyEnabled": false,
+      "undefined": null
     },
     "order": {
       "main": [],
@@ -135,7 +136,7 @@
     "name": "ubo style desktop",
     "sections": [
       {
-        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: system-ui, sans-serif;\n    --stylus-font-monospace: ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
+        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
       },
       {
         "code": ".header_pop {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
@@ -259,7 +260,7 @@
         ]
       }
     ],
-    "updateDate": 1779591330078,
+    "updateDate": 1779808530130,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
     "_rev": 1779472722682,
     "id": 1
