@@ -6,7 +6,8 @@ set -o pipefail
 # Touch ID for sudo
 if [ ! -f /etc/pam.d/sudo_local ]; then
   echo "Set TouchID for sudo commands via sudo_local"
-  echo -e "# sudo_local: local authentication customization for sudo\nauth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
+  echo "# sudo_local: local authentication customization for sudo
+auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
 else
   echo "sudo_local already exists, skip Set Touch ID"
 fi
