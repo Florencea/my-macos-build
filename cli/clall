@@ -33,7 +33,7 @@ command -v git &>/dev/null || {
 }
 
 REPO_LIST=$(curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" -s "https://api.github.com/user/repos?type=owner&per_page=100" | jq .[].ssh_url | sed -e 's/^"//' -e 's/"$//')
-read -ra REPOS <<<"$REPO_LIST"
+mapfile -t REPOS <<<"$REPO_LIST"
 REPO_LIST_LEN=${#REPOS[@]}
 TMPDIR="$(mktemp -d -t "$(basename $0)")"
 for REPO in "${REPOS[@]}"; do
