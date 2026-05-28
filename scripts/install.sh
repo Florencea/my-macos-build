@@ -70,16 +70,7 @@ brew install --cask font-jetbrains-mono font-inter istat-menus@6 || true
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
 # 1Password
-echo "Downloading 1Password official installer..."
-mkdir -p "$HOME/Downloads"
-curl -fsSL https://downloads.1password.com/mac/1Password.zip -o "$HOME/Downloads/1Password.zip"
-echo "Unzipping 1Password installer to Downloads..."
-unzip -o "$HOME/Downloads/1Password.zip" -d "$HOME/Downloads"
-echo "Launching 1Password installer and waiting for completion..."
-open -W "$HOME/Downloads/1Password Installer.app"
-echo "Cleaning up 1Password installer files..."
-rm -f "$HOME/Downloads/1Password.zip"
-rm -rf "$HOME/Downloads/1Password Installer.app"
+brew install --cask 1password
 
 # Other casks
 brew install --cask \
