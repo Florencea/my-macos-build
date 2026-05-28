@@ -65,7 +65,7 @@ done
 wait
 
 # Essential casks
-brew install --cask font-jetbrains-mono font-source-han-sans-vf istat-menus@6 || true
+brew install --cask font-jetbrains-mono istat-menus@6 || true
 
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
@@ -83,10 +83,10 @@ echo "Configuring Antigravity IDE..."
 AG_USER_DIR="$HOME/Library/Application Support/Antigravity IDE/User"
 mkdir -p "$AG_USER_DIR"
 if [ ! -f "$AG_USER_DIR/settings.json" ]; then
-  echo "{}" > "$AG_USER_DIR/settings.json"
+  echo "{}" >"$AG_USER_DIR/settings.json"
 fi
 if [ ! -f "$AG_USER_DIR/keybindings.json" ]; then
-  echo "[]" > "$AG_USER_DIR/keybindings.json"
+  echo "[]" >"$AG_USER_DIR/keybindings.json"
 fi
 
 AG_CLI=""
