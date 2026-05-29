@@ -24,6 +24,9 @@ fi
 # Disable auto-updates
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Disable Window Animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
 
