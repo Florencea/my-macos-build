@@ -65,7 +65,10 @@ done
 wait
 
 # Essential casks
-brew install --cask istat-menus@6 || true
+brew install --cask \
+  istat-menus@6 \
+  font-jetbrains-mono \
+  font-inter || true
 
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
@@ -75,8 +78,9 @@ brew install --cask \
   antigravity-ide \
   c0re100-qbittorrent \
   cloudflare-warp \
-  google-chrome \
-  logi-options+ || true
+  microsoft-edge \
+  logi-options+ \
+  visual-studio-code || true
 
 # Antigravity IDE Configuration
 echo "Configuring Antigravity IDE..."
