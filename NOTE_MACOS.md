@@ -72,7 +72,10 @@ sudo xattr -r -d com.apple.quarantine <FILE>
 ## Fix `foxundermoon.shell-format` issue
 
 ```sh
+# For antigravity-ide
 curl --output-dir "$HOME/.antigravity-ide/extensions/foxundermoon.shell-format-7.2.8-universal/dist" -O "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm"
+# For visual-studio-code
+curl --output-dir "$HOME/.vscode/extensions/foxundermoon.shell-format-7.2.8/dist" -O "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm"
 ```
 
 ## Set DNS Servers
