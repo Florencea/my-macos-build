@@ -137,9 +137,27 @@
     "sections": [
       {
         "code": "* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}"
+      },
+      {
+        "code": ".announce,\ndiv.clear:has(a[href='/topics/add']),\n.user-sidebar > div.ui-corner-all.box:nth-of-type(4),\na.download-pp,\na.download-xl {\n    display: none !important;\n}",
+        "domains": [
+          "dmhy.org"
+        ]
+      },
+      {
+        "code": ":where(.theme-host):where(.variable-context) {\n    --gem-sys-typography-markdown-type-scale--p-line-height: 1.75rem;\n}",
+        "domains": [
+          "gemini.google.com"
+        ]
+      },
+      {
+        "code": "nui-banner:has(.license-banner) {\n    display: none !important;\n}\nhtml body,\nh3.mat-mdc-list-base,\nh3.menu-text-color-default,\nh3.menu-text-color-hover,\n.mat-h5,\n.mat-typography .mat-h5,\n.mat-typography h5,\n.mat-h6,\n.mat-typography .mat-h6,\n.mat-typography h6,\n.nui-support-information.link {\n    font-weight: 400 !important;\n}\nbody {\n    --mat-button-toggle-label-text-weight: 400 !important;\n    --mat-dialog-supporting-text-weight: 400 !important;\n    --mat-form-field-container-text-weight: 400 !important;\n    --mat-form-field-filled-label-text-weight: 400 !important;\n    --mat-list-list-item-label-text-weight: 400 !important;\n    --mat-list-list-item-supporting-text-weight: 400 !important;\n    --mat-option-label-text-weight: 400 !important;\n    --mat-radio-label-text-weight: 400 !important;\n    --mat-select-trigger-text-weight: 400 !important;\n    --mat-stepper-header-label-text-weight: 400 !important;\n    --mat-table-row-item-label-text-weight: 400 !important;\n    --mat-table-footer-supporting-text-weight: 400 !important;\n    --mat-tooltip-supporting-text-weight: 400 !important;\n}",
+        "domains": [
+          "nebula.zyxel.com"
+        ]
       }
     ],
-    "updateDate": 1779999198918,
+    "updateDate": 1780056763309,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
     "_rev": 1779472722682,
     "id": 1
@@ -171,7 +189,7 @@
         ]
       }
     ],
-    "updateDate": 1780000899711,
+    "updateDate": 1780056782637,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
     "_rev": 1779472163914,
     "id": 2
