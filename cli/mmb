@@ -3,15 +3,15 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: Open current workspace in Antigravity IDE
+# Description: Open current workspace in VS Code
 # Usage: mmb
 # Example: mmb
 
 # Check commands
-command -v antigravity-ide &>/dev/null || {
-    echo "antigravity-ide is not installed" >&2
+command -v code &>/dev/null || {
+    echo "code is not installed" >&2
     exit 1
 }
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
-antigravity-ide "$SCRIPT_DIR/../"
+code "$SCRIPT_DIR/../"
