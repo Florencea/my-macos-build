@@ -24,9 +24,6 @@ fi
 # Disable auto-updates
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-# Disable Window Animations
-defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
-
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
 
@@ -68,10 +65,7 @@ done
 wait
 
 # Essential casks
-brew install --cask \
-  istat-menus@6 \
-  font-jetbrains-mono \
-  font-inter || true
+brew install --cask font-jetbrains-mono font-source-han-sans-vf istat-menus@6 || true
 
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
@@ -81,9 +75,8 @@ brew install --cask \
   antigravity-ide \
   c0re100-qbittorrent \
   cloudflare-warp \
-  microsoft-edge \
-  logi-options+ \
-  visual-studio-code || true
+  google-chrome \
+  logi-options+ || true
 
 # Antigravity IDE Configuration
 echo "Configuring Antigravity IDE..."
