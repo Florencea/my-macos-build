@@ -26,10 +26,10 @@
             <true/>
             <!-- 強制開啟 DoH (DNS over HTTPS)，不允許降級為傳統明文 DNS -->
             <key>DnsOverHttpsMode</key>
-            <string>secure</string>
+            <string>off</string>
             <!-- 指定 DoH 的查詢範本（此處設定為 Google DNS） -->
-            <key>DnsOverHttpsTemplates</key>
-            <string>https://dns.google/dns-query{?dns}</string>
+            <!-- <key>DnsOverHttpsTemplates</key> -->
+            <!-- <string>https://dns.google/dns-query{?dns}</string> -->
             <!-- 開啟嚴格型防追蹤保護 (Strict Tracking Prevention) -->
             <key>TrackingPrevention</key>
             <integer>2</integer>
