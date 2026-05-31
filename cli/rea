@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: ASS-Combiner: combine .cht.ass to macOS-compatible mp4
+# Description: ASS-Combiner: combine .cht.ass to macOS-compatible mp4, move up, and clean up directory
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
@@ -12,7 +12,7 @@ INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "\033[1mrea\033[0m: ASS-Combiner: combine .cht.ass to macOS-compatible mp4\n" >&2
+  printf "\033[1mrea\033[0m: ASS-Combiner: combine .cht.ass to macOS-compatible mp4, move up, and clean up directory\n" >&2
   printf "Usage: \033[1mrea\033[0m [input_dir]\n" >&2
   printf "       \033[1mrea\033[0m 'input'\n" >&2
   exit 1
@@ -34,33 +34,35 @@ command -v ffprobe &>/dev/null || {
   exit 1
 }
 
-cd "$INPUT_DIR"
+# Resolve paths
+INPUT_BASE="$(basename "$INPUT_DIR")"
+ABS_INPUT_DIR="$(cd "$INPUT_DIR" && pwd)"
+PARENT_DIR="$(dirname "$ABS_INPUT_DIR")"
+
+# Safety guard: prevent deleting root or empty paths
+if [[ "$ABS_INPUT_DIR" == "/" || -z "$ABS_INPUT_DIR" ]]; then
+  echo "Safety guard: ABS_INPUT_DIR cannot be root or empty" >&2
+  exit 1
+fi
 
 ### Input files
-INPUT_BASE="$(basename "$(pwd)")"
 INPUT_FILE=""
-if [[ -f "${INPUT_BASE}.mkv" ]]; then
-  INPUT_FILE="${INPUT_BASE}.mkv"
-elif [[ -f "${INPUT_BASE}.mp4" ]]; then
-  INPUT_FILE="${INPUT_BASE}.mp4"
+if [[ -f "${ABS_INPUT_DIR}/${INPUT_BASE}.mkv" ]]; then
+  INPUT_FILE="${ABS_INPUT_DIR}/${INPUT_BASE}.mkv"
+elif [[ -f "${ABS_INPUT_DIR}/${INPUT_BASE}.mp4" ]]; then
+  INPUT_FILE="${ABS_INPUT_DIR}/${INPUT_BASE}.mp4"
 fi
 
 ### Input cht ass
-INPUT_ASS_TW="${INPUT_BASE}.cht.ass"
-### Input chs ass
-INPUT_ASS_CN="${INPUT_BASE}.chs.ass"
+INPUT_ASS_TW="${ABS_INPUT_DIR}/${INPUT_BASE}.cht.ass"
 
 # Check files
 if [[ -z "$INPUT_FILE" ]]; then
-  echo "File ${INPUT_BASE}.mkv or ${INPUT_BASE}.mp4 not exist" >&2
+  echo "File ${INPUT_BASE}.mkv or ${INPUT_BASE}.mp4 not exist in $INPUT_DIR" >&2
   exit 1
 fi
 [[ -f "$INPUT_ASS_TW" ]] || {
   echo "File $INPUT_ASS_TW not exist" >&2
-  exit 1
-}
-[[ -f "$INPUT_ASS_CN" ]] || {
-  echo "File $INPUT_ASS_CN not exist" >&2
   exit 1
 }
 
@@ -72,7 +74,6 @@ FFMPEG_ARGS=(
   -map 0:v
   -map 0:a?
   -map 1:s
-  -map 2:s
   -c:v copy
 )
 
@@ -95,30 +96,25 @@ fi
 # Convert ASS to mov_text for MP4 compatibility, and set faststart
 FFMPEG_ARGS+=(
   -c:s mov_text
-  -metadata:s:s:0 language=zho -metadata:s:s:0 title="繁體中文"
-  -metadata:s:s:1 language=cmn -metadata:s:s:1 title="簡體中文"
+  -metadata:s:s:0 language=zho -metadata:s:s:0 title="中文"
   -disposition:s:0 default
-  -disposition:s:1 0
   -movflags +faststart
 )
 
 ### Temp File
 TMPFILE="$(mktemp -t "$(basename "$0")").mp4"
-OUTPUT_FILE="${INPUT_BASE}.mp4"
+OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mp4"
 
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
-  -i "$INPUT_ASS_CN" \
   "${FFMPEG_ARGS[@]}" \
   "$TMPFILE"
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
-# Clean up original file if it was a different format
-if [[ "$INPUT_FILE" != "$OUTPUT_FILE" ]]; then
-  rm "$INPUT_FILE"
-fi
+# Clean up input directory entirely
+rm -rf "$ABS_INPUT_DIR"
 
