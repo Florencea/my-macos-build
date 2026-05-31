@@ -25,12 +25,26 @@ command -v ffmpeg &>/dev/null || {
   echo "ffmpeg is not installed" >&2
   exit 1
 }
+command -v ffprobe &>/dev/null || {
+  echo "ffprobe is not installed" >&2
+  exit 1
+}
 
 # Check files
 [[ -f "$INPUT_FILE" ]] || {
   echo "File $INPUT_FILE not exist" >&2
   exit 1
 }
+
+# Detect container format and video codec
+FORMAT=$(ffprobe -v error -show_entries format=format_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+VIDEO_CODEC=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+
+VC_ARGS=(-c:v copy)
+# If container format is not mp4, or video codec is not h264/hevc, re-encode with hevc_videotoolbox
+if [[ ! "$FORMAT" =~ "mp4" ]] || [[ "$VIDEO_CODEC" != "h264" && "$VIDEO_CODEC" != "hevc" ]]; then
+  VC_ARGS=(-c:v hevc_videotoolbox -q:v 45 -tag:v hvc1)
+fi
 
 ### Output file
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_clip.mp4"
@@ -41,8 +55,8 @@ ffmpeg -y -hide_banner \
   -i "$INPUT_FILE" \
   -t "$DURATION" \
   -map 0:v:0 \
-  -map 0:a:0 \
-  -c:v copy \
+  -map 0:a:0? \
+  "${VC_ARGS[@]}" \
   -c:a aac \
   -map_chapters -1 \
   -movflags +faststart \
