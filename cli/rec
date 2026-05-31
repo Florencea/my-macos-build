@@ -55,19 +55,42 @@ TMPFILE="${WORKSPACE_DIR}/.tmp_$(basename "$0")_$$.mp4"
 # Set trap for cleanup of temp files
 trap 'rm -f "$TMP_PY" "$TMP_ASS" "$TMP_ASS_TRANS" "$TMP_FILTERED" "$TMPFILE"' EXIT
 
-# Get default subtitle stream index if any
-SUB_INDEX=$(ffprobe -v error -select_streams s -show_entries stream=index:disposition=default -of csv=p=0 "$INPUT_FILE" | grep ",1" | cut -d, -f1 | head -n 1)
+# Check if a codec is a supported text subtitle format
+is_text_codec() {
+  local codec="$1"
+  [[ "$codec" == "ass" || "$codec" == "ssa" || "$codec" == "subrip" || "$codec" == "srt" || "$codec" == "mov_text" || "$codec" == "webvtt" ]]
+}
 
-if [[ -z "$SUB_INDEX" ]]; then
-  SUB_INDEX=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | head -n 1)
-fi
+# Get all subtitle streams info
+# Output format per line: codec_name,is_default (e.g., subrip,1 or ass,0)
+mapfile -t SUB_INFO < <(ffprobe -v error -select_streams s -show_entries stream=codec_name:disposition=default -of csv=p=0 "$INPUT_FILE" || true)
 
+TARGET_SUB_IDX=""
+SUB_CODEC=""
 HAS_TEXT_SUB=false
-if [[ -n "$SUB_INDEX" ]]; then
-  SUB_CODEC=$(ffprobe -v error -select_streams "0:${SUB_INDEX}" -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE")
-  if [[ "$SUB_CODEC" == "ass" || "$SUB_CODEC" == "ssa" || "$SUB_CODEC" == "subrip" || "$SUB_CODEC" == "srt" || "$SUB_CODEC" == "mov_text" || "$SUB_CODEC" == "webvtt" ]]; then
+
+# 1. Look for a default text subtitle stream
+for i in "${!SUB_INFO[@]}"; do
+  IFS=',' read -r codec is_default <<< "${SUB_INFO[i]}"
+  if [[ "$is_default" == "1" ]] && is_text_codec "$codec"; then
+    TARGET_SUB_IDX="$i"
+    SUB_CODEC="$codec"
     HAS_TEXT_SUB=true
+    break
   fi
+done
+
+# 2. If no default text subtitle stream found, use the first text subtitle stream
+if [[ "$HAS_TEXT_SUB" == "false" ]]; then
+  for i in "${!SUB_INFO[@]}"; do
+    IFS=',' read -r codec is_default <<< "${SUB_INFO[i]}"
+    if is_text_codec "$codec"; then
+      TARGET_SUB_IDX="$i"
+      SUB_CODEC="$codec"
+      HAS_TEXT_SUB=true
+      break
+    fi
+  done
 fi
 
 # Get video and audio codecs to configure compatibility flags
@@ -156,8 +179,8 @@ with open(output_path, "w", encoding="utf-8") as f:
     f.writelines(output_lines)
 EOF
 
-  # Extract subtitle
-  ffmpeg -y -hide_banner -loglevel error -i "$INPUT_FILE" -map "0:${SUB_INDEX}" "$TMP_ASS"
+  # Extract default subtitle
+  ffmpeg -y -hide_banner -loglevel error -i "$INPUT_FILE" -map "0:s:${TARGET_SUB_IDX}" "$TMP_ASS"
   
   # Translate to Traditional Chinese
   python3 "$TMP_PY" "$TMP_ASS" "$TMP_ASS_TRANS"
