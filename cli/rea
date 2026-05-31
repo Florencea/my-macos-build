@@ -109,8 +109,8 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mp4"
 # Set trap for cleanup of temp files
 trap 'rm -f "$TMP_ASS" "$TMPFILE"' EXIT
 
-# Strip ASS style override tags so QuickTime displays clean plain text
-sed -E 's/\{[^}]*\}//g' "$INPUT_ASS_TW" > "$TMP_ASS"
+# Strip ASS style override tags and force primary text color to white for readability in QuickTime
+sed -E 's/\{[^}]*\}//g' "$INPUT_ASS_TW" | awk -F, 'BEGIN {OFS=","} /^Style:/ {$4="&H00FFFFFF"} {print}' > "$TMP_ASS"
 
 ffmpeg -y \
   -hide_banner \
