@@ -155,7 +155,7 @@ ffmpeg -y -hide_banner -loglevel error -stats \
   -ss <START> \
   -i <INPUT_FILE> \
   -t <DURATION> \
-  -vf "fps=<FRAME_RATE>,scale=<WIDTH>:-1:flags=lanczos" \
+  -vf "fps=<FRAME_RATE>,scale=<WIDTH>:-1:flags=lanczos,format=yuv420p" \
   -f yuv4mpegpipe - | \
   gifski -q \
     -Q <QUALITY_1_TO_100> \
