@@ -96,7 +96,7 @@ fi
 FFMPEG_ARGS+=(
   -c:s mov_text
   -metadata:s:s:0 language=zho -metadata:s:s:0 title="繁體中文"
-  -metadata:s:s:1 language=chi -metadata:s:s:1 title="簡體中文"
+  -metadata:s:s:1 language=cmn -metadata:s:s:1 title="簡體中文"
   -disposition:s:0 default
   -disposition:s:1 0
   -movflags +faststart
