@@ -3,24 +3,32 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: Re-Encoder: re-encode a mp4
+# Description: Re-Encoder: package movie to macOS-compatible mp4 with embedded default subtitle
 # Usage: rec [input_file]
-# Example: rec 'input.mp4'
+# Example: rec 'input.mkv'
 
 ### Args
 INPUT_FILE=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_FILE" ]]; then
-  printf "\033[1mrec\033[0m: Re-Encoder: re-encode a mp4\n" >&2
+  printf "\033[1mrec\033[0m: Re-Encoder: package movie to macOS-compatible mp4 with embedded default subtitle\n" >&2
   printf "Usage: \033[1mrec\033[0m [input_file]\n" >&2
-  printf "       \033[1mrec\033[0m 'input.mp4'\n" >&2
+  printf "       \033[1mrec\033[0m 'input.mkv'\n" >&2
   exit 1
 fi
 
 # Check commands
 command -v ffmpeg &>/dev/null || {
   echo "ffmpeg is not installed" >&2
+  exit 1
+}
+command -v ffprobe &>/dev/null || {
+  echo "ffprobe is not installed" >&2
+  exit 1
+}
+command -v python3 &>/dev/null || {
+  echo "python3 is not installed" >&2
   exit 1
 }
 
@@ -30,20 +38,165 @@ command -v ffmpeg &>/dev/null || {
   exit 1
 }
 
-### Temp File
-TMPFILE="$(mktemp -t "$(basename $0)").mp4"
+# Resolve output path
+INPUT_DIR="$(dirname "$INPUT_FILE")"
+INPUT_BASE="$(basename "$INPUT_FILE")"
+INPUT_NAME="${INPUT_BASE%.*}"
+OUTPUT_FILE="${INPUT_DIR}/${INPUT_NAME}.mp4"
 
-ffmpeg -y \
-  -hide_banner \
-  -loglevel error \
-  -i "$INPUT_FILE" \
-  -map 0:v:0 \
-  -map 0:a \
-  -map 0:s? \
-  -c copy \
-  -c:s mov_text \
-  -movflags +faststart \
-  -f mp4 \
-  "$TMPFILE"
+# Get absolute path of workspace for temp files
+WORKSPACE_DIR="$(pwd)"
+TMP_PY="${WORKSPACE_DIR}/.tmp_$(basename "$0")_$$.py"
+TMP_ASS="${WORKSPACE_DIR}/.tmp_$(basename "$0")_$$.ass"
+TMP_ASS_TRANS="${WORKSPACE_DIR}/.tmp_$(basename "$0")_trans_$$.ass"
+TMP_FILTERED="${WORKSPACE_DIR}/.tmp_filtered_$(basename "$0")_$$.ass"
+TMPFILE="${WORKSPACE_DIR}/.tmp_$(basename "$0")_$$.mp4"
 
-mv "$TMPFILE" "$INPUT_FILE"
+# Set trap for cleanup of temp files
+trap 'rm -f "$TMP_PY" "$TMP_ASS" "$TMP_ASS_TRANS" "$TMP_FILTERED" "$TMPFILE"' EXIT
+
+# Get default subtitle stream index if any
+SUB_INDEX=$(ffprobe -v error -select_streams s -show_entries stream=index:disposition=default -of csv=p=0 "$INPUT_FILE" | grep ",1" | cut -d, -f1 | head -n 1)
+
+if [[ -z "$SUB_INDEX" ]]; then
+  SUB_INDEX=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | head -n 1)
+fi
+
+HAS_TEXT_SUB=false
+if [[ -n "$SUB_INDEX" ]]; then
+  SUB_CODEC=$(ffprobe -v error -select_streams "0:${SUB_INDEX}" -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE")
+  if [[ "$SUB_CODEC" == "ass" || "$SUB_CODEC" == "ssa" || "$SUB_CODEC" == "subrip" || "$SUB_CODEC" == "srt" || "$SUB_CODEC" == "mov_text" || "$SUB_CODEC" == "webvtt" ]]; then
+    HAS_TEXT_SUB=true
+  fi
+fi
+
+# Get video and audio codecs to configure compatibility flags
+VIDEO_CODEC=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE")
+AUDIO_CODEC=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+
+FFMPEG_ARGS=()
+
+# HEVC needs tag:v hvc1 to be previewable/playable natively in macOS
+if [[ "$VIDEO_CODEC" == "hevc" || "$VIDEO_CODEC" == "h265" ]]; then
+  FFMPEG_ARGS+=(-tag:v hvc1)
+elif [[ "$VIDEO_CODEC" == "av1" || "$VIDEO_CODEC" == "vp9" ]]; then
+  printf "\033[33mWarning\033[0m: Video codec is %s, which is not natively supported by macOS Quick Look.\n" "$VIDEO_CODEC" >&2
+fi
+
+# Ensure audio codec compatibility with macOS (AAC)
+if [[ -n "$AUDIO_CODEC" ]]; then
+  if [[ "$AUDIO_CODEC" == "aac" ]]; then
+    FFMPEG_ARGS+=(-c:a copy)
+  else
+    FFMPEG_ARGS+=(-c:a aac)
+  fi
+fi
+
+if [[ "$HAS_TEXT_SUB" == "true" ]]; then
+  # Generate inline Python script for Simplified-to-Traditional translation using macOS CoreFoundation
+  cat << 'EOF' > "$TMP_PY"
+import sys
+import ctypes
+
+cf = ctypes.CDLL("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")
+cf.CFStringCreateWithCString.restype = ctypes.c_void_p
+cf.CFStringCreateWithCString.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_uint32]
+cf.CFStringCreateMutableCopy.restype = ctypes.c_void_p
+cf.CFStringCreateMutableCopy.argtypes = [ctypes.c_void_p, ctypes.c_long, ctypes.c_void_p]
+cf.CFStringTransform.restype = ctypes.c_bool
+cf.CFStringTransform.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_bool]
+cf.CFStringGetCString.restype = ctypes.c_bool
+cf.CFStringGetCString.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_long, ctypes.c_uint32]
+cf.CFRelease.argtypes = [ctypes.c_void_p]
+
+kCFStringEncodingUTF8 = 0x08000100
+
+def hans_to_hant(text):
+    if not text:
+        return text
+    text_bytes = text.encode("utf-8")
+    cf_str = cf.CFStringCreateWithCString(None, text_bytes, kCFStringEncodingUTF8)
+    if not cf_str: return text
+    cf_mut_str = cf.CFStringCreateMutableCopy(None, 0, cf_str)
+    cf.CFRelease(cf_str)
+    if not cf_mut_str: return text
+    cf_transform = cf.CFStringCreateWithCString(None, b"Hans-Hant", kCFStringEncodingUTF8)
+    if not cf_transform:
+        cf.CFRelease(cf_mut_str)
+        return text
+    success = cf.CFStringTransform(cf_mut_str, None, cf_transform, False)
+    cf.CFRelease(cf_transform)
+    if not success:
+        cf.CFRelease(cf_mut_str)
+        return text
+    buf_size = len(text_bytes) * 4 + 1
+    buf = ctypes.create_string_buffer(buf_size)
+    get_success = cf.CFStringGetCString(cf_mut_str, buf, buf_size, kCFStringEncodingUTF8)
+    cf.CFRelease(cf_mut_str)
+    if get_success:
+        return buf.value.decode("utf-8")
+    return text
+
+input_path = sys.argv[1]
+output_path = sys.argv[2]
+
+with open(input_path, "r", encoding="utf-8", errors="ignore") as f:
+    lines = f.readlines()
+
+output_lines = []
+for line in lines:
+    if line.startswith("Dialogue:"):
+        parts = line.split(",", 9)
+        if len(parts) > 9:
+            parts[9] = hans_to_hant(parts[9])
+            line = ",".join(parts)
+    output_lines.append(line)
+
+with open(output_path, "w", encoding="utf-8") as f:
+    f.writelines(output_lines)
+EOF
+
+  # Extract subtitle
+  ffmpeg -y -hide_banner -loglevel error -i "$INPUT_FILE" -map "0:${SUB_INDEX}" "$TMP_ASS"
+  
+  # Translate to Traditional Chinese
+  python3 "$TMP_PY" "$TMP_ASS" "$TMP_ASS_TRANS"
+  
+  # Strip style tags and force text color to white
+  sed -E 's/\{[^}]*\}//g' "$TMP_ASS_TRANS" | awk -F, 'BEGIN {OFS=","} /^Style:/ {$4="&H00FFFFFF"} {print}' > "$TMP_FILTERED"
+
+  ffmpeg -y \
+    -hide_banner \
+    -loglevel error \
+    -i "$INPUT_FILE" \
+    -i "$TMP_FILTERED" \
+    -map 0:v \
+    -map 0:a? \
+    -map 1:s \
+    -c:v copy \
+    "${FFMPEG_ARGS[@]}" \
+    -c:s mov_text \
+    -metadata:s:s:0 language=zho -metadata:s:s:0 title="中文" \
+    -disposition:s:0 default \
+    -movflags +faststart \
+    "$TMPFILE"
+else
+  # No text subtitle found, just copy video/audio
+  ffmpeg -y \
+    -hide_banner \
+    -loglevel error \
+    -i "$INPUT_FILE" \
+    -map 0:v \
+    -map 0:a? \
+    -c:v copy \
+    "${FFMPEG_ARGS[@]}" \
+    -movflags +faststart \
+    "$TMPFILE"
+fi
+
+mv "$TMPFILE" "$OUTPUT_FILE"
+
+# Clean up original file if it was a different format
+if [[ "$INPUT_FILE" != "$OUTPUT_FILE" ]]; then
+  rm -f "$INPUT_FILE"
+fi
