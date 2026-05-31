@@ -101,15 +101,22 @@ FFMPEG_ARGS+=(
   -movflags +faststart
 )
 
-### Temp File
+### Temp Files
+TMP_ASS="$(mktemp -t "$(basename "$0")").cht.ass"
 TMPFILE="$(mktemp -t "$(basename "$0")").mp4"
 OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mp4"
+
+# Set trap for cleanup of temp files
+trap 'rm -f "$TMP_ASS" "$TMPFILE"' EXIT
+
+# Strip ASS style override tags so QuickTime displays clean plain text
+sed -E 's/\{[^}]*\}//g' "$INPUT_ASS_TW" > "$TMP_ASS"
 
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
-  -i "$INPUT_ASS_TW" \
+  -i "$TMP_ASS" \
   "${FFMPEG_ARGS[@]}" \
   "$TMPFILE"
 
