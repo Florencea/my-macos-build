@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: ASS-Combiner: combile .cht.ass to mkv
+# Description: ASS-Combiner: combine .cht.ass to macOS-compatible mp4
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
@@ -12,7 +12,7 @@ INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "\033[1mrea\033[0m: ASS-Combiner: combile .cht.ass to mkv\n" >&2
+  printf "\033[1mrea\033[0m: ASS-Combiner: combine .cht.ass to macOS-compatible mp4\n" >&2
   printf "Usage: \033[1mrea\033[0m [input_dir]\n" >&2
   printf "       \033[1mrea\033[0m 'input'\n" >&2
   exit 1
@@ -21,6 +21,10 @@ fi
 # Check commands
 command -v ffmpeg &>/dev/null || {
   echo "ffmpeg is not installed" >&2
+  exit 1
+}
+command -v ffprobe &>/dev/null || {
+  echo "ffprobe is not installed" >&2
   exit 1
 }
 
@@ -32,18 +36,25 @@ command -v ffmpeg &>/dev/null || {
 
 cd "$INPUT_DIR"
 
-### Input file
-INPUT_FILE="$(basename "$(pwd)").mkv"
+### Input files
+INPUT_BASE="$(basename "$(pwd)")"
+INPUT_FILE=""
+if [[ -f "${INPUT_BASE}.mkv" ]]; then
+  INPUT_FILE="${INPUT_BASE}.mkv"
+elif [[ -f "${INPUT_BASE}.mp4" ]]; then
+  INPUT_FILE="${INPUT_BASE}.mp4"
+fi
+
 ### Input cht ass
-INPUT_ASS_TW="$(basename "$(pwd)").cht.ass"
+INPUT_ASS_TW="${INPUT_BASE}.cht.ass"
 ### Input chs ass
-INPUT_ASS_CN="$(basename "$(pwd)").chs.ass"
+INPUT_ASS_CN="${INPUT_BASE}.chs.ass"
 
 # Check files
-[[ -f "$INPUT_FILE" ]] || {
-  echo "File $INPUT_FILE not exist" >&2
+if [[ -z "$INPUT_FILE" ]]; then
+  echo "File ${INPUT_BASE}.mkv or ${INPUT_BASE}.mp4 not exist" >&2
   exit 1
-}
+fi
 [[ -f "$INPUT_ASS_TW" ]] || {
   echo "File $INPUT_ASS_TW not exist" >&2
   exit 1
@@ -53,8 +64,47 @@ INPUT_ASS_CN="$(basename "$(pwd)").chs.ass"
   exit 1
 }
 
+# Get video and audio codecs to configure compatibility flags
+VIDEO_CODEC=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE")
+AUDIO_CODEC=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+
+FFMPEG_ARGS=(
+  -map 0:v
+  -map 0:a?
+  -map 1:s
+  -map 2:s
+  -c:v copy
+)
+
+# HEVC needs tag:v hvc1 to be previewable/playable natively in macOS
+if [[ "$VIDEO_CODEC" == "hevc" || "$VIDEO_CODEC" == "h265" ]]; then
+  FFMPEG_ARGS+=(-tag:v hvc1)
+elif [[ "$VIDEO_CODEC" == "av1" || "$VIDEO_CODEC" == "vp9" ]]; then
+  printf "\033[33mWarning\033[0m: Video codec is %s, which is not natively supported by macOS Quick Look.\n" "$VIDEO_CODEC" >&2
+fi
+
+# Ensure audio codec compatibility with macOS (AAC)
+if [[ -n "$AUDIO_CODEC" ]]; then
+  if [[ "$AUDIO_CODEC" == "aac" ]]; then
+    FFMPEG_ARGS+=(-c:a copy)
+  else
+    FFMPEG_ARGS+=(-c:a aac)
+  fi
+fi
+
+# Convert ASS to mov_text for MP4 compatibility, and set faststart
+FFMPEG_ARGS+=(
+  -c:s mov_text
+  -metadata:s:s:0 language=zho -metadata:s:s:0 title="繁體中文"
+  -metadata:s:s:1 language=chi -metadata:s:s:1 title="簡體中文"
+  -disposition:s:0 default
+  -disposition:s:1 0
+  -movflags +faststart
+)
+
 ### Temp File
-TMPFILE="$(mktemp -t "$(basename $0)").mkv"
+TMPFILE="$(mktemp -t "$(basename "$0")").mp4"
+OUTPUT_FILE="${INPUT_BASE}.mp4"
 
 ffmpeg -y \
   -hide_banner \
@@ -62,15 +112,13 @@ ffmpeg -y \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
   -i "$INPUT_ASS_CN" \
-  -map 0:v \
-  -map 0:a \
-  -map 1:s \
-  -map 2:s \
-  -c copy \
-  -metadata:s:s:0 language=chi -metadata:s:s:0 title="繁體中文" \
-  -metadata:s:s:1 language=chi -metadata:s:s:1 title="簡體中文" \
-  -disposition:s:0 default \
-  -disposition:s:1 0 \
+  "${FFMPEG_ARGS[@]}" \
   "$TMPFILE"
 
-mv "$TMPFILE" "$INPUT_FILE"
+mv "$TMPFILE" "$OUTPUT_FILE"
+
+# Clean up original file if it was a different format
+if [[ "$INPUT_FILE" != "$OUTPUT_FILE" ]]; then
+  rm "$INPUT_FILE"
+fi
+
