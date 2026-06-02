@@ -59,7 +59,7 @@ curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/confi
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
 curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish.txt -o "$HOME/.config/fish/config.fish"
 
-for comp in clall ebk mdig mkclp mkgif mkgifv mmb rea rsl ua unodev up upp ytalb ytclp ytgif ytgifv ytmus ytmusfull; do
+for comp in clall ebk mdig mkclp mkgif mkgifv mmb rea rsl ua unodev up upp ytalb ytmus ytmusfull; do
   curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/completions/$comp.fish" -o "$HOME/.config/fish/completions/$comp.fish" &
 done
 wait
