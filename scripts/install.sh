@@ -65,7 +65,7 @@ done
 wait
 
 # Essential casks
-brew install --cask font-jetbrains-mono font-inter istat-menus@6 || true
+brew install --cask font-jetbrains-mono istat-menus@6 || true
 
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
