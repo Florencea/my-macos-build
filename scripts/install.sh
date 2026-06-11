@@ -75,7 +75,7 @@ brew install --cask \
   antigravity-ide \
   c0re100-qbittorrent \
   cloudflare-warp \
-  google-chrome \
+  microsoft-edge \
   logi-options+ || true
 
 # Antigravity IDE Configuration
