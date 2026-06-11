@@ -21,8 +21,10 @@ else
   echo "Homebrew exist, skip Homebrew installation"
 fi
 
-# Disable auto-updates
+# Disable auto-updates, env hints, and auto-confirm (Ask mode) for Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_ASK=1
 
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -42,7 +44,7 @@ chmod +x "$HOME/.config/git/hooks/pre-commit"
 git config --global core.hooksPath "$HOME/.config/git/hooks"
 
 # Fish shell
-brew install fish
+brew install --formula fish
 if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 fi
@@ -106,7 +108,7 @@ else
 fi
 
 # CLI tools
-brew install \
+brew install --formula \
   bash \
   curl \
   ffmpeg \
