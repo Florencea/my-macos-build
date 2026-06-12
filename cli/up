@@ -1,27 +1,165 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: Check for Node.js package updates in the current directory
+# Description: Check and update Node.js package dependencies with multi-commit workflow
 # Usage: up
 # Example: up
 
-# Check commands
-command -v npm &>/dev/null || {
-    echo "npm is not installed" >&2
-    exit 1
+# Helper functions for logging with timestamp and colors
+log() {
+  printf "\033[1;30m[%s]\033[0m \033[1;34m%s\033[0m\n" "$(date +"%H:%M:%S")" "$1"
 }
-command -v npx &>/dev/null || {
-    echo "npx is not installed" >&2
-    exit 1
+warn() {
+  printf "\033[1;30m[%s]\033[0m \033[1;31mWarning: %s\033[0m\n" "$(date +"%H:%M:%S")" "$1" >&2
 }
 
-### Check is node project exist
+# 1. Check required tools
+for cmd in git npm npx jq; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  }
+done
+
+# 2. Check project files
 [[ -f "package.json" ]] || {
-    echo "File package.json not exist" >&2
-    exit 1
+  echo "Error: File package.json does not exist" >&2
+  exit 1
+}
+[[ -f "package-lock.json" ]] || {
+  echo "Error: File package-lock.json does not exist" >&2
+  exit 1
 }
 
-### Check package to update
-npx -y npm-check-updates@latest -p npm -t latest --install never
+# 3. Sync repository
+log "Syncing repository..."
+git pull --quiet
+
+# 4. Check all updates (Read-only check)
+log "Checking for all available updates..."
+npx -y npm-check-updates@latest -p npm -t latest --install never || true
+
+# 5. Check minor updates for the update workflow
+log "Checking for minor updates..."
+NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
+
+if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
+  log "No minor updates available to install."
+  exit 0
+fi
+
+# Ask the user if they want to proceed with updates
+printf "\n"
+read -p "發現 minor 更新。若需要更新可直接輸入 y 繼續，其他鍵則退出: " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  log "已取消更新。"
+  exit 0
+fi
+
+# Store upgrades
+declare -A upgrades
+
+# Read upgrades into associative array
+while IFS=$'\t' read -r pkg ver; do
+  [[ -z "$pkg" ]] && continue
+  upgrades["$pkg"]="$ver"
+done < <(echo "$NCU_JSON" | jq -r 'to_entries | .[] | "\(.key)\t\(.value)"')
+
+# Define grouping rules
+get_group_key() {
+  local pkg="${1:-}"
+  if [[ "$pkg" == "vitest" || "$pkg" == @vitest/* ]]; then
+    echo "vitest"
+  elif [[ "$pkg" == "react" || "$pkg" == "react-dom" || "$pkg" == @types/react || "$pkg" == @types/react-dom ]]; then
+    echo "react"
+  elif [[ "$pkg" == eslint* || "$pkg" == @typescript-eslint/* ]]; then
+    echo "eslint"
+  elif [[ "$pkg" == @nestjs/* ]]; then
+    echo "nestjs"
+  elif [[ "$pkg" == "prisma" || "$pkg" == @prisma/* ]]; then
+    echo "prisma"
+  elif [[ "$pkg" == "playwright" || "$pkg" == @playwright/* ]]; then
+    echo "playwright"
+  elif [[ "$pkg" == @babel/* ]]; then
+    echo "babel"
+  elif [[ "$pkg" == @tanstack/* ]]; then
+    echo "tanstack"
+  elif [[ "$pkg" == vite || "$pkg" == @vitejs/* || "$pkg" == vite-plugin-* ]]; then
+    echo "vite"
+  else
+    echo "indiv-$pkg"
+  fi
+}
+
+# Group packages to resolve conflicts
+declare -A groups
+for pkg in "${!upgrades[@]}"; do
+  grp="$(get_group_key "$pkg")"
+  ver="${upgrades[$pkg]}"
+  if [[ -z "${groups[$grp]:-}" ]]; then
+    groups["$grp"]="$pkg@$ver"
+  else
+    groups["$grp"]="${groups[$grp]} $pkg@$ver"
+  fi
+done
+
+# Clear node_modules and lockfile for clean nested resolution
+log "Rebuilding lockfile and committing upgrades..."
+rm -rf node_modules package-lock.json
+
+# Install and commit groups
+for grp in "${!groups[@]}"; do
+  pkgs_in_group="${groups[$grp]}"
+
+  # Process upgrades: print transitions and build commit message
+  commit_msg_parts=""
+  for item in $pkgs_in_group; do
+    name="${item%@*}"
+    new_ver="${item##*@}"
+    old_ver="$(jq -r ".dependencies[\"$name\"] // .devDependencies[\"$name\"] // .peerDependencies[\"$name\"] // \"?\"" package.json)"
+
+    # Print transition logs with color
+    printf "  %s  %s  \033[1;32m→\033[0m  \033[1;32m%s\033[0m\n" "$name" "$old_ver" "$new_ver"
+
+    # Build plaintext commit message parts
+    part="$name $old_ver → $new_ver"
+    if [[ -z "$commit_msg_parts" ]]; then
+      commit_msg_parts="$part"
+    else
+      commit_msg_parts="$commit_msg_parts, $part"
+    fi
+  done
+
+  # Install group and write lockfile
+  if npm install $pkgs_in_group --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
+    git add package.json package-lock.json
+    git commit -q -m "chore(deps): update dependency $commit_msg_parts"
+  else
+    warn "Failed to install group [$grp] ($pkgs_in_group). Skipping..."
+    # Rollback modifications on failure
+    git checkout -- package.json package-lock.json
+  fi
+done
+
+# Push all commits to remote
+log "Pushing dependency commits..."
+git push -q
+
+# 6. Sync lockfile
+# Ensure lockfile integrity
+log "Cleaning lockfile..."
+npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
+
+if [[ -n "$(git status --short package-lock.json)" ]]; then
+  git add package-lock.json
+  git commit -q -m "chore(deps): sync and clean lockfile"
+  git push -q
+fi
+
+# 7. Reinstall node_modules
+log "Reinstalling local node_modules..."
+rm -rf node_modules
+npm ci
