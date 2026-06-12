@@ -52,10 +52,10 @@ fi
 
 # Ask the user if they want to proceed with updates
 printf "\n"
-read -p "發現 minor 更新。若需要更新可直接輸入 y 繼續，其他鍵則退出: " -n 1 -r
+read -p "Minor updates found. Press 'y' to upgrade, or any other key to exit: " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-  log "已取消更新。"
+  log "Upgrade cancelled."
   exit 0
 fi
 
