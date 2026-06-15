@@ -82,14 +82,6 @@ brew install --cask \
 
 # Antigravity IDE Configuration
 echo "Configuring Antigravity IDE..."
-AG_USER_DIR="$HOME/Library/Application Support/Antigravity IDE/User"
-mkdir -p "$AG_USER_DIR"
-if [ ! -f "$AG_USER_DIR/settings.json" ]; then
-  echo "{}" >"$AG_USER_DIR/settings.json"
-fi
-if [ ! -f "$AG_USER_DIR/keybindings.json" ]; then
-  echo "[]" >"$AG_USER_DIR/keybindings.json"
-fi
 
 AG_CLI=""
 if command -v agy-ide &>/dev/null; then
