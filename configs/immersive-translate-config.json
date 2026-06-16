@@ -41,7 +41,7 @@
   "isEnableNotification": false,
   "isShowContextMenu": false,
   "loadingTheme": "none",
-  "localUpdatedAt": "2026-06-10T11:23:25.569Z",
+  "localUpdatedAt": "2026-06-16T14:12:06.744Z",
   "modifiedBySystem": true,
   "monkeyH5FloatBall": {
     "afterInstalledAt": "",
@@ -195,13 +195,13 @@
       "blog.cloudflare.com"
     ]
   },
-  "updatedAt": "2026-06-10T11:23:25.569Z",
+  "updatedAt": "2026-06-16T14:12:06.744Z",
   "userTranslationServices": {
     "translationService": "google-free"
   },
   "terms": {
     "version": 1,
-    "exportedAt": "2026-06-10T11:23:39.786Z",
+    "exportedAt": "2026-06-16T14:16:25.146Z",
     "data": [
       {
         "id": "default",
