@@ -131,9 +131,16 @@ if [ -n "$IDE_CLI" ]; then
       done
     fi
   fi
+
+  # Fix foxundermoon.shell-format issue by downloading wasm
+  echo "Fixing foxundermoon.shell-format issue..."
+  WASM_DIR="$HOME/.antigravity-ide/extensions/foxundermoon.shell-format-7.2.8-universal/dist"
+  mkdir -p "$WASM_DIR"
+  curl -fsSL "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm" -o "$WASM_DIR/one_ini_bg.wasm" || echo "Failed to download wasm for shell-format"
 else
   echo "Warning: Antigravity IDE CLI not found. Extensions were not installed via CLI."
 fi
+
 
 
 # Node.js config
