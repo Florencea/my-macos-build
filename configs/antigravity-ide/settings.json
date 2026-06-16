@@ -10,6 +10,7 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "'JetBrains Mono', monospace",
+  "editor.fontLigatures": true,
   "editor.formatOnSave": true,
   "editor.guides.bracketPairs": "active",
   "editor.multiCursorModifier": "ctrlCmd",
