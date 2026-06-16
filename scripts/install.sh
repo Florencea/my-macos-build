@@ -112,6 +112,30 @@ mkdir -p "$HOME/.antigravity-ide/extensions"
 curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/settings.json" -o "$HOME/Library/Application Support/Antigravity IDE/User/settings.json"
 curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/extensions.json" -o "$HOME/.antigravity-ide/extensions/extensions.json"
 
+# Automatically install extensions via CLI
+if command -v antigravity-ide &>/dev/null; then
+  IDE_CLI="antigravity-ide"
+elif [ -f "/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide" ]; then
+  IDE_CLI="/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
+else
+  IDE_CLI=""
+fi
+
+if [ -n "$IDE_CLI" ]; then
+  echo "Installing Antigravity IDE extensions..."
+  if [ -f "$HOME/.antigravity-ide/extensions/extensions.json" ]; then
+    EXT_LIST=$(jq -r '.[].identifier.id' "$HOME/.antigravity-ide/extensions/extensions.json" 2>/dev/null || true)
+    if [ -n "$EXT_LIST" ]; then
+      for ext in $EXT_LIST; do
+        "$IDE_CLI" --install-extension "$ext" || echo "Failed to install extension: $ext"
+      done
+    fi
+  fi
+else
+  echo "Warning: Antigravity IDE CLI not found. Extensions were not installed via CLI."
+fi
+
+
 # Node.js config
 fnm install --lts
 fnm default lts-latest
