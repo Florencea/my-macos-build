@@ -1,0 +1,341 @@
+[
+  {
+    "identifier": {
+      "id": "astro-build.astro-vscode",
+      "uuid": "1fbbc8b0-7432-4b7e-8774-3336151da2f3"
+    },
+    "version": "2.16.13",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.13-darwin-arm64",
+      "scheme": "file"
+    },
+    "relativeLocation": "astro-build.astro-vscode-2.16.13-darwin-arm64",
+    "metadata": {
+      "installedTimestamp": 1781108347318,
+      "pinned": false,
+      "source": "gallery",
+      "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
+      "publisherId": "6c30d82f-e0d4-488a-a4a3-860c0c90001f",
+      "publisherDisplayName": "Astro",
+      "targetPlatform": "darwin-arm64",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "dbaeumer.vscode-eslint",
+      "uuid": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a"
+    },
+    "version": "3.0.24",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/dbaeumer.vscode-eslint-3.0.24-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "dbaeumer.vscode-eslint-3.0.24-universal",
+    "metadata": {
+      "installedTimestamp": 1781108351602,
+      "pinned": false,
+      "source": "gallery",
+      "id": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a",
+      "publisherId": "29859a75-d81b-4f0e-8578-2c80ecee6f99",
+      "publisherDisplayName": "dbaeumer",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "donjayamanne.githistory",
+      "uuid": "5960f38e-0bbe-4644-8f9c-9c8824e82511"
+    },
+    "version": "0.6.20",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/donjayamanne.githistory-0.6.20-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "donjayamanne.githistory-0.6.20-universal",
+    "metadata": {
+      "installedTimestamp": 1781108354013,
+      "pinned": false,
+      "source": "gallery",
+      "id": "5960f38e-0bbe-4644-8f9c-9c8824e82511",
+      "publisherId": "1ba8bd00-2ad1-4be0-a007-5b4b954c1ee7",
+      "publisherDisplayName": "donjayamanne",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "esbenp.prettier-vscode",
+      "uuid": "96fa4707-6983-4489-b7c5-d5ffdfdcce90"
+    },
+    "version": "12.4.0",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/esbenp.prettier-vscode-12.4.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "esbenp.prettier-vscode-12.4.0-universal",
+    "metadata": {
+      "installedTimestamp": 1781108356235,
+      "pinned": false,
+      "source": "gallery",
+      "id": "96fa4707-6983-4489-b7c5-d5ffdfdcce90",
+      "publisherId": "d16f4e39-2ffb-44e3-9c0d-79d873570e3a",
+      "publisherDisplayName": "Prettier",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "foxundermoon.shell-format",
+      "uuid": "5fb19573-2183-4cf2-b53d-0fb869dae7ae"
+    },
+    "version": "7.2.8",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/foxundermoon.shell-format-7.2.8-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "foxundermoon.shell-format-7.2.8-universal",
+    "metadata": {
+      "installedTimestamp": 1781108358599,
+      "pinned": false,
+      "source": "gallery",
+      "id": "5fb19573-2183-4cf2-b53d-0fb869dae7ae",
+      "publisherId": "c5bb2216-aaba-47a1-962e-5561e40c03c5",
+      "publisherDisplayName": "foxundermoon",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "github.github-vscode-theme",
+      "uuid": "7328a705-91fc-49e6-8293-da6f112e482d"
+    },
+    "version": "6.3.5",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/github.github-vscode-theme-6.3.5-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "github.github-vscode-theme-6.3.5-universal",
+    "metadata": {
+      "installedTimestamp": 1781108360719,
+      "pinned": false,
+      "source": "gallery",
+      "id": "7328a705-91fc-49e6-8293-da6f112e482d",
+      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+      "publisherDisplayName": "GitHub",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "mads-hartmann.bash-ide-vscode",
+      "uuid": "b1b0f283-8246-4e90-832e-a6c409d378d1"
+    },
+    "version": "1.43.0",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/mads-hartmann.bash-ide-vscode-1.43.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "mads-hartmann.bash-ide-vscode-1.43.0-universal",
+    "metadata": {
+      "installedTimestamp": 1781108363185,
+      "pinned": false,
+      "source": "gallery",
+      "id": "b1b0f283-8246-4e90-832e-a6c409d378d1",
+      "publisherId": "f40c9497-3e29-43d8-954d-e60d92bc26f0",
+      "publisherDisplayName": "mads-hartmann",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "ms-ceintl.vscode-language-pack-zh-hant",
+      "uuid": "64d05954-748a-433f-ba3e-edba0227e28e"
+    },
+    "version": "1.106.0",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
+    "metadata": {
+      "isApplicationScoped": true,
+      "installedTimestamp": 1781108366162,
+      "pinned": false,
+      "source": "gallery",
+      "id": "64d05954-748a-433f-ba3e-edba0227e28e",
+      "publisherId": "0b0882c3-aee3-4d7c-b5f9-872f9be0a115",
+      "publisherDisplayName": "MS-CEINTL",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "prisma.prisma",
+      "uuid": "33ce9d6b-41cf-4972-a62b-386f7201981d"
+    },
+    "version": "31.11.0",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/prisma.prisma-31.11.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "prisma.prisma-31.11.0-universal",
+    "metadata": {
+      "installedTimestamp": 1781108368833,
+      "pinned": false,
+      "source": "gallery",
+      "id": "33ce9d6b-41cf-4972-a62b-386f7201981d",
+      "publisherId": "2397d6f3-c7f1-4b03-9029-414f731a68ec",
+      "publisherDisplayName": "Prisma",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "redhat.vscode-yaml",
+      "uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
+    },
+    "version": "1.23.0",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/redhat.vscode-yaml-1.23.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "redhat.vscode-yaml-1.23.0-universal",
+    "metadata": {
+      "installedTimestamp": 1781108372264,
+      "pinned": false,
+      "source": "gallery",
+      "id": "2061917f-f76a-458a-8da9-f162de22b97e",
+      "publisherId": "455da6bb-00aa-4f13-91a3-9fa4780cadaa",
+      "publisherDisplayName": "Red Hat",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "timsexperiments.vscode-tailwindcss",
+      "uuid": "f03ebb44-cd7a-4b18-b16f-0df1962f474d"
+    },
+    "version": "0.14.29",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/timsexperiments.vscode-tailwindcss-0.14.29-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "timsexperiments.vscode-tailwindcss-0.14.29-universal",
+    "metadata": {
+      "installedTimestamp": 1781108374610,
+      "pinned": false,
+      "source": "gallery",
+      "id": "f03ebb44-cd7a-4b18-b16f-0df1962f474d",
+      "publisherId": "7868f4dd-f00d-4cb1-867f-ae3f648bc695",
+      "publisherDisplayName": "TimsExperiments",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "unifiedjs.vscode-mdx",
+      "uuid": "af8cfc85-cb72-45d0-bae2-9a98cd0c69f3"
+    },
+    "version": "1.8.17",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/unifiedjs.vscode-mdx-1.8.17-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "unifiedjs.vscode-mdx-1.8.17-universal",
+    "metadata": {
+      "installedTimestamp": 1781108377039,
+      "pinned": false,
+      "source": "gallery",
+      "id": "af8cfc85-cb72-45d0-bae2-9a98cd0c69f3",
+      "publisherId": "207bcd0f-c1b5-4dc9-ab76-47615c59238d",
+      "publisherDisplayName": "unified",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "yzhang.markdown-all-in-one",
+      "uuid": "98790d67-10fa-497c-9113-f6c7489207b2"
+    },
+    "version": "3.6.2",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/yzhang.markdown-all-in-one-3.6.2-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "yzhang.markdown-all-in-one-3.6.2-universal",
+    "metadata": {
+      "installedTimestamp": 1781108379497,
+      "pinned": false,
+      "source": "gallery",
+      "id": "98790d67-10fa-497c-9113-f6c7489207b2",
+      "publisherId": "36c8b41c-6ef6-4bf5-a5b7-65bef29b606f",
+      "publisherDisplayName": "yzhang",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  }
+]

@@ -89,3 +89,62 @@ backupjson "my-ubol-settings.json" "ubol-config.json"
 backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
 backupjson "stylus-*.json" "stylus.json"
+
+### Backup Antigravity IDE settings and extensions
+### Usage: backup_antigravity_ide
+function backup_antigravity_ide() {
+  CONFIG_HOME="$(cd "$(dirname "$(dirname "$0")")/configs" && pwd)"
+  IDE_CONFIG_DIR="$CONFIG_HOME/antigravity-ide"
+  mkdir -p "$IDE_CONFIG_DIR"
+
+  SRC_SETTINGS="${HOME:-}/Library/Application Support/Antigravity IDE/User/settings.json"
+  SRC_EXTENSIONS="${HOME:-}/.antigravity-ide/extensions/extensions.json"
+
+  DEST_SETTINGS="$IDE_CONFIG_DIR/settings.json"
+  DEST_EXTENSIONS="$IDE_CONFIG_DIR/extensions.json"
+
+  CHANGED=0
+
+  # 1. Backup settings.json (Keep raw format for possible comments)
+  if [[ -f "$SRC_SETTINGS" ]]; then
+    if [[ ! -f "$DEST_SETTINGS" ]] || ! cmp -s "$SRC_SETTINGS" "$DEST_SETTINGS"; then
+      cp "$SRC_SETTINGS" "$DEST_SETTINGS"
+      cd "$CONFIG_HOME" || exit
+      git add "antigravity-ide/settings.json"
+      echo ""
+      printf "Copy Antigravity IDE Settings: %s\n" "$SRC_SETTINGS"
+      printf "     --> %s\n\n" "antigravity-ide/settings.json"
+      CHANGED=1
+    fi
+  fi
+
+  # 2. Backup extensions.json (Format with jq for better diff)
+  if [[ -f "$SRC_EXTENSIONS" ]]; then
+    TEMP_EXTENSIONS="$IDE_CONFIG_DIR/temp_extensions.json"
+    jq . "$SRC_EXTENSIONS" > "$TEMP_EXTENSIONS"
+
+    if [[ ! -f "$DEST_EXTENSIONS" ]] || ! cmp -s "$TEMP_EXTENSIONS" "$DEST_EXTENSIONS"; then
+      mv "$TEMP_EXTENSIONS" "$DEST_EXTENSIONS"
+      cd "$CONFIG_HOME" || exit
+      git add "antigravity-ide/extensions.json"
+      echo ""
+      printf "Copy Antigravity IDE Extensions: %s\n" "$SRC_EXTENSIONS"
+      printf "     --> %s\n\n" "antigravity-ide/extensions.json"
+      CHANGED=1
+    else
+      rm -f "$TEMP_EXTENSIONS"
+    fi
+  fi
+
+  if [[ "$CHANGED" -eq 1 ]]; then
+    cd "$CONFIG_HOME" || exit
+    printf "Backup Antigravity IDE configurations..."
+    git commit -q -m "feat: Update Antigravity IDE configs by ebk"
+    git push -q
+    echo "done."
+    echo ""
+  fi
+}
+
+backup_antigravity_ide
+

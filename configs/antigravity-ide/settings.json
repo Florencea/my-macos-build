@@ -1,0 +1,22 @@
+{
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
+  },
+  "[dotenv][dockerfile][ignore][shellscript][properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "'JetBrains Mono', monospace",
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "files.associations": {
+    ".env*": "dotenv",
+    "*.css": "tailwindcss",
+  },
+  "redhat.telemetry.enabled": false,
+  "workbench.colorTheme": "GitHub Dark Default",
+}
