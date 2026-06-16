@@ -85,11 +85,6 @@ function backupjson() {
   fi
 }
 
-backupjson "my-ubol-settings.json" "ubol-config.json"
-backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
-backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
-backupjson "stylus-*.json" "stylus.json"
-
 ### Backup Antigravity IDE settings and extensions
 ### Usage: backup_antigravity_ide
 function backup_antigravity_ide() {
@@ -146,5 +141,10 @@ function backup_antigravity_ide() {
   fi
 }
 
+backupjson "my-ubol-settings.json" "ubol-config.json"
+backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
+backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
+backupjson "stylus-*.json" "stylus.json"
 backup_antigravity_ide
+
 
