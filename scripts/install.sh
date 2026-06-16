@@ -80,25 +80,6 @@ brew install --cask \
   google-chrome \
   logi-options+ || true
 
-# Antigravity IDE Configuration
-echo "Configuring Antigravity IDE..."
-
-AG_CLI=""
-if command -v agy-ide &>/dev/null; then
-  AG_CLI="agy-ide"
-elif command -v antigravity-ide &>/dev/null; then
-  AG_CLI="antigravity-ide"
-elif [ -x "/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide" ]; then
-  AG_CLI="/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
-fi
-
-if [ -n "$AG_CLI" ]; then
-  echo "Installing thotam.antigravity-sync..."
-  "$AG_CLI" --install-extension thotam.antigravity-sync 2>&1 | grep -v "depends on antigravityAnalytics" || true
-else
-  echo "Warning: Antigravity IDE CLI not found, skipping extension installation."
-fi
-
 # CLI tools
 brew install --formula \
   bash \
@@ -119,6 +100,42 @@ brew install --formula \
   yt-dlp \
   yq \
   zsh
+
+# Antigravity IDE Configuration
+echo "Configuring Antigravity IDE..."
+
+# Create configuration and extensions directories
+mkdir -p "$HOME/Library/Application Support/Antigravity IDE/User"
+mkdir -p "$HOME/.antigravity-ide/extensions"
+
+# Download settings and extensions list directly via curl
+curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/settings.json" -o "$HOME/Library/Application Support/Antigravity IDE/User/settings.json"
+curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/extensions.json" -o "$HOME/.antigravity-ide/extensions/extensions.json"
+
+AG_CLI=""
+if command -v agy-ide &>/dev/null; then
+  AG_CLI="agy-ide"
+elif command -v antigravity-ide &>/dev/null; then
+  AG_CLI="antigravity-ide"
+elif [ -x "/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide" ]; then
+  AG_CLI="/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
+fi
+
+if [ -n "$AG_CLI" ]; then
+  echo "Installing extensions from extensions.json..."
+  if [ -f "$HOME/.antigravity-ide/extensions/extensions.json" ] && command -v jq &>/dev/null; then
+    jq -r '.[] | .identifier.id' "$HOME/.antigravity-ide/extensions/extensions.json" | while read -r ext_id; do
+      if [ -n "$ext_id" ]; then
+        echo "Installing extension: $ext_id"
+        "$AG_CLI" --install-extension "$ext_id" 2>&1 | grep -v "depends on antigravityAnalytics" || true
+      fi
+    done
+  else
+    echo "Warning: extensions.json or jq not found, skipping extension installation."
+  fi
+else
+  echo "Warning: Antigravity IDE CLI not found, skipping extension installation."
+fi
 
 # Node.js config
 fnm install --lts
