@@ -87,6 +87,8 @@ get_group_key() {
     echo "babel"
   elif [[ "$pkg" == @tanstack/* ]]; then
     echo "tanstack"
+  elif [[ "$pkg" == @trpc/* ]]; then
+    echo "trpc"
   elif [[ "$pkg" == vite || "$pkg" == @vitejs/* || "$pkg" == vite-plugin-* ]]; then
     echo "vite"
   else
