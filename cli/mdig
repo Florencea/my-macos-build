@@ -10,23 +10,9 @@ set -o pipefail
 ### Args
 DOMAIN=${1:-}
 
-# Check arguments
-if [[ -z "$DOMAIN" ]]; then
-  printf "\033[1mmdig\033[0m: Multi-dig: Check DNS records on different DNS servers at once.\n" >&2
-  printf "Usage: \033[1mmdig\033[0m [domain]\n" >&2
-  printf "       \033[1mmdig\033[0m 'is1-ssl.mzstatic.com'\n" >&2
-  exit 1
-fi
-
-# Check commands
-command -v dig &>/dev/null || {
-  echo "dig is not installed" >&2
-  exit 1
-}
-
 # Color codes (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
 if [[ -t 1 ]]; then
-  BOLD=$'\033[1m'
+  BOLD=$'\033[1;34m' # Use Bold Blue for emphasized items to ensure high contrast and readability on all backgrounds
   GREEN=$'\033[32m'
   CYAN=$'\033[36m'
   RED=$'\033[31m'
@@ -42,6 +28,20 @@ else
   DIM=''
   RESET=''
 fi
+
+# Check arguments
+if [[ -z "$DOMAIN" ]]; then
+  printf "${GREEN}mdig${RESET}: Multi-dig: Check DNS records on different DNS servers at once.\n" >&2
+  printf "Usage: ${GREEN}mdig${RESET} [domain]\n" >&2
+  printf "       ${GREEN}mdig${RESET} 'is1-ssl.mzstatic.com'\n" >&2
+  exit 1
+fi
+
+# Check commands
+command -v dig &>/dev/null || {
+  echo "dig is not installed" >&2
+  exit 1
+}
 
 # DNS servers (Name|IPv4|IPv6)
 DNS_SERVERS=(

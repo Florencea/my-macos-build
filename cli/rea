@@ -7,14 +7,25 @@ set -o pipefail
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
+# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
+if [[ -t 1 ]]; then
+  COLOR_GREEN=$'\033[32m'
+  COLOR_YELLOW=$'\033[33m'
+  COLOR_RESET=$'\033[0m'
+else
+  COLOR_GREEN=''
+  COLOR_YELLOW=''
+  COLOR_RESET=''
+fi
+
 ### Args
 INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "\033[1mrea\033[0m: ASS-Combiner: combine .cht.ass to macOS-compatible mp4, move up, and clean up directory\n" >&2
-  printf "Usage: \033[1mrea\033[0m [input_dir]\n" >&2
-  printf "       \033[1mrea\033[0m 'input'\n" >&2
+  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: combine .cht.ass to macOS-compatible mp4, move up, and clean up directory\n" >&2
+  printf "Usage: ${COLOR_GREEN}rea${COLOR_RESET} [input_dir]\n" >&2
+  printf "       ${COLOR_GREEN}rea${COLOR_RESET} 'input'\n" >&2
   exit 1
 fi
 
@@ -86,7 +97,7 @@ FFMPEG_ARGS=(
 if [[ "$VIDEO_CODEC" == "hevc" || "$VIDEO_CODEC" == "h265" ]]; then
   FFMPEG_ARGS+=(-tag:v hvc1)
 elif [[ "$VIDEO_CODEC" == "av1" || "$VIDEO_CODEC" == "vp9" ]]; then
-  printf "\033[33mWarning\033[0m: Video codec is %s, which is not natively supported by macOS Quick Look.\n" "$VIDEO_CODEC" >&2
+  printf "${COLOR_YELLOW}Warning${COLOR_RESET}: Video codec is %s, which is not natively supported by macOS Quick Look.\n" "$VIDEO_CODEC" >&2
 fi
 
 # Ensure audio codec compatibility with macOS (AAC)

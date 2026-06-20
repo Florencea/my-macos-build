@@ -7,14 +7,23 @@ set -o pipefail
 # Usage: clall [GITHUB_ACCESS_TOKEN]
 # Example: clall ghp_000000000000000000000000000000000000
 
+# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
+if [[ -t 1 ]]; then
+  COLOR_GREEN=$'\033[32m'
+  COLOR_RESET=$'\033[0m'
+else
+  COLOR_GREEN=''
+  COLOR_RESET=''
+fi
+
 ### Args
 TOKEN=${1:-}
 
 # Check arguments
 if [[ -z "$TOKEN" ]]; then
-  printf "\033[1mclall\033[0m: Clone all GitHub Repositories\n" >&2
-  printf "Usage: \033[1mclall\033[0m [GITHUB_ACCESS_TOKEN]\n" >&2
-  printf "       \033[1mclall\033[0m ghp_000000000000000000000000000000000000\n" >&2
+  printf "${COLOR_GREEN}clall${COLOR_RESET}: Clone all GitHub Repositories\n" >&2
+  printf "Usage: ${COLOR_GREEN}clall${COLOR_RESET} [GITHUB_ACCESS_TOKEN]\n" >&2
+  printf "       ${COLOR_GREEN}clall${COLOR_RESET} ghp_000000000000000000000000000000000000\n" >&2
   exit 1
 fi
 
@@ -42,7 +51,7 @@ for REPO in "${REPOS[@]}"; do
     if git clone --quiet "$REPO"; then
       touch "$TMPDIR/$REPO_NAME"
       FINISHED=$(ls -1 "$TMPDIR" | wc -l | tr -d ' ')
-      printf "Clone [%s/%s] \033[1m%s\033[0m ok\n" "$FINISHED" "$REPO_LIST_LEN" "$REPO_NAME"
+      printf "Clone [%s/%s] ${COLOR_GREEN}%s${COLOR_RESET} ok\n" "$FINISHED" "$REPO_LIST_LEN" "$REPO_NAME"
     fi
   ) &
 done

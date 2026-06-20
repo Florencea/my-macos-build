@@ -8,6 +8,15 @@ set -o pipefail
 # Example: mkclp 'input.mp4' 01:02:08 11.0
 #          mkclp JoSY6AWKqHs 00:01:59 2
 
+# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
+if [[ -t 1 ]]; then
+  COLOR_GREEN=$'\033[32m'
+  COLOR_RESET=$'\033[0m'
+else
+  COLOR_GREEN=''
+  COLOR_RESET=''
+fi
+
 ### Args
 INPUT_FILE=${1:-}
 START=${2:-}
@@ -15,10 +24,10 @@ DURATION=${3:-}
 
 # Check arguments
 if [[ -z "$DURATION" ]]; then
-  printf "\033[1mmkclp\033[0m: Clip Maker (Supports local files and YouTube videos)\n" >&2
-  printf "Usage: \033[1mmkclp\033[0m [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]\n" >&2
-  printf "       \033[1mmkclp\033[0m 'input.mp4' 01:02:08 11.0\n" >&2
-  printf "       \033[1mmkclp\033[0m JoSY6AWKqHs 00:01:59 2\n" >&2
+  printf "${COLOR_GREEN}mkclp${COLOR_RESET}: Clip Maker (Supports local files and YouTube videos)\n" >&2
+  printf "Usage: ${COLOR_GREEN}mkclp${COLOR_RESET} [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]\n" >&2
+  printf "       ${COLOR_GREEN}mkclp${COLOR_RESET} 'input.mp4' 01:02:08 11.0\n" >&2
+  printf "       ${COLOR_GREEN}mkclp${COLOR_RESET} JoSY6AWKqHs 00:01:59 2\n" >&2
   exit 1
 fi
 
