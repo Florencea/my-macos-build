@@ -24,14 +24,24 @@ command -v dig &>/dev/null || {
   exit 1
 }
 
-# Color codes
-BOLD=$'\033[1m'
-GREEN=$'\033[1;32m'
-CYAN=$'\033[1;36m'
-RED=$'\033[31m'
-YELLOW=$'\033[1;33m'
-DIM=$'\033[90m'
-RESET=$'\033[0m'
+# Color codes (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
+if [[ -t 1 ]]; then
+  BOLD=$'\033[1m'
+  GREEN=$'\033[32m'
+  CYAN=$'\033[36m'
+  RED=$'\033[31m'
+  YELLOW=$'\033[33m'
+  DIM=$'\033[90m'
+  RESET=$'\033[0m'
+else
+  BOLD=''
+  GREEN=''
+  CYAN=''
+  RED=''
+  YELLOW=''
+  DIM=''
+  RESET=''
+fi
 
 # DNS servers (Name|IPv4|IPv6)
 DNS_SERVERS=(

@@ -21,10 +21,25 @@ command -v npm &>/dev/null || {
   exit 1
 }
 
+# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
+if [[ -t 1 ]]; then
+  COLOR_GREEN=$'\033[32m'
+  COLOR_CYAN=$'\033[36m'
+  COLOR_RED=$'\033[31m'
+  COLOR_BOLD=$'\033[1m'
+  COLOR_RESET=$'\033[0m'
+else
+  COLOR_GREEN=''
+  COLOR_CYAN=''
+  COLOR_RED=''
+  COLOR_BOLD=''
+  COLOR_RESET=''
+fi
+
 # Print current node/npm version
 CURRENT_LOCAL_VERSION="$(node -v)"
 CURRENT_NPM_VERSION="$(npm -v)"
-printf "\nnode: \033[1;32m%s\033[0m, npm: \033[1;32m%s\033[0m\n\n" "$CURRENT_LOCAL_VERSION" "$CURRENT_NPM_VERSION"
+printf "\nnode: ${COLOR_GREEN}%s${COLOR_RESET}, npm: ${COLOR_GREEN}%s${COLOR_RESET}\n\n" "$CURRENT_LOCAL_VERSION" "$CURRENT_NPM_VERSION"
 
 # Extract raw active node version once
 NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
@@ -56,19 +71,19 @@ if cd "$PROJECTS_DIR"; then
                 git add package.json
                 if git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION"; then
                   if git push -q &>/dev/null; then
-                    printf "engines.node \033[1m%s\033[0m: \033[1;31m%s\033[0m -> \033[1;36m%s\033[0m ok\n" "$PROJECT" "$OLD_NODE_VERSION" "$NODE_VERSION"
+                    printf "engines.node ${COLOR_BOLD}%s${COLOR_RESET}: ${COLOR_RED}%s${COLOR_RESET} -> ${COLOR_CYAN}%s${COLOR_RESET} ok\n" "$PROJECT" "$OLD_NODE_VERSION" "$NODE_VERSION"
                   else
-                    printf "engines.node \033[1m%s\033[0m: \033[1;31mfailed to push\033[0m\n" "$PROJECT" >&2
+                    printf "engines.node ${COLOR_BOLD}%s${COLOR_RESET}: ${COLOR_RED}failed to push${COLOR_RESET}\n" "$PROJECT" >&2
                   fi
                 fi
               fi
             ) &
           else
-            printf "engines.node \033[1m%s\033[0m: \033[1;32m%s\033[0m ok\n" "$PROJECT" "$OLD_NODE_VERSION"
+            printf "engines.node ${COLOR_BOLD}%s${COLOR_RESET}: ${COLOR_GREEN}%s${COLOR_RESET} ok\n" "$PROJECT" "$OLD_NODE_VERSION"
           fi
         fi
       else
-        printf "engines.node \033[1m%s\033[0m: skip (.node-version exists)\n" "$PROJECT"
+        printf "engines.node ${COLOR_BOLD}%s${COLOR_RESET}: skip (.node-version exists)\n" "$PROJECT"
       fi
     fi
   done

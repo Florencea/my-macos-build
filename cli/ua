@@ -25,6 +25,21 @@ command -v node &>/dev/null || {
   exit 1
 }
 
+# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
+if [[ -t 1 ]]; then
+  COLOR_GREEN=$'\033[32m'
+  COLOR_CYAN=$'\033[36m'
+  COLOR_RED=$'\033[31m'
+  COLOR_BOLD=$'\033[1m'
+  COLOR_RESET=$'\033[0m'
+else
+  COLOR_GREEN=''
+  COLOR_CYAN=''
+  COLOR_RED=''
+  COLOR_BOLD=''
+  COLOR_RESET=''
+fi
+
 ### Upgrade homebrew apps/clis
 cd "$HOME"
 # Disable greedy upgrades to prevent updating auto-updating apps (e.g. microsoft-edge)
@@ -40,7 +55,8 @@ if PREFERRED_NODEJS_REMOTE_VERSION="$(fnm list-remote --filter "$PREFERRED_NODEJ
   PREFERRED_NODEJS_REMOTE_VERSION="${PREFERRED_NODEJS_REMOTE_VERSION%% *}"
   CURRENT_LOCAL_VERSION="$(node -v)"
   if [[ "$PREFERRED_NODEJS_REMOTE_VERSION" != "$CURRENT_LOCAL_VERSION" ]]; then
-    printf "Preferred Node.js version: \033[1;32m$PREFERRED_NODEJS_VERSION\033[0m, remote: \033[1;36m$PREFERRED_NODEJS_REMOTE_VERSION\033[0m, local: \033[1;31m$CURRENT_LOCAL_VERSION\033[0m, install from remote\n"
+    printf "Preferred Node.js version: ${COLOR_GREEN}%s${COLOR_RESET}, remote: ${COLOR_CYAN}%s${COLOR_RESET}, local: ${COLOR_RED}%s${COLOR_RESET}, install from remote\n" \
+      "$PREFERRED_NODEJS_VERSION" "$PREFERRED_NODEJS_REMOTE_VERSION" "$CURRENT_LOCAL_VERSION"
     fnm install "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
     fnm default "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
     fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
@@ -58,7 +74,7 @@ else
   CURRENT_LOCAL_VERSION="$(node -v)"
   CURRENT_NPM_VERSION="$(npm -v)"
 fi
-printf "\nnode: \033[1;32m$CURRENT_LOCAL_VERSION\033[0m, npm: \033[1;32m$CURRENT_NPM_VERSION\033[0m\n\n"
+printf "\nnode: ${COLOR_GREEN}%s${COLOR_RESET}, npm: ${COLOR_GREEN}%s${COLOR_RESET}\n\n" "$CURRENT_LOCAL_VERSION" "$CURRENT_NPM_VERSION"
 
 ### Sync git projects
 SCRIPT_PATH="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
@@ -69,7 +85,7 @@ if cd "$PROJECTS_DIR"; then
     [[ -d "$PROJECT" ]] || continue
     PROJECT="${PROJECT%/}"
     if [[ -d "$PROJECT/.git" ]]; then
-      git -C "$PROJECT" pull --all --quiet && printf "Sync \033[1m%s\033[0m ok\n" "$PROJECT" &
+      git -C "$PROJECT" pull --all --quiet && printf "Sync ${COLOR_BOLD}%s${COLOR_RESET} ok\n" "$PROJECT" &
     fi
   done
   wait
