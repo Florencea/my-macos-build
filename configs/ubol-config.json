@@ -1,0 +1,64 @@
+{
+  "version": "2026.614.1502",
+  "filteringModes": {
+    "none": [],
+    "basic": [],
+    "optimal": [
+      "all-urls"
+    ],
+    "complete": []
+  },
+  "customFilters": [
+    [
+      "nebula.zyxel.com",
+      [
+        "nui-banner:has(.license-banner)"
+      ]
+    ],
+    [
+      "share.dmhy.org",
+      [
+        ".announce",
+        "a.download-pp",
+        "div.clear:has(a[href=\"/topics/add\"])"
+      ]
+    ],
+    [
+      "vite.dev",
+      [
+        ".VPDocAside > :not(.VPDocAsideOutline)"
+      ]
+    ],
+    [
+      "www.books.com.tw",
+      [
+        ".header_pop"
+      ]
+    ],
+    [
+      "www.elle.com",
+      [
+        "#gpt-leaderboard-ad",
+        ".breaker-ad",
+        ".piano-inline-newsletter",
+        ".standard-article-vertical-ad",
+        "div:has(> #gpt-ad-vertical-bottom)"
+      ]
+    ],
+    [
+      "www.macrumors.com",
+      [
+        "#featured_slider",
+        "div:has(> #featured_slider2)",
+        "div[class^=\"social--\"]"
+      ]
+    ],
+    [
+      "www.newsmarket.com.tw",
+      [
+        "#mob-bot-share",
+        ".kadence-conversion-wrap"
+      ]
+    ]
+  ]
+}
