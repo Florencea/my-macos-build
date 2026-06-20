@@ -26,7 +26,7 @@ if [[ -t 1 ]]; then
   COLOR_GREEN=$'\033[32m'
   COLOR_CYAN=$'\033[36m'
   COLOR_RED=$'\033[31m'
-  COLOR_BOLD=$'\033[1m'
+  COLOR_BOLD=$'\033[1;34m' # Use Bold Blue to prevent text from turning white in light terminal themes
   COLOR_RESET=$'\033[0m'
 else
   COLOR_GREEN=''
