@@ -108,9 +108,12 @@ echo "Configuring Antigravity IDE..."
 mkdir -p "$HOME/Library/Application Support/Antigravity IDE/User"
 mkdir -p "$HOME/.antigravity-ide/extensions"
 
-# Download settings and extensions list directly via curl
+# Download settings directly via curl
 curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/settings.json" -o "$HOME/Library/Application Support/Antigravity IDE/User/settings.json"
-curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/extensions.json" -o "$HOME/.antigravity-ide/extensions/extensions.json"
+
+# Download extensions list to a temporary location to prevent the CLI from thinking extensions are already installed
+TEMP_EXT_JSON="$HOME/.antigravity-ide/extensions.json.tmp"
+curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/extensions.json" -o "$TEMP_EXT_JSON"
 
 # Automatically install extensions via CLI
 if command -v antigravity-ide &>/dev/null; then
@@ -123,8 +126,8 @@ fi
 
 if [ -n "$IDE_CLI" ]; then
   echo "Installing Antigravity IDE extensions..."
-  if [ -f "$HOME/.antigravity-ide/extensions/extensions.json" ]; then
-    EXT_LIST=$(jq -r '.[].identifier.id' "$HOME/.antigravity-ide/extensions/extensions.json" 2>/dev/null || true)
+  if [ -f "$TEMP_EXT_JSON" ]; then
+    EXT_LIST=$(jq -r '.[].identifier.id' "$TEMP_EXT_JSON" 2>/dev/null || true)
     if [ -n "$EXT_LIST" ]; then
       for ext in $EXT_LIST; do
         "$IDE_CLI" --install-extension "$ext" || echo "Failed to install extension: $ext"
@@ -140,6 +143,9 @@ if [ -n "$IDE_CLI" ]; then
 else
   echo "Warning: Antigravity IDE CLI not found. Extensions were not installed via CLI."
 fi
+
+# Clean up temporary extensions JSON file
+rm -f "$TEMP_EXT_JSON"
 
 # Node.js config
 fnm install --lts
