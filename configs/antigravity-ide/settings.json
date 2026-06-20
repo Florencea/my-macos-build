@@ -9,7 +9,6 @@
     "source.organizeImports": "explicit",
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.fontFamily": "'JetBrains Mono', monospace",
   "editor.fontLigatures": true,
   "editor.formatOnSave": true,
   "editor.guides.bracketPairs": "active",
@@ -19,5 +18,6 @@
     "*.css": "tailwindcss",
   },
   "redhat.telemetry.enabled": false,
-  "workbench.colorTheme": "GitHub Dark Default",
+  "git.confirmSync": false,
+  "workbench.colorTheme": "Default Light Modern",
 }

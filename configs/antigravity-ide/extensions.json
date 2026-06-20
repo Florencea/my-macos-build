@@ -12,7 +12,7 @@
     },
     "relativeLocation": "astro-build.astro-vscode-2.16.13-darwin-arm64",
     "metadata": {
-      "installedTimestamp": 1781108347318,
+      "installedTimestamp": 1781621656095,
       "pinned": false,
       "source": "gallery",
       "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
@@ -38,7 +38,7 @@
     },
     "relativeLocation": "dbaeumer.vscode-eslint-3.0.24-universal",
     "metadata": {
-      "installedTimestamp": 1781108351602,
+      "installedTimestamp": 1781621660354,
       "pinned": false,
       "source": "gallery",
       "id": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a",
@@ -64,7 +64,7 @@
     },
     "relativeLocation": "donjayamanne.githistory-0.6.20-universal",
     "metadata": {
-      "installedTimestamp": 1781108354013,
+      "installedTimestamp": 1781621663742,
       "pinned": false,
       "source": "gallery",
       "id": "5960f38e-0bbe-4644-8f9c-9c8824e82511",
@@ -90,7 +90,7 @@
     },
     "relativeLocation": "esbenp.prettier-vscode-12.4.0-universal",
     "metadata": {
-      "installedTimestamp": 1781108356235,
+      "installedTimestamp": 1781621666549,
       "pinned": false,
       "source": "gallery",
       "id": "96fa4707-6983-4489-b7c5-d5ffdfdcce90",
@@ -116,7 +116,7 @@
     },
     "relativeLocation": "foxundermoon.shell-format-7.2.8-universal",
     "metadata": {
-      "installedTimestamp": 1781108358599,
+      "installedTimestamp": 1781621669612,
       "pinned": false,
       "source": "gallery",
       "id": "5fb19573-2183-4cf2-b53d-0fb869dae7ae",
@@ -142,7 +142,7 @@
     },
     "relativeLocation": "github.github-vscode-theme-6.3.5-universal",
     "metadata": {
-      "installedTimestamp": 1781108360719,
+      "installedTimestamp": 1781621671998,
       "pinned": false,
       "source": "gallery",
       "id": "7328a705-91fc-49e6-8293-da6f112e482d",
@@ -168,39 +168,12 @@
     },
     "relativeLocation": "mads-hartmann.bash-ide-vscode-1.43.0-universal",
     "metadata": {
-      "installedTimestamp": 1781108363185,
+      "installedTimestamp": 1781621675054,
       "pinned": false,
       "source": "gallery",
       "id": "b1b0f283-8246-4e90-832e-a6c409d378d1",
       "publisherId": "f40c9497-3e29-43d8-954d-e60d92bc26f0",
       "publisherDisplayName": "mads-hartmann",
-      "targetPlatform": "universal",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "ms-ceintl.vscode-language-pack-zh-hant",
-      "uuid": "64d05954-748a-433f-ba3e-edba0227e28e"
-    },
-    "version": "1.106.0",
-    "location": {
-      "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
-      "scheme": "file"
-    },
-    "relativeLocation": "ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
-    "metadata": {
-      "isApplicationScoped": true,
-      "installedTimestamp": 1781108366162,
-      "pinned": false,
-      "source": "gallery",
-      "id": "64d05954-748a-433f-ba3e-edba0227e28e",
-      "publisherId": "0b0882c3-aee3-4d7c-b5f9-872f9be0a115",
-      "publisherDisplayName": "MS-CEINTL",
       "targetPlatform": "universal",
       "updated": false,
       "private": false,
@@ -221,7 +194,7 @@
     },
     "relativeLocation": "prisma.prisma-31.11.0-universal",
     "metadata": {
-      "installedTimestamp": 1781108368833,
+      "installedTimestamp": 1781621678593,
       "pinned": false,
       "source": "gallery",
       "id": "33ce9d6b-41cf-4972-a62b-386f7201981d",
@@ -247,7 +220,7 @@
     },
     "relativeLocation": "redhat.vscode-yaml-1.23.0-universal",
     "metadata": {
-      "installedTimestamp": 1781108372264,
+      "installedTimestamp": 1781621681361,
       "pinned": false,
       "source": "gallery",
       "id": "2061917f-f76a-458a-8da9-f162de22b97e",
@@ -273,7 +246,7 @@
     },
     "relativeLocation": "timsexperiments.vscode-tailwindcss-0.14.29-universal",
     "metadata": {
-      "installedTimestamp": 1781108374610,
+      "installedTimestamp": 1781621683805,
       "pinned": false,
       "source": "gallery",
       "id": "f03ebb44-cd7a-4b18-b16f-0df1962f474d",
@@ -299,7 +272,7 @@
     },
     "relativeLocation": "unifiedjs.vscode-mdx-1.8.17-universal",
     "metadata": {
-      "installedTimestamp": 1781108377039,
+      "installedTimestamp": 1781621686306,
       "pinned": false,
       "source": "gallery",
       "id": "af8cfc85-cb72-45d0-bae2-9a98cd0c69f3",
@@ -325,12 +298,40 @@
     },
     "relativeLocation": "yzhang.markdown-all-in-one-3.6.2-universal",
     "metadata": {
-      "installedTimestamp": 1781108379497,
+      "installedTimestamp": 1781621688593,
       "pinned": false,
       "source": "gallery",
       "id": "98790d67-10fa-497c-9113-f6c7489207b2",
       "publisherId": "36c8b41c-6ef6-4bf5-a5b7-65bef29b606f",
       "publisherDisplayName": "yzhang",
+      "targetPlatform": "universal",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "ms-ceintl.vscode-language-pack-zh-hant"
+    },
+    "version": "1.106.0",
+    "location": {
+      "$mid": 1,
+      "fsPath": "/Users/florencea/.antigravity-ide/extensions/ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
+      "external": "file:///Users/florencea/.antigravity-ide/extensions/ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
+      "path": "/Users/florencea/.antigravity-ide/extensions/ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
+    "metadata": {
+      "isApplicationScoped": true,
+      "installedTimestamp": 1781621697223,
+      "pinned": false,
+      "source": "gallery",
+      "id": "64d05954-748a-433f-ba3e-edba0227e28e",
+      "publisherId": "0b0882c3-aee3-4d7c-b5f9-872f9be0a115",
+      "publisherDisplayName": "MS-CEINTL",
       "targetPlatform": "universal",
       "updated": false,
       "private": false,
