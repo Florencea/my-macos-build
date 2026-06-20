@@ -77,7 +77,7 @@ brew install --cask \
   antigravity-ide \
   c0re100-qbittorrent \
   cloudflare-warp \
-  google-chrome \
+  microsoft-edge \
   logi-options+ || true
 
 # CLI tools
@@ -140,8 +140,6 @@ if [ -n "$IDE_CLI" ]; then
 else
   echo "Warning: Antigravity IDE CLI not found. Extensions were not installed via CLI."
 fi
-
-
 
 # Node.js config
 fnm install --lts
