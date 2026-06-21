@@ -73,12 +73,12 @@ defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" ser
 
 # Other casks
 brew install --cask \
+  logi-options+ \
   1password \
+  google-chrome \
   antigravity-ide \
-  c0re100-qbittorrent \
   cloudflare-warp \
-  microsoft-edge \
-  logi-options+ || true
+  transmission || true
 
 # CLI tools
 brew install --formula \
