@@ -10,6 +10,15 @@
   },
   "customFilters": [
     [
+      "m.mobile01.com",
+      [
+        "#_popIniFrame",
+        "#share-bar",
+        ".app-open-btn",
+        "div:has(> [aria-label=\"cookieconsent\"])"
+      ]
+    ],
+    [
       "nebula.zyxel.com",
       [
         "nui-banner:has(.license-banner)"
@@ -54,10 +63,25 @@
       ]
     ],
     [
+      "www.mobile01.com",
+      [
+        ".docking_share:has(.c-icon--social)",
+        ".l-toolBar:has(.c-icon--social)",
+        "div:has(> [aria-label=\"cookieconsent\"])",
+        "div[id^=\"div-gpt-ad-\"]"
+      ]
+    ],
+    [
       "www.newsmarket.com.tw",
       [
         "#mob-bot-share",
         ".kadence-conversion-wrap"
+      ]
+    ],
+    [
+      "www.sogi.com.tw",
+      [
+        "#cookie-bar"
       ]
     ]
   ]
