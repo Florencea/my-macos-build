@@ -20,5 +20,4 @@
   },
   "git.confirmSync": false,
   "redhat.telemetry.enabled": false,
-  "workbench.colorTheme": "Default Light Modern",
 }
