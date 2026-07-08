@@ -1,32 +1,6 @@
 [
   {
     "identifier": {
-      "id": "astro-build.astro-vscode",
-      "uuid": "1fbbc8b0-7432-4b7e-8774-3336151da2f3"
-    },
-    "version": "2.16.13",
-    "location": {
-      "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.13-darwin-arm64",
-      "scheme": "file"
-    },
-    "relativeLocation": "astro-build.astro-vscode-2.16.13-darwin-arm64",
-    "metadata": {
-      "installedTimestamp": 1781969083092,
-      "pinned": false,
-      "source": "gallery",
-      "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
-      "publisherId": "6c30d82f-e0d4-488a-a4a3-860c0c90001f",
-      "publisherDisplayName": "Astro",
-      "targetPlatform": "darwin-arm64",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
       "id": "dbaeumer.vscode-eslint",
       "uuid": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a"
     },
@@ -210,32 +184,6 @@
   },
   {
     "identifier": {
-      "id": "redhat.vscode-yaml",
-      "uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
-    },
-    "version": "1.23.0",
-    "location": {
-      "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/redhat.vscode-yaml-1.23.0-universal",
-      "scheme": "file"
-    },
-    "relativeLocation": "redhat.vscode-yaml-1.23.0-universal",
-    "metadata": {
-      "installedTimestamp": 1781969124597,
-      "pinned": false,
-      "source": "gallery",
-      "id": "2061917f-f76a-458a-8da9-f162de22b97e",
-      "publisherId": "0e7f9d28-d909-433c-be4f-551fa2b4777f",
-      "publisherDisplayName": "Red Hat",
-      "targetPlatform": "universal",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
       "id": "timsexperiments.vscode-tailwindcss",
       "uuid": "f03ebb44-cd7a-4b18-b16f-0df1962f474d"
     },
@@ -288,13 +236,12 @@
   },
   {
     "identifier": {
-      "id": "yzhang.markdown-all-in-one"
+      "id": "yzhang.markdown-all-in-one",
+      "uuid": "98790d67-10fa-497c-9113-f6c7489207b2"
     },
     "version": "3.6.2",
     "location": {
       "$mid": 1,
-      "fsPath": "/Users/florencea/.antigravity-ide/extensions/yzhang.markdown-all-in-one-3.6.2-universal",
-      "external": "file:///Users/florencea/.antigravity-ide/extensions/yzhang.markdown-all-in-one-3.6.2-universal",
       "path": "/Users/florencea/.antigravity-ide/extensions/yzhang.markdown-all-in-one-3.6.2-universal",
       "scheme": "file"
     },
@@ -311,6 +258,67 @@
       "private": false,
       "isPreReleaseVersion": false,
       "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "astro-build.astro-vscode",
+      "uuid": "1fbbc8b0-7432-4b7e-8774-3336151da2f3"
+    },
+    "version": "2.16.17",
+    "location": {
+      "$mid": 1,
+      "path": "/Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.17-darwin-arm64",
+      "scheme": "file"
+    },
+    "relativeLocation": "astro-build.astro-vscode-2.16.17-darwin-arm64",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1783089971959,
+      "pinned": false,
+      "source": "gallery",
+      "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
+      "publisherId": "6c30d82f-e0d4-488a-a4a3-860c0c90001f",
+      "publisherDisplayName": "Astro",
+      "targetPlatform": "darwin-arm64",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "redhat.vscode-yaml"
+    },
+    "version": "1.24.0",
+    "location": {
+      "$mid": 1,
+      "fsPath": "/Users/florencea/.antigravity-ide/extensions/redhat.vscode-yaml-1.24.0-universal",
+      "external": "file:///Users/florencea/.antigravity-ide/extensions/redhat.vscode-yaml-1.24.0-universal",
+      "path": "/Users/florencea/.antigravity-ide/extensions/redhat.vscode-yaml-1.24.0-universal",
+      "scheme": "file"
+    },
+    "relativeLocation": "redhat.vscode-yaml-1.24.0-universal",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1783470423524,
+      "pinned": false,
+      "source": "gallery",
+      "id": "2061917f-f76a-458a-8da9-f162de22b97e",
+      "publisherId": "1deab481-4801-4170-8a64-801999f5ee73",
+      "publisherDisplayName": "Red Hat",
+      "targetPlatform": "universal",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
     }
   }
 ]
