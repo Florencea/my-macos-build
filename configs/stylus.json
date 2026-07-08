@@ -18,7 +18,7 @@
       "styleViaASS": false,
       "styleViaASS.sites": "",
       "styleViaASS.sitesOnly": false,
-      "styleViaXhr": true,
+      "styleViaXhr": false,
       "styleViaXhr.sites": "",
       "styleViaXhr.sitesOnly": false,
       "urlInstaller": true,
@@ -54,6 +54,7 @@
       "editor.toc.expanded": false,
       "editor.options.expanded": true,
       "editor.options.style.expanded": false,
+      "editor.general.expanded": true,
       "editor.lint.expanded": false,
       "editor.publish.expanded": true,
       "editor.lineWrapping": true,
@@ -79,8 +80,8 @@
         "space_around_combinator": true
       },
       "editor.beautify.hotkey": "",
-      "editor.lintDelay": 300,
       "editor.linter": "stylelint",
+      "editor.linter.on": true,
       "editor.lintReportDelay": 500,
       "editor.matchHighlight": "token",
       "editor.autoCloseBrackets": true,
@@ -94,7 +95,7 @@
       "editor.livePreview.delay": 0.2,
       "editor.targetsFirst": true,
       "editor.colorpicker": true,
-      "editor.colorpicker.hexUppercase": false,
+      "editor.colorpicker.hexUppercase": 0,
       "editor.colorpicker.hotkey": "",
       "editor.colorpicker.color": "",
       "editor.colorpicker.maxHeight": 300,
@@ -116,11 +117,11 @@
       "popup.sidePanel.finder": false,
       "popup.sidePanel.manager": false,
       "popup.sidePanel.options": true,
+      "popup.toggler.expanded": false,
       "popupWidth": 246,
       "popupWidthMax": 280,
       "updateInterval": 24,
-      "updateOnlyEnabled": false,
-      "undefined": null
+      "updateOnlyEnabled": false
     },
     "order": {
       "main": [],
@@ -136,7 +137,7 @@
     "name": "ubo style desktop",
     "sections": [
       {
-        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #e0e0e0;\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
+        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #e0e0e0;\n    --stylus-font-sans-serif: system-ui, sans-serif;\n    --stylus-font-monospace: ui-monospace, monospace;\n}\n"
       },
       {
         "code": "body {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
@@ -224,9 +225,9 @@
         ]
       }
     ],
-    "updateDate": 1782605318011,
+    "updateDate": 1783472485622,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1779472722682,
+    "_rev": 1783472485622,
     "id": 1
   },
   {
@@ -265,7 +266,7 @@
     ],
     "updateDate": 1782605766425,
     "_id": "9c3d4125-439d-40a4-96fb-e4245cacd3b5",
-    "_rev": 1779472163914,
+    "_rev": 1782605766425,
     "id": 2
   }
 ]
