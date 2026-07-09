@@ -140,7 +140,7 @@
         "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #e0e0e0;\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
       },
       {
-        "code": "body {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
+        "code": ".header_pop {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
         "domains": [
           "books.com.tw"
         ]
@@ -158,7 +158,13 @@
         ]
       },
       {
-        "code": ".gl4t:hover {\n    max-height: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
+        "code": "#gpt-leaderboard-ad,\n.breaker-ad,\n.piano-inline-newsletter,\n.standard-article-vertical-ad,\ndiv:has(> #gpt-ad-vertical-bottom) {\n    display: none !important;\n}",
+        "domains": [
+          "www.elle.com"
+        ]
+      },
+      {
+        "code": ".sp-separator {\n    display: none !important;\n}\n.gl4t:hover {\n    max-height: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
         "domains": [
           "exhentai.org",
           "e-hentai.org"
@@ -189,15 +195,45 @@
         ]
       },
       {
-        "code": "body {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
+        "code": "#featured_slider,\ndiv:has(> #featured_slider2),\ndiv[class^=\"social--\"] {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
         "domains": [
           "macrumors.com"
         ]
       },
       {
-        "code": "html body,\nh3.mat-mdc-list-base,\nh3.menu-text-color-default,\nh3.menu-text-color-hover,\n.mat-h5,\n.mat-typography .mat-h5,\n.mat-typography h5,\n.mat-h6,\n.mat-typography .mat-h6,\n.mat-typography h6,\n.nui-support-information.link {\n    font-weight: 400 !important;\n}\nbody {\n    --mat-button-toggle-label-text-weight: 400 !important;\n    --mat-dialog-supporting-text-weight: 400 !important;\n    --mat-form-field-container-text-weight: 400 !important;\n    --mat-form-field-filled-label-text-weight: 400 !important;\n    --mat-list-list-item-label-text-weight: 400 !important;\n    --mat-list-list-item-supporting-text-weight: 400 !important;\n    --mat-option-label-text-weight: 400 !important;\n    --mat-radio-label-text-weight: 400 !important;\n    --mat-select-trigger-text-weight: 400 !important;\n    --mat-stepper-header-label-text-weight: 400 !important;\n    --mat-table-row-item-label-text-weight: 400 !important;\n    --mat-table-footer-supporting-text-weight: 400 !important;\n    --mat-tooltip-supporting-text-weight: 400 !important;\n}",
+        "code": ".docking_share:has(.c-icon--social),\n.l-toolBar:has(.c-icon--social),\ndiv:has(> [aria-label=\"cookieconsent\"]),\ndiv[id^=\"div-gpt-ad-\"] {\n    display: none !important;\n}",
+        "domains": [
+          "www.mobile01.com"
+        ]
+      },
+      {
+        "code": "#_popIniFrame,\n#share-bar,\n.app-open-btn,\ndiv:has(> [aria-label=\"cookieconsent\"]) {\n    display: none !important;\n}",
+        "domains": [
+          "m.mobile01.com"
+        ]
+      },
+      {
+        "code": "nui-banner:has(.license-banner) {\n    display: none !important;\n}\nhtml body,\nh3.mat-mdc-list-base,\nh3.menu-text-color-default,\nh3.menu-text-color-hover,\n.mat-h5,\n.mat-typography .mat-h5,\n.mat-typography h5,\n.mat-h6,\n.mat-typography .mat-h6,\n.mat-typography h6,\n.nui-support-information.link {\n    font-weight: 400 !important;\n}\nbody {\n    --mat-button-toggle-label-text-weight: 400 !important;\n    --mat-dialog-supporting-text-weight: 400 !important;\n    --mat-form-field-container-text-weight: 400 !important;\n    --mat-form-field-filled-label-text-weight: 400 !important;\n    --mat-list-list-item-label-text-weight: 400 !important;\n    --mat-list-list-item-supporting-text-weight: 400 !important;\n    --mat-option-label-text-weight: 400 !important;\n    --mat-radio-label-text-weight: 400 !important;\n    --mat-select-trigger-text-weight: 400 !important;\n    --mat-stepper-header-label-text-weight: 400 !important;\n    --mat-table-row-item-label-text-weight: 400 !important;\n    --mat-table-footer-supporting-text-weight: 400 !important;\n    --mat-tooltip-supporting-text-weight: 400 !important;\n}",
         "domains": [
           "nebula.zyxel.com"
+        ]
+      },
+      {
+        "code": "#mob-bot-share,\n.kadence-conversion-wrap {\n    display: none !important;\n}",
+        "domains": [
+          "www.newsmarket.com.tw"
+        ]
+      },
+      {
+        "code": ".announce,\n.sp-separator,\na.download-pp,\ndiv.clear:has(a[href=\"/topics/add\"]) {\n    display: none !important;\n}",
+        "domains": [
+          "share.dmhy.org"
+        ]
+      },
+      {
+        "code": "#cookie-bar {\n    display: none !important;\n}",
+        "domains": [
+          "www.sogi.com.tw"
         ]
       },
       {
@@ -213,6 +249,12 @@
         ]
       },
       {
+        "code": ".VPDocAside > :not(.VPDocAsideOutline) {\n    display: none !important;\n}",
+        "domains": [
+          "vite.dev"
+        ]
+      },
+      {
         "code": ":root {\n    color-scheme: light dark;\n}\nhtml {\n    --stylus-hn-primary-dark: #662900;\n    --stylus-hn-primary-light: #ff6600;\n    --stylus-hn-dim-dark: #9d9d9e;\n    --stylus-hn-dim-light: #9390a3;\n\n    --stylus-hn-c00-light: var(--stylus-text-light);\n    --stylus-hn-c5a-light: #5a5a5a;\n    --stylus-hn-c73-light: #737373;\n    --stylus-hn-c82-light: #828282;\n    --stylus-hn-c88-light: #888888;\n    --stylus-hn-c9c-light: #9c9c9c;\n    --stylus-hn-cae-light: #aeaeae;\n    --stylus-hn-cbe-light: #bebebe;\n    --stylus-hn-cce-light: #cecece;\n    --stylus-hn-cdd-light: #dddddd;\n\n    --stylus-hn-c00-dark: var(--stylus-text-dark);\n    --stylus-hn-c5a-dark: #dddddd;\n    --stylus-hn-c73-dark: #cecece;\n    --stylus-hn-c82-dark: #bebebe;\n    --stylus-hn-c88-dark: #aeaeae;\n    --stylus-hn-c9c-dark: #9c9c9c;\n    --stylus-hn-cae-dark: #888888;\n    --stylus-hn-cbe-dark: #828282;\n    --stylus-hn-cce-dark: #737373;\n    --stylus-hn-cdd-dark: #5a5a5a;\n}\nbody {\n    margin: 0 !important;\n}\ntd,\n.pagetop,\n.comment {\n    font-size: 14px !important;\n    line-height: 1.5em !important;\n}\ntd {\n    height: auto !important;\n}\ntd,\n.comment {\n    font-family: var(--stylus-font-sans-serif) !important;\n}\n.comment a:link,\n.comment a:visited {\n    text-decoration: none !important;\n}\ntextarea,\ninput {\n    appearance: none !important;\n    border: none !important;\n}\ntr.spacer {\n    height: 8px !important;\n}\n.votearrow {\n    margin: 6px 4px 6px !important;\n}\n@media (min-width: 640px) {\n    td,\n    .pagetop,\n    .comment {\n        font-size: 16px !important;\n    }\n}\nbody,\ntd,\n.pagetop,\na:link,\na:visited {\n    color: light-dark(var(--stylus-text-light), var(--stylus-text-dark)) !important;\n}\n.subtext,\n.subtext a:link,\n.subtext a:visited,\n.comhead a:link,\n.comhead a:visited,\ntitleline a:visited {\n    color: light-dark(var(--stylus-hn-dim-light), var(--stylus-hn-dim-dark)) !important;\n}\ntextarea,\ninput {\n    background-color: light-dark(var(--stylus-bg-input-light), var(--stylus-bg-input-dark)) !important;\n    color: light-dark(var(--stylus-text-light), var(--stylus-text-dark)) !important;\n}\nbody,\ntable#hnmain {\n    background-color: light-dark(var(--stylus-bg-light), var(--stylus-bg-dark)) !important;\n}\ntable > tbody > tr > td[bgcolor=\"#ff6600\"] {\n    background-color: light-dark(var(--stylus-hn-primary-light), var(--stylus-hn-primary-dark)) !important;\n}\n.c00,\n.c00 a:link {\n    color: light-dark(var(--stylus-hn-c00-light), var(--stylus-hn-c00-dark)) !important;\n}\n.c5a,\n.c5a a:link {\n    color: light-dark(var(--stylus-hn-c5a-light), var(--stylus-hn-c5a-dark)) !important;\n}\n.c73,\n.c73 a:link {\n    color: light-dark(var(--stylus-hn-c73-light), var(--stylus-hn-c73-dark)) !important;\n}\n.c82,\n.c82 a:link {\n    color: light-dark(var(--stylus-hn-c82-light), var(--stylus-hn-c82-dark)) !important;\n}\n.c88,\n.c88 a:link {\n    color: light-dark(var(--stylus-hn-c88-light), var(--stylus-hn-c88-dark)) !important;\n}\n.c9c,\n.c9c a:link {\n    color: light-dark(var(--stylus-hn-c9c-light), var(--stylus-hn-c9c-dark)) !important;\n}\n.cae,\n.cae a:link {\n    color: light-dark(var(--stylus-hn-cae-light), var(--stylus-hn-cae-dark)) !important;\n}\n.cbe,\n.cbe a:link {\n    color: light-dark(var(--stylus-hn-cbe-light), var(--stylus-hn-cbe-dark)) !important;\n}\n.cce,\n.cce a:link {\n    color: light-dark(var(--stylus-hn-cce-light), var(--stylus-hn-cce-dark)) !important;\n}\n.cdd,\n.cdd a:link {\n    color: light-dark(var(--stylus-hn-cdd-light), var(--stylus-hn-cdd-dark)) !important;\n}",
         "domains": [
           "news.ycombinator.com"
@@ -225,9 +267,9 @@
         ]
       }
     ],
-    "updateDate": 1783567898786,
+    "updateDate": 1783569706433,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1783567898786,
+    "_rev": 1783569706433,
     "id": 1
   },
   {
