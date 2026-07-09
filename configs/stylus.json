@@ -137,7 +137,7 @@
     "name": "ubo style desktop",
     "sections": [
       {
-        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #fff;\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
+        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #e0e0e0;\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
       },
       {
         "code": "body {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
@@ -225,9 +225,9 @@
         ]
       }
     ],
-    "updateDate": 1783567807686,
+    "updateDate": 1783567898786,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1783567807686,
+    "_rev": 1783567898786,
     "id": 1
   },
   {
