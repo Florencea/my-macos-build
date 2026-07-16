@@ -322,23 +322,23 @@
   },
   {
     "identifier": {
-      "id": "github.github-vscode-theme",
-      "uuid": "7328a705-91fc-49e6-8293-da6f112e482d"
+      "id": "pkief.material-icon-theme",
+      "uuid": "5db78037-f674-459f-a236-db622c427c5b"
     },
-    "version": "6.3.5",
+    "version": "5.36.1",
     "location": {
       "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/github.github-vscode-theme-6.3.5-universal",
+      "path": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.36.1-universal",
       "scheme": "file"
     },
-    "relativeLocation": "github.github-vscode-theme-6.3.5-universal",
+    "relativeLocation": "pkief.material-icon-theme-5.36.1-universal",
     "metadata": {
-      "installedTimestamp": 1783683326754,
+      "installedTimestamp": 1784169804057,
       "pinned": false,
       "source": "gallery",
-      "id": "7328a705-91fc-49e6-8293-da6f112e482d",
-      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-      "publisherDisplayName": "GitHub",
+      "id": "5db78037-f674-459f-a236-db622c427c5b",
+      "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
+      "publisherDisplayName": "PKief",
       "targetPlatform": "universal",
       "updated": false,
       "private": false,
@@ -348,24 +348,23 @@
   },
   {
     "identifier": {
-      "id": "pkief.material-icon-theme"
+      "id": "github.github-vscode-theme"
     },
-    "version": "5.36.1",
+    "version": "6.3.5",
     "location": {
       "$mid": 1,
-      "fsPath": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.36.1-universal",
-      "external": "file:///Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.36.1-universal",
-      "path": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.36.1-universal",
+      "fsPath": "/Users/florencea/.antigravity-ide/extensions/github.github-vscode-theme-6.3.5-universal",
+      "path": "/Users/florencea/.antigravity-ide/extensions/github.github-vscode-theme-6.3.5-universal",
       "scheme": "file"
     },
-    "relativeLocation": "pkief.material-icon-theme-5.36.1-universal",
+    "relativeLocation": "github.github-vscode-theme-6.3.5-universal",
     "metadata": {
-      "installedTimestamp": 1783693124989,
+      "installedTimestamp": 1784169812791,
       "pinned": false,
       "source": "gallery",
-      "id": "5db78037-f674-459f-a236-db622c427c5b",
-      "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
-      "publisherDisplayName": "PKief",
+      "id": "7328a705-91fc-49e6-8293-da6f112e482d",
+      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+      "publisherDisplayName": "GitHub",
       "targetPlatform": "universal",
       "updated": false,
       "private": false,
