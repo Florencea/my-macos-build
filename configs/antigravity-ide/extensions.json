@@ -1,32 +1,6 @@
 [
   {
     "identifier": {
-      "id": "dbaeumer.vscode-eslint",
-      "uuid": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a"
-    },
-    "version": "3.0.24",
-    "location": {
-      "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/dbaeumer.vscode-eslint-3.0.24-universal",
-      "scheme": "file"
-    },
-    "relativeLocation": "dbaeumer.vscode-eslint-3.0.24-universal",
-    "metadata": {
-      "installedTimestamp": 1781969086838,
-      "pinned": false,
-      "source": "gallery",
-      "id": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a",
-      "publisherId": "29859a75-d81b-4f0e-8578-2c80ecee6f99",
-      "publisherDisplayName": "dbaeumer",
-      "targetPlatform": "universal",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
       "id": "donjayamanne.githistory",
       "uuid": "5960f38e-0bbe-4644-8f9c-9c8824e82511"
     },
@@ -322,54 +296,32 @@
   },
   {
     "identifier": {
-      "id": "pkief.material-icon-theme",
-      "uuid": "5db78037-f674-459f-a236-db622c427c5b"
+      "id": "dbaeumer.vscode-eslint",
+      "uuid": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a"
     },
-    "version": "5.36.1",
+    "version": "3.0.34",
     "location": {
       "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.36.1-universal",
+      "path": "/Users/florencea/.antigravity-ide/extensions/dbaeumer.vscode-eslint-3.0.34-universal",
       "scheme": "file"
     },
-    "relativeLocation": "pkief.material-icon-theme-5.36.1-universal",
+    "relativeLocation": "dbaeumer.vscode-eslint-3.0.34-universal",
     "metadata": {
-      "installedTimestamp": 1784169804057,
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1784499631379,
       "pinned": false,
       "source": "gallery",
-      "id": "5db78037-f674-459f-a236-db622c427c5b",
-      "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
-      "publisherDisplayName": "PKief",
+      "id": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a",
+      "publisherId": "29859a75-d81b-4f0e-8578-2c80ecee6f99",
+      "publisherDisplayName": "dbaeumer",
       "targetPlatform": "universal",
-      "updated": false,
+      "updated": true,
       "private": false,
       "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "github.github-vscode-theme"
-    },
-    "version": "6.3.5",
-    "location": {
-      "$mid": 1,
-      "fsPath": "/Users/florencea/.antigravity-ide/extensions/github.github-vscode-theme-6.3.5-universal",
-      "path": "/Users/florencea/.antigravity-ide/extensions/github.github-vscode-theme-6.3.5-universal",
-      "scheme": "file"
-    },
-    "relativeLocation": "github.github-vscode-theme-6.3.5-universal",
-    "metadata": {
-      "installedTimestamp": 1784169812791,
-      "pinned": false,
-      "source": "gallery",
-      "id": "7328a705-91fc-49e6-8293-da6f112e482d",
-      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-      "publisherDisplayName": "GitHub",
-      "targetPlatform": "universal",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
+      "hasPreReleaseVersion": false,
+      "preRelease": false
     }
   }
 ]
