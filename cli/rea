@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: ASS-Combiner: strip original subtitles and combine .cht.ass as the sole default subtitle track, move up, and clean up directory
+# Description: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
@@ -21,7 +21,7 @@ INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: strip original subtitles and combine .cht.ass as the sole default subtitle track, move up, and clean up directory\n" >&2
+  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory\n" >&2
   printf "Usage: ${COLOR_GREEN}rea${COLOR_RESET} [input_dir]\n" >&2
   printf "       ${COLOR_GREEN}rea${COLOR_RESET} 'input'\n" >&2
   exit 1
@@ -75,26 +75,21 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 # Set trap for cleanup of temp file
 trap 'rm -f "$TMPFILE"' EXIT
 
-# Mux .cht.ass into mkv as the sole default subtitle track (stripping original subtitles)
+# Mux .cht.ass into mkv as default subtitle track
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
   -map 0:v \
-  -map 0:a \
+  -map "0:a?" \
   -map 1:s \
   -c copy \
+  -metadata:s:s:0 language=chi -metadata:s:s:0 title="繁體中文" \
   -disposition:s:0 default \
-  -metadata:s:s:0 language=chi \
-  -metadata:s:s:0 title="繁體中文" \
   "$TMPFILE"
-
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
-
-
-
