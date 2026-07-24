@@ -32,6 +32,11 @@ command -v ffmpeg &>/dev/null || {
   echo "ffmpeg is not installed" >&2
   exit 1
 }
+command -v ffprobe &>/dev/null || {
+  echo "ffprobe is not installed" >&2
+  exit 1
+}
+
 
 # Check directories
 [[ -d "$INPUT_DIR" ]] || {
@@ -75,22 +80,24 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 # Set trap for cleanup of temp file
 trap 'rm -f "$TMPFILE"' EXIT
 
-# Mux .cht.ass into mkv as default subtitle track while preserving existing subtitle tracks
+# Count existing subtitle streams in original video file
+SUB_COUNT=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | wc -l | tr -d ' ')
+
+# Mux .cht.ass into mkv as default subtitle track while preserving all original streams
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
-  -map 0:v \
-  -map "0:a?" \
+  -map 0 \
   -map 1:s \
-  -map "0:s?" \
-  -map "0:t?" \
   -c copy \
   -disposition:s 0 \
-  -disposition:s:0 default \
-  -metadata:s:s:0 language=chi -metadata:s:s:0 title="繁體中文" \
+  -disposition:s:"$SUB_COUNT" default \
+  -metadata:s:s:"$SUB_COUNT" language=chi \
+  -metadata:s:s:"$SUB_COUNT" title="繁體中文" \
   "$TMPFILE"
+
 
 
 mv "$TMPFILE" "$OUTPUT_FILE"
