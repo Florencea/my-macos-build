@@ -3,18 +3,16 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: ASS-Combiner: combine .cht.ass to macOS-compatible mp4, move up, and clean up directory
+# Description: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
 # Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
 if [[ -t 1 ]]; then
   COLOR_GREEN=$'\033[32m'
-  COLOR_YELLOW=$'\033[33m'
   COLOR_RESET=$'\033[0m'
 else
   COLOR_GREEN=''
-  COLOR_YELLOW=''
   COLOR_RESET=''
 fi
 
@@ -23,7 +21,7 @@ INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: combine .cht.ass to macOS-compatible mp4, move up, and clean up directory\n" >&2
+  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory\n" >&2
   printf "Usage: ${COLOR_GREEN}rea${COLOR_RESET} [input_dir]\n" >&2
   printf "       ${COLOR_GREEN}rea${COLOR_RESET} 'input'\n" >&2
   exit 1
@@ -38,11 +36,6 @@ command -v ffprobe &>/dev/null || {
   echo "ffprobe is not installed" >&2
   exit 1
 }
-command -v python3 &>/dev/null || {
-  echo "python3 is not installed" >&2
-  exit 1
-}
-
 
 # Check directories
 [[ -d "$INPUT_DIR" ]] || {
@@ -82,131 +75,34 @@ fi
   exit 1
 }
 
-# Get video and audio codecs to configure compatibility flags
-VIDEO_CODEC=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE")
-AUDIO_CODEC=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+### Temp Files & Output File
+TMPFILE="${PARENT_DIR}/.tmp_$(basename "$0")_$$.mkv"
+OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 
-FFMPEG_ARGS=(
-  -map 0:v
-  -map 0:a?
-  -map 1:s
-  -c:v copy
-)
+# Set trap for cleanup of temp file
+trap 'rm -f "$TMPFILE"' EXIT
 
-# HEVC needs tag:v hvc1 to be previewable/playable natively in macOS
-if [[ "$VIDEO_CODEC" == "hevc" || "$VIDEO_CODEC" == "h265" ]]; then
-  FFMPEG_ARGS+=(-tag:v hvc1)
-elif [[ "$VIDEO_CODEC" == "av1" || "$VIDEO_CODEC" == "vp9" ]]; then
-  printf "${COLOR_YELLOW}Warning${COLOR_RESET}: Video codec is %s, which is not natively supported by macOS Quick Look.\n" "$VIDEO_CODEC" >&2
-fi
+# Count existing subtitle streams in original video file
+SUB_COUNT=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | wc -l | tr -d ' ')
 
-# Ensure audio codec compatibility with macOS (AAC)
-if [[ -n "$AUDIO_CODEC" ]]; then
-  if [[ "$AUDIO_CODEC" == "aac" ]]; then
-    FFMPEG_ARGS+=(-c:a copy)
-  else
-    FFMPEG_ARGS+=(-c:a aac)
-  fi
-fi
-
-# Convert ASS to mov_text for MP4 compatibility, and set faststart
-FFMPEG_ARGS+=(
-  -c:s mov_text
-  -metadata:s:s:0 language=zho -metadata:s:s:0 title="中文"
-  -disposition:s:0 default
-  -movflags +faststart
-)
-
-### Temp Files (created within workspace to respect sandbox & guidelines)
-TMP_PY="${PARENT_DIR}/.tmp_$(basename "$0")_$$.py"
-TMP_ASS="${PARENT_DIR}/.tmp_$(basename "$0")_$$.ass"
-TMPFILE="${PARENT_DIR}/.tmp_$(basename "$0")_$$.mp4"
-TMP_FILTERED="${PARENT_DIR}/.tmp_filtered_$(basename "$0")_$$.ass"
-OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mp4"
-
-# Set trap for cleanup of temp files
-trap 'rm -f "$TMP_PY" "$TMP_ASS" "$TMPFILE" "$TMP_FILTERED"' EXIT
-
-# Generate inline Python script for Simplified-to-Traditional translation using macOS CoreFoundation
-cat << 'EOF' > "$TMP_PY"
-import sys
-import ctypes
-
-cf = ctypes.CDLL("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")
-cf.CFStringCreateWithCString.restype = ctypes.c_void_p
-cf.CFStringCreateWithCString.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_uint32]
-cf.CFStringCreateMutableCopy.restype = ctypes.c_void_p
-cf.CFStringCreateMutableCopy.argtypes = [ctypes.c_void_p, ctypes.c_long, ctypes.c_void_p]
-cf.CFStringTransform.restype = ctypes.c_bool
-cf.CFStringTransform.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_bool]
-cf.CFStringGetCString.restype = ctypes.c_bool
-cf.CFStringGetCString.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_long, ctypes.c_uint32]
-cf.CFRelease.argtypes = [ctypes.c_void_p]
-
-kCFStringEncodingUTF8 = 0x08000100
-
-def hans_to_hant(text):
-    if not text:
-        return text
-    text_bytes = text.encode("utf-8")
-    cf_str = cf.CFStringCreateWithCString(None, text_bytes, kCFStringEncodingUTF8)
-    if not cf_str: return text
-    cf_mut_str = cf.CFStringCreateMutableCopy(None, 0, cf_str)
-    cf.CFRelease(cf_str)
-    if not cf_mut_str: return text
-    cf_transform = cf.CFStringCreateWithCString(None, b"Hans-Hant", kCFStringEncodingUTF8)
-    if not cf_transform:
-        cf.CFRelease(cf_mut_str)
-        return text
-    success = cf.CFStringTransform(cf_mut_str, None, cf_transform, False)
-    cf.CFRelease(cf_transform)
-    if not success:
-        cf.CFRelease(cf_mut_str)
-        return text
-    buf_size = len(text_bytes) * 4 + 1
-    buf = ctypes.create_string_buffer(buf_size)
-    get_success = cf.CFStringGetCString(cf_mut_str, buf, buf_size, kCFStringEncodingUTF8)
-    cf.CFRelease(cf_mut_str)
-    if get_success:
-        return buf.value.decode("utf-8")
-    return text
-
-input_path = sys.argv[1]
-output_path = sys.argv[2]
-
-with open(input_path, "r", encoding="utf-8", errors="ignore") as f:
-    lines = f.readlines()
-
-output_lines = []
-for line in lines:
-    if line.startswith("Dialogue:"):
-        parts = line.split(",", 9)
-        if len(parts) > 9:
-            parts[9] = hans_to_hant(parts[9])
-            line = ",".join(parts)
-    output_lines.append(line)
-
-with open(output_path, "w", encoding="utf-8") as f:
-    f.writelines(output_lines)
-EOF
-
-# Run python script to translate and output to a temporary ASS file
-python3 "$TMP_PY" "$INPUT_ASS_TW" "$TMP_ASS"
-
-# Strip ASS style override tags and force primary text color to white for readability in QuickTime
-sed -E 's/\{[^}]*\}//g' "$TMP_ASS" | awk -F, 'BEGIN {OFS=","} /^Style:/ {$4="&H00FFFFFF"} {print}' > "$TMP_FILTERED"
-mv "$TMP_FILTERED" "$TMP_ASS"
-
+# Mux .cht.ass into mkv without modifying original streams, setting .cht.ass as default subtitle track
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
-  -i "$TMP_ASS" \
-  "${FFMPEG_ARGS[@]}" \
+  -i "$INPUT_ASS_TW" \
+  -map 0 \
+  -map 1 \
+  -c copy \
+  -disposition:s 0 \
+  -disposition:s:"$SUB_COUNT" default \
+  -metadata:s:s:"$SUB_COUNT" language=zho \
+  -metadata:s:s:"$SUB_COUNT" title="繁體中文" \
   "$TMPFILE"
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
+
 
