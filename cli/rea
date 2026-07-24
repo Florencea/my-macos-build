@@ -32,10 +32,6 @@ command -v ffmpeg &>/dev/null || {
   echo "ffmpeg is not installed" >&2
   exit 1
 }
-command -v ffprobe &>/dev/null || {
-  echo "ffprobe is not installed" >&2
-  exit 1
-}
 
 # Check directories
 [[ -d "$INPUT_DIR" ]] || {
@@ -82,41 +78,28 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 # Set trap for cleanup of temp file
 trap 'rm -f "$TMPFILE"' EXIT
 
-# Count existing subtitle streams in original video file
-SUB_COUNT=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | wc -l | tr -d ' ')
-
-# Collect any external font files in the input directory to attach into MKV
-FFMPEG_ATTACH_ARGS=()
-shopt -s nullglob 2>/dev/null || true
-for font in "${ABS_INPUT_DIR}"/*.ttf "${ABS_INPUT_DIR}"/*.otf "${ABS_INPUT_DIR}"/*.ttc "${ABS_INPUT_DIR}"/*.woff*; do
-  if [[ -f "$font" ]]; then
-    FFMPEG_ATTACH_ARGS+=(-attach "$font" -metadata:s:t mimetype=application/x-truetype-font)
-  fi
-done
-shopt -u nullglob 2>/dev/null || true
-
-# Mux .cht.ass into mkv without modifying original video/audio streams, setting .cht.ass as default subtitle track
+# Mux .cht.ass into mkv as the first/default subtitle track without modifying original streams
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
-  "${FFMPEG_ATTACH_ARGS[@]}" \
-  -map 0 \
+  -map 0:v \
+  -map "0:a?" \
   -map 1:s \
-  -c:v copy \
-  -c:a copy \
-  -c:s ass \
-  -disposition:s 0 \
-  -disposition:s:"$SUB_COUNT" default \
-  -metadata:s:s:"$SUB_COUNT" language=zho \
-  -metadata:s:s:"$SUB_COUNT" title="繁體中文" \
+  -map "0:s?" \
+  -map "0:t?" \
+  -c copy \
+  -disposition:s:0 default \
+  -metadata:s:s:0 language=zho \
+  -metadata:s:s:0 title="繁體中文" \
   "$TMPFILE"
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
+
 
 
 
