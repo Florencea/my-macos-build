@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory
+# Description: ASS-Combiner: strip original subtitles and combine .cht.ass as the sole default subtitle track, move up, and clean up directory
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
@@ -21,7 +21,7 @@ INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory\n" >&2
+  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: strip original subtitles and combine .cht.ass as the sole default subtitle track, move up, and clean up directory\n" >&2
   printf "Usage: ${COLOR_GREEN}rea${COLOR_RESET} [input_dir]\n" >&2
   printf "       ${COLOR_GREEN}rea${COLOR_RESET} 'input'\n" >&2
   exit 1
@@ -32,16 +32,6 @@ command -v ffmpeg &>/dev/null || {
   echo "ffmpeg is not installed" >&2
   exit 1
 }
-command -v ffprobe &>/dev/null || {
-  echo "ffprobe is not installed" >&2
-  exit 1
-}
-command -v python3 &>/dev/null || {
-  echo "python3 is not installed" >&2
-  exit 1
-}
-
-
 
 # Check directories
 [[ -d "$INPUT_DIR" ]] || {
@@ -79,72 +69,31 @@ INPUT_FILE="${MKV_FILES[0]}"
 INPUT_ASS_TW="${ASS_FILES[0]}"
 
 ### Temp Files & Output File
-TMP_ASS="${PARENT_DIR}/.tmp_$(basename "$0")_$$.ass"
 TMPFILE="${PARENT_DIR}/.tmp_$(basename "$0")_$$.mkv"
 OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 
-# Set trap for cleanup of temp files
-trap 'rm -f "$TMPFILE" "$TMP_ASS"' EXIT
+# Set trap for cleanup of temp file
+trap 'rm -f "$TMPFILE"' EXIT
 
-# Convert ASS subtitle to clean UTF-8 without BOM to prevent NUL byte truncation in libass/IINA
-python3 -c '
-import sys
-
-input_path = sys.argv[1]
-output_path = sys.argv[2]
-
-with open(input_path, "rb") as f:
-    raw = f.read()
-
-if raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
-    text = raw.decode("utf-16", errors="ignore")
-elif raw.startswith(b"\xef\xbb\xbf"):
-    text = raw[3:].decode("utf-8", errors="ignore")
-else:
-    try:
-        text = raw.decode("utf-8")
-    except UnicodeDecodeError:
-        try:
-            text = raw.decode("cp950")
-        except UnicodeDecodeError:
-            text = raw.decode("gb18030", errors="ignore")
-
-with open(output_path, "w", encoding="utf-8") as f:
-    f.write(text)
-' "$INPUT_ASS_TW" "$TMP_ASS"
-
-# Collect any external font files in the input directory to attach into MKV
-FFMPEG_ATTACH_ARGS=()
-shopt -s nullglob 2>/dev/null || true
-for font in "${ABS_INPUT_DIR}"/*.ttf "${ABS_INPUT_DIR}"/*.otf "${ABS_INPUT_DIR}"/*.ttc "${ABS_INPUT_DIR}"/*.woff*; do
-  if [[ -f "$font" ]]; then
-    FFMPEG_ATTACH_ARGS+=(-attach "$font" -metadata:s:t mimetype=application/x-truetype-font)
-  fi
-done
-shopt -u nullglob 2>/dev/null || true
-
-# Count existing subtitle streams in original video file
-SUB_COUNT=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | wc -l | tr -d ' ')
-
-# Mux .cht.ass into mkv as default subtitle track while preserving all original streams and attaching fonts
+# Mux .cht.ass into mkv as the sole default subtitle track (stripping original subtitles)
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
-  -i "$TMP_ASS" \
-  "${FFMPEG_ATTACH_ARGS[@]}" \
-  -map 0 \
+  -i "$INPUT_ASS_TW" \
+  -map 0:v \
+  -map "0:a?" \
   -map 1:s \
   -c copy \
-  -disposition:s 0 \
-  -disposition:s:"$SUB_COUNT" default \
-  -metadata:s:s:"$SUB_COUNT" language=chi \
-  -metadata:s:s:"$SUB_COUNT" title="繁體中文" \
+  -disposition:s:0 default \
+  -metadata:s:s:0 language=chi \
+  -metadata:s:s:0 title="繁體中文" \
   "$TMPFILE"
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
+
 
 
