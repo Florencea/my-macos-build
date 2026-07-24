@@ -82,13 +82,14 @@ ffmpeg -y \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
   -map 0:v \
-  -map "0:a?" \
+  -map 0:a \
   -map 1:s \
   -c copy \
   -disposition:s:0 default \
   -metadata:s:s:0 language=chi \
   -metadata:s:s:0 title="繁體中文" \
   "$TMPFILE"
+
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
