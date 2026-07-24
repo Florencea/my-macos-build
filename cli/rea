@@ -50,10 +50,13 @@ if [[ "$ABS_INPUT_DIR" == "/" || -z "$ABS_INPUT_DIR" ]]; then
   exit 1
 fi
 
-### Find input files (.mkv and .cht.ass) in input directory
+### Find input files (.mkv and .cht*.ass / .ass) in input directory
 shopt -s nullglob
 MKV_FILES=( "${ABS_INPUT_DIR}"/*.mkv )
-ASS_FILES=( "${ABS_INPUT_DIR}"/*.cht.ass )
+ASS_FILES=( "${ABS_INPUT_DIR}"/*[Cc][Hh][Tt]*.ass "${ABS_INPUT_DIR}"/*[Tt][Cc]*.ass "${ABS_INPUT_DIR}"/*[Zh][Hh]-[Tt][Ww]*.ass )
+if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
+  ASS_FILES=( "${ABS_INPUT_DIR}"/*.ass )
+fi
 shopt -u nullglob
 
 if [[ ${#MKV_FILES[@]} -eq 0 ]]; then
@@ -61,7 +64,7 @@ if [[ ${#MKV_FILES[@]} -eq 0 ]]; then
   exit 1
 fi
 if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
-  echo "No .cht.ass file found in $INPUT_DIR" >&2
+  echo "No .ass subtitle file found in $INPUT_DIR" >&2
   exit 1
 fi
 
@@ -75,19 +78,17 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 # Set trap for cleanup of temp file
 trap 'rm -f "$TMPFILE"' EXIT
 
-# Mux .cht.ass into mkv as the sole default subtitle track (stripping residual subtitles from input file)
+# Mux .cht.ass into mkv as the sole default subtitle track (stripping original subtitles and cover art video streams)
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -sn \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
-  -map 0:v \
-  -map "0:a?" \
-  -map 1:s \
-  -c:v copy \
-  -c:a copy \
-  -c:s copy \
+  -map 0:v:0 \
+  -map "0:a:0?" \
+  -map 1:s:0 \
+  -c copy \
   -disposition:s:0 default \
   -metadata:s:s:0 language=chi \
   -metadata:s:s:0 title="繁體中文" \
