@@ -78,7 +78,7 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 # Set trap for cleanup of temp file
 trap 'rm -f "$TMPFILE"' EXIT
 
-# Mux .cht.ass into mkv as the first/default subtitle track without modifying original streams
+# Mux .cht.ass into mkv as default subtitle track
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
@@ -87,19 +87,13 @@ ffmpeg -y \
   -map 0:v \
   -map "0:a?" \
   -map 1:s \
-  -map "0:s?" \
-  -map "0:t?" \
   -c copy \
+  -metadata:s:s:0 language=chi -metadata:s:s:0 title="繁體中文" \
   -disposition:s:0 default \
-  -metadata:s:s:0 language=zho \
-  -metadata:s:s:0 title="繁體中文" \
   "$TMPFILE"
+
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
-
-
-
-
