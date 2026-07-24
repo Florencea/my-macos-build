@@ -85,15 +85,28 @@ trap 'rm -f "$TMPFILE"' EXIT
 # Count existing subtitle streams in original video file
 SUB_COUNT=$(ffprobe -v error -select_streams s -show_entries stream=index -of csv=p=0 "$INPUT_FILE" | wc -l | tr -d ' ')
 
-# Mux .cht.ass into mkv without modifying original streams, setting .cht.ass as default subtitle track
+# Collect any external font files in the input directory to attach into MKV
+FFMPEG_ATTACH_ARGS=()
+shopt -s nullglob 2>/dev/null || true
+for font in "${ABS_INPUT_DIR}"/*.ttf "${ABS_INPUT_DIR}"/*.otf "${ABS_INPUT_DIR}"/*.ttc "${ABS_INPUT_DIR}"/*.woff*; do
+  if [[ -f "$font" ]]; then
+    FFMPEG_ATTACH_ARGS+=(-attach "$font" -metadata:s:t mimetype=application/x-truetype-font)
+  fi
+done
+shopt -u nullglob 2>/dev/null || true
+
+# Mux .cht.ass into mkv without modifying original video/audio streams, setting .cht.ass as default subtitle track
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
+  "${FFMPEG_ATTACH_ARGS[@]}" \
   -map 0 \
-  -map 1 \
-  -c copy \
+  -map 1:s \
+  -c:v copy \
+  -c:a copy \
+  -c:s ass \
   -disposition:s 0 \
   -disposition:s:"$SUB_COUNT" default \
   -metadata:s:s:"$SUB_COUNT" language=zho \
@@ -104,5 +117,6 @@ mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
+
 
 
