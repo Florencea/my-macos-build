@@ -50,26 +50,23 @@ if [[ "$ABS_INPUT_DIR" == "/" || -z "$ABS_INPUT_DIR" ]]; then
   exit 1
 fi
 
-### Input files
-INPUT_FILE=""
-if [[ -f "${ABS_INPUT_DIR}/${INPUT_BASE}.mkv" ]]; then
-  INPUT_FILE="${ABS_INPUT_DIR}/${INPUT_BASE}.mkv"
-elif [[ -f "${ABS_INPUT_DIR}/${INPUT_BASE}.mp4" ]]; then
-  INPUT_FILE="${ABS_INPUT_DIR}/${INPUT_BASE}.mp4"
-fi
+### Find input files (.mkv and .cht.ass) in input directory
+shopt -s nullglob
+MKV_FILES=( "${ABS_INPUT_DIR}"/*.mkv )
+ASS_FILES=( "${ABS_INPUT_DIR}"/*.cht.ass )
+shopt -u nullglob
 
-### Input cht ass
-INPUT_ASS_TW="${ABS_INPUT_DIR}/${INPUT_BASE}.cht.ass"
-
-# Check files
-if [[ -z "$INPUT_FILE" ]]; then
-  echo "File ${INPUT_BASE}.mkv or ${INPUT_BASE}.mp4 not exist in $INPUT_DIR" >&2
+if [[ ${#MKV_FILES[@]} -eq 0 ]]; then
+  echo "No .mkv file found in $INPUT_DIR" >&2
   exit 1
 fi
-[[ -f "$INPUT_ASS_TW" ]] || {
-  echo "File $INPUT_ASS_TW not exist" >&2
+if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
+  echo "No .cht.ass file found in $INPUT_DIR" >&2
   exit 1
-}
+fi
+
+INPUT_FILE="${MKV_FILES[0]}"
+INPUT_ASS_TW="${ASS_FILES[0]}"
 
 ### Temp Files & Output File
 TMPFILE="${PARENT_DIR}/.tmp_$(basename "$0")_$$.mkv"
@@ -92,8 +89,8 @@ ffmpeg -y \
   -disposition:s:0 default \
   "$TMPFILE"
 
-
 mv "$TMPFILE" "$OUTPUT_FILE"
 
 # Clean up input directory entirely
 rm -rf "$ABS_INPUT_DIR"
+
