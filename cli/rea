@@ -75,18 +75,22 @@ OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 # Set trap for cleanup of temp file
 trap 'rm -f "$TMPFILE"' EXIT
 
-# Mux .cht.ass into mkv as default subtitle track
+# Mux .cht.ass into mkv as the sole default subtitle track (stripping residual subtitles from input file)
 ffmpeg -y \
   -hide_banner \
   -loglevel error \
+  -sn \
   -i "$INPUT_FILE" \
   -i "$INPUT_ASS_TW" \
   -map 0:v \
   -map "0:a?" \
   -map 1:s \
-  -c copy \
-  -metadata:s:s:0 language=chi -metadata:s:s:0 title="繁體中文" \
+  -c:v copy \
+  -c:a copy \
+  -c:s copy \
   -disposition:s:0 default \
+  -metadata:s:s:0 language=chi \
+  -metadata:s:s:0 title="繁體中文" \
   "$TMPFILE"
 
 mv "$TMPFILE" "$OUTPUT_FILE"
