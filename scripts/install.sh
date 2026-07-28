@@ -75,7 +75,10 @@ defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" ser
 brew install --cask \
   logi-options+ \
   1password \
-  microsoft-edge \
+  google-chrome \
+  keka \
+  kekaexternalhelper \
+  iina \
   antigravity-ide \
   cloudflare-warp \
   c0re100-qbittorrent || true
