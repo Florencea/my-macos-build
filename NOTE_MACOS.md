@@ -14,6 +14,9 @@
   - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
   - [Apple CDN Alias](#apple-cdn-alias)
   - [X CDN Alias](#x-cdn-alias)
+  - [Pagetual Rules](#pagetual-rules)
+    - [`share.dmhy.org`](#sharedmhyorg)
+    - [`e-hentai`](#e-hentai)
   - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
@@ -122,6 +125,45 @@ abs.twimg.com -> CNAME abs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
               -> CANME twimg.twitter.map.fastly.net (Slow, at SG)
 pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
               -> CANME dualstack.twimg.twitter.map.fastly.net  (Slow, at SG)
+```
+
+## Pagetual Rules
+
+### `share.dmhy.org`
+
+```json
+{
+  "name": "動漫花園",
+  "author": "skofkyo",
+  "example": "http://share.dmhy.org/topics/list/sort_id/2",
+  "url": "^https?://(www|share|dmhy)?(\\.)?(dmhy|anoneko)\\.(org|com)",
+  "action": 1,
+  "nextLink": "//a[text()='下一頁']",
+  "pageElement": "thead+tbody",
+  "replaceElement": ".table.clear>.nav_title,script+.nav_title",
+  "rate": 3,
+  "pageBar": 0,
+  "sideController": false
+}
+```
+
+### `e-hentai`
+
+```json
+{
+  "name": "E-Hentai",
+  "author": "skofkyo",
+  "example": "http://e-hentai.org/，https://exhentai.org/",
+  "url": "^https?://(e-hentai|exhentai)\\.org/",
+  "nextLink": "//table[@class='ptt']//a[string()='>'] | id('next') | id('unext')",
+  "pageElement": ".itg>div,.itg>tbody>tr:not(:first-of-type),.gl1t, #gdt>div:not(.c),#gdt>a:not(.c), #img",
+  "replaceElement": ".ptt,.ptb,.sn,.searchnav",
+  "css": "#img {max-width: 100% !important;height: auto !important;min-height: 400px;}",
+  "pageInit": "let img=doc.getElementById('img');img&&img.setAttribute('onerror','setTimeout(()=>{this.src=this.src.replace(/(\\\\?time=.*)?$/,`?time=${Date.now()}`)},3000)');",
+  "pageBar": 0,
+  "sideController": true,
+  "action": 0
+}
 ```
 
 ## Microsoft Edge for DevTools Device Profile
