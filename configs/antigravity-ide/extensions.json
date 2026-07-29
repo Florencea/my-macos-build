@@ -236,36 +236,6 @@
   },
   {
     "identifier": {
-      "id": "astro-build.astro-vscode",
-      "uuid": "1fbbc8b0-7432-4b7e-8774-3336151da2f3"
-    },
-    "version": "2.16.17",
-    "location": {
-      "$mid": 1,
-      "path": "/Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.17-darwin-arm64",
-      "scheme": "file"
-    },
-    "relativeLocation": "astro-build.astro-vscode-2.16.17-darwin-arm64",
-    "metadata": {
-      "isApplicationScoped": false,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "installedTimestamp": 1783089971959,
-      "pinned": false,
-      "source": "gallery",
-      "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
-      "publisherId": "6c30d82f-e0d4-488a-a4a3-860c0c90001f",
-      "publisherDisplayName": "Astro",
-      "targetPlatform": "darwin-arm64",
-      "updated": true,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "preRelease": false
-    }
-  },
-  {
-    "identifier": {
       "id": "redhat.vscode-yaml",
       "uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
     },
@@ -352,13 +322,12 @@
   },
   {
     "identifier": {
-      "id": "pkief.material-icon-theme"
+      "id": "pkief.material-icon-theme",
+      "uuid": "5db78037-f674-459f-a236-db622c427c5b"
     },
     "version": "5.37.0",
     "location": {
       "$mid": 1,
-      "fsPath": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.37.0-universal",
-      "external": "file:///Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.37.0-universal",
       "path": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.37.0-universal",
       "scheme": "file"
     },
@@ -375,6 +344,37 @@
       "private": false,
       "isPreReleaseVersion": false,
       "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "astro-build.astro-vscode"
+    },
+    "version": "2.16.18",
+    "location": {
+      "$mid": 1,
+      "fsPath": "/Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.18-darwin-arm64",
+      "external": "file:///Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.18-darwin-arm64",
+      "path": "/Users/florencea/.antigravity-ide/extensions/astro-build.astro-vscode-2.16.18-darwin-arm64",
+      "scheme": "file"
+    },
+    "relativeLocation": "astro-build.astro-vscode-2.16.18-darwin-arm64",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1785281291360,
+      "pinned": false,
+      "source": "gallery",
+      "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
+      "publisherId": "6c30d82f-e0d4-488a-a4a3-860c0c90001f",
+      "publisherDisplayName": "Astro",
+      "targetPlatform": "darwin-arm64",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
     }
   }
 ]
