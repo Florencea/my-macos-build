@@ -1,5 +1,5 @@
 {
-  "version": "2026.714.1952",
+  "version": "2026.723.1724",
   "filteringModes": {
     "none": [],
     "basic": [],
@@ -9,18 +9,6 @@
     "complete": []
   },
   "customFilters": [
-    [
-      "e-hentai.org",
-      [
-        ".sp-separator"
-      ]
-    ],
-    [
-      "exhentai.org",
-      [
-        ".sp-separator"
-      ]
-    ],
     [
       "m.mobile01.com",
       [
@@ -40,7 +28,6 @@
       "share.dmhy.org",
       [
         ".announce",
-        ".sp-separator",
         "a.download-pp",
         "div.clear:has(a[href=\"/topics/add\"])"
       ]
