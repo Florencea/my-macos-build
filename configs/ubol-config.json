@@ -1,5 +1,8 @@
 {
-  "version": "2026.723.1724",
+  "version": "2026.729.1529",
+  "rulesets": [
+    "+annoyances-cookies"
+  ],
   "filteringModes": {
     "none": [],
     "basic": [],
