@@ -11,3 +11,5 @@
 - [Stylus Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/stylus.json)
 - [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey.json)
 - [Immersive Translate](https://github.com/Florencea/my-macos-build/raw/main/configs/immersive-translate-config.json)
+- [NewTongwentang Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tongwentang.json)
+-
