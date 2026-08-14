@@ -12,8 +12,7 @@
     },
     "relativeLocation": "donjayamanne.githistory-0.6.20-universal",
     "metadata": {
-      "installedTimestamp": 1781969089456,
-      "pinned": false,
+      "installedTimestamp": 1786689822348,
       "source": "gallery",
       "id": "5960f38e-0bbe-4644-8f9c-9c8824e82511",
       "publisherId": "1ba8bd00-2ad1-4be0-a007-5b4b954c1ee7",
@@ -38,8 +37,7 @@
     },
     "relativeLocation": "esbenp.prettier-vscode-12.4.0-universal",
     "metadata": {
-      "installedTimestamp": 1781969092238,
-      "pinned": false,
+      "installedTimestamp": 1786689825023,
       "source": "gallery",
       "id": "96fa4707-6983-4489-b7c5-d5ffdfdcce90",
       "publisherId": "d16f4e39-2ffb-44e3-9c0d-79d873570e3a",
@@ -64,8 +62,7 @@
     },
     "relativeLocation": "foxundermoon.shell-format-7.2.8-universal",
     "metadata": {
-      "installedTimestamp": 1781969095429,
-      "pinned": false,
+      "installedTimestamp": 1786689828114,
       "source": "gallery",
       "id": "5fb19573-2183-4cf2-b53d-0fb869dae7ae",
       "publisherId": "c5bb2216-aaba-47a1-962e-5561e40c03c5",
@@ -90,8 +87,7 @@
     },
     "relativeLocation": "mads-hartmann.bash-ide-vscode-1.43.0-universal",
     "metadata": {
-      "installedTimestamp": 1781969102090,
-      "pinned": false,
+      "installedTimestamp": 1786689831105,
       "source": "gallery",
       "id": "b1b0f283-8246-4e90-832e-a6c409d378d1",
       "publisherId": "f40c9497-3e29-43d8-954d-e60d92bc26f0",
@@ -117,8 +113,7 @@
     "relativeLocation": "ms-ceintl.vscode-language-pack-zh-hant-1.106.0-universal",
     "metadata": {
       "isApplicationScoped": true,
-      "installedTimestamp": 1781969107347,
-      "pinned": false,
+      "installedTimestamp": 1786689836143,
       "source": "gallery",
       "id": "64d05954-748a-433f-ba3e-edba0227e28e",
       "publisherId": "0b0882c3-aee3-4d7c-b5f9-872f9be0a115",
@@ -143,8 +138,7 @@
     },
     "relativeLocation": "prisma.prisma-31.11.0-universal",
     "metadata": {
-      "installedTimestamp": 1781969117359,
-      "pinned": false,
+      "installedTimestamp": 1786689838632,
       "source": "gallery",
       "id": "33ce9d6b-41cf-4972-a62b-386f7201981d",
       "publisherId": "2397d6f3-c7f1-4b03-9029-414f731a68ec",
@@ -169,8 +163,7 @@
     },
     "relativeLocation": "timsexperiments.vscode-tailwindcss-0.14.29-universal",
     "metadata": {
-      "installedTimestamp": 1781969129404,
-      "pinned": false,
+      "installedTimestamp": 1786689853774,
       "source": "gallery",
       "id": "f03ebb44-cd7a-4b18-b16f-0df1962f474d",
       "publisherId": "7868f4dd-f00d-4cb1-867f-ae3f648bc695",
@@ -195,8 +188,7 @@
     },
     "relativeLocation": "unifiedjs.vscode-mdx-1.8.17-universal",
     "metadata": {
-      "installedTimestamp": 1781969132894,
-      "pinned": false,
+      "installedTimestamp": 1786689856600,
       "source": "gallery",
       "id": "af8cfc85-cb72-45d0-bae2-9a98cd0c69f3",
       "publisherId": "207bcd0f-c1b5-4dc9-ab76-47615c59238d",
@@ -221,8 +213,7 @@
     },
     "relativeLocation": "yzhang.markdown-all-in-one-3.6.2-universal",
     "metadata": {
-      "installedTimestamp": 1781969136050,
-      "pinned": false,
+      "installedTimestamp": 1786689859704,
       "source": "gallery",
       "id": "98790d67-10fa-497c-9113-f6c7489207b2",
       "publisherId": "36c8b41c-6ef6-4bf5-a5b7-65bef29b606f",
@@ -247,21 +238,16 @@
     },
     "relativeLocation": "redhat.vscode-yaml-1.24.0-universal",
     "metadata": {
-      "isApplicationScoped": false,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "installedTimestamp": 1783470423524,
-      "pinned": false,
+      "installedTimestamp": 1786689862467,
       "source": "gallery",
       "id": "2061917f-f76a-458a-8da9-f162de22b97e",
       "publisherId": "1deab481-4801-4170-8a64-801999f5ee73",
       "publisherDisplayName": "Red Hat",
       "targetPlatform": "universal",
-      "updated": true,
+      "updated": false,
       "private": false,
       "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "preRelease": false
+      "hasPreReleaseVersion": false
     }
   },
   {
@@ -277,21 +263,16 @@
     },
     "relativeLocation": "dbaeumer.vscode-eslint-3.0.34-universal",
     "metadata": {
-      "isApplicationScoped": false,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "installedTimestamp": 1784499631379,
-      "pinned": false,
+      "installedTimestamp": 1786689864840,
       "source": "gallery",
       "id": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a",
       "publisherId": "29859a75-d81b-4f0e-8578-2c80ecee6f99",
       "publisherDisplayName": "dbaeumer",
       "targetPlatform": "universal",
-      "updated": true,
+      "updated": false,
       "private": false,
       "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "preRelease": false
+      "hasPreReleaseVersion": false
     }
   },
   {
@@ -307,21 +288,16 @@
     },
     "relativeLocation": "astro-build.astro-vscode-2.16.18-darwin-arm64",
     "metadata": {
-      "isApplicationScoped": false,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "installedTimestamp": 1785281291360,
-      "pinned": false,
+      "installedTimestamp": 1786689867517,
       "source": "gallery",
       "id": "1fbbc8b0-7432-4b7e-8774-3336151da2f3",
       "publisherId": "6c30d82f-e0d4-488a-a4a3-860c0c90001f",
       "publisherDisplayName": "Astro",
       "targetPlatform": "darwin-arm64",
-      "updated": true,
+      "updated": false,
       "private": false,
       "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "preRelease": false
+      "hasPreReleaseVersion": false
     }
   },
   {
@@ -337,8 +313,7 @@
     },
     "relativeLocation": "github.github-vscode-theme-6.3.5-universal",
     "metadata": {
-      "installedTimestamp": 1785925211602,
-      "pinned": false,
+      "installedTimestamp": 1786689874494,
       "source": "gallery",
       "id": "7328a705-91fc-49e6-8293-da6f112e482d",
       "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
@@ -358,13 +333,13 @@
     "location": {
       "$mid": 1,
       "fsPath": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.37.0-universal",
+      "external": "file:///Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.37.0-universal",
       "path": "/Users/florencea/.antigravity-ide/extensions/pkief.material-icon-theme-5.37.0-universal",
       "scheme": "file"
     },
     "relativeLocation": "pkief.material-icon-theme-5.37.0-universal",
     "metadata": {
-      "installedTimestamp": 1785925225067,
-      "pinned": false,
+      "installedTimestamp": 1786689876381,
       "source": "gallery",
       "id": "5db78037-f674-459f-a236-db622c427c5b",
       "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
