@@ -1,7 +1,7 @@
 {
-  "version": "2026.729.1529",
+  "version": "2026.812.1211",
   "rulesets": [
-    "+annoyances-cookies"
+    "+jpn-1"
   ],
   "filteringModes": {
     "none": [],
