@@ -62,8 +62,8 @@ ssh-keygen -q -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519" && cat "$HOME/.ssh/id_
 ## Use Touch ID for sudo Commands
 
 ```sh
-sudo nano /etc/pam.d/sudo
-# Add this at line 2
+sudo nano /etc/pam.d/sudo_local
+# Add this
 auth       sufficient     pam_tid.so
 ```
 
