@@ -215,7 +215,7 @@ Mozilla/5.0 (Android 16; Mobile; rv:153.0) Gecko/153.0 Firefox/153.0
 
 #### High
 
-- Screen: `450 x 853`
+- Screen: `450 x 784`
 - DPR: `2.4`
 
 ### Access `about:config` on Firefox Android
