@@ -18,10 +18,15 @@
     - [`share.dmhy.org`](#sharedmhyorg)
     - [`E-Hentai / ExHentai (Gallery & List)`](#e-hentai--exhentai-gallery--list)
     - [`E-Hentai / ExHentai (Reader - Auto Preload)`](#e-hentai--exhentai-reader---auto-preload)
-  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
+  - [Firefox DevTools Device Profile](#firefox-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
       - [High](#high)
+    - [Access `about:config` on Firefox Android](#access-aboutconfig-on-firefox-android)
+  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
+    - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl-1)
+      - [Full](#full-1)
+      - [High](#high-1)
 
 ## Install Rosetta2
 
@@ -185,6 +190,38 @@ pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
   "action": 1,
   "autoLoadNum": 9999
 }
+```
+
+## Firefox DevTools Device Profile
+
+- Android Browser User Agent
+
+```text
+Mozilla/5.0 (Android 16; Mobile; rv:VERSION.0) Gecko/VERSION.0 Firefox/VERSION.0
+```
+
+- Example
+
+```text
+Mozilla/5.0 (Android 16; Mobile; rv:153.0) Gecko/153.0 Firefox/153.0
+```
+
+### Google Pixel 10 pro XL
+
+#### Full
+
+- Screen: `448 x 998`
+- DPR: `3`
+
+#### High
+
+- Screen: `450 x 853`
+- DPR: `2.4`
+
+### Access `about:config` on Firefox Android
+
+```text
+chrome://geckoview/content/config.xhtml
 ```
 
 ## Microsoft Edge for DevTools Device Profile
