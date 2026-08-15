@@ -116,7 +116,7 @@ function backup_antigravity_ide() {
   # 2. Backup extensions.json (Format with jq for better diff)
   if [[ -f "$SRC_EXTENSIONS" ]]; then
     TEMP_EXTENSIONS="$IDE_CONFIG_DIR/temp_extensions.json"
-    jq . "$SRC_EXTENSIONS" > "$TEMP_EXTENSIONS"
+    jq . "$SRC_EXTENSIONS" >"$TEMP_EXTENSIONS"
 
     if [[ ! -f "$DEST_EXTENSIONS" ]] || ! cmp -s "$TEMP_EXTENSIONS" "$DEST_EXTENSIONS"; then
       mv "$TEMP_EXTENSIONS" "$DEST_EXTENSIONS"
@@ -141,10 +141,10 @@ function backup_antigravity_ide() {
   fi
 }
 
+backup "my-ublock-backup*.txt" "ubo-config.txt"
 backupjson "my-ubol-settings.json" "ubol-config.json"
 backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
+backupjson "tongwentang-*.json" "tongwentang.json"
 backupjson "stylus-*.json" "stylus.json"
 backup_antigravity_ide
-
-
