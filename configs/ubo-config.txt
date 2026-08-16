@@ -1,7 +1,8 @@
 {
-  "timeStamp": 1786885616281,
+  "timeStamp": 1786888020253,
   "version": "1.73.0",
   "userSettings": {
+    "contextMenuEnabled": false,
     "importedLists": [],
     "popupPanelSections": 0,
     "prefetchingDisabled": false
