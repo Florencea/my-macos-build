@@ -1,15 +1,16 @@
 {
   "version": "2026.812.1211",
   "rulesets": [
-    "+jpn-1"
+    "+annoyances-cookies",
+    "+annoyances-social"
   ],
   "filteringModes": {
     "none": [],
     "basic": [],
-    "optimal": [
+    "optimal": [],
+    "complete": [
       "all-urls"
-    ],
-    "complete": []
+    ]
   },
   "customFilters": [
     [
@@ -50,11 +51,13 @@
     [
       "www.elle.com",
       [
+        "#gpt-ad-tmu",
         "#gpt-leaderboard-ad",
         ".breaker-ad",
         ".piano-inline-newsletter",
         ".standard-article-vertical-ad",
-        "div:has(> #gpt-ad-vertical-bottom)"
+        "div:has(> #gpt-ad-vertical-bottom)",
+        "div:has(> #gpt-ad-vertical-top)"
       ]
     ],
     [
