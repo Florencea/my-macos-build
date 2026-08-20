@@ -1,8 +1,18 @@
 {
-  "version": "2026.812.1211",
+  "version": "2026.820.1159",
   "rulesets": [
     "+annoyances-cookies",
-    "+annoyances-social"
+    "+annoyances-social",
+    "+annoyances-overlays",
+    "+annoyances-widgets",
+    "+annoyances-ai",
+    "+annoyances-others",
+    "+annoyances-notifications",
+    "+block-lan",
+    "+adguard-spyware-url",
+    "+adguard-mobile",
+    "+ublock-experimental",
+    "+ubol-tests"
   ],
   "filteringModes": {
     "none": [],
@@ -81,7 +91,8 @@
       "www.newsmarket.com.tw",
       [
         "#mob-bot-share",
-        ".kadence-conversion-wrap"
+        ".kadence-conversion-wrap",
+        "div.block-da-header_top"
       ]
     ],
     [
