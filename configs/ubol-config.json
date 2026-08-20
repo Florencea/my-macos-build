@@ -1,7 +1,6 @@
 {
   "version": "2026.820.1159",
   "rulesets": [
-    "+annoyances-cookies",
     "+annoyances-social",
     "+annoyances-overlays",
     "+annoyances-widgets",
@@ -12,7 +11,8 @@
     "+adguard-spyware-url",
     "+adguard-mobile",
     "+ublock-experimental",
-    "+ubol-tests"
+    "+ubol-tests",
+    "+annoyances-cookies"
   ],
   "filteringModes": {
     "none": [],
