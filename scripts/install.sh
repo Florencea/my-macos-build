@@ -98,52 +98,6 @@ brew install --formula \
   yq \
   zsh
 
-# Antigravity IDE Configuration
-echo "Configuring Antigravity IDE..."
-
-# Create configuration and extensions directories
-mkdir -p "$HOME/Library/Application Support/Antigravity IDE/User"
-mkdir -p "$HOME/.antigravity-ide/extensions"
-
-# Download settings directly via curl
-curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/settings.json" -o "$HOME/Library/Application Support/Antigravity IDE/User/settings.json"
-
-# Download extensions list to a temporary location to prevent the CLI from thinking extensions are already installed
-TEMP_EXT_JSON="$HOME/.antigravity-ide/extensions.json.tmp"
-curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/antigravity-ide/extensions.json" -o "$TEMP_EXT_JSON"
-
-# Automatically install extensions via CLI
-if command -v antigravity-ide &>/dev/null; then
-  IDE_CLI="antigravity-ide"
-elif [ -f "/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide" ]; then
-  IDE_CLI="/Applications/Antigravity IDE.app/Contents/Resources/app/bin/antigravity-ide"
-else
-  IDE_CLI=""
-fi
-
-if [ -n "$IDE_CLI" ]; then
-  echo "Installing Antigravity IDE extensions..."
-  if [ -f "$TEMP_EXT_JSON" ]; then
-    EXT_LIST=$(jq -r '.[].identifier.id' "$TEMP_EXT_JSON" 2>/dev/null || true)
-    if [ -n "$EXT_LIST" ]; then
-      for ext in $EXT_LIST; do
-        "$IDE_CLI" --install-extension "$ext" || echo "Failed to install extension: $ext"
-      done
-    fi
-  fi
-
-  # Fix foxundermoon.shell-format issue by downloading wasm
-  echo "Fixing foxundermoon.shell-format issue..."
-  WASM_DIR="$HOME/.antigravity-ide/extensions/foxundermoon.shell-format-7.2.8-universal/dist"
-  mkdir -p "$WASM_DIR"
-  curl -fsSL "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm" -o "$WASM_DIR/one_ini_bg.wasm" || echo "Failed to download wasm for shell-format"
-else
-  echo "Warning: Antigravity IDE CLI not found. Extensions were not installed via CLI."
-fi
-
-# Clean up temporary extensions JSON file
-rm -f "$TEMP_EXT_JSON"
-
 # Node.js config
 fnm install --lts
 fnm default lts-latest
