@@ -7,25 +7,18 @@
   - [Generate SSH Key](#generate-ssh-key)
   - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
   - [Remove Quarantine Attributes](#remove-quarantine-attributes)
-  - [Fix `foxundermoon.shell-format` issue](#fix-foxundermoonshell-format-issue)
-  - [Set DNS Servers](#set-dns-servers)
+  - [Fix VSCode `foxundermoon.shell-format` issue](#fix-vscode-foxundermoonshell-format-issue)
+  - [Set DNS Servers with CLI](#set-dns-servers-with-cli)
   - [Clear DNS Cache](#clear-dns-cache)
-  - [Force Homebrew use ipv4 only](#force-homebrew-use-ipv4-only)
-  - [Apple CDN Alias](#apple-cdn-alias)
-  - [X CDN Alias](#x-cdn-alias)
+  - [CDN Alias](#cdn-alias)
   - [Pagetual Rules](#pagetual-rules)
     - [`share.dmhy.org`](#sharedmhyorg)
     - [`E-Hentai / ExHentai (Gallery & List)`](#e-hentai--exhentai-gallery--list)
     - [`E-Hentai / ExHentai (Reader - Auto Preload)`](#e-hentai--exhentai-reader---auto-preload)
-  - [Firefox DevTools Device Profile](#firefox-devtools-device-profile)
+  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
       - [High](#high)
-    - [Access `about:config` on Firefox Android](#access-aboutconfig-on-firefox-android)
-  - [Microsoft Edge for DevTools Device Profile](#microsoft-edge-for-devtools-device-profile)
-    - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl-1)
-      - [Full](#full-1)
-      - [High](#high-1)
 
 ## Reset LaunchPad
 
@@ -71,16 +64,13 @@ auth       sufficient     pam_tid.so
 sudo xattr -r -d com.apple.quarantine <FILE>
 ```
 
-## Fix `foxundermoon.shell-format` issue
+## Fix VSCode `foxundermoon.shell-format` issue
 
 ```sh
-# For antigravity-ide
-curl --output-dir "$HOME/.antigravity-ide/extensions/foxundermoon.shell-format-7.2.8-universal/dist" -O "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm"
-# For visual-studio-code
 curl --output-dir "$HOME/.vscode/extensions/foxundermoon.shell-format-7.2.8/dist" -O "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm"
 ```
 
-## Set DNS Servers
+## Set DNS Servers with CLI
 
 ```sh
 # List network interfaces
@@ -99,27 +89,13 @@ networksetup -setdnsservers 'Wi-Fi' '8.8.8.8' '8.8.4.4' '2001:4860:4860::8888' '
 sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 ```
 
-## Force Homebrew use ipv4 only
+## CDN Alias
 
 ```sh
-# Create curl config
-echo "--ipv4" > ~/.homebrew_curlrc
-# Add into fish config
-echo 'set -gx HOMEBREW_CURLRC "$HOME/.homebrew_curlrc"' >> ~/.config/fish/config.fish
-# Reload config or open a new terminal window
-source ~/.config/fish/config.fish
-```
-
-## Apple CDN Alias
-
-```sh
+# Apple CDN
 is1-ssl.mzstatic.com -> CNAME mzstatic.com.edgekey.net (Fast, at Taiwan)
                      -> CANME h3.apis.apple.map.fastly.net (Slow, at JP or SG)
-```
-
-## X CDN Alias
-
-```sh
+# X CDN
 abs.twimg.com -> CNAME abs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
               -> CANME twimg.twitter.map.fastly.net (Slow, at SG)
 pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
@@ -183,38 +159,6 @@ pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
   "action": 1,
   "autoLoadNum": 9999
 }
-```
-
-## Firefox DevTools Device Profile
-
-- Android Browser User Agent
-
-```text
-Mozilla/5.0 (Android 16; Mobile; rv:VERSION.0) Gecko/VERSION.0 Firefox/VERSION.0
-```
-
-- Example
-
-```text
-Mozilla/5.0 (Android 16; Mobile; rv:153.0) Gecko/153.0 Firefox/153.0
-```
-
-### Google Pixel 10 pro XL
-
-#### Full
-
-- Screen: `448 x 998`
-- DPR: `3`
-
-#### High
-
-- Screen: `450 x 784`
-- DPR: `2.4`
-
-### Access `about:config` on Firefox Android
-
-```text
-chrome://geckoview/content/config.xhtml
 ```
 
 ## Microsoft Edge for DevTools Device Profile
