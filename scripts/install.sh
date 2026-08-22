@@ -73,7 +73,7 @@ brew install --cask \
   keka \
   kekaexternalhelper \
   iina \
-  antigravity-ide \
+  visual-studio-code \
   cloudflare-warp \
   c0re100-qbittorrent || true
 
