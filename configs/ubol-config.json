@@ -1,18 +1,19 @@
 {
   "version": "2026.820.1159",
   "rulesets": [
-    "+annoyances-social",
-    "+annoyances-overlays",
-    "+annoyances-widgets",
-    "+annoyances-ai",
-    "+annoyances-others",
-    "+annoyances-notifications",
+    "+adguard-mobile",
     "+block-lan",
     "+adguard-spyware-url",
-    "+adguard-mobile",
+    "+annoyances-ai",
+    "+annoyances-cookies",
+    "+annoyances-overlays",
+    "+annoyances-social",
+    "+annoyances-widgets",
+    "+annoyances-others",
+    "+annoyances-notifications",
     "+ublock-experimental",
     "+ubol-tests",
-    "+annoyances-cookies"
+    "+jpn-1"
   ],
   "filteringModes": {
     "none": [],
