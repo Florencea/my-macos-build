@@ -26,6 +26,9 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_ASK=1
 
+# Install Rosetta2
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
 

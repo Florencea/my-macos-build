@@ -1,6 +1,7 @@
 # macOS Note
 
 - [macOS Note](#macos-note)
+  - [Install Rosetta2](#install-rosetta2)
   - [Reset LaunchPad](#reset-launchpad)
   - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
   - [Disable Window Animations](#disable-window-animations)
@@ -19,6 +20,12 @@
     - [Google Pixel 10 pro XL](#google-pixel-10-pro-xl)
       - [Full](#full)
       - [High](#high)
+
+## Install Rosetta2
+
+```sh
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+```
 
 ## Reset LaunchPad
 
