@@ -1,9 +1,9 @@
 {
-  "version": "2026.820.1159",
+  "version": "2026.825.1619",
   "rulesets": [
-    "+adguard-mobile",
     "+block-lan",
-    "+adguard-spyware-url",
+    "+ublock-experimental",
+    "+ubol-tests",
     "+annoyances-ai",
     "+annoyances-cookies",
     "+annoyances-overlays",
@@ -11,9 +11,7 @@
     "+annoyances-widgets",
     "+annoyances-others",
     "+annoyances-notifications",
-    "+ublock-experimental",
-    "+ubol-tests",
-    "+jpn-1"
+    "+adguard-mobile"
   ],
   "filteringModes": {
     "none": [],
