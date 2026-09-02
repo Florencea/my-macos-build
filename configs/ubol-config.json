@@ -1,26 +1,12 @@
 {
-  "version": "2026.825.1619",
-  "rulesets": [
-    "+adguard-mobile",
-    "+block-lan",
-    "+annoyances-ai",
-    "+annoyances-cookies",
-    "+annoyances-overlays",
-    "+annoyances-social",
-    "+annoyances-widgets",
-    "+annoyances-others",
-    "+annoyances-notifications",
-    "+ublock-experimental",
-    "+ubol-tests",
-    "+adguard-spyware-url"
-  ],
+  "version": "2026.901.1442",
   "filteringModes": {
     "none": [],
     "basic": [],
-    "optimal": [],
-    "complete": [
+    "optimal": [
       "all-urls"
-    ]
+    ],
+    "complete": []
   },
   "customFilters": [
     [
@@ -101,20 +87,5 @@
         "#cookie-bar"
       ]
     ]
-  ],
-  "dnrRules": [
-    "---",
-    "# @@||korder.jh8.tw^$removeparam=utm_medium",
-    "action:",
-    "  type: allow",
-    "condition:",
-    "  requestDomains:",
-    "    - korder.jh8.tw",
-    "  resourceTypes:",
-    "    - main_frame",
-    "    - sub_frame",
-    "    - xmlhttprequest",
-    "  urlFilter: ^utm_medium=",
-    "---"
   ]
 }
