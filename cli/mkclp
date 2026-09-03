@@ -56,7 +56,12 @@ fi
 VC_ARGS=(-c:v copy)
 
 if [ "$IS_YT" = true ]; then
-  STREAM_URL=$(yt-dlp -g -S "vcodec:h264,acodec:m4a" "$INPUT_FILE" 2>/dev/null || true)
+  # Try fetching stream URL with Chrome cookies to prevent 403 Forbidden; fallback to no cookies if needed
+  BROWSER="${YT_DLP_BROWSER:-chrome}"
+  STREAM_URL=$(yt-dlp --cookies-from-browser "$BROWSER" -g -S "vcodec:h264,acodec:m4a" "$INPUT_FILE" 2>/dev/null || true)
+  if [[ -z "$STREAM_URL" ]]; then
+    STREAM_URL=$(yt-dlp -g -S "vcodec:h264,acodec:m4a" "$INPUT_FILE" 2>/dev/null || true)
+  fi
   if [[ -z "$STREAM_URL" ]]; then
     echo "Failed to get stream URL from yt-dlp for input: $INPUT_FILE" >&2
     exit 1
@@ -93,4 +98,3 @@ ffmpeg -y -hide_banner \
 
 printf "%s " "$OUTPUT_FILE"
 ls -lh "$OUTPUT_FILE" | awk -F " " {'print $5'}
-
