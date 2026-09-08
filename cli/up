@@ -86,24 +86,30 @@ done < <(echo "$NCU_JSON" | jq -r 'to_entries | .[] | "\(.key)\t\(.value)"')
 # Define grouping rules
 get_group_key() {
   local pkg="${1:-}"
-  if [[ "$pkg" == "vitest" || "$pkg" == @vitest/* ]]; then
+  if [[ "$pkg" == vitest* || "$pkg" == @vitest/* ]]; then
     echo "vitest"
   elif [[ "$pkg" == "react" || "$pkg" == "react-dom" || "$pkg" == @types/react || "$pkg" == @types/react-dom ]]; then
     echo "react"
-  elif [[ "$pkg" == eslint* || "$pkg" == @typescript-eslint/* ]]; then
+  elif [[ "$pkg" == eslint* || "$pkg" == @eslint/* || "$pkg" == typescript-eslint || "$pkg" == @typescript-eslint/* ]]; then
     echo "eslint"
-  elif [[ "$pkg" == @nestjs/* ]]; then
-    echo "nestjs"
-  elif [[ "$pkg" == "prisma" || "$pkg" == @prisma/* ]]; then
-    echo "prisma"
   elif [[ "$pkg" == "playwright" || "$pkg" == @playwright/* ]]; then
     echo "playwright"
-  elif [[ "$pkg" == @babel/* ]]; then
-    echo "babel"
   elif [[ "$pkg" == @tanstack/* ]]; then
     echo "tanstack"
-  elif [[ "$pkg" == @trpc/* ]]; then
-    echo "trpc"
+  elif [[ "$pkg" == "tailwindcss" || "$pkg" == @tailwindcss/* ]]; then
+    echo "tailwind"
+  elif [[ "$pkg" == "prettier" || "$pkg" == prettier-plugin-* || "$pkg" == @prettier/* ]]; then
+    echo "prettier"
+  elif [[ "$pkg" == "drizzle" || "$pkg" == drizzle-* || "$pkg" == @drizzle/* ]]; then
+    echo "drizzle"
+  elif [[ "$pkg" == "hono" || "$pkg" == @hono/* ]]; then
+    echo "hono"
+  elif [[ "$pkg" == "antd" || "$pkg" == @ant-design/* ]]; then
+    echo "antd"
+  elif [[ "$pkg" == i18next* || "$pkg" == "react-i18next" ]]; then
+    echo "i18next"
+  elif [[ "$pkg" == "electron" || "$pkg" == electron-* || "$pkg" == @electron/* ]]; then
+    echo "electron"
   elif [[ "$pkg" == vite || "$pkg" == @vitejs/* || "$pkg" == vite-plugin-* ]]; then
     echo "vite"
   else
