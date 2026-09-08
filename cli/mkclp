@@ -42,9 +42,8 @@ command -v ffprobe &>/dev/null || {
 }
 
 IS_YT=false
-INPUT_SOURCE="$INPUT_FILE"
 
-# Check if input exists as a file; if not, treat as YouTube source
+# Treat input as YouTube source if local file does not exist
 if [[ ! -f "$INPUT_FILE" ]]; then
   command -v yt-dlp &>/dev/null || {
     echo "File $INPUT_FILE not exist and yt-dlp is not installed" >&2
@@ -54,27 +53,47 @@ if [[ ! -f "$INPUT_FILE" ]]; then
 fi
 
 VC_ARGS=(-c:v copy)
+FFMPEG_INPUTS=()
+MAP_ARGS=()
 
 if [ "$IS_YT" = true ]; then
-  # Try fetching stream URL with Chrome cookies to prevent 403 Forbidden; fallback to no cookies if needed
+  # Fetch up to 1080p best video and audio streams
   BROWSER="${YT_DLP_BROWSER:-chrome}"
-  STREAM_URL=$(yt-dlp --cookies-from-browser "$BROWSER" -g -S "vcodec:h264,acodec:m4a" "$INPUT_FILE" 2>/dev/null || true)
-  if [[ -z "$STREAM_URL" ]]; then
-    STREAM_URL=$(yt-dlp -g -S "vcodec:h264,acodec:m4a" "$INPUT_FILE" 2>/dev/null || true)
+  YT_FORMAT="bestvideo[height<=1080]+bestaudio/best[height<=1080]"
+  RAW_URLS=$(yt-dlp --cookies-from-browser "$BROWSER" -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
+  if [[ -z "$RAW_URLS" ]]; then
+    RAW_URLS=$(yt-dlp -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
   fi
-  if [[ -z "$STREAM_URL" ]]; then
+  if [[ -z "$RAW_URLS" ]]; then
     echo "Failed to get stream URL from yt-dlp for input: $INPUT_FILE" >&2
     exit 1
   fi
-  INPUT_SOURCE="$STREAM_URL"
-  # Use optimized HEVC settings for compatibility with Apple devices and Line
+
+  STREAM_URLS=()
+  while IFS= read -r line; do
+    [[ -n "$line" ]] && STREAM_URLS+=("$line")
+  done <<<"$RAW_URLS"
+
+  # Support separate video and audio streams
+  if [[ ${#STREAM_URLS[@]} -ge 2 ]]; then
+    FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[0]}" -ss "$START" -i "${STREAM_URLS[1]}")
+    MAP_ARGS=(-map 0:v:0 -map 1:a:0?)
+  else
+    FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[0]}")
+    MAP_ARGS=(-map 0:v:0 -map 0:a:0?)
+  fi
+
+  # Hardware HEVC encoding optimized for Apple devices and LINE
   VC_ARGS=(-c:v hevc_videotoolbox -q:v 45 -profile:v main -pix_fmt yuv420p -tag:v hvc1)
 else
-  # Detect container format and video codec
-  FORMAT=$(ffprobe -v error -show_entries format=format_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_SOURCE" || true)
-  VIDEO_CODEC=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_SOURCE" || true)
+  FFMPEG_INPUTS=(-ss "$START" -i "$INPUT_FILE")
+  MAP_ARGS=(-map 0:v:0 -map 0:a:0?)
 
-  # If container format is not mp4, or video codec is not h264/hevc, re-encode with hevc_videotoolbox
+  # Detect container format and video codec
+  FORMAT=$(ffprobe -v error -show_entries format=format_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+  VIDEO_CODEC=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
+
+  # Re-encode non-mp4 or non-h264/hevc video using hevc_videotoolbox
   if [[ ! "$FORMAT" =~ "mp4" ]] || [[ "$VIDEO_CODEC" != "h264" && "$VIDEO_CODEC" != "hevc" ]]; then
     VC_ARGS=(-c:v hevc_videotoolbox -q:v 45 -profile:v main -pix_fmt yuv420p -tag:v hvc1)
   fi
@@ -85,11 +104,9 @@ OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_clip.mp4"
 
 ffmpeg -y -hide_banner \
   -loglevel error \
-  -ss "$START" \
-  -i "$INPUT_SOURCE" \
+  "${FFMPEG_INPUTS[@]}" \
   -t "$DURATION" \
-  -map 0:v:0 \
-  -map 0:a:0? \
+  "${MAP_ARGS[@]}" \
   "${VC_ARGS[@]}" \
   -c:a aac \
   -map_chapters -1 \
