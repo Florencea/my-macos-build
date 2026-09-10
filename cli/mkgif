@@ -3,13 +3,16 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: Gif Maker (Supports --fps [value] parameter, 480p, q100, local files and YouTube videos)
-# Usage: mkgif [--fps 12] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]
+# Description: High-quality Gif Maker via gifski (Supports -w/--width, --fps, -q/--quality, -l/--lossy, local files and YouTube)
+# Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]
 # Example: mkgif 'input.mp4' 01:02:08 11.0
-#          mkgif JoSY6AWKqHs 00:01:59 2 --fps 24
+#          mkgif JoSY6AWKqHs 00:01:59 20 --fps 10 -w 720
 
 ### Args
-FPS=12
+FPS=10
+WIDTH=720
+QUALITY=70
+LOSSY=false
 TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -20,6 +23,26 @@ while [[ $# -gt 0 ]]; do
     fi
     FPS="$2"
     shift 2
+    ;;
+  -w | --width)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: -w/--width requires a value" >&2
+      exit 1
+    fi
+    WIDTH="$2"
+    shift 2
+    ;;
+  -q | --quality)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: -q/--quality requires a value" >&2
+      exit 1
+    fi
+    QUALITY="$2"
+    shift 2
+    ;;
+  -l | --lossy)
+    LOSSY=true
+    shift 1
     ;;
   *)
     TEMP_ARGS+=("$1")
@@ -37,10 +60,10 @@ DURATION=${3:-}
 
 # Check arguments
 if [[ -z "$DURATION" ]]; then
-  echo "mkgif: Gif Maker (Supports --fps [value] parameter, 480p, q100, local files and YouTube videos)" >&2
-  echo "Usage: mkgif [--fps 12] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]" >&2
+  echo "mkgif: High-quality Gif Maker via gifski" >&2
+  echo "Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]" >&2
   echo "       mkgif 'input.mp4' 01:02:08 11.0" >&2
-  echo "       mkgif JoSY6AWKqHs 00:01:59 2 --fps 24" >&2
+  echo "       mkgif JoSY6AWKqHs 00:01:59 20 --fps 10 -w 720" >&2
   exit 1
 fi
 
@@ -67,7 +90,17 @@ if [[ ! -f "$INPUT_FILE" ]]; then
 fi
 
 if [ "$IS_YT" = true ]; then
-  STREAM_URL=$(yt-dlp -g -f "bestvideo[height<=480]" -S "vcodec:h264" "$INPUT_FILE" 2>/dev/null || true)
+  BROWSER="${YT_DLP_BROWSER:-chrome}"
+  # Target up to 720p or scale according to requested width (no codec restriction so VP9/AV1 works seamlessly)
+  YT_HEIGHT=720
+  if (( WIDTH <= 480 )); then
+    YT_HEIGHT=480
+  fi
+  YT_FORMAT="bestvideo[height<=${YT_HEIGHT}]/best[height<=${YT_HEIGHT}]/bestvideo/best"
+  STREAM_URL=$(yt-dlp --cookies-from-browser "$BROWSER" -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
+  if [[ -z "$STREAM_URL" ]]; then
+    STREAM_URL=$(yt-dlp -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
+  fi
   if [[ -z "$STREAM_URL" ]]; then
     echo "Failed to get stream URL from yt-dlp for input: $INPUT_FILE" >&2
     exit 1
@@ -75,22 +108,22 @@ if [ "$IS_YT" = true ]; then
   INPUT_SOURCE="$STREAM_URL"
 fi
 
-### quality
-QUALITY=85
-### width
-WIDTH=480
 ### Output file
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_fps${FPS}.gif"
+
+GIFSKI_ARGS=("-q" "-Q" "$QUALITY")
+if [ "$LOSSY" = true ]; then
+  GIFSKI_ARGS+=("--lossy-quality" "75")
+fi
 
 ffmpeg -y -hide_banner \
   -loglevel error \
   -ss "$START" \
   -i "$INPUT_SOURCE" \
   -t "$DURATION" \
-  -vf "fps=$FPS,scale=$WIDTH:-1:flags=lanczos,format=yuv420p" \
+  -vf "fps=$FPS,scale=$WIDTH:-2:flags=lanczos,format=yuv420p" \
   -f yuv4mpegpipe - |
-  gifski -q \
-    -Q "$QUALITY" \
+  gifski "${GIFSKI_ARGS[@]}" \
     -o "$OUTPUT_FILE" -
 
 printf "%s " "$OUTPUT_FILE"
