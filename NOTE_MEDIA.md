@@ -120,11 +120,17 @@ ffmpeg -y \
 
 ### AV1 crf
 
-| Metric               | Acceptable      | Streaming       | Visual Lossless |
-| :------------------- | :-------------- | :-------------- | :-------------- |
-| **CRF**              | 40              | 31              | 24              |
-| **Speed (Preset 6)** | ~4.8x (115 fps) | ~4.7x (113 fps) | ~4.7x (115 fps) |
-| **Speed (Preset 4)** | ~2.8x (68 fps)  | ~2.8x (67 fps)  | ~2.7x (65 fps)  |
+| Metric             | Acceptable      | Streaming       | Visual Lossless |
+| :----------------- | :-------------- | :-------------- | :-------------- |
+| **CRF**            | 40              | 31              | 24              |
+| **Speed (M1 Pro)** | ~4.8x (115 fps) | ~4.7x (113 fps) | ~4.7x (115 fps) |
+
+> [!TIP]
+> **Preset 6 vs Preset 4 Empirical Comparison (720p 24fps):**
+>
+> - **Preset 6 (Default Sweet Spot)**: Runs at **~4.7x** (115 fps) with VMAF 96.2 (CRF 31) / 97.5 (CRF 24).
+> - **Preset 4 (High Efficiency)**: Runs at **~2.8x** (67 fps, +65% encoding time), but yields only **+0.14 ~ 0.26 VMAF** gain and <2% file size reduction.
+> - **Recommendation**: Keep `-preset 6` as the standard default for general video and anime encoding.
 
 ```bash
 ffmpeg -y \
@@ -136,7 +142,7 @@ ffmpeg -y \
   -map "0:a?" \
   -c:v libsvtav1 \
   -crf <CRF> \
-  -preset <PRESET_0_TO_13> \
+  -preset 6 \
   -pix_fmt yuv420p10le \
   -svtav1-params tune=0 \
   -vf "subtitles=filename='<ASS_FILE>'" \
