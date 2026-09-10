@@ -2,13 +2,11 @@
 
 - [macOS Note](#macos-note)
   - [Install Rosetta2](#install-rosetta2)
-  - [Reset LaunchPad](#reset-launchpad)
   - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
   - [Disable Window Animations](#disable-window-animations)
   - [Generate SSH Key](#generate-ssh-key)
   - [Use Touch ID for sudo Commands](#use-touch-id-for-sudo-commands)
   - [Remove Quarantine Attributes](#remove-quarantine-attributes)
-  - [Fix VSCode `foxundermoon.shell-format` issue](#fix-vscode-foxundermoonshell-format-issue)
   - [Set DNS Servers with CLI](#set-dns-servers-with-cli)
   - [Clear DNS Cache](#clear-dns-cache)
   - [CDN Alias](#cdn-alias)
@@ -27,15 +25,6 @@
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
 ```
 
-## Reset LaunchPad
-
-```sh
-# macos >= 15
-rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad;killall Dock
-# macos < 15
-defaults write com.apple.dock ResetLaunchPad -bool true;killall Dock
-```
-
 ## Disable macOS popup showing accented characters when holding down a key
 
 ```sh
@@ -52,9 +41,9 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
 
 ```sh
 ssh-keygen -t ed25519
-cat .ssh/id_ed25519.pub | pbcopy
+cat "$HOME/.ssh/id_ed25519.pub" | pbcopy
 # One liner
-ssh-keygen -q -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519" && cat "$HOME/.ssh/id_ed25519.pub"
+ssh-keygen -q -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519" && pbcopy < "$HOME/.ssh/id_ed25519.pub"
 ```
 
 ## Use Touch ID for sudo Commands
@@ -69,12 +58,6 @@ auth       sufficient     pam_tid.so
 
 ```sh
 sudo xattr -r -d com.apple.quarantine <FILE>
-```
-
-## Fix VSCode `foxundermoon.shell-format` issue
-
-```sh
-curl --output-dir "$HOME/.vscode/extensions/foxundermoon.shell-format-7.2.8/dist" -O "https://unpkg.com/@one-ini/wasm@0.1.1/one_ini_bg.wasm"
 ```
 
 ## Set DNS Servers with CLI
@@ -101,12 +84,12 @@ sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 ```sh
 # Apple CDN
 is1-ssl.mzstatic.com -> CNAME mzstatic.com.edgekey.net (Fast, at Taiwan)
-                     -> CANME h3.apis.apple.map.fastly.net (Slow, at JP or SG)
+                     -> CNAME h3.apis.apple.map.fastly.net (Slow, at JP or SG)
 # X CDN
 abs.twimg.com -> CNAME abs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
-              -> CANME twimg.twitter.map.fastly.net (Slow, at SG)
+              -> CNAME twimg.twitter.map.fastly.net (Slow, at SG)
 pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
-              -> CANME dualstack.twimg.twitter.map.fastly.net  (Slow, at SG)
+              -> CNAME dualstack.twimg.twitter.map.fastly.net  (Slow, at SG)
 ```
 
 ## Pagetual Rules

@@ -3,22 +3,46 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: Clip Maker (Supports local files and YouTube videos)
-# Usage: mkclp [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]
+# Description: Clip Maker (Supports --quality [value], local files and YouTube videos)
+# Usage: mkclp [--quality 50] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]
 # Example: mkclp 'input.mp4' 01:02:08 11.0
 #          mkclp JoSY6AWKqHs 00:01:59 2
+#          mkclp JoSY6AWKqHs 00:01:59 2 --quality 45
 
 ### Args
+QUALITY=50
+TEMP_ARGS=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -q | --quality)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: --quality requires a value" >&2
+      exit 1
+    fi
+    QUALITY="$2"
+    shift 2
+    ;;
+  *)
+    TEMP_ARGS+=("$1")
+    shift 1
+    ;;
+  esac
+done
+
+# Restore positional parameters
+set -- "${TEMP_ARGS[@]}"
+
 INPUT_FILE=${1:-}
 START=${2:-}
 DURATION=${3:-}
 
 # Check arguments
 if [[ -z "$DURATION" ]]; then
-  echo "mkclp: Clip Maker (Supports local files and YouTube videos)" >&2
-  echo "Usage: mkclp [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]" >&2
+  echo "mkclp: Clip Maker (Supports --quality [value], local files and YouTube videos)" >&2
+  echo "Usage: mkclp [--quality 50] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]" >&2
   echo "       mkclp 'input.mp4' 01:02:08 11.0" >&2
   echo "       mkclp JoSY6AWKqHs 00:01:59 2" >&2
+  echo "       mkclp JoSY6AWKqHs 00:01:59 2 --quality 45" >&2
   exit 1
 fi
 
@@ -68,17 +92,17 @@ if [ "$IS_YT" = true ]; then
   # Support separate video and audio streams
   if [[ ${#STREAM_URLS[@]} -ge 2 ]]; then
     FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[0]}" -ss "$START" -i "${STREAM_URLS[1]}")
-    MAP_ARGS=(-map 0:v:0 -map 1:a:0?)
+    MAP_ARGS=(-map 0:v:0 -map "1:a?")
   else
     FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[0]}")
-    MAP_ARGS=(-map 0:v:0 -map 0:a:0?)
+    MAP_ARGS=(-map 0:v:0 -map "0:a?")
   fi
 
-  # Hardware HEVC encoding optimized for Apple devices and LINE
-  VC_ARGS=(-c:v hevc_videotoolbox -q:v 45 -profile:v main -pix_fmt yuv420p -tag:v hvc1)
+  # Hardware HEVC encoding optimized for Apple devices and LINE (Sweet Spot: q=50)
+  VC_ARGS=(-c:v hevc_videotoolbox -q:v "$QUALITY" -profile:v main -pix_fmt yuv420p -tag:v hvc1)
 else
   FFMPEG_INPUTS=(-ss "$START" -i "$INPUT_FILE")
-  MAP_ARGS=(-map 0:v:0 -map 0:a:0?)
+  MAP_ARGS=(-map 0:v:0 -map "0:a?")
 
   # Detect container format and video codec
   FORMAT=$(ffprobe -v error -show_entries format=format_name -of default=noprint_wrappers=1:nokey=1 "$INPUT_FILE" || true)
@@ -86,7 +110,7 @@ else
 
   # Re-encode non-mp4 or non-h264/hevc video using hevc_videotoolbox
   if [[ ! "$FORMAT" =~ "mp4" ]] || [[ "$VIDEO_CODEC" != "h264" && "$VIDEO_CODEC" != "hevc" ]]; then
-    VC_ARGS=(-c:v hevc_videotoolbox -q:v 45 -profile:v main -pix_fmt yuv420p -tag:v hvc1)
+    VC_ARGS=(-c:v hevc_videotoolbox -q:v "$QUALITY" -profile:v main -pix_fmt yuv420p -tag:v hvc1)
   fi
 fi
 
@@ -100,6 +124,7 @@ ffmpeg -y -hide_banner \
   "${MAP_ARGS[@]}" \
   "${VC_ARGS[@]}" \
   -c:a aac \
+  -b:a 192k \
   -map_chapters -1 \
   -movflags +faststart \
   "$OUTPUT_FILE"
