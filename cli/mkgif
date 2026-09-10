@@ -91,11 +91,18 @@ fi
 
 if [ "$IS_YT" = true ]; then
   BROWSER="${YT_DLP_BROWSER:-chrome}"
-  # Target up to 720p or scale according to requested width (no codec restriction so VP9/AV1 works seamlessly)
-  YT_HEIGHT=720
+  # Dynamically determine target video height based on requested width
+  # (e.g. width >= 1280 fetches up to 1080p/4K source for high-quality downsampling)
   if (( WIDTH <= 480 )); then
     YT_HEIGHT=480
+  elif (( WIDTH <= 720 )); then
+    YT_HEIGHT=720
+  elif (( WIDTH <= 1280 )); then
+    YT_HEIGHT=1080
+  else
+    YT_HEIGHT=2160
   fi
+
   YT_FORMAT="bestvideo[height<=${YT_HEIGHT}]/best[height<=${YT_HEIGHT}]/bestvideo/best"
   STREAM_URL=$(yt-dlp --cookies-from-browser "$BROWSER" -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
   if [[ -z "$STREAM_URL" ]]; then
@@ -111,7 +118,8 @@ fi
 ### Output file
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_fps${FPS}.gif"
 
-GIFSKI_ARGS=("-q" "-Q" "$QUALITY")
+# Explicitly pass -W $WIDTH to prevent gifski from silently clamping to 800x600
+GIFSKI_ARGS=("-q" "-Q" "$QUALITY" "-W" "$WIDTH")
 if [ "$LOSSY" = true ]; then
   GIFSKI_ARGS+=("--lossy-quality" "75")
 fi
