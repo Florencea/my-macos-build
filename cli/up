@@ -7,27 +7,12 @@ set -o pipefail
 # Usage: up
 # Example: up
 
-# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
-if [[ -t 1 ]]; then
-  COLOR_GRAY=$'\033[90m'
-  COLOR_BLUE=$'\033[34m'
-  COLOR_RED=$'\033[31m'
-  COLOR_GREEN=$'\033[32m'
-  COLOR_RESET=$'\033[0m'
-else
-  COLOR_GRAY=''
-  COLOR_BLUE=''
-  COLOR_RED=''
-  COLOR_GREEN=''
-  COLOR_RESET=''
-fi
-
-# Helper functions for logging with timestamp and colors
+# Helper functions for logging
 log() {
-  printf "${COLOR_GRAY}[%s]${COLOR_RESET} ${COLOR_BLUE}%s${COLOR_RESET}\n" "$(date +"%H:%M:%S")" "$1"
+  printf "%s\n" "$1"
 }
 warn() {
-  printf "${COLOR_GRAY}[%s]${COLOR_RESET} ${COLOR_RED}Warning: %s${COLOR_RESET}\n" "$(date +"%H:%M:%S")" "$1" >&2
+  printf "Warning: %s\n" "$1" >&2
 }
 
 # 1. Check required tools
@@ -48,15 +33,21 @@ done
   exit 1
 }
 
-# 3. Sync repository
+# 3. Check working directory status
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Error: Working directory is not clean. Please commit or stash your changes first." >&2
+  exit 1
+fi
+
+# 4. Sync repository
 log "Syncing repository..."
 git pull --quiet
 
-# 4. Check all updates (Read-only check)
+# 5. Check all updates (Read-only check)
 log "Checking for all available updates..."
 npx -y npm-check-updates@latest -p npm -t latest --install never || true
 
-# 5. Check minor updates for the update workflow
+# 6. Check minor updates for the update workflow
 log "Checking for minor updates..."
 NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
@@ -129,12 +120,13 @@ for pkg in "${!upgrades[@]}"; do
   fi
 done
 
-# Clear node_modules and lockfile for clean nested resolution
-log "Rebuilding lockfile and committing upgrades..."
-rm -rf node_modules package-lock.json
+log "Updating dependencies and committing by group..."
+
+# Sort group keys for deterministic commit ordering
+readarray -t sorted_groups < <(printf '%s\n' "${!groups[@]}" | sort)
 
 # Install and commit groups
-for grp in "${!groups[@]}"; do
+for grp in "${sorted_groups[@]}"; do
   pkgs_in_group="${groups[$grp]}"
 
   # Process upgrades: print transitions and build commit message
@@ -142,10 +134,10 @@ for grp in "${!groups[@]}"; do
   for item in $pkgs_in_group; do
     name="${item%@*}"
     new_ver="${item##*@}"
-    old_ver="$(jq -r ".dependencies[\"$name\"] // .devDependencies[\"$name\"] // .peerDependencies[\"$name\"] // \"?\"" package.json)"
+    old_ver="$(jq -r ".dependencies[\"$name\"] // .devDependencies[\"$name\"] // .peerDependencies[\"$name\"] // .optionalDependencies[\"$name\"] // \"?\"" package.json)"
 
-    # Print transition logs with color
-    printf "  %s  %s  ${COLOR_GREEN}→${COLOR_RESET}  ${COLOR_GREEN}%s${COLOR_RESET}\n" "$name" "$old_ver" "$new_ver"
+    # Print transition log
+    printf "  %s  %s  ->  %s\n" "$name" "$old_ver" "$new_ver"
 
     # Build plaintext commit message parts
     part="$name $old_ver → $new_ver"
@@ -160,6 +152,7 @@ for grp in "${!groups[@]}"; do
   if npm install $pkgs_in_group --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
     git add package.json package-lock.json
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
+    git push -q
   else
     warn "Failed to install group [$grp] ($pkgs_in_group). Skipping..."
     # Rollback modifications on failure
@@ -167,11 +160,7 @@ for grp in "${!groups[@]}"; do
   fi
 done
 
-# Push all commits to remote
-log "Pushing dependency commits..."
-git push -q
-
-# 6. Sync lockfile
+# 7. Sync lockfile
 # Ensure lockfile integrity
 log "Cleaning lockfile..."
 npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
@@ -182,7 +171,6 @@ if [[ -n "$(git status --short package-lock.json)" ]]; then
   git push -q
 fi
 
-# 7. Reinstall node_modules
+# 8. Reinstall node_modules
 log "Reinstalling local node_modules..."
-rm -rf node_modules
 npm ci

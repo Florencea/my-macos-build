@@ -8,32 +8,23 @@ set -o pipefail
 # Example: mkgif 'input.mp4' 01:02:08 11.0
 #          mkgif JoSY6AWKqHs 00:01:59 2 --fps 24
 
-# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
-if [[ -t 1 ]]; then
-  COLOR_GREEN=$'\033[32m'
-  COLOR_RESET=$'\033[0m'
-else
-  COLOR_GREEN=''
-  COLOR_RESET=''
-fi
-
 ### Args
 FPS=12
 TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --fps)
-      if [[ $# -lt 2 ]]; then
-        echo "Error: --fps requires a value" >&2
-        exit 1
-      fi
-      FPS="$2"
-      shift 2
-      ;;
-    *)
-      TEMP_ARGS+=("$1")
-      shift 1
-      ;;
+  --fps)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: --fps requires a value" >&2
+      exit 1
+    fi
+    FPS="$2"
+    shift 2
+    ;;
+  *)
+    TEMP_ARGS+=("$1")
+    shift 1
+    ;;
   esac
 done
 
@@ -46,10 +37,10 @@ DURATION=${3:-}
 
 # Check arguments
 if [[ -z "$DURATION" ]]; then
-  printf "${COLOR_GREEN}mkgif${COLOR_RESET}: Gif Maker (Supports --fps [value] parameter, 480p, q100, local files and YouTube videos)\n" >&2
-  printf "Usage: ${COLOR_GREEN}mkgif${COLOR_RESET} [--fps 12] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]\n" >&2
-  printf "       ${COLOR_GREEN}mkgif${COLOR_RESET} 'input.mp4' 01:02:08 11.0\n" >&2
-  printf "       ${COLOR_GREEN}mkgif${COLOR_RESET} JoSY6AWKqHs 00:01:59 2 --fps 24\n" >&2
+  echo "mkgif: Gif Maker (Supports --fps [value] parameter, 480p, q100, local files and YouTube videos)" >&2
+  echo "Usage: mkgif [--fps 12] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]" >&2
+  echo "       mkgif 'input.mp4' 01:02:08 11.0" >&2
+  echo "       mkgif JoSY6AWKqHs 00:01:59 2 --fps 24" >&2
   exit 1
 fi
 

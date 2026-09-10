@@ -7,23 +7,14 @@ set -o pipefail
 # Usage: rea [input_dir]
 # Example: rea 'input'
 
-# Colors for output (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
-if [[ -t 1 ]]; then
-  COLOR_GREEN=$'\033[32m'
-  COLOR_RESET=$'\033[0m'
-else
-  COLOR_GREEN=''
-  COLOR_RESET=''
-fi
-
 ### Args
 INPUT_DIR=${1:-}
 
 # Check arguments
 if [[ -z "$INPUT_DIR" ]]; then
-  printf "${COLOR_GREEN}rea${COLOR_RESET}: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory\n" >&2
-  printf "Usage: ${COLOR_GREEN}rea${COLOR_RESET} [input_dir]\n" >&2
-  printf "       ${COLOR_GREEN}rea${COLOR_RESET} 'input'\n" >&2
+  echo "rea: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory" >&2
+  echo "Usage: rea [input_dir]" >&2
+  echo "       rea 'input'" >&2
   exit 1
 fi
 
@@ -52,10 +43,10 @@ fi
 
 ### Find input files (.mkv and .cht*.ass / .ass) in input directory
 shopt -s nullglob
-MKV_FILES=( "${ABS_INPUT_DIR}"/*.mkv )
-ASS_FILES=( "${ABS_INPUT_DIR}"/*[Cc][Hh][Tt]*.ass "${ABS_INPUT_DIR}"/*[Tt][Cc]*.ass "${ABS_INPUT_DIR}"/*[Zh][Hh]-[Tt][Ww]*.ass )
+MKV_FILES=("${ABS_INPUT_DIR}"/*.mkv)
+ASS_FILES=("${ABS_INPUT_DIR}"/*[Cc][Hh][Tt]*.ass "${ABS_INPUT_DIR}"/*[Tt][Cc]*.ass "${ABS_INPUT_DIR}"/*[Zh][Hh]-[Tt][Ww]*.ass)
 if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
-  ASS_FILES=( "${ABS_INPUT_DIR}"/*.ass )
+  ASS_FILES=("${ABS_INPUT_DIR}"/*.ass)
 fi
 shopt -u nullglob
 

@@ -10,30 +10,11 @@ set -o pipefail
 ### Args
 DOMAIN=${1:-}
 
-# Color codes (using standard ANSI colors instead of bold/bright variants for light terminal theme compatibility)
-if [[ -t 1 ]]; then
-  BOLD=$'\033[1;34m' # Use Bold Blue for emphasized items to ensure high contrast and readability on all backgrounds
-  GREEN=$'\033[32m'
-  CYAN=$'\033[36m'
-  RED=$'\033[31m'
-  YELLOW=$'\033[33m'
-  DIM=$'\033[90m'
-  RESET=$'\033[0m'
-else
-  BOLD=''
-  GREEN=''
-  CYAN=''
-  RED=''
-  YELLOW=''
-  DIM=''
-  RESET=''
-fi
-
 # Check arguments
 if [[ -z "$DOMAIN" ]]; then
-  printf "${GREEN}mdig${RESET}: Multi-dig: Check DNS records on different DNS servers at once.\n" >&2
-  printf "Usage: ${GREEN}mdig${RESET} [domain]\n" >&2
-  printf "       ${GREEN}mdig${RESET} 'is1-ssl.mzstatic.com'\n" >&2
+  echo "mdig: Multi-dig: Check DNS records on different DNS servers at once." >&2
+  echo "Usage: mdig [domain]" >&2
+  echo "       mdig 'is1-ssl.mzstatic.com'" >&2
   exit 1
 fi
 
@@ -67,11 +48,11 @@ for i in "${!DNS_SERVERS[@]}"; do
 
     # Run A (via IPv4) and AAAA (via IPv6) queries in parallel
     if [[ "$SERVER_NAME" == "System" ]]; then
-      dig "$DOMAIN" A    +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null > "$TEMP_DIR/a_$i" &
-      dig "$DOMAIN" AAAA +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null > "$TEMP_DIR/aaaa_$i" &
+      dig "$DOMAIN" A +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null >"$TEMP_DIR/a_$i" &
+      dig "$DOMAIN" AAAA +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null >"$TEMP_DIR/aaaa_$i" &
     else
-      dig "@$IPV4_IP" "$DOMAIN" A    +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null > "$TEMP_DIR/a_$i" &
-      dig "@$IPV6_IP" "$DOMAIN" AAAA +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null > "$TEMP_DIR/aaaa_$i" &
+      dig "@$IPV4_IP" "$DOMAIN" A +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null >"$TEMP_DIR/a_$i" &
+      dig "@$IPV6_IP" "$DOMAIN" AAAA +noclass +nottl +noall +answer +stats +time=2 +tries=1 2>/dev/null >"$TEMP_DIR/aaaa_$i" &
     fi
     wait || true
 
@@ -87,25 +68,31 @@ for i in "${!DNS_SERVERS[@]}"; do
     AAAA_TIME=$(printf '%s' "$OUTPUT_AAAA" | awk '/Query time/ {print $4}')
 
     # Build A grouping key
-    if   [[ -z "$OUTPUT_A" ]]; then A_KEY="[A timeout]"
-    elif [[ -z "$A_IPS" ]];    then A_KEY="[no A record]"
-    else                            A_KEY="${A_IPS}"
+    if [[ -z "$OUTPUT_A" ]]; then
+      A_KEY="[A timeout]"
+    elif [[ -z "$A_IPS" ]]; then
+      A_KEY="[no A record]"
+    else
+      A_KEY="${A_IPS}"
     fi
 
     # Build AAAA grouping key
-    if   [[ -z "$OUTPUT_AAAA" ]]; then AAAA_KEY="[AAAA timeout]"
-    elif [[ -z "$AAAA_IPS" ]];    then AAAA_KEY="[no AAAA record]"
-    else                               AAAA_KEY="${AAAA_IPS}"
+    if [[ -z "$OUTPUT_AAAA" ]]; then
+      AAAA_KEY="[AAAA timeout]"
+    elif [[ -z "$AAAA_IPS" ]]; then
+      AAAA_KEY="[no AAAA record]"
+    else
+      AAAA_KEY="${AAAA_IPS}"
     fi
 
     # Write fields to separate files
-    printf '%s' "$SERVER_NAME" > "$TEMP_DIR/${i}_name"
-    printf '%s' "$IPV4_IP"     > "$TEMP_DIR/${i}_ipv4"
-    printf '%s' "$IPV6_IP"     > "$TEMP_DIR/${i}_ipv6"
-    printf '%s' "$A_KEY"       > "$TEMP_DIR/${i}_a_key"
-    printf '%s' "$AAAA_KEY"    > "$TEMP_DIR/${i}_aaaa_key"
-    printf '%s' "$A_TIME"      > "$TEMP_DIR/${i}_a_time"
-    printf '%s' "$AAAA_TIME"   > "$TEMP_DIR/${i}_aaaa_time"
+    printf '%s' "$SERVER_NAME" >"$TEMP_DIR/${i}_name"
+    printf '%s' "$IPV4_IP" >"$TEMP_DIR/${i}_ipv4"
+    printf '%s' "$IPV6_IP" >"$TEMP_DIR/${i}_ipv6"
+    printf '%s' "$A_KEY" >"$TEMP_DIR/${i}_a_key"
+    printf '%s' "$AAAA_KEY" >"$TEMP_DIR/${i}_aaaa_key"
+    printf '%s' "$A_TIME" >"$TEMP_DIR/${i}_a_time"
+    printf '%s' "$AAAA_TIME" >"$TEMP_DIR/${i}_aaaa_time"
   ) &
 done
 
@@ -139,7 +126,7 @@ done
 print_records() {
   local value="$1"
   if [[ "$value" == \[* ]]; then
-    printf '%s\n' "${RED}${value}${RESET}"
+    printf '%s\n' "$value"
   else
     IFS=',' read -ra ips <<<"$value"
     for ip in "${ips[@]}"; do
@@ -149,7 +136,7 @@ print_records() {
 }
 
 # Print A records section
-printf '%s── A Records ──%s\n' "$GREEN" "$RESET"
+printf '── A Records ──\n'
 for key in "${a_order[@]}"; do
   print_records "$key"
   for idx in ${a_groups["$key"]}; do
@@ -157,32 +144,20 @@ for key in "${a_order[@]}"; do
     ipv4=$(<"$TEMP_DIR/${idx}_ipv4")
     a_time=$(<"$TEMP_DIR/${idx}_a_time")
 
-    if [[ "$name" == "System" ]]; then
-      desc="${YELLOW}${name}${RESET}"
-      if [[ -n "$a_time" ]]; then
-        printf "  - %s ${YELLOW}[%s ms]${RESET}\n" "$desc" "$a_time"
-      else
-        printf "  - %s\n" "$desc"
-      fi
-    else
-      if [[ -n "$ipv4" ]]; then
-        desc="${BOLD}${name}${RESET} ${DIM}(${ipv4})${RESET}"
-      else
-        desc="${BOLD}${name}${RESET}"
-      fi
+    desc="$name"
+    [[ -n "$ipv4" ]] && desc="$name ($ipv4)"
 
-      if [[ -n "$a_time" ]]; then
-        printf "  - %s ${DIM}[%s ms]${RESET}\n" "$desc" "$a_time"
-      else
-        printf "  - %s\n" "$desc"
-      fi
+    if [[ -n "$a_time" ]]; then
+      printf "  - %s [%s ms]\n" "$desc" "$a_time"
+    else
+      printf "  - %s\n" "$desc"
     fi
   done
   echo ""
 done
 
 # Print AAAA records section
-printf '%s── AAAA Records ──%s\n' "$CYAN" "$RESET"
+printf '── AAAA Records ──\n'
 for key in "${aaaa_order[@]}"; do
   print_records "$key"
   for idx in ${aaaa_groups["$key"]}; do
@@ -190,25 +165,13 @@ for key in "${aaaa_order[@]}"; do
     ipv6=$(<"$TEMP_DIR/${idx}_ipv6")
     aaaa_time=$(<"$TEMP_DIR/${idx}_aaaa_time")
 
-    if [[ "$name" == "System" ]]; then
-      desc="${YELLOW}${name}${RESET}"
-      if [[ -n "$aaaa_time" ]]; then
-        printf "  - %s ${YELLOW}[%s ms]${RESET}\n" "$desc" "$aaaa_time"
-      else
-        printf "  - %s\n" "$desc"
-      fi
-    else
-      if [[ -n "$ipv6" ]]; then
-        desc="${BOLD}${name}${RESET} ${DIM}(${ipv6})${RESET}"
-      else
-        desc="${BOLD}${name}${RESET}"
-      fi
+    desc="$name"
+    [[ -n "$ipv6" ]] && desc="$name ($ipv6)"
 
-      if [[ -n "$aaaa_time" ]]; then
-        printf "  - %s ${DIM}[%s ms]${RESET}\n" "$desc" "$aaaa_time"
-      else
-        printf "  - %s\n" "$desc"
-      fi
+    if [[ -n "$aaaa_time" ]]; then
+      printf "  - %s [%s ms]\n" "$desc" "$aaaa_time"
+    else
+      printf "  - %s\n" "$desc"
     fi
   done
   echo ""

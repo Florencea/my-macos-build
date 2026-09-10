@@ -9,8 +9,8 @@ set -o pipefail
 
 # Check commands
 command -v code &>/dev/null || {
-    echo "code is not installed" >&2
-    exit 1
+  echo "code is not installed" >&2
+  exit 1
 }
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"

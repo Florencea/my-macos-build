@@ -16,72 +16,54 @@ command -v jq &>/dev/null || {
   exit 1
 }
 
+CONFIG_HOME="$(cd "$(dirname "$0")/../configs" && pwd)"
+
+commit_file() {
+  local file="$1"
+  cd "$CONFIG_HOME"
+  git add "$file"
+  if [[ -n "$(git status --porcelain "$file")" ]]; then
+    git commit -q -m "feat: Update $file by ebk"
+    git push -q
+    printf "Backup %s ok\n" "$file"
+  fi
+}
+
 ### Copy config
 ### Usage: copy <FILE_PATH> <FILE_NAME>
-function copy() {
-  CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
-  FILE_PATH=${1:-}
-  FILE_NAME=${2:-}
-  if [[ -f "$FILE_PATH" ]]; then
-    cp "$FILE_PATH" "$CONFIG_HOME/$FILE_NAME"
-    cd "$CONFIG_HOME" || exit
-    git add "$FILE_NAME"
-    if [[ -n "$(git status --porcelain)" ]]; then
-      echo ""
-      printf "Copy Configuration: %s\n" "$FILE_PATH"
-      printf "     --> %s\n\n" "$FILE_NAME"
-      printf "Backup..."
-      git commit -q -m "feat: Update config $FILE_NAME by ebk"
-      git push -q
-      echo "done."
-      echo ""
-    fi
+copy() {
+  local file_path="${1:-}"
+  local file_name="${2:-}"
+  if [[ -f "$file_path" ]]; then
+    cp "$file_path" "$CONFIG_HOME/$file_name"
+    commit_file "$file_name"
   fi
 }
 
 ### Backup config
 ### Usage: backup <FILE_PATTERN> <FILE_NAME>
-function backup() {
-  CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
-  FILE_PATTERN=${1:-}
-  FILE_NAME=${2:-}
-  FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
-  if [[ -f "$FILE_BACKUP" ]]; then
-    mv "$FILE_BACKUP" "$CONFIG_HOME/$FILE_NAME"
-    cd "$CONFIG_HOME" || exit
-    git add "$FILE_NAME"
-    echo ""
-    printf "Find Configuration: %s\n" "$FILE_BACKUP"
-    printf "     --> %s\n\n" "$FILE_NAME"
-    printf "Backup..."
-    git commit -q -m "feat: Update $FILE_NAME by ebk"
-    git push -q
-    echo "done."
-    echo ""
+backup() {
+  local file_pattern="${1:-}"
+  local file_name="${2:-}"
+  local file_backup
+  file_backup=$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n1)
+  if [[ -f "$file_backup" ]]; then
+    mv "$file_backup" "$CONFIG_HOME/$file_name"
+    commit_file "$file_name"
   fi
 }
 
 ### Backup and format json
 ### Usage: backupjson <FILE_PATTERN> <FILE_NAME>
-function backupjson() {
-  CONFIG_HOME="$(dirname "$(dirname $0)")/configs"
-  FILE_PATTERN=${1:-}
-  FILE_NAME=${2:-}
-  FILE_BACKUP=$(find "$HOME/Downloads" -maxdepth 1 -name "$FILE_PATTERN" | head -n1)
-  if [[ -f "$FILE_BACKUP" ]]; then
-    mv "$FILE_BACKUP" "$CONFIG_HOME/temp.json"
-    cd "$CONFIG_HOME" || exit
-    jq . temp.json >"$FILE_NAME"
-    rm temp.json
-    git add "$FILE_NAME"
-    echo ""
-    printf "Find Configuration: %s\n" "$FILE_BACKUP"
-    printf "     --> %s\n\n" "$FILE_NAME"
-    printf "Backup..."
-    git commit -q -m "feat: Update $FILE_NAME by ebk"
-    git push -q
-    echo "done."
-    echo ""
+backupjson() {
+  local file_pattern="${1:-}"
+  local file_name="${2:-}"
+  local file_backup
+  file_backup=$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n1)
+  if [[ -f "$file_backup" ]]; then
+    jq . "$file_backup" >"$CONFIG_HOME/$file_name"
+    rm -f "$file_backup"
+    commit_file "$file_name"
   fi
 }
 
