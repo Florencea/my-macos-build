@@ -59,6 +59,7 @@ ffmpeg -y \
 >
 > - `-map "0:a?"` is quoted to prevent wildcard globbing in modern shells (Zsh / Fish).
 > - `-vf "subtitles=..."` is optional for burning subtitles and requires FFmpeg built with `libass` (e.g. via `homebrew-ffmpeg/ffmpeg/ffmpeg --with-libass`).
+> - For HEVC and AV1, **10-bit color (`-pix_fmt yuv420p10le`) is strongly recommended** even for 8-bit sources to prevent color banding (posterization) in gradients/dark scenes and improve compression efficiency.
 > - For AV1, `libsvtav1` is the modern standard on Apple Silicon; presets range from `0` to `13` (integers, recommended `4` to `6`).
 
 ### H.264 (AVC) crf
@@ -88,7 +89,7 @@ ffmpeg -y \
 
 | Acceptable | Streaming | Visual Lossless |
 | :--------- | :-------- | :-------------- |
-| 31         | 24        | 20              |
+| 31         | 26        | 21              |
 
 ```bash
 ffmpeg -y \
@@ -101,6 +102,7 @@ ffmpeg -y \
   -c:v libx265 \
   -crf <CRF> \
   -preset veryslow \
+  -pix_fmt yuv420p10le \
   -vf "subtitles=filename='<ASS_FILE>'" \
   -tag:v hvc1 \
   -c:a copy \
@@ -112,7 +114,7 @@ ffmpeg -y \
 
 | Acceptable | Streaming | Visual Lossless |
 | :--------- | :-------- | :-------------- |
-| 35         | 28        | 22              |
+| 40         | 31        | 24              |
 
 ```bash
 ffmpeg -y \
@@ -125,6 +127,7 @@ ffmpeg -y \
   -c:v libsvtav1 \
   -crf <CRF> \
   -preset <PRESET_0_TO_13> \
+  -pix_fmt yuv420p10le \
   -svtav1-params tune=0 \
   -vf "subtitles=filename='<ASS_FILE>'" \
   -c:a copy \
