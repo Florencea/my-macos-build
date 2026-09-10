@@ -52,7 +52,7 @@ if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 fi
 if [ "$SHELL" != "/opt/homebrew/bin/fish" ]; then
-  chsh -s /opt/homebrew/bin/fish
+  sudo dscl . -create "/Users/$USER" UserShell /opt/homebrew/bin/fish
 fi
 
 mkdir -p "$HOME/.config/fish"
@@ -109,8 +109,8 @@ brew install --formula \
 
 # Node.js config
 fnm install --lts
-fnm default lts-latest
-fnm exec --using=lts-latest npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
+fnm default default
+fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
 
 # Nano config
 echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
