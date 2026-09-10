@@ -55,6 +55,9 @@ ffmpeg -y \
 
 ## Software Encoding Commands
 
+- Benchmark tested on MacBook Pro 16" (M1 Pro, 2021), FFmpeg 9.0.1
+  - Input: H.264 AVC 1280 x 720 from YouTube (Big Buck Bunny)
+
 > [!NOTE]
 >
 > - `-map "0:a?"` is quoted to prevent wildcard globbing in modern shells (Zsh / Fish).
@@ -64,9 +67,10 @@ ffmpeg -y \
 
 ### H.264 (AVC) crf
 
-| Acceptable | Streaming | Visual Lossless |
-| :--------- | :-------- | :-------------- |
-| 30         | 23        | 18              |
+| Metric             | Acceptable     | Streaming      | Visual Lossless |
+| :----------------- | :------------- | :------------- | :-------------- |
+| **CRF**            | 30             | 23             | 18              |
+| **Speed (M1 Pro)** | ~3.0x (71 fps) | ~2.6x (64 fps) | ~2.3x (57 fps)  |
 
 ```bash
 ffmpeg -y \
@@ -87,9 +91,13 @@ ffmpeg -y \
 
 ### HEVC (H.265) crf
 
-| Acceptable | Streaming | Visual Lossless |
-| :--------- | :-------- | :-------------- |
-| 31         | 26        | 21              |
+| Metric             | Acceptable       | Streaming        | Visual Lossless  |
+| :----------------- | :--------------- | :--------------- | :--------------- |
+| **CRF**            | 31               | 26               | 21               |
+| **Speed (M1 Pro)** | ~0.27x (6.6 fps) | ~0.23x (5.6 fps) | ~0.19x (4.8 fps) |
+
+> [!WARNING]
+> `libx265 -preset veryslow` is computationally prohibitive on CPU (~0.2x, 5× slower than real-time playback). If encoding speed or thermals are a concern, consider hardware encoding via `hevc_videotoolbox` (~13x) or SVT-AV1.
 
 ```bash
 ffmpeg -y \
@@ -112,9 +120,11 @@ ffmpeg -y \
 
 ### AV1 crf
 
-| Acceptable | Streaming | Visual Lossless |
-| :--------- | :-------- | :-------------- |
-| 40         | 31        | 24              |
+| Metric               | Acceptable      | Streaming       | Visual Lossless |
+| :------------------- | :-------------- | :-------------- | :-------------- |
+| **CRF**              | 40              | 31              | 24              |
+| **Speed (Preset 6)** | ~4.8x (115 fps) | ~4.7x (113 fps) | ~4.7x (115 fps) |
+| **Speed (Preset 4)** | ~2.8x (68 fps)  | ~2.8x (67 fps)  | ~2.7x (65 fps)  |
 
 ```bash
 ffmpeg -y \
