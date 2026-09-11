@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -7,30 +7,31 @@ set -o pipefail
 # Usage: ebk
 # Example: ebk
 
-command -v git &>/dev/null || {
-  echo "git is not installed" >&2
-  exit 1
-}
-command -v jq &>/dev/null || {
-  echo "jq is not installed" >&2
-  exit 1
-}
+# 1. Check required tools
+for cmd in git jq; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  }
+done
 
+# 2. Resolve configuration directory
 CONFIG_HOME="$(cd "$(dirname "$0")/../configs" && pwd)"
 
+# 3. Define backup helper functions
 commit_file() {
-  local file="$1"
-  cd "$CONFIG_HOME"
-  git add "$file"
-  if [[ -n "$(git status --porcelain "$file")" ]]; then
-    git commit -q -m "feat: Update $file by ebk"
-    git push -q
-    printf "Backup %s ok\n" "$file"
-  fi
+  local file="${1:-}"
+  (
+    cd "$CONFIG_HOME"
+    git add "$file"
+    if [[ -n "$(git status --porcelain "$file")" ]]; then
+      git commit -q -m "feat: Update $file by ebk"
+      git push -q
+      printf "Backup %s ok\n" "$file"
+    fi
+  )
 }
 
-### Copy config
-### Usage: copy <FILE_PATH> <FILE_NAME>
 copy() {
   local file_path="${1:-}"
   local file_name="${2:-}"
@@ -40,33 +41,30 @@ copy() {
   fi
 }
 
-### Backup config
-### Usage: backup <FILE_PATTERN> <FILE_NAME>
 backup() {
   local file_pattern="${1:-}"
   local file_name="${2:-}"
   local file_backup
-  file_backup=$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n1)
-  if [[ -f "$file_backup" ]]; then
+  file_backup="$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n 1)"
+  if [[ -n "$file_backup" && -f "$file_backup" ]]; then
     mv "$file_backup" "$CONFIG_HOME/$file_name"
     commit_file "$file_name"
   fi
 }
 
-### Backup and format json
-### Usage: backupjson <FILE_PATTERN> <FILE_NAME>
 backupjson() {
   local file_pattern="${1:-}"
   local file_name="${2:-}"
   local file_backup
-  file_backup=$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n1)
-  if [[ -f "$file_backup" ]]; then
+  file_backup="$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n 1)"
+  if [[ -n "$file_backup" && -f "$file_backup" ]]; then
     jq . "$file_backup" >"$CONFIG_HOME/$file_name"
     rm -f "$file_backup"
     commit_file "$file_name"
   fi
 }
 
+# 4. Backup extension configurations
 backup "my-ublock-backup*.txt" "ubo-config.txt"
 backupjson "my-ubol-settings.json" "ubol-config.json"
 backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"

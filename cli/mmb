@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -7,11 +7,14 @@ set -o pipefail
 # Usage: mmb
 # Example: mmb
 
-# Check commands
-command -v code &>/dev/null || {
-  echo "code is not installed" >&2
-  exit 1
-}
+# 1. Check required tools
+for cmd in code; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  }
+done
 
+# 2. Open workspace in Visual Studio Code
 SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
 code "$SCRIPT_DIR/../"

@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -9,7 +9,7 @@ set -o pipefail
 #          mkclp JoSY6AWKqHs 00:01:59 2
 #          mkclp JoSY6AWKqHs 00:01:59 2 --quality 45
 
-### Args
+# 1. Parse options
 QUALITY=50
 TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
@@ -29,14 +29,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Restore positional parameters
 set -- "${TEMP_ARGS[@]}"
 
-INPUT_FILE=${1:-}
-START=${2:-}
-DURATION=${3:-}
+# 2. Check arguments
+INPUT_FILE="${1:-}"
+START="${2:-}"
+DURATION="${3:-}"
 
-# Check arguments
 if [[ -z "$DURATION" ]]; then
   echo "mkclp: Clip Maker (Supports --quality [value], local files and YouTube videos)" >&2
   echo "Usage: mkclp [--quality 50] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]" >&2
@@ -46,32 +45,29 @@ if [[ -z "$DURATION" ]]; then
   exit 1
 fi
 
-# Check commands
-command -v ffmpeg &>/dev/null || {
-  echo "ffmpeg is not installed" >&2
-  exit 1
-}
-command -v ffprobe &>/dev/null || {
-  echo "ffprobe is not installed" >&2
-  exit 1
-}
+# 3. Check required tools
+for cmd in ffmpeg ffprobe; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  }
+done
 
 IS_YT=false
-
-# Treat input as YouTube source if local file does not exist
 if [[ ! -f "$INPUT_FILE" ]]; then
   command -v yt-dlp &>/dev/null || {
-    echo "File $INPUT_FILE not exist and yt-dlp is not installed" >&2
+    echo "Error: File $INPUT_FILE does not exist and yt-dlp is not installed" >&2
     exit 1
   }
   IS_YT=true
 fi
 
+# 4. Resolve input source
 VC_ARGS=(-c:v copy)
 FFMPEG_INPUTS=()
 MAP_ARGS=()
 
-if [ "$IS_YT" = true ]; then
+if [[ "$IS_YT" == true ]]; then
   # Fetch up to 1080p best video and audio streams
   BROWSER="${YT_DLP_BROWSER:-chrome}"
   YT_FORMAT="bestvideo[height<=1080]+bestaudio/best[height<=1080]"
@@ -80,14 +76,11 @@ if [ "$IS_YT" = true ]; then
     RAW_URLS=$(yt-dlp -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
   fi
   if [[ -z "$RAW_URLS" ]]; then
-    echo "Failed to get stream URL from yt-dlp for input: $INPUT_FILE" >&2
+    echo "Error: Failed to get stream URL from yt-dlp for input: $INPUT_FILE" >&2
     exit 1
   fi
 
-  STREAM_URLS=()
-  while IFS= read -r line; do
-    [[ -n "$line" ]] && STREAM_URLS+=("$line")
-  done <<<"$RAW_URLS"
+  readarray -t STREAM_URLS <<<"$RAW_URLS"
 
   # Support separate video and audio streams
   if [[ ${#STREAM_URLS[@]} -ge 2 ]]; then
@@ -114,7 +107,7 @@ else
   fi
 fi
 
-### Output file
+# 5. Generate video clip
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_clip.mp4"
 
 ffmpeg -y -hide_banner \
@@ -129,5 +122,6 @@ ffmpeg -y -hide_banner \
   -movflags +faststart \
   "$OUTPUT_FILE"
 
+# 6. Display output result
 printf "%s " "$OUTPUT_FILE"
-ls -lh "$OUTPUT_FILE" | awk -F " " {'print $5'}
+ls -lh "$OUTPUT_FILE" | awk '{print $5}'

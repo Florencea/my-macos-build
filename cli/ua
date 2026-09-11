@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -7,21 +7,21 @@ set -o pipefail
 # Usage: ua
 # Example: ua
 
-# Check commands
+# 1. Check required tools
 for cmd in brew fnm git node; do
   command -v "$cmd" &>/dev/null || {
-    echo "$cmd is not installed" >&2
+    echo "Error: $cmd is not installed" >&2
     exit 1
   }
 done
 
-### Upgrade homebrew apps/clis
+# 2. Upgrade Homebrew packages
 cd "$HOME"
 # Disable greedy upgrades to prevent updating auto-updating apps (e.g. microsoft-edge)
 HOMEBREW_NO_ENV_HINTS=1 HOMEBREW_NO_ASK=1 HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1 brew upgrade
 HOMEBREW_NO_ENV_HINTS=1 brew cleanup
 
-### Update Node.js
+# 3. Update Node.js via fnm
 NODE_VERSION="24"
 
 if REMOTE_VERSION="$(fnm list-remote --filter "${NODE_VERSION#v}" --latest 2>/dev/null)" && [[ -n "$REMOTE_VERSION" ]]; then
@@ -46,10 +46,10 @@ else
   NPM_VERSION="$(npm -v 2>/dev/null || echo "n/a")"
 fi
 
-### Print current node/npm version
+# 4. Print active Node.js and npm versions
 printf "\nnode: %s, npm: %s\n\n" "$CURRENT_VERSION" "$NPM_VERSION"
 
-### Sync git projects
+# 5. Sync git projects in workspace
 SCRIPT_PATH="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
 PROJECTS_DIR="$(cd "$SCRIPT_PATH/../.." && pwd)"
 

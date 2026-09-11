@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -7,10 +7,8 @@ set -o pipefail
 # Usage: clall [GITHUB_ACCESS_TOKEN]
 # Example: clall ghp_000000000000000000000000000000000000
 
-### Args
-TOKEN=${1:-}
-
-# Check arguments
+# 1. Check arguments
+TOKEN="${1:-}"
 if [[ -z "$TOKEN" ]]; then
   echo "clall: Clone all GitHub Repositories" >&2
   echo "Usage: clall [GITHUB_ACCESS_TOKEN]" >&2
@@ -18,33 +16,38 @@ if [[ -z "$TOKEN" ]]; then
   exit 1
 fi
 
-# Check commands
-command -v curl &>/dev/null || {
-  echo "curl is not installed" >&2
-  exit 1
-}
-command -v jq &>/dev/null || {
-  echo "jq is not installed" >&2
-  exit 1
-}
-command -v git &>/dev/null || {
-  echo "git is not installed" >&2
-  exit 1
-}
+# 2. Check required tools
+for cmd in curl jq git; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  }
+done
 
-REPO_LIST=$(curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" -s "https://api.github.com/user/repos?type=owner&per_page=100" | jq .[].ssh_url | sed -e 's/^"//' -e 's/"$//')
-mapfile -t REPOS <<<"$REPO_LIST"
+# 3. Fetch user repositories
+readarray -t REPOS < <(curl -s \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  "https://api.github.com/user/repos?type=owner&per_page=100" | jq -r '.[].ssh_url')
+
 REPO_LIST_LEN=${#REPOS[@]}
-TMPDIR="$(mktemp -d -t "$(basename $0)")"
+if [[ $REPO_LIST_LEN -eq 0 ]]; then
+  exit 0
+fi
+
+# 4. Clone repositories in parallel
+TMPDIR="$(mktemp -d -t "$(basename "$0")")"
+trap 'rm -rf "$TMPDIR"' EXIT
+
 for REPO in "${REPOS[@]}"; do
   REPO_NAME="$(basename "$REPO" .git)"
   (
     if git clone --quiet "$REPO"; then
       touch "$TMPDIR/$REPO_NAME"
-      FINISHED=$(ls -1 "$TMPDIR" | wc -l | tr -d ' ')
+      FINISHED=$(find "$TMPDIR" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')
       printf "Clone [%s/%s] %s ok\n" "$FINISHED" "$REPO_LIST_LEN" "$REPO_NAME"
     fi
   ) &
 done
 wait
-rm -rf "$TMPDIR"

@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -7,22 +7,20 @@ set -o pipefail
 # Usage: unodev
 # Example: unodev
 
-# Check commands
+# 1. Check required tools
 for cmd in git node jq; do
   command -v "$cmd" &>/dev/null || {
-    echo "$cmd is not installed" >&2
+    echo "Error: $cmd is not installed" >&2
     exit 1
   }
 done
 
-# Print current node version
+# 2. Extract active Node.js version
 CURRENT_LOCAL_VERSION="$(node -v)"
 printf "\nnode: %s\n\n" "$CURRENT_LOCAL_VERSION"
-
-# Extract raw active node version once
 NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
 
-# Define workspace directories referencing cli/ua
+# 3. Update engines.node in local projects
 SCRIPT_PATH="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
 PROJECTS_DIR="$(cd "$SCRIPT_PATH/../.." && pwd)"
 

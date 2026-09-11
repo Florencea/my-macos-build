@@ -7,10 +7,8 @@ set -o pipefail
 # Usage: mdig [domain]
 # Example: mdig 'is1-ssl.mzstatic.com'
 
-### Args
-DOMAIN=${1:-}
-
-# Check arguments
+# 1. Check arguments
+DOMAIN="${1:-}"
 if [[ -z "$DOMAIN" ]]; then
   echo "mdig: Multi-dig: Check DNS records on different DNS servers at once." >&2
   echo "Usage: mdig [domain]" >&2
@@ -18,13 +16,15 @@ if [[ -z "$DOMAIN" ]]; then
   exit 1
 fi
 
-# Check commands
-command -v dig &>/dev/null || {
-  echo "dig is not installed" >&2
-  exit 1
-}
+# 2. Check required tools
+for cmd in dig; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Error: $cmd is not installed" >&2
+    exit 1
+  }
+done
 
-# DNS servers (Name|IPv4|IPv6)
+# 3. Query DNS servers in parallel
 DNS_SERVERS=(
   "Google|8.8.8.8|2001:4860:4860::8888"
   "Cloudflare|1.1.1.1|2606:4700:4700::1111"
@@ -33,18 +33,15 @@ DNS_SERVERS=(
   "System|"
 )
 
-# Create temp dir for results
-TEMP_DIR=$(mktemp -d)
-cleanup() { rm -rf "$TEMP_DIR"; }
-trap cleanup EXIT
+TEMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TEMP_DIR"' EXIT
 
-# Query all servers in parallel
 for i in "${!DNS_SERVERS[@]}"; do
   (
     IFS='|' read -ra ADDR <<<"${DNS_SERVERS[$i]}"
-    SERVER_NAME=${ADDR[0]}
-    IPV4_IP=${ADDR[1]:-}
-    IPV6_IP=${ADDR[2]:-}
+    SERVER_NAME="${ADDR[0]}"
+    IPV4_IP="${ADDR[1]:-}"
+    IPV6_IP="${ADDR[2]:-}"
 
     # Run A (via IPv4) and AAAA (via IPv6) queries in parallel
     if [[ "$SERVER_NAME" == "System" ]]; then
@@ -98,7 +95,7 @@ done
 
 wait
 
-# Group A records
+# 4. Group DNS records
 declare -A a_groups
 declare -a a_order
 
@@ -110,7 +107,6 @@ for i in "${!DNS_SERVERS[@]}"; do
   a_groups["$key"]+="$i "
 done
 
-# Group AAAA records
 declare -A aaaa_groups
 declare -a aaaa_order
 
@@ -122,7 +118,7 @@ for i in "${!DNS_SERVERS[@]}"; do
   aaaa_groups["$key"]+="$i "
 done
 
-# Print IP records (one per line)
+# 5. Print DNS records
 print_records() {
   local value="$1"
   if [[ "$value" == \[* ]]; then
@@ -135,7 +131,6 @@ print_records() {
   fi
 }
 
-# Print A records section
 printf '── A Records ──\n'
 for key in "${a_order[@]}"; do
   print_records "$key"
@@ -156,7 +151,6 @@ for key in "${a_order[@]}"; do
   echo ""
 done
 
-# Print AAAA records section
 printf '── AAAA Records ──\n'
 for key in "${aaaa_order[@]}"; do
   print_records "$key"
