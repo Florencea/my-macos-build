@@ -39,15 +39,11 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
-# 4. Sync repository
-log "Syncing repository..."
-git pull --quiet
-
-# 5. Check all updates (Read-only check)
+# 4. Check all updates (Read-only check)
 log "Checking for all available updates..."
 npx -y npm-check-updates@latest -p npm -t latest --install never || true
 
-# 6. Check minor updates for the update workflow
+# 5. Check minor updates for the update workflow
 log "Checking for minor updates..."
 NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
@@ -63,6 +59,15 @@ echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   log "Upgrade cancelled."
   exit 0
+fi
+
+# 6. Sync repository
+if git rev-parse --abbrev-ref @{u} &>/dev/null; then
+  log "Syncing repository with remote..."
+  git pull --ff-only --quiet || {
+    echo "Error: Cannot fast-forward with remote. Please sync your branch first." >&2
+    exit 1
+  }
 fi
 
 # Store upgrades
