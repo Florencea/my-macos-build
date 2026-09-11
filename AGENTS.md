@@ -14,6 +14,14 @@ Before staging or committing any files, all modified files must be formatted usi
     ```
   - Configuration: 2-space indentation.
 
+- **Fish Shell Scripts (`configs/fish/**/*.fish`, `*.fish`)**:
+  - Formatter: `fish_indent`
+  - Command:
+    ```bash
+    fish_indent -w <modified-files>
+    ```
+  - Configuration: Fish standard formatting (bundled with `fish`).
+
 - **Markdown Files (`*.md`)**:
   - Formatter: `prettier`
   - Command:
