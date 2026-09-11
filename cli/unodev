@@ -8,23 +8,16 @@ set -o pipefail
 # Example: unodev
 
 # Check commands
-command -v git &>/dev/null || {
-  echo "git is not installed" >&2
-  exit 1
-}
-command -v node &>/dev/null || {
-  echo "node is not installed" >&2
-  exit 1
-}
-command -v npm &>/dev/null || {
-  echo "npm is not installed" >&2
-  exit 1
-}
+for cmd in git node jq; do
+  command -v "$cmd" &>/dev/null || {
+    echo "$cmd is not installed" >&2
+    exit 1
+  }
+done
 
-# Print current node/npm version
+# Print current node version
 CURRENT_LOCAL_VERSION="$(node -v)"
-CURRENT_NPM_VERSION="$(npm -v)"
-printf "\nnode: %s, npm: %s\n\n" "$CURRENT_LOCAL_VERSION" "$CURRENT_NPM_VERSION"
+printf "\nnode: %s\n\n" "$CURRENT_LOCAL_VERSION"
 
 # Extract raw active node version once
 NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
@@ -41,34 +34,27 @@ if cd "$PROJECTS_DIR"; then
     # Skip hidden folders
     [[ "$PROJECT" == .* ]] && continue
 
-    if [[ -d "$PROJECT/.git" ]]; then
-      if [[ ! -f "$PROJECT/.node-version" ]]; then
-        if [[ -f "$PROJECT/package.json" ]]; then
-          # Fast read using node -e with absolute path to avoid slow npm pkg get
-          OLD_NODE_VERSION=$(node -e "try { console.log(require('${PROJECTS_DIR}/${PROJECT}/package.json').engines.node || '') } catch(e) {}")
+    if [[ -d "$PROJECT/.git" && -f "$PROJECT/package.json" ]]; then
+      OLD_NODE_VERSION="$(jq -r '.engines.node // empty' "$PROJECT/package.json" 2>/dev/null || true)"
 
-          if [[ "$OLD_NODE_VERSION" != "$NODE_VERSION" ]]; then
-            (
-              cd "$PROJECT"
-              npm pkg set engines.node="$NODE_VERSION"
+      if [[ "$OLD_NODE_VERSION" != "$NODE_VERSION" ]]; then
+        (
+          cd "$PROJECT"
+          jq --arg v "$NODE_VERSION" '.engines.node = $v' package.json > package.json.tmp && mv package.json.tmp package.json
 
-              if [[ -n "$(git status --short)" ]]; then
-                git add package.json
-                if git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION"; then
-                  if git push -q &>/dev/null; then
-                    printf "engines.node %s: %s -> %s ok\n" "$PROJECT" "$OLD_NODE_VERSION" "$NODE_VERSION"
-                  else
-                    printf "engines.node %s: failed to push\n" "$PROJECT" >&2
-                  fi
-                fi
+          if [[ -n "$(git status --short package.json)" ]]; then
+            git add package.json
+            if git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION"; then
+              if git push -q &>/dev/null; then
+                printf "engines.node %s: %s -> %s ok\n" "$PROJECT" "$OLD_NODE_VERSION" "$NODE_VERSION"
+              else
+                printf "engines.node %s: failed to push\n" "$PROJECT" >&2
               fi
-            ) &
-          else
-            printf "engines.node %s: %s ok\n" "$PROJECT" "$OLD_NODE_VERSION"
+            fi
           fi
-        fi
+        ) &
       else
-        printf "engines.node %s: skip (.node-version exists)\n" "$PROJECT"
+        printf "engines.node %s: %s ok\n" "$PROJECT" "$OLD_NODE_VERSION"
       fi
     fi
   done
