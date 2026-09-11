@@ -42,7 +42,7 @@ git config --global core.quotepath false
 
 # Global Git Hooks setup for AI agents restriction
 mkdir -p "$HOME/.config/git/hooks"
-curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/git/hooks/pre-commit" -o "$HOME/.config/git/hooks/pre-commit"
+curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/git/hooks/pre-commit.sh" -o "$HOME/.config/git/hooks/pre-commit"
 chmod +x "$HOME/.config/git/hooks/pre-commit"
 git config --global core.hooksPath "$HOME/.config/git/hooks"
 
@@ -59,10 +59,10 @@ mkdir -p "$HOME/.config/fish"
 mkdir -p "$HOME/.config/fish/conf.d"
 mkdir -p "$HOME/.config/fish/functions"
 mkdir -p "$HOME/.config/fish/completions"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/00-paths.fish.txt -o "$HOME/.config/fish/conf.d/00-paths.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/fnm.fish.txt -o "$HOME/.config/fish/conf.d/fnm.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish.txt -o "$HOME/.config/fish/functions/fish_prompt.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish.txt -o "$HOME/.config/fish/config.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/00-paths.fish -o "$HOME/.config/fish/conf.d/00-paths.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/fnm.fish -o "$HOME/.config/fish/conf.d/fnm.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish -o "$HOME/.config/fish/functions/fish_prompt.fish"
+curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish -o "$HOME/.config/fish/config.fish"
 
 for comp in clall ebk mdig mkclp mkgif mmb rea ua unodev up; do
   curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/completions/$comp.fish" -o "$HOME/.config/fish/completions/$comp.fish" &
