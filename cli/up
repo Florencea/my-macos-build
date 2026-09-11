@@ -39,16 +39,14 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
-# 4. Check all updates (Read-only check)
-log "Checking for all available updates..."
-npx -y npm-check-updates@latest -p npm -t latest --install never || true
-
-# 5. Check minor updates for the update workflow
+# 4. Check minor updates for the update workflow
 log "Checking for minor updates..."
 NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
 if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
-  log "No minor updates available to install."
+  log "No minor updates available."
+  log "Checking for available major updates..."
+  npx -y npm-check-updates@latest -p npm -t latest --install never || true
   exit 0
 fi
 
@@ -61,7 +59,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   exit 0
 fi
 
-# 6. Sync repository
+# 5. Sync repository
 if git rev-parse --abbrev-ref @{u} &>/dev/null; then
   log "Syncing repository with remote..."
   git pull --ff-only --quiet || {
@@ -179,3 +177,9 @@ fi
 # 8. Reinstall node_modules
 log "Reinstalling local node_modules..."
 npm ci
+
+# 9. Check remaining major updates (Breaking changes)
+printf "\n"
+log "Checking for remaining major updates (manual upgrade required)..."
+npx -y npm-check-updates@latest -p npm -t latest --install never || true
+printf "\nTip: Run 'npx npm-check-updates -i' to selectively upgrade major dependencies.\n"
