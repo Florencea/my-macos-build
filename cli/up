@@ -7,7 +7,6 @@ set -o pipefail
 # Usage: up
 # Example: up
 
-
 # 1. Check required tools
 for cmd in git npm npx jq; do
   command -v "$cmd" &>/dev/null || {

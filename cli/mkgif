@@ -93,11 +93,11 @@ if [ "$IS_YT" = true ]; then
   BROWSER="${YT_DLP_BROWSER:-chrome}"
   # Dynamically determine target video height based on requested width
   # (e.g. width >= 1280 fetches up to 1080p/4K source for high-quality downsampling)
-  if (( WIDTH <= 480 )); then
+  if ((WIDTH <= 480)); then
     YT_HEIGHT=480
-  elif (( WIDTH <= 720 )); then
+  elif ((WIDTH <= 720)); then
     YT_HEIGHT=720
-  elif (( WIDTH <= 1280 )); then
+  elif ((WIDTH <= 1280)); then
     YT_HEIGHT=1080
   else
     YT_HEIGHT=2160
