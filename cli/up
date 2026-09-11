@@ -7,13 +7,6 @@ set -o pipefail
 # Usage: up
 # Example: up
 
-# Helper functions for logging
-log() {
-  printf "%s\n" "$1"
-}
-warn() {
-  printf "Warning: %s\n" "$1" >&2
-}
 
 # 1. Check required tools
 for cmd in git npm npx jq; do
@@ -39,29 +32,15 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
-# 4. Check minor updates for the update workflow
-log "Checking for minor updates..."
+# 4. Check minor updates
 NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
 if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
-  log "No minor updates available."
-  log "Checking for available major updates..."
-  npx -y npm-check-updates@latest -p npm -t latest --install never || true
-  exit 0
-fi
-
-# Ask the user if they want to proceed with updates
-printf "\n"
-read -p "Minor updates found. Press 'y' to upgrade, or any other key to exit: " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-  log "Upgrade cancelled."
   exit 0
 fi
 
 # 5. Sync repository
 if git rev-parse --abbrev-ref @{u} &>/dev/null; then
-  log "Syncing repository with remote..."
   git pull --ff-only --quiet || {
     echo "Error: Cannot fast-forward with remote. Please sync your branch first." >&2
     exit 1
@@ -123,8 +102,6 @@ for pkg in "${!upgrades[@]}"; do
   fi
 done
 
-log "Updating dependencies and committing by group..."
-
 # Sort group keys for deterministic commit ordering
 readarray -t sorted_groups < <(printf '%s\n' "${!groups[@]}" | sort)
 
@@ -157,15 +134,14 @@ for grp in "${sorted_groups[@]}"; do
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
     git push -q
   else
-    warn "Failed to install group [$grp] ($pkgs_in_group). Skipping..."
+    echo "Warning: Failed to install group [$grp] ($pkgs_in_group). Skipping..." >&2
     # Rollback modifications on failure
     git checkout -- package.json package-lock.json
   fi
 done
 
-# 7. Sync lockfile
+# 6. Sync lockfile
 # Ensure lockfile integrity
-log "Cleaning lockfile..."
 npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
 
 if [[ -n "$(git status --short package-lock.json)" ]]; then
@@ -174,12 +150,5 @@ if [[ -n "$(git status --short package-lock.json)" ]]; then
   git push -q
 fi
 
-# 8. Reinstall node_modules
-log "Reinstalling local node_modules..."
+# 7. Reinstall node_modules
 npm ci
-
-# 9. Check remaining major updates (Breaking changes)
-printf "\n"
-log "Checking for remaining major updates (manual upgrade required)..."
-npx -y npm-check-updates@latest -p npm -t latest --install never || true
-printf "\nTip: Run 'npx npm-check-updates -i' to selectively upgrade major dependencies.\n"
