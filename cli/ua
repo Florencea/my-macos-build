@@ -8,22 +8,12 @@ set -o pipefail
 # Example: ua
 
 # Check commands
-command -v brew &>/dev/null || {
-  echo "brew is not installed" >&2
-  exit 1
-}
-command -v fnm &>/dev/null || {
-  echo "fnm is not installed" >&2
-  exit 1
-}
-command -v git &>/dev/null || {
-  echo "git is not installed" >&2
-  exit 1
-}
-command -v node &>/dev/null || {
-  echo "node is not installed" >&2
-  exit 1
-}
+for cmd in brew fnm git node; do
+  command -v "$cmd" &>/dev/null || {
+    echo "$cmd is not installed" >&2
+    exit 1
+  }
+done
 
 ### Upgrade homebrew apps/clis
 cd "$HOME"
@@ -32,34 +22,32 @@ HOMEBREW_NO_ENV_HINTS=1 HOMEBREW_NO_ASK=1 HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS
 HOMEBREW_NO_ENV_HINTS=1 brew cleanup
 
 ### Update Node.js
-### Change this line for preferred version (start by 'v', ex: v20, v24)
-PREFERRED_NODEJS_VERSION="v24"
-###
-if PREFERRED_NODEJS_REMOTE_VERSION="$(fnm list-remote --filter "$PREFERRED_NODEJS_VERSION" --latest 2>/dev/null)" && [[ -n "$PREFERRED_NODEJS_REMOTE_VERSION" ]]; then
+NODE_VERSION="24"
+
+if REMOTE_VERSION="$(fnm list-remote --filter "${NODE_VERSION#v}" --latest 2>/dev/null)" && [[ -n "$REMOTE_VERSION" ]]; then
   # Strip LTS nickname (e.g. "v24.16.0 (Krypton)" -> "v24.16.0")
-  PREFERRED_NODEJS_REMOTE_VERSION="${PREFERRED_NODEJS_REMOTE_VERSION%% *}"
-  CURRENT_LOCAL_VERSION="$(node -v)"
-  if [[ "$PREFERRED_NODEJS_REMOTE_VERSION" != "$CURRENT_LOCAL_VERSION" ]]; then
-    printf "Preferred Node.js version: %s, remote: %s, local: %s, install from remote\n" \
-      "$PREFERRED_NODEJS_VERSION" "$PREFERRED_NODEJS_REMOTE_VERSION" "$CURRENT_LOCAL_VERSION"
-    fnm install "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
-    fnm default "$PREFERRED_NODEJS_REMOTE_VERSION" &>/dev/null
-    fnm uninstall "$CURRENT_LOCAL_VERSION" &>/dev/null
-    NODE_UPDATED="true"
+  REMOTE_VERSION="${REMOTE_VERSION%% *}"
+  CURRENT_VERSION="$(node -v 2>/dev/null || echo "")"
+
+  if [[ "$REMOTE_VERSION" != "$CURRENT_VERSION" ]]; then
+    printf "Updating Node.js: local %s -> remote %s (target: %s)\n" \
+      "${CURRENT_VERSION:-none}" "$REMOTE_VERSION" "$NODE_VERSION"
+    fnm install "$REMOTE_VERSION" &>/dev/null
+    fnm default "$REMOTE_VERSION" &>/dev/null
+    [[ -n "$CURRENT_VERSION" ]] && fnm uninstall "$CURRENT_VERSION" &>/dev/null
+    CURRENT_VERSION="$REMOTE_VERSION"
+    NPM_VERSION="$(fnm exec --using="$REMOTE_VERSION" npm -v 2>/dev/null || echo "n/a")"
+  else
+    NPM_VERSION="$(npm -v 2>/dev/null || echo "n/a")"
   fi
 else
-  printf "Warning: Failed to fetch remote Node.js version for $PREFERRED_NODEJS_VERSION. Skipping Node.js update.\n" >&2
+  printf "Warning: Failed to fetch remote Node.js version for %s. Skipping Node.js update.\n" "$NODE_VERSION" >&2
+  CURRENT_VERSION="$(node -v 2>/dev/null || echo "")"
+  NPM_VERSION="$(npm -v 2>/dev/null || echo "n/a")"
 fi
 
 ### Print current node/npm version
-if [[ "${NODE_UPDATED:-false}" == "true" ]]; then
-  CURRENT_LOCAL_VERSION="$(fnm exec --using="$PREFERRED_NODEJS_REMOTE_VERSION" node -v)"
-  CURRENT_NPM_VERSION="$(fnm exec --using="$PREFERRED_NODEJS_REMOTE_VERSION" npm -v)"
-else
-  CURRENT_LOCAL_VERSION="$(node -v)"
-  CURRENT_NPM_VERSION="$(npm -v)"
-fi
-printf "\nnode: %s, npm: %s\n\n" "$CURRENT_LOCAL_VERSION" "$CURRENT_NPM_VERSION"
+printf "\nnode: %s, npm: %s\n\n" "$CURRENT_VERSION" "$NPM_VERSION"
 
 ### Sync git projects
 SCRIPT_PATH="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
