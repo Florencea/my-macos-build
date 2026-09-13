@@ -77,7 +77,7 @@ install_casks() {
   installed="$(brew list --cask -1 2>/dev/null || true)"
   local to_install=()
   for cask in "$@"; do
-    if ! echo "$installed" | grep -qx "$cask"; then
+    if ! grep -Fxq "$cask" <<<"$installed"; then
       to_install+=("$cask")
     fi
   done
@@ -91,7 +91,14 @@ install_formulas() {
   installed="$(brew list --formula -1 2>/dev/null || true)"
   local to_install=()
   for formula in "$@"; do
-    if ! echo "$installed" | grep -qx "$formula"; then
+    local matched=false
+    while IFS= read -r line; do
+      if [[ "$line" == "$formula" || "$line" == "$formula"@* ]]; then
+        matched=true
+        break
+      fi
+    done <<<"$installed"
+    if [[ "$matched" != true ]]; then
       to_install+=("$formula")
     fi
   done
@@ -195,9 +202,11 @@ install_formulas \
   zsh
 
 # Node.js config
-fnm install --lts
-fnm default lts-latest
-fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
+if ! fnm list 2>/dev/null | grep -q 'lts-latest'; then
+  fnm install --lts
+  fnm default lts-latest
+  fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
+fi
 
 # Nano config
 echo "include ${HOMEBREW_PREFIX:-/opt/homebrew}/share/nanorc/*.nanorc" >~/.nanorc
