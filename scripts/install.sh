@@ -202,6 +202,5 @@ fnm exec --using=default npm config set audit false engine-strict true fund fals
 # Nano config
 echo "include ${HOMEBREW_PREFIX:-/opt/homebrew}/share/nanorc/*.nanorc" >~/.nanorc
 
-# Reset LaunchPad
-rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
+# Restart Dock
 killall Dock
