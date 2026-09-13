@@ -41,7 +41,11 @@ export HOMEBREW_NO_ASK=1
 export HOMEBREW_AUTO_UPDATE_QUIET=1
 
 # Install Rosetta2
-/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+if ! /usr/bin/pgrep oahd &>/dev/null && ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
+  /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+else
+  echo "Rosetta2 already installed, skip Rosetta2 installation"
+fi
 
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -54,9 +58,23 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 
+# Helper to copy from local repo if available, or fetch via curl
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." &>/dev/null && pwd)"
+
+fetch_file() {
+  local rel_path="$1"
+  local dest_path="$2"
+  if [[ -n "${REPO_DIR:-}" && -f "$REPO_DIR/$rel_path" ]]; then
+    cp "$REPO_DIR/$rel_path" "$dest_path"
+  else
+    curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/$rel_path" -o "$dest_path"
+  fi
+}
+
 # Global Git Hooks setup for AI agents restriction
 mkdir -p "$HOME/.config/git/hooks"
-curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/git/hooks/pre-commit.sh" -o "$HOME/.config/git/hooks/pre-commit"
+fetch_file "configs/git/hooks/pre-commit.sh" "$HOME/.config/git/hooks/pre-commit"
 chmod +x "$HOME/.config/git/hooks/pre-commit"
 git config --global core.hooksPath "$HOME/.config/git/hooks"
 
@@ -65,7 +83,7 @@ brew install --formula fish
 if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 fi
-if [ "$SHELL" != "/opt/homebrew/bin/fish" ]; then
+if [ "$(dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}')" != "/opt/homebrew/bin/fish" ]; then
   sudo dscl . -create "/Users/$USER" UserShell /opt/homebrew/bin/fish
 fi
 
@@ -73,13 +91,13 @@ mkdir -p "$HOME/.config/fish"
 mkdir -p "$HOME/.config/fish/conf.d"
 mkdir -p "$HOME/.config/fish/functions"
 mkdir -p "$HOME/.config/fish/completions"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/00-paths.fish -o "$HOME/.config/fish/conf.d/00-paths.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/conf.d/fnm.fish -o "$HOME/.config/fish/conf.d/fnm.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/functions/fish_prompt.fish -o "$HOME/.config/fish/functions/fish_prompt.fish"
-curl -fsSL https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/config.fish -o "$HOME/.config/fish/config.fish"
+fetch_file "configs/fish/conf.d/00-paths.fish" "$HOME/.config/fish/conf.d/00-paths.fish"
+fetch_file "configs/fish/conf.d/fnm.fish" "$HOME/.config/fish/conf.d/fnm.fish"
+fetch_file "configs/fish/functions/fish_prompt.fish" "$HOME/.config/fish/functions/fish_prompt.fish"
+fetch_file "configs/fish/config.fish" "$HOME/.config/fish/config.fish"
 
 for comp in clall ebk mdig mkclp mkgif mmb rea ua unodev up; do
-  curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/configs/fish/completions/$comp.fish" -o "$HOME/.config/fish/completions/$comp.fish" &
+  fetch_file "configs/fish/completions/$comp.fish" "$HOME/.config/fish/completions/$comp.fish" &
 done
 wait
 
@@ -123,7 +141,7 @@ brew install --formula \
 
 # Node.js config
 fnm install --lts
-fnm default default
+fnm default lts-latest
 fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
 
 # Nano config
@@ -132,8 +150,3 @@ echo "include ${HOMEBREW_PREFIX:-/opt/homebrew}/share/nanorc/*.nanorc" >~/.nanor
 # Reset LaunchPad
 rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
 killall Dock
-
-# Self-deletion
-if [[ -f "$0" ]]; then
-  rm "$0"
-fi
