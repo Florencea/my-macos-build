@@ -1,0 +1,27 @@
+# Homebrew environment (if not already set by zprofile)
+if [ -x "/opt/homebrew/bin/brew" ] && [[ -z "${HOMEBREW_PREFIX:-}" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Ensure unique entries in PATH
+typeset -U path PATH
+
+# PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
+path=(
+  /opt/homebrew/opt/bash/bin
+  /opt/homebrew/opt/zsh/bin
+  /opt/homebrew/opt/curl/bin
+  "$HOME/.local/bin"
+  $path
+)
+export PATH
+
+# fnm (Fast Node Manager)
+if command -v fnm &>/dev/null; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
+# Aliases (consistent with configs/fish/config.fish)
+alias nr="npm run"
+alias la="ls -lah"
+alias ll="ls -lh"

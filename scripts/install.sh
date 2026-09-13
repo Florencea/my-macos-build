@@ -20,18 +20,8 @@ fi
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
-  if [ -f "$HOME/.zprofile" ] && grep -q 'brew shellenv' "$HOME/.zprofile"; then
-    :
-  else
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-  fi
 else
   echo "Homebrew exist, skip Homebrew installation"
-  if [ -f "$HOME/.zprofile" ] && grep -q 'brew shellenv' "$HOME/.zprofile"; then
-    :
-  else
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-  fi
 fi
 
 # Disable auto-updates, env hints, and auto-confirm (Ask mode) for Homebrew
@@ -106,6 +96,14 @@ mkdir -p "$HOME/.config/git/hooks"
 fetch_file "configs/git/hooks/pre-commit.sh" "$HOME/.config/git/hooks/pre-commit"
 chmod +x "$HOME/.config/git/hooks/pre-commit"
 git config --global core.hooksPath "$HOME/.config/git/hooks"
+
+# Bash shell
+fetch_file "configs/bash/bash_profile" "$HOME/.bash_profile"
+fetch_file "configs/bash/bashrc" "$HOME/.bashrc"
+
+# Zsh shell
+fetch_file "configs/zsh/zprofile" "$HOME/.zprofile"
+fetch_file "configs/zsh/zshrc" "$HOME/.zshrc"
 
 # Fish shell
 install_formulas fish

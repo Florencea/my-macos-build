@@ -1,0 +1,17 @@
+# Homebrew environment
+if [ -x "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Ensure unique entries in PATH
+typeset -U path PATH
+
+# PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
+path=(
+  /opt/homebrew/opt/bash/bin
+  /opt/homebrew/opt/zsh/bin
+  /opt/homebrew/opt/curl/bin
+  "$HOME/.local/bin"
+  $path
+)
+export PATH
