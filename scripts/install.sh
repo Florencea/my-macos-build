@@ -13,18 +13,32 @@ else
 fi
 
 # Homebrew
+if [ -x "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  if [ -f "$HOME/.zprofile" ] && grep -q 'brew shellenv' "$HOME/.zprofile"; then
+    :
+  else
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
+  fi
 else
   echo "Homebrew exist, skip Homebrew installation"
+  if [ -f "$HOME/.zprofile" ] && grep -q 'brew shellenv' "$HOME/.zprofile"; then
+    :
+  else
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
+  fi
 fi
 
 # Disable auto-updates, env hints, and auto-confirm (Ask mode) for Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_ASK=1
+export HOMEBREW_AUTO_UPDATE_QUIET=1
 
 # Install Rosetta2
 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
@@ -113,7 +127,7 @@ fnm default default
 fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
 
 # Nano config
-echo "include /opt/homebrew/share/nanorc/*.nanorc" >~/.nanorc
+echo "include ${HOMEBREW_PREFIX:-/opt/homebrew}/share/nanorc/*.nanorc" >~/.nanorc
 
 # Reset LaunchPad
 rm -rf /private$(getconf DARWIN_USER_DIR)com.apple.dock.launchpad
