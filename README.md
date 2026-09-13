@@ -205,7 +205,7 @@ Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome
 
 - <https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/efece4442f3f583f7d04f98ef5168dfd08eaca5c>
 - <https://trac.ffmpeg.org/wiki/HWAccelIntro#VideoToolbox>
-- **Primary Use Case**: Rapid clipping and sharing via messaging apps (e.g. `cli/mkclp` for LINE, Discord). LINE natively supports direct drag-and-drop upload, video preview, and in-app playback for HEVC (`-tag:v hvc1`), while AV1 is not yet supported for direct in-app playback.
+- **Primary Use Case**: Rapid clipping and sharing via messaging apps (e.g. `cli/mkclp.sh` for LINE, Discord). LINE natively supports direct drag-and-drop upload, video preview, and in-app playback for HEVC (`-tag:v hvc1`), while AV1 is not yet supported for direct in-app playback.
 - `-q:v` could be set 0 to 100, higher is better (larger file).
 - `-movflags +faststart` ensures instant Quick Look preview on macOS and fast network streaming.
 - Test on MacBook Pro 16" (M1 Pro, 2021), FFmpeg 9.0.1

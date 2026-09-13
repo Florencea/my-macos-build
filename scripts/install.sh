@@ -101,6 +101,33 @@ for comp in clall ebk mdig mkclp mkgif mmb rea ua unodev up; do
 done
 wait
 
+# Setup CLI symlinks to ~/.local/bin
+CLI_DIR=""
+if [[ -n "${REPO_DIR:-}" && -d "$REPO_DIR/cli" ]]; then
+  CLI_DIR="$REPO_DIR/cli"
+elif [[ -d "$HOME/Developer/my-macos-build/cli" ]]; then
+  CLI_DIR="$HOME/Developer/my-macos-build/cli"
+fi
+
+if [[ -n "$CLI_DIR" ]]; then
+  mkdir -p "$HOME/.local/bin"
+  for script in "$CLI_DIR"/*.sh; do
+    [[ -f "$script" ]] || continue
+    cmd_name="$(basename "$script" .sh)"
+    ln -sf "$script" "$HOME/.local/bin/$cmd_name"
+  done
+
+  # Clean dangling symlinks originating from CLI_DIR
+  for link in "$HOME/.local/bin"/*; do
+    if [[ -L "$link" && ! -e "$link" ]]; then
+      target="$(readlink "$link" 2>/dev/null || true)"
+      if [[ "$target" == "$CLI_DIR"* ]]; then
+        rm -f "$link"
+      fi
+    fi
+  done
+fi
+
 # Essential casks
 brew install --cask font-jetbrains-mono font-inter istat-menus@6 || true
 

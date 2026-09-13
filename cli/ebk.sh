@@ -16,7 +16,8 @@ for cmd in git jq; do
 done
 
 # 2. Resolve configuration directory
-CONFIG_HOME="$(cd "$(dirname "$0")/../configs" && pwd)"
+SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
+CONFIG_HOME="$(cd "$SCRIPT_DIR/../configs" && pwd)"
 
 # 3. Define backup helper functions
 commit_file() {

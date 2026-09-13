@@ -6,4 +6,4 @@ fish_add_path -g --prepend --move \
     /opt/homebrew/opt/bash/bin \
     /opt/homebrew/opt/zsh/bin \
     /opt/homebrew/opt/curl/bin \
-    "$HOME/Developer/my-macos-build/cli"
+    "$HOME/.local/bin"

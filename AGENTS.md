@@ -48,3 +48,28 @@ Before staging or committing any files, all modified files must be formatted usi
     - `refactor(cli): optimize unodev with jq and remove npm and .node-version dependencies`
     - `style: format shell scripts using shfmt (-i 2)`
     - `fix(cli): scale yt-dlp source height by width`
+
+## 3. CLI Script Management Rules
+
+When adding, renaming, or removing CLI tools:
+
+- **Naming & Location**:
+  - Store executable shell scripts under `cli/<command>.sh`.
+  - Use the shebang `#!/usr/bin/env bash` and enable strict mode (`set -o errexit`, `set -o nounset`, `set -o pipefail`).
+  - Ensure the script has executable permissions: `chmod +x cli/<command>.sh`.
+
+- **Symlinks in `~/.local/bin`**:
+  - All CLI scripts are exposed system-wide without the `.sh` extension via `$HOME/.local/bin`.
+  - **Adding**: Create a symlink without extension:
+    ```bash
+    ln -sf "$PWD/cli/<command>.sh" "$HOME/.local/bin/<command>"
+    ```
+  - **Removing / Renaming**: Delete the corresponding symlink:
+    ```bash
+    rm -f "$HOME/.local/bin/<command>"
+    ```
+
+- **Fish Completions & Installation**:
+  - Provide a completion script under `configs/fish/completions/<command>.fish`.
+  - Update the completion loop in `scripts/install.sh` if adding or removing a command.
+  - Format completion files with `fish_indent -w`.
