@@ -6,7 +6,7 @@ This document outlines the development workflow, code formatting standards, and 
 
 Before staging or committing any files, all modified files must be formatted using the following tools:
 
-- **Shell Scripts (`cli/*`, `scripts/*`, `*.sh`)**:
+- **Shell Scripts** (`cli/*.sh`, `scripts/*.sh`):
   - Formatter: `shfmt`
   - Command:
     ```bash
@@ -14,7 +14,7 @@ Before staging or committing any files, all modified files must be formatted usi
     ```
   - Configuration: 2-space indentation.
 
-- **Fish Shell Scripts (`configs/fish/**/*.fish`, `*.fish`)**:
+- **Fish Shell Scripts** (`configs/fish/**/*.fish`, `*.fish`):
   - Formatter: `fish_indent`
   - Command:
     ```bash
@@ -22,7 +22,7 @@ Before staging or committing any files, all modified files must be formatted usi
     ```
   - Configuration: Fish standard formatting (bundled with `fish`).
 
-- **Markdown Files (`*.md`)**:
+- **Markdown Files** (`*.md`):
   - Formatter: `prettier`
   - Command:
     ```bash
