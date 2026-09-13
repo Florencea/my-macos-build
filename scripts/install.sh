@@ -87,18 +87,12 @@ install_casks() {
 }
 
 install_formulas() {
+  local brew_opt="${HOMEBREW_PREFIX:-/opt/homebrew}/opt"
   local installed
   installed="$(brew list --formula -1 2>/dev/null || true)"
   local to_install=()
   for formula in "$@"; do
-    local matched=false
-    while IFS= read -r line; do
-      if [[ "$line" == "$formula" || "$line" == "$formula"@* ]]; then
-        matched=true
-        break
-      fi
-    done <<<"$installed"
-    if [[ "$matched" != true ]]; then
+    if ! grep -Fxq "$formula" <<<"$installed" && [[ ! -d "$brew_opt/$formula" ]]; then
       to_install+=("$formula")
     fi
   done
