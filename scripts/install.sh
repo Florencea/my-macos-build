@@ -72,6 +72,34 @@ fetch_file() {
   fi
 }
 
+install_casks() {
+  local installed
+  installed="$(brew list --cask -1 2>/dev/null || true)"
+  local to_install=()
+  for cask in "$@"; do
+    if ! echo "$installed" | grep -qx "$cask"; then
+      to_install+=("$cask")
+    fi
+  done
+  if [[ ${#to_install[@]} -gt 0 ]]; then
+    brew install --cask "${to_install[@]}" || true
+  fi
+}
+
+install_formulas() {
+  local installed
+  installed="$(brew list --formula -1 2>/dev/null || true)"
+  local to_install=()
+  for formula in "$@"; do
+    if ! echo "$installed" | grep -qx "$formula"; then
+      to_install+=("$formula")
+    fi
+  done
+  if [[ ${#to_install[@]} -gt 0 ]]; then
+    brew install --formula "${to_install[@]}" || true
+  fi
+}
+
 # Global Git Hooks setup for AI agents restriction
 mkdir -p "$HOME/.config/git/hooks"
 fetch_file "configs/git/hooks/pre-commit.sh" "$HOME/.config/git/hooks/pre-commit"
@@ -79,7 +107,7 @@ chmod +x "$HOME/.config/git/hooks/pre-commit"
 git config --global core.hooksPath "$HOME/.config/git/hooks"
 
 # Fish shell
-brew install --formula fish
+install_formulas fish
 if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 fi
@@ -129,12 +157,12 @@ if [[ -n "$CLI_DIR" ]]; then
 fi
 
 # Essential casks
-brew install --cask font-jetbrains-mono font-inter istat-menus@6 || true
+install_casks font-jetbrains-mono font-inter istat-menus@6
 
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
 # Other casks
-brew install --cask \
+install_casks \
   logi-options+ \
   1password \
   microsoft-edge \
@@ -143,10 +171,10 @@ brew install --cask \
   iina \
   visual-studio-code \
   cloudflare-warp \
-  c0re100-qbittorrent || true
+  c0re100-qbittorrent
 
 # CLI tools
-brew install --formula \
+install_formulas \
   bash \
   curl \
   ffmpeg \
