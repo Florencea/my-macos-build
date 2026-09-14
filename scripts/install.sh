@@ -162,8 +162,7 @@ install_casks \
   kekaexternalhelper \
   iina \
   visual-studio-code \
-  cloudflare-warp \
-  c0re100-qbittorrent
+  cloudflare-warp
 
 # CLI tools
 install_formulas \
