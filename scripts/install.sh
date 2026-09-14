@@ -30,13 +30,6 @@ export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_ASK=1
 export HOMEBREW_AUTO_UPDATE_QUIET=1
 
-# Install Rosetta2
-if ! /usr/bin/pgrep oahd &>/dev/null && ! /usr/bin/arch -x86_64 /usr/bin/true 2>/dev/null; then
-  /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-else
-  echo "Rosetta2 already installed, skip Rosetta2 installation"
-fi
-
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
 

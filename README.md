@@ -12,7 +12,6 @@
 
 - [Extension Configs](#extension-configs)
 - [macOS Note](#macos-note)
-  - [Install Rosetta2](#install-rosetta2)
   - [Disable macOS popup showing accented characters when holding down a key](#disable-macos-popup-showing-accented-characters-when-holding-down-a-key)
   - [Disable Window Animations](#disable-window-animations)
   - [Generate SSH Key](#generate-ssh-key)
@@ -40,12 +39,6 @@
   - [Download Full Album from YTMusic](#download-full-album-from-ytmusic)
 
 ## macOS Note
-
-### Install Rosetta2
-
-```sh
-/usr/sbin/softwareupdate --install-rosetta --agree-to-license
-```
 
 ### Disable macOS popup showing accented characters when holding down a key
 
