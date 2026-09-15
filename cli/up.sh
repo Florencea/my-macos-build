@@ -58,7 +58,7 @@ done < <(echo "$NCU_JSON" | jq -r 'to_entries | .[] | "\(.key)\t\(.value)"')
 # Define grouping rules
 get_group_key() {
   local pkg="${1:-}"
-  if [[ "$pkg" == vitest* || "$pkg" == @vitest/* ]]; then
+  if [[ "$pkg" == vitest* || "$pkg" == @vitest/* || "$pkg" == vitest-browser-* ]]; then
     echo "vitest"
   elif [[ "$pkg" == "react" || "$pkg" == "react-dom" || "$pkg" == @types/react || "$pkg" == @types/react-dom ]]; then
     echo "react"
@@ -108,7 +108,7 @@ readarray -t sorted_groups < <(printf '%s\n' "${!groups[@]}" | sort)
 for grp in "${sorted_groups[@]}"; do
   pkgs_in_group="${groups[$grp]}"
 
-  # Process upgrades: print transitions and build commit message
+  # Process upgrades: print transitions, build commit message, and update package.json
   commit_msg_parts=""
   for item in $pkgs_in_group; do
     name="${item%@*}"
@@ -125,10 +125,27 @@ for grp in "${sorted_groups[@]}"; do
     else
       commit_msg_parts="$commit_msg_parts, $part"
     fi
+
+    # Update package.json version in its respective section
+    jq --arg name "$name" --arg ver "$new_ver" '
+      (if (.dependencies | has($name)) then .dependencies[$name] = $ver else . end) |
+      (if (.devDependencies | has($name)) then .devDependencies[$name] = $ver else . end) |
+      (if (.peerDependencies | has($name)) then .peerDependencies[$name] = $ver else . end) |
+      (if (.optionalDependencies | has($name)) then .optionalDependencies[$name] = $ver else . end)
+    ' package.json >package.json.tmp && mv package.json.tmp package.json
   done
 
+  # Format package.json if project has prettier
+  if [[ -x "./node_modules/.bin/prettier" ]]; then
+    ./node_modules/.bin/prettier --write package.json &>/dev/null || true
+  elif command -v prettier &>/dev/null; then
+    prettier --write package.json &>/dev/null || true
+  elif npx --no-install prettier --write package.json &>/dev/null; then
+    :
+  fi
+
   # Install group and write lockfile
-  if npm install $pkgs_in_group --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
+  if npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
     git add package.json package-lock.json
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
     git push -q
