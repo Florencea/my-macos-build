@@ -104,13 +104,15 @@ done
 # Sort group keys for deterministic commit ordering
 readarray -t sorted_groups < <(printf '%s\n' "${!groups[@]}" | sort)
 
+# Clean existing node_modules once before updates
+rm -rf node_modules
+
 # Install and commit groups
 for grp in "${sorted_groups[@]}"; do
   pkgs_in_group="${groups[$grp]}"
 
   # Process upgrades: print transitions, build commit message, and update package.json
   commit_msg_parts=""
-  pkg_names=""
   for item in $pkgs_in_group; do
     name="${item%@*}"
     new_ver="${item##*@}"
@@ -127,13 +129,6 @@ for grp in "${sorted_groups[@]}"; do
       commit_msg_parts="$commit_msg_parts, $part"
     fi
 
-    # Collect bare package names
-    if [[ -z "$pkg_names" ]]; then
-      pkg_names="$name"
-    else
-      pkg_names="$pkg_names $name"
-    fi
-
     # Update package.json version in its respective section
     jq --arg name "$name" --arg ver "$new_ver" '
       (if (.dependencies | has($name)) then .dependencies[$name] = $ver else . end) |
@@ -143,17 +138,11 @@ for grp in "${sorted_groups[@]}"; do
     ' package.json >package.json.tmp && mv package.json.tmp package.json
   done
 
-  # Format package.json if project has prettier
-  if [[ -x "./node_modules/.bin/prettier" ]]; then
-    ./node_modules/.bin/prettier --write package.json &>/dev/null || true
-  elif command -v prettier &>/dev/null; then
-    prettier --write package.json &>/dev/null || true
-  elif npx --no-install prettier --write package.json &>/dev/null; then
-    :
-  fi
+  # Remove lockfile to force a clean ideal tree build without circular peer deadlocks
+  rm -f package-lock.json
 
   # Install group and write lockfile
-  if npm update $pkg_names --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
+  if npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
     git add package.json package-lock.json
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
     git push -q
