@@ -149,9 +149,13 @@ if [[ -n "$CLI_DIR" ]]; then
 fi
 
 # Essential casks
-install_casks font-jetbrains-mono font-inter istat-menus@6
+install_casks font-jetbrains-mono font-inter stats
 
-defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
+stats_plist="$(mktemp)"
+fetch_file "configs/Stats.plist" "$stats_plist"
+killall Stats 2>/dev/null || true
+defaults import eu.exelban.Stats "$stats_plist"
+rm -f "$stats_plist"
 
 # Other casks
 install_casks \
