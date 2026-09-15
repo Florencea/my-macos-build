@@ -110,6 +110,7 @@ for grp in "${sorted_groups[@]}"; do
 
   # Process upgrades: print transitions, build commit message, and update package.json
   commit_msg_parts=""
+  pkg_names=""
   for item in $pkgs_in_group; do
     name="${item%@*}"
     new_ver="${item##*@}"
@@ -124,6 +125,13 @@ for grp in "${sorted_groups[@]}"; do
       commit_msg_parts="$part"
     else
       commit_msg_parts="$commit_msg_parts, $part"
+    fi
+
+    # Collect bare package names
+    if [[ -z "$pkg_names" ]]; then
+      pkg_names="$name"
+    else
+      pkg_names="$pkg_names $name"
     fi
 
     # Update package.json version in its respective section
@@ -145,7 +153,7 @@ for grp in "${sorted_groups[@]}"; do
   fi
 
   # Install group and write lockfile
-  if npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
+  if npm install $pkg_names --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
     git add package.json package-lock.json
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
     git push -q
