@@ -153,7 +153,7 @@ for grp in "${sorted_groups[@]}"; do
   fi
 
   # Install group and write lockfile
-  if npm install $pkg_names --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
+  if npm update $pkg_names --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
     git add package.json package-lock.json
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
     git push -q
