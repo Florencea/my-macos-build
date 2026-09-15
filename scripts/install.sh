@@ -157,7 +157,7 @@ defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" ser
 install_casks \
   logi-options+ \
   1password \
-  microsoft-edge \
+  google-chrome \
   keka \
   kekaexternalhelper \
   iina \

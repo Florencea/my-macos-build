@@ -17,7 +17,7 @@ done
 
 # 2. Upgrade Homebrew packages
 cd "$HOME"
-# Disable greedy upgrades to prevent updating auto-updating apps (e.g. microsoft-edge)
+# Disable greedy upgrades to prevent updating auto-updating apps (e.g. google-chrome)
 HOMEBREW_NO_ENV_HINTS=1 HOMEBREW_NO_ASK=1 HOMEBREW_AUTO_UPDATE_QUIET=1 HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1 brew upgrade
 HOMEBREW_NO_ENV_HINTS=1 brew cleanup
 
