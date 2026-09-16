@@ -166,6 +166,7 @@ install_casks \
 
 # CLI tools
 install_formulas \
+  actionlint \
   bash \
   curl \
   ffmpeg \
