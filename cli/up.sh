@@ -143,6 +143,9 @@ for grp in "${sorted_groups[@]}"; do
 
   # Install group and write lockfile
   if npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null; then
+    # Prune extraneous optional binaries immediately while lockfile is present
+    npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
+
     git add package.json package-lock.json
     git commit -q -m "chore(deps): update dependency $commit_msg_parts"
     git push -q
@@ -153,14 +156,12 @@ for grp in "${sorted_groups[@]}"; do
   fi
 done
 
-# 6. Sync lockfile
-# Ensure lockfile integrity
+# 6. Verify lockfile integrity
 npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
 
 if [[ -n "$(git status --short package-lock.json)" ]]; then
-  git add package-lock.json
-  git commit -q -m "chore(deps): sync and clean lockfile"
-  git push -q
+  echo "Error: Lockfile drifted unexpectedly after updates." >&2
+  exit 1
 fi
 
 # 7. Reinstall node_modules
