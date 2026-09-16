@@ -95,6 +95,7 @@ fetch_file "configs/bash/bash_profile" "$HOME/.bash_profile"
 fetch_file "configs/bash/bashrc" "$HOME/.bashrc"
 
 # Zsh shell
+fetch_file "configs/zsh/zshenv" "$HOME/.zshenv"
 fetch_file "configs/zsh/zprofile" "$HOME/.zprofile"
 fetch_file "configs/zsh/zshrc" "$HOME/.zshrc"
 

@@ -1,0 +1,19 @@
+# Homebrew environment
+if [ -x "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Ensure unique entries in PATH
+typeset -U path PATH
+
+# PATH configuration
+path=(
+  "$HOME/.local/bin"
+  $path
+)
+export PATH
+
+# fnm (Fast Node Manager)
+if command -v fnm &>/dev/null; then
+  eval "$(fnm env --use-on-cd)"
+fi
