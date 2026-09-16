@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Description: Check and update Node.js package dependencies with pre-checks and rollback
+# Description: Check and update Node.js package dependencies with clean spinner feedback
 # Usage: up
 # Example: up
 
@@ -45,17 +45,44 @@ if git rev-parse --abbrev-ref @{u} &>/dev/null; then
   }
 fi
 
-# 5. Check minor updates
+# 5. Spinner helper for time-consuming steps
+run_with_spinner() {
+  local msg="$1"
+  shift
+  local pid
+  local spin='-\|/'
+  local i=0
+
+  # Run target command in background with all noisy output muted
+  "$@" &>/dev/null &
+  pid=$!
+
+  # Show dynamic spinner while command is running
+  while kill -0 "$pid" 2>/dev/null; do
+    i=$(((i + 1) % 4))
+    printf "\r  \033[36m%s\033[0m %s..." "${spin:$i:1}" "$msg"
+    sleep 0.1
+  done
+
+  # Clear line immediately upon completion
+  printf "\r\033[K"
+
+  wait "$pid"
+}
+
+# 6. Check minor updates
 NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
 if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
   exit 0
 fi
 
-# 6. Collect update metadata
+# 7. Parse updates safely
 count=0
 commit_body=""
 single_pkg_summary=""
+
+RAW_TARGETS="$(echo "$NCU_JSON" | jq -r 'to_entries | .[] | "\(.key)\t\(.value)"')"
 
 while IFS=$'\t' read -r pkg new_ver; do
   [[ -z "$pkg" ]] && continue
@@ -64,64 +91,78 @@ while IFS=$'\t' read -r pkg new_ver; do
   printf "  %s  %s  ->  %s\n" "$pkg" "$old_ver" "$new_ver"
   commit_body+=$'\n'"- ${pkg}: ${old_ver} -> ${new_ver}"
   single_pkg_summary="${pkg} ${old_ver} -> ${new_ver}"
-  ((count++))
-done < <(echo "$NCU_JSON" | jq -r 'to_entries | .[] | "\(.key)\t\(.value)"')
+  count=$((count + 1))
+done <<<"$RAW_TARGETS"
 
-# 7. Create sandbox branch and register rollback trap
+# 8. Create sandbox branch and register rollback trap
 TEMP_BRANCH="chore/deps-upgrade-$(date +%s)"
 git checkout -q -b "$TEMP_BRANCH"
 
+FAILED_STEP="Verification"
+
 cleanup() {
-  local exit_code=$?
-  if [[ $exit_code -ne 0 ]]; then
-    echo "Error: Pre-checks failed. Rolling back changes to 'main'..." >&2
-    git checkout -q main
+  local orig_exit=$?
+  trap - EXIT INT TERM
+  printf "\r\033[K" # Clear any remaining spinner line on failure
+
+  if [[ $orig_exit -ne 0 ]]; then
+    echo "Error: Pre-checks failed at step '${FAILED_STEP}'. Rolling back changes to 'main'..." >&2
+    git checkout -q main || true
     git branch -D "$TEMP_BRANCH" >/dev/null 2>&1 || true
-    npm ci --quiet >/dev/null 2>&1 || true
+    npm ci --quiet &>/dev/null || true
   fi
-  exit $exit_code
+  exit "$orig_exit"
 }
 trap cleanup EXIT INT TERM
 
-# 8. Update package.json and lockfile
-npx -y npm-check-updates -u -t minor >/dev/null
-npm install --package-lock-only --ignore-scripts --loglevel error >/dev/null
+# 9. Update package.json and lockfile
+FAILED_STEP="npx npm-check-updates"
+run_with_spinner "Updating packages" npx -y npm-check-updates -u -t minor --loglevel silent
 
-# 9. Sync local dependencies for verification
-npm ci --quiet
+FAILED_STEP="npm install (lockfile update)"
+run_with_spinner "Writing lockfile" npm install --package-lock-only --ignore-scripts --loglevel error
 
-# 10. Run project pre-checks
+# 10. Sync local dependencies
+FAILED_STEP="npm ci"
+run_with_spinner "Syncing dependencies (npm ci)" npm ci --quiet
+
+# 11. Run project pre-checks
 run_first_matching_script() {
+  local category="$1"
+  local display_name="$2"
+  shift 2
   for script_name in "$@"; do
     if jq -e ".scripts[\"$script_name\"]" package.json >/dev/null 2>&1; then
-      npm run --silent "$script_name"
+      FAILED_STEP="npm run $script_name ($category)"
+      run_with_spinner "Verifying $display_name" npm run --silent "$script_name"
       return 0
     fi
   done
   return 1
 }
 
-# Auto-format and check formatting
-run_first_matching_script "format" || true
-run_first_matching_script "format:check" || true
+# Auto-format and format-check
+run_first_matching_script "format" "format" "format" || true
+run_first_matching_script "format-check" "formatting rules" "format:check" || true
 
 # Typecheck
-if ! run_first_matching_script "agent:typecheck" "typecheck"; then
+if ! run_first_matching_script "typecheck" "types" "agent:typecheck" "typecheck"; then
   if jq -e '.devDependencies.typescript // .dependencies.typescript' package.json >/dev/null 2>&1; then
-    npx tsc --noEmit
+    FAILED_STEP="npx tsc --noEmit"
+    run_with_spinner "Verifying types" npx tsc --noEmit
   fi
 fi
 
 # Lint
-run_first_matching_script "agent:lint" "lint" || true
+run_first_matching_script "lint" "linter" "agent:lint" "lint" || true
 
 # Dead code check
-run_first_matching_script "check:deadcode" "knip" || true
+run_first_matching_script "deadcode" "dead code" "check:deadcode" "knip" || true
 
 # Lightweight unit tests
-run_first_matching_script "agent:test:unit" "test:unit" || true
+run_first_matching_script "unit-test" "unit tests" "agent:test:unit" "test:unit" || true
 
-# 11. Build commit message
+# 12. Build commit message
 if [[ "$count" -eq 1 ]]; then
   commit_title="chore(deps): update dependency ${single_pkg_summary}"
   commit_msg="${commit_title}"
@@ -130,13 +171,18 @@ else
   commit_msg="${commit_title}"$'\n\n'"Upgrade details:${commit_body}"
 fi
 
-# 12. Commit on sandbox branch
+# 13. Commit on sandbox branch
+FAILED_STEP="git commit"
 git add -A
 git commit -q -m "$commit_msg"
 
-# 13. Fast-forward merge into main and push
+# 14. Fast-forward merge into main and push
+FAILED_STEP="git merge & push"
+run_with_spinner "Pushing to remote" git push -q origin "$TEMP_BRANCH:main"
+
 trap - EXIT INT TERM
 git checkout -q main
 git merge --ff-only -q "$TEMP_BRANCH"
 git branch -D -q "$TEMP_BRANCH"
-git push -q origin main
+
+echo "Pushed: $commit_title"
