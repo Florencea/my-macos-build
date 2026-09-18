@@ -191,7 +191,7 @@ install_formulas \
 if ! fnm list 2>/dev/null | grep -q 'lts-latest'; then
   fnm install --lts
   fnm default lts-latest
-  fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true save-exact true
+  fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true install-strategy linked save-exact true strict-peer-deps true
 fi
 
 # Nano config
