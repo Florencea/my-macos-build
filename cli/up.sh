@@ -50,7 +50,7 @@ run_with_spinner() {
   local msg="$1"
   shift
   local pid
-  local spin='-\|/'
+  local spin=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
   local i=0
 
   # Run target command in background with all noisy output muted
@@ -59,9 +59,9 @@ run_with_spinner() {
 
   # Show dynamic spinner while command is running
   while kill -0 "$pid" 2>/dev/null; do
-    i=$(((i + 1) % 4))
-    printf "\r  \033[36m%s\033[0m %s..." "${spin:$i:1}" "$msg"
-    sleep 0.1
+    printf "\r  %s %s..." "${spin[i]}" "$msg"
+    i=$(((i + 1) % ${#spin[@]}))
+    sleep 0.08
   done
 
   # Clear line immediately upon completion
