@@ -33,6 +33,48 @@ export HOMEBREW_AUTO_UPDATE_QUIET=1
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Safely disable Spotlight indexing to prevent CPU spikes and IPC deadlocks (e.g. mdfind / Homebrew cask).
+# Note:
+# - Avoid adding '/' to GUI privacy exclusions to prevent metadata daemon / mdfind IPC deadlocks.
+# - Uses macOS official kMDConfigSearchLevelFSSearchOnly fallback mode.
+# - Ignores CoreSpotlight reset expected exit code -1 under set -e.
+disable_spotlight_safely() {
+  echo "==> Safely disabling Spotlight indexing (kMDConfigSearchLevelFSSearchOnly)..."
+
+  local sudo_cmd=""
+  if [[ $EUID -ne 0 ]]; then
+    if ! command -v sudo &>/dev/null; then
+      echo "Error: sudo is required to configure Spotlight settings." >&2
+      return 1
+    fi
+    sudo -v
+    sudo_cmd="sudo"
+  fi
+
+  # 1. Globally disable indexing across all volumes
+  echo "--> Disabling indexing on all volumes..."
+  $sudo_cmd mdutil -a -i off
+
+  # 2. Erase existing indexing databases (suppress expected CoreSpotlight reset errors / Code=-1 under set -e)
+  echo "--> Erasing existing Spotlight index databases..."
+  $sudo_cmd mdutil -a -E || true
+
+  # 3. Terminate lingering metadata worker processes consuming resources
+  echo "--> Terminating lingering metadata worker processes..."
+  $sudo_cmd killall -9 mdworker mdworker_shared mds_stores 2>/dev/null || true
+
+  # 4. Prevent external volumes from being automatically indexed after system updates
+  echo "--> Disabling automatic indexing for external volumes..."
+  $sudo_cmd defaults write /Library/Preferences/com.apple.SpotlightServer.plist ExternalVolumesIndexed -bool false
+
+  # 5. Verify status across all volumes
+  echo "--> Verifying Spotlight indexing status:"
+  $sudo_cmd mdutil -a -s
+  echo "==> Spotlight indexing safely disabled."
+}
+
+disable_spotlight_safely
+
 # Git config
 git config --global user.name "Florencea"
 git config --global user.email "bearflorencea@gmail.com"
