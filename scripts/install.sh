@@ -224,6 +224,7 @@ install_formulas \
   python \
   rsync \
   shfmt \
+  socat \
   wget \
   yt-dlp \
   yq \
