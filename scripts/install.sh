@@ -245,8 +245,8 @@ install_casks \
   1password \
   google-chrome \
   keka \
-  kekaexternalhelper \
   iina \
+  transmission \
   visual-studio-code \
   cloudflare-warp
 
