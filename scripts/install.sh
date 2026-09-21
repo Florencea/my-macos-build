@@ -122,6 +122,11 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.quotepath false
 
+# HostName setup (prevents mDNS / DNS resolution timeouts on terminal launch)
+if [[ "$(scutil --get HostName 2>/dev/null || true)" != "florenceambp" ]]; then
+  sudo scutil --set HostName "florenceambp"
+fi
+
 # Helper to copy from local repo if available, or fetch via curl
 SCRIPT_DIR="${0:A:h}"
 REPO_DIR="${SCRIPT_DIR:h}"
@@ -176,6 +181,7 @@ fetch_file "configs/bash/bash_profile" "$HOME/.bash_profile"
 fetch_file "configs/bash/bashrc" "$HOME/.bashrc"
 
 # Zsh shell & Custom Completions
+touch "$HOME/.hushlogin"
 mkdir -p "$HOME/.local/share/zsh/site-functions"
 mkdir -p "$HOME/.config/zsh/functions"
 fetch_file "configs/zsh/zshenv" "$HOME/.zshenv"
