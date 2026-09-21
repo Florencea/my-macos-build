@@ -1,26 +1,13 @@
 #compdef mkgif
 
-_mkgif() {
-  local -a fps_list
-  fps_list=(
-    '12:Standard lightweight GIF (12 fps)'
-    '15:Smooth animation (15 fps)'
-    '24:Full motion (24 fps)'
-  )
+local -a widths fps_list
+widths=('360:Mobile small' '480:Standard sweet spot' '640:High definition' '720:Large')
+fps_list=('12:Lightweight GIF (12 fps)' '15:Smooth animation (15 fps)' '24:Full motion (24 fps)')
 
-  _arguments -s \
-    '1:Input video:_files -g "*.(mp4|mkv|mov|webm)(-.)"' \
-    '2:Start time: ' \
-    '3:Duration: ' \
-    '4:Width (px):(360 480 640 720)' \
-    '5:FPS:->fps' \
-    '6:Output GIF:_files -g "*.gif"' && return 0
-
-  case "$state" in
-  fps)
-    _describe -t fps_list 'Frame Rate' fps_list
-    ;;
-  esac
-}
-
-_mkgif "$@"
+_arguments -s \
+  '1:Input Video (File or URL):_alternative "files:Video Files:_files -g \"*.(mp4|mkv|mov|webm|avi)(-.)\"" "urls:URL:(https\:// http\://)" "allfiles:All Files:_files"' \
+  '2:Start Time (HH:MM:SS or SS): ' \
+  '3:Duration (Seconds): ' \
+  '4:Width (px):_describe -t widths "Width" widths' \
+  '5:FPS:_describe -t fps_list "Frame Rate" fps_list' \
+  '6:Output GIF:_files -g "*.gif"'

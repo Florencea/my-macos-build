@@ -1,22 +1,13 @@
 #compdef unodev
 
-_unodev() {
-  local -a node_majors
-  node_majors=(
-    '20:Node.js 20 LTS (Iron)'
-    '22:Node.js 22 LTS (Jod)'
-    '24:Node.js 24 Current / Future LTS'
-  )
+local -a node_majors
+node_majors=(
+  '20:Node.js 20 LTS (Iron)'
+  '22:Node.js 22 LTS (Jod)'
+  '24:Node.js 24 LTS'
+)
 
-  _arguments -s \
-    '(-d --dir)'{-d,--dir}'=[Target project directory]:Directory:_path_files -/' \
-    '1:Node Major Version:->majors' && return 0
-
-  case "$state" in
-  majors)
-    _describe -t node_majors 'Node.js LTS Releases' node_majors
-    ;;
-  esac
-}
-
-_unodev "$@"
+_arguments -s \
+  '(-d --dir)'{-d,--dir}'=[Target project directory]:Project Directory:_path_files -/' \
+  '(-h --help)'{-h,--help}'[Show help message]' \
+  '1:Node Major Version:_describe -t node_majors "Node LTS Version" node_majors'
