@@ -1,17 +1,49 @@
 #compdef mkclp
 
-local -a qualities
-qualities=(
-  '45:Sweet Spot (Storage-optimized, ~41% reduction)'
-  '50:Sweet Spot (Quality-optimized, ~29% reduction)'
-  '25:Low-bandwidth mobile playback'
-  '40:Standard playback'
-  '60:High quality (larger size)'
-)
+_mkclp() {
+  local curcontext="$curcontext" state line ret=1
+  typeset -A opt_args
 
-_arguments -s \
-  '1:Input Video (File or URL):_alternative "files:Video Files:_files -g \"*.(mp4|mkv|mov|webm|avi|ts)(-.)\"" "urls:URL:(https\:// http\://)" "allfiles:All Files:_files"' \
-  '2:Start Time (HH:MM:SS or SS): ' \
-  '3:Duration (Seconds or End Time): ' \
-  '4:Quality (0-100):_describe -t qualities "Quality Preset" qualities' \
-  '5:Output File:_files'
+  _arguments -C -s \
+    '(-q --quality)'{-q,--quality}'[Set VideoToolbox quality (default: 50)]:quality:->quality' \
+    '1:Input Video (File or URL):->input_source' \
+    '2:Start Time (HH\:MM\:SS or SS): ' \
+    '3:Duration (Seconds): ' && ret=0
+
+  case "$state" in
+  quality)
+    local -a qualities
+    qualities=(
+      '40:Standard playback'
+      '45:Storage-optimized sweet spot (~41% reduction)'
+      '50:Quality-optimized sweet spot (~29% reduction)'
+      '60:High quality (larger size)'
+      '75:High bitrate (diminishing returns)'
+    )
+    _describe -t qualities 'Quality Preset' qualities && ret=0
+    ;;
+  input_source)
+    local -a expl
+    _tags video-files urls all-files
+    while _tags; do
+      if _requested video-files; then
+        _description video-files expl 'video file'
+        _files "$expl[@]" -g "*.(#i)(mp4|mkv|mov|webm|avi|ts)(-.)" && ret=0
+      fi
+      if _requested urls; then
+        _description urls expl 'URL prefix'
+        compadd "$expl[@]" -S '' 'https://' 'http://' && ret=0
+      fi
+      if _requested all-files; then
+        _description all-files expl 'all files'
+        _files "$expl[@]" && ret=0
+      fi
+      ((ret == 0)) && break
+    done
+    ;;
+  esac
+
+  return ret
+}
+
+_mkclp "$@"

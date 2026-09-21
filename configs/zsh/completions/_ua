@@ -1,5 +1,7 @@
 #compdef ua
 
-_arguments -s \
-  '(-y --yes)'{-y,--yes}'[Run non-interactively without prompt]' \
-  '(-h --help)'{-h,--help}'[Show help message]'
+_ua() {
+  _message 'no arguments'
+}
+
+_ua "$@"

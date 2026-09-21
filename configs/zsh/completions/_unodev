@@ -1,13 +1,7 @@
 #compdef unodev
 
-local -a node_majors
-node_majors=(
-  '20:Node.js 20 LTS (Iron)'
-  '22:Node.js 22 LTS (Jod)'
-  '24:Node.js 24 LTS'
-)
+_unodev() {
+  _message 'no arguments'
+}
 
-_arguments -s \
-  '(-d --dir)'{-d,--dir}'=[Target project directory]:Project Directory:_path_files -/' \
-  '(-h --help)'{-h,--help}'[Show help message]' \
-  '1:Node Major Version:_describe -t node_majors "Node LTS Version" node_majors'
+_unodev "$@"

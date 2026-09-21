@@ -1,0 +1,7 @@
+#compdef ebk
+
+_ebk() {
+  _message 'no arguments'
+}
+
+_ebk "$@"

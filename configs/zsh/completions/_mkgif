@@ -1,13 +1,72 @@
 #compdef mkgif
 
-local -a widths fps_list
-widths=('360:Mobile small' '480:Standard sweet spot' '640:High definition' '720:Large')
-fps_list=('12:Lightweight GIF (12 fps)' '15:Smooth animation (15 fps)' '24:Full motion (24 fps)')
+_mkgif() {
+  local curcontext="$curcontext" state line ret=1
+  typeset -A opt_args
 
-_arguments -s \
-  '1:Input Video (File or URL):_alternative "files:Video Files:_files -g \"*.(mp4|mkv|mov|webm|avi)(-.)\"" "urls:URL:(https\:// http\://)" "allfiles:All Files:_files"' \
-  '2:Start Time (HH:MM:SS or SS): ' \
-  '3:Duration (Seconds): ' \
-  '4:Width (px):_describe -t widths "Width" widths' \
-  '5:FPS:_describe -t fps_list "Frame Rate" fps_list' \
-  '6:Output GIF:_files -g "*.gif"'
+  _arguments -C -s \
+    '--fps[Set FPS (default: 10)]:fps:->fps' \
+    '(-w --width)'{-w,--width}'[Set width in px (default: 720)]:width:->width' \
+    '(-q --quality)'{-q,--quality}'[Set gifski quality 1-100 (default: 70)]:quality:->quality' \
+    '(-l --lossy)'{-l,--lossy}'[Enable lossy LZW compression (default: off)]' \
+    '1:Input Video (File or URL):->input_source' \
+    '2:Start Time (HH\:MM\:SS or SS): ' \
+    '3:Duration (Seconds): ' && ret=0
+
+  case "$state" in
+  fps)
+    local -a fps_list
+    fps_list=(
+      '8:Low framerate'
+      '10:Default framerate'
+      '12:Lightweight GIF'
+      '15:Smooth animation'
+      '24:Full motion'
+    )
+    _describe -t fps_list 'Frame Rate' fps_list && ret=0
+    ;;
+  width)
+    local -a widths
+    widths=(
+      '480:Standard sweet spot'
+      '640:High definition'
+      '720:Large (default)'
+      '1280:HD'
+    )
+    _describe -t widths 'Width (px)' widths && ret=0
+    ;;
+  quality)
+    local -a qualities
+    qualities=(
+      '60:Lower quality'
+      '70:Default sweet spot'
+      '80:High quality'
+      '85:Very high quality'
+    )
+    _describe -t qualities 'gifski Quality' qualities && ret=0
+    ;;
+  input_source)
+    local -a expl
+    _tags video-files urls all-files
+    while _tags; do
+      if _requested video-files; then
+        _description video-files expl 'video file'
+        _files "$expl[@]" -g "*.(#i)(mp4|mkv|mov|webm|avi)(-.)" && ret=0
+      fi
+      if _requested urls; then
+        _description urls expl 'URL prefix'
+        compadd "$expl[@]" -S '' 'https://' 'http://' && ret=0
+      fi
+      if _requested all-files; then
+        _description all-files expl 'all files'
+        _files "$expl[@]" && ret=0
+      fi
+      ((ret == 0)) && break
+    done
+    ;;
+  esac
+
+  return ret
+}
+
+_mkgif "$@"

@@ -1,0 +1,7 @@
+#compdef clall
+
+_clall() {
+  _message 'GitHub Personal Access Token'
+}
+
+_clall "$@"

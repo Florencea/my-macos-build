@@ -186,6 +186,7 @@ fetch_file "configs/zsh/zshrc" "$HOME/.zshrc"
 if [[ -d "$REPO_DIR/configs/zsh/completions" ]]; then
   for comp in "$REPO_DIR/configs/zsh/completions"/_*(N); do
     cp -f "$comp" "$HOME/.local/share/zsh/site-functions/${comp:t}"
+    chmod 644 "$HOME/.local/share/zsh/site-functions/${comp:t}"
   done
 fi
 

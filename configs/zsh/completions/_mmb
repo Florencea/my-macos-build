@@ -1,0 +1,7 @@
+#compdef mmb
+
+_mmb() {
+  _message 'no arguments'
+}
+
+_mmb "$@"

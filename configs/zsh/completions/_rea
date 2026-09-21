@@ -1,0 +1,8 @@
+#compdef rea
+
+_rea() {
+  _arguments -s \
+    '1:Input Directory:_directories' && return 0
+}
+
+_rea "$@"
