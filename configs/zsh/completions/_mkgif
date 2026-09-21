@@ -1,0 +1,26 @@
+#compdef mkgif
+
+_mkgif() {
+  local -a fps_list
+  fps_list=(
+    '12:Standard lightweight GIF (12 fps)'
+    '15:Smooth animation (15 fps)'
+    '24:Full motion (24 fps)'
+  )
+
+  _arguments -s \
+    '1:Input video:_files -g "*.(mp4|mkv|mov|webm)(-.)"' \
+    '2:Start time: ' \
+    '3:Duration: ' \
+    '4:Width (px):(360 480 640 720)' \
+    '5:FPS:->fps' \
+    '6:Output GIF:_files -g "*.gif"' && return 0
+
+  case "$state" in
+  fps)
+    _describe -t fps_list 'Frame Rate' fps_list
+    ;;
+  esac
+}
+
+_mkgif "$@"

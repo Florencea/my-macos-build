@@ -1,0 +1,27 @@
+#compdef mkclp
+
+_mkclp() {
+  local -a qualities
+  qualities=(
+    '45:Storage-optimized sweet spot (~41% reduction)'
+    '50:Quality-optimized sweet spot (~29% reduction)'
+    '25:Low-bandwidth mobile playback'
+    '40:Good standard quality'
+    '60:High quality (larger file)'
+  )
+
+  _arguments -s \
+    '1:Input video:_files -g "*.(mp4|mkv|mov|webm|avi|ts)(-.)"' \
+    '2:Start time (HH:MM:SS or SS): ' \
+    '3:Duration or End time: ' \
+    '4:Quality (0-100):->qualities' \
+    '5:Output file:_files' && return 0
+
+  case "$state" in
+  qualities)
+    _describe -t qualities 'Encoding Quality' qualities
+    ;;
+  esac
+}
+
+_mkclp "$@"

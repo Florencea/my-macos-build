@@ -1,0 +1,6 @@
+#compdef up
+
+_arguments -s \
+  '(-d --dir)'{-d,--dir}'=[Project root directory]:Target Directory:_path_files -/' \
+  '(-y --yes)'{-y,--yes}'[Auto commit dependency updates]' \
+  '(-h --help)'{-h,--help}'[Show help message]'

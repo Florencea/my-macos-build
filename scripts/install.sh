@@ -175,12 +175,19 @@ git config --global core.hooksPath "$HOME/.config/git/hooks"
 fetch_file "configs/bash/bash_profile" "$HOME/.bash_profile"
 fetch_file "configs/bash/bashrc" "$HOME/.bashrc"
 
-# Zsh shell
+# Zsh shell & Custom Completions
 mkdir -p "$HOME/.local/share/zsh/site-functions"
 mkdir -p "$HOME/.config/zsh/functions"
 fetch_file "configs/zsh/zshenv" "$HOME/.zshenv"
 fetch_file "configs/zsh/zprofile" "$HOME/.zprofile"
 fetch_file "configs/zsh/zshrc" "$HOME/.zshrc"
+
+# Copy custom Zsh completions to site-functions
+if [[ -d "$REPO_DIR/configs/zsh/completions" ]]; then
+  for comp in "$REPO_DIR/configs/zsh/completions"/_*(N); do
+    cp -f "$comp" "$HOME/.local/share/zsh/site-functions/${comp:t}"
+  done
+fi
 
 user_shell="$(dscl . -read "/Users/$USER" UserShell 2>/dev/null || true)"
 user_shell="${${user_shell#UserShell: }%%$'\n'*}"
