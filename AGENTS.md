@@ -14,14 +14,6 @@ Before staging or committing any files, all modified files must be formatted usi
     ```
   - Configuration: 2-space indentation.
 
-- **Fish Shell Scripts** (`configs/fish/**/*.fish`, `*.fish`):
-  - Formatter: `fish_indent`
-  - Command:
-    ```bash
-    fish_indent -w <modified-files>
-    ```
-  - Configuration: Fish standard formatting (bundled with `fish`).
-
 - **Markdown Files** (`*.md`):
   - Formatter: `prettier`
   - Command:
@@ -36,7 +28,7 @@ Before staging or committing any files, all modified files must be formatted usi
   - Agents must **never** execute `git commit`.
   - Workflow for agents:
     1. Apply code changes.
-    2. Format modified files (`shfmt` for shell scripts, `fish_indent` for fish, `prettier` for markdown).
+    2. Format modified files (`shfmt` for shell scripts, `prettier` for markdown).
     3. Stage changes using `git add <files>`.
     4. Provide the exact `git commit -m "..."` command for manual execution by the user.
 
@@ -69,25 +61,19 @@ When adding, renaming, or removing CLI tools:
     rm -f "$HOME/.local/bin/<command>"
     ```
 
-- **Fish Completions & Installation**:
-  - Provide a completion script under `configs/fish/completions/<command>.fish`.
-  - Update the completion loop in `scripts/install.sh` if adding or removing a command.
-  - Format completion files with `fish_indent -w`.
+## 4. Shell Configuration Rules
 
-## 4. Multi-Shell Configuration Rules
-
-The repository provides unified environment parity across **Fish**, **Zsh**, and **Bash**:
+The repository provides unified environment parity across **Zsh** and **Bash**:
 
 - **Directory Layout**:
   - `configs/bash/`: `bash_profile`, `bashrc` (deployed to `~/.bash_profile`, `~/.bashrc`).
-  - `configs/zsh/`: `zprofile`, `zshrc` (deployed to `~/.zprofile`, `~/.zshrc`).
-  - `configs/fish/`: `config.fish`, `conf.d/`, `functions/`, `completions/` (deployed to `~/.config/fish/`).
+  - `configs/zsh/`: `zshenv`, `zprofile`, `zshrc` (deployed to `~/.zshenv`, `~/.zprofile`, `~/.zshrc`).
 
 - **Environment & Feature Parity**:
-  When updating environment variables, PATH priorities, or aliases, keep all three shells aligned:
+  When updating environment variables, PATH priorities, or aliases, keep shells aligned:
   - **Homebrew**: Initialize `brew shellenv`.
-  - **PATH Priority**: Prepend `$HOME/.local/bin`.
-  - **Node.js**: Activate `fnm` across all shells.
+  - **PATH Priority**: Prepend `$HOME/.local/bin` and `$HOME/.local/opt/node/bin`.
+  - **Node.js**: Standalone Active LTS managed in `$HOME/.local/opt/node`.
   - **Aliases**: Maintain common shortcuts (`nr`, `la`, `ll`).
 
 - **Idempotency Standards**:

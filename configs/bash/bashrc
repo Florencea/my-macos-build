@@ -6,20 +6,15 @@ if [ -x "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
-for p in "$HOME/.local/bin"; do
+# PATH configuration
+for p in "$HOME/.local/bin" "$HOME/.local/opt/node/bin"; do
   if [[ -d "$p" && ":$PATH:" != *":$p:"* ]]; then
     PATH="$p:$PATH"
   fi
 done
 export PATH
 
-# fnm (Fast Node Manager)
-if command -v fnm &>/dev/null; then
-  eval "$(fnm env --use-on-cd --shell bash)"
-fi
-
-# Aliases (consistent with configs/fish/config.fish)
+# Aliases
 alias nr="npm run"
 alias la="ls -lah"
 alias ll="ls -lh"

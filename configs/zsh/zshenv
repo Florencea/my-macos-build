@@ -9,11 +9,7 @@ typeset -U path PATH
 # PATH configuration
 path=(
   "$HOME/.local/bin"
+  "$HOME/.local/opt/node/bin"
   $path
 )
 export PATH
-
-# fnm (Fast Node Manager)
-if command -v fnm &>/dev/null; then
-  eval "$(fnm env --use-on-cd)"
-fi

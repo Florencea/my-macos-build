@@ -180,31 +180,11 @@ fetch_file "configs/zsh/zshenv" "$HOME/.zshenv"
 fetch_file "configs/zsh/zprofile" "$HOME/.zprofile"
 fetch_file "configs/zsh/zshrc" "$HOME/.zshrc"
 
-# Fish shell
-install_formulas fish
-if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
-  echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-fi
-local user_shell
 user_shell="$(dscl . -read "/Users/$USER" UserShell 2>/dev/null || true)"
 user_shell="${${user_shell#UserShell: }%%$'\n'*}"
-if [[ "$user_shell" != "/opt/homebrew/bin/fish" ]]; then
-  sudo dscl . -create "/Users/$USER" UserShell /opt/homebrew/bin/fish
+if [[ "$user_shell" != "/bin/zsh" ]]; then
+  sudo dscl . -create "/Users/$USER" UserShell /bin/zsh
 fi
-
-mkdir -p "$HOME/.config/fish"
-mkdir -p "$HOME/.config/fish/conf.d"
-mkdir -p "$HOME/.config/fish/functions"
-mkdir -p "$HOME/.config/fish/completions"
-fetch_file "configs/fish/conf.d/00-paths.fish" "$HOME/.config/fish/conf.d/00-paths.fish"
-fetch_file "configs/fish/conf.d/fnm.fish" "$HOME/.config/fish/conf.d/fnm.fish"
-fetch_file "configs/fish/functions/fish_prompt.fish" "$HOME/.config/fish/functions/fish_prompt.fish"
-fetch_file "configs/fish/config.fish" "$HOME/.config/fish/config.fish"
-
-for comp in clall ebk mdig mkclp mkgif mmb rea ua unodev up; do
-  fetch_file "configs/fish/completions/$comp.fish" "$HOME/.config/fish/completions/$comp.fish" &
-done
-wait
 
 # Setup CLI symlinks to ~/.local/bin
 CLI_DIR=""
@@ -250,21 +230,14 @@ install_casks \
 install_formulas \
   actionlint \
   ffmpeg \
-  fnm \
   gifski \
   jq \
   mtr \
   python \
   shfmt \
   yt-dlp \
-  yq
-
-# Node.js config
-if ! fnm list 2>/dev/null | grep -q 'lts-latest'; then
-  fnm install --lts
-  fnm default lts-latest
-  fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true install-strategy linked save-exact true strict-peer-deps true
-fi
+  zsh-autosuggestions \
+  zsh-syntax-highlighting
 
 # Restart Dock
 killall Dock

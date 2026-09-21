@@ -6,9 +6,10 @@ fi
 # Ensure unique entries in PATH
 typeset -U path PATH
 
-# PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
+# PATH configuration
 path=(
   "$HOME/.local/bin"
+  "$HOME/.local/opt/node/bin"
   $path
 )
 export PATH

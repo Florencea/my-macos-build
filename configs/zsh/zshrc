@@ -6,19 +6,30 @@ fi
 # Ensure unique entries in PATH
 typeset -U path PATH
 
-# PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
+# PATH configuration
 path=(
   "$HOME/.local/bin"
+  "$HOME/.local/opt/node/bin"
   $path
 )
 export PATH
 
-# fnm (Fast Node Manager)
-if command -v fnm &>/dev/null; then
-  eval "$(fnm env --use-on-cd --shell zsh)"
-fi
+# Fish-like navigation, menu select, and autocompletion
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
+zmodload -i zsh/complist
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+bindkey -e
+bindkey -M menuselect '^[[Z' reverse-menu-complete
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Aliases (consistent with configs/fish/config.fish)
+# Aliases
 alias nr="npm run"
 alias la="ls -lah"
 alias ll="ls -lh"

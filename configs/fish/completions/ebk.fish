@@ -1,1 +1,0 @@
-complete -c ebk -e
