@@ -76,6 +76,10 @@ export HOMEBREW_AUTO_UPDATE_QUIET=1
 # Disable key-repeat popup
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Disable window state restoration for Terminal to prevent talagentd disk I/O blocking
+defaults write com.apple.Terminal ApplePersistenceIgnoreState -bool true
+defaults write com.apple.Terminal NSQuitAlwaysKeepsWindows -bool false
+
 # Safely disable Spotlight indexing to prevent CPU spikes and IPC deadlocks (e.g. mdfind / Homebrew cask).
 disable_spotlight_safely() {
   echo "==> Safely disabling Spotlight indexing (kMDConfigSearchLevelFSSearchOnly)..."
