@@ -80,6 +80,14 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write com.apple.Terminal ApplePersistenceIgnoreState -bool true
 defaults write com.apple.Terminal NSQuitAlwaysKeepsWindows -bool false
 
+# Disable Siri suggestions & learning for Terminal to prevent BiomeAgent / CoreSpotlight donation hangs
+if ! defaults read com.apple.suggestions SiriCanLearnFromAppBlacklist 2>/dev/null | grep -q 'com.apple.Terminal'; then
+  defaults write com.apple.suggestions SiriCanLearnFromAppBlacklist -array-add "com.apple.Terminal"
+fi
+if ! defaults read com.apple.suggestions AppCanShowSiriSuggestionsBlacklist 2>/dev/null | grep -q 'com.apple.Terminal'; then
+  defaults write com.apple.suggestions AppCanShowSiriSuggestionsBlacklist -array-add "com.apple.Terminal"
+fi
+
 # Safely disable Spotlight indexing to prevent CPU spikes and IPC deadlocks (e.g. mdfind / Homebrew cask).
 disable_spotlight_safely() {
   echo "==> Safely disabling Spotlight indexing (kMDConfigSearchLevelFSSearchOnly)..."
