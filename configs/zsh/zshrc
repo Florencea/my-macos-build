@@ -1,17 +1,17 @@
-==============================================================================
-Native Zsh Configuration (Fish-like Interactive & Prompt Experience)
-==============================================================================
-------------------------------------------------------------------------------
-1. Custom Completions &
-FPATH Setup
-------------------------------------------------------------------------------
+# ==============================================================================
+# Native Zsh Configuration (Fish-like Interactive & Prompt Experience)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Custom Completions & FPATH Setup
+# ------------------------------------------------------------------------------
 typeset -U fpath FPATH
 [[ -d "$HOME/.local/share/zsh/site-functions" ]] && fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 [[ -d "$HOME/.config/zsh/functions" ]] && fpath=("$HOME/.config/zsh/functions" $fpath)
 
-------------------------------------------------------------------------------
-2. Fast Completion System Initialization (Cached compinit)
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 2. Fast Completion System Initialization (Cached compinit)
+# ------------------------------------------------------------------------------
 autoload -Uz compinit
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
   compinit
@@ -19,50 +19,48 @@ else
   compinit -C
 fi
 
-------------------------------------------------------------------------------
-3. Fish-like Tab Menu &
-Completion Behavior
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 3. Fish-like Tab Menu & Completion Behavior
+# ------------------------------------------------------------------------------
 zmodload -i zsh/complist
 
-Enable arrow-key menu selection
+# Enable arrow-key menu selection
 zstyle ':completion:*' menu select
 
-Case-insensitive + smart substring matching
-zstyle ':completion:' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]= r:|=*'
+# Case-insensitive + smart substring matching
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
 
-Grouping &
-descriptions
-zstyle ':completion:' verbose yes
-zstyle ':completion:' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:' group-name ''
-zstyle ':completion::descriptions' format '%B%F{blue}%d%f%b'
-zstyle ':completion::messages' format '%F{purple}%d%f'
-zstyle ':completion::warnings' format '%F{red}No matches for: %d%f'
+# Grouping & descriptions
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%B%F{blue}%d%f%b'
+zstyle ':completion:*:messages' format '%F{purple}%d%f'
+zstyle ':completion:*:warnings' format '%F{red}No matches for: %d%f'
 
-Completion cache
-zstyle ':completion:' use-cache on
-zstyle ':completion:' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+# Completion cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
 
-------------------------------------------------------------------------------
-4. Keybindings (Fish Menu Navigation & History Completion)
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 4. Keybindings (Fish Menu Navigation & History Completion)
+# ------------------------------------------------------------------------------
 bindkey -e
 
-Menu selection navigation with Tab / Shift-Tab / hjkl
+# Menu selection navigation with Tab / Shift-Tab / hjkl
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey -M menuselect 'h' backward-char
 bindkey -M menuselect 'k' up-line-or-history
 bindkey -M menuselect 'l' forward-char
 bindkey -M menuselect 'j' down-line-or-history
 
-Bind Right Arrow and Ctrl+F to accept autosuggestion
+# Bind Right Arrow and Ctrl+F to accept autosuggestion
 bindkey '^[[C' forward-char
 bindkey '^F' forward-char
 
-------------------------------------------------------------------------------
-5. History Settings (Autosuggestions Source)
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 5. History Settings (Autosuggestions Source)
+# ------------------------------------------------------------------------------
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
@@ -70,14 +68,14 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 setopt SHARE_HISTORY
 
-------------------------------------------------------------------------------
-6. Prompt: Exact Match of Original fish_prompt
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 6. Prompt: Exact Match of Original fish_prompt
+# ------------------------------------------------------------------------------
 autoload -Uz vcs_info
 setopt PROMPT_SUBST
 
-zstyle ':vcs_info:' enable git
-zstyle ':vcs_info:git' formats ' %F{cyan}(%b)%f'
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*' formats ' %F{cyan}(%b)%f'
 zstyle ':vcs_info:git*' actionformats ' %F{cyan}(%b|%a)%f'
 
 precmd() {
@@ -86,16 +84,16 @@ precmd() {
 
 PROMPT='%F{green}%~%f$vcs_info_msg_0_ '
 
-------------------------------------------------------------------------------
-7. Common Aliases
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 7. Common Aliases
+# ------------------------------------------------------------------------------
 alias nr="npm run"
 alias la="ls -la"
 alias ll="ls -l"
 
-------------------------------------------------------------------------------
-8. Interactive Plugins (Loaded last)
-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# 8. Interactive Plugins (Loaded last)
+# ------------------------------------------------------------------------------
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
