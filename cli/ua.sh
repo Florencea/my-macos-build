@@ -53,9 +53,9 @@ printf "\nnode: %s, npm: %s\n\n" "$CURRENT_VERSION" "$NPM_VERSION"
 PROJECTS_DIR="${0:A:h:h:h}"
 
 if cd "$PROJECTS_DIR"; then
-  for PROJECT in *(/N); do
+  for PROJECT in *(N/); do
     if [[ -d "$PROJECT/.git" ]]; then
-      git -C "$PROJECT" pull --all --quiet && printf "Sync %s ok\n" "$PROJECT" &
+      (git -C "$PROJECT" pull --all --quiet && printf "Sync %s ok\n" "$PROJECT") &
     fi
   done
   wait
