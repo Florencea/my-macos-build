@@ -123,8 +123,9 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 
 # HostName setup (prevents mDNS / DNS resolution timeouts on terminal launch)
-if [[ "$(scutil --get HostName 2>/dev/null || true)" != "florenceambp" ]]; then
-  sudo scutil --set HostName "florenceambp"
+TARGET_HOSTNAME="florenceambp"
+if [[ "$(scutil --get HostName 2>/dev/null || true)" != "$TARGET_HOSTNAME" ]]; then
+  sudo scutil --set HostName "$TARGET_HOSTNAME"
 fi
 
 # Helper to copy from local repo if available, or fetch via curl
