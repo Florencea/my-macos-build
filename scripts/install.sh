@@ -188,12 +188,12 @@ if [[ -d "$REPO_DIR/configs/zsh/completions" ]]; then
     cp -f "$comp" "$HOME/.local/share/zsh/site-functions/${comp:t}"
     chmod 644 "$HOME/.local/share/zsh/site-functions/${comp:t}"
   done
-fi
-
-user_shell="$(dscl . -read "/Users/$USER" UserShell 2>/dev/null || true)"
-user_shell="${${user_shell#UserShell: }%%$'\n'*}"
-if [[ "$user_shell" != "/bin/zsh" ]]; then
-  sudo dscl . -create "/Users/$USER" UserShell /bin/zsh
+else
+  local -a completions=(clall ebk mdig mkclp mkgif mmb rea ua unodev up)
+  for comp in "${completions[@]}"; do
+    fetch_file "configs/zsh/completions/_$comp" "$HOME/.local/share/zsh/site-functions/_$comp"
+    chmod 644 "$HOME/.local/share/zsh/site-functions/_$comp"
+  done
 fi
 
 # Setup CLI symlinks to ~/.local/bin

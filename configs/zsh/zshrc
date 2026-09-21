@@ -13,7 +13,8 @@ typeset -U fpath FPATH
 # 2. Fast Completion System Initialization (Cached compinit)
 # ------------------------------------------------------------------------------
 autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+setopt extendedglob
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) || ! -f ${ZDOTDIR:-$HOME}/.zcompdump ]]; then
   compinit
 else
   compinit -C
@@ -71,16 +72,14 @@ setopt SHARE_HISTORY
 # ------------------------------------------------------------------------------
 # 6. Prompt: Exact Match of Original fish_prompt
 # ------------------------------------------------------------------------------
-autoload -Uz vcs_info
+autoload -Uz add-zsh-hook vcs_info
 setopt PROMPT_SUBST
 
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*' formats ' %F{cyan}(%b)%f'
 zstyle ':vcs_info:git*' actionformats ' %F{cyan}(%b|%a)%f'
 
-precmd() {
-  vcs_info
-}
+add-zsh-hook precmd vcs_info
 
 PROMPT='%F{green}%~%f$vcs_info_msg_0_ '
 
@@ -88,8 +87,8 @@ PROMPT='%F{green}%~%f$vcs_info_msg_0_ '
 # 7. Common Aliases
 # ------------------------------------------------------------------------------
 alias nr="npm run"
-alias la="ls -la"
-alias ll="ls -l"
+alias la="ls -lah"
+alias ll="ls -lh"
 
 # ------------------------------------------------------------------------------
 # 8. Interactive Plugins (Loaded last)
@@ -98,8 +97,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
-[[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] &&
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
+  source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-[[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] &&
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
+  source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

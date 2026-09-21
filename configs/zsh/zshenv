@@ -1,5 +1,5 @@
-# Homebrew environment
-if [ -x "/opt/homebrew/bin/brew" ]; then
+# Homebrew environment (only if not already initialized by login shell)
+if [[ -z "${HOMEBREW_PREFIX:-}" && -x "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
