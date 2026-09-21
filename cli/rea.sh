@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -30,9 +30,9 @@ done
   exit 1
 }
 
-INPUT_BASE="$(basename "$INPUT_DIR")"
-ABS_INPUT_DIR="$(cd "$INPUT_DIR" && pwd)"
-PARENT_DIR="$(dirname "$ABS_INPUT_DIR")"
+INPUT_BASE="${INPUT_DIR:t}"
+ABS_INPUT_DIR="${INPUT_DIR:A}"
+PARENT_DIR="${ABS_INPUT_DIR:h}"
 
 # Safety guard: prevent deleting root or empty paths
 if [[ "$ABS_INPUT_DIR" == "/" || -z "$ABS_INPUT_DIR" ]]; then
@@ -41,28 +41,31 @@ if [[ "$ABS_INPUT_DIR" == "/" || -z "$ABS_INPUT_DIR" ]]; then
 fi
 
 # 4. Locate media and subtitle files
-shopt -s nullglob
-MKV_FILES=("${ABS_INPUT_DIR}"/*.mkv)
-ASS_FILES=("${ABS_INPUT_DIR}"/*[Cc][Hh][Tt]*.ass "${ABS_INPUT_DIR}"/*[Tt][Cc]*.ass "${ABS_INPUT_DIR}"/*[Zh][Hh]-[Tt][Ww]*.ass)
-if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
-  ASS_FILES=("${ABS_INPUT_DIR}"/*.ass)
+local -a MKV_FILES ASS_FILES
+MKV_FILES=("$ABS_INPUT_DIR"/*.mkv(N))
+ASS_FILES=(
+  "$ABS_INPUT_DIR"/*[Cc][Hh][Tt]*.ass(N)
+  "$ABS_INPUT_DIR"/*[Tt][Cc]*.ass(N)
+  "$ABS_INPUT_DIR"/*[Zh][Hh]-[Tt][Ww]*.ass(N)
+)
+if (($#ASS_FILES == 0)); then
+  ASS_FILES=("$ABS_INPUT_DIR"/*.ass(N))
 fi
-shopt -u nullglob
 
-if [[ ${#MKV_FILES[@]} -eq 0 ]]; then
+if (($#MKV_FILES == 0)); then
   echo "Error: No .mkv file found in $INPUT_DIR" >&2
   exit 1
 fi
-if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
+if (($#ASS_FILES == 0)); then
   echo "Error: No .ass subtitle file found in $INPUT_DIR" >&2
   exit 1
 fi
 
-INPUT_FILE="${MKV_FILES[0]}"
-INPUT_ASS_TW="${ASS_FILES[0]}"
+INPUT_FILE="${MKV_FILES[1]}"
+INPUT_ASS_TW="${ASS_FILES[1]}"
 
 # 5. Mux subtitle and clean up
-TMPFILE="${PARENT_DIR}/.tmp_$(basename "$0")_$$.mkv"
+TMPFILE="${PARENT_DIR}/.tmp_${0:t:r}_$$.mkv"
 OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"
 trap 'rm -f "$TMPFILE"' EXIT
 

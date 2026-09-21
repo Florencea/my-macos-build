@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -16,8 +16,7 @@ for cmd in git jq; do
 done
 
 # 2. Resolve configuration directory
-SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
-CONFIG_HOME="$(cd "$SCRIPT_DIR/../configs" && pwd)"
+CONFIG_HOME="${0:A:h:h}/configs"
 
 # 3. Define backup helper functions
 commit_file() {
@@ -45,8 +44,9 @@ copy() {
 backup() {
   local file_pattern="${1:-}"
   local file_name="${2:-}"
-  local file_backup
-  file_backup="$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n 1)"
+  local -a matches
+  matches=($HOME/Downloads/$~file_pattern(N))
+  local file_backup="${matches[1]:-}"
   if [[ -n "$file_backup" && -f "$file_backup" ]]; then
     mv "$file_backup" "$CONFIG_HOME/$file_name"
     commit_file "$file_name"
@@ -56,8 +56,9 @@ backup() {
 backupjson() {
   local file_pattern="${1:-}"
   local file_name="${2:-}"
-  local file_backup
-  file_backup="$(find "$HOME/Downloads" -maxdepth 1 -name "$file_pattern" | head -n 1)"
+  local -a matches
+  matches=($HOME/Downloads/$~file_pattern(N))
+  local file_backup="${matches[1]:-}"
   if [[ -n "$file_backup" && -f "$file_backup" ]]; then
     jq . "$file_backup" >"$CONFIG_HOME/$file_name"
     rm -f "$file_backup"

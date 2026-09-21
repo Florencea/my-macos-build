@@ -55,7 +55,7 @@ When adding, renaming, or removing CLI tools:
 
 - **Naming & Location**:
   - Store executable shell scripts under `cli/<command>.sh`.
-  - Use the shebang `#!/usr/bin/env bash` and enable strict mode (`set -o errexit`, `set -o nounset`, `set -o pipefail`).
+  - Use the shebang `#!/bin/zsh` and enable strict mode (`set -o errexit`, `set -o nounset`, `set -o pipefail`).
   - Ensure the script has executable permissions: `chmod +x cli/<command>.sh`.
 
 - **Symlinks in `~/.local/bin`**:
@@ -86,7 +86,7 @@ The repository provides unified environment parity across **Fish**, **Zsh**, and
 - **Environment & Feature Parity**:
   When updating environment variables, PATH priorities, or aliases, keep all three shells aligned:
   - **Homebrew**: Initialize `brew shellenv`.
-  - **PATH Priority**: Prepend `/opt/homebrew/opt/bash/bin`, `/opt/homebrew/opt/zsh/bin`, `/opt/homebrew/opt/curl/bin`, and `$HOME/.local/bin`.
+  - **PATH Priority**: Prepend `$HOME/.local/bin`.
   - **Node.js**: Activate `fnm` across all shells.
   - **Aliases**: Maintain common shortcuts (`nr`, `la`, `ll`).
 

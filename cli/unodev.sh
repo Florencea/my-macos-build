@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -21,14 +21,10 @@ printf "\nnode: %s\n\n" "$CURRENT_LOCAL_VERSION"
 NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
 
 # 3. Update engines.node in local projects
-SCRIPT_PATH="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
-PROJECTS_DIR="$(cd "$SCRIPT_PATH/../.." && pwd)"
+PROJECTS_DIR="${0:A:h:h:h}"
 
 if cd "$PROJECTS_DIR"; then
-  for PROJECT in */; do
-    [[ -d "$PROJECT" ]] || continue
-    PROJECT="${PROJECT%/}"
-
+  for PROJECT in *(/N); do
     # Skip hidden folders
     [[ "$PROJECT" == .* ]] && continue
 

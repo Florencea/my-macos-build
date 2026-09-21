@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -13,7 +13,7 @@ FPS=10
 WIDTH=720
 QUALITY=70
 LOSSY=false
-TEMP_ARGS=()
+local -a TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
   --fps)
@@ -116,7 +116,7 @@ fi
 OUTPUT_FILE="$(date +"%Y%m%d%H%M%S")_fps${FPS}.gif"
 
 # Explicitly pass -W $WIDTH to prevent gifski from silently clamping to 800x600
-GIFSKI_ARGS=("-q" "-Q" "$QUALITY" "-W" "$WIDTH")
+local -a GIFSKI_ARGS=("-q" "-Q" "$QUALITY" "-W" "$WIDTH")
 if [[ "$LOSSY" == true ]]; then
   GIFSKI_ARGS+=("--lossy-quality" "75")
 fi
@@ -132,5 +132,6 @@ ffmpeg -y -hide_banner \
     -o "$OUTPUT_FILE" -
 
 # 6. Display output result
-printf "%s " "$OUTPUT_FILE"
-ls -lh "$OUTPUT_FILE" | awk '{print $5}'
+local -a ls_out
+ls_out=(${=${(f)"$(ls -lh "$OUTPUT_FILE")"}})
+printf "%s %s\n" "$OUTPUT_FILE" "${ls_out[5]}"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -11,7 +11,7 @@ set -o pipefail
 
 # 1. Parse options
 QUALITY=50
-TEMP_ARGS=()
+local -a TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
   -q | --quality)
@@ -63,9 +63,9 @@ if [[ ! -f "$INPUT_FILE" ]]; then
 fi
 
 # 4. Resolve input source
-VC_ARGS=(-c:v copy)
-FFMPEG_INPUTS=()
-MAP_ARGS=()
+local -a VC_ARGS=(-c:v copy)
+local -a FFMPEG_INPUTS=()
+local -a MAP_ARGS=()
 
 if [[ "$IS_YT" == true ]]; then
   # Fetch up to 1080p best video and audio streams
@@ -80,14 +80,16 @@ if [[ "$IS_YT" == true ]]; then
     exit 1
   fi
 
-  readarray -t STREAM_URLS <<<"$RAW_URLS"
+  local -a STREAM_URLS
+  STREAM_URLS=("${(@f)RAW_URLS}")
+  STREAM_URLS=(${STREAM_URLS:#})
 
-  # Support separate video and audio streams
-  if [[ ${#STREAM_URLS[@]} -ge 2 ]]; then
-    FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[0]}" -ss "$START" -i "${STREAM_URLS[1]}")
+  # Support separate video and audio streams (1-indexed in Zsh)
+  if [[ $#STREAM_URLS -ge 2 ]]; then
+    FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[1]}" -ss "$START" -i "${STREAM_URLS[2]}")
     MAP_ARGS=(-map 0:v:0 -map "1:a?")
   else
-    FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[0]}")
+    FFMPEG_INPUTS=(-ss "$START" -i "${STREAM_URLS[1]}")
     MAP_ARGS=(-map 0:v:0 -map "0:a?")
   fi
 
@@ -123,5 +125,6 @@ ffmpeg -y -hide_banner \
   "$OUTPUT_FILE"
 
 # 6. Display output result
-printf "%s " "$OUTPUT_FILE"
-ls -lh "$OUTPUT_FILE" | awk '{print $5}'
+local -a ls_out
+ls_out=(${=${(f)"$(ls -lh "$OUTPUT_FILE")"}})
+printf "%s %s\n" "$OUTPUT_FILE" "${ls_out[5]}"

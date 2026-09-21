@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -50,8 +50,8 @@ run_with_spinner() {
   local msg="$1"
   shift
   local pid
-  local spin=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
-  local i=0
+  local -a spin=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
+  local -i i=1
 
   # Run target command in background with all noisy output muted
   "$@" &>/dev/null &
@@ -60,7 +60,7 @@ run_with_spinner() {
   # Show dynamic spinner while command is running
   while kill -0 "$pid" 2>/dev/null; do
     printf "\r  %s %s..." "${spin[i]}" "$msg"
-    i=$(((i + 1) % ${#spin[@]}))
+    i=$(((i % $#spin) + 1))
     sleep 0.08
   done
 

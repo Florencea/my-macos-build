@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -25,6 +25,7 @@ for cmd in dig; do
 done
 
 # 3. Query DNS servers in parallel
+local -a DNS_SERVERS
 DNS_SERVERS=(
   "Google|8.8.8.8|2001:4860:4860::8888"
   "Cloudflare|1.1.1.1|2606:4700:4700::1111"
@@ -36,12 +37,13 @@ DNS_SERVERS=(
 TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
-for i in "${!DNS_SERVERS[@]}"; do
+for ((i = 1; i <= $#DNS_SERVERS; i++)); do
   (
-    IFS='|' read -ra ADDR <<<"${DNS_SERVERS[$i]}"
-    SERVER_NAME="${ADDR[0]}"
-    IPV4_IP="${ADDR[1]:-}"
-    IPV6_IP="${ADDR[2]:-}"
+    local -a ADDR
+    ADDR=("${(@s:|:)DNS_SERVERS[i]}")
+    SERVER_NAME="${ADDR[1]}"
+    IPV4_IP="${ADDR[2]:-}"
+    IPV6_IP="${ADDR[3]:-}"
 
     # Run A (via IPv4) and AAAA (via IPv6) queries in parallel
     if [[ "$SERVER_NAME" == "System" ]]; then
@@ -53,16 +55,40 @@ for i in "${!DNS_SERVERS[@]}"; do
     fi
     wait || true
 
-    OUTPUT_A=$(<"$TEMP_DIR/a_$i")
-    OUTPUT_AAAA=$(<"$TEMP_DIR/aaaa_$i")
+    OUTPUT_A="$(<"$TEMP_DIR/a_$i")"
+    OUTPUT_AAAA="$(<"$TEMP_DIR/aaaa_$i")"
 
-    # Extract A records (sorted) and time
-    A_IPS=$(printf '%s' "$OUTPUT_A" | awk '$2 == "A" {print $3}' | sort | paste -sd "," -)
-    A_TIME=$(printf '%s' "$OUTPUT_A" | awk '/Query time/ {print $4}')
+    # Extract A records (sorted) and query time via native Zsh parsing
+    local -a a_records
+    local a_time=""
+    for line in "${(@f)OUTPUT_A}"; do
+      local -a words
+      words=(${=line})
+      if [[ "${words[2]:-}" == "A" ]]; then
+        a_records+=("${words[3]}")
+      elif [[ "${words[1]:-}" == ";;" && "${words[2]:-}" == "Query" && "${words[3]:-}" == "time:" ]]; then
+        a_time="${words[4]}"
+      fi
+    done
+    a_records=("${(@on)a_records}")
+    A_IPS="${(j:,:)a_records}"
+    A_TIME="$a_time"
 
-    # Extract AAAA records (sorted) and time
-    AAAA_IPS=$(printf '%s' "$OUTPUT_AAAA" | awk '$2 == "AAAA" {print $3}' | sort | paste -sd "," -)
-    AAAA_TIME=$(printf '%s' "$OUTPUT_AAAA" | awk '/Query time/ {print $4}')
+    # Extract AAAA records (sorted) and query time via native Zsh parsing
+    local -a aaaa_records
+    local aaaa_time=""
+    for line in "${(@f)OUTPUT_AAAA}"; do
+      local -a words
+      words=(${=line})
+      if [[ "${words[2]:-}" == "AAAA" ]]; then
+        aaaa_records+=("${words[3]}")
+      elif [[ "${words[1]:-}" == ";;" && "${words[2]:-}" == "Query" && "${words[3]:-}" == "time:" ]]; then
+        aaaa_time="${words[4]}"
+      fi
+    done
+    aaaa_records=("${(@on)aaaa_records}")
+    AAAA_IPS="${(j:,:)aaaa_records}"
+    AAAA_TIME="$aaaa_time"
 
     # Build A grouping key
     if [[ -z "$OUTPUT_A" ]]; then
@@ -96,26 +122,26 @@ done
 wait
 
 # 4. Group DNS records
-declare -A a_groups
-declare -a a_order
+typeset -A a_groups
+local -a a_order
 
-for i in "${!DNS_SERVERS[@]}"; do
-  key=$(<"$TEMP_DIR/${i}_a_key")
-  if [[ -z "${a_groups["$key"]:-}" ]]; then
+for ((i = 1; i <= $#DNS_SERVERS; i++)); do
+  key="$(<"$TEMP_DIR/${i}_a_key")"
+  if [[ -z "${a_groups[$key]:-}" ]]; then
     a_order+=("$key")
   fi
-  a_groups["$key"]+="$i "
+  a_groups[$key]+="$i "
 done
 
-declare -A aaaa_groups
-declare -a aaaa_order
+typeset -A aaaa_groups
+local -a aaaa_order
 
-for i in "${!DNS_SERVERS[@]}"; do
-  key=$(<"$TEMP_DIR/${i}_aaaa_key")
-  if [[ -z "${aaaa_groups["$key"]:-}" ]]; then
+for ((i = 1; i <= $#DNS_SERVERS; i++)); do
+  key="$(<"$TEMP_DIR/${i}_aaaa_key")"
+  if [[ -z "${aaaa_groups[$key]:-}" ]]; then
     aaaa_order+=("$key")
   fi
-  aaaa_groups["$key"]+="$i "
+  aaaa_groups[$key]+="$i "
 done
 
 # 5. Print DNS records
@@ -124,7 +150,8 @@ print_records() {
   if [[ "$value" == \[* ]]; then
     printf '%s\n' "$value"
   else
-    IFS=',' read -ra ips <<<"$value"
+    local -a ips
+    ips=("${(@s:,:)value}")
     for ip in "${ips[@]}"; do
       printf '%s\n' "$ip"
     done
@@ -134,10 +161,10 @@ print_records() {
 printf '── A Records ──\n'
 for key in "${a_order[@]}"; do
   print_records "$key"
-  for idx in ${a_groups["$key"]}; do
-    name=$(<"$TEMP_DIR/${idx}_name")
-    ipv4=$(<"$TEMP_DIR/${idx}_ipv4")
-    a_time=$(<"$TEMP_DIR/${idx}_a_time")
+  for idx in ${=a_groups[$key]}; do
+    name="$(<"$TEMP_DIR/${idx}_name")"
+    ipv4="$(<"$TEMP_DIR/${idx}_ipv4")"
+    a_time="$(<"$TEMP_DIR/${idx}_a_time")"
 
     desc="$name"
     [[ -n "$ipv4" ]] && desc="$name ($ipv4)"
@@ -154,10 +181,10 @@ done
 printf '── AAAA Records ──\n'
 for key in "${aaaa_order[@]}"; do
   print_records "$key"
-  for idx in ${aaaa_groups["$key"]}; do
-    name=$(<"$TEMP_DIR/${idx}_name")
-    ipv6=$(<"$TEMP_DIR/${idx}_ipv6")
-    aaaa_time=$(<"$TEMP_DIR/${idx}_aaaa_time")
+  for idx in ${=aaaa_groups[$key]}; do
+    name="$(<"$TEMP_DIR/${idx}_name")"
+    ipv6="$(<"$TEMP_DIR/${idx}_ipv6")"
+    aaaa_time="$(<"$TEMP_DIR/${idx}_aaaa_time")"
 
     desc="$name"
     [[ -n "$ipv6" ]] && desc="$name ($ipv6)"

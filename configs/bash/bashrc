@@ -7,7 +7,7 @@ if [ -x "/opt/homebrew/bin/brew" ]; then
 fi
 
 # PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
-for p in "$HOME/.local/bin" /opt/homebrew/opt/curl/bin /opt/homebrew/opt/zsh/bin /opt/homebrew/opt/bash/bin; do
+for p in "$HOME/.local/bin"; do
   if [[ -d "$p" && ":$PATH:" != *":$p:"* ]]; then
     PATH="$p:$PATH"
   fi

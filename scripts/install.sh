@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -77,10 +77,6 @@ export HOMEBREW_AUTO_UPDATE_QUIET=1
 defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Safely disable Spotlight indexing to prevent CPU spikes and IPC deadlocks (e.g. mdfind / Homebrew cask).
-# Note:
-# - Avoid adding '/' to GUI privacy exclusions to prevent metadata daemon / mdfind IPC deadlocks.
-# - Uses macOS official kMDConfigSearchLevelFSSearchOnly fallback mode.
-# - Ignores CoreSpotlight reset expected exit code -1 under set -e.
 disable_spotlight_safely() {
   echo "==> Safely disabling Spotlight indexing (kMDConfigSearchLevelFSSearchOnly)..."
 
@@ -127,8 +123,8 @@ git config --global pull.rebase false
 git config --global core.quotepath false
 
 # Helper to copy from local repo if available, or fetch via curl
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-REPO_DIR="$(cd "$SCRIPT_DIR/.." &>/dev/null && pwd)"
+SCRIPT_DIR="${0:A:h}"
+REPO_DIR="${SCRIPT_DIR:h}"
 
 fetch_file() {
   local rel_path="$1"
@@ -143,13 +139,13 @@ fetch_file() {
 install_casks() {
   local installed
   installed="$(brew list --cask -1 2>/dev/null || true)"
-  local to_install=()
+  local -a to_install=()
   for cask in "$@"; do
     if ! grep -Fxq "$cask" <<<"$installed"; then
       to_install+=("$cask")
     fi
   done
-  if [[ ${#to_install[@]} -gt 0 ]]; then
+  if (($#to_install > 0)); then
     brew install --cask "${to_install[@]}" || true
   fi
 }
@@ -158,13 +154,13 @@ install_formulas() {
   local brew_opt="${HOMEBREW_PREFIX:-/opt/homebrew}/opt"
   local installed
   installed="$(brew list --formula -1 2>/dev/null || true)"
-  local to_install=()
+  local -a to_install=()
   for formula in "$@"; do
     if ! grep -Fxq "$formula" <<<"$installed" && [[ ! -d "$brew_opt/$formula" ]]; then
       to_install+=("$formula")
     fi
   done
-  if [[ ${#to_install[@]} -gt 0 ]]; then
+  if (($#to_install > 0)); then
     brew install --formula "${to_install[@]}" || true
   fi
 }
@@ -189,7 +185,10 @@ install_formulas fish
 if ! grep -q '/opt/homebrew/bin/fish' /etc/shells; then
   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
 fi
-if [ "$(dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}')" != "/opt/homebrew/bin/fish" ]; then
+local user_shell
+user_shell="$(dscl . -read "/Users/$USER" UserShell 2>/dev/null || true)"
+user_shell="${${user_shell#UserShell: }%%$'\n'*}"
+if [[ "$user_shell" != "/opt/homebrew/bin/fish" ]]; then
   sudo dscl . -create "/Users/$USER" UserShell /opt/homebrew/bin/fish
 fi
 
@@ -217,19 +216,16 @@ fi
 
 if [[ -n "$CLI_DIR" ]]; then
   mkdir -p "$HOME/.local/bin"
-  for script in "$CLI_DIR"/*.sh; do
-    [[ -f "$script" ]] || continue
-    cmd_name="$(basename "$script" .sh)"
+  for script in "$CLI_DIR"/*.sh(N); do
+    cmd_name="${script:t:r}"
     ln -sf "$script" "$HOME/.local/bin/$cmd_name"
   done
 
   # Clean dangling symlinks originating from CLI_DIR
-  for link in "$HOME/.local/bin"/*; do
-    if [[ -L "$link" && ! -e "$link" ]]; then
-      target="$(readlink "$link" 2>/dev/null || true)"
-      if [[ "$target" == "$CLI_DIR"* ]]; then
-        rm -f "$link"
-      fi
+  for link in "$HOME/.local/bin"/*(-@N); do
+    target="$(readlink "$link" 2>/dev/null || true)"
+    if [[ "$target" == "$CLI_DIR"* ]]; then
+      rm -f "$link"
     fi
   done
 fi
@@ -253,24 +249,17 @@ install_casks \
 # CLI tools
 install_formulas \
   actionlint \
-  bash \
-  curl \
   ffmpeg \
   fnm \
-  gcc \
   gifski \
-  git \
   jq \
   mtr \
   nano \
   nanorc \
   python \
-  rsync \
   shfmt \
-  wget \
   yt-dlp \
-  yq \
-  zsh
+  yq
 
 # Node.js config
 if ! fnm list 2>/dev/null | grep -q 'lts-latest'; then
@@ -280,7 +269,7 @@ if ! fnm list 2>/dev/null | grep -q 'lts-latest'; then
 fi
 
 # Nano config
-echo "include ${HOMEBREW_PREFIX:-/opt/homebrew}/share/nanorc/*.nanorc" >~/.nanorc
+printf 'include %s/share/nanorc/*.nanorc\n' "${HOMEBREW_PREFIX:-/opt/homebrew}" >"$HOME/.nanorc"
 
 # Restart Dock
 killall Dock

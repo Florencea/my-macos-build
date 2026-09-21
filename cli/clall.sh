@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -25,27 +25,31 @@ for cmd in curl jq git; do
 done
 
 # 3. Fetch user repositories
-readarray -t REPOS < <(curl -s \
+local -a REPOS
+REPOS=("${(@f)$(curl -s \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  "https://api.github.com/user/repos?type=owner&per_page=100" | jq -r '.[].ssh_url')
+  "https://api.github.com/user/repos?type=owner&per_page=100" | jq -r '.[].ssh_url')}")
+REPOS=(${REPOS:#})
 
-REPO_LIST_LEN=${#REPOS[@]}
-if [[ $REPO_LIST_LEN -eq 0 ]]; then
+local -i REPO_LIST_LEN=$#REPOS
+if ((REPO_LIST_LEN == 0)); then
   exit 0
 fi
 
 # 4. Clone repositories in parallel
-TMPDIR="$(mktemp -d -t "$(basename "$0")")"
+TMPDIR="$(mktemp -d -t "${0:t:r}")"
 trap 'rm -rf "$TMPDIR"' EXIT
 
 for REPO in "${REPOS[@]}"; do
-  REPO_NAME="$(basename "$REPO" .git)"
+  REPO_NAME="${${REPO:t}%.git}"
   (
     if git clone --quiet "$REPO"; then
       touch "$TMPDIR/$REPO_NAME"
-      FINISHED=$(find "$TMPDIR" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')
+      local -a done_files
+      done_files=("$TMPDIR"/*(N))
+      local -i FINISHED=$#done_files
       printf "Clone [%s/%s] %s ok\n" "$FINISHED" "$REPO_LIST_LEN" "$REPO_NAME"
     fi
   ) &

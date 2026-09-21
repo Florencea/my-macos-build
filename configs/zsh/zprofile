@@ -8,9 +8,6 @@ typeset -U path PATH
 
 # PATH configuration (consistent with configs/fish/conf.d/00-paths.fish)
 path=(
-  /opt/homebrew/opt/bash/bin
-  /opt/homebrew/opt/zsh/bin
-  /opt/homebrew/opt/curl/bin
   "$HOME/.local/bin"
   $path
 )

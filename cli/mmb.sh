@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -16,5 +16,4 @@ for cmd in code; do
 done
 
 # 2. Open workspace in Visual Studio Code
-SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0")")"
-code "$SCRIPT_DIR/../"
+code "${0:A:h:h}"
