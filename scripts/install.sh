@@ -254,8 +254,6 @@ install_formulas \
   gifski \
   jq \
   mtr \
-  nano \
-  nanorc \
   python \
   shfmt \
   yt-dlp \
@@ -267,9 +265,6 @@ if ! fnm list 2>/dev/null | grep -q 'lts-latest'; then
   fnm default lts-latest
   fnm exec --using=default npm config set audit false engine-strict true fund false ignore-scripts true install-strategy linked save-exact true strict-peer-deps true
 fi
-
-# Nano config
-printf 'include %s/share/nanorc/*.nanorc\n' "${HOMEBREW_PREFIX:-/opt/homebrew}" >"$HOME/.nanorc"
 
 # Restart Dock
 killall Dock
