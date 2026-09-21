@@ -243,7 +243,6 @@ install_formulas \
   gifski \
   jq \
   mtr \
-  python \
   shfmt \
   yt-dlp \
   zsh-autosuggestions \
