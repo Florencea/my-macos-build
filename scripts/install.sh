@@ -3,14 +3,16 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# 0. Initialize sudo timestamp database (prevents fresh-install race condition)
+sudo -v
+
 # 1. Touch ID for sudo via system template
 if [[ ! -f /etc/pam.d/sudo_local ]]; then
   echo "==> Configuring Touch ID for sudo via sudo_local..."
   if [[ -f /etc/pam.d/sudo_local.template ]]; then
-    sudo sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local >/dev/null
+    sudo sh -c 'sed -e "s/^#auth/auth/" /etc/pam.d/sudo_local.template > /etc/pam.d/sudo_local'
   else
-    echo "# sudo_local: local authentication customization for sudo
-auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local >/dev/null
+    sudo sh -c 'echo "# sudo_local: local authentication customization for sudo\nauth       sufficient     pam_tid.so" > /etc/pam.d/sudo_local'
   fi
   sudo chmod 444 /etc/pam.d/sudo_local
 else
@@ -41,8 +43,6 @@ trust_internal_ca() {
   local cert_tmp
   cert_tmp="$(mktemp -t ca_cert.XXXXXX)"
 
-  trap 'rm -f "$cert_tmp"' EXIT INT TERM
-
   base64 -d <<<"$ca_b64" >"$cert_tmp"
   sudo security add-trusted-cert \
     -d \
@@ -53,7 +53,6 @@ trust_internal_ca() {
   echo "==> $ca_name installed and trusted successfully."
 
   rm -f "$cert_tmp"
-  trap - EXIT INT TERM
 }
 
 trust_internal_ca "BHPD Internal Root CA" "$BHPD_ROOT_CA_B64"
@@ -264,12 +263,7 @@ install_casks \
 
 echo "==> Configuring application defaults..."
 
-# iStat Menus 6 Settings & License
-fetch_file "configs/iStat Menus Settings.ismp" "/tmp/istatmenus.ismp"
-if [[ -f "/tmp/istatmenus.ismp" ]]; then
-  defaults import com.bjango.istatmenus6.extras /tmp/istatmenus.ismp
-  rm -f /tmp/istatmenus.ismp
-fi
+# iStat Menus 6 License
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
 # Keka configuration
@@ -288,7 +282,14 @@ defaults write com.colliderli.iina displayInLetterBox -bool false
 defaults write com.colliderli.iina horizontalScrollAction -int 2
 defaults write com.colliderli.iina verticalScrollAction -int 2
 defaults write com.colliderli.iina pinchAction -int 2
-defaults write com.colliderli.iina controlBarToolbarButtons '( 2, 1, 5, 0 )'
+
+# IINA toolbar buttons array using PlistBuddy for strict integer types
+IINA_PREF="$HOME/Library/Preferences/com.colliderli.iina.plist"
+/usr/libexec/PlistBuddy -c "Delete :controlBarToolbarButtons" "$IINA_PREF" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c "Add :controlBarToolbarButtons array" "$IINA_PREF" 2>/dev/null || true
+for btn_val in 2 1 5 0; do
+  /usr/libexec/PlistBuddy -c "Add :controlBarToolbarButtons: integer $btn_val" "$IINA_PREF" 2>/dev/null || true
+done
 
 # Transmission configuration
 defaults write org.m0k.transmission BindPort -int 51247
