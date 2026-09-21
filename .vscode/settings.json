@@ -1,0 +1,5 @@
+{
+  "files.associations": {
+    "**/configs/zsh/completions/_*": "shellscript"
+  }
+}
