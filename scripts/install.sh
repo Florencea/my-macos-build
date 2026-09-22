@@ -90,7 +90,6 @@ export HOMEBREW_CURL_RETRIES=3
 # 4. System Performance & Native Defaults
 echo "==> Configuring system defaults..."
 defaults write -g ApplePressAndHoldEnabled -bool false
-defaults write -g NSWindowResizeTime -float 0.001
 defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false
 
 # Terminal configuration: prevent disk I/O freezes
@@ -100,9 +99,6 @@ defaults write com.apple.Terminal NSQuitAlwaysKeepsWindows -bool false
 # Prevent .DS_Store generation on Network & USB volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
-
-# Suppress crash reporter UI dialogs
-defaults write com.apple.CrashReporter DialogType none
 
 # Accelerate DMG mounting by skipping validation
 defaults write com.apple.frameworks.diskimages skip-verify -bool true
@@ -279,6 +275,7 @@ configure_antigravity_permissions() {
     "pwd"
     "rg"
     "sg"
+    "shfmt"
     "tail"
     "tree"
     "uname"
