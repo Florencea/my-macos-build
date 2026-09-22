@@ -236,6 +236,65 @@ EOF
 
 cp "$HOME/.gemini/config/rules/macos-toolchain.md" "$HOME/.gemini/config/skills/macos-toolchain/SKILL.md"
 
+# Configure Antigravity Global Permission Grants (Request Review Allowlist & Disable Sandbox)
+configure_antigravity_permissions() {
+  local config_file="$HOME/.gemini/config/config.json"
+  echo "==> Configuring Antigravity global permissions in $config_file..."
+
+  mkdir -p "${config_file:h}"
+  if [[ ! -f "$config_file" ]]; then
+    echo "{}" >"$config_file"
+  fi
+
+  # Prefix-matched safe commands under the Antigravity DSL specification
+  local -a safe_commands=(
+    "ast-grep"
+    "bat"
+    "cat"
+    "duckdb"
+    "fd"
+    "git add"
+    "git branch"
+    "git diff"
+    "git log"
+    "git status"
+    "head"
+    "hyperfine"
+    "jq"
+    "ls"
+    "lsof"
+    "npm run agent:"
+    "npm run check"
+    "pwd"
+    "rg"
+    "sg"
+    "tail"
+    "tree"
+    "uname"
+    "which"
+    "yq"
+  )
+
+  local grants_json
+  grants_json="$(printf 'command(%s)\n' "${safe_commands[@]}" | jq -R . | jq -s .)"
+
+  local tmp_config
+  tmp_config="$(mktemp -t config.XXXXXX)"
+
+  jq --argjson grants "$grants_json" '
+    .userSettings = (.userSettings // {}) |
+    .userSettings.enableTerminalSandbox = false |
+    .userSettings.permissionPreset = "AGENT_PERMISSION_PRESET_REQUEST_REVIEW" |
+    .userSettings.globalPermissionGrants = (.userSettings.globalPermissionGrants // {}) |
+    .userSettings.globalPermissionGrants.allow = (((.userSettings.globalPermissionGrants.allow // []) + $grants) | unique)
+  ' "$config_file" >"$tmp_config"
+
+  mv "$tmp_config" "$config_file"
+  echo "==> Antigravity global permissions configured successfully."
+}
+
+configure_antigravity_permissions
+
 # 8. Setup CLI Symlinks
 CLI_DIR=""
 if [[ -n "${REPO_DIR:-}" && -d "$REPO_DIR/cli" ]]; then
