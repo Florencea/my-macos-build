@@ -15,8 +15,19 @@ if [[ ! -f /etc/pam.d/sudo_local ]]; then
     sudo sh -c 'echo "# sudo_local: local authentication customization for sudo\nauth       sufficient     pam_tid.so" > /etc/pam.d/sudo_local'
   fi
   sudo chmod 444 /etc/pam.d/sudo_local
+fi
+
+if ! grep -q "^auth[[:space:]]*sufficient[[:space:]]*pam_tid.so" /etc/pam.d/sudo_local; then
+  echo "==> Enabling pam_tid.so in existing sudo_local..."
+  sudo chmod 644 /etc/pam.d/sudo_local
+  if grep -q "^#auth[[:space:]]*sufficient[[:space:]]*pam_tid.so" /etc/pam.d/sudo_local; then
+    sudo sed -i '' 's/^#auth[[:space:]]*sufficient[[:space:]]*pam_tid.so/auth       sufficient     pam_tid.so/' /etc/pam.d/sudo_local
+  else
+    sudo sh -c 'printf "auth       sufficient     pam_tid.so\n" >> /etc/pam.d/sudo_local'
+  fi
+  sudo chmod 444 /etc/pam.d/sudo_local
 else
-  echo "sudo_local already exists, skipping Touch ID configuration."
+  echo "sudo_local already configured with Touch ID, skipping."
 fi
 
 # 2. Internal Root CAs (Private PKI for *.internal)
@@ -404,8 +415,48 @@ defaults write org.m0k.transmission DisplayPeerProgressBarNumber -bool true
 defaults write org.m0k.transmission FilterSearchType -string "Name"
 defaults write org.m0k.transmission AutoSize -bool true
 
-# Register default file associations directly to LaunchServices (no UI confirmation dialogs)
+# Register default file associations to LaunchServices (Strict Idempotency)
 LS_SECURE_PLIST="$HOME/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist"
+
+# Pre-deduplicate existing LSHandlers to prevent array ballooning
+if [[ -f "$LS_SECURE_PLIST" ]]; then
+  python3 - <<'EOF' 2>/dev/null || true
+import plistlib, os, json
+plist_path = os.path.expanduser('~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist')
+if os.path.exists(plist_path):
+    with open(plist_path, 'rb') as f:
+        data = plistlib.load(f)
+    handlers = data.get('LSHandlers', [])
+    seen = set()
+    deduped = []
+    for h in handlers:
+        key = json.dumps(h, sort_keys=True)
+        if key not in seen:
+            seen.add(key)
+            deduped.append(h)
+    data['LSHandlers'] = deduped
+    with open(plist_path, 'wb') as f:
+        plistlib.dump(data, f)
+EOF
+fi
+
+/usr/libexec/PlistBuddy -c "Add :LSHandlers array" "$LS_SECURE_PLIST" 2>/dev/null || true
+EXISTING_LS_DUMP="$(/usr/libexec/PlistBuddy -c "Print :LSHandlers" "$LS_SECURE_PLIST" 2>/dev/null || true)"
+
+add_ls_handler() {
+  local key_name="$1"
+  local val="$2"
+  local app_id="$3"
+
+  if ! grep -q "$val" <<<"$EXISTING_LS_DUMP"; then
+    /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$LS_SECURE_PLIST" 2>/dev/null || true
+    /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:${key_name} string $val" "$LS_SECURE_PLIST" 2>/dev/null || true
+    /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string $app_id" "$LS_SECURE_PLIST" 2>/dev/null || true
+    if [[ "$key_name" == "LSHandlerContentTag" ]]; then
+      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTagClass string public.filename-extension" "$LS_SECURE_PLIST" 2>/dev/null || true
+    fi
+  fi
+}
 
 # Keka default associations
 local -a keka_utis=(
@@ -425,17 +476,12 @@ local -a keka_utis=(
   "com.microsoft.cab"
 )
 for uti in "${keka_utis[@]}"; do
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentType string $uti" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string com.aone.keka" "$LS_SECURE_PLIST" 2>/dev/null || true
+  add_ls_handler "LSHandlerContentType" "$uti" "com.aone.keka"
 done
 
 local -a keka_exts=(7z rar zip tar gz tgz bz2 tbz2 xz txz iso dmg)
 for ext in "${keka_exts[@]}"; do
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTag string $ext" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTagClass string public.filename-extension" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string com.aone.keka" "$LS_SECURE_PLIST" 2>/dev/null || true
+  add_ls_handler "LSHandlerContentTag" "$ext" "com.aone.keka"
 done
 
 # IINA default associations
@@ -462,17 +508,12 @@ local -a iina_utis=(
   "public.m3u-playlist"
 )
 for uti in "${iina_utis[@]}"; do
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentType string $uti" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string com.colliderli.iina" "$LS_SECURE_PLIST" 2>/dev/null || true
+  add_ls_handler "LSHandlerContentType" "$uti" "com.colliderli.iina"
 done
 
 local -a iina_exts=(mkv flv webm wmv rmvb vob mov ts m4v avi mp4 mp3 flac wav aac ogg ape opus)
 for ext in "${iina_exts[@]}"; do
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTag string $ext" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTagClass string public.filename-extension" "$LS_SECURE_PLIST" 2>/dev/null || true
-  /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string com.colliderli.iina" "$LS_SECURE_PLIST" 2>/dev/null || true
+  add_ls_handler "LSHandlerContentTag" "$ext" "com.colliderli.iina"
 done
 
 # CLI tools
