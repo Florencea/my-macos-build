@@ -3,6 +3,20 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
+# 0. Agent & Subshell Environment Safeguards
+# ------------------------------------------------------------------------------
+# Enforce strict English locale for clean parsing
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
+# Prevent CLI tools & git from opening interactive pagers (prevents Agent hangs)
+export PAGER="cat"
+export GIT_PAGER="cat"
+
+# Suppress Homebrew hints for cleaner CLI output
+export HOMEBREW_NO_ENV_HINTS=1
+
+# ------------------------------------------------------------------------------
 # 1. Custom Completions & FPATH Setup
 # ------------------------------------------------------------------------------
 typeset -U fpath FPATH
@@ -84,11 +98,22 @@ add-zsh-hook precmd vcs_info
 PROMPT='%F{green}%~%f$vcs_info_msg_0_ '
 
 # ------------------------------------------------------------------------------
-# 7. Common Aliases
+# 7. Common Aliases & macOS BSD Safeguards
 # ------------------------------------------------------------------------------
 alias nr="npm run"
 alias la="ls -lah"
 alias ll="ls -lh"
+
+# Guide agents away from common Linux/GNU pitfalls directly in shell
+alias ss="echo 'Error: \"ss\" is Linux-specific. Use \"lsof -i :<PORT>\" or \"netstat -anv\" on macOS.' >&2; false"
+
+stat() {
+  if [[ "$*" == *"-c"* ]]; then
+    echo 'Error: GNU "stat -c" is unsupported on macOS BSD. Use "stat -f <format>" or "ls -l".' >&2
+    return 1
+  fi
+  command stat "$@"
+}
 
 # ------------------------------------------------------------------------------
 # 8. Interactive Plugins (Loaded last)
