@@ -194,6 +194,34 @@ else
   done
 fi
 
+# Antigravity Global Agent Instructions & Conventions
+echo "==> Configuring global Antigravity instructions..."
+mkdir -p "$HOME/.config/antigravity" "$HOME/.antigravity"
+cat <<'EOF' >"$HOME/.config/antigravity/rules.md"
+# Global Environment Constraints (macOS Darwin arm64)
+
+## Pre-installed High-Performance CLI Tools
+- Fast Search: ALWAYS use `rg` (ripgrep) for searching file contents. Avoid `grep -r`.
+- Path Traversal: ALWAYS use `fd` for finding files and directories. Avoid complex `find`.
+- Structure: ALWAYS inspect project trees with `tree -L 2 -I 'node_modules|.git'`.
+- Data Parsing: Use `jq` for JSON. Write disposable modern Node.js (`.mjs`) scripts for complex YAML/AST tasks. Do NOT use `yq` or Python.
+- HTTP Requests: `curl -fsSL` and `wget` are both available.
+
+## Local Git & Subshell Rules
+- Use native `/usr/bin/git`.
+- Pure local git workflows only (commit, diff, branch, rebase).
+- DO NOT use `gh` (GitHub CLI). Do not query remote issues or PRs.
+
+## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
+- `sed`: Always use BSD syntax: `sed -i '' 's/pattern/replacement/g' <file>`.
+- `awk`: Standard POSIX awk only. DO NOT use GNU 3-argument `match(s, r, a)`.
+- `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
+- Network: Check open ports using `lsof -i :<PORT>` (never Linux `ss` or `netstat -p`).
+EOF
+
+ln -sf "$HOME/.config/antigravity/rules.md" "$HOME/.config/antigravity/instructions.md"
+ln -sf "$HOME/.config/antigravity/rules.md" "$HOME/.antigravity/rules.md"
+
 # 8. Setup CLI Symlinks
 CLI_DIR=""
 if [[ -n "${REPO_DIR:-}" && -d "$REPO_DIR/cli" ]]; then
