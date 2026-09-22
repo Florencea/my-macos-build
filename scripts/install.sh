@@ -212,7 +212,12 @@ trigger: always_on
 - Fast Search: ALWAYS use `rg` (ripgrep) for searching file contents. Avoid `grep -r`.
 - Path Traversal: ALWAYS use `fd` for finding files and directories. Avoid raw `find`.
 - Directory Inspection: ALWAYS use `tree -L 2 -I 'node_modules|.git'`.
-- Data Parsing: Use `jq` for JSON. Write disposable modern Node.js (`.mjs`) scripts for YAML/TOML/complex data. Do NOT use `yq` or Python.
+- Structured Data: Use `jq` for JSON and `yq` for YAML (both query and in-place `-i` edits).
+- Tabular / Big Data: Use `duckdb -c "<SQL>"` for direct SQL queries over CSV, Parquet, or NDJSON.
+- Text Replacement: Prefer `sd 'pattern' 'replacement' <file>` for in-place replacements.
+- AST / Structural Code Search: Prefer `ast-grep` (`sg`) for semantic code pattern queries over regex.
+- Benchmarking: ALWAYS use `hyperfine` for timing CLI commands or scripts instead of raw `time`.
+- Scripting Runtime: ALWAYS use modern Node.js (`.mjs`). NEVER use Python (to avoid venv/pip breakage) or Deno.
 - HTTP Requests: `curl -fsSL` and `wget` are both available.
 
 ## Local Git & Subshell Rules
@@ -222,7 +227,7 @@ trigger: always_on
 
 ## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
 - `head` / `tail`: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `sed -n '1,3p' <file>`.
-- `sed`: Always use BSD syntax: `sed -i '' 's/.../.../' <file>`.
+- `sed`: Always use BSD syntax: `sed -i '' 's/.../.../' <file>` if `sd` is not applicable.
 - `awk`: Standard POSIX awk only; do NOT use GNU extensions like 3-argument `match()`.
 - `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
 - Network: Check open ports using `lsof -i :<PORT>` (never Linux `ss`).
@@ -413,15 +418,20 @@ done
 # CLI tools
 install_formulas \
   actionlint \
+  ast-grep \
+  duckdb \
   fd \
   ffmpeg \
   gifski \
+  hyperfine \
   jq \
   mtr \
   ripgrep \
+  sd \
   shfmt \
   tree \
   wget \
+  yq \
   yt-dlp \
   zsh-autosuggestions \
   zsh-syntax-highlighting
