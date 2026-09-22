@@ -377,11 +377,15 @@ done
 # CLI tools
 install_formulas \
   actionlint \
+  fd \
   ffmpeg \
   gifski \
   jq \
   mtr \
+  ripgrep \
   shfmt \
+  tree \
+  wget \
   yt-dlp \
   zsh-autosuggestions \
   zsh-syntax-highlighting
