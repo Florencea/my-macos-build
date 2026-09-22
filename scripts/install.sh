@@ -212,6 +212,7 @@ trigger: always_on
 - Fast Search: ALWAYS use `rg` (ripgrep) for searching file contents. Avoid `grep -r`.
 - Path Traversal: ALWAYS use `fd` for finding files and directories. Avoid raw `find`.
 - Directory Inspection: ALWAYS use `tree -L 2 -I 'node_modules|.git'`.
+- File Inspection / Slicing: Prefer `bat --paging=never -r <start>:<end> <file>` for non-interactive line-ranged previews.
 - Structured Data: Use `jq` for JSON and `yq` for YAML (both query and in-place `-i` edits).
 - Tabular / Big Data: Use `duckdb -c "<SQL>"` for direct SQL queries over CSV, Parquet, or NDJSON.
 - Text Replacement: Prefer `sd 'pattern' 'replacement' <file>` for in-place replacements.
@@ -226,7 +227,7 @@ trigger: always_on
 - DO NOT use `gh` (GitHub CLI). Do not query remote issues or PRs.
 
 ## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
-- `head` / `tail`: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `sed -n '1,3p' <file>`.
+- `head` / `tail`: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `sed -n '1,3p' <file>` or `bat`.
 - `sed`: Always use BSD syntax: `sed -i '' 's/.../.../' <file>` if `sd` is not applicable.
 - `awk`: Standard POSIX awk only; do NOT use GNU extensions like 3-argument `match()`.
 - `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
@@ -419,6 +420,7 @@ done
 install_formulas \
   actionlint \
   ast-grep \
+  bat \
   duckdb \
   fd \
   ffmpeg \
@@ -435,6 +437,9 @@ install_formulas \
   yt-dlp \
   zsh-autosuggestions \
   zsh-syntax-highlighting
+
+# Remove quarantine attributes to prevent syspolicyd gatekeeper hangs on first run
+xattr -d -r com.apple.quarantine "${HOMEBREW_PREFIX:-/opt/homebrew}/bin" 2>/dev/null || true
 
 # 10. Flush preferences cache before reboot
 killall cfprefsd 2>/dev/null || true
