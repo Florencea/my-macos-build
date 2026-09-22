@@ -194,33 +194,28 @@ else
   done
 fi
 
-# Antigravity Global Agent Instructions & Conventions
-echo "==> Configuring global Antigravity instructions..."
-mkdir -p "$HOME/.config/antigravity" "$HOME/.antigravity"
-cat <<'EOF' >"$HOME/.config/antigravity/rules.md"
-# Global Environment Constraints (macOS Darwin arm64)
+# Antigravity Global Custom Skill
+echo "==> Configuring Antigravity global macos-toolchain skill..."
+mkdir -p "$HOME/.gemini/antigravity/skills/macos-toolchain"
+cat <<'EOF' >"$HOME/.gemini/antigravity/skills/macos-toolchain/SKILL.md"
+---
+name: macos-toolchain
+description: Pre-installed high-performance CLI tools (rg, fd, tree) and macOS BSD compatibility constraints.
+---
 
-## Pre-installed High-Performance CLI Tools
+# macOS Darwin Toolchain Rules
 - Fast Search: ALWAYS use `rg` (ripgrep) for searching file contents. Avoid `grep -r`.
-- Path Traversal: ALWAYS use `fd` for finding files and directories. Avoid complex `find`.
-- Structure: ALWAYS inspect project trees with `tree -L 2 -I 'node_modules|.git'`.
-- Data Parsing: Use `jq` for JSON. Write disposable modern Node.js (`.mjs`) scripts for complex YAML/AST tasks. Do NOT use `yq` or Python.
+- Path Traversal: ALWAYS use `fd` for finding files and directories. Avoid raw `find`.
+- Directory Inspection: ALWAYS use `tree -L 2 -I 'node_modules|.git'`.
+- Data Parsing: Use `jq` for JSON. Write disposable modern Node.js (`.mjs`) scripts for YAML/TOML/complex data. Do NOT use `yq` or Python.
 - HTTP Requests: `curl -fsSL` and `wget` are both available.
-
-## Local Git & Subshell Rules
-- Use native `/usr/bin/git`.
-- Pure local git workflows only (commit, diff, branch, rebase).
-- DO NOT use `gh` (GitHub CLI). Do not query remote issues or PRs.
-
-## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
-- `sed`: Always use BSD syntax: `sed -i '' 's/pattern/replacement/g' <file>`.
-- `awk`: Standard POSIX awk only. DO NOT use GNU 3-argument `match(s, r, a)`.
-- `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
-- Network: Check open ports using `lsof -i :<PORT>` (never Linux `ss` or `netstat -p`).
+- Local Git Workflow: Pure local git only (`/usr/bin/git`). Never use `gh` CLI or attempt remote PR/issue queries.
+- macOS BSD Pitfalls:
+  - `sed`: Always use BSD syntax: `sed -i '' 's/.../.../' <file>`.
+  - `awk`: Standard POSIX awk only; do NOT use GNU extensions like 3-argument `match()`.
+  - `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
+  - Network: Check open ports using `lsof -i :<PORT>` (never Linux `ss`).
 EOF
-
-ln -sf "$HOME/.config/antigravity/rules.md" "$HOME/.config/antigravity/instructions.md"
-ln -sf "$HOME/.config/antigravity/rules.md" "$HOME/.antigravity/rules.md"
 
 # 8. Setup CLI Symlinks
 CLI_DIR=""
