@@ -3,18 +3,18 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-# 0. Agent & Subshell Environment Safeguards
+# 0. Environment & Locale
 # ------------------------------------------------------------------------------
-# Enforce strict English locale for clean parsing
+# Enforce strict English locale for clean parsing & consistent CLI output
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
-# Prevent CLI tools & git from opening interactive pagers (prevents Agent hangs)
-export PAGER="cat"
-export GIT_PAGER="cat"
-
-# Suppress Homebrew hints for cleaner CLI output
-export HOMEBREW_NO_ENV_HINTS=1
+# Agent & Non-Interactive Subshell Protection:
+# Disable interactive pagers when stdout is not a TTY to prevent process hangs
+if [[ ! -t 1 || "$TERM" == "dumb" ]]; then
+  export PAGER="cat"
+  export GIT_PAGER="cat"
+fi
 
 # ------------------------------------------------------------------------------
 # 1. Custom Completions & FPATH Setup
