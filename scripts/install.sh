@@ -264,6 +264,7 @@ configure_antigravity_permissions() {
     "git branch"
     "git diff"
     "git log"
+    "git show"
     "git status"
     "head"
     "hyperfine"
