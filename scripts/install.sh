@@ -266,6 +266,7 @@ configure_antigravity_permissions() {
     "git log"
     "git show"
     "git status"
+    "grep"
     "head"
     "hyperfine"
     "jq"
