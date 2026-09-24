@@ -10,10 +10,18 @@ export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
 # Agent & Non-Interactive Subshell Protection:
-# Disable interactive pagers when stdout is not a TTY to prevent process hangs
+# Disable interactive pagers when stdout is not a TTY to prevent process hangs.
+# NOTE: Avoid exporting GIT_PAGER to prevent leaking into process.env, which triggers
+# false positives in agent detectors like am-i-vibing (used in Astro 7).
 if [[ ! -t 1 || "$TERM" == "dumb" ]]; then
   export PAGER="cat"
-  export GIT_PAGER="cat"
+fi
+
+# Ensure interactive sessions never retain GIT_PAGER (e.g. inherited from VS Code probes or agents).
+# Prevents am-i-vibing from falsely classifying VS Code interactive terminals
+# (TERM_PROGRAM=vscode + GIT_PAGER=cat) as GitHub Copilot agents.
+if [[ -t 1 ]]; then
+  unset GIT_PAGER
 fi
 
 # ------------------------------------------------------------------------------
