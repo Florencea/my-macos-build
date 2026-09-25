@@ -209,7 +209,7 @@ mkdir -p "$HOME/.gemini/config/skills/macos-toolchain"
 cat <<'EOF' >"$HOME/.gemini/config/rules/macos-toolchain.md"
 ---
 name: macos-toolchain
-description: Pre-installed high-performance CLI tools, macOS BSD constraints, and shell execution rules
+description: Pre-installed high-performance CLI tools, pre-approved agent scripts, macOS BSD constraints, and shell execution rules
 trigger: always_on
 ---
 
@@ -229,6 +229,16 @@ trigger: always_on
 - Benchmarking: ALWAYS use `hyperfine` for timing CLI commands or scripts instead of raw `time`.
 - Scripting Runtime: ALWAYS use modern Node.js (`.mjs`). NEVER use Python (to avoid venv/pip breakage) or Deno.
 - HTTP Requests: `curl -fsSL` and `wget` are both available.
+
+## Frictionless Agent Script Execution (Whitelist-First)
+- Package Script Inspection: In Node.js / web projects, ALWAYS check `package.json` for scripts prefixed with `agent:*` (e.g. `jq -r '.scripts | keys[] | select(startswith("agent:"))' package.json`) before running verification, linting, formatting, or testing commands.
+- Frictionless Whitelist Priority: Commands matching `npm run agent:*` are pre-approved in the global security whitelist to bypass human approval prompts. ALWAYS prefer them over generic commands (such as `npm test`, `npm run lint`, `npx tsc`, or direct CLI tools).
+- Pre-Approved Whitelist Reference:
+  - Verification: `npm run agent:verify:gate`, `npm run agent:verify:inner`, `npm run agent:verify:unit`
+  - Linting & Formatting: `npm run agent:format`, `npm run agent:lint`, `npm run agent:lint:fix`, `npm run agent:lint:ci`, `npm run agent:lint:eslint`, `npm run agent:lint:eslint:fix`, `npm run agent:lint:tailwind`, `npm run agent:lint:tailwind:fix`
+  - Type Checking: `npm run agent:typecheck`
+  - Testing: `npm run agent:test:unit`, `npm run agent:test:e2e`
+- Fallback: Only fall back to standard project scripts or direct CLI tools when no matching `agent:*` script is defined in `package.json`.
 
 ## Local Git & Subshell Rules
 - Use native `/usr/bin/git`.
