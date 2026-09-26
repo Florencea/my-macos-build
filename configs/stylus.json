@@ -139,7 +139,7 @@
     "name": "ubo style desktop",
     "sections": [
       {
-        "code": ":root {\n    --stylus-bg-dark-firefox: #1d1b1f;\n    --stylus-bg-light-firefox: #f7f6fb;\n    --stylus-text-dark-firefox: #fff;\n    --stylus-text-light-firefox: #000;\n    --stylus-bg-input-dark-firefox: #312f33;\n    --stylus-bg-input-light-firefox: #e3e2e6;\n\n    --stylus-bg-dark-edge: #292929;\n    --stylus-bg-light-edge: #fff;\n    --stylus-text-dark-edge: #fff;\n    --stylus-text-light-edge: #000;\n    --stylus-bg-input-dark-edge: #383838;\n    --stylus-bg-input-light-edge: #e0e0e0;\n\n    --stylus-bg-dark: var(--stylus-bg-dark-edge);\n    --stylus-bg-light: var(--stylus-bg-light-edge);\n    --stylus-text-dark: var(--stylus-text-dark-edge);\n    --stylus-text-light: var(--stylus-text-light-edge);\n    --stylus-bg-input-dark: var(--stylus-bg-input-dark-edge);\n    --stylus-bg-input-light: var(--stylus-bg-input-light-edge);\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n@supports (-moz-appearance: none) {\n    :root {\n        --stylus-bg-dark: var(--stylus-bg-dark-firefox);\n        --stylus-bg-light: var(--stylus-bg-light-firefox);\n        --stylus-text-dark: var(--stylus-text-dark-firefox);\n        --stylus-text-light: var(--stylus-text-light-firefox);\n        --stylus-bg-input-dark: var(--stylus-bg-input-dark-firefox);\n        --stylus-bg-input-light: var(--stylus-bg-input-light-firefox);\n    }\n}\n* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}\n.sp-separator {\n    display: none !important;\n}"
+        "code": ":root {\n    --stylus-bg-dark: #292929;\n    --stylus-bg-light: #fff;\n    --stylus-text-dark: #fff;\n    --stylus-text-light: #000;\n    --stylus-bg-input-dark: #383838;\n    --stylus-bg-input-light: #e0e0e0;\n    --stylus-font-sans-serif: 'Inter Variable', system-ui, sans-serif;\n    --stylus-font-monospace: 'JetBrains Mono', ui-monospace, monospace;\n}\n* {\n    text-rendering: auto !important;\n    font-kerning: normal !important;\n    font-variant-ligatures: common-ligatures !important;\n    -webkit-font-smoothing: auto !important;\n}\n"
       },
       {
         "code": ".header_pop {\n    display: none !important;\n}\nbody {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
@@ -269,9 +269,9 @@
         ]
       }
     ],
-    "updateDate": 1787038676315,
+    "updateDate": 1790413454913,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1789236595947,
+    "_rev": 1790413454913,
     "id": 1
   },
   {
