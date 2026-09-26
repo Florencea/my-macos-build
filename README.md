@@ -2,7 +2,8 @@
 
 ## Extension Configs
 
-- [UBoL Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/ubol-config.json)
+- [UBoL Desktop Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/ubol-config-desktop.json)
+- [UBoL Mobile Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/ubol-config-mobile.json)
 - [Stylus Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/stylus.json)
 - [Tampermonkey Configs](https://github.com/Florencea/my-macos-build/raw/main/configs/tampermonkey.json)
 - [Immersive Translate](https://github.com/Florencea/my-macos-build/raw/main/configs/immersive-translate-config.json)
