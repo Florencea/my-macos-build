@@ -206,6 +206,7 @@ echo "==> Configuring global Antigravity rules and skills..."
 mkdir -p "$HOME/.gemini/config/rules"
 mkdir -p "$HOME/.gemini/config/skills/macos-toolchain"
 
+# >>> AGENT:RULE_MACOS_TOOLCHAIN:START <<<
 cat <<'EOF' >"$HOME/.gemini/config/rules/macos-toolchain.md"
 ---
 name: macos-toolchain
@@ -261,11 +262,13 @@ trigger: always_on
 - `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
 - Network: Check open ports using `lsof -i :<PORT>` (never Linux `ss`).
 EOF
+# >>> AGENT:RULE_MACOS_TOOLCHAIN:END <<<
 
 cp "$HOME/.gemini/config/rules/macos-toolchain.md" "$HOME/.gemini/config/skills/macos-toolchain/SKILL.md"
 
 mkdir -p "$HOME/.gemini/config/skills/modern-node-typescript"
 
+# >>> AGENT:RULE_MODERN_NODE_TS:START <<<
 cat <<'EOF' >"$HOME/.gemini/config/rules/modern-node-typescript.md"
 ---
 name: modern-node-typescript
@@ -310,6 +313,7 @@ trigger: always_on
   - **Nullish Coalescing**: Always prefer `??` and `?.` over `||` to prevent falsy bugs with `0`, `false`, or `""`.
   - **Template Literals**: Only interpolate primitives (`string`, `number`, `boolean`). Do not interpolate objects or `unknown` into template literals without explicit conversion.
 EOF
+# >>> AGENT:RULE_MODERN_NODE_TS:END <<<
 
 cp "$HOME/.gemini/config/rules/modern-node-typescript.md" "$HOME/.gemini/config/skills/modern-node-typescript/SKILL.md"
 

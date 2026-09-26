@@ -38,6 +38,8 @@
   - [Make GIF](#make-gif)
   - [Make GIF (Modern Pipeline)](#make-gif-modern-pipeline)
   - [Download Full Album from YTMusic](#download-full-album-from-ytmusic)
+- [AI Agent Prompt Templates](#ai-agent-prompt-templates)
+  - [Update Modern Node.js & TypeScript Standards](#update-modern-nodejs--typescript-standards)
 
 ## macOS Note
 
@@ -406,4 +408,20 @@ yt-dlp \
   --cookies-from-browser <BROWSER> \
   -o "%(playlist_index)02d %(title)s.%(ext)s" \
   <URL>
+```
+
+## AI Agent Prompt Templates
+
+### Update Modern Node.js & TypeScript Standards
+
+Use this prompt to instruct an AI agent to research the latest LTS updates and update `scripts/install.sh` token-efficiently:
+
+```markdown
+Please update the modern Node.js and TypeScript guidelines in scripts/install.sh:
+
+1. Delegate to a research subagent to look up the latest Node.js Active LTS and typescript-eslint standards (focus on deprecated features, new built-in modules, and strict-type-checked rules).
+2. Locate the anchor using `rg -n 'AGENT:RULE_MODERN_NODE_TS' scripts/install.sh` to get the line numbers. Do NOT read the entire script.
+3. Replace only the Heredoc content within the anchor block, preserving the surrounding script.
+4. Format the script using `shfmt -i 2 -ci -w scripts/install.sh`.
+5. Provide a concise summary of changes and the manual git commit command.
 ```
