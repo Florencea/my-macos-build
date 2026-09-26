@@ -39,6 +39,7 @@
   - [Make GIF (Modern Pipeline)](#make-gif-modern-pipeline)
   - [Download Full Album from YTMusic](#download-full-album-from-ytmusic)
 - [AI Agent Prompt Templates](#ai-agent-prompt-templates)
+  - [Update macOS Toolchain Standards](#update-macos-toolchain-standards)
   - [Update Modern Node.js & TypeScript Standards](#update-modern-nodejs--typescript-standards)
 
 ## macOS Note
@@ -411,6 +412,21 @@ yt-dlp \
 ```
 
 ## AI Agent Prompt Templates
+
+### Update macOS Toolchain Standards
+
+Use this prompt to instruct an AI agent to research emerging CLI tools, macOS Darwin constraints, and update `scripts/install.sh` token-efficiently:
+
+```markdown
+Please update the macOS toolchain guidelines and CLI utilities in scripts/install.sh:
+
+1. Delegate to a research subagent to survey state-of-the-art macOS Darwin CLI tools (e.g., Rust/Go utilities like rg, fd, sd, ast-grep, duckdb), BSD compatibility traps, and agent security whitelist patterns.
+2. Locate the anchor using `rg -n 'AGENT:RULE_MACOS_TOOLCHAIN' scripts/install.sh` to get the line numbers. Do NOT read the entire script.
+3. Replace only the Heredoc content within the anchor block, preserving the surrounding script.
+4. If new CLI tools are added, ensure they are also reflected in Homebrew formulas and configure_antigravity_permissions() in scripts/install.sh.
+5. Format the script using `shfmt -i 2 -ci -w scripts/install.sh`.
+6. Provide a concise summary of changes and the manual git commit command.
+```
 
 ### Update Modern Node.js & TypeScript Standards
 
