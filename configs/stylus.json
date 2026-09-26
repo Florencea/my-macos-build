@@ -179,7 +179,7 @@
         ]
       },
       {
-        "code": ".code-navigation-cursor {\n    display: none !important;\n}\n:is(code, kbd, pre, samp),\n#read-only-cursor-text-area,\n.react-code-text,\n.text-mono,\n.blob-code-inner {\n    font-family: var(--stylus-font-monospace) !important;\n}\nbody,\n.markdown-body {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
+        "code": ":is(code, kbd, pre, samp),\n#read-only-cursor-text-area,\n.react-code-text,\n.text-mono,\n.blob-code-inner {\n    font-family: var(--stylus-font-monospace) !important;\n}\nbody,\n.markdown-body {\n    font-family: var(--stylus-font-sans-serif) !important;\n}",
         "domains": [
           "github.com"
         ]
@@ -269,9 +269,9 @@
         ]
       }
     ],
-    "updateDate": 1790413454913,
+    "updateDate": 1790426245159,
     "_id": "01ce6566-808b-454e-a10c-6a91f3ec5ff0",
-    "_rev": 1790413454913,
+    "_rev": 1790426245159,
     "id": 1
   },
   {
