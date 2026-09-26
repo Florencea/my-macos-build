@@ -264,6 +264,55 @@ EOF
 
 cp "$HOME/.gemini/config/rules/macos-toolchain.md" "$HOME/.gemini/config/skills/macos-toolchain/SKILL.md"
 
+mkdir -p "$HOME/.gemini/config/skills/modern-node-typescript"
+
+cat <<'EOF' >"$HOME/.gemini/config/rules/modern-node-typescript.md"
+---
+name: modern-node-typescript
+description: Modern Node.js standards (Node 22/24+, pure ESM, zero-dependency built-ins) and strict typescript-eslint best practices
+trigger: always_on
+---
+
+# Modern Node.js & Strict TypeScript Guidelines
+
+## 1. Modern Node.js Scripting (Node 22/24+ LTS)
+- **Module System**: Always use pure ESM (`.mjs` or `"type": "module"`). Never write CommonJS (`require`, `module.exports`, `__dirname`, `__filename`).
+- **Node Protocol Imports**: ALWAYS prefix Node built-in modules with `node:` (e.g., `import fs from 'node:fs/promises'`, `import path from 'node:path'`, `import { parseArgs, styleText } from 'node:util'`).
+- **Path Resolution**: Use Node 20.11+ built-in `import.meta.dirname` and `import.meta.filename` instead of `fileURLToPath` hacks.
+- **Top-Level Await**: Use top-level `await` freely in ESM scripts without wrapping inside `(async () => {})()`.
+- **Zero-Dependency CLI First (Batteries-Included)**:
+  - **CLI Arguments**: Use `node:util` `parseArgs({ options, allowPositionals })`. Avoid external packages like `commander`, `yargs`, or `minimist`.
+  - **Terminal Styling**: Use `node:util` `styleText('color', text)`. Avoid `chalk` or `colorette`.
+  - **File Globbing**: Use `node:fs/promises` `glob(pattern)`. Avoid `fast-glob` or `glob`.
+  - **Native Web APIs**: Use native global `fetch`, `FormData`, `Request`, `Response`, `crypto.randomUUID()`, `structuredClone()`, `URL`, `AbortController`. Avoid `axios`, `node-fetch`, `uuid`, `lodash`.
+  - **Embedded Database**: Use native `node:sqlite` (`DatabaseSync`) for local persistence instead of external native SQLite bindings.
+  - **Testing**: Use native `node:test` and `node:assert/strict`.
+- **Process & Execution Safety**:
+  - In `node:child_process`, prefer `execFileSync` or `spawnSync` with an array of arguments and `shell: false` to prevent shell injection.
+  - Signal failure by assigning `process.exitCode = 1` rather than abruptly calling `process.exit(1)`, allowing pending async streams/logs to flush.
+
+## 2. Strict TypeScript & typescript-eslint (v8 strict-type-checked)
+- **Promise Safety (Strict Correctness)**:
+  - **No Floating Promises**: Every Promise must be `await`ed or explicitly flagged with `void` (`void doBackgroundWork()`).
+  - **No Misused Promises**: Never pass an async callback to synchronous array iterators (e.g., `items.forEach(async (x) => ...)`). Always use `for (const x of items)` or `Promise.all()`.
+  - **Await Thenable Only**: Never `await` non-promise values.
+- **Type Safety & No Escape Hatches**:
+  - **No `any`**: Strictly forbid `any` and `as any`. Use `unknown` and narrow types using type guards (`typeof`, `instanceof`), custom type predicates, or validation schemas (`zod`).
+  - **No Suppression**: Never use `@ts-ignore`. Only use `@ts-expect-error` with a descriptive justification comment when third-party types are verifiably broken.
+  - **No Non-Null Assertions**: Avoid `!` assertions. Use optional chaining (`?.`), nullish coalescing (`??`), or explicit runtime guards.
+- **Modern Idiomatic TypeScript**:
+  - **Use `satisfies`**: Use the `satisfies` operator to validate data structures while preserving specific literal inferences, rather than type casting (`as Type`).
+  - **Consistent Type Imports**: Enforce `import type { ... }` for type-only imports to support `verbatimModuleSyntax`.
+  - **Discriminated Unions**: Model domain states using discriminated unions with a common discriminator tag (e.g., `type: 'success' | 'error'`) rather than sprawling optional properties (`a?: string; b?: number;`).
+  - **Exhaustive Pattern Matching**: Ensure all cases of a union are handled using exhaustive `switch` checks or a helper like `assertNever(x: never): never`.
+- **Safe Control Flow & Error Handling**:
+  - **Catch Clauses**: Caught errors are `unknown`. Always inspect before reading: `const message = err instanceof Error ? err.message : String(err)`.
+  - **Nullish Coalescing**: Always prefer `??` and `?.` over `||` to prevent falsy bugs with `0`, `false`, or `""`.
+  - **Template Literals**: Only interpolate primitives (`string`, `number`, `boolean`). Do not interpolate objects or `unknown` into template literals without explicit conversion.
+EOF
+
+cp "$HOME/.gemini/config/rules/modern-node-typescript.md" "$HOME/.gemini/config/skills/modern-node-typescript/SKILL.md"
+
 # Configure Antigravity Global Permission Grants (Request Review Allowlist & Disable Sandbox)
 configure_antigravity_permissions() {
   local config_file="$HOME/.gemini/config/config.json"
