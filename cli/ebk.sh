@@ -69,6 +69,9 @@ backupjson() {
 # 4. Backup extension configurations
 backup "my-ublock-backup*.txt" "ubo-config.txt"
 backupjson "my-ubol-settings.json" "ubol-config.json"
+backupjson "ubol-config.json" "ubol-config.json"
+backupjson "ubol-config-desktop.json" "ubol-config-desktop.json"
+backupjson "ubol-config-mobile.json" "ubol-config-mobile.json"
 backupjson "immersive-translate-config-with-terms-*.json" "immersive-translate-config.json"
 backupjson "tampermonkey-backup-*.txt" "tampermonkey.json"
 backupjson "tongwentang-*.json" "tongwentang.json"
