@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: Upgrade Homebrew formulas, update Node.js (Active LTS), and sync all git repositories in workspace
 # Usage: ua
@@ -9,10 +8,10 @@ set -o pipefail
 
 # 1. Check required tools
 for cmd in brew curl git jq; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 2. Upgrade Homebrew packages
@@ -72,7 +71,13 @@ PROJECTS_DIR="${0:A:h:h:h}"
 if cd "$PROJECTS_DIR"; then
   for PROJECT in *(N/); do
     if [[ -d "$PROJECT/.git" ]]; then
-      (git -C "$PROJECT" pull --all --quiet && printf "Sync %s ok\n" "$PROJECT") &
+      (
+        if git -C "$PROJECT" pull --all --quiet; then
+          printf "Sync %s ok\n" "$PROJECT"
+        else
+          printf "Sync %s failed\n" "$PROJECT" >&2
+        fi
+      ) &
     fi
   done
   wait

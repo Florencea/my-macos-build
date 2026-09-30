@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: Sync and update Node.js version in package.json engines.node for all local workspace projects
 # Usage: unodev
@@ -9,10 +8,10 @@ set -o pipefail
 
 # 1. Check required tools
 for cmd in git node jq; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 2. Extract active Node.js version
@@ -24,12 +23,9 @@ NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
 PROJECTS_DIR="${0:A:h:h:h}"
 
 if cd "$PROJECTS_DIR"; then
-  for PROJECT in *(/N); do
-    # Skip hidden folders
-    [[ "$PROJECT" == .* ]] && continue
-
+  for PROJECT in *(N/); do
     if [[ -d "$PROJECT/.git" && -f "$PROJECT/package.json" ]]; then
-      OLD_NODE_VERSION="$(jq -r '.engines.node // empty' "$PROJECT/package.json" 2>/dev/null || true)"
+      OLD_NODE_VERSION="$(jq -r '.engines.node // empty' "$PROJECT/package.json" 2>/dev/null || echo "")"
 
       if [[ "$OLD_NODE_VERSION" != "$NODE_VERSION" ]]; then
         (
@@ -39,7 +35,7 @@ if cd "$PROJECTS_DIR"; then
           if [[ -n "$(git status --short package.json)" ]]; then
             git add package.json
             if git commit -q -m "chore(node): Update engines.node $OLD_NODE_VERSION -> $NODE_VERSION"; then
-              if git push -q &>/dev/null; then
+              if git push -q >/dev/null 2>&1; then
                 printf "engines.node %s: %s -> %s ok\n" "$PROJECT" "$OLD_NODE_VERSION" "$NODE_VERSION"
               else
                 printf "engines.node %s: failed to push\n" "$PROJECT" >&2

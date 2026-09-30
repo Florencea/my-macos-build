@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory
 # Usage: rea [input_dir]
@@ -18,10 +17,10 @@ fi
 
 # 2. Check required tools
 for cmd in ffmpeg; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 3. Validate input directory

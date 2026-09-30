@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: Multi-dig: Check A records (via IPv4) and AAAA records (via IPv6) at once.
 # Usage: mdig [domain]
@@ -18,10 +17,10 @@ fi
 
 # 2. Check required tools
 for cmd in dig; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 3. Query DNS servers in parallel

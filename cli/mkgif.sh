@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: High-quality Gif Maker via gifski (Supports -w/--width, --fps, -q/--quality, -l/--lossy, local files and YouTube)
 # Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]
@@ -16,38 +15,38 @@ LOSSY=false
 local -a TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-  --fps)
-    if [[ $# -lt 2 ]]; then
-      echo "Error: --fps requires a value" >&2
-      exit 1
-    fi
-    FPS="$2"
-    shift 2
-    ;;
-  -w | --width)
-    if [[ $# -lt 2 ]]; then
-      echo "Error: -w/--width requires a value" >&2
-      exit 1
-    fi
-    WIDTH="$2"
-    shift 2
-    ;;
-  -q | --quality)
-    if [[ $# -lt 2 ]]; then
-      echo "Error: -q/--quality requires a value" >&2
-      exit 1
-    fi
-    QUALITY="$2"
-    shift 2
-    ;;
-  -l | --lossy)
-    LOSSY=true
-    shift 1
-    ;;
-  *)
-    TEMP_ARGS+=("$1")
-    shift 1
-    ;;
+    --fps)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: --fps requires a value" >&2
+        exit 1
+      fi
+      FPS="$2"
+      shift 2
+      ;;
+    -w | --width)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: -w/--width requires a value" >&2
+        exit 1
+      fi
+      WIDTH="$2"
+      shift 2
+      ;;
+    -q | --quality)
+      if [[ $# -lt 2 ]]; then
+        echo "Error: -q/--quality requires a value" >&2
+        exit 1
+      fi
+      QUALITY="$2"
+      shift 2
+      ;;
+    -l | --lossy)
+      LOSSY=true
+      shift 1
+      ;;
+    *)
+      TEMP_ARGS+=("$1")
+      shift 1
+      ;;
   esac
 done
 
@@ -68,20 +67,20 @@ fi
 
 # 3. Check required tools
 for cmd in ffmpeg gifski; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 IS_YT=false
 INPUT_SOURCE="$INPUT_FILE"
 
 if [[ ! -f "$INPUT_FILE" ]]; then
-  command -v yt-dlp &>/dev/null || {
+  if ! (($+commands[yt - dlp])); then
     echo "Error: File $INPUT_FILE does not exist and yt-dlp is not installed" >&2
     exit 1
-  }
+  fi
   IS_YT=true
 fi
 
@@ -101,10 +100,7 @@ if [[ "$IS_YT" == true ]]; then
   fi
 
   YT_FORMAT="bestvideo[height<=${YT_HEIGHT}]/best[height<=${YT_HEIGHT}]/bestvideo/best"
-  STREAM_URL=$(yt-dlp --cookies-from-browser "$BROWSER" -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
-  if [[ -z "$STREAM_URL" ]]; then
-    STREAM_URL=$(yt-dlp -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || true)
-  fi
+  STREAM_URL="$(yt-dlp --cookies-from-browser "$BROWSER" -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || yt-dlp -g -f "$YT_FORMAT" "$INPUT_FILE" 2>/dev/null || echo "")"
   if [[ -z "$STREAM_URL" ]]; then
     echo "Error: Failed to get stream URL from yt-dlp for input: $INPUT_FILE" >&2
     exit 1
@@ -132,6 +128,6 @@ ffmpeg -y -hide_banner \
     -o "$OUTPUT_FILE" -
 
 # 6. Display output result
-local -a ls_out
-ls_out=(${=${(f)"$(ls -lh "$OUTPUT_FILE")"}})
-printf "%s %s\n" "$OUTPUT_FILE" "${ls_out[5]}"
+local file_size
+file_size="$(ls -lh "$OUTPUT_FILE" | awk '{print $5}')"
+printf "%s %s\n" "$OUTPUT_FILE" "$file_size"

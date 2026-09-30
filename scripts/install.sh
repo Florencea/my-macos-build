@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # 0. Initialize sudo timestamp database (prevents fresh-install race condition)
 sudo -v
@@ -53,7 +52,7 @@ trust_internal_ca "BHPD Internal Root CA" "$BHPD_ROOT_CA_B64"
 trust_internal_ca "BHGS Internal Root CA" "$BHGS_ROOT_CA_B64"
 
 # 3. Homebrew Setup
-if [ -x "/opt/homebrew/bin/brew" ]; then
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -205,6 +204,7 @@ fi
 
 if [[ -n "$CLI_DIR" ]]; then
   mkdir -p "$HOME/.local/bin"
+  chmod +x "$CLI_DIR"/*.sh(N)
   for script in "$CLI_DIR"/*.sh(N); do
     cmd_name="${script:t:r}"
     ln -sf "$script" "$HOME/.local/bin/$cmd_name"
@@ -376,11 +376,20 @@ done
 # CLI tools
 install_formulas \
   actionlint \
+  ast-grep \
+  bat \
+  duckdb \
+  fd \
   ffmpeg \
   gifski \
+  hyperfine \
   jq \
   mtr \
+  ripgrep \
+  sd \
   shfmt \
+  tree \
+  yq \
   yt-dlp \
   zsh-autosuggestions \
   zsh-syntax-highlighting

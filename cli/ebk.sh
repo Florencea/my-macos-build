@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: Backup and sync browser extension configuration files
 # Usage: ebk
@@ -9,10 +8,10 @@ set -o pipefail
 
 # 1. Check required tools
 for cmd in git jq; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 2. Resolve configuration directory
@@ -24,7 +23,7 @@ commit_file() {
   (
     cd "$CONFIG_HOME"
     git add "$file"
-    if [[ -n "$(git status --porcelain "$file")" ]]; then
+    if [[ -n "$(git status --porcelain -- "$file")" ]]; then
       git commit -q -m "feat: Update $file by ebk"
       git push -q
       printf "Backup %s ok\n" "$file"
@@ -45,7 +44,7 @@ backup() {
   local file_pattern="${1:-}"
   local file_name="${2:-}"
   local -a matches
-  matches=($HOME/Downloads/$~file_pattern(N))
+  matches=($HOME/Downloads/$~file_pattern(Nom))
   local file_backup="${matches[1]:-}"
   if [[ -n "$file_backup" && -f "$file_backup" ]]; then
     mv "$file_backup" "$CONFIG_HOME/$file_name"
@@ -57,10 +56,10 @@ backupjson() {
   local file_pattern="${1:-}"
   local file_name="${2:-}"
   local -a matches
-  matches=($HOME/Downloads/$~file_pattern(N))
+  matches=($HOME/Downloads/$~file_pattern(Nom))
   local file_backup="${matches[1]:-}"
   if [[ -n "$file_backup" && -f "$file_backup" ]]; then
-    jq . "$file_backup" >"$CONFIG_HOME/$file_name"
+    jq . "$file_backup" >"$CONFIG_HOME/$file_name.tmp" && mv "$CONFIG_HOME/$file_name.tmp" "$CONFIG_HOME/$file_name"
     rm -f "$file_backup"
     commit_file "$file_name"
   fi

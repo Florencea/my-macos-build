@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: Clone all GitHub Repositories
 # Usage: clall [GITHUB_ACCESS_TOKEN]
@@ -18,15 +17,15 @@ fi
 
 # 2. Check required tools
 for cmd in curl jq git; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 3. Fetch user repositories
 local -a REPOS
-REPOS=("${(@f)$(curl -s \
+REPOS=("${(@f)$(curl -fsSL \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -51,6 +50,8 @@ for REPO in "${REPOS[@]}"; do
       done_files=("$TMPDIR"/*(N))
       local -i FINISHED=$#done_files
       printf "Clone [%s/%s] %s ok\n" "$FINISHED" "$REPO_LIST_LEN" "$REPO_NAME"
+    else
+      printf "Clone %s failed\n" "$REPO_NAME" >&2
     fi
   ) &
 done

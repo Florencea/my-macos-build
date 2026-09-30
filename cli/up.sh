@@ -1,7 +1,6 @@
 #!/bin/zsh
-set -o errexit
-set -o nounset
-set -o pipefail
+emulate -L zsh
+set -euo pipefail
 
 # Description: Check and update Node.js package dependencies with clean spinner feedback
 # Usage: up
@@ -9,10 +8,10 @@ set -o pipefail
 
 # 1. Check required tools
 for cmd in git npm npx jq; do
-  command -v "$cmd" &>/dev/null || {
+  if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
-  }
+  fi
 done
 
 # 2. Check project files
@@ -82,7 +81,7 @@ count=0
 commit_body=""
 single_pkg_summary=""
 
-RAW_TARGETS="$(echo "$NCU_JSON" | jq -r 'to_entries | .[] | "\(.key)\t\(.value)"')"
+RAW_TARGETS="$(jq -r 'to_entries | .[] | "\(.key)\t\(.value)"' <<<"$NCU_JSON")"
 
 while IFS=$'\t' read -r pkg new_ver; do
   [[ -z "$pkg" ]] && continue
@@ -91,7 +90,7 @@ while IFS=$'\t' read -r pkg new_ver; do
   printf "  %s  %s  ->  %s\n" "$pkg" "$old_ver" "$new_ver"
   commit_body+=$'\n'"- ${pkg}: ${old_ver} -> ${new_ver}"
   single_pkg_summary="${pkg} ${old_ver} -> ${new_ver}"
-  count=$((count + 1))
+  ((count++))
 done <<<"$RAW_TARGETS"
 
 # 8. Create sandbox branch and register rollback trap
@@ -142,8 +141,8 @@ run_first_matching_script() {
 }
 
 # Auto-format and format-check
-run_first_matching_script "format" "format" "format" || true
-run_first_matching_script "format-check" "formatting rules" "format:check" || true
+run_first_matching_script "format" "format" "agent:format" "format" || true
+run_first_matching_script "format-check" "formatting rules" "agent:lint:eslint" "format:check" || true
 
 # Typecheck
 if ! run_first_matching_script "typecheck" "types" "agent:typecheck" "typecheck"; then
@@ -154,13 +153,13 @@ if ! run_first_matching_script "typecheck" "types" "agent:typecheck" "typecheck"
 fi
 
 # Lint
-run_first_matching_script "lint" "linter" "agent:lint" "lint" || true
+run_first_matching_script "lint" "linter" "agent:lint" "agent:lint:ci" "lint" || true
 
 # Dead code check
 run_first_matching_script "deadcode" "dead code" "check:deadcode" "knip" || true
 
 # Lightweight unit tests
-run_first_matching_script "unit-test" "unit tests" "agent:test:unit" "test:unit" || true
+run_first_matching_script "unit-test" "unit tests" "agent:verify:unit" "agent:test:unit" "test:unit" || true
 
 # 12. Build commit message
 if [[ "$count" -eq 1 ]]; then
