@@ -394,5 +394,91 @@ install_formulas \
   zsh-autosuggestions \
   zsh-syntax-highlighting
 
-# 10. Flush preferences cache before reboot
+# 10. Antigravity Global Permission Grants
+configure_antigravity_permissions() {
+  local cfg_dir="$HOME/.gemini/config"
+  local cfg_file="$cfg_dir/config.json"
+  mkdir -p "$cfg_dir"
+
+  local -a default_grants=(
+    "command(actionlint)"
+    "command(ast-grep)"
+    "command(awk)"
+    "command(basename)"
+    "command(bat)"
+    "command(cat)"
+    "command(cut)"
+    "command(date)"
+    "command(df)"
+    "command(diff)"
+    "command(dirname)"
+    "command(du)"
+    "command(duckdb)"
+    "command(echo)"
+    "command(false)"
+    "command(fd)"
+    "command(file)"
+    "command(find)"
+    "command(git add)"
+    "command(git branch)"
+    "command(git check-ignore)"
+    "command(git diff)"
+    "command(git grep)"
+    "command(git log)"
+    "command(git ls-files)"
+    "command(git rev-parse)"
+    "command(git show)"
+    "command(git status)"
+    "command(grep)"
+    "command(head)"
+    "command(hyperfine)"
+    "command(id)"
+    "command(jq)"
+    "command(ls)"
+    "command(printf)"
+    "command(pwd)"
+    "command(readlink)"
+    "command(realpath)"
+    "command(rg)"
+    "command(ripgrep)"
+    "command(sd)"
+    "command(sg)"
+    "command(shfmt)"
+    "command(sort)"
+    "command(stat)"
+    "command(sw_vers)"
+    "command(tail)"
+    "command(test)"
+    "command(tr)"
+    "command(tree)"
+    "command(true)"
+    "command(uname)"
+    "command(uniq)"
+    "command(wc)"
+    "command(which)"
+    "command(whoami)"
+    "command(yq)"
+    "command(regex:npm run agent:.*)"
+  )
+
+  local grants_json
+  grants_json="$(printf '%s\n' "${default_grants[@]}" | jq -R . | jq -s .)"
+
+  if [[ ! -s "$cfg_file" ]]; then
+    jq -n --argjson grants "$grants_json" \
+      '{userSettings: {globalPermissionGrants: {allow: $grants}}}' >"$cfg_file"
+  else
+    local tmp_cfg
+    tmp_cfg="$(mktemp -t antigravity_cfg.XXXXXX)"
+    jq --argjson grants "$grants_json" \
+      '.userSettings.globalPermissionGrants.allow = (((.userSettings.globalPermissionGrants.allow // []) + $grants) | unique)' \
+      "$cfg_file" >"$tmp_cfg"
+    mv -f "$tmp_cfg" "$cfg_file"
+  fi
+  chmod 600 "$cfg_file"
+}
+
+configure_antigravity_permissions
+
+# 11. Flush preferences cache before reboot
 killall cfprefsd 2>/dev/null || true

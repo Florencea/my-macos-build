@@ -14,7 +14,7 @@ trigger: always_on
 - File Inspection / Slicing: Prefer `bat --paging=never -r <start>:<end> <file>` for non-interactive line-ranged previews.
 - Structured Data: Use `jq` for JSON and `yq` for YAML (both query and in-place `-i` edits).
 - Tabular / Big Data: Use `duckdb -c "<SQL>"` for direct SQL queries over CSV, Parquet, or NDJSON.
-- Text Replacement: ALWAYS prefer `sd 'pattern' 'replacement' <file>` for in-place replacements.
+- Text Replacement: STRICTLY FORBIDDEN to use `sed`. ALWAYS use `sd 'pattern' 'replacement' <file>` for in-place replacements.
 - AST / Structural Code Search: Prefer `ast-grep` (`sg`) for semantic code pattern queries or structural rewrites over regex.
 - Shell Script Formatting: ALWAYS format `.sh` or `.zsh` scripts using `shfmt -i 2 -ci -w <file>`.
 - CI Workflow Verification: ALWAYS run `actionlint` when editing `.github/workflows/*.yml`.
@@ -43,6 +43,7 @@ trigger: always_on
 
 - NEVER use `eval` or dynamic variable execution (e.g., `cmd="..."; eval $cmd`). Always execute commands directly.
 - NEVER use dynamic subshell wrappers or ternary shell hacks just to view files (e.g., `view_file_or_head=...`).
+- NEVER use `sed` under any circumstance (`sed` is excluded from permission allowlists and strictly banned). For in-place replacement, ALWAYS use `sd`. For previewing line ranges, use `bat --paging=never -r <start>:<end> <file>` or `awk`.
 - NEVER access parent or sibling directory paths (e.g., `../<project>`) via shell commands without explicit user instruction.
 - NEVER suppress command failures using `|| true` or `2>/dev/null` unless explicitly requested. Let errors surface cleanly.
 
@@ -72,11 +73,11 @@ trigger: always_on
 
 ## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
 
-- `head` / `tail`: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `sed -n '1,3p' <file>` or `bat`.
+- `head` / `tail`: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `bat --paging=never -r 1:3 <file>` or `awk 'NR>=1&&NR<=3' <file>`.
 - `grep`: BSD grep DOES NOT support Perl-compatible regex (`-P`). ALWAYS use `rg` for advanced pattern matching.
 - `xargs`: BSD xargs DOES NOT support `-r` (`--no-run-if-empty`). Use `fd -X` or standard POSIX `while read` loops instead.
 - `date`: BSD date DOES NOT support GNU `date -d`. Use Node.js (`node -e "..."`) for relative date arithmetic.
-- `sed`: Always prefer `sd`. If `sed` must be used, use BSD syntax: `sed -i '' 's/.../.../' <file>`.
+- `sed`: STRICTLY FORBIDDEN. `sed` is prohibited in agent workflows and excluded from permission allowlists. ALWAYS use `sd` for in-place text replacement, and `bat` or `awk` for line extraction.
 - `awk`: Standard POSIX awk only; do NOT use GNU extensions like 3-argument `match()`.
 - `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
 - Network: Check open ports using `lsof -i :<PORT>` (never Linux `ss`).
