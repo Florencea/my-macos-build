@@ -1,6 +1,6 @@
 ---
 name: macos-toolchain
-description: Pre-installed high-performance CLI tools, pre-approved agent scripts, macOS BSD constraints, and shell execution rules
+description: Pre-installed high-performance CLI tools, pre-approved agent scripts, macOS BSD constraints, shell execution rules, and idiomatic Zsh standards
 trigger: always_on
 ---
 
@@ -45,6 +45,30 @@ trigger: always_on
 - NEVER use dynamic subshell wrappers or ternary shell hacks just to view files (e.g., `view_file_or_head=...`).
 - NEVER access parent or sibling directory paths (e.g., `../<project>`) via shell commands without explicit user instruction.
 - NEVER suppress command failures using `|| true` or `2>/dev/null` unless explicitly requested. Let errors surface cleanly.
+
+## Idiomatic Zsh Standards & Scripting Guidelines
+
+- Strict Header: Always begin Zsh scripts with:
+  ```zsh
+  #!/bin/zsh
+  set -euo pipefail
+  emulate -L zsh
+  ```
+- Indexing: Remember Zsh arrays are **1-based** (`$arr[1]` is the first item).
+- Word Splitting: Zsh does NOT split unquoted variables on whitespace by default. Do not rely on unquoted word splitting; use parameter expansion flags like `"${(@s/:/)PATH}"` when splitting is needed.
+- Path Resolution: Prefer native Zsh modifiers over external forks (`dirname`, `basename`, `realpath`):
+  - Absolute path: `${file:A}`
+  - Directory: `${file:h}`
+  - Filename only: `${file:t}`
+  - Extension: `${file:e}`
+  - Basename without extension: `${file:r:t}`
+- Glob Qualifiers: Prefer native qualifiers over `find`/`sort` pipes:
+  - Regular files only: `*(.)`
+  - Directories only: `*(/)`
+  - Nullglob (no error if empty): `*(N)`
+  - Sort by modification time (newest first): `*(om)`
+- Floating-Point Math: Use native arithmetic `(( result = 1.5 * 2.0 ))` instead of calling `bc` or `awk`.
+- Temporary Files: Prefer process substitution `=(cmd)` when a seekable temporary file is required (Zsh automatically handles cleanup).
 
 ## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
 
