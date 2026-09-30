@@ -8,15 +8,12 @@ sudo -v
 
 # 1. Touch ID for sudo via system template
 if [[ ! -f /etc/pam.d/sudo_local ]]; then
-  echo "==> Configuring Touch ID for sudo via sudo_local..."
   if [[ -f /etc/pam.d/sudo_local.template ]]; then
     sudo sh -c 'sed -e "s/^#auth/auth/" /etc/pam.d/sudo_local.template > /etc/pam.d/sudo_local'
   else
-    sudo sh -c 'echo "# sudo_local: local authentication customization for sudo\nauth       sufficient     pam_tid.so" > /etc/pam.d/sudo_local'
+    sudo sh -c 'printf "# sudo_local: local authentication customization for sudo\nauth       sufficient     pam_tid.so\n" > /etc/pam.d/sudo_local'
   fi
   sudo chmod 444 /etc/pam.d/sudo_local
-else
-  echo "sudo_local already exists, skipping Touch ID configuration."
 fi
 
 # 2. Internal Root CAs (Private PKI for *.internal)
@@ -35,11 +32,9 @@ trust_internal_ca() {
     in_cert && /Trust Setting/ { trusted=1 }
     END { exit !trusted }
   ' <<<"$trust_dump"; then
-    echo "$ca_name is already trusted in admin domain, skipping"
     return 0
   fi
 
-  echo "==> Installing and trusting $ca_name..."
   local cert_tmp
   cert_tmp="$(mktemp -t ca_cert.XXXXXX)"
 
@@ -49,8 +44,7 @@ trust_internal_ca() {
     -r trustRoot \
     -p ssl \
     -k /Library/Keychains/System.keychain \
-    "$cert_tmp"
-  echo "==> $ca_name installed and trusted successfully."
+    "$cert_tmp" >/dev/null 2>&1 || true
 
   rm -f "$cert_tmp"
 }
@@ -63,11 +57,9 @@ if [ -x "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if ! command -v brew &>/dev/null; then
+if ! command -v brew >/dev/null 2>&1; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  echo "Homebrew exists, skipping Homebrew installation."
 fi
 
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -77,7 +69,6 @@ export HOMEBREW_AUTO_UPDATE_QUIET=1
 export HOMEBREW_CURL_RETRIES=3
 
 # 4. System Performance & Native Defaults
-echo "==> Configuring system defaults..."
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g NSWindowResizeTime -float 0.001
 defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false
@@ -100,11 +91,9 @@ defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 # 5. Disable Spotlight, Siri, and Background Intelligence safely & completely
 disable_spotlight_and_siri() {
-  echo "==> Safely and completely disabling Spotlight indexing and Siri pipelines..."
-
   # Turn off indexing globally
-  sudo mdutil -a -i off >/dev/null
-  sudo mdutil -a -E 2>/dev/null || true
+  sudo mdutil -a -i off >/dev/null 2>&1 || true
+  sudo mdutil -a -E >/dev/null 2>&1 || true
   sudo defaults write /Library/Preferences/com.apple.SpotlightServer.plist ExternalVolumesIndexed -bool false
 
   # Place native markers to avoid indexing loops
@@ -132,8 +121,6 @@ disable_spotlight_and_siri() {
   if ! defaults read com.apple.suggestions AppCanShowSiriSuggestionsBlacklist 2>/dev/null | grep -q 'com.apple.Terminal'; then
     defaults write com.apple.suggestions AppCanShowSiriSuggestionsBlacklist -array-add "com.apple.Terminal"
   fi
-
-  echo "==> Spotlight and Siri safely deactivated."
 }
 
 disable_spotlight_and_siri
@@ -275,8 +262,6 @@ install_casks \
   visual-studio-code \
   cloudflare-warp
 
-echo "==> Configuring application defaults..."
-
 # iStat Menus 6 License
 defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
 
@@ -402,10 +387,3 @@ install_formulas \
 
 # 10. Flush preferences cache before reboot
 killall cfprefsd 2>/dev/null || true
-
-echo ""
-echo "========================================================================"
-echo "==> Installation complete."
-echo "==> Please REBOOT your Mac manually to finalize macOS 27 FontRegistry,"
-echo "    kernel extensions, and launchd process deactivations."
-echo "========================================================================"
