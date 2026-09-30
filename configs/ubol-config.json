@@ -16,103 +16,6 @@
       ]
     ],
     [
-      "hn.algolia.com",
-      [
-        ".PoweredBy"
-      ]
-    ],
-    [
-      "m.mobile01.com",
-      [
-        "#_popIniFrame",
-        "#share-bar",
-        ".app-open-btn",
-        "div:has(>[aria-label=\"cookieconsent\"])"
-      ]
-    ],
-    [
-      "macrumors.com",
-      [
-        "#featured_slider",
-        "div:has(>#featured_slider2)",
-        "div[class^=\"social--\"]"
-      ]
-    ],
-    [
-      "nebula.zyxel.com",
-      [
-        "nui-banner:has(.license-banner)"
-      ]
-    ],
-    [
-      "pts.org.tw",
-      [
-        "#backTop",
-        "#header",
-        ".article-info",
-        ".article-title+div:has(>div>span>time)",
-        ".break-news-container>.news-list>li>div>.tag-list",
-        ".container>div>aside",
-        ".cookie-flex",
-        ".editor-recommend-area",
-        ".embed-responsive:has(iframe)",
-        ".main-footer",
-        ".program-mask",
-        ".raw-html-embed",
-        ".relative-news-list",
-        ".share-list",
-        ".site-banner",
-        ".tag-list",
-        "body>.article-main-info>.container>.row>.col-lg-8>.tag-list",
-        "body>.container",
-        "body>.container:has(.fb-comments)",
-        "body>article>.container>.row>.col-lg-2",
-        "body>article>.container>.row>.col-lg-8>:not(.post-article)",
-        "div[x-data=\"headerBar\"]",
-        "div[x-data=privacyAlert]",
-        "nav.main-nav",
-        "nav[aria-label=\"breadcrumb\"]"
-      ]
-    ],
-    [
-      "share.dmhy.org",
-      [
-        "#recent-commnet",
-        "#tabs-1>p:nth-child(1)",
-        "#tabs-1>p:nth-child(7)",
-        "#tabs-1>p:nth-child(8)",
-        "#tabs-1>p:nth-child(9)",
-        ".announce",
-        ".resource-info>ul>li:nth-child(4)",
-        ".resource-info>ul>li:nth-child(5)",
-        ".resource-info>ul>li:nth-child(8)",
-        ".user-sidebar>.box:last-child",
-        "a.download-pp",
-        "div.clear:has(a[href=\"/topics/add\"])"
-      ]
-    ],
-    [
-      "techbang.com",
-      [
-        "#sidebar",
-        "#topShare",
-        ".article>:not(.content):not(.header):not(.article-wrapper)",
-        ".float-top",
-        ".headline",
-        ".nav-header-holder>:not(.site-logo)",
-        ".newsletter2in1",
-        "div:has(>.google-dfp):not(.main-content)",
-        "div[class^=ad]",
-        "div[id*=crazy_ad]"
-      ]
-    ],
-    [
-      "vite.dev",
-      [
-        ".VPDocAside>:not(.VPDocAsideOutline)"
-      ]
-    ],
-    [
       "www.elle.com",
       [
         "#gpt-leaderboard-ad",
@@ -125,12 +28,20 @@
     [
       "www.ithome.com.tw",
       [
-        "#page-header>:not(.page-header)",
-        ".pagination>ul>li:not(.prev):not(.next)",
+        "body>:not(.main-container)",
         "[id*=\"block-block-\"]",
         "[id*=\"block-views-hot-news-block-\"]",
+        "#page-header>:not(.page-header)",
         "aside[role=\"complementary\"]",
-        "body>:not(.main-container)"
+        ".pagination>ul>li:not(.prev):not(.next)"
+      ]
+    ],
+    [
+      "macrumors.com",
+      [
+        "#featured_slider",
+        "div:has(>#featured_slider2)",
+        "div[class^=\"social--\"]"
       ]
     ],
     [
@@ -143,6 +54,21 @@
       ]
     ],
     [
+      "m.mobile01.com",
+      [
+        "#_popIniFrame",
+        "#share-bar",
+        ".app-open-btn",
+        "div:has(>[aria-label=\"cookieconsent\"])"
+      ]
+    ],
+    [
+      "nebula.zyxel.com",
+      [
+        "nui-banner:has(.license-banner)"
+      ]
+    ],
+    [
       "www.newsmarket.com.tw",
       [
         "#mob-bot-share",
@@ -150,9 +76,83 @@
       ]
     ],
     [
+      "share.dmhy.org",
+      [
+        ".announce",
+        "a.download-pp",
+        "div.clear:has(a[href=\"/topics/add\"])",
+        ".resource-info>ul>li:nth-child(4)",
+        ".resource-info>ul>li:nth-child(5)",
+        ".resource-info>ul>li:nth-child(8)",
+        ".user-sidebar>.box:last-child",
+        "#tabs-1>p:nth-child(1)",
+        "#tabs-1>p:nth-child(7)",
+        "#tabs-1>p:nth-child(8)",
+        "#tabs-1>p:nth-child(9)",
+        "#recent-commnet"
+      ]
+    ],
+    [
       "www.sogi.com.tw",
       [
         "#cookie-bar"
+      ]
+    ],
+    [
+      "pts.org.tw",
+      [
+        "body>.container",
+        ".embed-responsive:has(iframe)",
+        ".share-list",
+        ".break-news-container>.news-list>li>div>.tag-list",
+        ".container>div>aside",
+        "#backTop",
+        ".editor-recommend-area",
+        ".relative-news-list",
+        "body>.container:has(.fb-comments)",
+        "body>article>.container>.row>.col-lg-2",
+        "body>article>.container>.row>.col-lg-8>:not(.post-article)",
+        "body>.article-main-info>.container>.row>.col-lg-8>.tag-list",
+        ".article-info",
+        "nav[aria-label=\"breadcrumb\"]",
+        ".main-footer",
+        ".program-mask",
+        "#header",
+        "div[x-data=\"headerBar\"]",
+        "nav.main-nav",
+        ".raw-html-embed",
+        ".tag-list",
+        ".cookie-flex",
+        ".article-title+div:has(>div>span>time)",
+        "div[x-data=privacyAlert]",
+        ".site-banner"
+      ]
+    ],
+    [
+      "techbang.com",
+      [
+        ".nav-header-holder>:not(.site-logo)",
+        ".float-top",
+        "div[class^=ad]",
+        "div[id*=crazy_ad]",
+        "#sidebar",
+        ".headline",
+        ".article>:not(.content):not(.header):not(.article-wrapper)",
+        "#topShare",
+        "div:has(>.google-dfp):not(.main-content)",
+        ".newsletter2in1"
+      ]
+    ],
+    [
+      "vite.dev",
+      [
+        ".VPDocAside>:not(.VPDocAsideOutline)"
+      ]
+    ],
+    [
+      "hn.algolia.com",
+      [
+        ".PoweredBy"
       ]
     ]
   ],
