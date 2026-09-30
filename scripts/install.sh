@@ -194,6 +194,20 @@ else
   done
 fi
 
+local -a skills=()
+if [[ -d "$REPO_DIR/configs/skills" ]]; then
+  for skill_file in "$REPO_DIR/configs/skills"/*.md(N); do
+    skills+=("${skill_file:t:r}")
+  done
+else
+  skills=(macos-toolchain modern-nodejs modern-react-tailwind modern-typescript)
+fi
+
+for skill in "${skills[@]}"; do
+  mkdir -p "$HOME/.gemini/config/skills/$skill"
+  fetch_file "configs/skills/$skill.md" "$HOME/.gemini/config/skills/$skill/SKILL.md"
+done
+
 # 8. Setup CLI Symlinks
 CLI_DIR=""
 if [[ -n "${REPO_DIR:-}" && -d "$REPO_DIR/cli" ]]; then
