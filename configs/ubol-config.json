@@ -1,5 +1,5 @@
 {
-  "version": "2026.926.2202",
+  "version": "2026.920.1710",
   "filteringModes": {
     "none": [],
     "basic": [],
@@ -12,7 +12,9 @@
     [
       "books.com.tw",
       [
-        ".header_pop"
+        ".header_pop",
+        ".ad_pop",
+        "#app_banner"
       ]
     ],
     [
@@ -119,7 +121,7 @@
         ".program-mask",
         "#header",
         "div[x-data=\"headerBar\"]",
-        "nav.main-nav",
+        ".v2-chrome",
         ".raw-html-embed",
         ".tag-list",
         ".cookie-flex",
@@ -170,6 +172,8 @@
     "*##*:style(font-variant-ligatures:common-ligatures !important)",
     "*##*:style(-webkit-font-smoothing:auto !important)",
     "books.com.tw##body:style(font-family:var(--stylus-font-sans-serif) !important)",
+    "books.com.tw##.page-content.with-app-banner #content:style(padding-top:70px !important)",
+    "books.com.tw##.page-content.with-app-banner #header_v2:style(top:0 !important)",
     "coolpc.com.tw##*:style(font-family:var(--stylus-font-sans-serif) !important)",
     "dmhy.org##body:style(font-family:var(--stylus-font-sans-serif) !important)",
     "exhentai.org##.gl4t:hover:style(max-height:none !important)",
@@ -877,6 +881,7 @@
     "manhuaren.com##.view-fix-top-bar>a:matches-media((pointer:coarse)):style(display:none !important)",
     "manhuaren.com##.noDataFont:matches-media((pointer:coarse)):style(display:none !important)",
     "manhuaren.com##.header-card:matches-media((pointer:coarse)):style(display:none !important)",
+    "manhuaren.com##a:has(>.normal-top-back):matches-media((pointer:coarse)):style(display:none !important)",
     "manhuaren.com###cp_img:matches-media((pointer:coarse)):style(height:calc(100vh - 60px) !important)",
     "manhuaren.com###cp_img:matches-media((pointer:coarse)):style(padding-top:60px !important)",
     "manhuaren.com###cp_img:matches-media((pointer:coarse)):style(overflow-y:auto !important)",
@@ -961,11 +966,9 @@
     "manhuaren.com##img.normal-top-logo:matches-media((pointer:coarse) and (prefers-color-scheme:dark)):style(filter:invert(1) !important)",
     "manhuaren.com##.manga-list-title-more:matches-media((pointer:coarse) and (prefers-color-scheme:dark)):style(filter:invert(1) !important)",
     "manhuaren.com##.view-fix-bottom-bar-logo:matches-media((pointer:coarse) and (prefers-color-scheme:dark)):style(filter:invert(0) grayscale(1) !important)",
-    "manhuaren.com##.normal-top-back:matches-media((pointer:coarse) and (prefers-color-scheme:dark)):style(filter:invert(1) grayscale(1) !important)",
     "manhuaren.com##img.normal-top-logo:matches-media((pointer:coarse) and (prefers-color-scheme:light)):style(filter:invert(0) !important)",
     "manhuaren.com##.manga-list-title-more:matches-media((pointer:coarse) and (prefers-color-scheme:light)):style(filter:invert(0) !important)",
     "manhuaren.com##.view-fix-bottom-bar-logo:matches-media((pointer:coarse) and (prefers-color-scheme:light)):style(filter:invert(1) grayscale(1) !important)",
-    "manhuaren.com##.normal-top-back:matches-media((pointer:coarse) and (prefers-color-scheme:light)):style(filter:invert(0) grayscale(1) !important)",
     "manhuaren.com##.index-menu-item-title:matches-media((pointer:coarse)):style(color:light-dark(var(--stylus-text-light),var(--stylus-text-dark)) !important)",
     "manhuaren.com##.manga-list-title:matches-media((pointer:coarse)):style(color:light-dark(var(--stylus-text-light),var(--stylus-text-dark)) !important)",
     "manhuaren.com##.manga-list-2-title:matches-media((pointer:coarse)):style(color:light-dark(var(--stylus-text-light),var(--stylus-text-dark)) !important)",
