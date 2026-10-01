@@ -1,6 +1,7 @@
 #!/bin/zsh
 emulate -L zsh
 set -euo pipefail
+setopt POSIX_TRAPS
 
 # Description: Check and update Node.js package dependencies with clean spinner feedback
 # Usage: up
@@ -51,9 +52,11 @@ run_with_spinner() {
   local pid
   local -a spin=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
   local -i i=1
+  local tmp_log
+  tmp_log="$(mktemp -t up-spinner.XXXXXX)"
 
-  # Run target command in background with all noisy output muted
-  "$@" &>/dev/null &
+  # Run target command in background with output captured to temp log
+  "$@" >"$tmp_log" 2>&1 &
   pid=$!
 
   # Show dynamic spinner while command is running
@@ -66,7 +69,12 @@ run_with_spinner() {
   # Clear line immediately upon completion
   printf "\r\033[K"
 
-  wait "$pid"
+  if ! wait "$pid"; then
+    cat "$tmp_log" >&2
+    rm -f "$tmp_log"
+    return 1
+  fi
+  rm -f "$tmp_log"
 }
 
 # 6. Check minor updates
@@ -83,14 +91,14 @@ single_pkg_summary=""
 
 RAW_TARGETS="$(jq -r 'to_entries | .[] | "\(.key)\t\(.value)"' <<<"$NCU_JSON")"
 
-while IFS=$'\t' read -r pkg new_ver; do
+while IFS=$'\t' read -r pkg new_ver || [[ -n "$pkg" ]]; do
   [[ -z "$pkg" ]] && continue
   old_ver="$(jq -r ".dependencies[\"$pkg\"] // .devDependencies[\"$pkg\"] // .peerDependencies[\"$pkg\"] // .optionalDependencies[\"$pkg\"] // \"?\"" package.json)"
 
   printf "  %s  %s  ->  %s\n" "$pkg" "$old_ver" "$new_ver"
   commit_body+=$'\n'"- ${pkg}: ${old_ver} -> ${new_ver}"
   single_pkg_summary="${pkg} ${old_ver} -> ${new_ver}"
-  ((count++))
+  ((count++)) || true
 done <<<"$RAW_TARGETS"
 
 # 8. Create sandbox branch and register rollback trap
@@ -116,7 +124,7 @@ trap cleanup EXIT INT TERM
 
 # 9. Update package.json and lockfile
 FAILED_STEP="npx npm-check-updates"
-run_with_spinner "Updating packages" npx -y npm-check-updates -u -t minor --loglevel silent
+run_with_spinner "Updating packages" npx -y npm-check-updates@latest -p npm -u -t minor --loglevel silent
 
 FAILED_STEP="npm install (lockfile update)"
 run_with_spinner "Writing lockfile" npm install --package-lock-only --ignore-scripts --loglevel error
@@ -137,15 +145,25 @@ run_first_matching_script() {
       return 0
     fi
   done
-  return 1
+  return 0
 }
 
 # Auto-format and format-check
-run_first_matching_script "format" "format" "agent:format" "format" || true
-run_first_matching_script "format-check" "formatting rules" "agent:lint:eslint" "format:check" || true
+run_first_matching_script "format" "format" "agent:format" "format"
+run_first_matching_script "format-check" "formatting rules" "agent:lint:eslint" "format:check"
 
 # Typecheck
-if ! run_first_matching_script "typecheck" "types" "agent:typecheck" "typecheck"; then
+has_typecheck=0
+for script_name in "agent:typecheck" "typecheck"; do
+  if jq -e ".scripts[\"$script_name\"]" package.json >/dev/null 2>&1; then
+    has_typecheck=1
+    FAILED_STEP="npm run $script_name (typecheck)"
+    run_with_spinner "Verifying types" npm run --silent "$script_name"
+    break
+  fi
+done
+
+if ((! has_typecheck)); then
   if jq -e '.devDependencies.typescript // .dependencies.typescript' package.json >/dev/null 2>&1; then
     FAILED_STEP="npx tsc --noEmit"
     run_with_spinner "Verifying types" npx tsc --noEmit
@@ -153,13 +171,13 @@ if ! run_first_matching_script "typecheck" "types" "agent:typecheck" "typecheck"
 fi
 
 # Lint
-run_first_matching_script "lint" "linter" "agent:lint" "agent:lint:ci" "lint" || true
+run_first_matching_script "lint" "linter" "agent:lint" "agent:lint:ci" "lint"
 
 # Dead code check
-run_first_matching_script "deadcode" "dead code" "check:deadcode" "knip" || true
+run_first_matching_script "deadcode" "dead code" "check:deadcode" "knip"
 
 # Lightweight unit tests
-run_first_matching_script "unit-test" "unit tests" "agent:verify:unit" "agent:test:unit" "test:unit" || true
+run_first_matching_script "unit-test" "unit tests" "agent:verify:unit" "agent:test:unit" "test:unit"
 
 # 12. Build commit message
 if [[ "$count" -eq 1 ]]; then
