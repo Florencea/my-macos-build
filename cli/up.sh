@@ -116,7 +116,12 @@ cleanup() {
     echo "Error: Pre-checks failed at step '${FAILED_STEP}'. Rolling back changes to 'main'..." >&2
     git checkout -q main || true
     git branch -D "$TEMP_BRANCH" >/dev/null 2>&1 || true
-    npm ci --quiet &>/dev/null || true
+    if [[ -d ".node_modules.bak" ]]; then
+      rm -rf node_modules
+      mv .node_modules.bak node_modules
+    else
+      npm ci --quiet &>/dev/null || true
+    fi
   fi
   exit "$orig_exit"
 }
@@ -126,12 +131,19 @@ trap cleanup EXIT INT TERM
 FAILED_STEP="npx npm-check-updates"
 run_with_spinner "Updating packages" npx -y npm-check-updates@latest -p npm -u -t minor --loglevel silent
 
+# Backup and isolate node_modules, remove stale lockfile to avoid circular peer deadlocks
+if [[ -d "node_modules" ]]; then
+  mv node_modules .node_modules.bak
+fi
+rm -f package-lock.json
+
 FAILED_STEP="npm install (lockfile update)"
 run_with_spinner "Writing lockfile" npm install --package-lock-only --ignore-scripts --loglevel error
 
 # 10. Sync local dependencies
 FAILED_STEP="npm ci"
 run_with_spinner "Syncing dependencies (npm ci)" npm ci --quiet
+rm -rf .node_modules.bak
 
 # 11. Run project pre-checks
 run_first_matching_script() {
