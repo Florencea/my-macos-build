@@ -396,14 +396,14 @@ install_formulas \
 
 # 10. Vite+ Global CLI & Node.js Runtime Management
 if ! command -v vp >/dev/null 2>&1 && [[ ! -x "$HOME/.local/share/vite-plus/bin/vp" ]]; then
-  curl -fsSL https://vite.plus | VP_NODE_MANAGER=yes VP_PM_MANAGER=yes bash
+  curl -fsSL https://vite.plus | CI=true VP_NODE_MANAGER=yes VP_PM_MANAGER=yes bash >/dev/null 2>&1
 fi
 
 # Ensure Active LTS is default and installed
 local vp_bin="${commands[vp]:-$HOME/.local/share/vite-plus/bin/vp}"
 if [[ -x "$vp_bin" ]]; then
-  "$vp_bin" env default lts
-  "$vp_bin" env install lts
+  VP_LOG=error "$vp_bin" env default lts >/dev/null 2>&1
+  VP_LOG=error "$vp_bin" env install lts >/dev/null 2>&1
 fi
 
 # Clean up legacy standalone Node.js directory if present

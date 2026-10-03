@@ -15,6 +15,7 @@ done
 export PATH
 
 # Vite+ environment setup
+export VP_LOG=error
 if [ -f "$HOME/.config/vite-plus/env" ]; then
   . "$HOME/.config/vite-plus/env"
 fi

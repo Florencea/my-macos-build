@@ -120,7 +120,7 @@ cleanup() {
       rm -rf node_modules
       mv .node_modules.bak node_modules
     else
-      vp install --frozen-lockfile --silent 2>/dev/null || npm ci --quiet 2>/dev/null || true
+      VP_LOG=error vp install --frozen-lockfile --silent 2>/dev/null || npm ci --quiet 2>/dev/null || true
     fi
   fi
   exit "$orig_exit"
@@ -138,11 +138,11 @@ fi
 rm -f package-lock.json
 
 FAILED_STEP="vp install (lockfile update)"
-run_with_spinner "Writing lockfile" vp install --lockfile-only --ignore-scripts
+run_with_spinner "Writing lockfile" env VP_LOG=error vp install --lockfile-only --ignore-scripts
 
 # 10. Sync local dependencies
 FAILED_STEP="vp install"
-run_with_spinner "Syncing dependencies (vp install)" vp install --frozen-lockfile
+run_with_spinner "Syncing dependencies (vp install)" env VP_LOG=error vp install --frozen-lockfile
 rm -rf .node_modules.bak
 
 # 11. Run project pre-checks

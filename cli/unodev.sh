@@ -15,7 +15,7 @@ for cmd in git jq vp; do
 done
 
 # 2. Extract active Node.js version
-CURRENT_LOCAL_VERSION="$(vp node -v 2>/dev/null || node -v)"
+CURRENT_LOCAL_VERSION="$(VP_LOG=error vp node -v 2>/dev/null || node -v)"
 printf "\nnode: %s\n\n" "$CURRENT_LOCAL_VERSION"
 NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
 
