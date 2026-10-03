@@ -394,7 +394,25 @@ install_formulas \
   zsh-autosuggestions \
   zsh-syntax-highlighting
 
-# 10. Antigravity Global Permission Grants
+# 10. Vite+ Global CLI & Node.js Runtime Management
+if ! command -v vp >/dev/null 2>&1 && [[ ! -x "$HOME/.local/share/vite-plus/bin/vp" ]]; then
+  curl -fsSL https://vite.plus | VP_NODE_MANAGER=yes VP_PM_MANAGER=yes bash
+fi
+
+# Ensure Active LTS is default and installed
+local vp_bin="${commands[vp]:-$HOME/.local/share/vite-plus/bin/vp}"
+if [[ -x "$vp_bin" ]]; then
+  "$vp_bin" env default lts
+  "$vp_bin" env install lts
+fi
+
+# Clean up legacy standalone Node.js directory if present
+if [[ -d "$HOME/.local/opt/node" ]]; then
+  rm -rf "$HOME/.local/opt"/node*(N)
+  rmdir "$HOME/.local/opt" 2>/dev/null || true
+fi
+
+# 11. Antigravity Global Permission Grants
 configure_antigravity_permissions() {
   local cfg_dir="$HOME/.gemini/config"
   local cfg_file="$cfg_dir/config.json"
@@ -459,6 +477,7 @@ configure_antigravity_permissions() {
     "command(whoami)"
     "command(yq)"
     "command(regex:npm run agent:.*)"
+    "command(regex:vp run agent:.*)"
   )
 
   local grants_json
@@ -480,5 +499,5 @@ configure_antigravity_permissions() {
 
 configure_antigravity_permissions
 
-# 11. Flush preferences cache before reboot
+# 12. Flush preferences cache before reboot
 killall cfprefsd 2>/dev/null || true

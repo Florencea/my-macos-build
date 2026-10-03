@@ -7,7 +7,7 @@ set -euo pipefail
 # Example: unodev
 
 # 1. Check required tools
-for cmd in git node jq; do
+for cmd in git jq vp; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
@@ -15,7 +15,7 @@ for cmd in git node jq; do
 done
 
 # 2. Extract active Node.js version
-CURRENT_LOCAL_VERSION="$(node -v)"
+CURRENT_LOCAL_VERSION="$(vp node -v 2>/dev/null || node -v)"
 printf "\nnode: %s\n\n" "$CURRENT_LOCAL_VERSION"
 NODE_VERSION="${CURRENT_LOCAL_VERSION#v}"
 

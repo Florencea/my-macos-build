@@ -72,8 +72,8 @@ The repository provides unified environment parity across **Zsh** and **Bash**:
 - **Environment & Feature Parity**:
   When updating environment variables, PATH priorities, or aliases, keep shells aligned:
   - **Homebrew**: Initialize `brew shellenv`.
-  - **PATH Priority**: Prepend `$HOME/.local/bin` and `$HOME/.local/opt/node/bin`.
-  - **Node.js**: Standalone Active LTS managed in `$HOME/.local/opt/node`.
+  - **PATH Priority**: Prepend `$HOME/.local/bin` and `$HOME/.local/share/vite-plus/bin`.
+  - **Node.js & Toolchains**: Managed globally via Vite+ (`vp` CLI, shims in `$HOME/.local/share/vite-plus/bin`, environment via `$HOME/.config/vite-plus/env`).
   - **Aliases**: Maintain common shortcuts (`nr`, `la`, `ll`).
 
 - **Idempotency Standards**:

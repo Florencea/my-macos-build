@@ -9,7 +9,7 @@ typeset -U path PATH
 # PATH configuration
 path=(
   "$HOME/.local/bin"
-  "$HOME/.local/opt/node/bin"
+  "$HOME/.local/share/vite-plus/bin"
   $path
 )
 export PATH

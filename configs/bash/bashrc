@@ -7,12 +7,17 @@ if [ -x "/opt/homebrew/bin/brew" ]; then
 fi
 
 # PATH configuration
-for p in "$HOME/.local/bin" "$HOME/.local/opt/node/bin"; do
+for p in "$HOME/.local/bin" "$HOME/.local/share/vite-plus/bin"; do
   if [[ -d "$p" && ":$PATH:" != *":$p:"* ]]; then
     PATH="$p:$PATH"
   fi
 done
 export PATH
+
+# Vite+ environment setup
+if [ -f "$HOME/.config/vite-plus/env" ]; then
+  . "$HOME/.config/vite-plus/env"
+fi
 
 # Aliases
 alias nr="npm run"

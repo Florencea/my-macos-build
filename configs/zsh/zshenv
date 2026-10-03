@@ -12,7 +12,12 @@ typeset -U path PATH
 # PATH configuration
 path=(
   "$HOME/.local/bin"
-  "$HOME/.local/opt/node/bin"
+  "$HOME/.local/share/vite-plus/bin"
   $path
 )
 export PATH
+
+# Vite+ environment setup
+if [[ -f "$HOME/.config/vite-plus/env" ]]; then
+  . "$HOME/.config/vite-plus/env"
+fi

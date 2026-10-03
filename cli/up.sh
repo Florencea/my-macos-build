@@ -8,7 +8,7 @@ setopt POSIX_TRAPS
 # Example: up
 
 # 1. Check required tools
-for cmd in git npm npx jq; do
+for cmd in git jq vp vpx; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
@@ -78,7 +78,7 @@ run_with_spinner() {
 }
 
 # 6. Check minor updates
-NCU_JSON="$(npx -y npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
+NCU_JSON="$(vpx -s npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
 
 if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
   exit 0
@@ -120,7 +120,7 @@ cleanup() {
       rm -rf node_modules
       mv .node_modules.bak node_modules
     else
-      npm ci --quiet &>/dev/null || true
+      vp install --frozen-lockfile --silent 2>/dev/null || npm ci --quiet 2>/dev/null || true
     fi
   fi
   exit "$orig_exit"
@@ -128,8 +128,8 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 # 9. Update package.json and lockfile
-FAILED_STEP="npx npm-check-updates"
-run_with_spinner "Updating packages" npx -y npm-check-updates@latest -p npm -u -t minor --loglevel silent
+FAILED_STEP="vpx npm-check-updates"
+run_with_spinner "Updating packages" vpx -s npm-check-updates@latest -p npm -u -t minor
 
 # Backup and isolate node_modules, remove stale lockfile to avoid circular peer deadlocks
 if [[ -d "node_modules" ]]; then
@@ -137,12 +137,12 @@ if [[ -d "node_modules" ]]; then
 fi
 rm -f package-lock.json
 
-FAILED_STEP="npm install (lockfile update)"
-run_with_spinner "Writing lockfile" npm install --package-lock-only --ignore-scripts --loglevel error
+FAILED_STEP="vp install (lockfile update)"
+run_with_spinner "Writing lockfile" vp install --lockfile-only --ignore-scripts
 
 # 10. Sync local dependencies
-FAILED_STEP="npm ci"
-run_with_spinner "Syncing dependencies (npm ci)" npm ci --quiet
+FAILED_STEP="vp install"
+run_with_spinner "Syncing dependencies (vp install)" vp install --frozen-lockfile
 rm -rf .node_modules.bak
 
 # 11. Run project pre-checks
@@ -177,8 +177,8 @@ done
 
 if ((! has_typecheck)); then
   if jq -e '.devDependencies.typescript // .dependencies.typescript' package.json >/dev/null 2>&1; then
-    FAILED_STEP="npx tsc --noEmit"
-    run_with_spinner "Verifying types" npx tsc --noEmit
+    FAILED_STEP="vpx tsc --noEmit"
+    run_with_spinner "Verifying types" vpx tsc --noEmit
   fi
 fi
 

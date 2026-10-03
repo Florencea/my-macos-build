@@ -102,3 +102,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
 [[ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
   source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# ------------------------------------------------------------------------------
+# 9. Vite+ Environment & Shell Completions
+# ------------------------------------------------------------------------------
+[[ -f "$HOME/.config/vite-plus/env" ]] && . "$HOME/.config/vite-plus/env"
