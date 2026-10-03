@@ -476,8 +476,9 @@ configure_antigravity_permissions() {
     "command(which)"
     "command(whoami)"
     "command(yq)"
-    "command(regex:npm run agent:.*)"
     "command(regex:vp run agent:.*)"
+    "command(regex:vpr agent:.*)"
+    "command(regex:vpx oxfmt.*)"
   )
 
   local grants_json

@@ -15,10 +15,10 @@ Before staging or committing any files, all modified files must be formatted usi
   - Configuration: 2-space indentation.
 
 - **Markdown Files** (`*.md`):
-  - Formatter: `prettier`
+  - Formatter: `oxfmt` (via Vite+)
   - Command:
     ```bash
-    npx prettier --write <modified-files>
+    vpx oxfmt <modified-files>
     ```
 
 ## 2. Git Commit Rules
@@ -28,7 +28,7 @@ Before staging or committing any files, all modified files must be formatted usi
   - Agents must **never** execute `git commit`.
   - Workflow for agents:
     1. Apply code changes.
-    2. Format modified files (`shfmt` for shell scripts, `prettier` for markdown).
+    2. Format modified files (`shfmt` for shell scripts, `oxfmt` via `vpx oxfmt` for markdown).
     3. Stage changes using `git add <files>`.
     4. Provide the exact `git commit -m "..."` command for manual execution by the user.
 
@@ -73,7 +73,7 @@ The repository provides unified environment parity across **Zsh** and **Bash**:
   When updating environment variables, PATH priorities, or aliases, keep shells aligned:
   - **Homebrew**: Initialize `brew shellenv`.
   - **PATH Priority**: Prepend `$HOME/.local/bin` and `$HOME/.local/share/vite-plus/bin`.
-  - **Node.js & Toolchains**: Managed globally via Vite+ (`vp` CLI, shims in `$HOME/.local/share/vite-plus/bin`, environment via `$HOME/.config/vite-plus/env`).
+  - **Node.js & Toolchains**: Managed globally via Vite+ (`vp` CLI, `vpr` task runner, shims in `$HOME/.local/share/vite-plus/bin`, environment via `$HOME/.config/vite-plus/env`). Tasks and scripts are executed using `vp run` or `vpr` rather than `npm run`.
   - **Aliases**: Maintain common shortcuts (`nr`, `la`, `ll`).
 
 - **Idempotency Standards**:

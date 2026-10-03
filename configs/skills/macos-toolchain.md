@@ -17,21 +17,22 @@ trigger: always_on
 - Text Replacement: STRICTLY FORBIDDEN to use `sed`. ALWAYS use `sd 'pattern' 'replacement' <file>` for in-place replacements.
 - AST / Structural Code Search: Prefer `ast-grep` (`sg`) for semantic code pattern queries or structural rewrites over regex.
 - Shell Script Formatting: ALWAYS format `.sh` or `.zsh` scripts using `shfmt -i 2 -ci -w <file>`.
+- Markdown Formatting: ALWAYS format `.md` files using `oxfmt` via Vite+ (`vpx oxfmt <file>`).
 - CI Workflow Verification: ALWAYS run `actionlint` when editing `.github/workflows/*.yml`.
 - Benchmarking: ALWAYS use `hyperfine` for timing CLI commands or scripts instead of raw `time`.
 - Scripting Runtime: ALWAYS use modern Node.js (`.mjs`). NEVER use Python (to avoid venv/pip breakage) or Deno.
-- Unified Web & Node Toolchain: ALWAYS use `vp` for managing Node.js runtimes and running tasks. Prefer `vpx -s <pkg>` over `npx` for executing package binaries with zero overhead and automatic caching.
+- Unified Web & Node Toolchain: ALWAYS use `vp` for managing Node.js runtimes and running tasks (`vp run` / `vpr`). Prefer `vpx` (e.g. `vpx oxfmt` or `vpx -s <pkg>`) over `npx` for executing package binaries with zero overhead and automatic caching.
 - HTTP Requests: `curl -fsSL` and `wget` are both available.
 
 ## Frictionless Agent Script Execution (Whitelist-First)
 
 - Package Script Inspection: In Node.js / web projects, ALWAYS check `package.json` for scripts prefixed with `agent:*` (e.g. `jq -r '.scripts | keys[] | select(startswith("agent:"))' package.json`) before running verification, linting, formatting, or testing commands.
-- Frictionless Whitelist Priority: Commands matching `vp run agent:*` and `npm run agent:*` are pre-approved in the global security whitelist (`command(regex:vp run agent:.*)` and `command(regex:npm run agent:.*)`) to bypass human approval prompts. In Vite+ workspaces, ALWAYS prefer `vp run agent:*` (or `vpr agent:*`) over `npm run agent:*` or generic commands (such as `npm test`, `npm run lint`, `npx tsc`, or direct CLI tools).
+- Frictionless Whitelist Priority: Commands matching `vp run agent:*` and `vpr agent:*` are pre-approved in the global security whitelist (`command(regex:vp run agent:.*)` and `command(regex:vpr agent:.*)`) to bypass human approval prompts. All projects are managed via Vite+ (`vp` / `vpr`); `npm run` is deprecated and removed from the whitelist. ALWAYS prefer `vp run agent:*` (or `vpr agent:*`) over direct CLI tools or non-whitelisted commands.
 - Pre-Approved Whitelist Reference:
-  - Verification: `vp run agent:verify:gate`, `vp run agent:verify:inner`, `vp run agent:verify:unit`
-  - Linting & Formatting: `vp run agent:format`, `vp run agent:lint`, `vp run agent:lint:fix`, `vp run agent:lint:ci`, `vp run agent:lint:eslint`, `vp run agent:lint:eslint:fix`, `vp run agent:lint:tailwind`, `vp run agent:lint:tailwind:fix`
-  - Type Checking: `vp run agent:typecheck`
-  - Testing: `vp run agent:test:unit`, `vp run agent:test:e2e`
+  - Verification: `vp run agent:verify:gate` (or `vpr agent:verify:gate`), `vp run agent:verify:inner`, `vp run agent:verify:unit`
+  - Linting & Formatting: `vp run agent:format` (or `vpr agent:format`), `vp run agent:lint`, `vp run agent:lint:fix`, `vp run agent:lint:ci`, `vp run agent:lint:eslint`, `vp run agent:lint:eslint:fix`, `vp run agent:lint:tailwind`, `vp run agent:lint:tailwind:fix`
+  - Type Checking: `vp run agent:typecheck` (or `vpr agent:typecheck`)
+  - Testing: `vp run agent:test:unit` (or `vpr agent:test:unit`), `vp run agent:test:e2e`
 - Fallback: Only fall back to standard project scripts or direct CLI tools when no matching `agent:*` script is defined in `package.json`.
 
 ## Local Git & Subshell Rules
