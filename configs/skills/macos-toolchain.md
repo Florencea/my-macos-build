@@ -20,17 +20,18 @@ trigger: always_on
 - CI Workflow Verification: ALWAYS run `actionlint` when editing `.github/workflows/*.yml`.
 - Benchmarking: ALWAYS use `hyperfine` for timing CLI commands or scripts instead of raw `time`.
 - Scripting Runtime: ALWAYS use modern Node.js (`.mjs`). NEVER use Python (to avoid venv/pip breakage) or Deno.
+- Unified Web & Node Toolchain: ALWAYS use `vp` for managing Node.js runtimes and running tasks. Prefer `vpx -s <pkg>` over `npx` for executing package binaries with zero overhead and automatic caching.
 - HTTP Requests: `curl -fsSL` and `wget` are both available.
 
 ## Frictionless Agent Script Execution (Whitelist-First)
 
 - Package Script Inspection: In Node.js / web projects, ALWAYS check `package.json` for scripts prefixed with `agent:*` (e.g. `jq -r '.scripts | keys[] | select(startswith("agent:"))' package.json`) before running verification, linting, formatting, or testing commands.
-- Frictionless Whitelist Priority: Commands matching `npm run agent:*` are pre-approved in the global security whitelist to bypass human approval prompts. ALWAYS prefer them over generic commands (such as `npm test`, `npm run lint`, `npx tsc`, or direct CLI tools).
+- Frictionless Whitelist Priority: Commands matching `vp run agent:*` and `npm run agent:*` are pre-approved in the global security whitelist (`command(regex:vp run agent:.*)` and `command(regex:npm run agent:.*)`) to bypass human approval prompts. In Vite+ workspaces, ALWAYS prefer `vp run agent:*` (or `vpr agent:*`) over `npm run agent:*` or generic commands (such as `npm test`, `npm run lint`, `npx tsc`, or direct CLI tools).
 - Pre-Approved Whitelist Reference:
-  - Verification: `npm run agent:verify:gate`, `npm run agent:verify:inner`, `npm run agent:verify:unit`
-  - Linting & Formatting: `npm run agent:format`, `npm run agent:lint`, `npm run agent:lint:fix`, `npm run agent:lint:ci`, `npm run agent:lint:eslint`, `npm run agent:lint:eslint:fix`, `npm run agent:lint:tailwind`, `npm run agent:lint:tailwind:fix`
-  - Type Checking: `npm run agent:typecheck`
-  - Testing: `npm run agent:test:unit`, `npm run agent:test:e2e`
+  - Verification: `vp run agent:verify:gate`, `vp run agent:verify:inner`, `vp run agent:verify:unit`
+  - Linting & Formatting: `vp run agent:format`, `vp run agent:lint`, `vp run agent:lint:fix`, `vp run agent:lint:ci`, `vp run agent:lint:eslint`, `vp run agent:lint:eslint:fix`, `vp run agent:lint:tailwind`, `vp run agent:lint:tailwind:fix`
+  - Type Checking: `vp run agent:typecheck`
+  - Testing: `vp run agent:test:unit`, `vp run agent:test:e2e`
 - Fallback: Only fall back to standard project scripts or direct CLI tools when no matching `agent:*` script is defined in `package.json`.
 
 ## Local Git & Subshell Rules
@@ -70,6 +71,8 @@ trigger: always_on
   - Sort by modification time (newest first): `*(om)`
 - Floating-Point Math: Use native arithmetic `(( result = 1.5 * 2.0 ))` instead of calling `bc` or `awk`.
 - Temporary Files: Prefer process substitution `=(cmd)` when a seekable temporary file is required (Zsh automatically handles cleanup).
+- Unix Rule of Silence: Automation scripts and system maintenance routines must strictly adhere to the Unix Rule of Silence—complete silence on success, directing errors and warnings exclusively to `stderr`. Avoid verbose progress banners, step-by-step logs, or `[ok]` confirmation prints in single-target or background tasks. When invoking `vp` in scripts, suppress internal tracing chatter by prefixing `VP_LOG=error` and passing `--silent` where supported.
+- Multi-Target Batch Feedback: When a script inspects, updates, or clones multiple user workspaces or files in batch (such as `unodev`, `clall`, or `ebk`), explicitly print per-target outcomes (`[ok]`, updated version transitions, or backed-up filenames) so the user has immediate visibility into which projects or files were affected.
 
 ## macOS BSD Compatibility Traps (Linux/GNU Forbidden)
 

@@ -20,3 +20,11 @@ trigger: always_on
   - **Embedded Database**: Use native `node:sqlite` (`DatabaseSync`) for local persistence instead of external native SQLite bindings.
   - **Testing**: Use native `node:test` and `node:assert/strict`.
 - **Process & Execution Safety**: In `node:child_process`, prefer `execFileSync` or `spawnSync` with an array of arguments and `shell: false` to prevent shell injection. Signal failure by assigning `process.exitCode = 1` rather than abruptly calling `process.exit(1)`, allowing pending async streams/logs to flush.
+
+## 2. Global Vite+ (`vp`) Toolchain Integration
+
+- **Runtime Management**: Node.js runtimes (Active LTS) are managed globally via Vite+ (`vp env default lts`, `vp env install lts`), eliminating manual tarball setups or NVM/asdf overhead.
+- **Task Runner & Scripts**: Prefer `vp run <task>` (or `vpr <task>`) for executing `package.json` scripts and workspace tasks with automatic task caching.
+- **Binary Runner**: Prefer `vpx -s <package-binary>` over `npx` for executing uninstalled tools with zero delay and cached runtime resolution.
+- **Deterministic Dependencies**: Use `vp install --lockfile-only` for fast lockfile generation and `vp install --frozen-lockfile` for deterministic CI and sandbox dependency restores.
+- **Clean Automation Logging**: Set `VP_LOG=error` in non-interactive scripts or automated workflows to prevent `tracing_subscriber` diagnostic chatter from polluting stdout/stderr.
