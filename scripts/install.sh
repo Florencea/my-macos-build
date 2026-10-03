@@ -258,7 +258,6 @@ install_casks \
   google-chrome \
   keka \
   iina \
-  transmission \
   visual-studio-code \
   cloudflare-warp
 
