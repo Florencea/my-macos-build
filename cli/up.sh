@@ -8,7 +8,7 @@ setopt POSIX_TRAPS
 # Example: up
 
 # 1. Check required tools
-for cmd in git jq vp vpx; do
+for cmd in git jq vp vpr vpx; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
@@ -18,10 +18,6 @@ done
 # 2. Check project files
 [[ -f "package.json" ]] || {
   echo "Error: File package.json does not exist" >&2
-  exit 1
-}
-[[ -f "package-lock.json" ]] || {
-  echo "Error: File package-lock.json does not exist" >&2
   exit 1
 }
 
@@ -78,7 +74,7 @@ run_with_spinner() {
 }
 
 # 6. Check minor updates
-NCU_JSON="$(vpx -s npm-check-updates@latest -p npm -t minor --install never --jsonUpgraded)"
+NCU_JSON="$(vpx -s npm-check-updates@latest -t minor --install never --jsonUpgraded)"
 
 if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
   exit 0
@@ -120,7 +116,7 @@ cleanup() {
       rm -rf node_modules
       mv .node_modules.bak node_modules
     else
-      VP_LOG=error vp install --frozen-lockfile --silent 2>/dev/null || npm ci --quiet 2>/dev/null || true
+      VP_LOG=error vp install --frozen-lockfile --silent 2>/dev/null || true
     fi
   fi
   exit "$orig_exit"
@@ -129,7 +125,7 @@ trap cleanup EXIT INT TERM
 
 # 9. Update package.json and lockfile
 FAILED_STEP="vpx npm-check-updates"
-run_with_spinner "Updating packages" vpx -s npm-check-updates@latest -p npm -u -t minor
+run_with_spinner "Updating packages" vpx -s npm-check-updates@latest -u -t minor
 
 # Backup and isolate node_modules, remove stale lockfile to avoid circular peer deadlocks
 if [[ -d "node_modules" ]]; then
@@ -152,8 +148,8 @@ run_first_matching_script() {
   shift 2
   for script_name in "$@"; do
     if jq -e ".scripts[\"$script_name\"]" package.json >/dev/null 2>&1; then
-      FAILED_STEP="npm run $script_name ($category)"
-      run_with_spinner "Verifying $display_name" npm run --silent "$script_name"
+      FAILED_STEP="vpr $script_name ($category)"
+      run_with_spinner "Verifying $display_name" env VP_LOG=error vpr "$script_name"
       return 0
     fi
   done
@@ -169,8 +165,8 @@ has_typecheck=0
 for script_name in "agent:typecheck" "typecheck"; do
   if jq -e ".scripts[\"$script_name\"]" package.json >/dev/null 2>&1; then
     has_typecheck=1
-    FAILED_STEP="npm run $script_name (typecheck)"
-    run_with_spinner "Verifying types" npm run --silent "$script_name"
+    FAILED_STEP="vpr $script_name (typecheck)"
+    run_with_spinner "Verifying types" env VP_LOG=error vpr "$script_name"
     break
   fi
 done
