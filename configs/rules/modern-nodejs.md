@@ -68,10 +68,14 @@ description: Modern Node.js pure ESM standards, config pre-verification, Zod run
 
 ---
 
-## 6. Agent-Friendly Vite+ Execution Formats
+## 6. Agent-Friendly Vite+ Execution Formats & Task Caching
 
 When running Node.js or Vite+ package manager commands as an agent, use token-efficient structured formats:
 
+- **Production Server / Script Execution**: Prefer `vp node <script>` (e.g. `vp node dist/server/app.js`) over raw unmanaged `node` to run within the Vite+ managed runtime environment.
+- **Task Runner Caching**: In `vite.config.ts`, declare `run.cache: { scripts: true, tasks: true }` to cache script and task runs across invocations.
+- **Cache Inspection**: Run `vpr --last-details` to verify whether task steps resulted in cache hits or misses.
+- **Clean Execution & Cache Purging**: When troubleshooting unexpected behavior, use `vpr --no-cache` to force execution or `vp cache clean` to purge caches cleanly.
 - **Installed Packages**: `vp list --json` (or `vp pm list --json`)
 - **Outdated Dependencies**: `vp outdated --format json`
 - **Toolchain Status**: `vp toolchain --json`

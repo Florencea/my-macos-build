@@ -97,10 +97,12 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 10. Agent Verification & Toolchain Commands
+## 10. Agent Verification, All-in-One Configuration & Vitest Projects
 
-When running type checks and linters as an AI agent, use agent-optimized flags:
-
-- **Linting**: `vp lint -f agent` (or `vpx oxlint -f agent`) for concise error lines without token-heavy decorative frames.
-- **Type Checking**: `tsc -b --pretty false` (or `tsc --noEmit --pretty false`) to prevent color codes and ASCII banners.
-- **Combined Check**: `vp check --quiet` to suppress cosmetic warnings.
+- **All-in-One `vite.config.ts` Consolidation**: In modern Vite+ repositories, configure Oxlint and Oxfmt rules directly inside `vite.config.ts` (`lint` and `fmt` fields) with `lint.options.typeAware: true` and `lint.options.typeCheck: true`. Avoid introducing duplicate standalone configuration files (`.oxlintrc.json`, `.prettierignore`).
+- **Vitest Browser Projects Testing**: Write component and E2E tests using `vite-plus/test` and Vitest Browser mode (`browser.provider = playwright()`). Run tests via `vp test run --project <name> --reporter=tap-flat --no-color`.
+- **Agent Verification Flags**:
+  - **Type Checking**: `vpr typecheck` (or `tsc -b --pretty false`) to prevent color codes and ASCII banners.
+  - **Linting**: `vp lint -f agent` (or `vpx oxlint -f agent`) for concise error lines without token-heavy decorative frames.
+  - **Combined Check**: `vp check --quiet` to suppress cosmetic warnings.
+  - **Unified Gate**: `vpr verify` to run checks, deadcode analysis, tests, and build.

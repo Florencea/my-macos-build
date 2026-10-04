@@ -89,15 +89,19 @@ export const env: Env = parsed.data;
 
 All Node.js runtimes and tasks are managed via Vite+ (`vp`). When executing tools in agent workflows, use token-efficient formats:
 
-| Task / Domain          | Standard Command | Agent-Friendly Format                        | Purpose                                              |
-| :--------------------- | :--------------- | :------------------------------------------- | :--------------------------------------------------- |
-| **Linting**            | `vp lint`        | `vp lint -f agent`                           | Minimalist error-location format without ANSI frames |
-| **Combined Check**     | `vp check`       | `vp check --quiet`                           | Suppresses cosmetic warnings, only outputs errors    |
-| **Installed Packages** | `vp list`        | `vp list --json`                             | Machine-readable dependency graph                    |
-| **Outdated Packages**  | `vp outdated`    | `vp outdated --format json`                  | Structured upgrade candidate inspection              |
-| **Toolchain Graph**    | `vp toolchain`   | `vp toolchain --json`                        | Detailed active toolchain JSON report                |
-| **Test Execution**     | `vp test`        | `vp test run --reporter=tap-flat --no-color` | Linear TAP flat output, eliminates spinners          |
+| Task / Domain          | Standard Command | Agent-Friendly Format                        | Purpose                                                  |
+| :--------------------- | :--------------- | :------------------------------------------- | :------------------------------------------------------- |
+| **Linting**            | `vp lint`        | `vp lint -f agent`                           | Minimalist error-location format without ANSI frames     |
+| **Combined Check**     | `vp check`       | `vp check --quiet`                           | Suppresses cosmetic warnings, only outputs errors        |
+| **Script / Server**    | `vp node`        | `vp node <script>`                           | Executes in Vite+ managed Node.js environment            |
+| **Installed Packages** | `vp list`        | `vp list --json`                             | Machine-readable dependency graph                        |
+| **Outdated Packages**  | `vp outdated`    | `vp outdated --format json`                  | Structured upgrade candidate inspection                  |
+| **Toolchain Graph**    | `vp toolchain`   | `vp toolchain --json`                        | Detailed active toolchain JSON report                    |
+| **Test Execution**     | `vp test`        | `vp test run --reporter=tap-flat --no-color` | Linear TAP flat output, eliminates spinners              |
+| **Cache Inspection**   | `vpr`            | `vpr --last-details`                         | Inspect task runner cache hit/miss and execution timings |
+| **Cache Purge**        | `vp cache`       | `vp cache clean`                             | Purge Vite task runner and compilation caches            |
 
+- **Vite Task Runner Caching (`run.cache`)**: In `vite.config.ts`, declare `run.cache: { scripts: true, tasks: true }`. Tasks and scripts executed via `vpr` replay cached results in milliseconds when source files are unmodified. Pass `--no-cache` (`vpr --no-cache`) to bypass cache temporarily.
 - **Clean Automation Logging**: Set `VP_LOG=error` in non-interactive scripts to prevent `tracing_subscriber` diagnostic logs from cluttering output.
 - **Deterministic Dependencies**: Use `vp install --frozen-lockfile` in CI / automated verification runs.
 

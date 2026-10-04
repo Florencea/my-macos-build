@@ -36,12 +36,15 @@ Follow this decision tree when designing components and styling:
 
 - **Direct Ref Passing:** Pass `ref` directly as a regular prop. Never use `React.forwardRef`; destructure `{ ref, ...props }` directly in component signatures.
 - **Explicit Component Typing:** Never use `React.FC` or `React.FunctionComponent`. Explicitly declare prop types (e.g., `interface ButtonProps`) and type `children` as `React.ReactNode`.
+- **Automatic Memoization (React Compiler):** When `@vitejs/plugin-react` has `compiler: true` and `oxc-transform-react` is installed, do NOT add manual `useMemo`, `useCallback`, or `React.memo`. The compiler automatically performs fine-grained memoization across components and hooks.
 - **Server/Client Boundaries:** Keep Client Components as lean leaves in the component tree to maximize server-side rendering and reduce client bundle size.
 
 ---
 
 ## 3. Tailwind CSS v4 Rules
 
+- **Design Tokens Single Source of Truth (`@theme`):** All design tokens, custom colors, fonts, and breakpoints must reside in the CSS root file via `@theme`. Bridge tokens to external UI component libraries (Ant Design tokens, Spectrum) via CSS variables. Never hardcode colors or use inline style overrides.
+- **Canonical Class Validation:** Ensure all utility classes pass `vpr lint:tailwind` with 0 warnings. Fix canonical syntax discrepancies automatically via `vpr lint:tailwind:fix`.
 - **No Dynamic Class Interpolation:** Never dynamically interpolate class names (e.g., `bg-blue-${shade}`). Use complete class string literals or record maps so the static scanner detects them.
 - **Native CSS Variables & `@theme`:** Leverage Tailwind v4 `@theme` directives and CSS custom properties instead of legacy JS configuration files.
 - **Restrict `@apply`:** Stick to utility classes directly in markup. Avoid extracting utilities via `@apply` into CSS files except for base resets.

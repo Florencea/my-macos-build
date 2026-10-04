@@ -118,14 +118,27 @@ When agents need comprehensive API documentation or usage flags, query these ver
 
 ## 4. Frictionless Agent Script Execution (Whitelist-First)
 
-- **Package Script Inspection**: In Node.js / web projects, ALWAYS check `package.json` for scripts prefixed with `agent:*` (e.g. `jq -r '.scripts | keys[] | select(startswith("agent:"))' package.json`) before running verification, linting, formatting, or testing commands.
-- **Frictionless Whitelist Priority**: Commands matching `vp run agent:*` and `vpr agent:*` are pre-approved in the global security whitelist (`command(regex:vp run agent:.*)` and `command(regex:vpr agent:.*)`) to bypass human approval prompts. All projects are managed via Vite+ (`vp` / `vpr`); `npm run` is deprecated and removed from the whitelist. ALWAYS prefer `vp run agent:*` (or `vpr agent:*`) over direct CLI tools or non-whitelisted commands.
-- **Pre-Approved Whitelist Reference**:
-  - Verification: `vp run agent:verify:gate` (or `vpr agent:verify:gate`), `vp run agent:verify:inner`, `vp run agent:verify:unit`
-  - Linting & Formatting: `vp run agent:format` (or `vpr agent:format`), `vp run agent:lint`, `vp run agent:lint:fix`, `vp run agent:lint:ci`, `vp run agent:lint:oxlint`, `vp run agent:lint:oxlint:fix`, `vp run agent:lint:tailwind`, `vp run agent:lint:tailwind:fix` (Note: Prettier and ESLint are deprecated; all projects standardize on Oxlint via `vp lint` and Oxfmt via `vp fmt` / `vpx oxfmt`)
-  - Type Checking: `vp run agent:typecheck` (or `vpr agent:typecheck`)
-  - Testing: `vp run agent:test:unit` (or `vpr agent:test:unit`), `vp run agent:test:e2e`
-- **Fallback**: Only fall back to standard project scripts or direct CLI tools when no matching `agent:*` script is defined in `package.json`.
+- **Frictionless Whitelist Priority**: The environment enforces a strict Antigravity permission model. Safe development, verification, and inspection commands are pre-approved in the global security whitelist (`~/.gemini/config/config.json`) to bypass interactive approval prompts. All projects are managed via Vite+ (`vp` / `vpr`); legacy `npm run` is deprecated.
+- **Pre-Approved Safe Native `vp` Commands**:
+  - **Quality & Format**: `vp check`, `vp check --quiet`, `vp lint`, `vp lint -f agent`, `vp fmt`, `vp fmt --check`, `vp format`
+  - **Build & Preview**: `vp build`, `vp pack`, `vp preview`
+  - **Test Runner**: `vp test`, `vp test run`, `vp test run --project <name>`, `vp test run --reporter=tap-flat --no-color`
+  - **Inspection (Read-Only)**: `vp list`, `vp ls`, `vp outdated`, `vp toolchain`, `vp toolchain --json`
+  - **Execution & Cache**: `vp node <script>`, `vp exec <cmd>`, `vp cache clean`
+- **Pre-Approved Task Runner (`vpr` / `vp run`) Whitelist**:
+  - `vpr verify` (unified verification gate: checks, deadcode, tests, build)
+  - `vpr typecheck` (strict TypeScript compiler check)
+  - `vpr agent:*` (`agent:verify:gate`, `agent:verify:inner`, `agent:verify:unit`, `agent:test:unit`, `agent:test:e2e`)
+  - `vpr check:*` (e.g. `vpr check:fast`, `vpr check:deadcode`)
+  - `vpr lint:*` (e.g. `vpr lint:ci`, `vpr lint:tailwind`, `vpr lint:tailwind:fix`)
+  - `vpr test:*` (e.g. `vpr test:unit`, `vpr test:e2e`, `vpr test:setup`)
+  - `vpr build:*` (e.g. `vpr build:all`)
+  - Task cache inspection and flags: `vpr --last-details`, `vpr --no-cache`
+- **Pre-Approved Rust Toolchain (`vpx`)**:
+  - `vpx oxfmt <files>`
+  - `vpx oxlint -f agent <files>`
+- **Strictly Banned / Confirmation-Required Commands**:
+  - NEVER execute state-destructive commands without explicit user instruction: `vp implode` (destroys toolchain), `vp upgrade` (binary upgrade), `vp rm` / `vp remove` / `vp uninstall` (removes dependencies), `vp config` / `vp hooks`.
 
 ---
 

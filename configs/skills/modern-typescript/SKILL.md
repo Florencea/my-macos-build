@@ -122,8 +122,35 @@ Modern agentic workflows eliminate ESLint and Prettier overhead in favor of Rust
 - **Oxfmt Automated Formatting (`vpx oxfmt` / `vp fmt`)**:
   - Format in-place: `vpx oxfmt <file>` (or `vp fmt`)
   - Check formatting without editing: `vpx oxfmt --check`
-- **Configuration (`.oxlintrc.json`)**:
-  - Use standard JSON configuration when custom rule overrides are needed:
+- **All-in-One Configuration (`vite.config.ts`)**:
+  - In modern Vite+ repositories, declare `lint` and `fmt` directly inside `vite.config.ts` instead of managing duplicate configuration files (`.oxlintrc.json`, `.prettierignore`):
+    ```ts
+    import { defineConfig } from "vite-plus";
+
+    export default defineConfig({
+      lint: {
+        ignorePatterns: ["dist/**", ".cache/**", "test-results/**"],
+        options: {
+          typeAware: true,
+          typeCheck: true,
+        },
+        categories: {
+          correctness: "error",
+          suspicious: "error",
+          perf: "error",
+        },
+        plugins: ["react", "unicorn", "typescript", "oxc", "vitest"],
+      },
+      fmt: {
+        ignorePatterns: ["dist/**", "pnpm-lock.yaml"],
+        sortPackageJson: true,
+      },
+    });
+    ```
+- **Vitest Browser Projects Testing**:
+  - Write browser tests using `vite-plus/test` and Vitest Projects (`browser.provider = playwright()`). Run via `vp test run --project <name> --reporter=tap-flat --no-color`.
+- **Legacy Standalone Configuration (`.oxlintrc.json`)**:
+  - Standalone JSON configuration remains supported for non-Vite+ repos or standalone toolchain setups:
     ```json
     {
       "$schema": "./node_modules/oxlint/configuration_schema.json",

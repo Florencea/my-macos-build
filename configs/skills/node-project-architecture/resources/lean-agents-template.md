@@ -8,6 +8,7 @@ This project uses Vite+ to manage development tools. Always use `vp` (or `vpr` s
 - `vp install`: Install dependencies
 - `vp update`: Update dependencies
 - `vp test`: Run Vitest tests
+- `vp build`: Build production bundles
 - `vp check`: Run linter, typecheck, format checks
 - `vp fmt`: Run formatter
 - `vp lint`: Run linter
@@ -43,15 +44,17 @@ Guidelines for AI agents and human contributors working on this repository.
 
 ## 3. Frictionless Execution (Whitelist-First)
 
-Prioritize `vpr agent:*` commands matching Antigravity's pre-approved execution whitelist:
+Prioritize `vpr` and native `vp` commands matching Antigravity's pre-approved execution whitelist:
 
-- **Verification Gate**: `vpr agent:verify:gate` (unit -> build -> e2e)
-- **Unit Verification**: `vpr agent:verify:unit` (inner loop + unit tests)
-- **Inner Loop**: `vpr agent:verify:inner` (typecheck + lint)
-- **Type Check**: `vpr agent:typecheck` (`tsc -b --pretty false`)
-- **Lint & Fix**: `vpr agent:lint:fix` (`vp lint --fix`)
-- **CI Lint**: `vpr agent:lint:ci` (`actionlint` 0 errors/warnings)
-- **Unit Tests**: `vpr agent:test:unit` (`vp test run --reporter=tap-flat --no-color`)
+- **Gate**: `vpr agent:verify:gate` (unit -> build -> e2e) or `vpr verify`
+- **Inner Loop**: `vpr agent:verify:inner` (`vpr typecheck && vp lint && vpr lint:tailwind`)
+- **Unit Tests**: `vpr agent:test:unit` (`vp test run --project unit --reporter=tap-flat --no-color`)
+- **E2E Tests**: `vpr agent:test:e2e` (`vp test run --project e2e --reporter=tap-flat --no-color`)
+- **Type Check**: `vpr typecheck` (`tsc -b --pretty false`)
+- **CI Lint**: `vpr lint:ci` (`actionlint` 0 errors/warnings)
+- **Tailwind Lint**: `vpr lint:tailwind`, `vpr lint:tailwind:fix`
+- **Build**: `vp build`
+- **Task Caching**: Scripts executed via `vpr` leverage Vite Task caching (`run.cache: { scripts: true, tasks: true }`). Unmodified steps replay in milliseconds. Use `vpr --last-details` to inspect cache hits, or `vp cache clean` / `vpr --no-cache` to force clean execution.
 
 ---
 
