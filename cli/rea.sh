@@ -86,3 +86,6 @@ ffmpeg -y \
 
 mv "$TMPFILE" "$OUTPUT_FILE"
 rm -rf "$ABS_INPUT_DIR"
+
+local file_size="$(ls -lh "$OUTPUT_FILE" | awk '{print $5}')"
+printf "%s %s ok\n" "${OUTPUT_FILE:t}" "$file_size"
