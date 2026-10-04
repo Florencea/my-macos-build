@@ -22,12 +22,19 @@ This document outlines the core development workflow, code formatting standards,
   - Agents must **never** execute `git commit`.
   - Mandatory workflow for agents:
     1. Apply code changes and verify.
-    2. Format modified files (`shfmt` for shell scripts, `vpx oxfmt` for markdown).
+    2. Format modified files (`shfmt` for shell scripts, `vpx oxfmt` for markdown/code).
     3. Stage changes using `git add <files>`.
     4. Provide the exact `git commit -m "..."` command for manual execution by the user.
 - **Bare Command Invocation (No Path Prefixes)**:
   - All terminal commands executed by agents must strictly use bare command names (e.g. `git`, `vp`, `node`, `shfmt`) without absolute path prefixes (e.g. NEVER `/usr/bin/git`).
   - Commands rely on `$PATH` to ensure compatibility with Antigravity security allowlists.
+- **Agent-Friendly Execution Formats**:
+  - When running verification, tests, or inspection commands, always prefer token-efficient structured flags over decorative terminal UI:
+    - Linting: `vp lint -f agent` (or `vpx oxlint -f agent`)
+    - Type check: `tsc -b --pretty false` (or `tsc --noEmit --pretty false`)
+    - Combined check: `vp check --quiet`
+    - Tests: `vp test run --reporter=tap-flat --no-color` (or `--json`)
+    - Dependencies: `vp list --json`, `vp outdated --format json`
 - **Commit Message Convention**:
   - Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
   - Common types: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`.
@@ -41,7 +48,7 @@ Before staging any files, all modified files must be formatted:
 
 - **Shell Scripts** (`cli/*.sh`, `scripts/*.sh`, `configs/bash/*`, `configs/zsh/*`):
   - Formatter: `shfmt -i 2 -ci -w <files>`
-- **Markdown Files** (`*.md`):
+- **Markdown & Code Files** (`*.md`, `*.json`, `*.ts`):
   - Formatter: `vpx oxfmt <files>`
 
 ---
@@ -54,11 +61,18 @@ Before staging any files, all modified files must be formatted:
 
 ---
 
-## 5. Technical Authoring Standards
+## 5. Technical Authoring & Code Quality Standards
 
-- **Live Documentation First**:
-  - Before authoring or refactoring skills, technical rules, or tool configurations, agents MUST query authoritative endpoints (`search_web`, `https://oxc.rs/llms.txt`, `https://viteplus.dev/llms-full.txt`) to inspect the latest stable CLI flags, schemas, and paradigms.
-  - Never guess or rely solely on stale pre-training memory.
+- **Live Documentation & Configuration Pre-Verification**:
+  - Before authoring or refactoring skills, technical rules, tool configurations, or package manager settings (`package.json`, `tsconfig*.json`, `vite.config.*`, `.oxlintrc.json`, `pnpm-workspace.yaml`), agents MUST query authoritative endpoints (`search_web`, `https://oxc.rs/llms.txt`, `https://viteplus.dev/llms-full.txt`, `<tool> --help`).
+  - Never guess schemas, flags, or configuration syntax solely from pre-training memory.
+- **Zero Suppression Directives Policy**:
+  - NEVER use `// @ts-ignore`, `// @ts-expect-error`, `// @ts-nocheck`, `/* oxlint-disable */`, `/* eslint-disable */`, or `// biome-ignore` to bypass type or lint errors.
+  - Never relax configuration rules to make faulty code compile. All errors must be resolved structurally.
+- **Zod-First Runtime Validation**:
+  - Boundary data (API responses, `JSON.parse`, file configs, `process.env`) must be parsed via Zod `safeParse`.
+  - Derive static types using `z.infer<typeof Schema>`.
+  - Strictly avoid `as unknown as Type` or unvalidated type smuggling.
 - **No Fragile Version Pinning**:
   - Never hardcode minor or patch versions (e.g. avoid `0.15+`, `v1.2.3`). Reference major generations or LTS branches instead (e.g. `Node.js (Active LTS)`, `TypeScript 5+`, `Vite+`).
   - Instruct tools and users to query versions dynamically via `<tool> --version` or `<tool> --help`.

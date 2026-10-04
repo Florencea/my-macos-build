@@ -1,17 +1,26 @@
 ---
 name: modern-typescript
-description: Strict TypeScript standards (TS 5+) and high-performance Oxlint + Oxfmt toolchain for agentic development. Use when writing, refactoring, or type-checking TypeScript code, configuring tsconfig or .oxlintrc.json, and resolving type errors.
-compatibility: TypeScript 5+, Oxlint, Oxfmt, Vite+
+description: Strict TypeScript standards (TS 5+), zero suppression directives, Zod runtime validation, and high-performance Oxlint + Oxfmt toolchain for agentic development. Use when writing, refactoring, or type-checking TypeScript code, configuring tsconfig or .oxlintrc.json, and resolving type errors.
+compatibility: TypeScript 5+, Oxlint, Oxfmt, Vite+, Zod
 ---
 
 # Strict TypeScript Guidelines
 
 **🚨 AGENT INSTRUCTION (CRITICAL):** This project strictly enforces zero-warning `oxlint` linting, automated `oxfmt` formatting, and strict compiler checks (`tsc --noEmit`). You MUST write clean, type-safe TypeScript code that passes on the first attempt without regressions.
 
+---
+
 ## 1. Type Safety & Linting Decision Tree
 
-Before generating code, apply this decision tree to prevent linting failures:
+Before writing or refactoring TypeScript code, apply this decision tree to prevent defects:
 
+- **Handling Boundary / Untrusted Data (API, JSON, Env, Files)**:
+  - ❌ NEVER cast with `as unknown as Type` or raw `as Type`.
+  - ✅ Define a Zod schema and run `schema.safeParse(data)`. Infer the type via `z.infer<typeof schema>`.
+- **Handling Diagnostics & Lint Errors**:
+  - ❌ NEVER suppress with `// @ts-ignore`, `// @ts-expect-error`, or `/* oxlint-disable */`.
+  - ❌ NEVER downgrade rules or add global ignores in configuration files.
+  - ✅ Narrow types with control flow (`typeof`, `instanceof`, `in`), use discriminated unions, or adjust type declarations.
 - **Conditionals & Truthiness**:
   - Always evaluate explicit boolean values (`strict-boolean-expressions`).
   - ❌ `if (str)` / `if (arr.length)` / `if (obj)`
@@ -31,57 +40,120 @@ Before generating code, apply this decision tree to prevent linting failures:
 - **Null Safety**:
   - NEVER use the non-null assertion operator (`!`). Handle `null`/`undefined` via control flow, `?.`, or `??`.
 - **Unknown vs Any**:
-  - The `any` type is STRICTLY FORBIDDEN. Use `unknown` and perform `typeof`, `instanceof`, or schema validation (e.g. Zod).
+  - The `any` type is STRICTLY FORBIDDEN. Use `unknown` and perform runtime schema validation (Zod) or narrow with guards.
 
 ---
 
-## 2. High-Performance Oxlint & Oxfmt Toolchain
+## 2. Anti-Patterns & Positive Refactoring Guide
 
-Modern agentic projects eliminate legacy ESLint and Prettier overhead in favor of Rust-powered tools:
+### Anti-Pattern 1: Bypassing Errors via Suppression Directives
 
-- **Oxlint Integration (`vp lint` / `vpx oxlint`)**: Oxlint analyzes TypeScript ASTs up to 50–100x faster than ESLint. It catches syntax errors, bad idioms, and security vulnerabilities without blocking development loops.
-- **Agent Output Format (`--format=agent`)**: When verifying code in agentic loops, use the dedicated agent reporter:
-  ```bash
-  npx oxlint --deny-warnings --format=agent
+- **❌ Violation**:
+  ```ts
+  // @ts-ignore: bypass type error
+  const id = user.profile.id;
+
+  // oxlint-disable-next-line
+  if (data) process(data);
   ```
-- **Type Checking Decoupling (`tsc --noEmit`)**: Oxlint performs fast static linting; full type validation is handled separately by `tsc --noEmit` (or `vp check`). This decoupling avoids AST bridge bottlenecks and ensures seamless compatibility with modern TypeScript compiler generations.
-- **Oxfmt Automated Formatting (`vpx oxfmt` / `vp fmt`)**: Replaces Prettier completely. Runs instantly and enforces consistent styling:
-  - Format in-place: `vpx oxfmt` (or `vp fmt`)
-  - Check formatting without editing: `vpx oxfmt --check`
-  - Migrate Prettier configuration: `vpx oxfmt --migrate prettier`
-- **Configuration (`.oxlintrc.json`)**: Use standard JSON configuration when custom rule overrides are needed:
-  ```json
-  {
-    "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "plugins": ["typescript", "unicorn"],
-    "rules": {
-      "typescript/no-explicit-any": "error",
-      "typescript/consistent-type-imports": "error"
-    }
+- **✅ Positive Refactoring**:
+  ```ts
+  // Use optional chaining and explicit truthiness check
+  const id = user.profile?.id;
+  if (id !== undefined) {
+    process(id);
   }
   ```
 
+### Anti-Pattern 2: Type Smuggling via `as unknown as Type`
+
+- **❌ Violation**:
+  ```ts
+  // DANGEROUS: Type system is bypassed; crashes at runtime if schema changes
+  const payload = (await res.json()) as unknown as UserPayload;
+  ```
+- **✅ Positive Refactoring with Zod**:
+  ```ts
+  import { z } from "zod";
+
+  export const UserPayloadSchema = z.object({
+    id: z.string().uuid(),
+    username: z.string().min(1),
+    email: z.string().email(),
+    roles: z.array(z.string()).default([]),
+  });
+
+  export type UserPayload = z.infer<typeof UserPayloadSchema>;
+
+  const rawJson: unknown = await res.json();
+  const result = UserPayloadSchema.safeParse(rawJson);
+
+  if (!result.success) {
+    // Graceful error reporting with structured field issues
+    console.error("Payload validation failed:", result.error.flatten());
+    throw new Error("Invalid user payload received from API");
+  }
+
+  const payload: UserPayload = result.data; // Fully safe, zero assertions
+  ```
+
 ---
 
-## 3. Modern Idiomatic TypeScript
+## 3. High-Performance Oxlint & Vite+ Toolchain
 
-- **Consistent Type Imports**: Enforce `import type { ... }` for type-only imports to support `verbatimModuleSyntax`.
-- **Discriminated Unions**: Model domain states using discriminated unions with a common discriminator tag (e.g., `type: 'success' | 'error'`) rather than sprawling optional properties (`a?: string; b?: number;`).
-- **Exhaustive Pattern Matching**: Ensure all cases of a union are handled using exhaustive `switch` checks or a helper like `assertNever(x: never): never`.
-- **Safe Control Flow & Error Handling**: Caught errors are `unknown`. Always inspect before reading: `const message = err instanceof Error ? err.message : String(err)`.
+Modern agentic workflows eliminate ESLint and Prettier overhead in favor of Rust-powered tools:
+
+- **Agent Output Format (`vp lint -f agent` / `vpx oxlint -f agent`)**:
+  - When verifying code in agentic execution loops, always use the dedicated `agent` reporter:
+    ```bash
+    vp lint -f agent
+    ```
+  - This outputs token-efficient, simplified diagnostics (`file:line:col: error rule: message`) without decorative frames or ANSI codes.
+- **Type Checking (`tsc -b --pretty false` / `tsc --noEmit --pretty false`)**:
+  - Pass `--pretty false` to suppress color codes and decorative ASCII formatting:
+    ```bash
+    tsc -b --pretty false
+    ```
+- **Quiet Check (`vp check --quiet`)**:
+  - When running combined formatting, linting, and type checking, pass `--quiet` to suppress warnings and highlight only critical errors:
+    ```bash
+    vp check --quiet
+    ```
+- **Oxfmt Automated Formatting (`vpx oxfmt` / `vp fmt`)**:
+  - Format in-place: `vpx oxfmt <file>` (or `vp fmt`)
+  - Check formatting without editing: `vpx oxfmt --check`
+- **Configuration (`.oxlintrc.json`)**:
+  - Use standard JSON configuration when custom rule overrides are needed:
+    ```json
+    {
+      "$schema": "./node_modules/oxlint/configuration_schema.json",
+      "plugins": ["typescript", "unicorn"],
+      "rules": {
+        "typescript/no-explicit-any": "error",
+        "typescript/consistent-type-imports": "error"
+      }
+    }
+    ```
 
 ---
 
-## 4. Authoritative Documentation & LLM References
+## 4. Configuration Syntax Pre-Verification Mandate
 
-When agents need rule definitions or compiler option references, query these authoritative endpoints:
+Before modifying or creating any configuration files (`tsconfig.json`, `tsconfig.*.json`, `.oxlintrc.json`), agents MUST query official live references. Guessing compiler options or lint rule names from pre-training memory is strictly prohibited:
 
-- **Oxc & Oxlint Official Reference**:
-  - Oxc LLM Full Reference: `https://oxc.rs/llms.txt`
-  - Oxlint Official Documentation: `https://oxc.rs/docs/guide/usage/linter.html`
-  - Oxlint Rules Manual: `https://oxc.rs/docs/guide/usage/linter/rules.html`
-  - Oxfmt Formatter Guide: `https://oxc.rs/docs/guide/usage/formatter.html`
-  - Coding Agents Guide: `https://oxc.rs/docs/guide/usage/coding-agents.md`
-- **TypeScript Official Reference**:
+- **TypeScript TSConfig Reference**:
   - Documentation: `https://www.typescriptlang.org/docs/`
   - TSConfig Options: `https://www.typescriptlang.org/tsconfig/`
+- **Oxc & Oxlint Reference**:
+  - Oxc LLM Full Reference: `https://oxc.rs/llms.txt`
+  - Oxlint Rules Manual: `https://oxc.rs/docs/guide/usage/linter/rules.html`
+  - Coding Agents Guide: `https://oxc.rs/docs/guide/usage/coding-agents.md`
+
+---
+
+## 5. Modern Idiomatic TypeScript
+
+- **Consistent Type Imports**: Enforce `import type { ... }` for type-only imports to support `verbatimModuleSyntax`.
+- **Discriminated Unions**: Model domain states using discriminated unions with a common discriminator tag (e.g. `type: 'success' | 'error'`) rather than sprawling optional properties (`a?: string; b?: number;`).
+- **Exhaustive Pattern Matching**: Ensure all cases of a union are handled using exhaustive `switch` checks or a helper like `assertNever(x: never): never`.
+- **Safe Control Flow & Error Handling**: Caught errors are `unknown`. Always inspect before reading: `const message = err instanceof Error ? err.message : String(err)`.

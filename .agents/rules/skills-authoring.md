@@ -31,6 +31,9 @@ description: Rules for creating, structuring, and maintaining Antigravity Skills
 ## 3. Mandatory Authoring Invariants & Best Practices
 
 - **Live Documentation First**: Before writing, refactoring, or updating any technical skill or rule, the agent MUST query authoritative endpoints (`search_web`, `read_url_content`, `https://oxc.rs/llms.txt`, `https://viteplus.dev/llms-full.txt`) to verify the latest stable CLI flags, options, and paradigms. Guessing from stale model weights or pre-training memory is strictly prohibited.
+- **Zero Suppression Directives Policy**: Skills and rules must NEVER recommend or contain diagnostic suppression directives (`@ts-ignore`, `@ts-expect-error`, `oxlint-disable`, etc.). All code examples must resolve issues structurally.
+- **Zod-First Runtime Validation**: Code examples dealing with external boundary data (API, JSON, env) must demonstrate runtime schema parsing via Zod (`safeParse`), never unsafe casts (`as unknown as Type`).
+- **Agent-Friendly Formats**: Tool execution examples must prioritize token-efficient structured formats (`-f agent`, `--json`, `--reporter=tap-flat`, `--no-color`, `--quiet`).
 - **No Fragile Version Pinning**: NEVER hardcode minor, patch, or rapidly evolving version numbers in documentation, frontmatter, or headings. Reference major generations or LTS branches instead (e.g. `TypeScript 5+`, `Node.js (Active LTS)`). Instruct agents to verify exact installed versions dynamically via `<command> --version` or `<command> --help`.
 - **Keep Skills Focused**: 1 responsibility per skill.
 - **Use Scripts as Black Boxes**: Run `<tool> --help` or `<tool> -h` instead of inspecting script source codes.

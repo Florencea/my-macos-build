@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CI: "true"
+  NO_COLOR: "1"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  gatekeeper:
+    name: Gatekeeper (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version-file: package.json
+          cache: true
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Typecheck
+        run: vp run agent:typecheck
+
+      - name: Check (Oxlint & Oxfmt)
+        run: vp check
+
+      - name: Run unit & integration tests
+        run: vp run agent:test:unit
+
+      - name: Build production bundle
+        run: vp build

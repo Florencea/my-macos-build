@@ -32,6 +32,8 @@ When selecting tools for common tasks, always follow this prioritized logic flow
   - CI Workflow verification $\rightarrow$ `actionlint` when editing `.github/workflows/*.yml`.
 - **Runtime & Web Toolchain**:
   - Always use modern Node.js (`.mjs`) managed globally via Vite+ (`vp`). NEVER use Python or Deno.
+- **Agent-Friendly Structured Outputs**:
+  - Prioritize token-efficient, non-interactive formats (`--json`, `-f agent`, `--format json`, `--reporter=tap-flat`, `--no-color`, `--quiet`) over interactive progress bars, animations, or ASCII frames.
 
 ---
 
@@ -144,6 +146,7 @@ When agents need comprehensive API documentation or usage flags, query these ver
 - NEVER use `sed` under any circumstance (`sed` is excluded from permission allowlists and strictly banned). For in-place replacement, ALWAYS use `sd`. For previewing line ranges, use `bat --paging=never -r <start>:<end> <file>` or `awk`.
 - NEVER access parent or sibling directory paths (e.g., `../<project>`) via shell commands without explicit user instruction.
 - NEVER suppress command failures using `|| true` or `2>/dev/null` unless explicitly requested. Let errors surface cleanly.
+- NEVER guess Tool Syntax or Configuration Schemas. Always run `<tool> --help` or query live documentation endpoints (`llms.txt`) before authoring configurations or invoking unfamiliar flags.
 
 ---
 

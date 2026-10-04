@@ -1,6 +1,6 @@
 ---
 trigger: always_on
-description: macOS Darwin CLI toolchain constraints, BSD compatibility traps, and banned command rules.
+description: macOS Darwin CLI toolchain constraints, BSD compatibility traps, banned command rules, and agent-friendly execution formats.
 ---
 
 # macOS Darwin Execution Rules & Environment Invariants
@@ -16,7 +16,8 @@ description: macOS Darwin CLI toolchain constraints, BSD compatibility traps, an
 - **Tabular / Large Data**: Use `duckdb -c "<SQL>"` for CSV, Parquet, or NDJSON.
 - **AST / Code Matching**: Use `ast-grep` (`sg`) for semantic structural search and rewrites.
 - **Formatting**: Shell scripts with `shfmt -i 2 -ci -w`, Markdown files with `vpx oxfmt`.
-- **CI Workflows**: ALWAYS validate GitHub workflows with `actionlint`.
+- **CI Workflows**: ALWAYS validate GitHub workflows with `actionlint` locally before staging.
+- **Agent-Friendly Output Formats**: Prioritize token-efficient, machine-readable formats (`--json`, `-f agent`, `--format json`, `--reporter=tap-flat`, `--no-color`, `--quiet`) over interactive terminal UI animations, spinners, or decorative frames.
 
 ---
 
@@ -28,6 +29,7 @@ description: macOS Darwin CLI toolchain constraints, BSD compatibility traps, an
 - **NEVER use dynamic subshell wrappers** or ternary shell hacks just to view files (e.g. `view_file_or_head=...`).
 - **NEVER access parent or sibling project directories** (e.g. `../<sibling>`) via shell commands without explicit user instruction.
 - **NEVER suppress command failures** with `|| true` or `2>/dev/null` unless explicitly requested. Let errors surface cleanly.
+- **NEVER guess Tool Syntax or Configuration Schemas**: Always inspect `<tool> --help` and verify current versions via official documentation or `llms.txt` before authoring configuration files or running unfamiliar flags.
 - **Local Git Only**: Use native bare `git` (NEVER `/usr/bin/git`). Do NOT use `gh` (GitHub CLI) to query remote PRs or issues.
 
 ---
