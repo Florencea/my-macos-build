@@ -1,12 +1,12 @@
 ---
 trigger: glob
 globs: "**/*.ts, **/*.tsx, **/*.mts, **/*.cts"
-description: Strict TypeScript type safety rules and @typescript-eslint strict/stylistic enforcement.
+description: Strict TypeScript type safety rules, compiler invariants, and Oxlint enforcement.
 ---
 
 # Strict TypeScript Rules & Type-Checked Invariants
 
-**CRITICAL:** All generated TypeScript code MUST pass `@typescript-eslint/strictTypeChecked` and `@typescript-eslint/stylisticTypeChecked` on the first attempt.
+**CRITICAL:** All generated TypeScript code MUST pass `oxlint` (zero warnings, zero errors) and compile cleanly under strict TypeScript (`tsc --noEmit`) on the first attempt.
 
 ## 1. Strict Boolean & Truthiness Expressions
 

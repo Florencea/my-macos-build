@@ -19,7 +19,7 @@ description: Rules for creating, structuring, and maintaining Antigravity Skills
 - **Skills (`configs/skills/<skill-name>/SKILL.md`)**:
   - `name` (required): Lowercase alphanumeric and hyphens only (1-64 chars), matching folder name.
   - `description` (required): Concise, high-density description detailing what the skill does and explicit trigger criteria (e.g. "Use when...").
-  - `compatibility` (recommended): E.g. `macOS Darwin, Zsh 5.9+, Vite+ 1.0.0+`.
+  - `compatibility` (recommended): E.g. `macOS Darwin, Zsh 5+, Node.js (Active LTS), Vite+`. (STRICTLY PROHIBITED to pin fragile minor/patch versions like `0.15+` or `1.0.0+`).
   - **Prohibited**: NEVER put `trigger: always_on` in skills.
 - **Rules (`configs/rules/<rule-name>.md`)**:
   - `trigger` (required): `always_on` or `glob`.
@@ -28,12 +28,14 @@ description: Rules for creating, structuring, and maintaining Antigravity Skills
 
 ---
 
-## 3. Official Best Practices
+## 3. Mandatory Authoring Invariants & Best Practices
 
+- **Live Documentation First**: Before writing, refactoring, or updating any technical skill or rule, the agent MUST query authoritative endpoints (`search_web`, `read_url_content`, `https://oxc.rs/llms.txt`, `https://viteplus.dev/llms-full.txt`) to verify the latest stable CLI flags, options, and paradigms. Guessing from stale model weights or pre-training memory is strictly prohibited.
+- **No Fragile Version Pinning**: NEVER hardcode minor, patch, or rapidly evolving version numbers in documentation, frontmatter, or headings. Reference major generations or LTS branches instead (e.g. `TypeScript 5+`, `Node.js (Active LTS)`). Instruct agents to verify exact installed versions dynamically via `<command> --version` or `<command> --help`.
 - **Keep Skills Focused**: 1 responsibility per skill.
 - **Use Scripts as Black Boxes**: Run `<tool> --help` or `<tool> -h` instead of inspecting script source codes.
 - **Include Decision Trees**: Structural logic flows for tool/architecture selection.
-- **Authoritative Documentation**: Verified LLM query endpoints (`llms-full.txt`, `llms.txt`, official documentation).
+- **Authoritative Documentation**: Always include verified LLM query endpoints (`llms-full.txt`, `llms.txt`, official documentation) for deep referencing.
 
 ---
 

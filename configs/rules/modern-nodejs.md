@@ -10,7 +10,7 @@ description: Modern Node.js pure ESM standards and zero-dependency built-in rule
 
 - **Pure ESM Only**: Always use pure ESM (`.mjs` or `"type": "module"` in `package.json`). Never write CommonJS (`require`, `module.exports`, `__dirname`, `__filename`).
 - **Node Protocol Imports**: ALWAYS prefix Node built-in modules with `node:` (e.g. `import fs from 'node:fs/promises'`).
-- **Native Path Resolution**: Use Node 20.11+ built-in `import.meta.dirname` and `import.meta.filename` instead of `fileURLToPath` workarounds.
+- **Native Path Resolution**: Use native built-in `import.meta.dirname` and `import.meta.filename` instead of `fileURLToPath` workarounds.
 - **Top-Level Await**: Use top-level `await` freely in ESM scripts without wrapper functions.
 
 ---

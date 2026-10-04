@@ -1,7 +1,7 @@
 ---
 name: node-project-architecture
 description: Architecture blueprint, rules splitting standards, and workspace layout for Node.js projects with package.json. Use when creating a new Node.js project, refactoring a bloated AGENTS.md, designing .agents/rules and .agents/skills, or configuring agent:* package scripts.
-compatibility: Node.js 22/24+, Vite+ 1.0.0+, Antigravity 2.0+
+compatibility: Node.js (Active LTS), Vite+, Antigravity
 ---
 
 # Node.js Project Architecture & Rules Splitting Guidelines
@@ -94,6 +94,9 @@ In `package.json`, define pre-approved `agent:*` tasks matching Antigravity's gl
   }
 }
 ```
+
+> [!TIP]
+> **Modern Toolchain Migration (Oxlint & Oxfmt)**: Monolithic ESLint, Prettier, and `@typescript-eslint` packages are deprecated. All modern Node.js repositories standardize on Rust-powered tools: **`oxlint`** (via `vp lint`) for sub-second static analysis and **`oxfmt`** (via `vpx oxfmt .` or `vp fmt`) for formatting. Full type checking is cleanly decoupled and performed via `tsc --noEmit` (or `vp check`).
 
 ---
 

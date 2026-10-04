@@ -1,12 +1,12 @@
 ---
 name: modern-typescript
-description: Strict TypeScript standards (TS V6/V7) and @typescript-eslint strict/stylistic type-checked linting rules for agentic development. Use when writing, refactoring, or type-checking TypeScript code, configuring tsconfig or typescript-eslint, and resolving type errors.
-compatibility: TypeScript 5.x/6.x/7.x, @typescript-eslint 8.x
+description: Strict TypeScript standards (TS 5+) and high-performance Oxlint + Oxfmt toolchain for agentic development. Use when writing, refactoring, or type-checking TypeScript code, configuring tsconfig or .oxlintrc.json, and resolving type errors.
+compatibility: TypeScript 5+, Oxlint, Oxfmt, Vite+
 ---
 
 # Strict TypeScript Guidelines
 
-**🚨 AGENT INSTRUCTION (CRITICAL):** This project strictly enforces `@typescript-eslint/strictTypeChecked` and `@typescript-eslint/stylisticTypeChecked`. You MUST write code that passes these strict linting rules on the first attempt to avoid wasting development cycles.
+**🚨 AGENT INSTRUCTION (CRITICAL):** This project strictly enforces zero-warning `oxlint` linting, automated `oxfmt` formatting, and strict compiler checks (`tsc --noEmit`). You MUST write clean, type-safe TypeScript code that passes on the first attempt without regressions.
 
 ## 1. Type Safety & Linting Decision Tree
 
@@ -35,11 +35,31 @@ Before generating code, apply this decision tree to prevent linting failures:
 
 ---
 
-## 2. TypeScript V6/V7 & Configuration
+## 2. High-Performance Oxlint & Oxfmt Toolchain
 
-- **TypeScript V6/V7 Compatibility**: TypeScript 7 (Go port) currently lacks the programmatic AST API required by `typescript-eslint`. To use TypeScript 7 for compilation alongside typed linting, install TypeScript 6 via an npm alias (`"typescript": "npm:@typescript/typescript6"`, `"@typescript/native": "npm:typescript@^7"`) and configure ESLint to use the TS 6 parser.
-- **Flat Config Type-Aware Linting**: Always use `tseslint.configs.strictTypeChecked` and `tseslint.configs.stylisticTypeChecked` in your `eslint.config.js` (Flat Config).
-- **Project Service**: Enable typed linting efficiently by setting `languageOptions.parserOptions.projectService: true` and `tsconfigRootDir: import.meta.dirname`. Do not use the legacy `project: true` unless required.
+Modern agentic projects eliminate legacy ESLint and Prettier overhead in favor of Rust-powered tools:
+
+- **Oxlint Integration (`vp lint` / `vpx oxlint`)**: Oxlint analyzes TypeScript ASTs up to 50–100x faster than ESLint. It catches syntax errors, bad idioms, and security vulnerabilities without blocking development loops.
+- **Agent Output Format (`--format=agent`)**: When verifying code in agentic loops, use the dedicated agent reporter:
+  ```bash
+  npx oxlint --deny-warnings --format=agent
+  ```
+- **Type Checking Decoupling (`tsc --noEmit`)**: Oxlint performs fast static linting; full type validation is handled separately by `tsc --noEmit` (or `vp check`). This decoupling avoids AST bridge bottlenecks and ensures seamless compatibility with modern TypeScript compiler generations.
+- **Oxfmt Automated Formatting (`vpx oxfmt` / `vp fmt`)**: Replaces Prettier completely. Runs instantly and enforces consistent styling:
+  - Format in-place: `vpx oxfmt` (or `vp fmt`)
+  - Check formatting without editing: `vpx oxfmt --check`
+  - Migrate Prettier configuration: `vpx oxfmt --migrate prettier`
+- **Configuration (`.oxlintrc.json`)**: Use standard JSON configuration when custom rule overrides are needed:
+  ```json
+  {
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": ["typescript", "unicorn"],
+    "rules": {
+      "typescript/no-explicit-any": "error",
+      "typescript/consistent-type-imports": "error"
+    }
+  }
+  ```
 
 ---
 
@@ -56,14 +76,12 @@ Before generating code, apply this decision tree to prevent linting failures:
 
 When agents need rule definitions or compiler option references, query these authoritative endpoints:
 
+- **Oxc & Oxlint Official Reference**:
+  - Oxc LLM Full Reference: `https://oxc.rs/llms.txt`
+  - Oxlint Official Documentation: `https://oxc.rs/docs/guide/usage/linter.html`
+  - Oxlint Rules Manual: `https://oxc.rs/docs/guide/usage/linter/rules.html`
+  - Oxfmt Formatter Guide: `https://oxc.rs/docs/guide/usage/formatter.html`
+  - Coding Agents Guide: `https://oxc.rs/docs/guide/usage/coding-agents.md`
 - **TypeScript Official Reference**:
   - Documentation: `https://www.typescriptlang.org/docs/`
   - TSConfig Options: `https://www.typescriptlang.org/tsconfig/`
-- **typescript-eslint Documentation**:
-  - Rules Index: `https://typescript-eslint.io/rules/`
-  - Key Strict Rules:
-    - `strict-boolean-expressions`: `https://typescript-eslint.io/rules/strict-boolean-expressions/`
-    - `no-floating-promises`: `https://typescript-eslint.io/rules/no-floating-promises/`
-    - `no-unsafe-assignment`: `https://typescript-eslint.io/rules/no-unsafe-assignment/`
-    - `consistent-type-imports`: `https://typescript-eslint.io/rules/consistent-type-imports/`
-    - `projectService` Guide: `https://typescript-eslint.io/packages/parser#projectservice`

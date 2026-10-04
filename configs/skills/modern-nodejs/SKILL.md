@@ -1,7 +1,7 @@
 ---
 name: modern-nodejs
-description: Modern Node.js standards (Node 22/24+ LTS, pure ESM, zero-dependency built-ins) and Vite+ runtime integration for agentic development. Use when writing Node.js scripts, managing dependencies, configuring runtimes, or building CLI utilities.
-compatibility: Node.js 24 LTS (v24.21.0+), Vite+ 1.0.0+
+description: Modern Node.js standards (Active LTS, pure ESM, zero-dependency built-ins) and Vite+ runtime integration for agentic development. Use when writing Node.js scripts, managing dependencies, configuring runtimes, or building CLI utilities.
+compatibility: Node.js (Active LTS), Vite+
 ---
 
 # Modern Node.js Guidelines
@@ -30,11 +30,11 @@ When building Node.js CLI tools and scripts, prioritize zero-dependency native b
 
 ---
 
-## 2. Modern Node.js Scripting Standards (Node 24 LTS)
+## 2. Modern Node.js Scripting Standards (Active LTS)
 
 - **Module System**: Always use pure ESM (`.mjs` or `"type": "module"` in `package.json`). Never write CommonJS (`require`, `module.exports`, `__dirname`, `__filename`).
 - **Node Protocol Imports**: ALWAYS prefix Node built-in modules with `node:` (e.g., `import fs from 'node:fs/promises'`).
-- **Path Resolution**: Use Node 20.11+ built-in `import.meta.dirname` and `import.meta.filename` instead of `fileURLToPath` workarounds.
+- **Path Resolution**: Use native built-in `import.meta.dirname` and `import.meta.filename` instead of `fileURLToPath` workarounds.
 - **Top-Level Await**: Use top-level `await` freely in ESM scripts without wrapper functions.
 - **Process & Execution Safety**: In `node:child_process`, prefer `execFileSync` or `spawnSync` with an array of arguments and `shell: false` to prevent shell injection. Signal failure by assigning `process.exitCode = 1` rather than abruptly calling `process.exit(1)`, allowing pending async streams and logs to flush.
 

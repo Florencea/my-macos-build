@@ -165,7 +165,7 @@ run_first_matching_script() {
 
 # Auto-format and format-check
 run_first_matching_script "format" "format" "agent:format" "format"
-run_first_matching_script "format-check" "formatting rules" "agent:lint:eslint" "format:check"
+run_first_matching_script "format-check" "formatting rules" "agent:lint" "agent:lint:oxlint" "agent:lint:eslint" "format:check"
 
 # Typecheck
 has_typecheck=0

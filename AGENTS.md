@@ -51,7 +51,18 @@ Before staging any files, all modified files must be formatted:
 
 ---
 
-## 5. Modular Domain Rules (`.agents/rules/`)
+## 5. Technical Authoring Standards
+
+- **Live Documentation First**:
+  - Before authoring or refactoring skills, technical rules, or tool configurations, agents MUST query authoritative endpoints (`search_web`, `https://oxc.rs/llms.txt`, `https://viteplus.dev/llms-full.txt`) to inspect the latest stable CLI flags, schemas, and paradigms.
+  - Never guess or rely solely on stale pre-training memory.
+- **No Fragile Version Pinning**:
+  - Never hardcode minor or patch versions (e.g. avoid `0.15+`, `v1.2.3`). Reference major generations or LTS branches instead (e.g. `Node.js (Active LTS)`, `TypeScript 5+`, `Vite+`).
+  - Instruct tools and users to query versions dynamically via `<tool> --version` or `<tool> --help`.
+
+---
+
+## 6. Modular Domain Rules (`.agents/rules/`)
 
 To keep this document lean, domain-specific rules are modularized and automatically injected via file globbing:
 

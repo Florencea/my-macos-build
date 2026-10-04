@@ -1,7 +1,7 @@
 ---
 name: macos-toolchain
 description: Pre-installed high-performance CLI tools, pre-approved agent scripts, macOS BSD constraints, shell execution rules, and idiomatic Zsh standards. Use when running terminal commands, writing or debugging shell scripts, inspecting CLI tools, or managing development workflows on macOS Darwin.
-compatibility: macOS Darwin, Zsh 5.9+, Vite+ 1.0.0+
+compatibility: macOS Darwin, Zsh 5+, Vite+
 ---
 
 # macOS Darwin Toolchain Rules & Agent Guidelines
@@ -58,50 +58,59 @@ In accordance with Antigravity Best Practices, treat local project helper script
 
 When agents need comprehensive API documentation or usage flags, query these verified authoritative endpoints using `read_url_content` or `curl -fsSL <url> | rg -C 10 '<topic>'`:
 
-- **Vite+ Toolchain (`vp`, `vpx`, `vpr`) v1.0.0**:
+- **Vite+ Toolchain (`vp`, `vpx`, `vpr`)**:
   - Full Manual: `https://viteplus.dev/llms-full.txt` (Comprehensive reference for global CLI, task runner, caching, and shims)
   - Topic Index: `https://viteplus.dev/llms.txt`
+  - Documentation: `https://viteplus.dev/guide.md`
+  - CLI Help: `vp help` / `vp --help`
 - **Oxc (`oxfmt`, `oxlint`)**:
   - LLM Reference: `https://oxc.rs/llms.txt` (Formatting and linting rules)
-- **ast-grep (`sg`) v0.45.3**:
+  - Coding Agents: `https://oxc.rs/docs/guide/usage/coding-agents.md`
+  - CLI Help: `npx oxlint --help`, `npx oxfmt --help`
+- **ast-grep (`sg`)**:
   - LLM Reference: `https://ast-grep.github.io/llms.txt`
   - Guide: `https://ast-grep.github.io/guide/`
-- **DuckDB v1.5.6**:
+  - CLI Help: `sg --help`
+- **DuckDB**:
   - LLM Reference: `https://duckdb.org/llms.txt`
   - Documentation: `https://duckdb.org/docs/`
-- **ripgrep (`rg`) v15.2.0**:
+  - CLI Help: `duckdb --help`
+- **ripgrep (`rg`)**:
   - User Guide: `https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md`
   - CLI Help: `rg --help`
-- **fd v10.5.0**:
+- **fd**:
   - Documentation: `https://github.com/sharkdp/fd`
   - CLI Help: `fd --help`
-- **bat v0.26.1**:
+- **bat**:
   - Documentation: `https://github.com/sharkdp/bat`
   - CLI Help: `bat --help`
-- **jq v1.8.2**:
+- **jq**:
   - Manual: `https://jqlang.github.io/jq/manual/`
   - CLI Help: `jq --help`
-- **yq (mikefarah) v4.54.1**:
+- **yq (mikefarah)**:
   - Documentation: `https://mikefarah.gitbook.io/yq`
   - CLI Help: `yq --help`
-- **sd v1.0.0**:
+- **sd**:
   - Documentation: `https://github.com/chmln/sd`
   - CLI Help: `sd --help`
-- **actionlint v1.7.12**:
+- **actionlint**:
   - Usage: `https://github.com/rhysd/actionlint/blob/main/docs/usage.md`
   - CLI Help: `actionlint -help`
-- **hyperfine v1.20.0**:
+- **hyperfine**:
   - Documentation: `https://github.com/sharkdp/hyperfine`
   - CLI Help: `hyperfine --help`
-- **shfmt v3.14.1**:
+- **shfmt**:
   - Documentation: `https://github.com/mvdan/sh`
   - CLI Help: `shfmt --help`
-- **FFmpeg v9.0.2**:
+- **FFmpeg**:
   - Documentation: `https://ffmpeg.org/ffmpeg.html`
-- **yt-dlp v2026.08.19**:
+  - CLI Help: `ffmpeg -h`
+- **yt-dlp**:
   - Usage: `https://github.com/yt-dlp/yt-dlp#usage-and-options`
-- **gifski v1.34.0**:
+  - CLI Help: `yt-dlp --help`
+- **gifski**:
   - Documentation: `https://gif.ski/`
+  - CLI Help: `gifski --help`
 
 ---
 
@@ -111,7 +120,7 @@ When agents need comprehensive API documentation or usage flags, query these ver
 - **Frictionless Whitelist Priority**: Commands matching `vp run agent:*` and `vpr agent:*` are pre-approved in the global security whitelist (`command(regex:vp run agent:.*)` and `command(regex:vpr agent:.*)`) to bypass human approval prompts. All projects are managed via Vite+ (`vp` / `vpr`); `npm run` is deprecated and removed from the whitelist. ALWAYS prefer `vp run agent:*` (or `vpr agent:*`) over direct CLI tools or non-whitelisted commands.
 - **Pre-Approved Whitelist Reference**:
   - Verification: `vp run agent:verify:gate` (or `vpr agent:verify:gate`), `vp run agent:verify:inner`, `vp run agent:verify:unit`
-  - Linting & Formatting: `vp run agent:format` (or `vpr agent:format`), `vp run agent:lint`, `vp run agent:lint:fix`, `vp run agent:lint:ci`, `vp run agent:lint:eslint`, `vp run agent:lint:eslint:fix`, `vp run agent:lint:tailwind`, `vp run agent:lint:tailwind:fix`
+  - Linting & Formatting: `vp run agent:format` (or `vpr agent:format`), `vp run agent:lint`, `vp run agent:lint:fix`, `vp run agent:lint:ci`, `vp run agent:lint:oxlint`, `vp run agent:lint:oxlint:fix`, `vp run agent:lint:tailwind`, `vp run agent:lint:tailwind:fix` (Note: Prettier and ESLint are deprecated; all projects standardize on Oxlint via `vp lint` and Oxfmt via `vp fmt` / `vpx oxfmt`)
   - Type Checking: `vp run agent:typecheck` (or `vpr agent:typecheck`)
   - Testing: `vp run agent:test:unit` (or `vpr agent:test:unit`), `vp run agent:test:e2e`
 - **Fallback**: Only fall back to standard project scripts or direct CLI tools when no matching `agent:*` script is defined in `package.json`.
