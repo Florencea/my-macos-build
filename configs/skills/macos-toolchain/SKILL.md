@@ -129,7 +129,8 @@ When agents need comprehensive API documentation or usage flags, query these ver
 
 ## 5. Local Git & Subshell Rules
 
-- Use native `/usr/bin/git`.
+- Use native bare `git` (NEVER `/usr/bin/git`).
+- AI direct commits are globally blocked across all repositories by `~/.config/git/hooks/pre-commit` (`ANTIGRAVITY_AGENT=1`). Always stage changes with `git add` and output commit commands for manual user execution.
 - Pure local git workflows only (commit suggestions, diff, branch, rebase).
 - DO NOT use `gh` (GitHub CLI). Do not query remote issues or PRs.
 
@@ -137,6 +138,7 @@ When agents need comprehensive API documentation or usage flags, query these ver
 
 ## 6. Shell Execution Anti-Patterns (STRICTLY FORBIDDEN)
 
+- NEVER prefix commands with absolute paths (e.g., `/usr/bin/git`, `/bin/zsh`). Always invoke bare command names (e.g., `git`, `zsh`, `vp`, `node`) relying on `$PATH` to preserve security allowlist matching.
 - NEVER use `eval` or dynamic variable execution (e.g., `cmd="..."; eval $cmd`). Always execute commands directly.
 - NEVER use dynamic subshell wrappers or ternary shell hacks just to view files (e.g., `view_file_or_head=...`).
 - NEVER use `sed` under any circumstance (`sed` is excluded from permission allowlists and strictly banned). For in-place replacement, ALWAYS use `sd`. For previewing line ranges, use `bat --paging=never -r <start>:<end> <file>` or `awk`.

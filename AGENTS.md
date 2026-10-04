@@ -15,16 +15,19 @@ This document outlines the core development workflow, code formatting standards,
 
 ---
 
-## 2. Git Commit Rules
+## 2. Git Commit & Command Execution Rules
 
-- **AI Direct Commits Prohibited**:
-  - The repository enforces a pre-commit hook that rejects direct commits by AI agents (`ANTIGRAVITY_AGENT=1`).
+- **AI Direct Commits Globally Prohibited**:
+  - The entire machine enforces a global Git hook (`~/.config/git/hooks/pre-commit`) and global rule `macos-execution.md` (`always_on`) that reject direct commits by AI agents (`ANTIGRAVITY_AGENT=1`).
   - Agents must **never** execute `git commit`.
-  - Workflow for agents:
-    1. Apply code changes.
-    2. Format modified files (`shfmt` for shell scripts, `oxfmt` via `vpx oxfmt` for markdown).
+  - Mandatory workflow for agents:
+    1. Apply code changes and verify.
+    2. Format modified files (`shfmt` for shell scripts, `vpx oxfmt` for markdown).
     3. Stage changes using `git add <files>`.
     4. Provide the exact `git commit -m "..."` command for manual execution by the user.
+- **Bare Command Invocation (No Path Prefixes)**:
+  - All terminal commands executed by agents must strictly use bare command names (e.g. `git`, `vp`, `node`, `shfmt`) without absolute path prefixes (e.g. NEVER `/usr/bin/git`).
+  - Commands rely on `$PATH` to ensure compatibility with Antigravity security allowlists.
 - **Commit Message Convention**:
   - Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
   - Common types: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`.

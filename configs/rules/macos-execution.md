@@ -22,12 +22,13 @@ description: macOS Darwin CLI toolchain constraints, BSD compatibility traps, an
 
 ## 2. Shell Execution Anti-Patterns (STRICTLY FORBIDDEN)
 
+- **NEVER use Absolute Path Prefixes (Bare Commands Only)**: STRICTLY PROHIBITED to prefix CLI commands with absolute paths (e.g., `/usr/bin/git`, `/bin/zsh`, `/usr/bin/python`, `/usr/local/bin/...`, `/opt/homebrew/bin/...`). ALWAYS execute bare command names directly (e.g., `git`, `zsh`, `vp`, `node`, `rg`, `fd`) relying on `$PATH`. Prefixing absolute paths breaks Antigravity's security allowlist matching and triggers intrusive confirmation prompts.
 - **NEVER use `sed`**: `sed` is completely prohibited and excluded from permission allowlists. For text replacements, use `sd`. For previewing lines, use `bat` or `awk`.
 - **NEVER use `eval`** or dynamic variable execution (e.g. `cmd="..."; eval $cmd`). Execute commands directly.
 - **NEVER use dynamic subshell wrappers** or ternary shell hacks just to view files (e.g. `view_file_or_head=...`).
 - **NEVER access parent or sibling project directories** (e.g. `../<sibling>`) via shell commands without explicit user instruction.
 - **NEVER suppress command failures** with `|| true` or `2>/dev/null` unless explicitly requested. Let errors surface cleanly.
-- **Local Git Only**: Use native `/usr/bin/git`. Do NOT use `gh` (GitHub CLI) to query remote PRs or issues.
+- **Local Git Only**: Use native bare `git` (NEVER `/usr/bin/git`). Do NOT use `gh` (GitHub CLI) to query remote PRs or issues.
 
 ---
 
@@ -55,3 +56,18 @@ description: macOS Darwin CLI toolchain constraints, BSD compatibility traps, an
 - **Word Splitting**: Zsh does NOT split unquoted variables on whitespace by default. Use parameter expansion flags like `"${(@s/:/)PATH}"` when splitting is needed.
 - **Path Resolution**: Prefer native Zsh modifiers: `${file:A}` (abs), `${file:h}` (dir), `${file:t}` (name), `${file:e}` (ext), `${file:r:t}` (basename).
 - **Glob Qualifiers**: Native qualifiers: `*(.)` (files), `*(/)` (dirs), `*(N)` (nullglob), `*(om)` (by mtime).
+
+---
+
+## 5. Global Git Workflow (AI Direct Commits Prohibited)
+
+- **Global Pre-Commit Hook Invariant**:
+  - The system enforces a global Git hook (`~/.config/git/hooks/pre-commit`) via `core.hooksPath`.
+  - When `ANTIGRAVITY_AGENT=1`, any direct `git commit` invocation is unconditionally rejected by the hook.
+  - Individual repositories DO NOT need to declare this rule in their local `AGENTS.md`; it applies machine-wide across all workspaces.
+- **Mandatory Workflow for AI Agents**:
+  1. Apply code changes and verify correctness.
+  2. Format modified files (`shfmt` for shell, `vpx oxfmt` for markdown/code).
+  3. Stage verified changes using `git add <files>`.
+  4. Output the exact `git commit -m "..."` command (following Conventional Commits) for manual execution by the user.
+  5. NEVER execute `git commit` under any circumstance.

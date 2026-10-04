@@ -52,7 +52,10 @@ Root `AGENTS.md` is loaded unconditionally (`always_on`) for the entire workspac
 
 ### What Is Already Handled Globally:
 
-Do NOT copy-paste standard TypeScript linting rules, Node 24 pure ESM guidelines, React 19 paradigms, or Tailwind CSS v4 rules into project `AGENTS.md`. These are automatically provided by machine-wide global rules in `~/.gemini/config/rules/` with file glob triggers (`**/*.ts`, `**/*.tsx`, `**/*.mjs`).
+Do NOT copy-paste Git commit prohibitions, TypeScript linting rules, Node ESM guidelines, React paradigms, or Tailwind CSS rules into project `AGENTS.md`. These are automatically handled machine-wide:
+
+- **Git Commit Prohibitions**: Globally guarded by `~/.config/git/hooks/pre-commit` and enforced by global rule `macos-execution.md` (`trigger: always_on`). Projects never need to redeclare commit restrictions.
+- **Language & Runtime Rules**: Automatically provided by machine-wide global rules in `~/.gemini/config/rules/` with file glob triggers (`**/*.ts`, `**/*.tsx`, `**/*.mjs`).
 
 ---
 
