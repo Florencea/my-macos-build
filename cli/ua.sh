@@ -14,6 +14,8 @@ for cmd in brew curl git jq vp; do
   fi
 done
 
+PROJECTS_DIR="${0:A:h:h:h}"
+
 # 2. Upgrade Homebrew packages
 cd "$HOME"
 # Disable greedy upgrades to prevent updating auto-updating apps (e.g. google-chrome)
@@ -21,11 +23,16 @@ HOMEBREW_NO_ENV_HINTS=1 HOMEBREW_NO_ASK=1 HOMEBREW_AUTO_UPDATE_QUIET=1 HOMEBREW_
 HOMEBREW_NO_ENV_HINTS=1 brew cleanup
 
 # 3. Update Node.js & Vite+ Toolchain (Active LTS via vp)
-# Pipe through cat to bypass repetitive interactive TTY banner while preserving output
 vp upgrade | cat
-vp env default lts | cat
-vp env install lts | cat
-vp env clean | cat
+
+OLD_NODE="$(vp node -v 2>/dev/null || node -v 2>/dev/null || echo "")"
+install_out="$(vp env install lts 2>&1 | cat)"
+NEW_NODE="$(vp node -v 2>/dev/null || node -v 2>/dev/null || echo "")"
+
+if [[ -n "$OLD_NODE" && "$OLD_NODE" != "$NEW_NODE" ]]; then
+  echo "$install_out"
+  vp env clean 2>&1 | cat
+fi
 
 # Clean up legacy standalone Node.js if present
 if [[ -d "$HOME/.local/opt/node" ]]; then
@@ -33,24 +40,44 @@ if [[ -d "$HOME/.local/opt/node" ]]; then
   rmdir "$HOME/.local/opt" 2>/dev/null || true
 fi
 
-CURRENT_NODE="$(vp node -v 2>/dev/null || node -v 2>/dev/null || echo "none")"
-CURRENT_VP="$(vp --version 2>/dev/null | rg '^vp v' || echo "")"
-printf "\n%s\nnode: %s\n\n" "$CURRENT_VP" "$CURRENT_NODE"
+printf "\nnode: %s\n\n" "$NEW_NODE"
 
 # 4. Sync git projects in workspace
-PROJECTS_DIR="${0:A:h:h:h}"
-
 if cd "$PROJECTS_DIR"; then
+  TMPDIR="$(mktemp -d -t ua_sync.XXXXXX)"
+  trap 'rm -rf "$TMPDIR"' EXIT INT TERM
+
+  local -i total=0
   for PROJECT in *(N/); do
     if [[ -d "$PROJECT/.git" ]]; then
+      ((total += 1))
       (
-        if git -C "$PROJECT" pull --all --quiet; then
-          printf "Sync %s ok\n" "$PROJECT"
+        local out
+        if out="$(git -C "$PROJECT" pull --all 2>&1)"; then
+          if [[ "$out" =~ "Updating |Fast-forward" ]]; then
+            printf "Sync %s updated\n" "$PROJECT"
+            touch "$TMPDIR/${PROJECT}_updated"
+          fi
+          touch "$TMPDIR/${PROJECT}_ok"
         else
           printf "Sync %s failed\n" "$PROJECT" >&2
+          touch "$TMPDIR/${PROJECT}_failed"
         fi
       ) &
     fi
   done
   wait
+
+  local -a updated_files=("$TMPDIR"/*_updated(N))
+  local -a failed_files=("$TMPDIR"/*_failed(N))
+  local -i updated_count=$#updated_files
+  local -i failed_count=$#failed_files
+
+  if ((failed_count == 0)); then
+    if ((updated_count == 0)); then
+      printf "Sync workspace repositories ok (%d projects up to date)\n" "$total"
+    else
+      printf "Sync workspace repositories ok (%d updated, %d up to date)\n" "$updated_count" "$((total - updated_count))"
+    fi
+  fi
 fi
