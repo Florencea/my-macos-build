@@ -15,38 +15,52 @@ LOSSY=false
 local -a TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --fps)
-      if [[ $# -lt 2 ]]; then
-        echo "Error: --fps requires a value" >&2
-        exit 1
-      fi
-      FPS="$2"
-      shift 2
-      ;;
-    -w | --width)
-      if [[ $# -lt 2 ]]; then
-        echo "Error: -w/--width requires a value" >&2
-        exit 1
-      fi
-      WIDTH="$2"
-      shift 2
-      ;;
-    -q | --quality)
-      if [[ $# -lt 2 ]]; then
-        echo "Error: -q/--quality requires a value" >&2
-        exit 1
-      fi
-      QUALITY="$2"
-      shift 2
-      ;;
-    -l | --lossy)
-      LOSSY=true
-      shift 1
-      ;;
-    *)
-      TEMP_ARGS+=("$1")
-      shift 1
-      ;;
+  -h | --help)
+    echo "mkgif: High-quality Gif Maker via gifski"
+    echo "Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]"
+    echo "Options:"
+    echo "  -w, --width <num>     Output gif width in pixels (default: 720)"
+    echo "  --fps <num>           Frame rate per second (default: 10)"
+    echo "  -q, --quality <num>   Gifski encoding quality 1-100 (default: 70)"
+    echo "  -l, --lossy           Enable lossy optimization"
+    echo "  -h, --help            Show this help message"
+    echo "Examples:"
+    echo "  mkgif 'input.mp4' 01:02:08 11.0"
+    echo "  mkgif JoSY6AWKqHs 00:01:59 20 --fps 10 -w 720"
+    exit 0
+    ;;
+  --fps)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: --fps requires a value" >&2
+      exit 1
+    fi
+    FPS="$2"
+    shift 2
+    ;;
+  -w | --width)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: -w/--width requires a value" >&2
+      exit 1
+    fi
+    WIDTH="$2"
+    shift 2
+    ;;
+  -q | --quality)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: -q/--quality requires a value" >&2
+      exit 1
+    fi
+    QUALITY="$2"
+    shift 2
+    ;;
+  -l | --lossy)
+    LOSSY=true
+    shift 1
+    ;;
+  *)
+    TEMP_ARGS+=("$1")
+    shift 1
+    ;;
   esac
 done
 

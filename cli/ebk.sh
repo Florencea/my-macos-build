@@ -6,7 +6,14 @@ set -euo pipefail
 # Usage: ebk
 # Example: ebk
 
-# 1. Check required tools
+# 1. Parse arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "ebk: Backup and sync browser extension configuration files"
+  echo "Usage: ebk"
+  exit 0
+fi
+
+# 2. Check required tools
 for cmd in git jq; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2

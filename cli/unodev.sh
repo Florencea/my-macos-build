@@ -6,7 +6,14 @@ set -euo pipefail
 # Usage: unodev
 # Example: unodev
 
-# 1. Check required tools
+# 1. Parse arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "unodev: Sync and update Node.js version in package.json engines.node for all local workspace projects"
+  echo "Usage: unodev"
+  exit 0
+fi
+
+# 2. Check required tools
 for cmd in git jq vp; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2

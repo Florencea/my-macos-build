@@ -7,6 +7,13 @@ set -euo pipefail
 # Example: clall ghp_000000000000000000000000000000000000
 
 # 1. Check arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "clall: Clone all GitHub Repositories for the authenticated user"
+  echo "Usage: clall [GITHUB_ACCESS_TOKEN]"
+  echo "       clall ghp_000000000000000000000000000000000000"
+  exit 0
+fi
+
 TOKEN="${1:-}"
 if [[ -z "$TOKEN" ]]; then
   echo "clall: Clone all GitHub Repositories" >&2

@@ -6,7 +6,14 @@ set -euo pipefail
 # Usage: mmb
 # Example: mmb
 
-# 1. Check required tools
+# 1. Parse arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "mmb: Open current my-macos-build workspace in Visual Studio Code"
+  echo "Usage: mmb"
+  exit 0
+fi
+
+# 2. Check required tools
 for cmd in code; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2

@@ -7,7 +7,14 @@ setopt POSIX_TRAPS
 # Usage: up
 # Example: up
 
-# 1. Check required tools
+# 1. Parse arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "up: Check and update Node.js package dependencies with clean spinner feedback"
+  echo "Usage: up"
+  exit 0
+fi
+
+# 2. Check required tools
 for cmd in git jq vp vpr vpx; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2

@@ -7,6 +7,13 @@ set -euo pipefail
 # Example: rea 'input'
 
 # 1. Parse arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "rea: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track"
+  echo "Usage: rea [input_dir]"
+  echo "       rea 'input'"
+  exit 0
+fi
+
 INPUT_DIR="${1:-}"
 if [[ -z "$INPUT_DIR" ]]; then
   echo "rea: ASS-Combiner: combine .cht.ass into original mkv as default subtitle track, move up, and clean up directory" >&2

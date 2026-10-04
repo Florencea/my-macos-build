@@ -13,18 +13,29 @@ QUALITY=50
 local -a TEMP_ARGS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -q | --quality)
-      if [[ $# -lt 2 ]]; then
-        echo "Error: --quality requires a value" >&2
-        exit 1
-      fi
-      QUALITY="$2"
-      shift 2
-      ;;
-    *)
-      TEMP_ARGS+=("$1")
-      shift 1
-      ;;
+  -h | --help)
+    echo "mkclp: Clip Maker (Supports --quality [value], local files and YouTube videos)"
+    echo "Usage: mkclp [--quality 50] [input_file_or_url] [from(hh:mm:ss or sec)] [during(sec)]"
+    echo "Options:"
+    echo "  -q, --quality <num>   Set video quality/bitrate factor (default: 50)"
+    echo "  -h, --help            Show this help message"
+    echo "Examples:"
+    echo "  mkclp 'input.mp4' 01:02:08 11.0"
+    echo "  mkclp JoSY6AWKqHs 00:01:59 2 --quality 45"
+    exit 0
+    ;;
+  -q | --quality)
+    if [[ $# -lt 2 ]]; then
+      echo "Error: --quality requires a value" >&2
+      exit 1
+    fi
+    QUALITY="$2"
+    shift 2
+    ;;
+  *)
+    TEMP_ARGS+=("$1")
+    shift 1
+    ;;
   esac
 done
 

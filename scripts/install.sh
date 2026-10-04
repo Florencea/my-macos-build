@@ -182,16 +182,22 @@ fi
 
 local -a skills=()
 if [[ -d "$REPO_DIR/configs/skills" ]]; then
-  for skill_file in "$REPO_DIR/configs/skills"/*.md(N); do
-    skills+=("${skill_file:t:r}")
+  for skill_dir in "$REPO_DIR/configs/skills"/*(/N); do
+    skills+=("${skill_dir:t}")
   done
-else
+fi
+
+if ((${#skills[@]} == 0)); then
   skills=(macos-toolchain modern-nodejs modern-react-tailwind modern-typescript)
 fi
 
 for skill in "${skills[@]}"; do
   mkdir -p "$HOME/.gemini/config/skills/$skill"
-  fetch_file "configs/skills/$skill.md" "$HOME/.gemini/config/skills/$skill/SKILL.md"
+  if [[ -n "${REPO_DIR:-}" && -d "$REPO_DIR/configs/skills/$skill" ]]; then
+    cp -R "$REPO_DIR/configs/skills/$skill/." "$HOME/.gemini/config/skills/$skill/"
+  else
+    fetch_file "configs/skills/$skill/SKILL.md" "$HOME/.gemini/config/skills/$skill/SKILL.md"
+  fi
 done
 
 # 8. Setup CLI Symlinks

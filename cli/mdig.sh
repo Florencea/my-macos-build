@@ -7,6 +7,13 @@ set -euo pipefail
 # Example: mdig 'is1-ssl.mzstatic.com'
 
 # 1. Check arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "mdig: Multi-dig: Check DNS records on different DNS servers at once"
+  echo "Usage: mdig [domain]"
+  echo "       mdig 'is1-ssl.mzstatic.com'"
+  exit 0
+fi
+
 DOMAIN="${1:-}"
 if [[ -z "$DOMAIN" ]]; then
   echo "mdig: Multi-dig: Check DNS records on different DNS servers at once." >&2

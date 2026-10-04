@@ -6,7 +6,14 @@ set -euo pipefail
 # Usage: ua
 # Example: ua
 
-# 1. Check required tools
+# 1. Parse arguments
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  echo "ua: Upgrade Homebrew formulas, update Node.js (Active LTS via Vite+), and sync git repositories"
+  echo "Usage: ua"
+  exit 0
+fi
+
+# 2. Check required tools
 for cmd in brew curl git jq vp; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
