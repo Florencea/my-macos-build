@@ -1,25 +1,19 @@
 # Agent Guidelines & Workflow Rules
 
-This document outlines the development workflow, code formatting standards, and commit rules for AI agents operating in this repository.
+This document outlines the core development workflow, code formatting standards, and commit rules for AI agents operating in this repository.
 
-## 1. Code Formatting Standards
+## 1. Quick Architecture Map
 
-Before staging or committing any files, all modified files must be formatted using the following tools:
+| Layer               | Path                            | Responsibility                                                      |
+| :------------------ | :------------------------------ | :------------------------------------------------------------------ |
+| **CLI Tools**       | `cli/*.sh`                      | Executable user-facing shell commands (symlinked to `~/.local/bin`) |
+| **Dotfiles**        | `configs/bash/`, `configs/zsh/` | Shell configuration parity, aliases, and completions                |
+| **Global Rules**    | `configs/rules/`                | Global Antigravity rules deployed to `~/.gemini/config/rules/`      |
+| **Global Skills**   | `configs/skills/`               | Global Antigravity skills deployed to `~/.gemini/config/skills/`    |
+| **Installer**       | `scripts/install.sh`            | Idempotent macOS environment setup and dotfile installer            |
+| **Workspace Rules** | `.agents/rules/`                | Modular project rules triggered via file globbing                   |
 
-- **Shell Scripts** (`cli/*.sh`, `scripts/*.sh`, `configs/bash/*`, `configs/zsh/*`):
-  - Formatter: `shfmt`
-  - Command:
-    ```bash
-    shfmt -i 2 -w <modified-files>
-    ```
-  - Configuration: 2-space indentation.
-
-- **Markdown Files** (`*.md`):
-  - Formatter: `oxfmt` (via Vite+)
-  - Command:
-    ```bash
-    vpx oxfmt <modified-files>
-    ```
+---
 
 ## 2. Git Commit Rules
 
@@ -31,93 +25,36 @@ Before staging or committing any files, all modified files must be formatted usi
     2. Format modified files (`shfmt` for shell scripts, `oxfmt` via `vpx oxfmt` for markdown).
     3. Stage changes using `git add <files>`.
     4. Provide the exact `git commit -m "..."` command for manual execution by the user.
-
 - **Commit Message Convention**:
   - Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
   - Common types: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`.
-  - Common scopes: `cli`, `configs`, `docs`, `media`.
-  - Examples:
-    - `refactor(cli): optimize unodev with jq and remove npm and .node-version dependencies`
-    - `style: format shell scripts using shfmt (-i 2)`
-    - `fix(cli): scale yt-dlp source height by width`
+  - Common scopes: `cli`, `configs`, `docs`, `skills`, `rules`.
 
-## 3. CLI Script Management Rules
+---
 
-When adding, renaming, or removing CLI tools:
+## 3. Code Formatting Standards
 
-- **Naming & Location**:
-  - Store executable shell scripts under `cli/<command>.sh`.
-  - Use the shebang `#!/bin/zsh` and enable strict mode (`set -o errexit`, `set -o nounset`, `set -o pipefail`).
-  - Ensure the script has executable permissions: `chmod +x cli/<command>.sh`.
+Before staging any files, all modified files must be formatted:
 
-- **Symlinks in `~/.local/bin`**:
-  - All CLI scripts are exposed system-wide without the `.sh` extension via `$HOME/.local/bin`.
-  - **Adding**: Create a symlink without extension:
-    ```bash
-    ln -sf "$PWD/cli/<command>.sh" "$HOME/.local/bin/<command>"
-    ```
-  - **Removing / Renaming**: Delete the corresponding symlink:
-    ```bash
-    rm -f "$HOME/.local/bin/<command>"
-    ```
+- **Shell Scripts** (`cli/*.sh`, `scripts/*.sh`, `configs/bash/*`, `configs/zsh/*`):
+  - Formatter: `shfmt -i 2 -ci -w <files>`
+- **Markdown Files** (`*.md`):
+  - Formatter: `vpx oxfmt <files>`
 
-- **Mandatory `--help` & `-h` Support**:
-  - All CLI scripts under `cli/<command>.sh` MUST implement `-h` and `--help` option parsing at the beginning of the script.
-  - When invoked with `-h` or `--help`, the script must output Description, Usage, Options (if applicable), and Examples, and cleanly exit with code 0 (`exit 0`).
-  - This ensures agents and users can safely inspect usage without triggering unintended mutations or long-running executions.
+---
 
-## 4. Shell Configuration Rules
-
-The repository provides unified environment parity across **Zsh** and **Bash**:
-
-- **Directory Layout**:
-  - `configs/bash/`: `bash_profile`, `bashrc` (deployed to `~/.bash_profile`, `~/.bashrc`).
-  - `configs/zsh/`: `zshenv`, `zprofile`, `zshrc` (deployed to `~/.zshenv`, `~/.zprofile`, `~/.zshrc`).
-
-- **Environment & Feature Parity**:
-  When updating environment variables, PATH priorities, or aliases, keep shells aligned:
-  - **Homebrew**: Initialize `brew shellenv`.
-  - **PATH Priority**: Prepend `$HOME/.local/bin` and `$HOME/.local/share/vite-plus/bin`.
-  - **Node.js & Toolchains**: Managed globally via Vite+ (`vp` CLI, `vpr` task runner, shims in `$HOME/.local/share/vite-plus/bin`, environment via `$HOME/.config/vite-plus/env`). Tasks and scripts are executed using `vp run` or `vpr` rather than `npm run`.
-  - **Aliases**: Maintain common shortcuts (`nr`, `la`, `ll`).
-
-- **Idempotency Standards**:
-  - All shell configurations and installer tasks must be idempotent (safe to run repeatedly without side effects or duplicating `$PATH`).
-  - In Zsh, enforce uniqueness using `typeset -U path PATH`.
-  - In Bash, check before prepending: `[[ ":$PATH:" != *":$p:"* ]]`.
-  - In `scripts/install.sh`, use `fetch_file` or overwrite semantics rather than unbounded appends.
-
-## 5. Language & Planning Standards
+## 4. Language & Planning Standards
 
 - **Traditional Chinese for Plans and Responses**:
   - All implementation plans (`/plan`), walkthrough artifacts, design documents, and conversational responses generated by AI agents must strictly be written in **Traditional Chinese (繁體中文)**.
-  - Technical terms, CLI commands, package names, code symbols, and file paths should retain their standard casing and English identifiers (e.g. `brew upgrade`, `vite-plus`, `package.json`, `~/.local/bin`).
-  - When updating project documentation or agent guidelines, maintain consistency in terminology and clear, idiomatic phrasing.
+  - Technical terms, CLI commands, package names, code symbols, and file paths retain their standard casing and English identifiers (e.g. `brew upgrade`, `vite-plus`, `package.json`, `~/.local/bin`).
 
-## 6. Antigravity Skill Authoring & Management Rules
+---
 
-When creating, modifying, or maintaining agent skills in this repository:
+## 5. Modular Domain Rules (`.agents/rules/`)
 
-- **Canonical Directory Layout**:
-  - All skills must strictly reside in `configs/skills/<skill-name>/SKILL.md`. Flat `.md` files under `configs/skills/` are strictly prohibited.
-  - Optional subdirectories inside `<skill-name>/`:
-    - `references/`: Extended manuals, API specifications, and LLM text dumps.
-    - `scripts/`: Executable helper automation scripts.
-    - `examples/`: Reference implementations and templates.
-    - `resources/`: Static configuration schemas and assets.
+To keep this document lean, domain-specific rules are modularized and automatically injected via file globbing:
 
-- **YAML Frontmatter Specification**:
-  - `name` (required): Lowercase alphanumeric and hyphens only (1-64 chars). Must match `<skill-name>` folder name.
-  - `description` (required): Concise, high-density description detailing what the skill does and explicit trigger criteria (e.g. "Use when...").
-  - `compatibility` (recommended): Clear system environment constraints (e.g. `macOS Darwin, Zsh 5.9+, Vite+ 1.0.0+`).
-  - **Prohibited Attributes**: Strictly FORBIDDEN to include `trigger: always_on` in skills (that is a Rule-only attribute). Skills rely on progressive disclosure via `description`.
-
-- **Official Skill Best Practices ([Antigravity Best Practices](https://antigravity.google/docs/skills/#best-practices))**:
-  - **Keep Skills Focused**: Each skill must address a single domain or workflow without bloating into a catch-all document.
-  - **Use Scripts as Black Boxes**: When interacting with CLI tools or project helper scripts (`cli/*.sh`), agents must run `<tool> --help` or `<tool> -h` rather than inspecting entire script source codes into the context.
-  - **Include Decision Trees**: Provide structural logic flows guiding tool, framework, and API choices (e.g. `ast-grep` vs `rg` vs `fd`, `node:util` vs external packages).
-  - **Authoritative Documentation**: Include verified LLM query endpoints (`llms-full.txt`, `llms.txt`, official documentation) with accurate tool version numbers.
-
-- **Installer & Deployment Synchronization**:
-  - When adding, renaming, or removing skills, always update the `skills=(...)` fallback array in `scripts/install.sh`.
-  - Ensure new skills are deployed to `$HOME/.gemini/config/skills/<skill-name>/SKILL.md` after changes.
+- **CLI Scripts**: [`.agents/rules/cli-scripts.md`](./.agents/rules/cli-scripts.md) (triggers on `cli/*.sh`)
+- **Shell & Installer**: [`.agents/rules/shell-configs.md`](./.agents/rules/shell-configs.md) (triggers on `configs/bash/*`, `configs/zsh/*`, `scripts/*.sh`)
+- **Skills & Rules**: [`.agents/rules/skills-authoring.md`](./.agents/rules/skills-authoring.md) (triggers on `configs/skills/**`, `configs/rules/**`)

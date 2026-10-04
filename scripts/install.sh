@@ -180,6 +180,22 @@ else
   done
 fi
 
+local -a rules=()
+if [[ -d "$REPO_DIR/configs/rules" ]]; then
+  for rule_file in "$REPO_DIR/configs/rules"/*.md(N); do
+    rules+=("${rule_file:t:r}")
+  done
+fi
+
+if ((${#rules[@]} == 0)); then
+  rules=(macos-execution modern-nodejs modern-react-tailwind modern-typescript)
+fi
+
+mkdir -p "$HOME/.gemini/config/rules"
+for rule in "${rules[@]}"; do
+  fetch_file "configs/rules/$rule.md" "$HOME/.gemini/config/rules/$rule.md"
+done
+
 local -a skills=()
 if [[ -d "$REPO_DIR/configs/skills" ]]; then
   for skill_dir in "$REPO_DIR/configs/skills"/*(/N); do
@@ -188,7 +204,7 @@ if [[ -d "$REPO_DIR/configs/skills" ]]; then
 fi
 
 if ((${#skills[@]} == 0)); then
-  skills=(macos-toolchain modern-nodejs modern-react-tailwind modern-typescript)
+  skills=(macos-toolchain modern-nodejs modern-react-tailwind modern-typescript node-project-architecture)
 fi
 
 for skill in "${skills[@]}"; do
