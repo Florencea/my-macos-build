@@ -163,11 +163,19 @@ run_first_matching_script() {
   return 0
 }
 
-# Auto-format and format-check
-run_first_matching_script "format" "format" "agent:format" "format"
-run_first_matching_script "format-check" "formatting rules" "agent:lint" "agent:lint:oxlint" "agent:lint:eslint" "format:check"
+# 11.1 Auto-format: native vp fmt formats all code & config files in place
+# (Resolves pnpm-workspace.yaml and package.json formatting drift immediately)
+FAILED_STEP="vp fmt"
+run_with_spinner "Formatting code & configs (vp fmt)" env VP_LOG=error vp fmt
 
-# Typecheck
+# 11.2 Code quality & lint: native vp check verifies formatting, runs Oxlint, and type checks
+FAILED_STEP="vp check"
+run_with_spinner "Checking quality & lint (vp check)" env VP_LOG=error vp check --quiet --no-error-on-unmatched-pattern
+
+# Run optional auxiliary linters not covered by Oxlint (e.g. Tailwind or custom CI linters)
+run_first_matching_script "lint" "additional lint rules" "lint:tailwind" "agent:lint:ci"
+
+# 11.3 Typecheck
 has_typecheck=0
 for script_name in "agent:typecheck" "typecheck"; do
   if jq -e ".scripts[\"$script_name\"]" package.json >/dev/null 2>&1; then
@@ -184,9 +192,6 @@ if ((! has_typecheck)); then
     run_with_spinner "Verifying types" vpx tsc --noEmit
   fi
 fi
-
-# Lint
-run_first_matching_script "lint" "linter" "agent:lint" "agent:lint:ci" "lint"
 
 # Dead code check
 run_first_matching_script "deadcode" "dead code" "check:deadcode" "knip"
