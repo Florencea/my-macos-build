@@ -15,6 +15,7 @@ Avoid monolithic, multi-thousand-line `AGENTS.md` files at the project root. Ins
 ```text
 <project-root>/
 ├── package.json              # Central scripts with three-tier agent:* gates
+├── pnpm-workspace.yaml       # Workspace config with saveExact: true to pin dependency versions
 ├── AGENTS.md                 # Lean project overview, SSOT invariants, architecture map (< 3 KB)
 ├── .vscode/                  # Standardized editor toolchain configuration
 │   ├── settings.json         # Oxc formatter, Vite+ script runner, ESLint/Prettier disabled
@@ -187,7 +188,42 @@ export default defineConfig({
 
 ---
 
-## 5. Configuration Syntax Pre-Verification Mandate
+## 5. Dependency Version Pinning & Workspace Settings (`pnpm-workspace.yaml`)
+
+In modern Node.js and Vite+ projects using pnpm, **`pnpm-workspace.yaml` MUST explicitly declare `saveExact: true`** to ensure dependency versions are locked deterministically.
+
+### Why `saveExact: true` is Mandatory:
+
+- **Eliminates Upstream Drift**: Using semver ranges (`^` or `~`) introduces non-deterministic dependency upgrades. Minor or patch releases upstream can silently introduce breaking changes or bugs, resulting in the dreaded "works on my machine" syndrome and flaky CI runs.
+- **Enforces Deterministic Manifests**: With `saveExact: true`, executing `vp add <pkg>` or `pnpm add <pkg>` pins dependencies to their exact version in `package.json` (e.g. `"1.2.3"` instead of `"^1.2.3"`).
+- **Workspace-Level Single Source of Truth**: Modern pnpm (v10+ / v11+) consolidates workspace settings directly into `pnpm-workspace.yaml`, deprecating legacy scattered `.npmrc` (`save-exact=true`) files for workspace configuration.
+
+### Canonical `pnpm-workspace.yaml`:
+
+```yaml
+# pnpm-workspace.yaml
+packages:
+  - "."
+
+# Enforce exact version saving when running `vp add` or `pnpm add` (e.g. "1.2.3" instead of "^1.2.3")
+saveExact: true
+```
+
+For monorepos with multiple packages:
+
+```yaml
+packages:
+  - "apps/*"
+  - "packages/*"
+
+saveExact: true
+```
+
+See reference template: [pnpm-workspace-template.yaml](./resources/pnpm-workspace-template.yaml).
+
+---
+
+## 6. Configuration Syntax Pre-Verification Mandate
 
 > [!CRITICAL]
 > **Never Rely on Stale Pre-Training Memory for Tool Configurations**: Toolchains (Vite+, Tailwind v4, TypeScript 5+, Oxlint, pnpm catalogs, ESLint flat config) evolve rapidly. Guessing config syntax leads to immediate build breaks.
@@ -198,13 +234,14 @@ export default defineConfig({
 2. **Query Authoritative Live Docs**:
    - Vite+ / Task runner: `https://viteplus.dev/llms-full.txt`
    - Oxc / Oxlint / Oxfmt: `https://oxc.rs/llms.txt`
+   - pnpm workspace & settings: `https://pnpm.io/pnpm-workspace_yaml`
    - TypeScript options: `https://www.typescriptlang.org/tsconfig/`
    - Tailwind v4: Query `@theme` and CSS-first configuration docs.
 3. **Check CLI Options**: Run `<tool> --help` to verify supported flags before executing unfamiliar options.
 
 ---
 
-## 6. Schema & Boundary Validation Layer (Zod-First Policy)
+## 7. Schema & Boundary Validation Layer (Zod-First Policy)
 
 All untrusted boundary data in the project must pass through runtime schema validation rather than compile-time type assertions:
 
@@ -241,13 +278,14 @@ All untrusted boundary data in the project must pass through runtime schema vali
 
 ---
 
-## 7. Modern `/plan` Protocol for Vite+ Web Projects
+## 8. Modern `/plan` Protocol for Vite+ Web Projects
 
 When executing in planning mode (`/plan`), agents operating in Vite+ workspaces must construct their technical implementation plan around the Vite+ toolchain to minimize tokens, maximize cache hit rates, and ensure error-free first-pass verification:
 
 ### 1. Toolchain & Environment Pre-Flight
 
 - Inspect active toolchain status via `vp toolchain --json` and installed packages via `vp list --json`.
+- Verify that `pnpm-workspace.yaml` exists and declares `saveExact: true` to prevent unpinned dependency drift.
 - Detect whether `vite.config.ts` has `run.cache: { scripts: true, tasks: true }` and Vitest Browser projects enabled.
 
 ### 2. Single Source of Truth & Zero Redundant Configs
@@ -277,11 +315,12 @@ When executing in planning mode (`/plan`), agents operating in Vite+ workspaces 
 
 ---
 
-## 8. Templates & Reference Assets
+## 9. Templates & Reference Assets
 
 Use the bundled templates when creating a new Node.js / Vite+ project or refactoring an existing repository:
 
 - [Lean AGENTS.md Template](./resources/lean-agents-template.md)
+- [pnpm-workspace.yaml Template](./resources/pnpm-workspace-template.yaml)
 - [VSCode Settings Template](./resources/vscode-settings-template.json)
 - [VSCode Extensions Template](./resources/vscode-extensions-template.json)
 - [GitHub Actions CI Workflow Template](./resources/ci-workflow-template.yml)

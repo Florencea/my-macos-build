@@ -1,0 +1,5 @@
+packages:
+  - "."
+
+# Enforce exact version saving when running `vp add` or `pnpm add` (e.g. "1.2.3" instead of "^1.2.3")
+saveExact: true

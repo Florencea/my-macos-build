@@ -37,7 +37,8 @@ Guidelines for AI agents and human contributors working on this repository.
 - **Single Source of Truth (SSOT)**: Domain contracts and schemas are defined once (e.g. database schema or Zod DTOs) and inferred downstream. Never duplicate types manually.
 - **Zod-First Boundary Defense**: Untrusted external data (API responses, JSON inputs, environment variables) MUST be validated using Zod (`safeParse`). Never use `as unknown as Type` assertions.
 - **Zero Suppression Policy**: NEVER use `// @ts-ignore`, `// @ts-expect-error`, or `/* oxlint-disable */` to bypass errors. All type issues must be resolved through proper type narrowing or schema definitions.
-- **Configuration Pre-Verification**: Before editing package or tool configuration files (`package.json`, `tsconfig*.json`, `vite.config.*`), inspect current versions and query official documentation or `llms.txt`. Never guess syntax from memory.
+- **Configuration Pre-Verification**: Before editing package or tool configuration files (`package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, `vite.config.*`), inspect current versions and query official documentation or `llms.txt`. Never guess syntax from memory.
+- **Dependency Version Pinning (`pnpm-workspace.yaml`)**: Always declare `saveExact: true` in `pnpm-workspace.yaml` to pin all installed dependencies to exact versions (e.g. `1.2.3` instead of `^1.2.3`), preventing upstream drift between local and CI environments.
 - **Protected Files**: Never manually edit auto-generated files (e.g. `routeTree.gen.ts`).
 
 ---
