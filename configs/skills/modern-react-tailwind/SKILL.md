@@ -1,68 +1,301 @@
 ---
 name: modern-react-tailwind
-description: Strict best practices for modern React (React 19) and Tailwind CSS v4. Use when building React components, server actions, forms, hooks, layout structures, and styling with Tailwind CSS v4.
-compatibility: React 19.x, Tailwind CSS 4.x
+description: Strict best practices for modern React 19, official 'You Might Not Need an Effect' rules, and Tailwind CSS v4. Use when building React components, server actions, forms, hooks, layout structures, and styling with Tailwind CSS v4.
+compatibility: React 19.x, Tailwind CSS 4.x, Vite+
 ---
 
-# Modern React & Tailwind CSS Guidelines
+# Modern React 19, Official Best Practices & Tailwind CSS v4 Guidelines
 
-**CRITICAL:** Enforce React 19 paradigms and Tailwind CSS v4 patterns across all generated code.
+## 1. Component Architecture & Effect Decision Tree
 
-## 1. Architecture & Component Decision Tree
-
-Follow this decision tree when designing components and styling:
+Follow this decision tree when designing components, data flows, and state:
 
 - **Server vs Client Boundary**:
   - Default all components to **React Server Components (RSC)**.
   - Add `"use client"` ONLY when the component requires browser APIs, state hooks (`useState`, `useReducer`), event handlers (`onClick`, `onChange`), or custom interactive hooks.
+- **Do I Need an Effect? (The Synchronization Test)**:
+  - Is it synchronizing with an external system (browser DOM API, non-React widget, WebSocket, external store)? $\rightarrow$ **YES, use an Effect**.
+  - Is it transforming data for rendering, handling user events, resetting state on prop change, or updating parent state? $\rightarrow$ **NO, DO NOT USE AN EFFECT**.
 - **Form Submissions & Data Mutations**:
   - Always prefer native `<form action={serverAction}>` paired with `useActionState` and `useFormStatus`.
   - Avoid legacy `onSubmit` handlers paired with `e.preventDefault()`.
 - **Async Resource Unwrapping**:
   - Use `use(Promise)` or `use(Context)` to unwrap resources directly in render.
   - NEVER use `useEffect` for initial data fetching.
-- **Optimistic UI**:
-  - Use `useOptimistic` for instantaneous UI state updates before server action completion.
-- **Class Merging & Conditional Classes**:
-  - Always merge classes via `clsx` and `tailwind-merge` (typically encapsulated as `cn(...)`).
-  - NEVER concatenate class strings manually (`${base} ${extra}`).
 - **Theme & Design Tokens**:
   - Use native Tailwind CSS v4 `@theme` directives and CSS variables.
-  - Do NOT create or edit legacy JavaScript configuration files (`tailwind.config.js`).
+  - Bridge UI libraries (Ant Design tokens, Spectrum) via CSS variables. Never hardcode colors or use inline `style={{ ... }}` overrides.
 
 ---
 
-## 2. React 19 Best Practices
+## 2. React Official Best Practices: You Might Not Need an Effect (12 Scenarios)
 
-- **Direct Ref Passing:** Pass `ref` directly as a regular prop. Never use `React.forwardRef`; destructure `{ ref, ...props }` directly in component signatures.
-- **Explicit Component Typing:** Never use `React.FC` or `React.FunctionComponent`. Explicitly declare prop types (e.g., `interface ButtonProps`) and type `children` as `React.ReactNode`.
-- **Automatic Memoization (React Compiler):** When `@vitejs/plugin-react` has `compiler: true` and `oxc-transform-react` is installed, do NOT add manual `useMemo`, `useCallback`, or `React.memo`. The compiler automatically performs fine-grained memoization across components and hooks.
-- **Server/Client Boundaries:** Keep Client Components as lean leaves in the component tree to maximize server-side rendering and reduce client bundle size.
+Effects are an escape hatch. Follow these 12 concrete patterns directly from React official documentation:
+
+### Scenario 1: Updating State Based on Props or State (Derived State)
+
+- 🔴 **Bad**: Redundant state and extra cascading render pass
+  ```tsx
+  const [fullName, setFullName] = useState("");
+  useEffect(() => {
+    setFullName(firstName + " " + lastName);
+  }, [firstName, lastName]);
+  ```
+- 🟢 **Good**: Calculated during rendering
+  ```tsx
+  const fullName = firstName + " " + lastName;
+  ```
+
+### Scenario 2: Caching Expensive Calculations
+
+- 🔴 **Bad**: Updating state from an Effect
+  ```tsx
+  const [visibleTodos, setVisibleTodos] = useState([]);
+  useEffect(() => {
+    setVisibleTodos(getFilteredTodos(todos, filter));
+  }, [todos, filter]);
+  ```
+- 🟢 **Good**: Trust React Compiler, or use `useMemo` when profiling demands it
+  ```tsx
+  const visibleTodos = useMemo(() => getFilteredTodos(todos, filter), [todos, filter]);
+  ```
+
+### Scenario 3: Resetting All State When a Prop Changes
+
+- 🔴 **Bad**: Listening to prop changes to reset state (causes extra render pass & flashes stale UI)
+  ```tsx
+  function Profile({ userId }) {
+    const [comment, setComment] = useState("");
+    useEffect(() => {
+      setComment("");
+    }, [userId]);
+  }
+  ```
+- 🟢 **Good**: Pass a unique `key` to the component to tell React it is a different identity
+  ```tsx
+  <Profile userId={userId} key={userId} />
+  ```
+
+### Scenario 4: Adjusting Some State When a Prop Changes
+
+- 🔴 **Bad**: Adjusting state in an Effect
+  ```tsx
+  useEffect(() => {
+    setSelection(null);
+  }, [items]);
+  ```
+- 🟢 **Good**: Derive inline during rendering, or adjust state during render if state must be preserved
+  ```tsx
+  const [prevItems, setPrevItems] = useState(items);
+  const [selectedId, setSelectedId] = useState(null);
+  if (items !== prevItems) {
+    setPrevItems(items);
+    setSelectedId(null);
+  }
+  ```
+
+### Scenario 5: Sharing Logic Between Event Handlers
+
+- 🔴 **Bad**: Setting state to trigger an Effect
+  ```tsx
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+    if (product) buyProduct(product);
+  }, [product]);
+  ```
+- 🟢 **Good**: Call the shared logic directly from the event handler
+  ```tsx
+  function handleBuy(product) {
+    buyProduct(product);
+    showNotification("Purchased!");
+  }
+  ```
+
+### Scenario 6: Sending POST Requests
+
+- 🔴 **Bad**: Triggering mutations inside an Effect
+  ```tsx
+  useEffect(() => {
+    post("/api/register");
+  }, []);
+  ```
+- 🟢 **Good**: Trigger mutations from user event handlers or Server Actions
+  ```tsx
+  function handleSubmit() {
+    post("/api/register");
+  }
+  ```
+
+### Scenario 7: Chains of Computations (No Cascading Effects)
+
+- 🔴 **Bad**: Effect chains (Effect 1 triggers Effect 2 which triggers Effect 3)
+- 🟢 **Good**: Compute the next states together inside the triggering event handler, or derive them in render.
+
+### Scenario 8: Initializing the Application
+
+- 🔴 **Bad**: Running app setup in a root component's Effect (runs twice in Strict Mode)
+- 🟢 **Good**: Top-level module execution or global initialization flag
+  ```tsx
+  let didInit = false;
+  function App() {
+    useEffect(() => {
+      if (!didInit) {
+        didInit = true;
+        initAuthToken();
+      }
+    }, []);
+  }
+  ```
+
+### Scenario 9: Notifying Parent Components About State Changes
+
+- 🔴 **Bad**: Watching local state in an Effect to notify parent
+  ```tsx
+  useEffect(() => {
+    onChange(isOn);
+  }, [isOn]);
+  ```
+- 🟢 **Good**: Notify parent during the event that causes the change, or lift state up
+  ```tsx
+  function handleClick() {
+    const nextIsOn = !isOn;
+    setIsOn(nextIsOn);
+    onChange(nextIsOn);
+  }
+  ```
+
+### Scenario 10: Passing Data to the Parent
+
+- 🔴 **Bad**: Child fetches and passes data up via Effect
+- 🟢 **Good**: Parent fetches data and passes it down to child as props.
+
+### Scenario 11: Subscribing to an External Store
+
+- 🔴 **Bad**: Manually subscribing with `useEffect` + `useState`
+- 🟢 **Good**: Use React's built-in `useSyncExternalStore`
+  ```tsx
+  function useOnlineStatus() {
+    return useSyncExternalStore(
+      subscribe,
+      () => navigator.onLine,
+      () => true,
+    );
+  }
+  ```
+
+### Scenario 12: Fetching Data
+
+- 🔴 **Bad**: Raw `useEffect` + `fetch` without cleanup (susceptible to race conditions)
+- 🟢 **Good**: Route loaders (TanStack Router), React Server Components, or `use(Promise)` / TanStack Query.
+  If manual Effect fetching is required, implement cleanup:
+  ```tsx
+  useEffect(() => {
+    let ignore = false;
+    async function startFetching() {
+      const json = await fetchTodos(userId);
+      if (!ignore) setTodos(json);
+    }
+    startFetching();
+    return () => {
+      ignore = true;
+    };
+  }, [userId]);
+  ```
 
 ---
 
-## 3. Tailwind CSS v4 Rules
+## 3. React 19 Core Paradigms & Server Actions
 
-- **Design Tokens Single Source of Truth (`@theme`):** All design tokens, custom colors, fonts, and breakpoints must reside in the CSS root file via `@theme`. Bridge tokens to external UI component libraries (Ant Design tokens, Spectrum) via CSS variables. Never hardcode colors or use inline style overrides.
-- **Canonical Class Validation:** Ensure all utility classes pass `vpr lint:tailwind` with 0 warnings. Fix canonical syntax discrepancies automatically via `vpr lint:tailwind:fix`.
-- **No Dynamic Class Interpolation:** Never dynamically interpolate class names (e.g., `bg-blue-${shade}`). Use complete class string literals or record maps so the static scanner detects them.
-- **Native CSS Variables & `@theme`:** Leverage Tailwind v4 `@theme` directives and CSS custom properties instead of legacy JS configuration files.
-- **Restrict `@apply`:** Stick to utility classes directly in markup. Avoid extracting utilities via `@apply` into CSS files except for base resets.
+- **Direct Ref Passing**: Pass `ref` directly as a regular prop. Never use `React.forwardRef`.
+  ```tsx
+  interface InputProps {
+    ref?: React.Ref<HTMLInputElement>;
+    label: string;
+  }
+  export function Input({ ref, label, ...props }: InputProps) {
+    return (
+      <label>
+        {label}
+        <input ref={ref} {...props} />
+      </label>
+    );
+  }
+  ```
+- **Form Actions & Optimistic State**:
+  ```tsx
+  import { useActionState, useOptimistic } from "react";
+
+  export function TodoForm({ action }: { action: (prev: State, fd: FormData) => Promise<State> }) {
+    const [state, formAction, isPending] = useActionState(action, {
+      todos: [],
+    });
+    const [optimisticTodos, setOptimistic] = useOptimistic(
+      state.todos,
+      (current, newTitle: string) => [...current, { id: "temp", title: newTitle }],
+    );
+
+    return (
+      <form
+        action={async (fd) => {
+          setOptimistic(fd.get("title") as string);
+          await formAction(fd);
+        }}
+      >
+        <input name="title" required />
+        <button disabled={isPending}>Add</button>
+      </form>
+    );
+  }
+  ```
 
 ---
 
-## 4. Authoritative Documentation & LLM References
+## 4. Tailwind CSS v4 Theme Bridge & Styling Standards
 
-When agents need up-to-date syntax, API definitions, or migration patterns, consult these authoritative endpoints:
+### Design Token Single Source of Truth (`@theme`)
 
-- **React 19 Official Documentation**:
-  - LLM Topic Index: `https://react.dev/llms.txt`
-  - React Reference: `https://react.dev/reference/react`
-  - Specific React 19 APIs:
-    - `useActionState`: `https://react.dev/reference/react/useActionState`
-    - `useFormStatus`: `https://react.dev/reference/react-dom/hooks/useFormStatus`
-    - `useOptimistic`: `https://react.dev/reference/react/useOptimistic`
-    - `use`: `https://react.dev/reference/react/use`
-- **Tailwind CSS v4 Official Documentation**:
-  - Core Documentation: `https://tailwindcss.com/docs`
-  - v4 Theme & Variables: `https://tailwindcss.com/docs/theme`
+In your root CSS file (`src/index.css`), declare theme tokens using Tailwind CSS v4 syntax:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3b82f6;
+  --color-brand-accent: #8b5cf6;
+  --font-display: "Inter", sans-serif;
+}
+```
+
+### Bridging External UI Libraries (e.g. Ant Design Tokens)
+
+Bridge external component library theme variables directly to CSS variables defined in `@theme`:
+
+```tsx
+import { ConfigProvider } from "antd";
+
+export function AntdProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "var(--color-primary)",
+          borderRadius: 8,
+        },
+      }}
+    >
+      {children}
+    </ConfigProvider>
+  );
+}
+```
+
+---
+
+## 5. Authoritative Documentation Endpoints
+
+Inspect live documentation using `webread <url>`:
+
+- React Official Reference: `webread https://react.dev/reference/react`
+- You Might Not Need an Effect: `webread https://react.dev/learn/you-might-not-need-an-effect`
+- React Compiler: `webread https://react.dev/learn/react-compiler`
+- Tailwind CSS v4: `webread https://tailwindcss.com/docs`

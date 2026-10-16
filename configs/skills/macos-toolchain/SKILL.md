@@ -1,6 +1,6 @@
 ---
 name: macos-toolchain
-description: Pre-installed high-performance CLI tools, pre-approved agent scripts, macOS BSD constraints, shell execution rules, and idiomatic Zsh standards. Use when running terminal commands, writing or debugging shell scripts, inspecting CLI tools, or managing development workflows on macOS Darwin.
+description: Pre-installed high-performance CLI tools, web analysis tools (webread, htmlq), live query endpoints, macOS BSD constraints, shell execution rules, and idiomatic Zsh standards. Use when running terminal commands, inspecting docs, writing shell scripts, or managing macOS workflows.
 compatibility: macOS Darwin, Zsh 5+, Vite+
 ---
 
@@ -10,6 +10,12 @@ compatibility: macOS Darwin, Zsh 5+, Vite+
 
 When selecting tools for common tasks, always follow this prioritized logic flow:
 
+- **Web Page & Documentation Analysis**:
+  - 1st Priority (Official LLM Docs) $\rightarrow$ Probe `/llms-full.txt` or `/llms.txt` via `webread --llms <url>`.
+  - 2nd Priority (Clean Readability Markdown) $\rightarrow$ `webread <url>` (strips all scripts, SVGs, navbars, and headers).
+  - 3rd Priority (Structured DOM Extraction) $\rightarrow$ `webread -s '<css-selector>' <url>` or `curl -sL <url> | htmlq '<selector>'`.
+  - 4th Priority (Interactive Browsing) $\rightarrow$ Recommended `/browser` slash command.
+  - STRICTLY FORBIDDEN to dump multi-hundred-kilobyte raw HTML into the conversation context.
 - **Structural Code Analysis & Refactoring**:
   - Semantic syntax matching or structural rewrites $\rightarrow$ `ast-grep` (`sg`)
   - File contents regex pattern search $\rightarrow$ `rg` (ripgrep). Avoid `grep -r`.
@@ -20,29 +26,29 @@ When selecting tools for common tasks, always follow this prioritized logic flow
   - Non-interactive line-ranged previews $\rightarrow$ `bat --paging=never -r <start>:<end> <file>`.
 - **Structured Data Manipulation**:
   - JSON querying and editing $\rightarrow$ `jq`
+  - HTML querying and node extraction $\rightarrow$ `htmlq`
   - YAML querying and editing $\rightarrow$ `yq` (supports in-place edits via `-i`)
   - Tabular / Big Data (CSV, Parquet, NDJSON) $\rightarrow$ `duckdb -c "<SQL>"`
 - **Text Replacement**:
   - In-place text replacement $\rightarrow$ `sd 'pattern' 'replacement' <file>`. STRICTLY FORBIDDEN to use `sed`.
 - **Formatting**:
   - Shell scripts (`.sh`, `.zsh`) $\rightarrow$ `shfmt -i 2 -ci -w <file>`
-  - Markdown (`.md`) $\rightarrow$ `vpx oxfmt <file>` (via Vite+)
+  - Markdown & code files $\rightarrow$ `vpx oxfmt <file>` (via Vite+)
 - **Benchmarking & Workflows**:
   - Timing CLI commands or scripts $\rightarrow$ `hyperfine '<cmd>'` instead of raw `time`.
-  - CI Workflow verification $\rightarrow$ `actionlint` when editing `.github/workflows/*.yml`.
-- **Runtime & Web Toolchain**:
-  - Always use modern Node.js (`.mjs`) managed globally via Vite+ (`vp`). NEVER use Python or Deno.
+  - CI Workflow verification $\rightarrow$ `actionlint` locally before staging `.github/workflows/*.yml`.
 - **Agent-Friendly Structured Outputs**:
   - Prioritize token-efficient, non-interactive formats (`--json`, `-f agent`, `--format json`, `--reporter=tap-flat`, `--no-color`, `--quiet`) over interactive progress bars, animations, or ASCII frames.
 
 ---
 
-## 2. Scripts as Black Boxes (Pre-approved Local Helpers)
+## 2. Scripts as Black Boxes (Pre-approved Local Helpers in `~/.local/bin`)
 
 In accordance with Antigravity Best Practices, treat local project helper scripts (`cli/*.sh` exposed system-wide in `~/.local/bin`) as **black boxes**:
 
 - **Check Usage First**: ALWAYS run `<command> --help` or `<command> -h` before invoking an unfamiliar tool. Do NOT read the entire script source code into the conversation context just to inspect parameters.
 - **Available CLI Commands in `~/.local/bin`**:
+  - `webread`: Clean, token-efficient webpage and doc reader via Jina Reader & htmlq (`webread --help`)
   - `clall`: Batch clone all GitHub repositories for authenticated user (`clall --help`)
   - `ebk`: Backup and sync browser extension configs (`ebk --help`)
   - `mdig`: Query A and AAAA DNS records in parallel across resolvers (`mdig --help`)
@@ -56,148 +62,64 @@ In accordance with Antigravity Best Practices, treat local project helper script
 
 ---
 
-## 3. Authoritative Documentation & LLM Query Endpoints
+## 3. Pre-Execution Live Query & Authoritative Documentation Endpoints
 
-When agents need comprehensive API documentation or usage flags, query these verified authoritative endpoints using `read_url_content` or `curl -fsSL <url> | rg -C 10 '<topic>'`:
+Before executing unfamiliar commands or authoring configs, query these verified endpoints using `webread <url>` or `<command> --help`:
 
 - **Vite+ Toolchain (`vp`, `vpx`, `vpr`)**:
-  - Full Manual: `https://viteplus.dev/llms-full.txt` (Comprehensive reference for global CLI, task runner, caching, and shims)
-  - Topic Index: `https://viteplus.dev/llms.txt`
-  - Documentation: `https://viteplus.dev/guide.md`
+  - LLM Full Reference: `webread --llms https://viteplus.dev` (or `https://viteplus.dev/llms-full.txt`)
   - CLI Help: `vp help` / `vp --help`
 - **Oxc (`oxfmt`, `oxlint`)**:
-  - LLM Reference: `https://oxc.rs/llms.txt` (Formatting and linting rules)
-  - Coding Agents: `https://oxc.rs/docs/guide/usage/coding-agents.md`
+  - LLM Reference: `webread --llms https://oxc.rs` (or `https://oxc.rs/llms.txt`)
   - CLI Help: `npx oxlint --help`, `npx oxfmt --help`
+- **React**:
+  - Official Reference: `webread https://react.dev/reference/react`
+  - You Might Not Need an Effect: `webread https://react.dev/learn/you-might-not-need-an-effect`
 - **ast-grep (`sg`)**:
-  - LLM Reference: `https://ast-grep.github.io/llms.txt`
-  - Guide: `https://ast-grep.github.io/guide/`
+  - LLM Reference: `webread --llms https://ast-grep.github.io`
   - CLI Help: `sg --help`
+- **htmlq**:
+  - CLI Help: `htmlq --help`
 - **DuckDB**:
-  - LLM Reference: `https://duckdb.org/llms.txt`
-  - Documentation: `https://duckdb.org/docs/`
+  - LLM Reference: `webread --llms https://duckdb.org`
   - CLI Help: `duckdb --help`
 - **ripgrep (`rg`)**:
-  - User Guide: `https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md`
   - CLI Help: `rg --help`
 - **fd**:
-  - Documentation: `https://github.com/sharkdp/fd`
   - CLI Help: `fd --help`
 - **bat**:
-  - Documentation: `https://github.com/sharkdp/bat`
   - CLI Help: `bat --help`
 - **jq**:
-  - Manual: `https://jqlang.github.io/jq/manual/`
   - CLI Help: `jq --help`
-- **yq (mikefarah)**:
-  - Documentation: `https://mikefarah.gitbook.io/yq`
+- **yq**:
   - CLI Help: `yq --help`
 - **sd**:
-  - Documentation: `https://github.com/chmln/sd`
   - CLI Help: `sd --help`
 - **actionlint**:
-  - Usage: `https://github.com/rhysd/actionlint/blob/main/docs/usage.md`
   - CLI Help: `actionlint -help`
-- **hyperfine**:
-  - Documentation: `https://github.com/sharkdp/hyperfine`
-  - CLI Help: `hyperfine --help`
-- **shfmt**:
-  - Documentation: `https://github.com/mvdan/sh`
-  - CLI Help: `shfmt --help`
-- **FFmpeg**:
-  - Documentation: `https://ffmpeg.org/ffmpeg.html`
-  - CLI Help: `ffmpeg -h`
-- **yt-dlp**:
-  - Usage: `https://github.com/yt-dlp/yt-dlp#usage-and-options`
-  - CLI Help: `yt-dlp --help`
-- **gifski**:
-  - Documentation: `https://gif.ski/`
-  - CLI Help: `gifski --help`
 
 ---
 
-## 4. Frictionless Agent Script Execution (Whitelist-First)
+## 4. macOS BSD Compatibility Invariants
 
-- **Frictionless Whitelist Priority**: The environment enforces a strict Antigravity permission model. Safe development, verification, and inspection commands are pre-approved in the global security whitelist (`~/.gemini/config/config.json`) to bypass interactive approval prompts. All projects are managed via Vite+ (`vp` / `vpr`); legacy `npm run` is deprecated.
-- **Pre-Approved Safe Native `vp` Commands**:
-  - **Quality & Format**: `vp check`, `vp check --quiet`, `vp lint`, `vp lint -f agent`, `vp fmt`, `vp fmt --check`, `vp format`
-  - **Build & Preview**: `vp build`, `vp pack`, `vp preview`
-  - **Test Runner**: `vp test`, `vp test run`, `vp test run --project <name>`, `vp test run --reporter=tap-flat --no-color`
-  - **Inspection (Read-Only)**: `vp list`, `vp ls`, `vp outdated`, `vp toolchain`, `vp toolchain --json`
-  - **Execution & Cache**: `vp node <script>`, `vp exec <cmd>`, `vp cache clean`
-- **Pre-Approved Task Runner (`vpr` / `vp run`) Whitelist**:
-  - `vpr verify` (unified verification gate: checks, deadcode, tests, build)
-  - `vpr typecheck` (strict TypeScript compiler check)
-  - `vpr agent:*` (`agent:verify:gate`, `agent:verify:inner`, `agent:verify:unit`, `agent:test:unit`, `agent:test:e2e`)
-  - `vpr check:*` (e.g. `vpr check:fast`, `vpr check:deadcode`)
-  - `vpr lint:*` (e.g. `vpr lint:ci`, `vpr lint:tailwind`, `vpr lint:tailwind:fix`)
-  - `vpr test:*` (e.g. `vpr test:unit`, `vpr test:e2e`, `vpr test:setup`)
-  - `vpr build:*` (e.g. `vpr build:all`)
-  - Task cache inspection and flags: `vpr --last-details`, `vpr --no-cache`
-- **Pre-Approved Rust Toolchain (`vpx`)**:
-  - `vpx oxfmt <files>`
-  - `vpx oxlint -f agent <files>`
-- **Strictly Banned / Confirmation-Required Commands**:
-  - NEVER execute state-destructive commands without explicit user instruction: `vp implode` (destroys toolchain), `vp upgrade` (binary upgrade), `vp rm` / `vp remove` / `vp uninstall` (removes dependencies), `vp config` / `vp hooks`.
+- **`head` / `tail`**: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `bat --paging=never -r 1:3 <file>` or `awk 'NR>=1&&NR<=3' <file>`.
+- **`grep`**: BSD grep DOES NOT support Perl-compatible regex (`-P`). ALWAYS use `rg` for advanced pattern matching.
+- **`xargs`**: BSD xargs DOES NOT support `-r` (`--no-run-if-empty`). Use `fd -X` or standard POSIX `while read` loops instead.
+- **`date`**: BSD date DOES NOT support GNU `date -d`. Use Node.js (`node -e "..."`) for relative date arithmetic.
+- **`awk`**: Standard POSIX awk only; do NOT use GNU extensions like 3-argument `match()`.
+- **`stat`**: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
+- **Network**: Check open ports using `lsof -i :<PORT>` (never Linux `ss`).
 
 ---
 
-## 5. Local Git & Subshell Rules
+## 5. Idiomatic Zsh Standards
 
-- Use native bare `git` (NEVER `/usr/bin/git`).
-- AI direct commits are globally blocked across all repositories by `~/.config/git/hooks/pre-commit` (`ANTIGRAVITY_AGENT=1`). Always stage changes with `git add` and output commit commands for manual user execution.
-- Pure local git workflows only (commit suggestions, diff, branch, rebase).
-- DO NOT use `gh` (GitHub CLI). Do not query remote issues or PRs.
-
----
-
-## 6. Shell Execution Anti-Patterns (STRICTLY FORBIDDEN)
-
-- NEVER prefix commands with absolute paths (e.g., `/usr/bin/git`, `/bin/zsh`). Always invoke bare command names (e.g., `git`, `zsh`, `vp`, `node`) relying on `$PATH` to preserve security allowlist matching.
-- NEVER use `eval` or dynamic variable execution (e.g., `cmd="..."; eval $cmd`). Always execute commands directly.
-- NEVER use dynamic subshell wrappers or ternary shell hacks just to view files (e.g., `view_file_or_head=...`).
-- NEVER use `sed` under any circumstance (`sed` is excluded from permission allowlists and strictly banned). For in-place replacement, ALWAYS use `sd`. For previewing line ranges, use `bat --paging=never -r <start>:<end> <file>` or `awk`.
-- NEVER access parent or sibling directory paths (e.g., `../<project>`) via shell commands without explicit user instruction.
-- NEVER suppress command failures using `|| true` or `2>/dev/null` unless explicitly requested. Let errors surface cleanly.
-- NEVER guess Tool Syntax or Configuration Schemas. Always run `<tool> --help` or query live documentation endpoints (`llms.txt`) before authoring configurations or invoking unfamiliar flags.
-
----
-
-## 7. Idiomatic Zsh Standards & Scripting Guidelines
-
-- **Strict Header**: Always begin Zsh scripts with:
+- **Strict Header**:
   ```zsh
   #!/bin/zsh
   emulate -L zsh
   set -euo pipefail
   ```
-- **Indexing**: Remember Zsh arrays are **1-based** (`$arr[1]` is the first item).
-- **Word Splitting**: Zsh does NOT split unquoted variables on whitespace by default. Do not rely on unquoted word splitting; use parameter expansion flags like `"${(@s/:/)PATH}"` when splitting is needed.
-- **Path Resolution**: Prefer native Zsh modifiers over external forks (`dirname`, `basename`, `realpath`):
-  - Absolute path: `${file:A}`
-  - Directory: `${file:h}`
-  - Filename only: `${file:t}`
-  - Extension: `${file:e}`
-  - Basename without extension: `${file:r:t}`
-- **Glob Qualifiers**: Prefer native qualifiers over `find`/`sort` pipes:
-  - Regular files only: `*(.)`
-  - Directories only: `*(/)`
-  - Nullglob (no error if empty): `*(N)`
-  - Sort by modification time (newest first): `*(om)`
-- **Floating-Point Math**: Use native arithmetic `(( result = 1.5 * 2.0 ))` instead of calling `bc` or `awk`.
-- **Temporary Files**: Prefer process substitution `=(cmd)` when a seekable temporary file is required (Zsh automatically handles cleanup).
-- **Unix Rule of Silence & Interactive CLI Feedback**: Background automation routines and unattended maintenance jobs must strictly adhere to the Unix Rule of Silence (silence on success, errors to `stderr`). However, user-facing interactive CLI commands (`cli/*.sh` such as `ua`, `up`, `clall`, `ebk`, `unodev`) MUST provide clear operational feedback, real-time command progress (e.g. `brew upgrade`), version transitions, and completion confirmations. To suppress repetitive interactive TTY banners from toolchains like Vite+, pipe commands through `cat` rather than blanket suppression (`>/dev/null 2>&1 || true`).
-- **Multi-Target Batch Feedback**: When a script inspects, updates, or clones multiple user workspaces or files in batch (such as `unodev`, `clall`, or `ebk`), explicitly print per-target outcomes (`[ok]`, updated version transitions, or backed-up filenames) so the user has immediate visibility into which projects or files were affected.
-
----
-
-## 8. macOS BSD Compatibility Traps (Linux/GNU Forbidden)
-
-- `head` / `tail`: Standard POSIX syntax only. NEVER use GNU extensions like `head -v` or `head -q`. For line ranges, use `bat --paging=never -r 1:3 <file>` or `awk 'NR>=1&&NR<=3' <file>`.
-- `grep`: BSD grep DOES NOT support Perl-compatible regex (`-P`). ALWAYS use `rg` for advanced pattern matching.
-- `xargs`: BSD xargs DOES NOT support `-r` (`--no-run-if-empty`). Use `fd -X` or standard POSIX `while read` loops instead.
-- `date`: BSD date DOES NOT support GNU `date -d`. Use Node.js (`node -e "..."`) for relative date arithmetic.
-- `sed`: STRICTLY FORBIDDEN. `sed` is prohibited in agent workflows and excluded from permission allowlists. ALWAYS use `sd` for in-place text replacement, and `bat` or `awk` for line extraction.
-- `awk`: Standard POSIX awk only; do NOT use GNU extensions like 3-argument `match()`.
-- `stat`: BSD syntax. Use `stat -f "%z"` (never Linux `stat -c`).
-- `network`: Check open ports using `lsof -i :<PORT>` (never Linux `ss`).
+- **1-Based Indexing**: Zsh arrays start at 1 (`$array[1]`).
+- **Word Splitting**: Does not split unquoted variables by default; use `${(@s/:/)PATH}` when needed.
+- **Modifiers**: Use native modifiers: `${file:A}` (abs), `${file:h}` (dir), `${file:t}` (name), `${file:r:t}` (basename).

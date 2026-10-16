@@ -1,6 +1,6 @@
 ---
 name: modern-nodejs
-description: Modern Node.js standards (Active LTS, pure ESM, zero-dependency built-ins), config pre-verification, Zod runtime validation, and Vite+ runtime integration for agentic development. Use when writing Node.js scripts, managing dependencies, configuring runtimes, or building CLI utilities.
+description: Modern Node.js pure ESM standards, config pre-verification, Zod runtime validation, and zero-dependency built-in rules. Use when writing Node.js scripts, managing dependencies, configuring runtimes, or building CLI utilities.
 compatibility: Node.js (Active LTS), Vite+, Zod
 ---
 
@@ -30,99 +30,93 @@ When building Node.js CLI tools and scripts, prioritize zero-dependency native b
 
 ---
 
-## 2. Configuration Syntax Pre-Verification Mandate
+## 2. Pre-Execution Config Verification & Native Manifest Operations
 
-> [!CRITICAL]
-> **Strict Verification Before Editing Configuration Files**: Node.js ecosystem configurations (`package.json`, `pnpm-workspace.yaml`, `.npmrc`, conditional export maps) change rapidly between major versions. Agents must never configure these files using pre-training memory alone.
-
-### Verification Workflow:
-
-1. **Detect Tool & Runtime Generation**:
-   - Inspect active versions: Run `vp toolchain` or check `engines.node` in `package.json`.
-2. **Query Official Reference Endpoints**:
-   - Package manager / Vite+: `https://viteplus.dev/llms-full.txt`
-   - Node.js APIs: `https://nodejs.org/docs/latest-v24.x/api/`
-3. **Verify CLI Syntax**:
-   - Run `<tool> --help` to confirm CLI flags before executing non-standard commands.
-4. **Native Manifest Operations (`vp pm pkg`)**:
-   - Querying fields: `vp pm pkg get <key>` (or `vp -C <dir> pm pkg get <key>`)
-   - Mutating fields: `vp pm pkg set <key>=<value>` (use `--json` for objects/booleans/arrays)
-   - Removing fields: `vp pm pkg delete <key>`
-   - Standardizing & fixing: `vp pm pkg fix`
-   - Strictly avoid raw regex replacements or `jq` intermediate file swapping (`package.json.tmp && mv`).
+- **Pre-Verification Mandate**: Before authoring or updating configuration files (`package.json`, `pnpm-workspace.yaml`, toolchain settings), query authoritative endpoints:
+  - Toolchain Status: Run `vp toolchain` to inspect runtime version and active tools dynamically.
+  - Live Documentation: Run `webread --llms https://viteplus.dev` (or query `https://viteplus.dev/llms-full.txt`).
+  - NEVER guess syntax, package fields, or flags from outdated memory.
+- **Native Manifest Operations (`vp pm pkg`)**:
+  - Querying fields: `vp pm pkg get <key>` (or `vp -C <dir> pm pkg get <key>`)
+  - Mutating fields: `vp pm pkg set <key>=<value>` (use `--json` for objects/booleans/arrays)
+  - Removing fields: `vp pm pkg delete <key>`
+  - Standardizing & fixing: `vp pm pkg fix`
+  - STRICTLY FORBIDDEN to use raw regex replacements or `jq` intermediate file swapping (`package.json.tmp && mv`).
 
 ---
 
-## 3. Zod-First Runtime Validation (Env & Boundary Inputs)
+## 3. Zod-First Boundary Validation Pattern
 
-Never assume `process.env` or external JSON input contains correct types or defined values. Always parse with Zod `safeParse`:
+Validate environment variables and untrusted runtime inputs with Zod schemas:
 
 ```ts
 import { z } from "zod";
 
-const EnvSchema = z.object({
+const ConfigSchema = z.object({
   PORT: z.coerce.number().default(3000),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   DATABASE_URL: z.string().url(),
-  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
 });
 
-export type Env = z.infer<typeof EnvSchema>;
-
-const parsed = EnvSchema.safeParse(process.env);
+const parsed = ConfigSchema.safeParse(process.env);
 if (!parsed.success) {
-  console.error("Invalid environment variables:\n", parsed.error.flatten());
+  console.error("Configuration error:", parsed.error.flatten());
   process.exitCode = 1;
-  throw new Error("Environment configuration error");
+  throw new Error("Invalid environment configuration");
 }
-
-export const env: Env = parsed.data;
+export const config = parsed.data;
 ```
 
 ---
 
-## 4. Modern Node.js Scripting Standards (Active LTS)
+## 4. Native Built-In Usage Examples
 
-- **Module System**: Always use pure ESM (`.mjs` or `"type": "module"` in `package.json`). Never write CommonJS (`require`, `module.exports`, `__dirname`, `__filename`).
-- **Node Protocol Imports**: ALWAYS prefix Node built-in modules with `node:` (e.g., `import fs from 'node:fs/promises'`).
-- **Path Resolution**: Use native built-in `import.meta.dirname` and `import.meta.filename` instead of `fileURLToPath` workarounds.
-- **Top-Level Await**: Use top-level `await` freely in ESM scripts without wrapper functions.
-- **Process & Execution Safety**: In `node:child_process`, prefer `execFileSync` or `spawnSync` with an array of arguments and `shell: false` to prevent shell injection. Signal failure by assigning `process.exitCode = 1` rather than abruptly calling `process.exit(1)`, allowing pending async streams and logs to flush.
+### Native CLI Argument Parsing (`node:util`):
 
----
+```ts
+import { parseArgs } from "node:util";
 
-## 5. Global Vite+ (`vp`) Toolchain & Agent-Friendly Output Formats
+const { values, positionals } = parseArgs({
+  options: {
+    verbose: { type: "boolean", short: "v", default: false },
+    output: { type: "string", short: "o" },
+  },
+  allowPositionals: true,
+});
+```
 
-All Node.js runtimes and tasks are managed via Vite+ (`vp`). When executing tools in agent workflows, use token-efficient formats:
+### Native Terminal Colors (`node:util`):
 
-| Task / Domain          | Standard Command | Agent-Friendly Format                        | Purpose                                                  |
-| :--------------------- | :--------------- | :------------------------------------------- | :------------------------------------------------------- |
-| **Linting**            | `vp lint`        | `vp lint -f agent`                           | Minimalist error-location format without ANSI frames     |
-| **Combined Check**     | `vp check`       | `vp check --quiet`                           | Suppresses cosmetic warnings, only outputs errors        |
-| **Script / Server**    | `vp node`        | `vp node <script>`                           | Executes in Vite+ managed Node.js environment            |
-| **Installed Packages** | `vp list`        | `vp list --json`                             | Machine-readable dependency graph                        |
-| **Outdated Packages**  | `vp outdated`    | `vp outdated --format json`                  | Structured upgrade candidate inspection                  |
-| **Toolchain Graph**    | `vp toolchain`   | `vp toolchain --json`                        | Detailed active toolchain JSON report                    |
-| **Test Execution**     | `vp test`        | `vp test run --reporter=tap-flat --no-color` | Linear TAP flat output, eliminates spinners              |
-| **Cache Inspection**   | `vpr`            | `vpr --last-details`                         | Inspect task runner cache hit/miss and execution timings |
-| **Cache Purge**        | `vp cache`       | `vp cache clean`                             | Purge Vite task runner and compilation caches            |
+```ts
+import { styleText } from "node:util";
 
-- **Vite Task Runner Caching (`run.cache`)**: In `vite.config.ts`, declare `run.cache: { scripts: true, tasks: true }`. Tasks and scripts executed via `vpr` replay cached results in milliseconds when source files are unmodified. Pass `--no-cache` (`vpr --no-cache`) to bypass cache temporarily.
-- **Clean Automation Logging**: Set `VP_LOG=error` in non-interactive scripts to prevent `tracing_subscriber` diagnostic logs from cluttering output.
-- **Deterministic Dependencies**: Use `vp install --frozen-lockfile` in CI / automated verification runs.
+console.log(styleText("green", "✔ Operation completed successfully"));
+console.log(styleText(["bold", "red"], "✖ Fatal error encountered"));
+```
 
----
+### Native SQLite Persistence (`node:sqlite`):
 
-## 6. Authoritative Documentation & LLM References
+```ts
+import { DatabaseSync } from "node:sqlite";
 
-When inspecting Node.js API syntax or runtime options, query these authoritative endpoints:
+const db = new DatabaseSync("app.db");
+db.exec(`
+  CREATE TABLE IF NOT EXISTS metrics (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    value REAL NOT NULL
+  )
+`);
+const insert = db.prepare("INSERT INTO metrics (name, value) VALUES (?, ?)");
+insert.run("cpu_usage", 42.5);
+```
 
-- **Node.js Official Documentation (v24 LTS)**:
-  - API Index: `https://nodejs.org/docs/latest-v24.x/api/` (or `https://nodejs.org/docs/latest/api/`)
-  - `parseArgs`: `https://nodejs.org/docs/latest-v24.x/api/util.html#utilparseargsconfig`
-  - `styleText`: `https://nodejs.org/docs/latest-v24.x/api/util.html#utilstyletextformat-text-options`
-  - `node:sqlite`: `https://nodejs.org/docs/latest-v24.x/api/sqlite.html`
-  - `node:test`: `https://nodejs.org/docs/latest-v24.x/api/test.html`
-- **Vite+ Toolchain Manual**:
-  - Full LLM Manual: `https://viteplus.dev/llms-full.txt` (covers `vp env`, `vp run`, `vpr`, `vpx`, package manager flags)
-  - Topic Index: `https://viteplus.dev/llms.txt`
+### Native File Globbing (`node:fs/promises`):
+
+```ts
+import { glob } from "node:fs/promises";
+
+for await (const entry of glob("src/**/*.ts")) {
+  console.log("Found:", entry);
+}
+```

@@ -173,7 +173,7 @@ if [[ -d "$REPO_DIR/configs/zsh/completions" ]]; then
     chmod 644 "$HOME/.local/share/zsh/site-functions/${comp:t}"
   done
 else
-  local -a completions=(clall ebk mdig mkclp mkgif mmb rea ua unodev up)
+  local -a completions=(clall ebk mdig mkclp mkgif mmb rea ua unodev up webread)
   for comp in "${completions[@]}"; do
     fetch_file "configs/zsh/completions/_$comp" "$HOME/.local/share/zsh/site-functions/_$comp"
     chmod 644 "$HOME/.local/share/zsh/site-functions/_$comp"
@@ -188,7 +188,7 @@ if [[ -d "$REPO_DIR/configs/rules" ]]; then
 fi
 
 if ((${#rules[@]} == 0)); then
-  rules=(macos-execution modern-nodejs modern-react-tailwind modern-typescript)
+  rules=(ci-workflows macos-execution modern-nodejs modern-react-tailwind modern-testing modern-typescript)
 fi
 
 mkdir -p "$HOME/.gemini/config/rules"
@@ -204,7 +204,7 @@ if [[ -d "$REPO_DIR/configs/skills" ]]; then
 fi
 
 if ((${#skills[@]} == 0)); then
-  skills=(macos-toolchain modern-nodejs modern-react-tailwind modern-typescript node-project-architecture)
+  skills=(macos-toolchain modern-nodejs modern-react-tailwind modern-typescript node-project-architecture tanstack-router)
 fi
 
 for skill in "${skills[@]}"; do
@@ -404,6 +404,7 @@ install_formulas \
   fd \
   ffmpeg \
   gifski \
+  htmlq \
   hyperfine \
   jq \
   mtr \

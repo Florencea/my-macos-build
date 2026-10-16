@@ -1,20 +1,24 @@
 ---
 trigger: glob
 globs: "**/*.js, **/*.mjs, **/*.cjs, **/package.json, **/pnpm-workspace.yaml"
-description: Modern Node.js pure ESM standards, config pre-verification, Zod runtime validation, and zero-dependency built-in rules.
+description: Modern Node.js pure ESM standards, pre-execution config verification, Zod runtime validation, native manifest operations, and zero-dependency built-in rules.
 ---
 
 # Modern Node.js Execution Rules
 
-## 1. Configuration Syntax Pre-Verification Mandate
+## 1. Pre-Execution Config Verification & Native Manifest Operations
 
-- **Strict Requirement Before Modifying Configs**: Prior to writing or modifying any configuration files (`package.json`, `pnpm-workspace.yaml`, `.npmrc`, lockfiles, toolchain settings), agents MUST verify the exact schema and options:
-  - Check current tool/runtime version: Run `vp toolchain` or inspect `engines.node` / dependencies.
-  - Query live documentation: Check `https://viteplus.dev/llms-full.txt` or relevant official manuals.
+- **Pre-Verification Mandate**: Prior to writing or modifying any configuration files (`package.json`, `pnpm-workspace.yaml`, `.npmrc`, toolchain settings), agents MUST verify the exact schema and current runtime options:
+  - Check dynamic project/runtime constraints: Run `vp toolchain` or inspect `engines.node` and dependencies in `package.json`. NEVER hardcode or assume fixed version numbers.
+  - Query live documentation: Inspect `https://viteplus.dev/llms-full.txt` (via `webread --llms https://viteplus.dev`) or run `<tool> --help`.
   - NEVER guess syntax, package fields (e.g. `exports`, `imports`, `type`), or CLI flags from memory.
 - **Native Manifest Operations (`vp pm pkg`)**:
-  - When querying or modifying `package.json` fields programmatically in scripts or agent workflows, ALWAYS use native Vite+ package manifest commands (`vp pm pkg get`, `vp pm pkg set`, `vp pm pkg delete`, `vp pm pkg fix`).
-  - NEVER use regex replacements or `jq` with temporary intermediate files (`package.json.tmp && mv`) to mutate `package.json`.
+  - When querying or mutating `package.json` fields programmatically, ALWAYS use native Vite+ package manifest commands:
+    - Querying: `vp pm pkg get <key>` (or `vp -C <dir> pm pkg get <key>`)
+    - Modifying: `vp pm pkg set <key>=<value>` (use `--json` for objects, numbers, booleans, arrays)
+    - Deleting: `vp pm pkg delete <key>`
+    - Standardizing: `vp pm pkg fix`
+  - STRICTLY FORBIDDEN to use raw regex replacements or `jq` with intermediate file swapping (`package.json.tmp && mv`) to mutate `package.json`.
 
 ---
 
@@ -55,12 +59,15 @@ description: Modern Node.js pure ESM standards, config pre-verification, Zod run
 
 ## 4. Zero-Dependency Built-In Tooling (Batteries-Included)
 
-- **CLI Argument Parsing**: Always use `node:util` `parseArgs({ options, allowPositionals })`. Avoid `commander`, `yargs`, or `minimist`.
-- **Terminal Styling & Colors**: Always use `node:util` `styleText('color', text)`. Avoid `chalk` or `colorette`.
-- **File System Globbing**: Always use `node:fs/promises` `glob(pattern)`. Avoid `fast-glob` or `glob`.
-- **Embedded Database**: Always use native `node:sqlite` (`DatabaseSync`) for local persistence instead of external native C-binding SQLite packages.
+Prioritize zero-dependency native built-ins supported by the active Node runtime over external third-party packages:
+
+- **CLI Argument Parsing**: Use `node:util` `parseArgs({ options, allowPositionals })`. Avoid `commander`, `yargs`, or `minimist`.
+- **Terminal Styling & Colors**: Use `node:util` `styleText('color', text)`. Avoid `chalk` or `colorette`.
+- **File System Globbing**: Use `node:fs/promises` `glob(pattern)`. Avoid `fast-glob` or `glob`.
+- **Embedded Database**: Use native `node:sqlite` (`DatabaseSync`) for local persistence instead of external native C-binding SQLite packages.
+- **Environment Loading**: Use native `process.loadEnvFile()` where available instead of `dotenv`.
 - **Native Web Standards**: Always use global `fetch`, `FormData`, `Request`, `Response`, `crypto.randomUUID()`, `structuredClone()`, `URL`, `AbortController`. Avoid `axios`, `uuid`, `lodash`.
-- **Unit Testing**: Always use native `node:test` and `node:assert/strict`.
+- **Unit Testing**: Use native `node:test` and `node:assert/strict` for standalone Node scripts.
 
 ---
 
@@ -75,7 +82,7 @@ description: Modern Node.js pure ESM standards, config pre-verification, Zod run
 
 When running Node.js or Vite+ package manager commands as an agent, use token-efficient structured formats:
 
-- **Production Server / Script Execution**: Prefer `vp node <script>` (e.g. `vp node dist/server/app.js`) over raw unmanaged `node` to run within the Vite+ managed runtime environment.
+- **Production Server / Script Execution**: Prefer `vp node <script>` over raw unmanaged `node` to run within the Vite+ managed runtime environment.
 - **Task Runner Caching**: In `vite.config.ts`, declare `run.cache: { scripts: true, tasks: true }` to cache script and task runs across invocations.
 - **Cache Inspection**: Run `vpr --last-details` to verify whether task steps resulted in cache hits or misses.
 - **Clean Execution & Cache Purging**: When troubleshooting unexpected behavior, use `vpr --no-cache` to force execution or `vp cache clean` to purge caches cleanly.

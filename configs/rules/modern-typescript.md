@@ -1,14 +1,23 @@
 ---
 trigger: glob
 globs: "**/*.ts, **/*.tsx, **/*.mts, **/*.cts"
-description: Strict TypeScript type safety rules, zero-suppression invariants, Zod runtime validation, and Oxlint enforcement.
+description: Strict TypeScript type safety rules, pre-execution verification, zero-suppression invariants, Zod runtime validation, and Oxlint enforcement.
 ---
 
 # Strict TypeScript Rules & Type-Checked Invariants
 
 **CRITICAL:** All generated TypeScript code MUST pass `oxlint` (zero warnings, zero errors) and compile cleanly under strict TypeScript (`tsc --noEmit` or `tsc -b --pretty false`) on the first attempt.
 
-## 1. Zero Suppression Directives Policy (STRICTLY FORBIDDEN)
+## 1. Pre-Execution Verification & Live Query Mandate
+
+- **Verify Diagnostics & Flags First**: Before troubleshooting unfamiliar type errors or adjusting compiler/linter settings, query live flags:
+  - Run `npx oxlint --help` or `tsc --help` to confirm valid options.
+  - Inspect official LLM references: `https://oxc.rs/llms.txt` (via `webread --llms https://oxc.rs`).
+  - NEVER guess tsconfig compiler options or linter rule names.
+
+---
+
+## 2. Zero Suppression Directives Policy (STRICTLY FORBIDDEN)
 
 - **NEVER Suppress Compiler or Linter Diagnostics**: Suppressing diagnostics to bypass checks is strictly prohibited:
   - ❌ `// @ts-ignore` / `// @ts-expect-error` / `// @ts-nocheck`
@@ -19,7 +28,7 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 2. Ban on Unsafe Assertions & Type Smuggling
+## 3. Ban on Unsafe Assertions & Type Smuggling
 
 - **Absolute Ban on Double Assertions**: NEVER use double type casting to force an incompatible type:
   - ❌ `data as unknown as TargetType` / `data as any as TargetType`
@@ -31,7 +40,7 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 3. Zod-First Runtime Validation & Boundary Defense
+## 4. Zod-First Runtime Validation & Boundary Defense
 
 - **Mandatory Runtime Validation for Boundary Data**: Untrusted data (API responses, `JSON.parse`, file reads, `process.env`, CLI inputs) MUST be validated with Zod:
   - ✅ Always define schemas: `const Schema = z.object({ ... });`
@@ -49,7 +58,7 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 4. Strict Boolean & Truthiness Expressions
+## 5. Strict Boolean & Truthiness Expressions
 
 - **Strict Booleans**: NEVER evaluate non-boolean values in `if` or conditional expressions (`strict-boolean-expressions`).
   - ❌ `if (str)` / `if (arr.length)` / `if (obj)`
@@ -57,7 +66,7 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 5. Map Lookups & Data Access
+## 6. Map Lookups & Data Access
 
 - **No Double Map Lookups**: NEVER use `Map.has(key)` followed by `Map.get(key)`. `Map.has()` does not narrow types in TypeScript. Perform a single `.get()` and explicitly check against `undefined`.
   - ❌ `if (map.has(key)) { const v = map.get(key); }`
@@ -65,21 +74,21 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 6. Safe Template Literals & String Conversion
+## 7. Safe Template Literals & String Conversion
 
 - **Primitive Interpolation Only**: NEVER interpolate objects, arrays, promises, or `unknown` into template strings. Only primitive types (`string`, `number`, `boolean`) are allowed.
   - Explicitly convert complex types using `String(val)` or `JSON.stringify(val)`.
 
 ---
 
-## 7. Absolute Ban on Unsafe Any
+## 8. Absolute Ban on Unsafe Any
 
 - **The `any` Type is STRICTLY FORBIDDEN**: Never assign, return, call, or access members on an `any` type (`no-unsafe-*`).
   - Always use `unknown` and perform `typeof`, `instanceof`, or Zod validation before operating on untrusted data.
 
 ---
 
-## 8. Async Execution & Null Safety
+## 9. Async Execution & Null Safety
 
 - **No Floating Promises**: ALL promises must be `await`ed, returned, or explicitly marked with `void` (`no-floating-promises`).
 - **Strict Null Checks**: Never use the non-null assertion operator (`!`). Always handle `null`/`undefined` via control flow analysis, optional chaining (`?.`), or nullish coalescing (`??`).
@@ -87,7 +96,7 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 9. Type Annotations & Modeling
+## 10. Type Annotations & Modeling
 
 - **Static vs Dynamic Data**:
   - Static configs, mock data, known keys $\rightarrow$ use `satisfies Type` (preserves narrow literal inference).
@@ -97,7 +106,7 @@ description: Strict TypeScript type safety rules, zero-suppression invariants, Z
 
 ---
 
-## 10. Agent Verification, All-in-One Configuration & Vitest Projects
+## 11. Agent Verification, All-in-One Configuration & Vitest Projects
 
 - **All-in-One `vite.config.ts` Consolidation**: In modern Vite+ repositories, configure Oxlint and Oxfmt rules directly inside `vite.config.ts` (`lint` and `fmt` fields) with `lint.options.typeAware: true` and `lint.options.typeCheck: true`. Avoid introducing duplicate standalone configuration files (`.oxlintrc.json`, `.prettierignore`).
 - **Vitest Browser Projects Testing**: Write component and E2E tests using `vite-plus/test` and Vitest Browser mode (`browser.provider = playwright()`). Run tests via `vp test run --project <name> --reporter=tap-flat --no-color`.
