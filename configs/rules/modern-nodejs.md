@@ -80,8 +80,10 @@ Prioritize zero-dependency native built-ins supported by the active Node runtime
 
 ## 6. Agent-Friendly Vite+ Execution Formats & Task Caching
 
-When running Node.js or Vite+ package manager commands as an agent, use token-efficient structured formats:
-
+- **Unified Vite+ Toolchain Mandate**: ALWAYS use Vite+ commands across all workflows (`vp`, `vpx`, `vpr`). STRICTLY FORBIDDEN to use package-manager specific runners (`npx`, `pnpm dlx`, `bunx`, `npm run`).
+  - Execute project scripts $\rightarrow$ `vpr <script>` (or `vp run <script>`)
+  - Execute one-off tools $\rightarrow$ `vpx <tool>` (e.g. `vpx oxlint`, `vpx oxfmt`)
+  - Manage dependencies $\rightarrow$ `vp install`, `vp update`, `vp add`, `vp remove`
 - **Production Server / Script Execution**: Prefer `vp node <script>` over raw unmanaged `node` to run within the Vite+ managed runtime environment.
 - **Task Runner Caching**: In `vite.config.ts`, declare `run.cache: { scripts: true, tasks: true }` to cache script and task runs across invocations.
 - **Cache Inspection**: Run `vpr --last-details` to verify whether task steps resulted in cache hits or misses.

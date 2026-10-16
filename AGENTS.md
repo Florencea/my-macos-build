@@ -25,6 +25,9 @@ This document outlines the core development workflow, code formatting standards,
     2. Format modified files (`shfmt` for shell scripts, `vpx oxfmt` for markdown/code).
     3. Stage changes using `git add <files>`.
     4. Provide the exact `git commit -m "..."` command for manual execution by the user.
+- **Unified Vite+ Toolchain Mandate (`vp`, `vpx`, `vpr`)**:
+  - Across all Node.js projects, always use native Vite+ commands: `vp` for package/project management, `vpx <tool>` for one-off tool execution, and `vpr <script>` (or `vp run <script>`) for package scripts.
+  - STRICTLY PROHIBITED to invoke package-manager specific runners like `npx`, `pnpm dlx`, `bunx`, or `npm run`.
 - **Bare Command Invocation (No Path Prefixes)**:
   - All terminal commands executed by agents must strictly use bare command names (e.g. `git`, `vp`, `node`, `shfmt`) without absolute path prefixes (e.g. NEVER `/usr/bin/git`).
   - Commands rely on `$PATH` to ensure compatibility with Antigravity security allowlists.

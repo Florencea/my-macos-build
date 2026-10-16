@@ -71,7 +71,7 @@ Before executing unfamiliar commands or authoring configs, query these verified 
   - CLI Help: `vp help` / `vp --help`
 - **Oxc (`oxfmt`, `oxlint`)**:
   - LLM Reference: `webread --llms https://oxc.rs` (or `https://oxc.rs/llms.txt`)
-  - CLI Help: `npx oxlint --help`, `npx oxfmt --help`
+  - CLI Help: `vpx oxlint --help`, `vpx oxfmt --help` (or `vp lint --help`, `vp fmt --help`)
 - **React**:
   - Official Reference: `webread https://react.dev/reference/react`
   - You Might Not Need an Effect: `webread https://react.dev/learn/you-might-not-need-an-effect`

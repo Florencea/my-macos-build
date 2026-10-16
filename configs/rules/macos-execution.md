@@ -37,6 +37,7 @@ description: macOS Darwin CLI toolchain constraints, live query mandates, web ex
 
 ## 3. Shell Execution Anti-Patterns (STRICTLY FORBIDDEN)
 
+- **NEVER use Package-Manager Specific Runners (`npx`, `pnpm dlx`, `bunx`, `npm run`)**: STRICTLY FORBIDDEN to invoke package-manager specific wrappers or runners. ALWAYS use the unified Vite+ toolchain: `vp` for package/runtime management, `vpx <tool>` for tool execution, and `vpr <script>` (or `vp run <script>`) for running scripts from `package.json`.
 - **NEVER use Absolute Path Prefixes (Bare Commands Only)**: STRICTLY PROHIBITED to prefix CLI commands with absolute paths (e.g., `/usr/bin/git`, `/bin/zsh`, `/usr/bin/python`, `/usr/local/bin/...`, `/opt/homebrew/bin/...`). ALWAYS execute bare command names directly (e.g., `git`, `zsh`, `vp`, `node`, `rg`, `fd`, `webread`, `htmlq`) relying on `$PATH`. Prefixing absolute paths breaks Antigravity's security allowlist matching and triggers intrusive confirmation prompts.
 - **NEVER use `sed`**: `sed` is completely prohibited and excluded from permission allowlists. For text replacements, use `sd`. For previewing lines, use `bat` or `awk`.
 - **NEVER use `eval`** or dynamic variable execution (e.g. `cmd="..."; eval $cmd`). Execute commands directly.

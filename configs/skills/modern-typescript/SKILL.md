@@ -14,7 +14,7 @@ compatibility: TypeScript 5+, Oxlint, Oxfmt, Vite+, Zod
 
 Before troubleshooting unfamiliar type errors or adjusting compiler/linter settings, query live flags:
 
-- Run `npx oxlint --help` or `tsc --help` to confirm valid options.
+- Run `vpx oxlint --help` (or `vp lint --help`) or `tsc --help` to confirm valid options.
 - Inspect official LLM references: `webread --llms https://oxc.rs` (or `https://oxc.rs/llms.txt`).
 - NEVER guess tsconfig compiler options or linter rule names.
 

@@ -11,7 +11,7 @@ description: Strict TypeScript type safety rules, pre-execution verification, ze
 ## 1. Pre-Execution Verification & Live Query Mandate
 
 - **Verify Diagnostics & Flags First**: Before troubleshooting unfamiliar type errors or adjusting compiler/linter settings, query live flags:
-  - Run `npx oxlint --help` or `tsc --help` to confirm valid options.
+  - Run `vpx oxlint --help` (or `vp lint --help`) or `tsc --help` to confirm valid options.
   - Inspect official LLM references: `https://oxc.rs/llms.txt` (via `webread --llms https://oxc.rs`).
   - NEVER guess tsconfig compiler options or linter rule names.
 

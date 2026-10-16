@@ -36,6 +36,12 @@ When building Node.js CLI tools and scripts, prioritize zero-dependency native b
   - Toolchain Status: Run `vp toolchain` to inspect runtime version and active tools dynamically.
   - Live Documentation: Run `webread --llms https://viteplus.dev` (or query `https://viteplus.dev/llms-full.txt`).
   - NEVER guess syntax, package fields, or flags from outdated memory.
+- **Unified Vite+ Toolchain Mandate**:
+  - Always use `vp`, `vpx`, and `vpr` across all Node.js projects.
+  - STRICTLY PROHIBITED to invoke package-manager specific runners (`npx`, `pnpm dlx`, `bunx`, `npm run`).
+  - One-off tool execution: `vpx <tool>` (e.g. `vpx oxlint`, `vpx oxfmt`).
+  - Script execution: `vpr <script>` (or `vp run <script>`).
+  - Dependency management: `vp install`, `vp update`, `vp add`, `vp remove`.
 - **Native Manifest Operations (`vp pm pkg`)**:
   - Querying fields: `vp pm pkg get <key>` (or `vp -C <dir> pm pkg get <key>`)
   - Mutating fields: `vp pm pkg set <key>=<value>` (use `--json` for objects/booleans/arrays)
