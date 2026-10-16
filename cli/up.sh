@@ -15,20 +15,20 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
 fi
 
 # 2. Check required tools
-for cmd in git jq vp vpr vpx; do
+for cmd in git jq vp vpr vpx yq; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
   fi
 done
 
-# 2. Check project files
+# 3. Check project files
 [[ -f "package.json" ]] || {
   echo "Error: File package.json does not exist" >&2
   exit 1
 }
 
-# 3. Check git status and branch
+# 4. Check git status and branch
 CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 if [[ "$CURRENT_BRANCH" != "main" ]]; then
   echo "Error: Current branch is not 'main' ($CURRENT_BRANCH)" >&2
@@ -40,7 +40,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
-# 4. Sync repository
+# 5. Sync repository
 if git rev-parse --abbrev-ref @{u} &>/dev/null; then
   git pull --ff-only --quiet || {
     echo "Error: Cannot fast-forward with remote. Please sync your branch first." >&2
@@ -48,7 +48,7 @@ if git rev-parse --abbrev-ref @{u} &>/dev/null; then
   }
 fi
 
-# 5. Spinner helper for time-consuming steps
+# 6. Spinner helper for time-consuming steps
 run_with_spinner() {
   local msg="$1"
   shift
@@ -80,31 +80,74 @@ run_with_spinner() {
   rm -f "$tmp_log"
 }
 
-# 6. Check minor updates
+# 7. Detect Vite+ project and inspect toolchain
+IS_VITE_PLUS=0
+if jq -e '((.dependencies // {}) + (.devDependencies // {})) | has("vite-plus")' package.json >/dev/null 2>&1; then
+  IS_VITE_PLUS=1
+fi
+
+VP_TOOLCHAIN_UPGRADED=0
+VP_OLD_VER=""
+VP_NEW_VER=""
+
+if ((IS_VITE_PLUS)); then
+  GLOBAL_VP_VER="$(vp --version 2>/dev/null | awk '/^vp v/ {sub(/^vp v/, ""); print $1}')"
+  LOCAL_VP_VER="$(jq -r '((.dependencies // {}) + (.devDependencies // {}))["vite-plus"] // empty' package.json 2>/dev/null)"
+
+  # If catalog-backed, resolve concrete version from pnpm-workspace.yaml
+  if [[ "$LOCAL_VP_VER" == "catalog:" && -f "pnpm-workspace.yaml" ]]; then
+    LOCAL_VP_VER="$(yq '.catalog.vite-plus // .catalogs.default.vite-plus // ""' pnpm-workspace.yaml 2>/dev/null)"
+  fi
+
+  if [[ -n "$GLOBAL_VP_VER" && -n "$LOCAL_VP_VER" && "$LOCAL_VP_VER" != "$GLOBAL_VP_VER" ]]; then
+    VP_TOOLCHAIN_UPGRADED=1
+    VP_OLD_VER="$LOCAL_VP_VER"
+    VP_NEW_VER="$GLOBAL_VP_VER"
+  fi
+fi
+
+# 8. Check minor updates via NCU
 NCU_JSON="$(vpx -s npm-check-updates@latest -t minor --install never --jsonUpgraded)"
 
-if [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
+if ((! IS_VITE_PLUS || ! VP_TOOLCHAIN_UPGRADED)) && [[ -z "$NCU_JSON" || "$NCU_JSON" == "{}" ]]; then
   exit 0
 fi
 
-# 7. Parse updates safely
+# 9. Parse updates safely
 count=0
 commit_body=""
 single_pkg_summary=""
 
-RAW_TARGETS="$(jq -r 'to_entries | .[] | "\(.key)\t\(.value)"' <<<"$NCU_JSON")"
+has_vite_plus_in_targets=0
 
-while IFS=$'\t' read -r pkg new_ver || [[ -n "$pkg" ]]; do
-  [[ -z "$pkg" ]] && continue
-  old_ver="$(jq -r ".dependencies[\"$pkg\"] // .devDependencies[\"$pkg\"] // .peerDependencies[\"$pkg\"] // .optionalDependencies[\"$pkg\"] // \"?\"" package.json)"
+if [[ -n "$NCU_JSON" && "$NCU_JSON" != "{}" ]]; then
+  raw_entries=("${(@f)$(jq -r 'to_entries[] | "\(.key)=\(.value)"' <<<"$NCU_JSON")}")
 
-  printf "  %s  %s  ->  %s\n" "$pkg" "$old_ver" "$new_ver"
-  commit_body+=$'\n'"- ${pkg}: ${old_ver} -> ${new_ver}"
-  single_pkg_summary="${pkg} ${old_ver} -> ${new_ver}"
+  for entry in "${raw_entries[@]}"; do
+    [[ -z "$entry" ]] && continue
+    pkg="${entry%%=*}"
+    new_ver="${entry#*=}"
+    old_ver="$(jq -r ".dependencies[\"$pkg\"] // .devDependencies[\"$pkg\"] // .peerDependencies[\"$pkg\"] // .optionalDependencies[\"$pkg\"] // \"?\"" package.json)"
+
+    if [[ "$pkg" == "vite-plus" ]]; then
+      has_vite_plus_in_targets=1
+    fi
+
+    printf "  %s  %s  ->  %s\n" "$pkg" "$old_ver" "$new_ver"
+    commit_body+=$'\n'"- ${pkg}: ${old_ver} -> ${new_ver}"
+    single_pkg_summary="${pkg} ${old_ver} -> ${new_ver}"
+    ((count++)) || true
+  done
+fi
+
+if ((VP_TOOLCHAIN_UPGRADED && ! has_vite_plus_in_targets)); then
+  printf "  %s  %s  ->  %s\n" "vite-plus" "$VP_OLD_VER" "$VP_NEW_VER"
+  commit_body+=$'\n'"- vite-plus: ${VP_OLD_VER} -> ${VP_NEW_VER}"
+  single_pkg_summary="vite-plus ${VP_OLD_VER} -> ${VP_NEW_VER}"
   ((count++)) || true
-done <<<"$RAW_TARGETS"
+fi
 
-# 8. Create sandbox branch and register rollback trap
+# 10. Create sandbox branch and register rollback trap
 TEMP_BRANCH="chore/deps-upgrade-$(date +%s)"
 git checkout -q -b "$TEMP_BRANCH"
 
@@ -130,28 +173,42 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-# 9. Update package.json and lockfile
-FAILED_STEP="vpx npm-check-updates"
-run_with_spinner "Updating packages" vpx -s npm-check-updates@latest -u -t minor
-
-FAILED_STEP="vp pm pkg fix"
-run_with_spinner "Normalizing manifest (vp pm pkg fix)" env VP_LOG=error vp pm pkg fix
-
-# Backup and isolate node_modules, remove stale lockfile to avoid circular peer deadlocks
-if [[ -d "node_modules" ]]; then
-  mv node_modules .node_modules.bak
+# 11. Update package manifests and lockfile
+if [[ -n "$NCU_JSON" && "$NCU_JSON" != "{}" ]]; then
+  FAILED_STEP="vpx npm-check-updates"
+  run_with_spinner "Updating packages (NCU)" vpx -s npm-check-updates@latest -u -t minor
 fi
-rm -f package-lock.json
 
-FAILED_STEP="vp install (lockfile update)"
-run_with_spinner "Writing lockfile" env VP_LOG=error vp install --lockfile-only --ignore-scripts
+if ((IS_VITE_PLUS)); then
+  # Vite+ native toolchain migration: keep node_modules in place so migrator can read tsdown & peer metadata
+  FAILED_STEP="vp migrate --no-interactive"
+  run_with_spinner "Aligning Vite+ toolchain (vp migrate)" env VP_LOG=error vp migrate --no-interactive
 
-# 10. Sync local dependencies
-FAILED_STEP="vp install"
-run_with_spinner "Syncing dependencies (vp install)" env VP_LOG=error vp install --frozen-lockfile
-rm -rf .node_modules.bak
+  FAILED_STEP="vp pm pkg fix"
+  run_with_spinner "Normalizing manifest (vp pm pkg fix)" env VP_LOG=error vp pm pkg fix
 
-# 11. Run project pre-checks
+  # Verify frozen lockfile consistency
+  FAILED_STEP="vp install (frozen verification)"
+  run_with_spinner "Verifying frozen lockfile" env VP_LOG=error vp install --frozen-lockfile
+else
+  # Generic Node.js project: normalize and isolate node_modules to avoid peer deadlocks
+  FAILED_STEP="vp pm pkg fix"
+  run_with_spinner "Normalizing manifest (vp pm pkg fix)" env VP_LOG=error vp pm pkg fix
+
+  if [[ -d "node_modules" ]]; then
+    mv node_modules .node_modules.bak
+  fi
+  rm -f package-lock.json
+
+  FAILED_STEP="vp install (lockfile update)"
+  run_with_spinner "Writing lockfile" env VP_LOG=error vp install --lockfile-only --ignore-scripts
+
+  FAILED_STEP="vp install"
+  run_with_spinner "Syncing dependencies (vp install)" env VP_LOG=error vp install --frozen-lockfile
+  rm -rf .node_modules.bak
+fi
+
+# 12. Run project pre-checks
 run_first_matching_script() {
   local category="$1"
   local display_name="$2"
@@ -166,19 +223,19 @@ run_first_matching_script() {
   return 0
 }
 
-# 11.1 Auto-format: native vp fmt formats all code & config files in place
+# 12.1 Auto-format: native vp fmt formats all code & config files in place
 # (Resolves pnpm-workspace.yaml and package.json formatting drift immediately)
 FAILED_STEP="vp fmt"
 run_with_spinner "Formatting code & configs (vp fmt)" env VP_LOG=error vp fmt
 
-# 11.2 Code quality & lint: native vp check verifies formatting, runs Oxlint, and type checks
+# 12.2 Code quality & lint: native vp check verifies formatting, runs Oxlint, and type checks
 FAILED_STEP="vp check"
 run_with_spinner "Checking quality & lint (vp check)" env VP_LOG=error vp check --quiet --no-error-on-unmatched-pattern
 
 # Run optional auxiliary linters not covered by Oxlint (e.g. Tailwind or custom CI linters)
 run_first_matching_script "lint" "additional lint rules" "lint:tailwind" "agent:lint:ci"
 
-# 11.3 Typecheck
+# 12.3 Typecheck
 has_typecheck=0
 for script_name in "agent:typecheck" "typecheck"; do
   if jq -e ".scripts[\"$script_name\"]" package.json >/dev/null 2>&1; then
@@ -202,7 +259,7 @@ run_first_matching_script "deadcode" "dead code" "check:deadcode" "knip"
 # Lightweight unit tests
 run_first_matching_script "unit-test" "unit tests" "agent:verify:unit" "agent:test:unit" "test:unit"
 
-# 12. Build commit message
+# 13. Build commit message
 if [[ "$count" -eq 1 ]]; then
   commit_title="chore(deps): update dependency ${single_pkg_summary}"
   commit_msg="${commit_title}"
@@ -211,18 +268,24 @@ else
   commit_msg="${commit_title}"$'\n\n'"Upgrade details:${commit_body}"
 fi
 
-# 13. Commit on sandbox branch
+# 14. Commit on sandbox branch
 FAILED_STEP="git commit"
 git add -A
 git commit -q -m "$commit_msg"
 
-# 14. Fast-forward merge into main and push
-FAILED_STEP="git merge & push"
-run_with_spinner "Pushing to remote" git push -q origin "$TEMP_BRANCH:main"
+# 15. Push to remote and fast-forward merge into main
+if git rev-parse --abbrev-ref @{u} &>/dev/null; then
+  FAILED_STEP="git push"
+  run_with_spinner "Pushing to remote" git push -q origin "$TEMP_BRANCH:main"
+fi
 
 trap - EXIT INT TERM
 git checkout -q main
 git merge --ff-only -q "$TEMP_BRANCH"
 git branch -D -q "$TEMP_BRANCH"
 
-echo "Pushed: $commit_title"
+if git rev-parse --abbrev-ref @{u} &>/dev/null; then
+  echo "Pushed: $commit_title"
+else
+  echo "Committed and merged: $commit_title"
+fi
