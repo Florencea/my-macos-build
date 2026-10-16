@@ -14,7 +14,7 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
 fi
 
 # 2. Check required tools
-for cmd in git jq vp; do
+for cmd in git vp; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1
@@ -32,12 +32,12 @@ PROJECTS_DIR="${0:A:h:h:h}"
 if cd "$PROJECTS_DIR"; then
   for PROJECT in *(N/); do
     if [[ -d "$PROJECT/.git" && -f "$PROJECT/package.json" ]]; then
-      OLD_NODE_VERSION="$(jq -r '.engines.node // empty' "$PROJECT/package.json" 2>/dev/null || echo "")"
+      OLD_NODE_VERSION="$(VP_LOG=error vp -C "$PROJECT" pm pkg get engines.node 2>/dev/null || echo "")"
 
       if [[ "$OLD_NODE_VERSION" != "$NODE_VERSION" ]]; then
         (
           cd "$PROJECT"
-          jq --arg v "$NODE_VERSION" '.engines.node = $v' package.json >package.json.tmp && mv package.json.tmp package.json
+          VP_LOG=error vp pm pkg set engines.node="$NODE_VERSION"
 
           if [[ -n "$(git status --short package.json)" ]]; then
             git add package.json

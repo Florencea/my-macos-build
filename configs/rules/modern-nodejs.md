@@ -12,6 +12,9 @@ description: Modern Node.js pure ESM standards, config pre-verification, Zod run
   - Check current tool/runtime version: Run `vp toolchain` or inspect `engines.node` / dependencies.
   - Query live documentation: Check `https://viteplus.dev/llms-full.txt` or relevant official manuals.
   - NEVER guess syntax, package fields (e.g. `exports`, `imports`, `type`), or CLI flags from memory.
+- **Native Manifest Operations (`vp pm pkg`)**:
+  - When querying or modifying `package.json` fields programmatically in scripts or agent workflows, ALWAYS use native Vite+ package manifest commands (`vp pm pkg get`, `vp pm pkg set`, `vp pm pkg delete`, `vp pm pkg fix`).
+  - NEVER use regex replacements or `jq` with temporary intermediate files (`package.json.tmp && mv`) to mutate `package.json`.
 
 ---
 

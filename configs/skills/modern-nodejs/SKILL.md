@@ -44,6 +44,12 @@ When building Node.js CLI tools and scripts, prioritize zero-dependency native b
    - Node.js APIs: `https://nodejs.org/docs/latest-v24.x/api/`
 3. **Verify CLI Syntax**:
    - Run `<tool> --help` to confirm CLI flags before executing non-standard commands.
+4. **Native Manifest Operations (`vp pm pkg`)**:
+   - Querying fields: `vp pm pkg get <key>` (or `vp -C <dir> pm pkg get <key>`)
+   - Mutating fields: `vp pm pkg set <key>=<value>` (use `--json` for objects/booleans/arrays)
+   - Removing fields: `vp pm pkg delete <key>`
+   - Standardizing & fixing: `vp pm pkg fix`
+   - Strictly avoid raw regex replacements or `jq` intermediate file swapping (`package.json.tmp && mv`).
 
 ---
 

@@ -14,7 +14,7 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
 fi
 
 # 2. Check required tools
-for cmd in brew curl git jq vp; do
+for cmd in brew curl git vp; do
   if ! (($+commands[$cmd])); then
     echo "Error: $cmd is not installed" >&2
     exit 1

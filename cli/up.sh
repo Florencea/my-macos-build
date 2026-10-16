@@ -134,6 +134,9 @@ trap cleanup EXIT INT TERM
 FAILED_STEP="vpx npm-check-updates"
 run_with_spinner "Updating packages" vpx -s npm-check-updates@latest -u -t minor
 
+FAILED_STEP="vp pm pkg fix"
+run_with_spinner "Normalizing manifest (vp pm pkg fix)" env VP_LOG=error vp pm pkg fix
+
 # Backup and isolate node_modules, remove stale lockfile to avoid circular peer deadlocks
 if [[ -d "node_modules" ]]; then
   mv node_modules .node_modules.bak
