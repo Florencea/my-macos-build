@@ -144,8 +144,17 @@ REPO_DIR="${SCRIPT_DIR:h}"
 fetch_file() {
   local rel_path="$1"
   local dest_path="$2"
-  if [[ -n "${REPO_DIR:-}" && -f "$REPO_DIR/$rel_path" ]]; then
-    cp "$REPO_DIR/$rel_path" "$dest_path"
+  local src_path="${REPO_DIR:-}/$rel_path"
+
+  mkdir -p "${dest_path:h}"
+
+  if [[ -n "${REPO_DIR:-}" && -f "$src_path" ]]; then
+    if [[ -L "$dest_path" ]]; then
+      rm -f "$dest_path"
+    fi
+    if [[ ! -f "$dest_path" ]] || ! cmp -s "$src_path" "$dest_path"; then
+      cp -f "$src_path" "$dest_path"
+    fi
   else
     local encoded_path="${rel_path// /%20}"
     curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/$encoded_path" -o "$dest_path"
@@ -169,8 +178,14 @@ fetch_file "configs/zsh/zshrc" "$HOME/.zshrc"
 
 if [[ -d "$REPO_DIR/configs/zsh/completions" ]]; then
   for comp in "$REPO_DIR/configs/zsh/completions"/_*(N); do
-    cp -f "$comp" "$HOME/.local/share/zsh/site-functions/${comp:t}"
-    chmod 644 "$HOME/.local/share/zsh/site-functions/${comp:t}"
+    dest="$HOME/.local/share/zsh/site-functions/${comp:t}"
+    if [[ -L "$dest" ]]; then
+      rm -f "$dest"
+    fi
+    if [[ ! -f "$dest" ]] || ! cmp -s "$comp" "$dest"; then
+      cp -f "$comp" "$dest"
+    fi
+    chmod 644 "$dest"
   done
 else
   local -a completions=(clall ebk mdig mkclp mkgif mmb rea ua unodev up webread)
@@ -208,11 +223,15 @@ if ((${#skills[@]} == 0)); then
 fi
 
 for skill in "${skills[@]}"; do
-  mkdir -p "$HOME/.gemini/config/skills/$skill"
+  local target_dir="$HOME/.gemini/config/skills/$skill"
+  mkdir -p "$target_dir"
   if [[ -n "${REPO_DIR:-}" && -d "$REPO_DIR/configs/skills/$skill" ]]; then
-    cp -R "$REPO_DIR/configs/skills/$skill/." "$HOME/.gemini/config/skills/$skill/"
+    for f in "$target_dir"/*(N@); do
+      rm -f "$f"
+    done
+    cp -R "$REPO_DIR/configs/skills/$skill/." "$target_dir/"
   else
-    fetch_file "configs/skills/$skill/SKILL.md" "$HOME/.gemini/config/skills/$skill/SKILL.md"
+    fetch_file "configs/skills/$skill/SKILL.md" "$target_dir/SKILL.md"
   fi
 done
 
