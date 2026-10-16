@@ -174,24 +174,35 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 # 11. Update package manifests and lockfile
-if [[ -n "$NCU_JSON" && "$NCU_JSON" != "{}" ]]; then
-  FAILED_STEP="vpx npm-check-updates"
-  run_with_spinner "Updating packages (NCU)" vpx -s npm-check-updates@latest -u -t minor
-fi
-
 if ((IS_VITE_PLUS)); then
-  # Vite+ native toolchain migration: keep node_modules in place so migrator can read tsdown & peer metadata
+  # 11.1 Vite+ native toolchain migration MUST run first while original package.json and lockfile are intact,
+  # ensuring migrator can accurately determine source Vitest version and prevent v4/v5 migration blocking errors.
   FAILED_STEP="vp migrate --no-interactive"
   run_with_spinner "Aligning Vite+ toolchain (vp migrate)" env VP_LOG=error vp migrate --no-interactive
 
+  # 11.2 Update remaining third-party dependencies via NCU
+  if [[ -n "$NCU_JSON" && "$NCU_JSON" != "{}" ]]; then
+    FAILED_STEP="vpx npm-check-updates"
+    run_with_spinner "Updating packages (NCU)" vpx -s npm-check-updates@latest -u -t minor
+  fi
+
   FAILED_STEP="vp pm pkg fix"
   run_with_spinner "Normalizing manifest (vp pm pkg fix)" env VP_LOG=error vp pm pkg fix
+
+  # Refresh lockfile with any new third-party dependencies updated by NCU
+  FAILED_STEP="vp install"
+  run_with_spinner "Syncing dependencies (vp install)" env VP_LOG=error vp install
 
   # Verify frozen lockfile consistency
   FAILED_STEP="vp install (frozen verification)"
   run_with_spinner "Verifying frozen lockfile" env VP_LOG=error vp install --frozen-lockfile
 else
-  # Generic Node.js project: normalize and isolate node_modules to avoid peer deadlocks
+  # Generic Node.js project: update via NCU, normalize, isolate node_modules, and update lockfile
+  if [[ -n "$NCU_JSON" && "$NCU_JSON" != "{}" ]]; then
+    FAILED_STEP="vpx npm-check-updates"
+    run_with_spinner "Updating packages (NCU)" vpx -s npm-check-updates@latest -u -t minor
+  fi
+
   FAILED_STEP="vp pm pkg fix"
   run_with_spinner "Normalizing manifest (vp pm pkg fix)" env VP_LOG=error vp pm pkg fix
 
