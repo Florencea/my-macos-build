@@ -1,6 +1,6 @@
 ---
 trigger: glob
-globs: ".github/workflows/**/*.yml", ".github/workflows/**/*.yaml"
+globs: ".github/workflows/**/*.yml, .github/workflows/**/*.yaml"
 description: Standards for GitHub Actions CI workflows, Vite+ caching, and mandatory local actionlint shift-left verification.
 ---
 
