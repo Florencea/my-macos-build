@@ -284,18 +284,15 @@ FAILED_STEP="git commit"
 git add -A
 git commit -q -m "$commit_msg"
 
-# 15. Push to remote and fast-forward merge into main
-if git rev-parse --abbrev-ref @{u} &>/dev/null; then
-  FAILED_STEP="git push"
-  run_with_spinner "Pushing to remote" git push -q origin "$TEMP_BRANCH:main"
-fi
-
+# 15. Fast-forward merge into main and push to remote
 trap - EXIT INT TERM
 git checkout -q main
 git merge --ff-only -q "$TEMP_BRANCH"
 git branch -D -q "$TEMP_BRANCH"
 
 if git rev-parse --abbrev-ref @{u} &>/dev/null; then
+  FAILED_STEP="git push"
+  run_with_spinner "Pushing to remote" git push -q origin main
   echo "Pushed: $commit_title"
 else
   echo "Committed and merged: $commit_title"
