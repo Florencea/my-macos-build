@@ -11,7 +11,13 @@ $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 
 $scriptDir = $PSScriptRoot
-if (-not $scriptDir) {
+if ($scriptDir -and $PSCommandPath) {
+    $commandInfo = [System.IO.FileInfo]::new($PSCommandPath)
+    if ($null -ne $commandInfo.LinkTarget) {
+        $scriptDir = Split-Path -Parent (($commandInfo.ResolveLinkTarget($true) ?? $commandInfo).FullName)
+    }
+}
+elseif (-not $scriptDir) {
     $entryPath = [Environment]::GetCommandLineArgs() |
         Select-Object -Skip 1 |
         Where-Object { $_ -and (-not $_.StartsWith('-')) -and (Test-Path -LiteralPath $_ -PathType Leaf) } |

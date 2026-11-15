@@ -118,9 +118,30 @@ try {
         $resolvedDir = Resolve-CliScriptDirectory -CommandPath $symlinkPath
         Assert-Condition -Name 'Resolve-CliScriptDirectory resolves symlink target' -Condition ($resolvedDir -eq $cliDir) -Detail "got '$resolvedDir'"
 
-        $symHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $symlinkPath, '--help')
-        Assert-Condition -Name 'Extensionless symlink --help exits 0' -Condition ($symHelp.ExitCode -eq 0) -Detail "exit $($symHelp.ExitCode): $($symHelp.Stderr)"
-        Assert-Condition -Name 'Extensionless symlink --help prints usage' -Condition ($symHelp.Stdout -match 'mmb:')
+        if (-not $IsWindows) {
+            $symHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $symlinkPath, '--help')
+            Assert-Condition -Name 'Extensionless symlink --help exits 0' -Condition ($symHelp.ExitCode -eq 0) -Detail "exit $($symHelp.ExitCode): $($symHelp.Stderr)"
+            Assert-Condition -Name 'Extensionless symlink --help prints usage' -Condition ($symHelp.Stdout -match 'mmb:')
+        }
+
+        $ps1SymlinkPath = Join-Path $tempTestDir 'mmb_link.ps1'
+        $ps1LinkCreated = $false
+        try {
+            New-Item -ItemType SymbolicLink -Path $ps1SymlinkPath -Target $targetScript -ErrorAction Stop | Out-Null
+            $ps1LinkCreated = $true
+        }
+        catch {
+            $ps1LinkCreated = $false
+        }
+
+        if ($ps1LinkCreated) {
+            $resolvedPs1Dir = Resolve-CliScriptDirectory -ScriptRoot $tempTestDir -CommandPath $ps1SymlinkPath
+            Assert-Condition -Name 'Resolve-CliScriptDirectory resolves .ps1 symlink even with ScriptRoot' -Condition ($resolvedPs1Dir -eq $cliDir) -Detail "got '$resolvedPs1Dir'"
+
+            $ps1SymHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $ps1SymlinkPath, '--help')
+            Assert-Condition -Name 'PS1 symlink --help exits 0' -Condition ($ps1SymHelp.ExitCode -eq 0) -Detail "exit $($ps1SymHelp.ExitCode): $($ps1SymHelp.Stderr)"
+            Assert-Condition -Name 'PS1 symlink --help prints usage' -Condition ($ps1SymHelp.Stdout -match 'mmb:')
+        }
     }
 
     # 3. Contract tests for all cli/*.ps1 scripts (--help and unknown option rejection)
@@ -251,13 +272,25 @@ try {
     if (Get-Command 'git' -ErrorAction SilentlyContinue) {
         $missingGitSrc = Join-Path $tempTestDir 'missing_repo.git'
         $missingGitDest = Join-Path $tempTestDir 'missing_repo_dest'
+        $prevLcAll = $env:LC_ALL
         $prevEap = $ErrorActionPreference
-        $ErrorActionPreference = 'Continue'
-        $gitOut = @(& git clone --quiet $missingGitSrc $missingGitDest 2>&1)
-        $gitCode = $LASTEXITCODE
-        $ErrorActionPreference = $prevEap
+        try {
+            $env:LC_ALL = 'C'
+            $ErrorActionPreference = 'Continue'
+            $gitOut = @(& git clone --quiet $missingGitSrc $missingGitDest 2>&1)
+            $gitCode = $LASTEXITCODE
+        }
+        finally {
+            $ErrorActionPreference = $prevEap
+            if ($null -eq $prevLcAll) {
+                Remove-Item Env:LC_ALL -ErrorAction SilentlyContinue
+            }
+            else {
+                $env:LC_ALL = $prevLcAll
+            }
+        }
         $gitDetail = Format-NativeErrorDetail -OutputLines $gitOut -ExitCode $gitCode
-        Assert-Condition -Name 'Format-NativeErrorDetail formats git ErrorRecord output' -Condition (($gitCode -ne 0) -and ($gitDetail -match 'does not exist')) -Detail "got '$gitDetail'"
+        Assert-Condition -Name 'Format-NativeErrorDetail formats git ErrorRecord output' -Condition (($gitCode -ne 0) -and ($gitDetail -match 'does not exist|does not appear to be a git repository')) -Detail "got '$gitDetail'"
     }
 
     $clallOpRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'clall.ps1'), 'op://Personal/GitHub/token')

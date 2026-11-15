@@ -7,6 +7,14 @@ function Resolve-CliScriptDirectory {
     )
 
     if (-not [string]::IsNullOrWhiteSpace($ScriptRoot)) {
+        if (-not [string]::IsNullOrWhiteSpace($CommandPath) -and (Test-Path -LiteralPath $CommandPath -PathType Leaf)) {
+            $cmdInfo = [System.IO.FileInfo]::new((Resolve-Path -LiteralPath $CommandPath).Path)
+            if ($null -ne $cmdInfo.LinkTarget) {
+                $targetInfo = $cmdInfo.ResolveLinkTarget($true)
+                $realPath = ($null -ne $targetInfo) ? $targetInfo.FullName : $cmdInfo.FullName
+                return (Split-Path -Parent $realPath)
+            }
+        }
         return $ScriptRoot
     }
 
