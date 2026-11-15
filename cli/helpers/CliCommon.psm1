@@ -161,6 +161,21 @@ function Import-WindowsMachinePath {
     $env:PATH = $entries -join ';'
 }
 
+function Resolve-YtDlpBrowser {
+    param(
+        [string]$Browser = '',
+        [string]$EnvBrowser = $env:YT_DLP_BROWSER
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($Browser)) {
+        return $Browser.Trim()
+    }
+    if (-not [string]::IsNullOrWhiteSpace($EnvBrowser)) {
+        return $EnvBrowser.Trim()
+    }
+    return 'chrome'
+}
+
 function Invoke-YtDlpSegment {
     param(
         [Parameter(Mandatory)]
@@ -175,7 +190,7 @@ function Invoke-YtDlpSegment {
         [switch]$ForceKeyframesAtCuts
     )
 
-    $targetBrowser = $Browser ? $Browser : ($env:YT_DLP_BROWSER ? $env:YT_DLP_BROWSER : 'edge')
+    $targetBrowser = Resolve-YtDlpBrowser -Browser $Browser
     $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ('yt_seg_' + [System.Guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
 
@@ -463,5 +478,6 @@ Export-ModuleMember -Function @(
     'Resolve-GitHubRepoList',
     'Resolve-PlaywrightSyncStep',
     'Resolve-ProjectVerifyStep',
+    'Resolve-YtDlpBrowser',
     'Test-WorkspaceNodeSyncTarget'
 )

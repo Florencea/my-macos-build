@@ -278,6 +278,31 @@ try {
     $multiRaw = ConvertFrom-Json '[{"name":"alpha","ssh_url":"git@github.com:u/alpha.git"},{"name":"no-ssh"},{"ssh_url":"git@github.com:u/beta.git"}]' -NoEnumerate
     $multiApiRepos = @(Resolve-GitHubRepoList -RawResponse $multiRaw)
     Assert-Condition -Name 'Resolve-GitHubRepoList unwraps multi-element -NoEnumerate array and filters missing ssh_url' -Condition (($multiApiRepos.Count -eq 2) -and ($multiApiRepos[0].Name -eq 'alpha') -and ($multiApiRepos[1].Name -eq 'beta')) -Detail "got $($multiApiRepos.Count)"
+
+    # 11. Resolve-YtDlpBrowser and mkclp/mkgif default browser contract tests
+    $prevYtBrowser = $env:YT_DLP_BROWSER
+    try {
+        Remove-Item Env:YT_DLP_BROWSER -ErrorAction SilentlyContinue
+        Assert-Condition -Name 'Resolve-YtDlpBrowser defaults to chrome' -Condition ((Resolve-YtDlpBrowser) -eq 'chrome')
+        Assert-Condition -Name 'Resolve-YtDlpBrowser ignores whitespace browser arg' -Condition ((Resolve-YtDlpBrowser -Browser '   ') -eq 'chrome')
+
+        $env:YT_DLP_BROWSER = ' edge '
+        Assert-Condition -Name 'Resolve-YtDlpBrowser uses trimmed YT_DLP_BROWSER env var' -Condition ((Resolve-YtDlpBrowser) -eq 'edge')
+        Assert-Condition -Name 'Resolve-YtDlpBrowser prefers explicit browser over env var' -Condition ((Resolve-YtDlpBrowser -Browser ' firefox ') -eq 'firefox')
+    }
+    finally {
+        if ($null -eq $prevYtBrowser) {
+            Remove-Item Env:YT_DLP_BROWSER -ErrorAction SilentlyContinue
+        }
+        else {
+            $env:YT_DLP_BROWSER = $prevYtBrowser
+        }
+    }
+
+    foreach ($mediaScript in @('mkclp.ps1', 'mkgif.ps1')) {
+        $mediaHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir $mediaScript), '--help')
+        Assert-Condition -Name "$mediaScript --help documents default browser as chrome" -Condition ($mediaHelp.Stdout -match 'default:\s*chrome') -Detail "got '$($mediaHelp.Stdout)'"
+    }
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {
