@@ -64,11 +64,17 @@ if ($Help) {
 if (-not $Token) {
     $Token = $env:GITHUB_TOKEN ? $env:GITHUB_TOKEN : ($env:GH_TOKEN ? $env:GH_TOKEN : '')
 }
+$Token = $Token.Trim()
 
 if (-not $Token) {
     [Console]::Error.WriteLine('clall: Clone all GitHub Repositories')
     [Console]::Error.WriteLine('Usage: clall [GITHUB_ACCESS_TOKEN]')
     [Console]::Error.WriteLine('       GITHUB_TOKEN=... clall')
+    exit 1
+}
+
+if ($Token.StartsWith('op://', [System.StringComparison]::OrdinalIgnoreCase)) {
+    [Console]::Error.WriteLine("Error: Unresolved 1Password secret reference in token; run via 'op run'")
     exit 1
 }
 
@@ -83,23 +89,37 @@ $headers = @{
     'User-Agent'           = 'pwsh-clall'
 }
 
-$repos = [System.Collections.Generic.List[string]]::new()
+$repos = [System.Collections.Generic.List[pscustomobject]]::new()
 $page = 1
-while ($true) {
-    $uri = "https://api.github.com/user/repos?type=owner&per_page=100&page=$page"
-    $response = @(Invoke-RestMethod -Uri $uri -Headers $headers -Method Get)
-    if ($response.Count -eq 0) {
-        break
-    }
-    foreach ($item in $response) {
-        if ($item.ssh_url) {
-            $repos.Add([string]$item.ssh_url)
+try {
+    while ($true) {
+        $uri = "https://api.github.com/user/repos?type=owner&per_page=100&page=$page"
+        $response = @(Invoke-RestMethod -Uri $uri -Headers $headers -Method Get | Where-Object { $null -ne $_ })
+        if ($response.Count -eq 0) {
+            break
         }
+        foreach ($item in $response) {
+            $sshProp = $item.PSObject.Properties['ssh_url']
+            if ($null -eq $sshProp -or [string]::IsNullOrWhiteSpace([string]$sshProp.Value)) {
+                continue
+            }
+            $sshUrl = [string]$sshProp.Value
+            $nameProp = $item.PSObject.Properties['name']
+            $repoName = ($null -ne $nameProp -and -not [string]::IsNullOrWhiteSpace([string]$nameProp.Value)) ? [string]$nameProp.Value : [System.IO.Path]::GetFileNameWithoutExtension($sshUrl)
+            $repos.Add([PSCustomObject]@{
+                    Name = $repoName
+                    Url  = $sshUrl
+                })
+        }
+        if ($response.Count -lt 100) {
+            break
+        }
+        $page++
     }
-    if ($response.Count -lt 100) {
-        break
-    }
-    $page++
+}
+catch {
+    [Console]::Error.WriteLine("Error: Failed to fetch repositories from GitHub API: $($_.Exception.Message)")
+    exit 1
 }
 
 $total = $repos.Count
@@ -108,48 +128,79 @@ if ($total -eq 0) {
 }
 
 $targetRoot = $PWD.ProviderPath
-$syncState = [hashtable]::Synchronized(@{ Done = 0 })
+$done = 0
+$failedCount = 0
+$prevTerminalPrompt = $env:GIT_TERMINAL_PROMPT
+$env:GIT_TERMINAL_PROMPT = '0'
 
-$results = @($repos | ForEach-Object -Parallel {
-        $repoUrl = $_
-        $repoName = [System.IO.Path]::GetFileNameWithoutExtension($repoUrl)
-        $destPath = Join-Path $using:targetRoot $repoName
-        $totalCount = $using:total
-        $state = $using:syncState
+try {
+    $repos | ForEach-Object -Parallel {
+        Set-StrictMode -Version Latest
+        $ErrorActionPreference = 'Continue'
+
+        $repo = $_
+        $destPath = Join-Path $using:targetRoot $repo.Name
 
         if (Test-Path -LiteralPath $destPath) {
-            [System.Threading.Monitor]::Enter($state)
-            try {
-                $state.Done++
-                $done = $state.Done
+            return [PSCustomObject]@{
+                Name        = $repo.Name
+                Status      = 'Skipped'
+                OutputLines = @()
+                ExitCode    = 0
             }
-            finally {
-                [System.Threading.Monitor]::Exit($state)
-            }
-            Write-Output "Skip [$done/$totalCount] $repoName (already exists)"
-            return [PSCustomObject]@{ Name = $repoName; Success = $true }
         }
 
-        $cloneErr = @(& git clone --quiet $repoUrl $destPath 2>&1)
-        if ($LASTEXITCODE -eq 0) {
-            [System.Threading.Monitor]::Enter($state)
-            try {
-                $state.Done++
-                $done = $state.Done
+        $maxAttempts = 2
+        $cloneErr = @()
+        $exitCode = 1
+
+        for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+            $cloneErr = @(& git clone --quiet $repo.Url $destPath 2>&1)
+            $exitCode = $LASTEXITCODE
+            if ($exitCode -eq 0) {
+                return [PSCustomObject]@{
+                    Name        = $repo.Name
+                    Status      = 'Cloned'
+                    OutputLines = @()
+                    ExitCode    = 0
+                }
             }
-            finally {
-                [System.Threading.Monitor]::Exit($state)
+
+            if (Test-Path -LiteralPath $destPath) {
+                Remove-Item -LiteralPath $destPath -Recurse -Force -ErrorAction SilentlyContinue
             }
-            Write-Output "Clone [$done/$totalCount] $repoName ok"
-            return [PSCustomObject]@{ Name = $repoName; Success = $true }
+
+            if ($attempt -lt $maxAttempts) {
+                Start-Sleep -Milliseconds 500
+            }
         }
 
-        $detail = ($cloneErr | ForEach-Object { [string]$_ } | Where-Object { $_.Trim() } | Select-Object -First 1) ?? "exit code $LASTEXITCODE"
-        [Console]::Error.WriteLine("Clone $repoName failed: $detail")
-        return [PSCustomObject]@{ Name = $repoName; Success = $false }
-    } -ThrottleLimit 6)
+        return [PSCustomObject]@{
+            Name        = $repo.Name
+            Status      = 'Failed'
+            OutputLines = @($cloneErr | ForEach-Object { [string]$_ })
+            ExitCode    = $exitCode
+        }
+    } -ThrottleLimit 6 | ForEach-Object {
+        if ($_.Status -eq 'Skipped') {
+            $done++
+            Write-Output "Skip [$done/$total] $($_.Name) (already exists)"
+        }
+        elseif ($_.Status -eq 'Cloned') {
+            $done++
+            Write-Output "Clone [$done/$total] $($_.Name) ok"
+        }
+        else {
+            $failedCount++
+            $detail = Format-NativeErrorDetail -OutputLines $_.OutputLines -ExitCode $_.ExitCode
+            [Console]::Error.WriteLine("Clone $($_.Name) failed: $detail")
+        }
+    }
+}
+finally {
+    $env:GIT_TERMINAL_PROMPT = $prevTerminalPrompt
+}
 
-$failedCount = @($results | Where-Object { -not $_.Success }).Count
 if ($failedCount -gt 0) {
     exit 1
 }

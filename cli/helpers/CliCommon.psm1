@@ -393,12 +393,39 @@ function Test-WorkspaceNodeSyncTarget {
     return ($PullUpdated -or (-not $hasNodeModules))
 }
 
+function Format-NativeErrorDetail {
+    param(
+        [AllowEmptyCollection()]
+        [AllowNull()]
+        [object[]]$OutputLines = @(),
+        [int]$ExitCode = 1
+    )
+
+    $lines = @(
+        foreach ($line in @($OutputLines)) {
+            if ($null -eq $line) {
+                continue
+            }
+            $text = ([string]$line).Trim()
+            if ($text) {
+                $text
+            }
+        }
+    )
+
+    if ($lines.Count -gt 0) {
+        return ($lines -join ' | ')
+    }
+    return "exit code $ExitCode"
+}
+
 Export-ModuleMember -Function @(
     'Resolve-CliScriptDirectory',
     'Test-RequiredCommand',
     'Convert-TimeToSecond',
     'ConvertTo-ValidatedInt',
     'Format-ByteSize',
+    'Format-NativeErrorDetail',
     'Import-WindowsMachinePath',
     'Invoke-YtDlpSegment',
     'Resolve-PlaywrightSyncStep',

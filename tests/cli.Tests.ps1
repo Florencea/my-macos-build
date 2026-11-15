@@ -240,6 +240,29 @@ try {
     [System.IO.File]::WriteAllText((Join-Path $installedRepo 'pnpm-lock.yaml'), '')
     Assert-Condition -Name 'Test-WorkspaceNodeSyncTarget skips unchanged repo when node_modules exists' -Condition (-not (Test-WorkspaceNodeSyncTarget -RepoPath $installedRepo -PullUpdated $false))
     Assert-Condition -Name 'Test-WorkspaceNodeSyncTarget syncs updated repo when node_modules exists' -Condition (Test-WorkspaceNodeSyncTarget -RepoPath $installedRepo -PullUpdated $true)
+
+    # 9. Format-NativeErrorDetail and clall.ps1 contract tests
+    $multiErr = Format-NativeErrorDetail -OutputLines @('fatal: remote error: ', '', '  Repository is disabled.', $null) -ExitCode 128
+    Assert-Condition -Name 'Format-NativeErrorDetail preserves multi-line git error details' -Condition ($multiErr -eq 'fatal: remote error: | Repository is disabled.') -Detail "got '$multiErr'"
+
+    $emptyErr = Format-NativeErrorDetail -OutputLines @('', '   ') -ExitCode 128
+    Assert-Condition -Name 'Format-NativeErrorDetail falls back to exit code when output is blank' -Condition ($emptyErr -eq 'exit code 128') -Detail "got '$emptyErr'"
+
+    if (Get-Command 'git' -ErrorAction SilentlyContinue) {
+        $missingGitSrc = Join-Path $tempTestDir 'missing_repo.git'
+        $missingGitDest = Join-Path $tempTestDir 'missing_repo_dest'
+        $prevEap = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        $gitOut = @(& git clone --quiet $missingGitSrc $missingGitDest 2>&1)
+        $gitCode = $LASTEXITCODE
+        $ErrorActionPreference = $prevEap
+        $gitDetail = Format-NativeErrorDetail -OutputLines $gitOut -ExitCode $gitCode
+        Assert-Condition -Name 'Format-NativeErrorDetail formats git ErrorRecord output' -Condition (($gitCode -ne 0) -and ($gitDetail -match 'does not exist')) -Detail "got '$gitDetail'"
+    }
+
+    $clallOpRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'clall.ps1'), 'op://Personal/GitHub/token')
+    Assert-Condition -Name 'clall.ps1 rejects unresolved op:// secret reference' -Condition ($clallOpRes.ExitCode -ne 0) -Detail 'expected non-zero exit'
+    Assert-Condition -Name 'clall.ps1 explains unresolved op:// token error on stderr' -Condition ($clallOpRes.Stderr -match '1Password secret reference') -Detail "got '$($clallOpRes.Stderr)'"
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {
