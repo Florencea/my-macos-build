@@ -94,24 +94,15 @@ $page = 1
 try {
     while ($true) {
         $uri = "https://api.github.com/user/repos?type=owner&per_page=100&page=$page"
-        $response = @(Invoke-RestMethod -Uri $uri -Headers $headers -Method Get | Where-Object { $null -ne $_ })
-        if ($response.Count -eq 0) {
+        $rawResponse = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+        $rawCount = ($rawResponse -is [System.Array]) ? $rawResponse.Count : (($null -ne $rawResponse) ? 1 : 0)
+        if ($rawCount -eq 0) {
             break
         }
-        foreach ($item in $response) {
-            $sshProp = $item.PSObject.Properties['ssh_url']
-            if ($null -eq $sshProp -or [string]::IsNullOrWhiteSpace([string]$sshProp.Value)) {
-                continue
-            }
-            $sshUrl = [string]$sshProp.Value
-            $nameProp = $item.PSObject.Properties['name']
-            $repoName = ($null -ne $nameProp -and -not [string]::IsNullOrWhiteSpace([string]$nameProp.Value)) ? [string]$nameProp.Value : [System.IO.Path]::GetFileNameWithoutExtension($sshUrl)
-            $repos.Add([PSCustomObject]@{
-                    Name = $repoName
-                    Url  = $sshUrl
-                })
+        foreach ($repoItem in @(Resolve-GitHubRepoList -RawResponse $rawResponse)) {
+            $repos.Add($repoItem)
         }
-        if ($response.Count -lt 100) {
+        if ($rawCount -lt 100) {
             break
         }
         $page++
@@ -124,6 +115,7 @@ catch {
 
 $total = $repos.Count
 if ($total -eq 0) {
+    Write-Output 'No repositories found.'
     exit 0
 }
 

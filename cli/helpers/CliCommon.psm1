@@ -419,6 +419,38 @@ function Format-NativeErrorDetail {
     return "exit code $ExitCode"
 }
 
+function Resolve-GitHubRepoList {
+    param(
+        [AllowNull()]
+        [object]$RawResponse
+    )
+
+    $items = [System.Collections.Generic.List[pscustomobject]]::new()
+    if ($null -eq $RawResponse) {
+        return @($items)
+    }
+
+    $entries = ($RawResponse -is [System.Array]) ? $RawResponse : @($RawResponse)
+    foreach ($entry in $entries) {
+        if ($null -eq $entry) {
+            continue
+        }
+        $sshProp = $entry.PSObject.Properties['ssh_url']
+        if ($null -eq $sshProp -or [string]::IsNullOrWhiteSpace([string]$sshProp.Value)) {
+            continue
+        }
+        $sshUrl = [string]$sshProp.Value
+        $nameProp = $entry.PSObject.Properties['name']
+        $repoName = ($null -ne $nameProp -and -not [string]::IsNullOrWhiteSpace([string]$nameProp.Value)) ? [string]$nameProp.Value : [System.IO.Path]::GetFileNameWithoutExtension($sshUrl)
+        $items.Add([PSCustomObject]@{
+                Name = $repoName
+                Url  = $sshUrl
+            })
+    }
+
+    return @($items)
+}
+
 Export-ModuleMember -Function @(
     'Resolve-CliScriptDirectory',
     'Test-RequiredCommand',
@@ -428,6 +460,7 @@ Export-ModuleMember -Function @(
     'Format-NativeErrorDetail',
     'Import-WindowsMachinePath',
     'Invoke-YtDlpSegment',
+    'Resolve-GitHubRepoList',
     'Resolve-PlaywrightSyncStep',
     'Resolve-ProjectVerifyStep',
     'Test-WorkspaceNodeSyncTarget'

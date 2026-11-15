@@ -263,6 +263,21 @@ try {
     $clallOpRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'clall.ps1'), 'op://Personal/GitHub/token')
     Assert-Condition -Name 'clall.ps1 rejects unresolved op:// secret reference' -Condition ($clallOpRes.ExitCode -ne 0) -Detail 'expected non-zero exit'
     Assert-Condition -Name 'clall.ps1 explains unresolved op:// token error on stderr' -Condition ($clallOpRes.Stderr -match '1Password secret reference') -Detail "got '$($clallOpRes.Stderr)'"
+
+    # 10. Resolve-GitHubRepoList tests (including -NoEnumerate array responses)
+    $emptyApiRepos = @(Resolve-GitHubRepoList -RawResponse (ConvertFrom-Json '[]' -NoEnumerate))
+    Assert-Condition -Name 'Resolve-GitHubRepoList handles empty JSON array' -Condition ($emptyApiRepos.Count -eq 0) -Detail "got $($emptyApiRepos.Count)"
+
+    $nullApiRepos = @(Resolve-GitHubRepoList -RawResponse $null)
+    Assert-Condition -Name 'Resolve-GitHubRepoList handles null response' -Condition ($nullApiRepos.Count -eq 0) -Detail "got $($nullApiRepos.Count)"
+
+    $singleRaw = ConvertFrom-Json '[{"name":"alpha","ssh_url":"git@github.com:u/alpha.git"}]' -NoEnumerate
+    $singleApiRepos = @(Resolve-GitHubRepoList -RawResponse $singleRaw)
+    Assert-Condition -Name 'Resolve-GitHubRepoList unwraps single-element -NoEnumerate array' -Condition (($singleApiRepos.Count -eq 1) -and ($singleApiRepos[0].Name -eq 'alpha') -and ($singleApiRepos[0].Url -eq 'git@github.com:u/alpha.git'))
+
+    $multiRaw = ConvertFrom-Json '[{"name":"alpha","ssh_url":"git@github.com:u/alpha.git"},{"name":"no-ssh"},{"ssh_url":"git@github.com:u/beta.git"}]' -NoEnumerate
+    $multiApiRepos = @(Resolve-GitHubRepoList -RawResponse $multiRaw)
+    Assert-Condition -Name 'Resolve-GitHubRepoList unwraps multi-element -NoEnumerate array and filters missing ssh_url' -Condition (($multiApiRepos.Count -eq 2) -and ($multiApiRepos[0].Name -eq 'alpha') -and ($multiApiRepos[1].Name -eq 'beta')) -Detail "got $($multiApiRepos.Count)"
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {
