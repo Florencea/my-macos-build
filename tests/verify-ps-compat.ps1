@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module -Name (Join-Path $PSScriptRoot 'VerifyCommon.psm1') -Force
 
 $targetGroup = 'all'
-$validGroups = @('all', 'cli', 'install')
+$validGroups = @('all', 'install')
 $targetPaths = [System.Collections.Generic.List[string]]::new()
 
 for ($i = 0; $i -lt $args.Count; $i++) {
@@ -21,7 +21,7 @@ for ($i = 0; $i -lt $args.Count; $i++) {
     }
     elseif ($arg -match '^--?target$') {
         if ($i + 1 -ge $args.Count) {
-            [Console]::Error.WriteLine('Error: --target requires a value (all|cli|install)')
+            [Console]::Error.WriteLine('Error: --target requires a value (all|install)')
             exit 1
         }
         $i++
@@ -39,7 +39,7 @@ for ($i = 0; $i -lt $args.Count; $i++) {
         $targetPaths.Add([string]$args[$i])
     }
     elseif ($arg -match '^--?h(elp)?$') {
-        Write-Output 'Usage: pwsh -NoLogo -NoProfile -File tests/verify-ps-compat.ps1 [--target all|cli|install] [--path <file>]'
+        Write-Output 'Usage: pwsh -NoLogo -NoProfile -File tests/verify-ps-compat.ps1 [--target all|install] [--path <file>]'
         exit 0
     }
     else {
@@ -54,30 +54,8 @@ if ($targetGroup -notin $validGroups) {
 }
 
 $repoRoot = Get-RepoRootPath
-$cliRoot = Join-Path $repoRoot 'cli'
 $scriptsRoot = Join-Path $repoRoot 'scripts'
 $failures = [System.Collections.Generic.List[string]]::new()
-
-$cliCompatSettings = @{
-    IncludeRules = @('PSUseCompatibleCommands', 'PSUseCompatibleTypes')
-    Rules        = @{
-        PSUseCompatibleCommands = @{
-            Enable         = $true
-            TargetProfiles = @(
-                'ubuntu_x64_18.04_7.0.0_x64_3.1.2_core',
-                'win-4_x64_10.0.18362.0_7.0.0_x64_3.1.2_core'
-            )
-            IgnoreCommands = @('Resolve-DnsName', 'node')
-        }
-        PSUseCompatibleTypes    = @{
-            Enable         = $true
-            TargetProfiles = @(
-                'ubuntu_x64_18.04_7.0.0_x64_3.1.2_core',
-                'win-4_x64_10.0.18362.0_7.0.0_x64_3.1.2_core'
-            )
-        }
-    }
-}
 
 $installCompatSettings = @{
     IncludeRules = @('PSUseCompatibleSyntax', 'PSUseCompatibleCommands', 'PSUseCompatibleTypes')
@@ -108,16 +86,7 @@ $psFiles = @(Resolve-VerifyTargetFile -RepoRoot $repoRoot -TargetPaths @($target
 $checkedCount = 0
 foreach ($file in $psFiles) {
     $relPath = [System.IO.Path]::GetRelativePath($repoRoot, $file.FullName) -replace '\\', '/'
-    $isUnderCli = $file.FullName.StartsWith($cliRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)
-    if ($isUnderCli) {
-        $checkedCount++
-        $cliCompatViolations = @(Invoke-ScriptAnalyzerSafe -TargetPath $file.FullName -Settings $cliCompatSettings)
-        if ($cliCompatViolations.Count -gt 0) {
-            $cliCompatViolations | Format-Table RuleName, Severity, Line, Message -AutoSize
-            $failures.Add("Cross-platform compatibility rules failed on $relPath")
-        }
-    }
-    elseif ($file.FullName.StartsWith($scriptsRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)) {
+    if ($file.FullName.StartsWith($scriptsRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)) {
         $checkedCount++
         $installCompatViolations = @(Invoke-ScriptAnalyzerSafe -TargetPath $file.FullName -Settings $installCompatSettings)
         if ($installCompatViolations.Count -gt 0) {

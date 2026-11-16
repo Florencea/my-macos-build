@@ -13,7 +13,7 @@ Import-Module -Name (Join-Path $PSScriptRoot 'VerifyCommon.psm1') -Force
 $fixMode = $false
 $serialMode = $false
 $targetGroup = 'all'
-$validGroups = @('all', 'cli', 'install')
+$validGroups = @('all', 'install', 'tests')
 $targetPaths = [System.Collections.Generic.List[string]]::new()
 
 for ($i = 0; $i -lt $args.Count; $i++) {
@@ -29,7 +29,7 @@ for ($i = 0; $i -lt $args.Count; $i++) {
     }
     elseif ($arg -match '^--?target$') {
         if ($i + 1 -ge $args.Count) {
-            [Console]::Error.WriteLine('Error: --target requires a value (all|cli|install)')
+            [Console]::Error.WriteLine('Error: --target requires a value (all|install|tests)')
             exit 1
         }
         $i++
@@ -47,7 +47,7 @@ for ($i = 0; $i -lt $args.Count; $i++) {
         $targetPaths.Add([string]$args[$i])
     }
     elseif ($arg -match '^--?h(elp)?$') {
-        Write-Output 'Usage: pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 [--fix] [--target all|cli|install] [--path <file>] [--serial]'
+        Write-Output 'Usage: pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 [--fix] [--target all|install|tests] [--path <file>] [--serial]'
         exit 0
     }
     else {
@@ -66,16 +66,16 @@ $settingsPath = Join-Path $repoRoot 'PSScriptAnalyzerSettings.psd1'
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 $failures = [System.Collections.Generic.List[string]]::new()
 
-# Isolate install.ps1 PSUseCorrectCasing cold discovery from cli/tests in parallel worker processes.
+# Isolate install.ps1 PSUseCorrectCasing cold discovery from tests in parallel worker processes.
 if ((-not $serialMode) -and ($targetPaths.Count -eq 0) -and ($targetGroup -eq 'all')) {
-    $workerArgsCli = @('-NoLogo', '-NoProfile', '-File', $PSCommandPath, '--target', 'cli')
+    $workerArgsTests = @('-NoLogo', '-NoProfile', '-File', $PSCommandPath, '--target', 'tests')
     $workerArgsInstall = @('-NoLogo', '-NoProfile', '-File', $PSCommandPath, '--target', 'install')
     if ($fixMode) {
-        $workerArgsCli += '--fix'
+        $workerArgsTests += '--fix'
         $workerArgsInstall += '--fix'
     }
     $results = Invoke-ParallelProcessTask -Tasks @(
-        @{ Label = 'ps-lint-cli'; FileName = 'pwsh'; Arguments = $workerArgsCli },
+        @{ Label = 'ps-lint-tests'; FileName = 'pwsh'; Arguments = $workerArgsTests },
         @{ Label = 'ps-lint-install'; FileName = 'pwsh'; Arguments = $workerArgsInstall }
     )
     foreach ($res in $results) {

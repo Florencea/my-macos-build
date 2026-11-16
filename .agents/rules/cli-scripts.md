@@ -1,67 +1,45 @@
 ---
 trigger: glob
-globs: "cli/*.ps1"
-description: Rules for managing, authoring, and verifying cross-platform PowerShell 7 CLI scripts in cli/.
+globs: "cli/src/**, scripts/sync-cli-bins.ts"
+description: Rules for authoring, registering, and verifying Vite+ TypeScript CLI commands under cli/src/.
 ---
 
-# Cross-Platform PowerShell 7 CLI Script Rules
+# Vite+ TypeScript CLI Rules
 
-## 1. Naming, Permissions & Strict Header
+## 1. Architecture & Loader Isolation
 
-- Store executable cross-platform PowerShell 7 scripts under `cli/<command>.ps1`.
-- Begin every script with the cross-platform `env -S` shebang (which runs `pwsh -NoLogo -NoProfile` on macOS/Linux and is treated as a comment on Windows):
-  ```powershell
-  #!/usr/bin/env -S pwsh -NoLogo -NoProfile
-  ```
-- Enforce strict mode and UTF-8 output encoding at the top of the script:
-  ```powershell
-  Set-StrictMode -Version Latest
-  $ErrorActionPreference = 'Stop'
-  [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
-  ```
-- Ensure scripts have executable permissions on macOS/Linux: `chmod +x cli/<command>.ps1`.
+- **Source & Registry**:
+  - Implement each CLI command under `cli/src/commands/<command>.ts` using `defineCommand` from `cli/src/lib/cli-framework.ts`.
+  - Export shared domain logic in `cli/src/lib/*.ts` (`cli-framework.ts`, `context.ts`, `github-actions.ts`, `media.ts`, `node-toolchain.ts`, `process.ts`, `spinner.ts`, `transaction.ts`, `webread-parser.ts`).
+  - Register all commands in `cli/src/registry.ts` (`CLI_COMMANDS`, `COMMAND_NAMES`) invoked by `cli/src/main.ts`.
+- **Generated Entrypoints (`cli/bin/`)**:
+  - Never hand-edit `cli/bin/*`. Regenerate POSIX shims (`0o755`, LF) and Windows wrappers (`*.cmd`) after any change to `cli/src/registry.ts` via `vpr cli:sync-bins`.
+  - POSIX shims resolve the physical repository root with `realpath "$0"` and execute `exec "$vpx_bin" "$repo_root/cli/src/main.ts" "<cmd>" "$@"`; Windows `.cmd` wrappers execute `vpx "%REPO_ROOT%\cli\src\main.ts" "<cmd>" %*`.
 
 ---
 
-## 2. Direct `$args` Parsing & Symlink-Safe Path Resolution
+## 2. Hexagonal `CommandContext` Ports & Declarative CLI Contracts
 
-- **Direct `$args` Parsing (No `[CmdletBinding()] param(...)`)**:
-  - Parse CLI arguments directly from `$args` (`for ($i = 0; $i -lt $args.Count; $i++) { $arg = [string]$args[$i] ... }`) rather than `[CmdletBinding()] param(...)`.
-  - Avoiding `[CmdletBinding()]` prevents PowerShell's `ParameterBinder` and CommonParameters (`-WarningAction`, `-OutVariable`, `-Verbose`, `-Debug`) from colliding with short POSIX flags (`-w`, `-o`, `-v`, `-d`).
-  - Support both POSIX/GNU style (`--llms`, `--quality`, `-w`, `-h`, `--help`) and PowerShell style (`-Llms`, `-Quality`, `-Width`, `-Help`) via case-insensitive regex matching (`-match`).
-- **Extensionless Shebang & Symlink Path Resolution (`cli/helpers/*.psm1`)**:
-  - When `pwsh` executes an extensionless file via shebang on macOS/Linux (e.g., `~/.local/bin/ua`), PowerShell's engine runs it as an anonymous `ScriptBlock` and leaves `$PSScriptRoot` and `$PSCommandPath` empty (`""`).
-  - Furthermore, `~/.local/bin/<cmd>` is a symlink whose parent directory is `~/.local/bin`, not `cli/`.
-  - Shared PowerShell CLI helpers are organized by domain under `cli/helpers/`: `CliCommon.psm1` (symlink resolution, validation, formatting, error formatting, terminal spinner), `NodeToolchain.psm1` (Vite+, `oxfmt`, `pnpm`, Playwright, project verify resolution), `GitHubActions.psm1` (CI workflow discovery and action tag updater), and `MediaCommon.psm1` (`yt-dlp` segment helpers).
-  - Scripts importing helper modules resolve `$scriptDir` via `$PSScriptRoot` with `[Environment]::GetCommandLineArgs()` + `[System.IO.FileInfo]::new(...).ResolveLinkTarget($true)` fallback (note: `ResolveLinkTarget` returns `FileSystemInfo`, so always use `.FullName` with `Split-Path -Parent` rather than `.DirectoryName`), then run `Import-Module -Name (Join-Path $scriptDir 'helpers' '<Module>.psm1') -Force`.
-- **Strict CLI Flag Rejection**:
-  - Reject unknown `-*` / `--*` options and unexpected positional arguments with a clear stderr message and non-zero exit code instead of silently ignoring them.
-- **PowerShell 7.4+ Native Byte-Stream Piping**:
-  - Pipe binary streams directly between external native commands (`& ffmpeg ... | & gifski ...`) relying on PowerShell 7.4+ default `PSNativeCommandPreserveBytePipe` rather than `sh -c` or `cmd.exe /c` string interpolation.
+- **Dependency Injection (`cli/src/lib/context.ts`)**:
+  - Command handlers must use injected `ctx` ports (`runner`, `fs`, `fetch`, `dns`, `env`, `cwd`, `platform`, `repoRoot`, `stdout`, `stderr`, `isTty`, `dryRun`, `now`) rather than calling global `node:child_process` or mutating `process.env` directly, keeping Vitest suites deterministic and offline.
+- **Declarative Argument & Error Handling (`cli/src/lib/cli-framework.ts`)**:
+  - Parse flags via `node:util` `parseArgs` backed by Zod `optionsSchema` and `positionals` min/max bounds.
+  - Reject unknown flags and invalid positional counts with `UsageError` (exit code `2`) and missing external binaries with `MissingDependencyError` (exit code `127`).
+  - Support `--help` / `-h` (auto-generated from the command definition) and `--dry-run` (`supportsDryRun: true`) consistently.
+- **Signal Cleanup Under `vpx`**:
+  - When manipulating TTY cursor visibility, creating temporary files, or spawning child processes, register `SIGINT`/`SIGTERM` cleanup handlers (and `try/finally`) to restore terminal state (`\x1b[?25h`), terminate active child processes, and remove temporary directories.
 
 ---
 
-## 3. System Exposure (`~/.local/bin` on macOS & User `PATH` on Windows)
+## 3. System Exposure & Zsh Completion Parity
 
-- **macOS**: All CLI scripts are exposed system-wide without the `.ps1` extension via `$HOME/.local/bin`:
-  ```bash
-  ln -sf "$PWD/cli/<command>.ps1" "$HOME/.local/bin/<command>"
-  ```
-- **Windows 11**: The `cli/` directory is registered in User `PATH` via `scripts/install.ps1`, allowing direct invocation without typing `.ps1`.
+- **macOS**: `scripts/install.sh` symlinks `cli/bin/*` (excluding `*.cmd`) into `~/.local/bin/<cmd>` and prunes stale broken symlinks pointing into `cli/`.
+- **Windows 11 / 10 LTSC**: `scripts/windows/WindowsProvisioning.psm1` (`Register-RepositoryCliPath`) adds `cli\bin` to User `PATH` and removes legacy `cli` path entries.
+- **Zsh Completions**: Keep `configs/zsh/completions/_<cmd>` flags synchronized with `cli/src/commands/<cmd>.ts` (enforced by `tests/contract/cli-commands.test.ts`).
 
 ---
 
-## 4. Cross-Platform Formatting, Static Analysis & AST Syntax Verification
+## 4. TypeScript Hygiene & Verification Gates
 
-- **Pre-Execution Live Documentation & Introspection Gate**:
-  - Before using unfamiliar cmdlets, provider parameters, or `.NET` methods in `cli/*.ps1`, verify via `Get-Command <Cmdlet> -Syntax` (or `[Namespace.Type].GetMethods()`), or follow the two-stage GitHub Raw lookup in `modern-powershell`.
-  - Always pass `-LiteralPath` (never `-Path`) to file cmdlets (`Test-Path`, `Get-Item`, `Get-ChildItem`, `Get-Content`, `Copy-Item`, `Move-Item`, `Remove-Item`, `Resolve-Path`) unless wildcard globbing is explicitly required, and pass resolved absolute paths to `.NET` `[System.IO.File]` methods.
-- **Tiered Formatting, AST & Static Analysis Gates (`tests/verify-ps-*.ps1`)**:
-  - Maintain `PSScriptAnalyzerSettings.psd1` at the repository root (synced with `plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1`).
-  - Run the Tier 1 inner-loop script after modifying any `cli/*.ps1` or `cli/helpers/*.psm1` file (enforces Stroustrup formatting + LF + UTF-8 without BOM, `Parser::ParseFile`, AST contract checks for Cmdlet parameters / `$env:PATH` / `-LiteralPath` / Tier A header):
-    ```powershell
-    pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1 --fix --path cli/<command>.ps1
-    ```
-  - Before finalizing changes, run the full Tier 3 gate (`vpr agent:verify:gate`, or `tests/verify-ps-lint.ps1` + `tests/verify-ps-compat.ps1` + `tests/cli.Tests.ps1` without `node_modules`) enforcing `Invoke-ScriptAnalyzer -IncludeSuppressed` = **0 violations** and cross-platform `PSUseCompatibleCommands` / `PSUseCompatibleTypes`.
-  - Strictly prohibited to add `[Diagnostics.CodeAnalysis.SuppressMessageAttribute(...)]`, pass `-ExcludeRule`, or weaken `PSScriptAnalyzerSettings.psd1`.
-  - Eliminate all cmdlet aliases (`select`, `where`, `dir`, `echo`, `gc`), empty catch blocks, `Write-Host` calls (use `Write-Output`, `[Console]::Error.WriteLine`, or `$Host.UI.Write` for terminal spinners, noting that `PSAvoidUsingWriteHost` also forbids `[Console]::Write`), single-line brace blocks, plural function nouns, uninitialized parallel runspace variables (`$using:`), and unapproved verbs.
+- Enforce `erasableSyntaxOnly`, `verbatimModuleSyntax`, `noUncheckedIndexedAccess`, `node:` protocol imports, Zod `safeParse` at boundaries, `process.exitCode` over `process.exit`, and zero lint/type suppression directives.
+- Format edited files with `vpx oxfmt <files>` and verify via `vpr agent:verify:inner` (fast loop), `vpr agent:verify:unit`, and `vpr agent:verify:gate` before staging.

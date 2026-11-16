@@ -16,7 +16,6 @@
   },
   "include": [
     "vite.config.ts",
-    "cli/helpers/**/*.ts",
     "cli/helpers/**/*.d.ts",
     "cli/src/**/*.ts",
     "scripts/**/*.ts",

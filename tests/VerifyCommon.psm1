@@ -16,7 +16,7 @@ function Resolve-VerifyTargetFile {
         [Parameter(Mandatory)]
         [string]$RepoRoot,
         [string[]]$TargetPaths = @(),
-        [ValidateSet('all', 'cli', 'install')]
+        [ValidateSet('all', 'install', 'tests')]
         [string]$TargetGroup = 'all'
     )
 
@@ -29,7 +29,6 @@ function Resolve-VerifyTargetFile {
         return @($resolved)
     }
 
-    $cliRoot = Join-Path $RepoRoot 'cli'
     $scriptsRoot = Join-Path $RepoRoot 'scripts'
     $testsRoot = Join-Path $RepoRoot 'tests'
 
@@ -43,26 +42,17 @@ function Resolve-VerifyTargetFile {
         return @($installFiles)
     }
 
-    $list = [System.Collections.Generic.List[System.IO.FileInfo]]::new()
-    foreach ($item in @(Get-ChildItem -LiteralPath $cliRoot -Filter '*.ps1' -File)) {
-        $list.Add($item)
-    }
-    foreach ($item in @(Get-ChildItem -LiteralPath (Join-Path $cliRoot 'helpers') -Filter '*.psm1' -File)) {
-        $list.Add($item)
-    }
-    foreach ($item in @(Get-ChildItem -LiteralPath $testsRoot -Filter '*.ps1' -File)) {
-        $list.Add($item)
-    }
-    foreach ($item in @(Get-ChildItem -LiteralPath $testsRoot -Filter '*.psm1' -File)) {
-        $list.Add($item)
-    }
-    if ($TargetGroup -eq 'all') {
-        foreach ($item in $installFiles) {
-            $list.Add($item)
-        }
+    $testFiles = @(
+        @(Get-ChildItem -LiteralPath $testsRoot -Filter 'verify-ps-*.ps1' -File) +
+        @(Get-ChildItem -LiteralPath $testsRoot -Filter 'VerifyCommon.psm1' -File) |
+            Sort-Object FullName
+    )
+
+    if ($TargetGroup -eq 'tests') {
+        return @($testFiles)
     }
 
-    return @($list)
+    return @($testFiles + $installFiles)
 }
 
 function Get-FormatterOnlySetting {
@@ -193,12 +183,11 @@ function Test-PowerShellAstContract {
         [Parameter(Mandatory)]
         [string]$RelativePath,
         [Parameter(Mandatory)]
-        [string]$CliRoot
+        [string]$RepoRoot
     )
 
     $contractFailures = [System.Collections.Generic.List[string]]::new()
-    $isCliScript = ($FileInfo.DirectoryName -eq $CliRoot) -and ($FileInfo.Extension -eq '.ps1')
-    $scriptsRoot = Join-Path (Split-Path -Parent $CliRoot) 'scripts'
+    $scriptsRoot = Join-Path $RepoRoot 'scripts'
     $isTierB = $FileInfo.FullName.StartsWith($scriptsRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)
     $isCrossPlat = (-not $isTierB) -and ($RawContent -notmatch '(?m)^#Requires\s+-Version\s+5\.1\b')
 
@@ -208,21 +197,6 @@ function Test-PowerShellAstContract {
         }
         if ($RawContent -notmatch '(?m)^Set-StrictMode\s+-Version\s+Latest\b') {
             $contractFailures.Add("${RelativePath}: missing 'Set-StrictMode -Version Latest'")
-        }
-    }
-
-    if ($isCliScript) {
-        if (-not $RawContent.StartsWith('#!/usr/bin/env -S pwsh -NoLogo -NoProfile')) {
-            $contractFailures.Add("${RelativePath}: missing Tier A shebang '#!/usr/bin/env -S pwsh -NoLogo -NoProfile'")
-        }
-        if ($RawContent -notmatch '(?m)^Set-StrictMode\s+-Version\s+Latest\b') {
-            $contractFailures.Add("${RelativePath}: missing 'Set-StrictMode -Version Latest'")
-        }
-        if ($RawContent -notmatch '(?m)^\$ErrorActionPreference\s*=\s*''Stop''\s*$') {
-            $contractFailures.Add("${RelativePath}: missing ""`$ErrorActionPreference = 'Stop'""")
-        }
-        if ($RawContent -notmatch '\[Console\]::OutputEncoding') {
-            $contractFailures.Add("${RelativePath}: missing [Console]::OutputEncoding UTF-8 setup")
         }
     }
 

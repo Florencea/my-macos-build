@@ -340,26 +340,29 @@ deploy_antigravity_plugins() {
 
 link_cli_scripts() {
   local repo_dir="$1"
-  local cli_dir=""
+  local cli_bin_dir=""
 
-  if [[ -n "${repo_dir:-}" && -d "$repo_dir/cli" ]]; then
-    cli_dir="$repo_dir/cli"
-  elif [[ -d "$HOME/Developer/my-machine-build/cli" ]]; then
-    cli_dir="$HOME/Developer/my-machine-build/cli"
+  if [[ -n "${repo_dir:-}" && -d "$repo_dir/cli/bin" ]]; then
+    cli_bin_dir="$repo_dir/cli/bin"
+  elif [[ -d "$HOME/Developer/my-machine-build/cli/bin" ]]; then
+    cli_bin_dir="$HOME/Developer/my-machine-build/cli/bin"
   fi
 
-  if [[ -z "$cli_dir" ]]; then
+  if [[ -z "$cli_bin_dir" ]]; then
     return 0
   fi
 
+  local cli_dir="${cli_bin_dir:h}"
   mkdir -p "$HOME/.local/bin"
-  chmod +x "$cli_dir"/*.ps1(N)
-  local script cmd_name link_path
-  for script in "$cli_dir"/*.ps1(N); do
-    cmd_name="${script:t:r}"
+
+  local bin_file cmd_name link_path
+  for bin_file in "$cli_bin_dir"/*(N); do
+    [[ -f "$bin_file" && "$bin_file" != *.cmd ]] || continue
+    [[ -x "$bin_file" ]] || chmod +x "$bin_file"
+    cmd_name="${bin_file:t}"
     link_path="$HOME/.local/bin/$cmd_name"
-    if [[ "$(readlink "$link_path" 2>/dev/null || true)" != "$script" ]]; then
-      ln -sf "$script" "$link_path"
+    if [[ "$(readlink "$link_path" 2>/dev/null || true)" != "$bin_file" ]]; then
+      ln -sf "$bin_file" "$link_path"
     fi
   done
 

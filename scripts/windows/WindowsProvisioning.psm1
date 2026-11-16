@@ -447,7 +447,8 @@ function Register-RepositoryCliPath {
         [string]$VpHome
     )
 
-    $cliDir = (Resolve-Path -LiteralPath (Join-Path $RepoRoot 'cli')).Path
+    $legacyCliDir = (Resolve-Path -LiteralPath (Join-Path $RepoRoot 'cli')).Path.TrimEnd('\')
+    $cliBinDir = (Resolve-Path -LiteralPath (Join-Path $RepoRoot 'cli\bin')).Path.TrimEnd('\')
     $rawUserPath = [Environment]::GetEnvironmentVariable('Path', 'User')
     $currentUserPath = @()
     if ($rawUserPath) {
@@ -458,21 +459,25 @@ function Register-RepositoryCliPath {
                     if (-not $_) {
                         return $false
                     }
+                    if ($_ -eq $legacyCliDir) {
+                        Write-Output "Removed legacy $legacyCliDir from User PATH."
+                        return $false
+                    }
                     $expanded = [Environment]::ExpandEnvironmentVariables($_)
                     Test-Path -LiteralPath $expanded
                 }
         )
     }
 
-    $vpBinDir = Join-Path $VpHome 'bin'
+    $vpBinDir = (Join-Path $VpHome 'bin').TrimEnd('\')
     if ((Test-Path -LiteralPath $vpBinDir -PathType Container) -and ($currentUserPath -notcontains $vpBinDir)) {
         $currentUserPath = @($vpBinDir) + $currentUserPath
         Write-Output "Added $vpBinDir to User PATH."
     }
 
-    if ($currentUserPath -notcontains $cliDir) {
-        $currentUserPath += $cliDir
-        Write-Output "Added $cliDir to User PATH."
+    if ($currentUserPath -notcontains $cliBinDir) {
+        $currentUserPath += $cliBinDir
+        Write-Output "Added $cliBinDir to User PATH."
     }
 
     $cleanPath = ($currentUserPath | Select-Object -Unique) -join ';'

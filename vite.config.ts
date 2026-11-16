@@ -11,28 +11,11 @@ export default defineConfig({
         command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1",
         cache: {
           input: [
-            "cli/**/*.ps1",
-            "cli/**/*.psm1",
             "scripts/**/*.ps1",
             "scripts/**/*.psm1",
             "scripts/**/*.psd1",
             "tests/VerifyCommon.psm1",
-            "tests/verify-ps-fast.ps1",
-            "PSScriptAnalyzerSettings.psd1",
-          ],
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
-          output: [],
-        },
-      },
-      "ps:lint:cli": {
-        command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 --target cli",
-        dependsOn: ["ps:fast"],
-        cache: {
-          input: [
-            "cli/**/*.ps1",
-            "cli/**/*.psm1",
-            "tests/**/*.ps1",
-            "tests/**/*.psm1",
+            "tests/verify-ps-*.ps1",
             "PSScriptAnalyzerSettings.psd1",
           ],
           untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
@@ -50,20 +33,6 @@ export default defineConfig({
             "tests/VerifyCommon.psm1",
             "tests/verify-ps-lint.ps1",
             "PSScriptAnalyzerSettings.psd1",
-          ],
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
-          output: [],
-        },
-      },
-      "ps:compat:cli": {
-        command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-compat.ps1 --target cli",
-        dependsOn: ["ps:fast"],
-        cache: {
-          input: [
-            "cli/**/*.ps1",
-            "cli/**/*.psm1",
-            "tests/VerifyCommon.psm1",
-            "tests/verify-ps-compat.ps1",
           ],
           untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
@@ -104,7 +73,6 @@ export default defineConfig({
         dependsOn: ["typecheck", "ps:fast", "lint:shell"],
         cache: {
           input: [
-            "cli/helpers/**/*.ts",
             "cli/helpers/**/*.d.ts",
             "cli/src/**/*.ts",
             "scripts/**/*.ts",
@@ -120,10 +88,9 @@ export default defineConfig({
       },
       "verify:unit": {
         command: "vp test run --project unit --reporter=tap-flat --no-color",
-        dependsOn: ["verify:inner", "ps:lint:cli", "ps:lint:install"],
+        dependsOn: ["verify:inner", "ps:lint:install"],
         cache: {
           input: [
-            "cli/helpers/webread-parser.ts",
             "cli/src/**/*.ts",
             "tests/webread-parser.test.ts",
             "tests/unit/**/*.test.ts",
@@ -134,39 +101,27 @@ export default defineConfig({
           output: [],
         },
       },
-      "verify:native": {
-        command: "pwsh -NoLogo -NoProfile -File tests/cli.Tests.ps1",
-        dependsOn: ["ps:fast"],
-        cache: {
-          input: [
-            "cli/**/*.ps1",
-            "cli/**/*.psm1",
-            "tests/cli.Tests.ps1",
-            "tests/verify-ps-fast.ps1",
-            "tests/VerifyCommon.psm1",
-            "PSScriptAnalyzerSettings.psd1",
-            "package.json",
-          ],
-          env: ["YT_DLP_BROWSER"],
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
-          output: [],
-        },
-      },
       "verify:gate": {
         command: "vp test run --project contract --reporter=tap-flat --no-color",
-        dependsOn: ["verify:unit", "ps:compat:cli", "ps:compat:install", "verify:native"],
+        dependsOn: ["verify:unit", "ps:compat:install"],
         cache: {
           input: [
             "plugins/**",
             "cli/bin/**",
             "cli/src/**/*.ts",
+            "scripts/install.sh",
+            "scripts/install.ps1",
+            "scripts/windows/**",
             "scripts/sync-cli-bins.ts",
+            "tests/VerifyCommon.psm1",
+            "tests/verify-ps-*.ps1",
             "tests/plugins.test.ts",
             "tests/contract/**/*.test.ts",
             "PSScriptAnalyzerSettings.psd1",
             "package.json",
             "vite.config.ts",
           ],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },

@@ -39,7 +39,6 @@ for ($i = 0; $i -lt $args.Count; $i++) {
 }
 
 $repoRoot = Get-RepoRootPath
-$cliRoot = Join-Path $repoRoot 'cli'
 $scriptsRoot = Join-Path $repoRoot 'scripts'
 $settingsPath = Join-Path $repoRoot 'PSScriptAnalyzerSettings.psd1'
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
@@ -81,7 +80,7 @@ foreach ($file in $psFiles) {
         $failures.Add("AST syntax errors in ${relPath}: $($parseErrors -join '; ')")
     }
     else {
-        foreach ($cf in @(Test-PowerShellAstContract -FileInfo $file -Ast $ast -RawContent $effectiveContent -RelativePath $relPath -CliRoot $cliRoot)) {
+        foreach ($cf in @(Test-PowerShellAstContract -FileInfo $file -Ast $ast -RawContent $effectiveContent -RelativePath $relPath -RepoRoot $repoRoot)) {
             $failures.Add($cf)
         }
     }

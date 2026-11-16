@@ -1,23 +1,23 @@
 # My Machine Build
 
-Cross-platform workstation bootstrap, PowerShell CLI utilities, dotfiles, and Antigravity plugins for macOS Darwin, Windows 11, and Windows 10 IoT LTSC.
+Cross-platform workstation bootstrap, Vite+ TypeScript CLI utilities, dotfiles, and Antigravity plugins for macOS Darwin, Windows 11, and Windows 10 IoT LTSC.
 
 ## Repository Overview
 
-- `cli/` (`clall.ps1`, `ebk.ps1`, `mdig.ps1`, `mkclp.ps1`, `mkgif.ps1`, `mmb.ps1`, `rea.ps1`, `ua.ps1`, `unodev.ps1`, `up.ps1`, `upnpmv.ps1`, `webread.ps1`): Cross-platform PowerShell 7 tools backed by `cli/helpers/CliCommon.psm1` and `cli/helpers/webread-parser.ts`.
+- `cli/`: Vite+ (`vpx`) TypeScript CLI suite (`clall`, `ebk`, `mdig`, `mkclp`, `mkgif`, `mmb`, `rea`, `ua`, `unodev`, `up`, `upnpmv`, `webread`) under `cli/src/` with generated cross-platform shims in `cli/bin/` (`vpr cli:sync-bins`).
 - `plugins/`: Antigravity plugins synced to `~/.gemini/config/plugins/` (`common-modern-tools`, `macos-modern-tools`, `windows-modern-tools`, `modern-web-stack`).
-- `scripts/install.sh`: Idempotent macOS Zsh installer for packages, dotfiles, CLI symlinks, and Antigravity plugins.
-- `scripts/install.ps1`: Dual-version Windows PowerShell 5.1 and PowerShell 7+ installer for WinGet packages, profiles, PATH registration, and Antigravity plugins.
+- `scripts/install.sh`: Idempotent macOS Zsh installer for packages, dotfiles, `cli/bin/*` symlinks, Vite+, and Antigravity plugins.
+- `scripts/install.ps1`: Dual-version Windows PowerShell 5.1 and PowerShell 7+ installer for WinGet packages, profiles, `cli\bin` User `PATH` registration, Vite+, and Antigravity plugins.
 - `configs/`: Browser extension exports (`ubol-config.json`, `stylus.json`, `tampermonkey.json`, `immersive-translate-config.json`), global Git hooks, and shell configs.
-- `tests/`: Tiered PowerShell/Shell verifiers (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`, `tests/verify-shell.ps1`) backed by `tests/VerifyCommon.psm1`, zero-dependency PowerShell 7 CLI tests (`tests/cli.Tests.ps1`), and Vitest suites (`tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
+- `tests/`: Tiered OS-bootstrap PowerShell verifiers (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`) backed by `tests/VerifyCommon.psm1`, Vite+ shell verifier (`tests/verify-shell.ts`), and Vitest suites (`tests/unit/`, `tests/contract/`, `tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
 
 ## Bootstrap and Verification Commands
 
 - macOS setup: `zsh scripts/install.sh`
 - Windows setup: `powershell -ExecutionPolicy Bypass -File scripts/install.ps1`
 - Full verification gate via Vite+ (Tier 1–3 DAG with caching): `vpr agent:verify:gate`
-- Tiered Vite+ checks: `vpr agent:verify:inner` (Tier 1), `vpr agent:verify:ps -- --fix --path <file>` (PowerShell Tier 1), `vpr agent:verify:unit` (Tier 2), `vp test --project unit`, `vp test --project contract`
-- Standalone verification scripts (work without `node_modules`): `pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1`, `tests/verify-shell.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`, `tests/cli.Tests.ps1`
+- Tiered Vite+ checks: `vpr agent:verify:inner` (Tier 1), `vpr agent:verify:ps -- --fix --path <file>` (PowerShell Tier 1), `vpr agent:verify:unit` (Tier 2), `vpr cli:sync-bins` (regenerate `cli/bin/`), `vp test --project unit`, `vp test --project contract`
+- Standalone OS-bootstrap & shell checks: `pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`, and `vpx tests/verify-shell.ts`
 
 ## Extension Configs
 
@@ -164,7 +164,7 @@ Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome
 
 - <https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/efece4442f3f583f7d04f98ef5168dfd08eaca5c>
 - <https://trac.ffmpeg.org/wiki/HWAccelIntro#VideoToolbox>
-- **Primary Use Case**: Rapid clipping and sharing via messaging apps (e.g. `cli/mkclp.ps1` for LINE, Discord). LINE natively supports direct drag-and-drop upload, video preview, and in-app playback for HEVC (`-tag:v hvc1`), while AV1 is not yet supported for direct in-app playback.
+- **Primary Use Case**: Rapid clipping and sharing via messaging apps (e.g. `mkclp` for LINE, Discord). LINE natively supports direct drag-and-drop upload, video preview, and in-app playback for HEVC (`-tag:v hvc1`), while AV1 is not yet supported for direct in-app playback.
 - `-q:v` could be set 0 to 100, higher is better (larger file).
 - `-movflags +faststart` ensures instant Quick Look preview on macOS and fast network streaming.
 - Test on MacBook Pro 16" (M1 Pro, 2021), FFmpeg 9.0.1
