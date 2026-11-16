@@ -90,32 +90,36 @@ export const reaCommand = defineCommand({
     });
 
     try {
-      const result = await ctx.runner.exec("ffmpeg", [
-        "-y",
-        "-hide_banner",
-        "-loglevel",
-        "error",
-        "-sn",
-        "-i",
-        inputFile,
-        "-i",
-        inputAssTw,
-        "-map",
-        "0:v:0",
-        "-map",
-        "0:a:0?",
-        "-map",
-        "1:s:0",
-        "-c",
-        "copy",
-        "-disposition:s:0",
-        "default",
-        "-metadata:s:s:0",
-        "language=chi",
-        "-metadata:s:s:0",
-        "title=繁體中文",
-        tmpFile,
-      ]);
+      const result = await ctx.runner.exec(
+        "ffmpeg",
+        [
+          "-y",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-sn",
+          "-i",
+          inputFile,
+          "-i",
+          inputAssTw,
+          "-map",
+          "0:v:0",
+          "-map",
+          "0:a:0?",
+          "-map",
+          "1:s:0",
+          "-c",
+          "copy",
+          "-disposition:s:0",
+          "default",
+          "-metadata:s:s:0",
+          "language=chi",
+          "-metadata:s:s:0",
+          "title=繁體中文",
+          tmpFile,
+        ],
+        { signal: ctx.signal },
+      );
 
       if (result.exitCode !== 0) {
         const detail = formatNativeErrorDetail([result.stderr, result.stdout], result.exitCode);

@@ -16,8 +16,8 @@
   },
   "include": [
     "vite.config.ts",
-    "cli/helpers/**/*.d.ts",
     "cli/src/**/*.ts",
+    "cli/src/types/**/*.d.ts",
     "scripts/**/*.ts",
     "tests/**/*.ts"
   ]

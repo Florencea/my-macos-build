@@ -57,5 +57,5 @@
 ## 6. Darwin Utilities & PowerShell Symlink Resolution
 
 - **Architecture & System Tools**: Check `uname -m` (`arm64` vs `x86_64`). Use `pbcopy`/`pbpaste`, `defaults write`, and `/usr/libexec/PlistBuddy`.
-- **Extensionless `pwsh` Symlinks**: Scripts symlinked without `.ps1` into `~/.local/bin/<cmd>` leave `$PSScriptRoot` and `$PSCommandPath` empty. Resolve the true script directory from `[Environment]::GetCommandLineArgs()` and `[System.IO.FileInfo]::new(...).ResolveLinkTarget($true)` (shared in `cli/helpers/CliCommon.psm1`).
+- **Extensionless `pwsh` Symlinks**: Scripts symlinked without `.ps1` into `~/.local/bin/<cmd>` leave `$PSScriptRoot` and `$PSCommandPath` empty. Resolve the true script directory from `[Environment]::GetCommandLineArgs()` and `[System.IO.FileInfo]::new(...).ResolveLinkTarget($true)`.
 - **Case-Sensitive Env Vars**: Darwin env keys are case-sensitive (`$env:PATH` works; `$env:Path` is `$null`). Always use `$env:PATH`, `Join-Path`, `-LiteralPath`, and `[System.IO.Path]::PathSeparator`.

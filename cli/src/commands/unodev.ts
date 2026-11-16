@@ -2,6 +2,7 @@ import path from "node:path";
 import { z } from "zod";
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { ExecutionError, formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
+import { isFile, pathExists } from "../lib/fs-utils.ts";
 import { formatProjectPackageManifest, withWindowsMachinePath } from "../lib/node-toolchain.ts";
 import { mapWithConcurrency } from "../lib/process.ts";
 
@@ -11,24 +12,6 @@ const PROJECT_CONCURRENCY_LIMIT = 6;
 interface WorkspaceNodeProject {
   readonly name: string;
   readonly dir: string;
-}
-
-async function pathExists(fsPort: CommandContext["fs"], targetPath: string): Promise<boolean> {
-  try {
-    await fsPort.stat(targetPath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function isFile(fsPort: CommandContext["fs"], filePath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(filePath);
-    return stats.isFile();
-  } catch {
-    return false;
-  }
 }
 
 async function resolveLocalNodeVersion(ctx: CommandContext): Promise<string> {
@@ -60,8 +43,8 @@ async function discoverNodeProjects(
     dirs.map(async (entry) => {
       const dir = path.join(projectsDir, entry.name);
       const [hasGit, hasPkg] = await Promise.all([
-        pathExists(fsPort, path.join(dir, ".git")),
-        isFile(fsPort, path.join(dir, "package.json")),
+        pathExists(path.join(dir, ".git"), fsPort),
+        isFile(path.join(dir, "package.json"), fsPort),
       ]);
       return hasGit && hasPkg ? { name: entry.name, dir } : undefined;
     }),
@@ -152,6 +135,7 @@ async function syncProjectNodeEngine(
 
   const addRes = await ctx.runner.exec("git", ["-C", project.dir, "add", "--", "package.json"]);
   if (addRes.exitCode !== 0) {
+    await ctx.runner.exec("git", ["-C", project.dir, "checkout", "-q", "--", "package.json"]);
     ctx.stderr(`engines.node ${project.name}: failed to stage package.json\n`);
     return false;
   }
@@ -165,6 +149,8 @@ async function syncProjectNodeEngine(
     `chore(node): Update engines.node ${oldVer} -> ${targetVersion}`,
   ]);
   if (commitRes.exitCode !== 0) {
+    await ctx.runner.exec("git", ["-C", project.dir, "reset", "-q", "HEAD", "--", "package.json"]);
+    await ctx.runner.exec("git", ["-C", project.dir, "checkout", "-q", "--", "package.json"]);
     ctx.stderr(`engines.node ${project.name}: failed to commit\n`);
     return false;
   }

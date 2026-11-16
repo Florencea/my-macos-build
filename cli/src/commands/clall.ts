@@ -4,10 +4,13 @@ import { defineCommand } from "../lib/cli-framework.ts";
 import {
   ExecutionError,
   UsageError,
+  formatErrorMessage,
   formatNativeErrorDetail,
   parseEnvWithSchema,
   type CommandContext,
 } from "../lib/context.ts";
+import { pathExists } from "../lib/fs-utils.ts";
+import { mapWithConcurrency } from "../lib/process.ts";
 
 const EmptyOptionsSchema = z.object({});
 
@@ -123,7 +126,11 @@ async function fetchAllOwnedRepos(
 
   const fetchPage = async (page: number): Promise<void> => {
     const uri = `https://api.github.com/user/repos?type=owner&per_page=${GITHUB_PER_PAGE.toString()}&page=${page.toString()}`;
-    const response = await ctx.fetch(uri, { method: "GET", headers });
+    const signal =
+      ctx.signal !== undefined
+        ? AbortSignal.any([ctx.signal, AbortSignal.timeout(20_000)])
+        : AbortSignal.timeout(20_000);
+    const response = await ctx.fetch(uri, { method: "GET", headers, signal });
     if (!response.ok) {
       throw new ExecutionError(
         `Error: Failed to fetch repositories from GitHub API (HTTP ${response.status.toString()})`,
@@ -158,7 +165,7 @@ async function fetchAllOwnedRepos(
     if (err instanceof ExecutionError) {
       throw err;
     }
-    const msg = err instanceof Error ? err.message : String(err);
+    const msg = formatErrorMessage(err);
     throw new ExecutionError(`Error: Failed to fetch repositories from GitHub API: ${msg}`, 1);
   }
 
@@ -171,28 +178,20 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
-async function pathExists(fsPort: CommandContext["fs"], targetPath: string): Promise<boolean> {
-  try {
-    await fsPort.stat(targetPath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 async function cloneSingleRepo(
   ctx: CommandContext,
   repo: GitHubRepoEntry,
   retryDelayMs: number,
 ): Promise<CloneOutcome> {
   const destPath = path.join(ctx.cwd, repo.name);
-  if (await pathExists(ctx.fs, destPath)) {
+  if (await pathExists(destPath, ctx.fs)) {
     return { status: "skipped", name: repo.name };
   }
 
   const attemptClone = async (attempt: number): Promise<CloneOutcome> => {
     const cloneRes = await ctx.runner.exec("git", ["clone", "--quiet", repo.sshUrl, destPath], {
       env: { GIT_TERMINAL_PROMPT: "0" },
+      signal: ctx.signal,
     });
 
     if (cloneRes.exitCode === 0) {
@@ -211,32 +210,6 @@ async function cloneSingleRepo(
   };
 
   return await attemptClone(1);
-}
-
-async function cloneReposBounded(
-  ctx: CommandContext,
-  repos: readonly GitHubRepoEntry[],
-  concurrencyLimit = CLONE_CONCURRENCY_LIMIT,
-  retryDelayMs = CLONE_RETRY_DELAY_MS,
-): Promise<readonly CloneOutcome[]> {
-  const outcomes: (CloneOutcome | undefined)[] = Array.from({ length: repos.length });
-  let nextIndex = 0;
-
-  const runWorker = async (): Promise<void> => {
-    const index = nextIndex;
-    nextIndex += 1;
-    const repo = repos[index];
-    if (repo === undefined) {
-      return;
-    }
-    outcomes[index] = await cloneSingleRepo(ctx, repo, retryDelayMs);
-    await runWorker();
-  };
-
-  const workerCount = Math.min(concurrencyLimit, repos.length);
-  await Promise.all(Array.from({ length: workerCount }, () => runWorker()));
-
-  return outcomes.filter((item): item is CloneOutcome => item !== undefined);
 }
 
 /**
@@ -266,7 +239,7 @@ export const clallCommand = defineCommand({
       const checks = await Promise.all(
         repos.map(async (repo) => ({
           repo,
-          exists: await pathExists(ctx.fs, path.join(ctx.cwd, repo.name)),
+          exists: await pathExists(path.join(ctx.cwd, repo.name), ctx.fs),
         })),
       );
       for (const { repo, exists } of checks) {
@@ -280,7 +253,11 @@ export const clallCommand = defineCommand({
       return 0;
     }
 
-    const outcomes = await cloneReposBounded(ctx, repos);
+    const outcomes = await mapWithConcurrency(
+      repos,
+      CLONE_CONCURRENCY_LIMIT,
+      async (repo) => await cloneSingleRepo(ctx, repo, CLONE_RETRY_DELAY_MS),
+    );
     let done = 0;
     let failedCount = 0;
 

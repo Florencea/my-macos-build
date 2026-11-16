@@ -2,6 +2,8 @@
 
 _rea() {
   _arguments -s \
+    '--dry-run[Preview planned actions without applying changes]' \
+    '(-h --help)'{-h,--help}'[Show help message]' \
     '1:Input Directory:_directories' && return 0
 }
 

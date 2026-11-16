@@ -14,7 +14,7 @@ All Antigravity customizations are packaged as **Plugins** under `plugins/<plugi
   - `plugin.json`: Manifest for universal cross-platform CLI toolchain bundle.
   - `PSScriptAnalyzerSettings.psd1`: Synced canonical `PSScriptAnalyzer` settings for formatting and non-bypassable static analysis across workspaces.
   - `rules/AGENTS.md`: Always-on invariants covering CLI priorities, zero-throwaway script policy, two-stage live doc verification, token discipline, git commit safety, and dual-mode documentation standards.
-  - `skills/common-toolchain/SKILL.md`: 4-tier tool selection hierarchy, progressive reconnaissance (L0-L4), custom CLI helpers (`cli/*.ps1`), two-stage `webread` protocol, and verified documentation matrix.
+  - `skills/common-toolchain/SKILL.md`: 4-tier tool selection hierarchy, progressive reconnaissance (L0-L4), custom CLI helpers (`cli/bin/*` backed by `cli/src/`), two-stage `webread` protocol, and verified documentation matrix.
   - `skills/modern-powershell/SKILL.md`: Cross-platform and cross-version (`pwsh` vs `powershell.exe` 5.1) PowerShell authoring standards, runtime introspection gate, 3-stage formatting/AST/lint pipeline, and zero-suppression policy.
 - **`plugins/macos-modern-tools/`** (macOS only):
   - `plugin.json`: Manifest for macOS platform bundle.

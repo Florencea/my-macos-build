@@ -171,4 +171,42 @@ describe("ua command", () => {
       await fs.rm(tempDir, { recursive: true, force: true });
     }
   });
+
+  it("returns exit code 1 and prints stderr when brew upgrade or vp upgrade fails", async () => {
+    const brewFail = createTestContext({
+      platform: "darwin",
+      runner: {
+        commandExists: async () => true,
+        spawnInteractive: async (cmd, args) => (cmd === "brew" && args[0] === "upgrade" ? 1 : 0),
+      },
+    });
+    await expect(uaCommand.execute(["--skip-vite", "--skip-git"], brewFail.ctx)).resolves.toBe(1);
+    expect(brewFail.getStderr()).toContain("brew upgrade failed");
+
+    const vpFail = createTestContext({
+      platform: "darwin",
+      runner: {
+        commandExists: async () => true,
+        exec: async (cmd, args) => {
+          if (cmd === "vp" && args[0] === "upgrade") {
+            return { exitCode: 1, stdout: "", stderr: "network error" };
+          }
+          if (cmd === "vp" && args[0] === "env" && args[1] === "list-remote") {
+            return {
+              exitCode: 0,
+              stdout: JSON.stringify({
+                package_managers: {
+                  pnpm: [{ version: "12.21.0", latest: true, installed: true }],
+                },
+              }),
+              stderr: "",
+            };
+          }
+          return { exitCode: 0, stdout: "", stderr: "" };
+        },
+      },
+    });
+    await expect(uaCommand.execute(["--skip-brew", "--skip-git"], vpFail.ctx)).resolves.toBe(1);
+    expect(vpFail.getStderr()).toContain("vp upgrade failed");
+  });
 });

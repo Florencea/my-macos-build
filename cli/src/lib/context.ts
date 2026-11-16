@@ -59,7 +59,13 @@ export interface PipeExecResult {
 }
 
 export interface CommandRunner {
-  commandExists(name: string): Promise<boolean>;
+  commandExists(
+    name: string,
+    options?: {
+      readonly env?: Readonly<Record<string, string | undefined>>;
+      readonly platform?: NodeJS.Platform;
+    },
+  ): Promise<boolean>;
   exec(
     command: string,
     args: readonly string[],
@@ -92,6 +98,7 @@ export interface CommandContext {
   readonly isTty: boolean;
   readonly dryRun: boolean;
   readonly now: () => Date;
+  readonly signal?: AbortSignal;
   readonly onSignalCleanup: (handler: () => void) => () => void;
 }
 
@@ -143,6 +150,23 @@ export function formatByteSize(byteCount: number): string {
   return `${Math.round(byteCount / ONE_KB).toString()}K`;
 }
 
+export function formatErrorMessage(err: unknown): string {
+  if (err instanceof Error) {
+    return err.message;
+  }
+  if (typeof err === "string") {
+    return err;
+  }
+  if (typeof err === "number" || typeof err === "boolean") {
+    return err.toString();
+  }
+  try {
+    return JSON.stringify(err) ?? "Unknown error";
+  } catch {
+    return "Unknown error";
+  }
+}
+
 export function formatNativeErrorDetail(
   outputLines: readonly (string | null | undefined)[],
   exitCode = 1,
@@ -179,6 +203,7 @@ export interface NodeContextOverrides {
   readonly dns?: DnsPort;
   readonly repoRoot?: string;
   readonly dryRun?: boolean;
+  readonly signal?: AbortSignal;
   readonly onSignalCleanup?: (handler: () => void) => () => void;
 }
 
@@ -205,6 +230,7 @@ export function createNodeCommandContext(overrides: NodeContextOverrides): Comma
     isTty: process.stderr.isTTY,
     dryRun: overrides.dryRun ?? false,
     now: () => new Date(),
+    signal: overrides.signal,
     onSignalCleanup: overrides.onSignalCleanup ?? noopCleanup,
   };
 }

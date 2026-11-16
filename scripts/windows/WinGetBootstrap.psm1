@@ -334,6 +334,9 @@ function Install-WingetIdempotent {
     else {
         Write-Output "      [+] Installing $Name ($Id)..."
         & winget install --id $Id -e --accept-package-agreements --accept-source-agreements --disable-interactivity
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "WinGet installation for $Name ($Id) exited with code $LASTEXITCODE."
+        }
     }
 }
 

@@ -1,6 +1,12 @@
 import { parseArgs } from "node:util";
 import { z } from "zod";
-import { CliError, MissingDependencyError, UsageError, type CommandContext } from "./context.ts";
+import {
+  CliError,
+  MissingDependencyError,
+  UsageError,
+  formatErrorMessage,
+  type CommandContext,
+} from "./context.ts";
 
 export interface FlagDefinition {
   readonly type: "boolean" | "string";
@@ -181,9 +187,8 @@ export async function runCliCommand<TSchema extends z.ZodType>(
       allowPositionals: true,
     });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    const normalized = msg.startsWith("Unknown option") ? `Error: ${msg}` : `Error: ${msg}`;
-    throw new UsageError(normalized, true);
+    const msg = formatErrorMessage(err);
+    throw new UsageError(`Error: ${msg}`, true);
   }
 
   if (parsed.values["help"] === true) {
@@ -246,7 +251,7 @@ export function handleCliError(
     stderr(`${err.message}\n`);
     return err.exitCode;
   }
-  const msg = err instanceof Error ? err.message : String(err);
+  const msg = formatErrorMessage(err);
   stderr(`Error: ${msg}\n`);
   return 1;
 }

@@ -200,7 +200,8 @@ describe("mkgif command", () => {
       ).resolves.toBe(0);
       expect(winGuiCalls[0]).toContain("-filter_complex");
 
-      // Case 3: Windows Console subsystem (3) -> uses gifski pipe
+      // Case 3: Windows Console subsystem (3) -> uses gifski pipe even if extensionless shim coexists
+      await fs.writeFile(path.join(binDir, "gifski"), "not-a-pe-posix-shim");
       await fs.writeFile(gifskiExe, buildPeBinary(3));
       let usedPipe = false;
       const winCliRun = createTestContext({
@@ -256,6 +257,7 @@ describe("mkgif command", () => {
       ).resolves.toBe(0);
 
       expect(execArgs[0]?.command).toBe("yt-dlp");
+      expect(execArgs[0]?.args).toContain("--force-keyframes-at-cuts");
       expect(execArgs[0]?.args).toContain(
         "bestvideo[height<=480]/best[height<=480]/bestvideo/best",
       );

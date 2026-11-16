@@ -168,9 +168,22 @@ describe("all 12 CLI commands parity, completions, and symlink contract", () => 
         }
       }
 
+      if (cmd.supportsDryRun === true && !content.includes("--dry-run")) {
+        missingTokens.push(`${cmdName}:--dry-run`);
+      }
+      if (!content.includes("--help") || !content.includes("-h")) {
+        missingTokens.push(`${cmdName}:--help`);
+      }
+
       for (const match of content.matchAll(/--([a-z0-9-]+)/g)) {
         const captured = match[1];
-        if (captured !== undefined && captured !== "help" && !Object.hasOwn(cmd.flags, captured)) {
+        if (captured === undefined || captured === "help") {
+          continue;
+        }
+        if (captured === "dry-run" && cmd.supportsDryRun === true) {
+          continue;
+        }
+        if (!Object.hasOwn(cmd.flags, captured)) {
           extraCompletionFlags.push(`${cmdName}:--${captured}`);
         }
       }
@@ -181,13 +194,15 @@ describe("all 12 CLI commands parity, completions, and symlink contract", () => 
   });
 
   it.skipIf(process.platform === "win32")(
-    "enforces positional rejection via extensionless symlinks outside repo for Stage 4 commands",
+    "enforces positional rejection via extensionless symlinks outside repo for zero-positional commands",
     async () => {
       const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-cmd-contract-"));
       try {
-        const stage4Commands = ["unodev", "upnpmv", "ua", "up"] as const;
+        const zeroPositionalCommands = COMMAND_NAMES.filter(
+          (name) => (CLI_COMMANDS.get(name)?.positionals?.max ?? 0) === 0,
+        );
         const checks = await Promise.all(
-          stage4Commands.map(async (name) => {
+          zeroPositionalCommands.map(async (name) => {
             const symlinkPath = path.join(tempDir, `${name}-exec`);
             await fs.symlink(path.join(BIN_DIR, name), symlinkPath);
 

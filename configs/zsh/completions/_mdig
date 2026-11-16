@@ -2,6 +2,7 @@
 
 _mdig() {
   _arguments -s \
+    '(-h --help)'{-h,--help}'[Show help message]' \
     '1:Domain:_hosts' && return 0
 }
 

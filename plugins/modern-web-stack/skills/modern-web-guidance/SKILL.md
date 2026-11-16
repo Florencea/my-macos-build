@@ -21,7 +21,7 @@ This repository maintains zero static specifications or cheat sheets for web pla
   - Modern Browser APIs: WebMCP, Sanitizer API, Temporal/dates, WebAssembly, on-device AI (Prompt API).
 - **DO NOT Trigger**:
   - Backend logic (Node.js APIs, Hono routes, Drizzle ORM, SQL schemas).
-  - Infrastructure & automation (GitHub Actions CI, Docker, PowerShell scripts `cli/*.ps1`, OS installers).
+  - Infrastructure & automation (GitHub Actions CI, Docker, CLI tools `cli/src/**`, OS installers `scripts/install.*`).
   - Framework-only state logic (React state hooks, route definitions in TanStack Router).
 
 ---

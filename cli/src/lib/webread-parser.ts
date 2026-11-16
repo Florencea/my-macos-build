@@ -502,7 +502,9 @@ function classifyInputKind(
 
   if (
     url !== undefined &&
-    (/\.(?:txt|md|ya?ml|ps1|psm1|psd1)(?:$|\?)/i.test(url) ||
+    (/\.(?:txt|md|ya?ml|ps1|psm1|psd1|ts|mts|cts|tsx|js|mjs|cjs|jsx|sh|zsh|bash|toml|css|sql)(?:$|\?)/i.test(
+      url,
+    ) ||
       /\/llms(?:-full)?\.txt(?:$|\?)/i.test(url))
   ) {
     return "plain";
@@ -533,7 +535,11 @@ function formatJsonPayload(input: string): string {
  */
 export async function parseWebContent(input: string, options: ParseOptions = {}): Promise<string> {
   const parsedOptions = ParseOptionsSchema.safeParse(options);
-  const safeOptions: ParseOptions = parsedOptions.success ? parsedOptions.data : {};
+  if (!parsedOptions.success) {
+    const detail = parsedOptions.error.issues.map((issue) => issue.message).join("; ");
+    throw new Error(`Invalid webread parser options (${detail})`);
+  }
+  const safeOptions: ParseOptions = parsedOptions.data;
   const sourceUrl = safeOptions.url ?? "unknown-source";
   const maxLength = safeOptions.maxLength ?? DEFAULT_MAX_CHARS;
 

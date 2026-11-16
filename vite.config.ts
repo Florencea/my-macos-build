@@ -73,8 +73,8 @@ export default defineConfig({
         dependsOn: ["typecheck", "ps:fast", "lint:shell"],
         cache: {
           input: [
-            "cli/helpers/**/*.d.ts",
             "cli/src/**/*.ts",
+            "cli/src/types/**/*.d.ts",
             "scripts/**/*.ts",
             "tests/**/*.ts",
             "plugins/**",

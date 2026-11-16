@@ -1,5 +1,6 @@
 import path from "node:path";
 import { ExecutionError, type CommandContext } from "./context.ts";
+import { isDirectory } from "./fs-utils.ts";
 
 export interface BranchTransactionController {
   setStep(stepLabel: string): void;
@@ -11,21 +12,13 @@ export interface BranchTransactionOptions {
   readonly baseBranch?: string;
   readonly cwd?: string;
   readonly initialStep?: string;
+  readonly onSignalCleanup?: CommandContext["onSignalCleanup"];
   readonly onRollback?: () => Promise<void>;
 }
 
 export interface ProjectManifestRollbackSpec {
   readonly lockTrackedBefore: boolean;
   readonly lockExistedBefore: boolean;
-}
-
-async function isDirectory(fsPort: CommandContext["fs"], dirPath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(dirPath);
-    return stats.isDirectory();
-  } catch {
-    return false;
-  }
 }
 
 /**
@@ -36,7 +29,7 @@ export async function backupNodeModules(
   projectDir: string,
 ): Promise<boolean> {
   const nodeModulesDir = path.join(projectDir, "node_modules");
-  if (!(await isDirectory(fsPort, nodeModulesDir))) {
+  if (!(await isDirectory(nodeModulesDir, fsPort))) {
     return false;
   }
   const backupDir = path.join(projectDir, ".node_modules.bak");
@@ -53,7 +46,7 @@ export async function restoreNodeModulesBackup(
   projectDir: string,
 ): Promise<boolean> {
   const backupDir = path.join(projectDir, ".node_modules.bak");
-  if (!(await isDirectory(fsPort, backupDir))) {
+  if (!(await isDirectory(backupDir, fsPort))) {
     return false;
   }
   const nodeModulesDir = path.join(projectDir, "node_modules");
@@ -124,7 +117,12 @@ export async function runBranchTransaction<T>(
     );
   }
 
+  let rolledBack = false;
   const rollback = async (): Promise<void> => {
+    if (rolledBack) {
+      return;
+    }
+    rolledBack = true;
     await ctx.runner.exec("git", ["reset", "--hard", "-q"], { cwd: workDir }).catch(() => {});
     await ctx.runner.exec("git", ["checkout", "-q", baseBranch], { cwd: workDir }).catch(() => {});
     await ctx.runner
@@ -135,10 +133,16 @@ export async function runBranchTransaction<T>(
     }
   };
 
+  const unregisterSignal =
+    options.onSignalCleanup?.(() => {
+      void rollback();
+    }) ?? (() => {});
+
   let result: T;
   try {
     result = await work(controller);
   } catch (err) {
+    unregisterSignal();
     if (ctx.isTty) {
       ctx.stderr("\r\x1b[K");
     }
@@ -148,6 +152,8 @@ export async function runBranchTransaction<T>(
     await rollback();
     throw err;
   }
+
+  unregisterSignal();
 
   const checkoutMainRes = await ctx.runner.exec("git", ["checkout", "-q", baseBranch], {
     cwd: workDir,

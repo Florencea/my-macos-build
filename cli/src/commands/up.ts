@@ -1,7 +1,8 @@
 import path from "node:path";
 import { z } from "zod";
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
-import { ExecutionError, type CommandContext } from "../lib/context.ts";
+import { ExecutionError, formatErrorMessage, type CommandContext } from "../lib/context.ts";
+import { isDirectory, isFile } from "../lib/fs-utils.ts";
 import {
   findGitHubActionFiles,
   getGitHubActionReferences,
@@ -18,6 +19,7 @@ import {
   resolveProjectVerifySteps,
   withWindowsMachinePath,
 } from "../lib/node-toolchain.ts";
+import { runSequentially } from "../lib/process.ts";
 import { withSpinner } from "../lib/spinner.ts";
 import {
   backupNodeModules,
@@ -43,23 +45,7 @@ class RollbackHandledError extends Error {
   }
 }
 
-async function isFile(fsPort: CommandContext["fs"], filePath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(filePath);
-    return stats.isFile();
-  } catch {
-    return false;
-  }
-}
-
-async function isDirectory(fsPort: CommandContext["fs"], dirPath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(dirPath);
-    return stats.isDirectory();
-  } catch {
-    return false;
-  }
-}
+class SpinnerStepError extends ExecutionError {}
 
 async function runSpinnerStep(
   ctx: CommandContext,
@@ -75,6 +61,7 @@ async function runSpinnerStep(
     const res = await ctx.runner.exec(exe, args, {
       cwd: ctx.cwd,
       env: { VP_LOG: "error", ...extraEnv },
+      signal: ctx.signal,
     });
     if (res.exitCode !== 0) {
       const lines = [res.stdout, res.stderr]
@@ -85,7 +72,7 @@ async function runSpinnerStep(
       for (const line of lines) {
         ctx.stderr(`${line}\n`);
       }
-      throw new ExecutionError(
+      throw new SpinnerStepError(
         `Step failed with exit code ${res.exitCode.toString()}`,
         res.exitCode,
       );
@@ -138,7 +125,7 @@ async function resolveVitePlusUpgrade(
   let localVpVer = deps["vite-plus"] ?? devDeps["vite-plus"] ?? "";
   if (
     localVpVer === "catalog:" &&
-    (await isFile(ctx.fs, path.join(ctx.cwd, "pnpm-workspace.yaml")))
+    (await isFile(path.join(ctx.cwd, "pnpm-workspace.yaml"), ctx.fs))
   ) {
     const yqRes = await ctx.runner.exec(
       "yq",
@@ -237,7 +224,7 @@ export const upCommand = defineCommand({
     const ncuEntries = Object.entries(ncuMap);
 
     let hasLockfileDrift = false;
-    if (await isFile(effectiveCtx.fs, path.join(effectiveCtx.cwd, "pnpm-lock.yaml"))) {
+    if (await isFile(path.join(effectiveCtx.cwd, "pnpm-lock.yaml"), effectiveCtx.fs)) {
       const driftRes = await effectiveCtx.runner.exec(
         "vp",
         ["install", "--frozen-lockfile", "--lockfile-only", "--silent"],
@@ -249,8 +236,8 @@ export const upCommand = defineCommand({
     const hasDepUpdates = vpUpgrade.upgraded || ncuEntries.length > 0 || hasLockfileDrift;
 
     const isGitHubActionsRepo = await isDirectory(
-      effectiveCtx.fs,
       path.join(effectiveCtx.cwd, "actions"),
+      effectiveCtx.fs,
     );
     const ciFiles = isGitHubActionsRepo
       ? []
@@ -353,6 +340,7 @@ export const upCommand = defineCommand({
           tempBranch,
           baseBranch: "main",
           cwd: effectiveCtx.cwd,
+          onSignalCleanup: effectiveCtx.onSignalCleanup,
           onRollback: async () => {
             const restoredBackup = await restoreNodeModulesBackup(
               effectiveCtx.fs,
@@ -589,11 +577,7 @@ export const upCommand = defineCommand({
               }
 
               const verifySteps = resolveProjectVerifySteps(scriptsMap);
-              const runVerifySequentially = async (index: number): Promise<void> => {
-                const step = verifySteps[index];
-                if (step === undefined) {
-                  return;
-                }
+              await runSequentially(verifySteps, async (step) => {
                 await runSpinnerStep(
                   effectiveCtx,
                   tx,
@@ -602,9 +586,7 @@ export const upCommand = defineCommand({
                   step.exe,
                   step.args,
                 );
-                await runVerifySequentially(index + 1);
-              };
-              await runVerifySequentially(0);
+              });
 
               const depStatusRes = await effectiveCtx.runner.exec(
                 "git",
@@ -720,7 +702,10 @@ export const upCommand = defineCommand({
                 createdCommits.push(ciCommitTitle);
               }
             }
-          } catch {
+          } catch (err) {
+            if (!(err instanceof SpinnerStepError)) {
+              effectiveCtx.stderr(`Error: ${formatErrorMessage(err)}\n`);
+            }
             throw new RollbackHandledError();
           }
         },

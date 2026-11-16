@@ -65,7 +65,7 @@ describe("ebk command", () => {
       await fs.writeFile(stylusFile, "not-json-fallback");
 
       const gitCalls: Array<readonly string[]> = [];
-      const { ctx, getStdout } = createTestContext({
+      const { ctx, getStdout, getStderr } = createTestContext({
         env: { HOME: tempDir },
         repoRoot: tempDir,
         runner: {
@@ -85,6 +85,7 @@ describe("ebk command", () => {
 
       const code = await ebkCommand.execute([], ctx);
       expect(code).toBe(0);
+      expect(getStderr()).toContain("stylus-2026.json is not valid JSON");
 
       expect(await fs.readFile(path.join(configsDir, "ubo-config.txt"), "utf8")).toBe("new-ubo\n");
       expect(await fs.readFile(path.join(configsDir, "ubol-config.json"), "utf8")).toBe(

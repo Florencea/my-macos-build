@@ -10,12 +10,11 @@ import {
   type CommandContext,
 } from "../lib/context.ts";
 import {
-  downloadYtDlpSegment,
   formatMediaTimestamp,
   parseTimeToSeconds,
   resolveLocalMediaFile,
   resolveYtDlpBrowser,
-  type YtDlpSegmentResult,
+  withMediaInputSource,
 } from "../lib/media.ts";
 
 const MkclpOptionsSchema = z.object({
@@ -222,86 +221,75 @@ export const mkclpCommand = defineCommand({
       return 0;
     }
 
-    let tempSegment: YtDlpSegmentResult | null = null;
-    let unregisterSignal: (() => void) | null = null;
-
-    try {
-      let inputSource = localFile ?? inputArg;
-      let ffmpegStart = startText;
-
-      if (!isLocal) {
-        tempSegment = await downloadYtDlpSegment(ctx, {
-          inputSource: inputArg,
-          startSecond: startSec,
-          endSecond: startSec + durSec,
-          format: "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
-          browser: options.browser,
-          forceKeyframesAtCuts: true,
+    return await withMediaInputSource(
+      ctx,
+      {
+        inputArg,
+        localFile,
+        startSecond: startSec,
+        endSecond: startSec + durSec,
+        format: "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
+        browser: options.browser,
+        forceKeyframesAtCuts: true,
+      },
+      async ({ isLocal: resolvedIsLocal, filePath: inputSource }) => {
+        const ffmpegStart = resolvedIsLocal ? startText : "0";
+        const probe = await probeVideoStream(ctx, inputSource);
+        const vcArgs = buildCodecArgs({
+          copy: options.copy,
+          isLocal: resolvedIsLocal,
+          probe,
+          qualityExplicitlySet,
+          isMac,
+          effectiveQuality,
         });
-        const segmentDir = tempSegment.tempDir;
-        unregisterSignal = ctx.onSignalCleanup(() => {
-          void ctx.fs.rm(segmentDir, { recursive: true, force: true }).catch(() => {});
-        });
-        inputSource = tempSegment.filePath;
-        ffmpegStart = "0";
-      }
 
-      const probe = await probeVideoStream(ctx, inputSource);
-      const vcArgs = buildCodecArgs({
-        copy: options.copy,
-        isLocal,
-        probe,
-        qualityExplicitlySet,
-        isMac,
-        effectiveQuality,
-      });
-
-      const ffmpegRes = await ctx.runner.exec("ffmpeg", [
-        "-y",
-        "-hide_banner",
-        "-loglevel",
-        "error",
-        "-ss",
-        ffmpegStart,
-        "-i",
-        inputSource,
-        "-t",
-        durationText,
-        "-map",
-        "0:v:0",
-        "-map",
-        "0:a?",
-        ...vcArgs,
-        "-map_chapters",
-        "-1",
-        "-movflags",
-        "+faststart",
-        resolvedOutput,
-      ]);
-
-      if (ffmpegRes.exitCode !== 0) {
-        const detail = formatNativeErrorDetail(
-          [ffmpegRes.stderr, ffmpegRes.stdout],
-          ffmpegRes.exitCode,
+        const ffmpegRes = await ctx.runner.exec(
+          "ffmpeg",
+          [
+            "-y",
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-ss",
+            ffmpegStart,
+            "-i",
+            inputSource,
+            "-t",
+            durationText,
+            "-map",
+            "0:v:0",
+            "-map",
+            "0:a?",
+            ...vcArgs,
+            "-map_chapters",
+            "-1",
+            "-movflags",
+            "+faststart",
+            resolvedOutput,
+          ],
+          { signal: ctx.signal },
         );
-        throw new ExecutionError(`Error: ffmpeg failed (${detail})`, ffmpegRes.exitCode);
-      }
 
-      try {
-        const outStats = await ctx.fs.stat(resolvedOutput);
-        if (outStats.isFile()) {
-          ctx.stdout(`${outputName} ${formatByteSize(outStats.size)}\n`);
+        if (ffmpegRes.exitCode !== 0) {
+          const detail = formatNativeErrorDetail(
+            [ffmpegRes.stderr, ffmpegRes.stdout],
+            ffmpegRes.exitCode,
+          );
+          throw new ExecutionError(`Error: ffmpeg failed (${detail})`, ffmpegRes.exitCode);
         }
-      } catch {
-        // Output size reporting is best-effort after a zero exit code.
-      }
 
-      return 0;
-    } finally {
-      unregisterSignal?.();
-      if (tempSegment !== null) {
-        await ctx.fs.rm(tempSegment.tempDir, { recursive: true, force: true }).catch(() => {});
-      }
-    }
+        try {
+          const outStats = await ctx.fs.stat(resolvedOutput);
+          if (outStats.isFile()) {
+            ctx.stdout(`${outputName} ${formatByteSize(outStats.size)}\n`);
+          }
+        } catch {
+          // Output size reporting is best-effort after a zero exit code.
+        }
+
+        return 0;
+      },
+    );
   },
 });

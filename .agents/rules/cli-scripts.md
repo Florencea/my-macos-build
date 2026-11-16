@@ -10,8 +10,9 @@ description: Rules for authoring, registering, and verifying Vite+ TypeScript CL
 
 - **Source & Registry**:
   - Implement each CLI command under `cli/src/commands/<command>.ts` using `defineCommand` from `cli/src/lib/cli-framework.ts`.
-  - Export shared domain logic in `cli/src/lib/*.ts` (`cli-framework.ts`, `context.ts`, `github-actions.ts`, `media.ts`, `node-toolchain.ts`, `process.ts`, `spinner.ts`, `transaction.ts`, `webread-parser.ts`).
+  - Export shared domain logic in `cli/src/lib/*.ts` (`cli-framework.ts`, `context.ts`, `fs-utils.ts`, `github-actions.ts`, `media.ts`, `node-toolchain.ts`, `process.ts`, `spinner.ts`, `transaction.ts`, `webread-parser.ts`) and ambient type declarations in `cli/src/types/*.d.ts`.
   - Register all commands in `cli/src/registry.ts` (`CLI_COMMANDS`, `COMMAND_NAMES`) invoked by `cli/src/main.ts`.
+  - Reuse `mapWithConcurrency` and `runSequentially` from `cli/src/lib/process.ts`, `isFile` / `isDirectory` / `pathExists` from `cli/src/lib/fs-utils.ts`, `formatErrorMessage` from `cli/src/lib/context.ts`, and `withMediaInputSource` from `cli/src/lib/media.ts` instead of duplicating loop recursion or filesystem helpers.
 - **Generated Entrypoints (`cli/bin/`)**:
   - Never hand-edit `cli/bin/*`. Regenerate POSIX shims (`0o755`, LF) and Windows wrappers (`*.cmd`) after any change to `cli/src/registry.ts` via `vpr cli:sync-bins`.
   - POSIX shims resolve the physical repository root with `realpath "$0"` and execute `exec "$vpx_bin" "$repo_root/cli/src/main.ts" "<cmd>" "$@"`; Windows `.cmd` wrappers execute `vpx "%REPO_ROOT%\cli\src\main.ts" "<cmd>" %*`.

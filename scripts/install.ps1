@@ -194,7 +194,13 @@ foreach ($pkg in @($manifest['DesktopPackages'])) {
     Install-WingetIdempotent -Id $pkg.Id -Name $pkg.Name
 }
 
-& winget pin add --id Microsoft.Edge --blocking 2>$null | Out-Null
+$edgeInstalled = @(& winget list --id Microsoft.Edge -e --accept-source-agreements --disable-interactivity 2>$null)
+if ($edgeInstalled -match 'Microsoft\.Edge') {
+    $edgePinned = @(& winget pin list --id Microsoft.Edge --accept-source-agreements 2>$null)
+    if (-not ($edgePinned -match 'Microsoft\.Edge')) {
+        & winget pin add --id Microsoft.Edge --blocking 2>$null | Out-Null
+    }
+}
 Sync-SessionPath -ExtraPaths $vpExtraPaths
 
 # 5. Global Git Configuration & Pre-Commit Safety Hook

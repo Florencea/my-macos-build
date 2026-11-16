@@ -3,7 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { z } from "zod";
 import { ExecutionError, formatNativeErrorDetail, type CommandContext } from "./context.ts";
-import { resolveExecutableInPath } from "./process.ts";
+import { isDirectory, isFile, pathExists } from "./fs-utils.ts";
+import { buildSpawnEnv, resolveExecutableInPath } from "./process.ts";
 
 const LOCKFILE_NAMES = [
   "pnpm-lock.yaml",
@@ -90,33 +91,6 @@ export interface VitePlusOxfmtSpec {
   readonly oxfmtVersion: string;
 }
 
-async function isFile(fsPort: CommandContext["fs"], filePath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(filePath);
-    return stats.isFile();
-  } catch {
-    return false;
-  }
-}
-
-async function isDirectory(fsPort: CommandContext["fs"], dirPath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(dirPath);
-    return stats.isDirectory();
-  } catch {
-    return false;
-  }
-}
-
-async function pathExists(fsPort: CommandContext["fs"], targetPath: string): Promise<boolean> {
-  try {
-    await fsPort.stat(targetPath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 /**
  * Reads and validates a `package.json` file with Zod, returning `null` if missing or invalid.
  */
@@ -125,7 +99,7 @@ export async function readPackageJsonManifest(
   projectDir: string,
 ): Promise<PackageJsonManifest | null> {
   const pkgPath = path.join(projectDir, "package.json");
-  if (!(await isFile(fsPort, pkgPath))) {
+  if (!(await isFile(pkgPath, fsPort))) {
     return null;
   }
   try {
@@ -180,7 +154,9 @@ export async function withWindowsMachinePath(ctx: CommandContext): Promise<Comma
   const psScript = [
     "$u = [Environment]::GetEnvironmentVariable('Path', 'User')",
     "$m = [Environment]::GetEnvironmentVariable('Path', 'Machine')",
-    `Write-Output "$u\n${WIN_PATH_SEPARATOR_MARKER}\n$m"`,
+    "Write-Output $u",
+    `Write-Output '${WIN_PATH_SEPARATOR_MARKER}'`,
+    "Write-Output $m",
   ].join("; ");
 
   const queryShell = async (shellExe: string): Promise<boolean> => {
@@ -207,37 +183,44 @@ export async function withWindowsMachinePath(ctx: CommandContext): Promise<Comma
     return ctx;
   }
 
-  const mergedEnv: Record<string, string | undefined> = {
-    ...ctx.env,
-    PATH: mergedPath,
-  };
+  const mergedEnv: Record<string, string | undefined> = buildSpawnEnv(
+    ctx.env,
+    { PATH: mergedPath },
+    ctx.platform,
+  );
 
   return {
     ...ctx,
     env: mergedEnv,
     runner: {
-      async commandExists(name: string): Promise<boolean> {
-        if (await ctx.runner.commandExists(name)) {
+      async commandExists(name, cmdOptions) {
+        if (await ctx.runner.commandExists(name, cmdOptions)) {
           return true;
         }
-        return (await resolveExecutableInPath(name, mergedEnv, ctx.platform)) !== null;
+        return (
+          (await resolveExecutableInPath(
+            name,
+            cmdOptions?.env ?? mergedEnv,
+            cmdOptions?.platform ?? ctx.platform,
+          )) !== null
+        );
       },
       exec(command, args, options) {
         return ctx.runner.exec(command, args, {
           ...options,
-          env: { PATH: mergedPath, ...options?.env },
+          env: buildSpawnEnv({ PATH: mergedPath }, options?.env, ctx.platform),
         });
       },
       pipe(left, right, options) {
         return ctx.runner.pipe(left, right, {
           ...options,
-          env: { PATH: mergedPath, ...options?.env },
+          env: buildSpawnEnv({ PATH: mergedPath }, options?.env, ctx.platform),
         });
       },
       spawnInteractive(command, args, options) {
         return ctx.runner.spawnInteractive(command, args, {
           ...options,
-          env: { PATH: mergedPath, ...options?.env },
+          env: buildSpawnEnv({ PATH: mergedPath }, options?.env, ctx.platform),
         });
       },
       cleanupActiveProcesses() {
@@ -278,12 +261,12 @@ export async function resolvePlaywrightSyncStep(
 
   const binDir = path.join(projectRoot, "node_modules", ".bin");
   const fullBinChecks = await Promise.all(
-    PLAYWRIGHT_BIN_NAMES.map((binName) => isFile(fsPort, path.join(binDir, binName))),
+    PLAYWRIGHT_BIN_NAMES.map((binName) => isFile(path.join(binDir, binName), fsPort)),
   );
   const hasPlaywrightBin = fullBinChecks.includes(true);
 
   const coreBinChecks = await Promise.all(
-    PLAYWRIGHT_CORE_BIN_NAMES.map((binName) => isFile(fsPort, path.join(binDir, binName))),
+    PLAYWRIGHT_CORE_BIN_NAMES.map((binName) => isFile(path.join(binDir, binName), fsPort)),
   );
   const hasCoreBin = coreBinChecks.includes(true);
 
@@ -389,18 +372,18 @@ export async function isWorkspaceNodeSyncTarget(
   repoPath: string,
   pullUpdated = false,
 ): Promise<boolean> {
-  if (!(await isFile(fsPort, path.join(repoPath, "package.json")))) {
+  if (!(await isFile(path.join(repoPath, "package.json"), fsPort))) {
     return false;
   }
 
   const lockChecks = await Promise.all(
-    LOCKFILE_NAMES.map((lockfile) => isFile(fsPort, path.join(repoPath, lockfile))),
+    LOCKFILE_NAMES.map((lockfile) => isFile(path.join(repoPath, lockfile), fsPort)),
   );
   if (!lockChecks.includes(true)) {
     return false;
   }
 
-  const hasNodeModules = await isDirectory(fsPort, path.join(repoPath, "node_modules"));
+  const hasNodeModules = await isDirectory(path.join(repoPath, "node_modules"), fsPort);
   return pullUpdated || !hasNodeModules;
 }
 
@@ -496,7 +479,7 @@ export async function isPnpmWorkspaceProject(
   fsPort: CommandContext["fs"],
   repoPath: string,
 ): Promise<boolean> {
-  if (!(await pathExists(fsPort, path.join(repoPath, ".git")))) {
+  if (!(await pathExists(path.join(repoPath, ".git"), fsPort))) {
     return false;
   }
 
@@ -514,8 +497,8 @@ export async function isPnpmWorkspaceProject(
   }
 
   const [hasLock, hasWorkspace] = await Promise.all([
-    isFile(fsPort, path.join(repoPath, "pnpm-lock.yaml")),
-    isFile(fsPort, path.join(repoPath, "pnpm-workspace.yaml")),
+    isFile(path.join(repoPath, "pnpm-lock.yaml"), fsPort),
+    isFile(path.join(repoPath, "pnpm-workspace.yaml"), fsPort),
   ]);
   return hasLock || hasWorkspace;
 }
@@ -528,7 +511,7 @@ export async function formatProjectPackageManifest(
   projectDir: string,
 ): Promise<{ readonly success: boolean; readonly errorDetail: string }> {
   const manifestPath = path.join(projectDir, "package.json");
-  if (!(await isFile(ctx.fs, manifestPath))) {
+  if (!(await isFile(manifestPath, ctx.fs))) {
     return {
       success: false,
       errorDetail: `package.json not found in ${projectDir}`,
@@ -624,7 +607,7 @@ export async function getVitePlusOxfmtSpec(
     pkgPath: string,
     directPkgPath: string,
   ): Promise<VitePlusOxfmtSpec | null> => {
-    if (!(await isFile(ctx.fs, pkgPath))) {
+    if (!(await isFile(pkgPath, ctx.fs))) {
       return null;
     }
     try {
@@ -651,7 +634,7 @@ export async function getVitePlusOxfmtSpec(
 
   const perRootSpecs = await Promise.all(
     uniqueRoots.map(async (trimmedRoot): Promise<VitePlusOxfmtSpec | null> => {
-      if (!(await isDirectory(ctx.fs, trimmedRoot))) {
+      if (!(await isDirectory(trimmedRoot, ctx.fs))) {
         return null;
       }
 
@@ -707,7 +690,7 @@ export async function syncGlobalOxfmt(ctx: CommandContext): Promise<void> {
   const targetVer = spec.oxfmtVersion;
   const shimName = ctx.platform === "win32" ? "oxfmt.exe" : "oxfmt";
   const shimPath = path.join(spec.vpHome, "bin", shimName);
-  const shimExists = await isFile(ctx.fs, shimPath);
+  const shimExists = await isFile(shimPath, ctx.fs);
   let currentVer = "";
 
   if (shimExists) {

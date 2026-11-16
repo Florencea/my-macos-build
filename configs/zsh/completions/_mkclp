@@ -9,6 +9,7 @@ _mkclp() {
     '(-c --copy)'{-c,--copy}'[Force lossless stream copy without re-encoding]' \
     '(-b --browser)'{-b,--browser}'[Browser for YouTube cookies (default: chrome)]:browser:(chrome edge brave firefox safari)' \
     '(-o --output)'{-o,--output}'[Custom output file path]:output file:_files' \
+    '--dry-run[Preview planned actions without applying changes]' \
     '(-h --help)'{-h,--help}'[Show help message]' \
     '1:Input Video (File or URL):->input_source' \
     '2:Start Time (HH\:MM\:SS or SS): ' \

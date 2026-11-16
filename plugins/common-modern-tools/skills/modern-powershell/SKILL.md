@@ -53,10 +53,10 @@ Fetch indexes first, then retrieve only the targeted `.md` section via `webread`
 
 ## 3. Cross-Version Compatibility Matrix (PS 7+ vs PS 5.1)
 
-- **Tier A — Cross-Platform CLI Tools (`cli/*.ps1`, general automation)**:
+- **Tier A — PowerShell 7+ General Automation (`*.ps1`, `tests/verify-ps-*.ps1`)**:
   - Header: `#!/usr/bin/env -S pwsh -NoLogo -NoProfile` (LF, UTF-8 without BOM).
   - Modern syntax permitted: `? :`, `??`, `&&`, `||`, `ForEach-Object -Parallel`, `ConvertFrom-Json -AsHashtable`.
-- **Tier B — Dual-Version Bootstrap Scripts (`scripts/install.ps1`)**:
+- **Tier B — Dual-Version Bootstrap Scripts (`scripts/install.ps1`, `scripts/windows/*.psm1`)**:
   - Header: `#Requires -Version 5.1` (must execute on default Windows PowerShell 5.1 and PowerShell 7+).
   - Guard `$IsWindows`: `$isWin = ($PSVersionTable.PSEdition -ne 'Core') -or $IsWindows`.
   - No PS 7 operators (`? :`, `??`, `&&`, `||`). Use standard `if/else`.
@@ -90,14 +90,14 @@ Fetch indexes first, then retrieve only the targeted `.md` section via `webread`
 In repositories providing tiered PowerShell verification scripts (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`), run the fast Tier 1 script during active editing and the full gate (`vpr agent:verify:gate`) before completion:
 
 ```powershell
-pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1 --fix --path cli/command.ps1
-pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 --path cli/command.ps1
+pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1 --fix --path scripts/install.ps1
+pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 --path scripts/install.ps1
 ```
 
 In standalone workspaces without repository verification scripts, execute all three stages directly:
 
 ```powershell
-$targetFile = 'cli/command.ps1'
+$targetFile = 'scripts/example.ps1'
 $settings = './PSScriptAnalyzerSettings.psd1'
 $absPath = (Resolve-Path -LiteralPath $targetFile).Path
 

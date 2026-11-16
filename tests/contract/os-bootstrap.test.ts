@@ -108,7 +108,12 @@ describe("OS bootstrap PowerShell and installer contracts", () => {
     );
 
     const parsedJson: unknown = JSON.parse(stdout.trim());
-    const result = BootstrapInspectionSchema.parse(parsedJson);
+    const validated = BootstrapInspectionSchema.safeParse(parsedJson);
+    expect(validated.success).toBe(true);
+    if (!validated.success) {
+      return;
+    }
+    const result = validated.data;
 
     expect(result.manifestCounts.CliPackages).toBeGreaterThan(0);
     expect(result.manifestCounts.DesktopPackages).toBeGreaterThan(0);
@@ -147,5 +152,80 @@ describe("OS bootstrap PowerShell and installer contracts", () => {
     expect(winProvisioning).toContain("Join-Path $RepoRoot 'cli\\bin'");
     expect(winProvisioning).toContain("$legacyCliDir");
     expect(winProvisioning).toContain("$_ -eq $legacyCliDir");
+  });
+
+  it.skipIf(process.platform === "win32")(
+    "executes install.sh link_cli_scripts and sync_plugin_dir idempotently in isolated HOME",
+    async () => {
+      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-install-sh-"));
+      try {
+        const localBinDir = path.join(tempHome, ".local", "bin");
+        await fs.mkdir(localBinDir, { recursive: true });
+        await fs.symlink(
+          path.join(REPO_ROOT, "cli", "up.ps1"),
+          path.join(localBinDir, "stale-legacy-cmd"),
+        );
+
+        const installSh = await fs.readFile(path.join(REPO_ROOT, "scripts", "install.sh"), "utf8");
+        const withoutMain = installSh.replace(/\nmain "\$@"\s*$/, "\n");
+        const scriptRunner = [
+          withoutMain,
+          'link_cli_scripts "$MMB_REPO_ROOT"',
+          'sync_plugin_dir "$MMB_REPO_ROOT" "common-modern-tools"',
+          'link_cli_scripts "$MMB_REPO_ROOT"',
+          'sync_plugin_dir "$MMB_REPO_ROOT" "common-modern-tools"',
+        ].join("\n");
+
+        await execFileAsync("zsh", ["-c", scriptRunner], {
+          env: { ...process.env, HOME: tempHome, MMB_REPO_ROOT: REPO_ROOT },
+        });
+
+        await expect(fs.lstat(path.join(localBinDir, "stale-legacy-cmd"))).rejects.toThrow(
+          /ENOENT/,
+        );
+        const linkedEntries = await fs.readdir(localBinDir);
+        expect(linkedEntries).toHaveLength(12);
+        expect(linkedEntries.some((name) => name.endsWith(".cmd"))).toBe(false);
+        const webreadTarget = await fs.readlink(path.join(localBinDir, "webread"));
+        expect(webreadTarget).toBe(path.join(REPO_ROOT, "cli", "bin", "webread"));
+
+        const pluginManifest = await fs.readFile(
+          path.join(tempHome, ".gemini", "config", "plugins", "common-modern-tools", "plugin.json"),
+          "utf8",
+        );
+        expect(pluginManifest).toContain("common-modern-tools");
+      } finally {
+        await fs.rm(tempHome, { recursive: true, force: true });
+      }
+    },
+  );
+
+  it("validates WindowsProvisioning.psm1 Test-DirectoryContentEqual idempotency helper", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-win-prov-"));
+    try {
+      const srcDir = path.join(tempDir, "src");
+      const dstDir = path.join(tempDir, "dst");
+      await fs.mkdir(path.join(srcDir, "sub"), { recursive: true });
+      await fs.mkdir(path.join(dstDir, "sub"), { recursive: true });
+      await fs.writeFile(path.join(srcDir, "sub", "a.txt"), "hello\n", "utf8");
+      await fs.writeFile(path.join(dstDir, "sub", "a.txt"), "hello\n", "utf8");
+      await fs.writeFile(path.join(dstDir, ".DS_Store"), "junk", "utf8");
+
+      const provPath = path.join(REPO_ROOT, "scripts", "windows", "WindowsProvisioning.psm1");
+      const psScript = [
+        "$ErrorActionPreference = 'Stop'",
+        `Import-Module -Name '${provPath.replace(/'/g, "''")}' -Force`,
+        `& (Get-Module WindowsProvisioning) { param($s, $d) Test-DirectoryContentEqual -SourceDir $s -DestinationDir $d } '${srcDir.replace(/'/g, "''")}' '${dstDir.replace(/'/g, "''")}'`,
+      ].join("\n");
+
+      const equalRun = await execFileAsync("pwsh", ["-NoLogo", "-NoProfile", "-Command", psScript]);
+      expect(equalRun.stdout.trim()).toBe("True");
+
+      await fs.writeFile(path.join(dstDir, "sub", "a.txt"), "changed\n", "utf8");
+      const diffRun = await execFileAsync("pwsh", ["-NoLogo", "-NoProfile", "-Command", psScript]);
+      expect(diffRun.stdout.trim()).toBe("False");
+    } finally {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
   });
 });

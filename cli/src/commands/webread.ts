@@ -73,10 +73,13 @@ async function fetchTextPayload(
   timeoutMs: number,
 ): Promise<FetchedPayload | null> {
   try {
+    const timeoutSignal = AbortSignal.timeout(timeoutMs);
+    const signal =
+      ctx.signal !== undefined ? AbortSignal.any([ctx.signal, timeoutSignal]) : timeoutSignal;
     const response = await ctx.fetch(url, {
       headers,
       redirect: "follow",
-      signal: AbortSignal.timeout(timeoutMs),
+      signal,
     });
     if (!response.ok) {
       return null;
@@ -284,12 +287,7 @@ export const webreadCommand = defineCommand({
     if (outputPath !== undefined && outputPath.trim() !== "") {
       const absOut = path.resolve(ctx.cwd, outputPath);
       await ctx.fs.mkdir(path.dirname(absOut), { recursive: true });
-      const newline = ctx.platform === "win32" ? "\r\n" : "\n";
-      const normalized =
-        result
-          .replace(/\r\n/g, "\n")
-          .replace(/\n/g, newline)
-          .replace(/[\r\n]+$/g, "") + newline;
+      const normalized = `${result.replace(/\r\n/g, "\n").replace(/\n+$/g, "")}\n`;
       await ctx.fs.writeFile(absOut, normalized, "utf8");
       ctx.stdout(`Content saved to ${outputPath}\n`);
       return 0;

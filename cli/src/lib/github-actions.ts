@@ -1,6 +1,7 @@
 import path from "node:path";
 import { z } from "zod";
 import { ExecutionError, formatNativeErrorDetail, type CommandContext } from "./context.ts";
+import { isDirectory } from "./fs-utils.ts";
 import { mapWithConcurrency } from "./process.ts";
 
 const GITHUB_WORKFLOW_OR_ACTION_RE = /^\.github\/(workflows\/[^/]+\.ya?ml|(.+\/)?action\.ya?ml)$/i;
@@ -53,15 +54,6 @@ export interface GitHubActionUpdate {
   readonly newRef: string;
 }
 
-async function isDirectory(fsPort: CommandContext["fs"], dirPath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(dirPath);
-    return stats.isDirectory();
-  } catch {
-    return false;
-  }
-}
-
 function escapeRegExp(literal: string): string {
   return literal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -77,10 +69,10 @@ export async function restoreGitHubWorkflow(
   const includeActionsDir = options?.includeActionsDir ?? false;
 
   const pathsToInspect: string[] = [];
-  if (await isDirectory(ctx.fs, path.join(workDir, ".github"))) {
+  if (await isDirectory(path.join(workDir, ".github"), ctx.fs)) {
     pathsToInspect.push(".github");
   }
-  if (includeActionsDir && (await isDirectory(ctx.fs, path.join(workDir, "actions")))) {
+  if (includeActionsDir && (await isDirectory(path.join(workDir, "actions"), ctx.fs))) {
     pathsToInspect.push("actions");
   }
   if (pathsToInspect.length === 0) {
@@ -134,7 +126,7 @@ export async function findGitHubActionFiles(
   projectDir = ctx.cwd,
 ): Promise<readonly string[]> {
   const githubDir = path.join(projectDir, ".github");
-  if (!(await isDirectory(ctx.fs, githubDir))) {
+  if (!(await isDirectory(githubDir, ctx.fs))) {
     return [];
   }
 

@@ -2,6 +2,7 @@ import path from "node:path";
 import { z } from "zod";
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
+import { isDirectory, isFile } from "../lib/fs-utils.ts";
 import {
   formatProjectPackageManifest,
   isPnpmWorkspaceProject,
@@ -10,6 +11,7 @@ import {
   resolveLatestPnpmVersionFromJson,
   withWindowsMachinePath,
 } from "../lib/node-toolchain.ts";
+import { runSequentially } from "../lib/process.ts";
 import { restoreProjectManifest } from "../lib/transaction.ts";
 
 const EmptyOptionsSchema = z.object({});
@@ -17,24 +19,6 @@ const EmptyOptionsSchema = z.object({});
 interface WorkspacePnpmProject {
   readonly name: string;
   readonly dir: string;
-}
-
-async function isFile(fsPort: CommandContext["fs"], filePath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(filePath);
-    return stats.isFile();
-  } catch {
-    return false;
-  }
-}
-
-async function isDirectory(fsPort: CommandContext["fs"], dirPath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(dirPath);
-    return stats.isDirectory();
-  } catch {
-    return false;
-  }
 }
 
 async function discoverPnpmProjects(
@@ -71,8 +55,8 @@ async function updateProjectPnpmVersion(
   const targetSpec = `pnpm@${targetVersion}`;
   const lockPath = path.join(project.dir, "pnpm-lock.yaml");
   const [hasLockfile, hasNodeModules] = await Promise.all([
-    isFile(ctx.fs, lockPath),
-    isDirectory(ctx.fs, path.join(project.dir, "node_modules")),
+    isFile(lockPath, ctx.fs),
+    isDirectory(path.join(project.dir, "node_modules"), ctx.fs),
   ]);
 
   const vpEnv = { VP_LOG: "error" };
@@ -231,12 +215,13 @@ async function updateProjectPnpmVersion(
   }
 
   const filesToStage = ["package.json"];
-  if (await isFile(ctx.fs, lockPath)) {
+  if (await isFile(lockPath, ctx.fs)) {
     filesToStage.push("pnpm-lock.yaml");
   }
 
   const addRes = await ctx.runner.exec("git", ["-C", project.dir, "add", "--", ...filesToStage]);
   if (addRes.exitCode !== 0) {
+    await restoreProjectManifest(ctx, project.dir, rollbackSpec);
     ctx.stderr(`packageManager ${project.name}: failed to stage package.json / pnpm-lock.yaml\n`);
     return false;
   }
@@ -256,6 +241,8 @@ async function updateProjectPnpmVersion(
     commitMsg,
   ]);
   if (commitRes.exitCode !== 0) {
+    await ctx.runner.exec("git", ["-C", project.dir, "reset", "-q", "HEAD", "--", ...filesToStage]);
+    await restoreProjectManifest(ctx, project.dir, rollbackSpec);
     ctx.stderr(`packageManager ${project.name}: failed to commit\n`);
     return false;
   }
@@ -281,29 +268,6 @@ async function updateProjectPnpmVersion(
     ctx.stdout(`packageManager ${project.name}: ${targetSpec} ok\n`);
   }
   return true;
-}
-
-async function processProjectsSequentially(
-  ctx: CommandContext,
-  projects: readonly WorkspacePnpmProject[],
-  targetVersion: string,
-): Promise<boolean> {
-  let allSucceeded = true;
-
-  const step = async (index: number): Promise<void> => {
-    const project = projects[index];
-    if (project === undefined) {
-      return;
-    }
-    const ok = await updateProjectPnpmVersion(ctx, project, targetVersion);
-    if (!ok) {
-      allSucceeded = false;
-    }
-    await step(index + 1);
-  };
-
-  await step(0);
-  return allSucceeded;
 }
 
 /**
@@ -373,7 +337,13 @@ export const upnpmvCommand = defineCommand({
       return 0;
     }
 
-    const allSucceeded = await processProjectsSequentially(effectiveCtx, projects, targetVersion);
+    let allSucceeded = true;
+    await runSequentially(projects, async (project) => {
+      const ok = await updateProjectPnpmVersion(effectiveCtx, project, targetVersion);
+      if (!ok) {
+        allSucceeded = false;
+      }
+    });
     return allSucceeded ? 0 : 1;
   },
 });

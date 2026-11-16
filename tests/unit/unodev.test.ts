@@ -128,4 +128,44 @@ describe("unodev command", () => {
       await fs.rm(tempDir, { recursive: true, force: true });
     }
   });
+
+  it("resets and restores package.json when git commit fails", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-unodev-commit-fail-"));
+    try {
+      const repoRoot = path.join(tempDir, "repo-commit-fail");
+      await fs.mkdir(path.join(repoRoot, ".git"), { recursive: true });
+      await fs.writeFile(path.join(repoRoot, "package.json"), '{"name":"test"}\n');
+
+      const calls: string[] = [];
+      const { ctx, getStderr } = createTestContext({
+        repoRoot,
+        runner: {
+          commandExists: async () => true,
+          exec: async (cmd, args) => {
+            calls.push(`${cmd} ${args.join(" ")}`);
+            if (cmd === "vp" && args[0] === "node") {
+              return { exitCode: 0, stdout: "v26.13.1\n", stderr: "" };
+            }
+            if (cmd === "vp" && args.includes("get")) {
+              return { exitCode: 0, stdout: '"26.11.0"\n', stderr: "" };
+            }
+            if (cmd === "git" && args.includes("--short")) {
+              return { exitCode: 0, stdout: "M  package.json\n", stderr: "" };
+            }
+            if (cmd === "git" && args.includes("commit")) {
+              return { exitCode: 1, stdout: "", stderr: "hook rejected" };
+            }
+            return { exitCode: 0, stdout: "", stderr: "" };
+          },
+        },
+      });
+
+      await expect(unodevCommand.execute([], ctx)).resolves.toBe(1);
+      expect(getStderr()).toContain("failed to commit");
+      expect(calls).toContain(`git -C ${repoRoot} reset -q HEAD -- package.json`);
+      expect(calls).toContain(`git -C ${repoRoot} checkout -q -- package.json`);
+    } finally {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
+  });
 });

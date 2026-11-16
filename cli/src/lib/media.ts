@@ -202,12 +202,11 @@ export async function downloadYtDlpSegment(
   commonArgs.push("-f", input.format, "-o", outputTemplate);
 
   try {
-    const cookieRes = await ctx.runner.exec("yt-dlp", [
-      "--cookies-from-browser",
-      targetBrowser,
-      ...commonArgs,
-      input.inputSource,
-    ]);
+    const cookieRes = await ctx.runner.exec(
+      "yt-dlp",
+      ["--cookies-from-browser", targetBrowser, ...commonArgs, input.inputSource],
+      { signal: ctx.signal },
+    );
     let downloadedPath = await findDownloadedSegmentFile(ctx.fs, tempDir);
 
     if (cookieRes.exitCode !== 0 || downloadedPath === null) {
@@ -218,7 +217,9 @@ export async function downloadYtDlpSegment(
           .map((entry) => ctx.fs.rm(path.join(tempDir, entry.name), { force: true })),
       );
 
-      const fallbackRes = await ctx.runner.exec("yt-dlp", [...commonArgs, input.inputSource]);
+      const fallbackRes = await ctx.runner.exec("yt-dlp", [...commonArgs, input.inputSource], {
+        signal: ctx.signal,
+      });
       downloadedPath = await findDownloadedSegmentFile(ctx.fs, tempDir);
 
       if (fallbackRes.exitCode !== 0 || downloadedPath === null) {
@@ -242,5 +243,48 @@ export async function downloadYtDlpSegment(
     throw err;
   } finally {
     unregisterSignal();
+  }
+}
+
+export interface MediaInputSourceSpec {
+  readonly inputArg: string;
+  readonly localFile: string | null;
+  readonly startSecond: number;
+  readonly endSecond: number;
+  readonly format: string;
+  readonly browser?: string;
+  readonly forceKeyframesAtCuts?: boolean;
+}
+
+/**
+ * Resolves a local media file or downloads a bounded remote segment with signal/finally cleanup.
+ */
+export async function withMediaInputSource<T>(
+  ctx: CommandContext,
+  spec: MediaInputSourceSpec,
+  work: (resolved: { readonly isLocal: boolean; readonly filePath: string }) => Promise<T>,
+): Promise<T> {
+  if (spec.localFile !== null) {
+    return await work({ isLocal: true, filePath: spec.localFile });
+  }
+
+  const segment = await downloadYtDlpSegment(ctx, {
+    inputSource: spec.inputArg,
+    startSecond: spec.startSecond,
+    endSecond: spec.endSecond,
+    format: spec.format,
+    browser: spec.browser,
+    forceKeyframesAtCuts: spec.forceKeyframesAtCuts,
+  });
+
+  const unregisterSignal = ctx.onSignalCleanup(() => {
+    void ctx.fs.rm(segment.tempDir, { recursive: true, force: true }).catch(() => {});
+  });
+
+  try {
+    return await work({ isLocal: false, filePath: segment.filePath });
+  } finally {
+    unregisterSignal();
+    await ctx.fs.rm(segment.tempDir, { recursive: true, force: true }).catch(() => {});
   }
 }

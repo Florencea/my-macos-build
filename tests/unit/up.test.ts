@@ -366,4 +366,54 @@ describe("up command and transactional rollback", () => {
       await fs.rm(tempDir, { recursive: true, force: true });
     }
   });
+
+  it("reports non-spinner errors such as missing actionlint before rolling back", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-up-actionlint-"));
+    try {
+      await fs.mkdir(path.join(tempDir, ".github", "workflows"), { recursive: true });
+      await fs.writeFile(
+        path.join(tempDir, ".github", "workflows", "ci.yml"),
+        "jobs:\n  ci:\n    steps:\n      - uses: actions/checkout@v4\n",
+      );
+      await fs.writeFile(
+        path.join(tempDir, "package.json"),
+        JSON.stringify({ name: "demo", dependencies: { zod: "4.6.0" } }),
+      );
+
+      const { ctx, getStderr } = createTestContext({
+        cwd: tempDir,
+        runner: {
+          commandExists: async (cmd) => cmd !== "actionlint",
+          exec: async (cmd, args) => {
+            if (cmd === "git" && args.includes("HEAD")) {
+              return { exitCode: 0, stdout: "main\n", stderr: "" };
+            }
+            if (cmd === "git" && args.includes("@{u}")) {
+              return { exitCode: 1, stdout: "", stderr: "" };
+            }
+            if (cmd === "vpx" && args.includes("--jsonUpgraded")) {
+              return { exitCode: 0, stdout: "{}\n", stderr: "" };
+            }
+            if (cmd === "yq") {
+              return {
+                exitCode: 0,
+                stdout: JSON.stringify([{ uses: "actions/checkout@v4", line: 4 }]),
+                stderr: "",
+              };
+            }
+            if (cmd === "git" && args.includes("ls-remote")) {
+              return { exitCode: 0, stdout: "sha\trefs/tags/v4.2.1\n", stderr: "" };
+            }
+            return { exitCode: 0, stdout: "", stderr: "" };
+          },
+        },
+      });
+
+      await expect(upCommand.execute([], ctx)).resolves.toBe(1);
+      expect(getStderr()).toContain("actionlint is not installed");
+      expect(getStderr()).toContain("Pre-checks failed at step 'actionlint pre-check'");
+    } finally {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
+  });
 });

@@ -1,7 +1,9 @@
 #compdef unodev
 
 _unodev() {
-  _message 'no arguments'
+  _arguments -s \
+    '--dry-run[Preview planned actions without applying changes]' \
+    '(-h --help)'{-h,--help}'[Show help message]'
 }
 
 _unodev "$@"

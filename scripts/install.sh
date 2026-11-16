@@ -215,7 +215,20 @@ fetch_file() {
     fi
   else
     local encoded_path="${rel_path// /%20}"
-    curl -fsSL "https://raw.githubusercontent.com/Florencea/my-machine-build/main/$encoded_path" -o "$dest_path"
+    local tmp_file
+    tmp_file="$(mktemp -t mmb_fetch.XXXXXX)"
+    if curl -fsSL "https://raw.githubusercontent.com/Florencea/my-machine-build/main/$encoded_path" -o "$tmp_file"; then
+      if [[ -L "$dest_path" ]]; then
+        rm -f "$dest_path"
+      fi
+      if [[ ! -f "$dest_path" ]] || ! cmp -s "$tmp_file" "$dest_path"; then
+        cp -f "$tmp_file" "$dest_path"
+      fi
+      rm -f "$tmp_file"
+    else
+      rm -f "$tmp_file"
+      return 1
+    fi
   fi
 }
 
@@ -267,12 +280,13 @@ sync_plugin_dir() {
 
   mkdir -p "$dest_dir"
   if [[ -n "${repo_dir:-}" && -d "$src_dir" ]]; then
-    if ! diff -qr "$src_dir" "$dest_dir" >/dev/null 2>&1; then
+    if ! diff -qr -x '.DS_Store' "$src_dir" "$dest_dir" >/dev/null 2>&1; then
       if [[ -n "$dest_dir" && -d "$dest_dir" ]]; then
         rm -rf "${dest_dir:?}"
       fi
       mkdir -p "$dest_dir"
       cp -R -c "$src_dir/." "$dest_dir/"
+      find "$dest_dir" -name '.DS_Store' -delete 2>/dev/null || true
     fi
   else
     fetch_file "$repo_dir" "plugins/$plugin_name/plugin.json" "$dest_dir/plugin.json"
@@ -362,7 +376,7 @@ link_cli_scripts() {
     cmd_name="${bin_file:t}"
     link_path="$HOME/.local/bin/$cmd_name"
     if [[ "$(readlink "$link_path" 2>/dev/null || true)" != "$bin_file" ]]; then
-      ln -sf "$bin_file" "$link_path"
+      ln -sfn "$bin_file" "$link_path"
     fi
   done
 
@@ -424,9 +438,11 @@ install_psscriptanalyzer() {
   if curl -4 -fsSL "https://github.com/PowerShell/PSScriptAnalyzer/releases/download/${pssa_version}/PSScriptAnalyzer.${pssa_version}.nupkg" -o "$pssa_tmp" 2>/dev/null ||
     curl -fsSL "https://github.com/PowerShell/PSScriptAnalyzer/releases/download/${pssa_version}/PSScriptAnalyzer.${pssa_version}.nupkg" -o "$pssa_tmp" 2>/dev/null; then
     mkdir -p "$pssa_dest"
-    unzip -q -o "$pssa_tmp" -d "$pssa_dest" >/dev/null 2>&1 || true
-    rm -f "$pssa_tmp"
+    if ! unzip -q -o "$pssa_tmp" -d "$pssa_dest" >/dev/null 2>&1; then
+      rm -rf "${pssa_dest:?}"
+    fi
   fi
+  rm -f "$pssa_tmp"
 }
 
 install_packages() {
@@ -647,7 +663,7 @@ setup_vite_plus() {
   fi
 
   local legacy_opt="$HOME/.local/opt"
-  if [[ -d "$legacy_opt/node" ]]; then
+  if [[ -d "$legacy_opt" ]]; then
     local legacy_node_dir
     for legacy_node_dir in "$legacy_opt"/node*(N); do
       if [[ -n "$legacy_node_dir" && -d "$legacy_node_dir" ]]; then

@@ -60,9 +60,9 @@ Execute code inspection along five progressive levels to conserve context:
 
 ---
 
-## 3. Custom Local CLI Helpers (`cli/*.ps1` on PATH / `~/.local/bin`)
+## 3. Custom Local CLI Helpers (`cli/bin/*` on PATH / `~/.local/bin`)
 
-Treat local helper scripts as black boxes: always run `<command> --help` or `<command> -h` before composition.
+Treat local helper commands (implemented under `cli/src/` and exposed via `cli/bin/*` shims) as black boxes: always run `<command> --help` or `<command> -h` before composition.
 
 - `webread`: Clean, token-efficient webpage and document reader (`webread --help`).
 - `ua`: Complete system upgrade (Homebrew/winget, Vite+, Node.js LTS, pnpm, workspace git sync).

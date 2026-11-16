@@ -175,6 +175,26 @@ describe("webread command", () => {
       const saved = await fs.readFile(path.join(tempDir, outFile), "utf8");
       expect(saved).toBe("## Spec\n\nBody\n");
 
+      const winOutFile = path.join("nested", "win-out.md");
+      const winRun = createTestContext({
+        cwd: tempDir,
+        platform: "win32",
+        fetch: async () =>
+          new Response("# Win\r\n\r\nLine\r\n", {
+            status: 200,
+            headers: { "content-type": "text/plain" },
+          }),
+      });
+      await expect(
+        webreadCommand.execute(
+          ["--no-enclosure", "-o", winOutFile, "https://example.com/a.txt"],
+          winRun.ctx,
+        ),
+      ).resolves.toBe(0);
+      const winSaved = await fs.readFile(path.join(tempDir, winOutFile), "utf8");
+      expect(winSaved).toBe("# Win\n\nLine\n");
+      expect(winSaved.includes("\r\n")).toBe(false);
+
       const rawRun = createTestContext({
         fetch: async () =>
           new Response("<p>raw</p>", { status: 200, headers: { "content-type": "text/html" } }),

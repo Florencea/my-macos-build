@@ -104,10 +104,11 @@ function Initialize-VitePlusToolchain {
     if ([Environment]::GetEnvironmentVariable('VP_HOME', 'User') -ne $VpHome) {
         Write-Output "[3/9] Setting VP_HOME to $VpHome..."
         [Environment]::SetEnvironmentVariable('VP_HOME', $VpHome, 'User')
-        $env:VP_HOME = $VpHome
     }
+    $env:VP_HOME = $VpHome
     $env:VP_NODE_MANAGER = 'yes'
     $env:VP_PM_MANAGER = 'yes'
+    Sync-SessionPath -ExtraPaths $ExtraPaths
     if (-not (Get-Command 'vp' -ErrorAction SilentlyContinue)) {
         Write-Output '      Installing Vite+ toolchain...'
         $vpBootstrapScript = Join-Path $env:TEMP "vp-install-$(Get-Random).ps1"
@@ -292,12 +293,16 @@ function Set-TerminalAndCodeConfiguration {
     if (Test-Path -LiteralPath $codeSettings) {
         # Insert property textually because VS Code settings.json allows JSONC comments and trailing commas unsupported by PS 5.1 ConvertFrom-Json.
         $content = Get-Content -LiteralPath $codeSettings -Raw
-        if ($content -notmatch '"terminal\.integrated\.defaultProfile\.windows"') {
+        if ([string]::IsNullOrWhiteSpace($content)) {
+            $initialCode = "{\r\n  `"terminal.integrated.defaultProfile.windows`": `"PowerShell`"\r\n}\r\n"
+            [System.IO.File]::WriteAllText($codeSettings, $initialCode, $utf8NoBom)
+        }
+        elseif ($content -notmatch '"terminal\.integrated\.defaultProfile\.windows"') {
             $idx = $content.LastIndexOf('}')
             if ($idx -ge 0) {
                 $prefix = $content.Substring(0, $idx).TrimEnd(" `t`r`n")
                 $comma = ','
-                if ($prefix.EndsWith(',')) {
+                if ($prefix.EndsWith('{') -or $prefix.EndsWith(',')) {
                     $comma = ''
                 }
                 $new = "$prefix$comma`r`n  `"terminal.integrated.defaultProfile.windows`": `"PowerShell`"`r`n}`r`n"
@@ -354,7 +359,7 @@ if (Get-Module -ListAvailable -Name PSReadLine) {
         $pPath = Join-Path $pDir 'Microsoft.PowerShell_profile.ps1'
         if (Test-Path -LiteralPath $pPath) {
             $existing = Get-Content -LiteralPath $pPath -Raw
-            if ($existing.Trim() -ne $profileContent.Trim()) {
+            if ([string]::IsNullOrEmpty($existing) -or ($existing.Trim() -ne $profileContent.Trim())) {
                 [System.IO.File]::WriteAllText($pPath, $profileContent, $utf8NoBom)
             }
         }
@@ -397,6 +402,53 @@ if (Get-Module -ListAvailable -Name PSReadLine) {
     }
 }
 
+function Test-DirectoryContentEqual {
+    param(
+        [Parameter(Mandatory)]
+        [string]$SourceDir,
+        [Parameter(Mandatory)]
+        [string]$DestinationDir
+    )
+
+    if ((-not (Test-Path -LiteralPath $SourceDir -PathType Container)) -or (-not (Test-Path -LiteralPath $DestinationDir -PathType Container))) {
+        return $false
+    }
+
+    $srcFiles = @(
+        Get-ChildItem -LiteralPath $SourceDir -Recurse -File |
+            Where-Object { $_.Name -ne '.DS_Store' } |
+            Sort-Object FullName
+    )
+    $dstFiles = @(
+        Get-ChildItem -LiteralPath $DestinationDir -Recurse -File |
+            Where-Object { $_.Name -ne '.DS_Store' } |
+            Sort-Object FullName
+    )
+    if ($srcFiles.Count -ne $dstFiles.Count) {
+        return $false
+    }
+
+    $sep = [System.IO.Path]::DirectorySeparatorChar
+    $srcPrefix = $SourceDir.TrimEnd($sep) + $sep
+    $dstPrefix = $DestinationDir.TrimEnd($sep) + $sep
+    for ($i = 0; $i -lt $srcFiles.Count; $i++) {
+        $srcRel = $srcFiles[$i].FullName.Substring($srcPrefix.Length)
+        $dstRel = $dstFiles[$i].FullName.Substring($dstPrefix.Length)
+        if ($srcRel -ine $dstRel) {
+            return $false
+        }
+        if ($srcFiles[$i].Length -ne $dstFiles[$i].Length) {
+            return $false
+        }
+        $srcHash = (Get-FileHash -LiteralPath $srcFiles[$i].FullName -Algorithm SHA256).Hash
+        $dstHash = (Get-FileHash -LiteralPath $dstFiles[$i].FullName -Algorithm SHA256).Hash
+        if ($srcHash -ne $dstHash) {
+            return $false
+        }
+    }
+    return $true
+}
+
 function Sync-AntigravityPlugin {
     param(
         [Parameter(Mandatory)]
@@ -420,6 +472,9 @@ function Sync-AntigravityPlugin {
         $srcPlugin = Join-Path $RepoRoot "plugins\$pluginName"
         $destPlugin = Join-Path $pluginsDestRoot $pluginName
         if (Test-Path -LiteralPath $srcPlugin) {
+            if (Test-DirectoryContentEqual -SourceDir $srcPlugin -DestinationDir $destPlugin) {
+                continue
+            }
             if (Test-Path -LiteralPath $destPlugin) {
                 Remove-Item -LiteralPath $destPlugin -Recurse -Force -ErrorAction SilentlyContinue
             }
@@ -480,8 +535,26 @@ function Register-RepositoryCliPath {
         Write-Output "Added $cliBinDir to User PATH."
     }
 
-    $cleanPath = ($currentUserPath | Select-Object -Unique) -join ';'
-    [Environment]::SetEnvironmentVariable('Path', $cleanPath, 'User')
+    $seen = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+    $dedupedPath = [System.Collections.Generic.List[string]]::new()
+    foreach ($entry in $currentUserPath) {
+        if ($seen.Add($entry)) {
+            [void]$dedupedPath.Add($entry)
+        }
+    }
+    $cleanPath = $dedupedPath -join ';'
+
+    $prevTrimmed = ''
+    if ($rawUserPath) {
+        $prevTrimmed = @(
+            $rawUserPath -split ';' |
+                ForEach-Object { $_.Trim().TrimEnd('\') } |
+                Where-Object { $_ }
+        ) -join ';'
+    }
+    if ($cleanPath -cne $prevTrimmed) {
+        [Environment]::SetEnvironmentVariable('Path', $cleanPath, 'User')
+    }
 }
 
 Export-ModuleMember -Function @(

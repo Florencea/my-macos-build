@@ -2,7 +2,9 @@ import os from "node:os";
 import path from "node:path";
 import { z } from "zod";
 import { defineCommand } from "../lib/cli-framework.ts";
-import type { CommandContext } from "../lib/context.ts";
+import { formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
+import { isDirectory } from "../lib/fs-utils.ts";
+import { runSequentially } from "../lib/process.ts";
 
 const EmptyOptionsSchema = z.object({});
 const JsonValueSchema = z.json();
@@ -132,7 +134,11 @@ async function commitBackupFile(
       `feat: Update ${fileName} by ebk`,
     ]);
     if (commitRes.exitCode !== 0) {
-      ctx.stderr(`Error: git commit failed for ${fileName}\n`);
+      const detail = formatNativeErrorDetail(
+        [commitRes.stderr, commitRes.stdout],
+        commitRes.exitCode,
+      );
+      ctx.stderr(`Error: git commit failed for ${fileName} (${detail})\n`);
       return { ok: false, changed: false };
     }
     ctx.stdout(`Backup ${fileName} ok\n`);
@@ -141,32 +147,6 @@ async function commitBackupFile(
 
   ctx.stdout(`Backup ${fileName} ok (unchanged)\n`);
   return { ok: true, changed: false };
-}
-
-async function commitTargetsSequentially(
-  ctx: CommandContext,
-  configHome: string,
-  targetNames: readonly string[],
-): Promise<{ readonly hasError: boolean; readonly needPush: boolean }> {
-  let hasError = false;
-  let needPush = false;
-
-  const step = async (index: number): Promise<void> => {
-    const fileName = targetNames[index];
-    if (fileName === undefined) {
-      return;
-    }
-    const outcome = await commitBackupFile(ctx, configHome, fileName);
-    if (!outcome.ok) {
-      hasError = true;
-    } else if (outcome.changed) {
-      needPush = true;
-    }
-    await step(index + 1);
-  };
-
-  await step(0);
-  return { hasError, needPush };
 }
 
 /**
@@ -184,15 +164,7 @@ export const ebkCommand = defineCommand({
   supportsDryRun: true,
   async run({ ctx }) {
     const downloadsDir = resolveDownloadsDir(ctx);
-    let downloadsExists = false;
-    try {
-      const stat = await ctx.fs.stat(downloadsDir);
-      downloadsExists = stat.isDirectory();
-    } catch {
-      downloadsExists = false;
-    }
-
-    if (!downloadsExists) {
+    if (!(await isDirectory(downloadsDir, ctx.fs))) {
       return 0;
     }
 
@@ -244,10 +216,16 @@ export const ebkCommand = defineCommand({
           const formatted = tryFormatJsonText(rawText);
           if (formatted !== null) {
             await ctx.fs.writeFile(destPath, formatted, "utf8");
+            await Promise.all(matched.map((item) => ctx.fs.rm(item.fullPath, { force: true })));
           } else {
+            ctx.stderr(
+              `Warning: ${latest.name} is not valid JSON; copying raw file to ${rule.targetName}\n`,
+            );
             await moveFileCrossDevice(ctx.fs, latest.fullPath, destPath);
+            await Promise.all(
+              matched.slice(1).map((item) => ctx.fs.rm(item.fullPath, { force: true })),
+            );
           }
-          await Promise.all(matched.map((item) => ctx.fs.rm(item.fullPath, { force: true })));
         } else {
           await moveFileCrossDevice(ctx.fs, latest.fullPath, destPath);
           await Promise.all(
@@ -259,13 +237,22 @@ export const ebkCommand = defineCommand({
     );
 
     const targetNames = syncedTargets.filter((name): name is string => name !== undefined);
-    const commitSummary = await commitTargetsSequentially(ctx, configHome, targetNames);
-    let hasError = commitSummary.hasError;
+    let hasError = false;
+    let needPush = false;
+    await runSequentially(targetNames, async (fileName) => {
+      const outcome = await commitBackupFile(ctx, configHome, fileName);
+      if (!outcome.ok) {
+        hasError = true;
+      } else if (outcome.changed) {
+        needPush = true;
+      }
+    });
 
-    if (commitSummary.needPush) {
+    if (needPush) {
       const pushRes = await ctx.runner.exec("git", ["-C", configHome, "push", "-q"]);
       if (pushRes.exitCode !== 0) {
-        ctx.stderr("Error: git push failed\n");
+        const detail = formatNativeErrorDetail([pushRes.stderr, pushRes.stdout], pushRes.exitCode);
+        ctx.stderr(`Error: git push failed (${detail})\n`);
         hasError = true;
       }
     }

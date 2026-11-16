@@ -6,6 +6,7 @@ _ua() {
     '--skip-winget[Skip winget upgrade (Windows)]' \
     '--skip-vite[Skip Vite+ and Node.js LTS update]' \
     '--skip-git[Skip workspace Git repositories sync]' \
+    '--dry-run[Preview planned actions without applying changes]' \
     '(-h --help)'{-h,--help}'[Show help message]'
 }
 

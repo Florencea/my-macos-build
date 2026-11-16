@@ -3,6 +3,7 @@ import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { z } from "zod";
 import type {
   CommandExecOptions,
   CommandExecResult,
@@ -11,19 +12,47 @@ import type {
   PipeExecResult,
 } from "./context.ts";
 
-function buildSpawnEnv(
-  baseEnv: NodeJS.ProcessEnv,
+const ErrnoCodeSchema = z.object({ code: z.string() });
+
+export function buildSpawnEnv(
+  baseEnv: Readonly<Record<string, string | undefined>>,
   overrideEnv?: Readonly<Record<string, string | undefined>>,
+  platform: NodeJS.Platform = process.platform,
 ): NodeJS.ProcessEnv {
   if (overrideEnv === undefined) {
-    return baseEnv;
+    return { ...baseEnv };
   }
+
   const merged: NodeJS.ProcessEnv = { ...baseEnv };
+  if (platform !== "win32") {
+    for (const [key, value] of Object.entries(overrideEnv)) {
+      if (value === undefined) {
+        delete merged[key];
+      } else {
+        merged[key] = value;
+      }
+    }
+    return merged;
+  }
+
+  // On Windows, plain JS objects are case-sensitive unlike process.env; collapse existing case variants.
+  const keyIndex = new Map<string, string>();
+  for (const existingKey of Object.keys(merged)) {
+    keyIndex.set(existingKey.toLowerCase(), existingKey);
+  }
+
   for (const [key, value] of Object.entries(overrideEnv)) {
+    const lowerKey = key.toLowerCase();
+    const prevKey = keyIndex.get(lowerKey);
+    if (prevKey !== undefined && prevKey !== key) {
+      delete merged[prevKey];
+    }
     if (value === undefined) {
       delete merged[key];
+      keyIndex.delete(lowerKey);
     } else {
       merged[key] = value;
+      keyIndex.set(lowerKey, key);
     }
   }
   return merged;
@@ -91,16 +120,22 @@ export async function resolveExecutableInPath(
           .filter((ext) => ext !== "")
       : [""];
 
+  const hasExplicitExtension = path.extname(name) !== "";
   const candidates: string[] = [];
+
   for (const dir of pathDirs) {
     if (platform === "win32") {
       const exactCandidate = path.join(dir, name);
-      candidates.push(exactCandidate);
+      if (hasExplicitExtension) {
+        candidates.push(exactCandidate);
+      }
       for (const ext of extensions) {
         const withExt = name.toLowerCase().endsWith(ext.toLowerCase())
           ? exactCandidate
           : `${exactCandidate}${ext}`;
-        candidates.push(withExt);
+        if (!candidates.includes(withExt)) {
+          candidates.push(withExt);
+        }
       }
     } else {
       candidates.push(path.join(dir, name));
@@ -144,6 +179,11 @@ function applyAbortAndTimeout(child: ChildProcess, options?: CommandExecOptions)
   };
 }
 
+function isEpipeError(err: Error): boolean {
+  const parsed = ErrnoCodeSchema.safeParse(err);
+  return parsed.success && parsed.data.code === "EPIPE";
+}
+
 export function createNodeCommandRunner(): CommandRunner {
   const activeProcesses = new Set<ChildProcess>();
 
@@ -155,8 +195,18 @@ export function createNodeCommandRunner(): CommandRunner {
   }
 
   return {
-    async commandExists(name: string): Promise<boolean> {
-      const found = await resolveExecutableInPath(name, process.env, process.platform);
+    async commandExists(
+      name: string,
+      options?: {
+        readonly env?: Readonly<Record<string, string | undefined>>;
+        readonly platform?: NodeJS.Platform;
+      },
+    ): Promise<boolean> {
+      const found = await resolveExecutableInPath(
+        name,
+        options?.env ?? process.env,
+        options?.platform ?? process.platform,
+      );
       return found !== null;
     },
 
@@ -278,7 +328,22 @@ export function createNodeCommandRunner(): CommandRunner {
         });
 
         // Ignore EPIPE when downstream consumer finishes before upstream closes
-        rightProc.stdin.on("error", () => {});
+        rightProc.stdin.on("error", (err: Error) => {
+          if (!isEpipeError(err)) {
+            fail(err);
+          }
+        });
+        leftProc.stdout.on("error", (err: Error) => {
+          if (!isEpipeError(err)) {
+            fail(err);
+          }
+        });
+        rightProc.stdout.on("error", (err: Error) => {
+          if (!isEpipeError(err)) {
+            fail(err);
+          }
+        });
+
         leftProc.stdout.pipe(rightProc.stdin);
 
         leftProc.once("error", fail);
@@ -295,6 +360,10 @@ export function createNodeCommandRunner(): CommandRunner {
           clearRight();
           untrackRight();
           rightCode = code ?? 1;
+          leftProc.stdout.unpipe(rightProc.stdin);
+          if (leftCode === null) {
+            leftProc.stdout.destroy();
+          }
           finishIfReady();
         });
       });
@@ -342,7 +411,8 @@ export function createNodeCommandRunner(): CommandRunner {
 }
 
 /**
- * Executes an async mapper over `items` with a bounded worker pool while preserving input order.
+ * Executes an async mapper over `items` with a bounded worker pool while preserving input order
+ * and retaining `undefined` results.
  */
 export async function mapWithConcurrency<T, R>(
   items: readonly T[],
@@ -352,21 +422,37 @@ export async function mapWithConcurrency<T, R>(
   if (items.length === 0) {
     return [];
   }
-  const results: (R | undefined)[] = Array.from({ length: items.length });
+
+  const entries = items.map((item, index) => ({ item, index }));
+  const results: R[] = [];
   let nextIndex = 0;
 
-  const runWorker = async (): Promise<void> => {
-    const index = nextIndex;
-    nextIndex += 1;
-    const item = items[index];
-    if (item === undefined) {
-      return;
+  const runWorker = (): Promise<void> => {
+    const entry = entries[nextIndex];
+    if (entry === undefined) {
+      return Promise.resolve();
     }
-    results[index] = await mapper(item, index);
-    await runWorker();
+    nextIndex += 1;
+    return mapper(entry.item, entry.index).then((value) => {
+      results[entry.index] = value;
+      return runWorker();
+    });
   };
 
-  const workerCount = Math.max(1, Math.min(concurrencyLimit, items.length));
+  const workerCount = Math.max(1, Math.min(concurrencyLimit, entries.length));
   await Promise.all(Array.from({ length: workerCount }, () => runWorker()));
-  return results.filter((entry): entry is R => entry !== undefined);
+  return results;
+}
+
+/**
+ * Executes an async action sequentially over `items` without loop-await recursion boilerplate.
+ */
+export async function runSequentially<T>(
+  items: readonly T[],
+  action: (item: T, index: number) => Promise<void>,
+): Promise<void> {
+  await items.reduce<Promise<void>>(
+    (chain, item, index) => chain.then(() => action(item, index)),
+    Promise.resolve(),
+  );
 }

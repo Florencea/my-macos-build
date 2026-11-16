@@ -1,9 +1,10 @@
-import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { parseArgs } from "node:util";
 import { z } from "zod";
+import { formatErrorMessage } from "../cli/src/lib/context.ts";
+import { isDirectory } from "../cli/src/lib/fs-utils.ts";
 import { createNodeCommandRunner, resolveExecutableInPath } from "../cli/src/lib/process.ts";
 
 const VerifyShellArgsSchema = z.object({
@@ -12,7 +13,7 @@ const VerifyShellArgsSchema = z.object({
 });
 
 async function listFilesInDir(dirPath: string): Promise<string[]> {
-  if (!existsSync(dirPath)) {
+  if (!(await isDirectory(dirPath))) {
     return [];
   }
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
@@ -119,7 +120,7 @@ if (isEntryPoint) {
     fixMode = validated.data.fix;
     showHelp = validated.data.help;
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
+    const msg = formatErrorMessage(err);
     process.stderr.write(`Error: ${msg}\n`);
     process.exitCode = 1;
   }

@@ -3,17 +3,20 @@ import path from "node:path";
 import { z } from "zod";
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
+import { isDirectory, pathExists } from "../lib/fs-utils.ts";
 import {
   isWorkspaceNodeSyncTarget,
   resolveLatestPnpmVersionFromJson,
   syncGlobalOxfmt,
   withWindowsMachinePath,
 } from "../lib/node-toolchain.ts";
-import { mapWithConcurrency } from "../lib/process.ts";
+import { mapWithConcurrency, runSequentially } from "../lib/process.ts";
 
 const GIT_PULL_CONCURRENCY = 6;
 const PNPM_LOCK_CONFLICT_RE =
   /ERR_PNPM_OUTDATED_LOCKFILE|ERR_PNPM_FROZEN_LOCKFILE_WITH_OUTDATED_LOCKFILE/;
+const WINGET_NO_APPLICABLE_UPDATE_SIGNED = -1978335189;
+const WINGET_NO_APPLICABLE_UPDATE_UNSIGNED = 2316632107;
 
 const UaOptionsSchema = z.object({
   "skip-brew": z.boolean().default(false),
@@ -35,24 +38,6 @@ interface GitPullResult {
   readonly output: string;
 }
 
-async function pathExists(fsPort: CommandContext["fs"], targetPath: string): Promise<boolean> {
-  try {
-    await fsPort.stat(targetPath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function isDirectory(fsPort: CommandContext["fs"], dirPath: string): Promise<boolean> {
-  try {
-    const stats = await fsPort.stat(dirPath);
-    return stats.isDirectory();
-  } catch {
-    return false;
-  }
-}
-
 function writeNonEmptyLines(write: (text: string) => void, text: string): void {
   const trimmed = text.trimEnd();
   if (trimmed !== "") {
@@ -72,13 +57,13 @@ async function readNodeVersion(ctx: CommandContext): Promise<string> {
 async function runOsPackageUpgrade(
   ctx: CommandContext,
   options: z.infer<typeof UaOptionsSchema>,
-): Promise<void> {
+): Promise<boolean> {
   if (ctx.platform === "darwin" && !options["skip-brew"]) {
     await assertRequiredCommands(ctx, ["brew"]);
     const homeDir = ctx.env["HOME"] ?? os.homedir();
     if (ctx.dryRun) {
       ctx.stdout("[dry-run] brew upgrade && brew cleanup\n");
-      return;
+      return true;
     }
     const brewEnv = {
       HOMEBREW_NO_ENV_HINTS: "1",
@@ -86,9 +71,25 @@ async function runOsPackageUpgrade(
       HOMEBREW_AUTO_UPDATE_QUIET: "1",
       HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS: "1",
     };
-    await ctx.runner.spawnInteractive("brew", ["upgrade"], { cwd: homeDir, env: brewEnv });
-    await ctx.runner.spawnInteractive("brew", ["cleanup"], { cwd: homeDir, env: brewEnv });
-    return;
+    const upgradeCode = await ctx.runner.spawnInteractive("brew", ["upgrade"], {
+      cwd: homeDir,
+      env: brewEnv,
+      signal: ctx.signal,
+    });
+    if (upgradeCode !== 0) {
+      ctx.stderr(`Error: brew upgrade failed (exit code ${upgradeCode.toString()})\n`);
+      return false;
+    }
+    const cleanupCode = await ctx.runner.spawnInteractive("brew", ["cleanup"], {
+      cwd: homeDir,
+      env: brewEnv,
+      signal: ctx.signal,
+    });
+    if (cleanupCode !== 0) {
+      ctx.stderr(`Error: brew cleanup failed (exit code ${cleanupCode.toString()})\n`);
+      return false;
+    }
+    return true;
   }
 
   if (ctx.platform === "win32" && !options["skip-winget"]) {
@@ -97,38 +98,67 @@ async function runOsPackageUpgrade(
         ctx.stdout(
           "[dry-run] winget upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements\n",
         );
-        return;
+        return true;
       }
-      await ctx.runner.spawnInteractive("winget", [
-        "upgrade",
-        "--all",
-        "--include-unknown",
-        "--accept-package-agreements",
-        "--accept-source-agreements",
-      ]);
+      const wingetCode = await ctx.runner.spawnInteractive(
+        "winget",
+        [
+          "upgrade",
+          "--all",
+          "--include-unknown",
+          "--accept-package-agreements",
+          "--accept-source-agreements",
+        ],
+        { signal: ctx.signal },
+      );
+      if (
+        wingetCode !== 0 &&
+        wingetCode !== WINGET_NO_APPLICABLE_UPDATE_SIGNED &&
+        wingetCode !== WINGET_NO_APPLICABLE_UPDATE_UNSIGNED
+      ) {
+        ctx.stderr(`Error: winget upgrade failed (exit code ${wingetCode.toString()})\n`);
+        return false;
+      }
     }
   }
+  return true;
 }
 
-async function runViteToolchainUpgrade(ctx: CommandContext): Promise<void> {
+async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
   await assertRequiredCommands(ctx, ["vp"]);
   if (ctx.dryRun) {
     ctx.stdout(
       "[dry-run] vp upgrade && vp env install lts && vp env install pnpm@latest && sync global oxfmt\n",
     );
-    return;
+    return true;
   }
 
-  const upgradeRes = await ctx.runner.exec("vp", ["upgrade"]);
+  let hasError = false;
+  const upgradeRes = await ctx.runner.exec("vp", ["upgrade"], { signal: ctx.signal });
   writeNonEmptyLines(ctx.stdout, upgradeRes.stdout);
-  writeNonEmptyLines(ctx.stdout, upgradeRes.stderr);
+  if (upgradeRes.exitCode !== 0) {
+    writeNonEmptyLines(ctx.stderr, upgradeRes.stderr);
+    ctx.stderr(`Error: vp upgrade failed (exit code ${upgradeRes.exitCode.toString()})\n`);
+    hasError = true;
+  } else {
+    writeNonEmptyLines(ctx.stdout, upgradeRes.stderr);
+  }
 
   const oldNode = await readNodeVersion(ctx);
-  const installLtsRes = await ctx.runner.exec("vp", ["env", "install", "lts"]);
+  const installLtsRes = await ctx.runner.exec("vp", ["env", "install", "lts"], {
+    signal: ctx.signal,
+  });
   const newNode = await readNodeVersion(ctx);
 
   const nodeUpdated = oldNode !== "" && oldNode !== newNode;
-  if (nodeUpdated) {
+  if (installLtsRes.exitCode !== 0) {
+    writeNonEmptyLines(ctx.stderr, installLtsRes.stdout);
+    writeNonEmptyLines(ctx.stderr, installLtsRes.stderr);
+    ctx.stderr(
+      `Error: vp env install lts failed (exit code ${installLtsRes.exitCode.toString()})\n`,
+    );
+    hasError = true;
+  } else if (nodeUpdated) {
     writeNonEmptyLines(ctx.stdout, installLtsRes.stdout);
     writeNonEmptyLines(ctx.stdout, installLtsRes.stderr);
   }
@@ -154,10 +184,17 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<void> {
           "install",
           `pnpm@${latestPnpm.version}`,
         ]);
-        writeNonEmptyLines(ctx.stdout, pnpmInstallRes.stdout);
-        writeNonEmptyLines(ctx.stdout, pnpmInstallRes.stderr);
         if (pnpmInstallRes.exitCode === 0) {
+          writeNonEmptyLines(ctx.stdout, pnpmInstallRes.stdout);
+          writeNonEmptyLines(ctx.stdout, pnpmInstallRes.stderr);
           pnpmUpdated = true;
+        } else {
+          writeNonEmptyLines(ctx.stderr, pnpmInstallRes.stdout);
+          writeNonEmptyLines(ctx.stderr, pnpmInstallRes.stderr);
+          ctx.stderr(
+            `Error: vp env install pnpm@${latestPnpm.version} failed (exit code ${pnpmInstallRes.exitCode.toString()})\n`,
+          );
+          hasError = true;
         }
       }
     }
@@ -166,25 +203,36 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<void> {
   if (pnpmVersionLabel === "") {
     const pnpmFallbackRes = await ctx.runner.exec("vp", ["env", "install", "pnpm@latest"]);
     const combined = `${pnpmFallbackRes.stdout}\n${pnpmFallbackRes.stderr}`;
-    writeNonEmptyLines(ctx.stdout, pnpmFallbackRes.stdout);
-    writeNonEmptyLines(ctx.stdout, pnpmFallbackRes.stderr);
+    if (pnpmFallbackRes.exitCode === 0) {
+      writeNonEmptyLines(ctx.stdout, pnpmFallbackRes.stdout);
+      writeNonEmptyLines(ctx.stdout, pnpmFallbackRes.stderr);
+      pnpmUpdated = true;
+    } else {
+      writeNonEmptyLines(ctx.stderr, pnpmFallbackRes.stdout);
+      writeNonEmptyLines(ctx.stderr, pnpmFallbackRes.stderr);
+      ctx.stderr(
+        `Error: vp env install pnpm@latest failed (exit code ${pnpmFallbackRes.exitCode.toString()})\n`,
+      );
+      hasError = true;
+    }
     const match = combined.match(/pnpm\s+(v\d+\.\d+\.\d+(?:-[^\s.]*)?)/);
     if (match !== null && match[1] !== undefined) {
       pnpmVersionLabel = match[1];
     }
-    if (pnpmFallbackRes.exitCode === 0) {
-      pnpmUpdated = true;
-    }
   }
 
   if (nodeUpdated || pnpmUpdated) {
-    await ctx.runner.exec("vp", ["env", "clean"]);
+    const cleanRes = await ctx.runner.exec("vp", ["env", "clean"]);
+    if (cleanRes.exitCode !== 0) {
+      const detail = formatNativeErrorDetail([cleanRes.stderr, cleanRes.stdout], cleanRes.exitCode);
+      ctx.stderr(`Warning: vp env clean failed (${detail})\n`);
+    }
   }
 
   if (ctx.platform === "darwin") {
     const homeDir = ctx.env["HOME"] ?? os.homedir();
     const legacyOptDir = path.join(homeDir, ".local", "opt");
-    if (await isDirectory(ctx.fs, legacyOptDir)) {
+    if (await isDirectory(legacyOptDir, ctx.fs)) {
       const optEntries = await ctx.fs.readdir(legacyOptDir, { withFileTypes: true });
       await Promise.all(
         optEntries
@@ -206,6 +254,7 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<void> {
   } else {
     ctx.stdout("\n");
   }
+  return !hasError;
 }
 
 async function discoverGitRepos(
@@ -220,7 +269,7 @@ async function discoverGitRepos(
   const checks = await Promise.all(
     dirs.map(async (entry) => {
       const dir = path.join(projectsDir, entry.name);
-      return (await pathExists(fsPort, path.join(dir, ".git")))
+      return (await pathExists(path.join(dir, ".git"), fsPort))
         ? { name: entry.name, dir }
         : undefined;
     }),
@@ -299,15 +348,11 @@ async function syncWorkspaceGitRepos(ctx: CommandContext, projectsDir: string): 
 
   if (syncTargets.length > 0) {
     await assertRequiredCommands(ctx, ["vp"]);
-    const syncSequentially = async (index: number): Promise<void> => {
-      const target = syncTargets[index];
-      if (target === undefined) {
-        return;
-      }
+    await runSequentially(syncTargets, async (target) => {
       const depRes = await ctx.runner.exec(
         "vp",
         ["-C", target.dir, "install", "--frozen-lockfile", "--silent"],
-        { env: { VP_LOG: "error" } },
+        { env: { VP_LOG: "error" }, signal: ctx.signal },
       );
       if (depRes.exitCode !== 0) {
         const depErr = formatNativeErrorDetail([depRes.stderr, depRes.stdout], depRes.exitCode);
@@ -321,9 +366,7 @@ async function syncWorkspaceGitRepos(ctx: CommandContext, projectsDir: string): 
       } else {
         ctx.stdout(`Sync ${target.name} dependencies ok\n`);
       }
-      await syncSequentially(index + 1);
-    };
-    await syncSequentially(0);
+    });
   }
 
   if (failedCount === 0) {
@@ -375,16 +418,12 @@ export const uaCommand = defineCommand({
     const effectiveCtx = await withWindowsMachinePath(ctx);
     const projectsDir = path.dirname(effectiveCtx.repoRoot);
 
-    await runOsPackageUpgrade(effectiveCtx, options);
+    const osOk = await runOsPackageUpgrade(effectiveCtx, options);
+    const viteOk = options["skip-vite"] ? true : await runViteToolchainUpgrade(effectiveCtx);
+    const gitExit = options["skip-git"]
+      ? 0
+      : await syncWorkspaceGitRepos(effectiveCtx, projectsDir);
 
-    if (!options["skip-vite"]) {
-      await runViteToolchainUpgrade(effectiveCtx);
-    }
-
-    if (!options["skip-git"]) {
-      return await syncWorkspaceGitRepos(effectiveCtx, projectsDir);
-    }
-
-    return 0;
+    return osOk && viteOk && gitExit === 0 ? 0 : 1;
   },
 });

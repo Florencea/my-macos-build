@@ -113,7 +113,7 @@ lsof -nP -iTCP:3000 -sTCP:LISTEN
 
 ---
 
-## 7. Extensionless Shebang Symlink Resolution (`cli/*.ps1`)
+## 7. Extensionless Shebang Symlink Resolution (`~/.local/bin/*`)
 
 When executing extensionless PowerShell scripts symlinked into `~/.local/bin/<cmd>` via `#!/usr/bin/env -S pwsh -NoLogo -NoProfile`, `$PSScriptRoot` is empty. Always resolve physical paths via `ResolveLinkTarget($true)`:
 

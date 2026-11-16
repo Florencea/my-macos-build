@@ -10,12 +10,11 @@ import {
   type CommandContext,
 } from "../lib/context.ts";
 import {
-  downloadYtDlpSegment,
   formatMediaTimestamp,
   parseTimeToSeconds,
   resolveLocalMediaFile,
   resolveYtDlpBrowser,
-  type YtDlpSegmentResult,
+  withMediaInputSource,
 } from "../lib/media.ts";
 import { resolveExecutableInPath } from "../lib/process.ts";
 
@@ -35,18 +34,23 @@ const PE_SUBSYSTEM_MIN_SIZE = 0x5e;
 const PE_CONSOLE_SUBSYSTEM = 3;
 
 async function isCliCapableGifski(ctx: CommandContext): Promise<boolean> {
-  const hasGifski = await ctx.runner.commandExists("gifski");
-  if (!hasGifski) {
-    return false;
-  }
-
   if (ctx.platform !== "win32") {
-    return true;
+    return await ctx.runner.commandExists("gifski", { env: ctx.env, platform: ctx.platform });
   }
 
-  // On Windows, a GUI-subsystem gifski binary cannot accept piped stdin.
+  // On Windows, resolve the actual executable (.exe/.cmd) and verify console PE subsystem.
   try {
-    const exePath = await resolveExecutableInPath("gifski", ctx.env, ctx.platform);
+    let exePath = await resolveExecutableInPath("gifski", ctx.env, ctx.platform);
+    if (exePath === null) {
+      const hasCommand = await ctx.runner.commandExists("gifski", {
+        env: ctx.env,
+        platform: ctx.platform,
+      });
+      if (!hasCommand) {
+        return false;
+      }
+      exePath = await resolveExecutableInPath("gifski", process.env, ctx.platform);
+    }
     if (exePath === null) {
       return false;
     }
@@ -181,42 +185,72 @@ export const mkgifCommand = defineCommand({
       return 0;
     }
 
-    let tempSegment: YtDlpSegmentResult | null = null;
-    let unregisterSignal: (() => void) | null = null;
+    const ytHeight = selectYtDlpMaxHeight(width);
+    const ytFormat = `bestvideo[height<=${ytHeight.toString()}]/best[height<=${ytHeight.toString()}]/bestvideo/best`;
 
-    try {
-      let inputSource = localFile ?? inputArg;
-      let ffmpegStart = startText;
+    return await withMediaInputSource(
+      ctx,
+      {
+        inputArg,
+        localFile,
+        startSecond: startSec,
+        endSecond: startSec + durSec,
+        format: ytFormat,
+        browser: options.browser,
+        forceKeyframesAtCuts: true,
+      },
+      async ({ isLocal: resolvedIsLocal, filePath: inputSource }) => {
+        const ffmpegStart = resolvedIsLocal ? startText : "0";
 
-      if (!isLocal) {
-        const ytHeight = selectYtDlpMaxHeight(width);
-        const ytFormat = `bestvideo[height<=${ytHeight.toString()}]/best[height<=${ytHeight.toString()}]/bestvideo/best`;
-        tempSegment = await downloadYtDlpSegment(ctx, {
-          inputSource: inputArg,
-          startSecond: startSec,
-          endSecond: startSec + durSec,
-          format: ytFormat,
-          browser: options.browser,
-        });
-        const segmentDir = tempSegment.tempDir;
-        unregisterSignal = ctx.onSignalCleanup(() => {
-          void ctx.fs.rm(segmentDir, { recursive: true, force: true }).catch(() => {});
-        });
-        inputSource = tempSegment.filePath;
-        ffmpegStart = "0";
-      }
+        if (useGifski) {
+          const gifskiArgs = ["-q", "-Q", quality.toString(), "-W", width.toString()];
+          if (options.lossy) {
+            gifskiArgs.push("--lossy-quality", "75");
+          }
+          gifskiArgs.push("-o", resolvedOutput, "-");
 
-      if (useGifski) {
-        const gifskiArgs = ["-q", "-Q", quality.toString(), "-W", width.toString()];
-        if (options.lossy) {
-          gifskiArgs.push("--lossy-quality", "75");
-        }
-        gifskiArgs.push("-o", resolvedOutput, "-");
+          const pipeRes = await ctx.runner.pipe(
+            {
+              command: "ffmpeg",
+              args: [
+                "-y",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-ss",
+                ffmpegStart,
+                "-i",
+                inputSource,
+                "-t",
+                durationText,
+                "-vf",
+                `fps=${fps.toString()},scale=${width.toString()}:-2:flags=lanczos,format=yuv420p`,
+                "-f",
+                "yuv4mpegpipe",
+                "-",
+              ],
+            },
+            {
+              command: "gifski",
+              args: gifskiArgs,
+            },
+            { signal: ctx.signal },
+          );
 
-        const pipeRes = await ctx.runner.pipe(
-          {
-            command: "ffmpeg",
-            args: [
+          if (pipeRes.leftExitCode !== 0 || pipeRes.rightExitCode !== 0) {
+            const exitCode =
+              pipeRes.rightExitCode !== 0 ? pipeRes.rightExitCode : pipeRes.leftExitCode;
+            const detail = formatNativeErrorDetail([pipeRes.stderr, pipeRes.stdout], exitCode);
+            throw new ExecutionError(
+              `Error: GIF generation failed (ffmpeg=${pipeRes.leftExitCode.toString()}, gifski=${pipeRes.rightExitCode.toString()}: ${detail})`,
+              exitCode,
+            );
+          }
+        } else {
+          const filterComplex = `[0:v] fps=${fps.toString()},scale=${width.toString()}:-1:flags=lanczos,split [a][b];[a] palettegen=max_colors=256:stats_mode=diff [p];[b][p] paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle`;
+          const paletteRes = await ctx.runner.exec(
+            "ffmpeg",
+            [
               "-y",
               "-hide_banner",
               "-loglevel",
@@ -227,70 +261,36 @@ export const mkgifCommand = defineCommand({
               inputSource,
               "-t",
               durationText,
-              "-vf",
-              `fps=${fps.toString()},scale=${width.toString()}:-2:flags=lanczos,format=yuv420p`,
-              "-f",
-              "yuv4mpegpipe",
-              "-",
+              "-filter_complex",
+              filterComplex,
+              resolvedOutput,
             ],
-          },
-          {
-            command: "gifski",
-            args: gifskiArgs,
-          },
-        );
-
-        if (pipeRes.leftExitCode !== 0 || pipeRes.rightExitCode !== 0) {
-          const exitCode =
-            pipeRes.rightExitCode !== 0 ? pipeRes.rightExitCode : pipeRes.leftExitCode;
-          const detail = formatNativeErrorDetail([pipeRes.stderr, pipeRes.stdout], exitCode);
-          throw new ExecutionError(
-            `Error: GIF generation failed (ffmpeg=${pipeRes.leftExitCode.toString()}, gifski=${pipeRes.rightExitCode.toString()}: ${detail})`,
-            exitCode,
+            { signal: ctx.signal },
           );
-        }
-      } else {
-        const filterComplex = `[0:v] fps=${fps.toString()},scale=${width.toString()}:-1:flags=lanczos,split [a][b];[a] palettegen=max_colors=256:stats_mode=diff [p];[b][p] paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle`;
-        const paletteRes = await ctx.runner.exec("ffmpeg", [
-          "-y",
-          "-hide_banner",
-          "-loglevel",
-          "error",
-          "-ss",
-          ffmpegStart,
-          "-i",
-          inputSource,
-          "-t",
-          durationText,
-          "-filter_complex",
-          filterComplex,
-          resolvedOutput,
-        ]);
 
-        if (paletteRes.exitCode !== 0) {
-          const detail = formatNativeErrorDetail(
-            [paletteRes.stderr, paletteRes.stdout],
-            paletteRes.exitCode,
-          );
-          throw new ExecutionError(`Error: GIF generation failed (${detail})`, paletteRes.exitCode);
+          if (paletteRes.exitCode !== 0) {
+            const detail = formatNativeErrorDetail(
+              [paletteRes.stderr, paletteRes.stdout],
+              paletteRes.exitCode,
+            );
+            throw new ExecutionError(
+              `Error: GIF generation failed (${detail})`,
+              paletteRes.exitCode,
+            );
+          }
         }
-      }
 
-      try {
-        const outStats = await ctx.fs.stat(resolvedOutput);
-        if (outStats.isFile()) {
-          ctx.stdout(`${outputName} ${formatByteSize(outStats.size)}\n`);
+        try {
+          const outStats = await ctx.fs.stat(resolvedOutput);
+          if (outStats.isFile()) {
+            ctx.stdout(`${outputName} ${formatByteSize(outStats.size)}\n`);
+          }
+        } catch {
+          // Output size reporting is best-effort after a zero exit code.
         }
-      } catch {
-        // Output size reporting is best-effort after a zero exit code.
-      }
 
-      return 0;
-    } finally {
-      unregisterSignal?.();
-      if (tempSegment !== null) {
-        await ctx.fs.rm(tempSegment.tempDir, { recursive: true, force: true }).catch(() => {});
-      }
-    }
+        return 0;
+      },
+    );
   },
 });
