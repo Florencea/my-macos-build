@@ -87,13 +87,14 @@ Fetch indexes first, then retrieve only the targeted `.md` section via `webread`
 
 ## 5. Three-Stage Mandatory Verification Pipeline
 
-In repositories providing `tests/verify.ps1`, run the unified single-command gate:
+In repositories providing tiered PowerShell verification scripts (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`), run the fast Tier 1 script during active editing and the full gate (`vpr agent:verify:gate`) before completion:
 
 ```powershell
-pwsh -NoLogo -NoProfile -File tests/verify.ps1 --fix --scope ps --path cli/command.ps1
+pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1 --fix --path cli/command.ps1
+pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 --path cli/command.ps1
 ```
 
-In standalone workspaces without `tests/verify.ps1`, execute all three stages directly:
+In standalone workspaces without repository verification scripts, execute all three stages directly:
 
 ```powershell
 $targetFile = 'cli/command.ps1'

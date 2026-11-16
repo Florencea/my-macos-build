@@ -11,7 +11,9 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 $cliDir = Join-Path $repoRoot 'cli'
 $commonModule = Join-Path $cliDir 'helpers' 'CliCommon.psm1'
+$verifyModule = Join-Path $PSScriptRoot 'VerifyCommon.psm1'
 Import-Module -Name $commonModule -Force
+Import-Module -Name $verifyModule -Force
 
 $script:passed = 0
 $script:failed = 0
@@ -146,33 +148,104 @@ try {
 
     # 3. Contract tests for all cli/*.ps1 scripts (--help and unknown option rejection)
     $cliScripts = @(Get-ChildItem -LiteralPath $cliDir -Filter '*.ps1' -File | Sort-Object Name)
+    $contractTasks = [System.Collections.Generic.List[object]]::new()
+    foreach ($scriptFile in $cliScripts) {
+        $contractTasks.Add(@{
+                Label     = "help:$($scriptFile.Name)"
+                FileName  = 'pwsh'
+                Arguments = @('-NoLogo', '-NoProfile', '-File', $scriptFile.FullName, '--help')
+            })
+        $contractTasks.Add(@{
+                Label     = "bad:$($scriptFile.Name)"
+                FileName  = 'pwsh'
+                Arguments = @('-NoLogo', '-NoProfile', '-File', $scriptFile.FullName, '--unknown-flag-test')
+            })
+    }
+
+    $contractByLabel = @{}
+    foreach ($res in @(Invoke-ParallelProcessTask -Tasks @($contractTasks) -ThrottleLimit 8)) {
+        $contractByLabel[$res.Label] = $res
+    }
+
+    $scriptResults = @{}
     foreach ($scriptFile in $cliScripts) {
         $cmdName = $scriptFile.BaseName
-        $helpRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $scriptFile.FullName, '--help')
+        $helpRes = $contractByLabel["help:$($scriptFile.Name)"]
+        $badRes = $contractByLabel["bad:$($scriptFile.Name)"]
+        $scriptResults[$scriptFile.Name] = [PSCustomObject]@{
+            Help = $helpRes
+            Bad  = $badRes
+        }
+
         Assert-Condition -Name "$($scriptFile.Name) --help exit 0" -Condition ($helpRes.ExitCode -eq 0) -Detail "exit $($helpRes.ExitCode): $($helpRes.Stderr)"
         Assert-Condition -Name "$($scriptFile.Name) --help outputs usage" -Condition ($helpRes.Stdout -match [regex]::Escape($cmdName))
 
-        $badRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $scriptFile.FullName, '--unknown-flag-test')
         Assert-Condition -Name "$($scriptFile.Name) rejects unknown option" -Condition ($badRes.ExitCode -ne 0) -Detail 'expected non-zero exit'
         Assert-Condition -Name "$($scriptFile.Name) writes unknown option error to stderr" -Condition ($badRes.Stderr -match 'Unknown option')
     }
 
-    # 4. rea.ps1 safety guard: refuse deleting directory with multiple .mkv files
-    if (Get-Command 'ffmpeg' -ErrorAction SilentlyContinue) {
-        $reaDir = Join-Path $tempTestDir 'multi_mkv'
+    # Prepare parallel subprocess checks for sections 4, 5, 12, and 13
+    $fastVerifyScript = Join-Path $repoRoot 'tests' 'verify-ps-fast.ps1'
+    $badContractScript = Join-Path $tempTestDir 'bad_contract.ps1'
+    $badScriptText = @'
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+$p = $env:Path
+Write-Output $p
+Stop-Job -Name 'nonexistent' -Force -ErrorAction SilentlyContinue
+'@ -replace "`r`n", "`n"
+    [System.IO.File]::WriteAllText($badContractScript, ($badScriptText.TrimEnd() + "`n"), [System.Text.UTF8Encoding]::new($false))
+
+    $extraTasks = [System.Collections.Generic.List[object]]::new()
+    $hasFfmpeg = [bool](Get-Command 'ffmpeg' -ErrorAction SilentlyContinue)
+    $reaDir = Join-Path $tempTestDir 'multi_mkv'
+    if ($hasFfmpeg) {
         New-Item -ItemType Directory -Force -Path $reaDir | Out-Null
         [System.IO.File]::WriteAllText((Join-Path $reaDir 'a.mkv'), '')
         [System.IO.File]::WriteAllText((Join-Path $reaDir 'b.mkv'), '')
         [System.IO.File]::WriteAllText((Join-Path $reaDir 'a.cht.ass'), '')
+        $extraTasks.Add(@{
+                Label     = 'rea:multi-mkv'
+                FileName  = 'pwsh'
+                Arguments = @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'rea.ps1'), $reaDir)
+            })
+    }
+    $extraTasks.Add(@{
+            Label     = 'webread:bad-max'
+            FileName  = 'pwsh'
+            Arguments = @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'webread.ps1'), '--max-chars', 'abc', 'https://example.com')
+        })
+    $extraTasks.Add(@{
+            Label     = 'verify:up'
+            FileName  = 'pwsh'
+            Arguments = @('-NoLogo', '-NoProfile', '-File', $fastVerifyScript, '--path', (Join-Path $cliDir 'up.ps1'))
+        })
+    $extraTasks.Add(@{
+            Label     = 'verify:bad-contract'
+            FileName  = 'pwsh'
+            Arguments = @('-NoLogo', '-NoProfile', '-File', $fastVerifyScript, '--path', $badContractScript)
+        })
+    $extraTasks.Add(@{
+            Label     = 'upnpmv:positional'
+            FileName  = 'pwsh'
+            Arguments = @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'upnpmv.ps1'), 'extra-arg')
+        })
 
-        $reaRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'rea.ps1'), $reaDir)
+    $extraByLabel = @{}
+    foreach ($res in @(Invoke-ParallelProcessTask -Tasks @($extraTasks) -ThrottleLimit 6)) {
+        $extraByLabel[$res.Label] = $res
+    }
+
+    # 4. rea.ps1 safety guard: refuse deleting directory with multiple .mkv files
+    if ($hasFfmpeg) {
+        $reaRes = $extraByLabel['rea:multi-mkv']
         Assert-Condition -Name 'rea.ps1 rejects directory with multiple mkv files' -Condition ($reaRes.ExitCode -ne 0)
         Assert-Condition -Name 'rea.ps1 outputs multiple mkv error' -Condition ($reaRes.Stderr -match 'Multiple \.mkv files')
         Assert-Condition -Name 'rea.ps1 preserves directory when aborted' -Condition (Test-Path -LiteralPath $reaDir -PathType Container)
     }
 
     # 5. webread.ps1 rejects invalid --max-chars cleanly
-    $webreadBadMax = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir 'webread.ps1'), '--max-chars', 'abc', 'https://example.com')
+    $webreadBadMax = $extraByLabel['webread:bad-max']
     Assert-Condition -Name 'webread.ps1 rejects non-integer --max-chars' -Condition ($webreadBadMax.ExitCode -ne 0)
     Assert-Condition -Name 'webread.ps1 reports --max-chars validation error' -Condition ($webreadBadMax.Stderr -match 'Invalid integer for --max-chars')
 
@@ -333,36 +406,25 @@ try {
     }
 
     foreach ($mediaScript in @('mkclp.ps1', 'mkgif.ps1')) {
-        $mediaHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir $mediaScript), '--help')
+        $mediaHelp = $scriptResults[$mediaScript].Help
         Assert-Condition -Name "$mediaScript --help documents default browser as chrome" -Condition ($mediaHelp.Stdout -match 'default:\s*chrome') -Detail "got '$($mediaHelp.Stdout)'"
     }
 
-    # 12. verify.ps1 --path target mode and AST contract regression tests
-    $verifyScript = Join-Path $repoRoot 'tests' 'verify.ps1'
-    $upVerifyRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $verifyScript, '--scope', 'ps', '--path', (Join-Path $cliDir 'up.ps1'))
-    Assert-Condition -Name 'verify.ps1 --scope ps --path cli/up.ps1 passes' -Condition ($upVerifyRes.ExitCode -eq 0) -Detail "exit $($upVerifyRes.ExitCode): $($upVerifyRes.Stderr)"
+    # 12. verify-ps-fast.ps1 --path target mode and AST contract regression tests
+    $upVerifyRes = $extraByLabel['verify:up']
+    Assert-Condition -Name 'verify-ps-fast.ps1 --path cli/up.ps1 passes' -Condition ($upVerifyRes.ExitCode -eq 0) -Detail "exit $($upVerifyRes.ExitCode): $($upVerifyRes.Stderr)"
 
-    $badContractScript = Join-Path $tempTestDir 'bad_contract.ps1'
-    $badScriptText = @'
-Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
-$p = $env:Path
-Write-Output $p
-Stop-Job -Name 'nonexistent' -Force -ErrorAction SilentlyContinue
-'@ -replace "`r`n", "`n"
-    [System.IO.File]::WriteAllText($badContractScript, ($badScriptText.TrimEnd() + "`n"), [System.Text.UTF8Encoding]::new($false))
-    $badVerifyRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $verifyScript, '--scope', 'ps', '--path', $badContractScript)
-    Assert-Condition -Name 'verify.ps1 AST contract rejects invalid Stop-Job -Force and $env:Path' -Condition (($badVerifyRes.ExitCode -ne 0) -and ($badVerifyRes.Stderr -match 'invalid parameter -Force') -and ($badVerifyRes.Stderr -match 'uppercase \$env:PATH')) -Detail "stderr: $($badVerifyRes.Stderr)"
+    $badVerifyRes = $extraByLabel['verify:bad-contract']
+    Assert-Condition -Name 'verify-ps-fast.ps1 AST contract rejects invalid Stop-Job -Force and $env:Path' -Condition (($badVerifyRes.ExitCode -ne 0) -and ($badVerifyRes.Stderr -match 'invalid parameter -Force') -and ($badVerifyRes.Stderr -match 'uppercase \$env:PATH')) -Detail "stderr: $($badVerifyRes.Stderr)"
 
     # 13. upnpmv.ps1 and pnpm helper contract tests
-    $upnpmvPath = Join-Path $cliDir 'upnpmv.ps1'
-    $upnpmvHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $upnpmvPath, '--help')
+    $upnpmvHelp = $scriptResults['upnpmv.ps1'].Help
     Assert-Condition -Name 'upnpmv.ps1 --help exits 0 and documents packageManager' -Condition (($upnpmvHelp.ExitCode -eq 0) -and ($upnpmvHelp.Stdout -match 'packageManager')) -Detail "got '$($upnpmvHelp.Stdout)'"
 
-    $upnpmvUnknown = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $upnpmvPath, '--unknown-flag')
+    $upnpmvUnknown = $scriptResults['upnpmv.ps1'].Bad
     Assert-Condition -Name 'upnpmv.ps1 rejects unknown flag' -Condition (($upnpmvUnknown.ExitCode -ne 0) -and ($upnpmvUnknown.Stderr -match 'Unknown option')) -Detail "got '$($upnpmvUnknown.Stderr)'"
 
-    $upnpmvPositional = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $upnpmvPath, 'extra-arg')
+    $upnpmvPositional = $extraByLabel['upnpmv:positional']
     Assert-Condition -Name 'upnpmv.ps1 rejects unexpected positional arg' -Condition (($upnpmvPositional.ExitCode -ne 0) -and ($upnpmvPositional.Stderr -match 'Unexpected argument')) -Detail "got '$($upnpmvPositional.Stderr)'"
 
     $pnpmRemoteJson = '{"package_managers":{"pnpm":[{"version":"12.20.0","latest":false,"installed":false},{"version":"12.21.0","latest":true,"installed":true}]}}'

@@ -56,11 +56,12 @@ description: Rules for managing, authoring, and verifying cross-platform PowerSh
 - **Pre-Execution Live Documentation & Introspection Gate**:
   - Before using unfamiliar cmdlets, provider parameters, or `.NET` methods in `cli/*.ps1`, verify via `Get-Command <Cmdlet> -Syntax` (or `[Namespace.Type].GetMethods()`), or follow the two-stage GitHub Raw lookup in `modern-powershell`.
   - Always pass `-LiteralPath` (never `-Path`) to file cmdlets (`Test-Path`, `Get-Item`, `Get-ChildItem`, `Get-Content`, `Copy-Item`, `Move-Item`, `Remove-Item`, `Resolve-Path`) unless wildcard globbing is explicitly required, and pass resolved absolute paths to `.NET` `[System.IO.File]` methods.
-- **Unified Formatting, AST & Compatibility Gate (`tests/verify.ps1`)**:
+- **Tiered Formatting, AST & Static Analysis Gates (`tests/verify-ps-*.ps1`)**:
   - Maintain `PSScriptAnalyzerSettings.psd1` at the repository root (synced with `plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1`).
-  - Run the single-command gate after modifying any `cli/*.ps1` or `cli/helpers/*.psm1` file (enforces `Invoke-Formatter` Stroustrup style + LF + UTF-8 without BOM, `Parser::ParseFile`, AST contract checks for Cmdlet parameters / `$env:PATH` / `-LiteralPath` / Tier A header, `PSUseCompatibleCommands` / `PSUseCompatibleTypes`, and `Invoke-ScriptAnalyzer -IncludeSuppressed` = **0 violations**):
+  - Run the Tier 1 inner-loop script after modifying any `cli/*.ps1` or `cli/helpers/*.psm1` file (enforces Stroustrup formatting + LF + UTF-8 without BOM, `Parser::ParseFile`, AST contract checks for Cmdlet parameters / `$env:PATH` / `-LiteralPath` / Tier A header):
     ```powershell
-    pwsh -NoLogo -NoProfile -File tests/verify.ps1 --fix --scope ps --path cli/<command>.ps1
+    pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1 --fix --path cli/<command>.ps1
     ```
+  - Before finalizing changes, run the full Tier 3 gate (`vpr agent:verify:gate`, or `tests/verify-ps-lint.ps1` + `tests/verify-ps-compat.ps1` + `tests/cli.Tests.ps1` without `node_modules`) enforcing `Invoke-ScriptAnalyzer -IncludeSuppressed` = **0 violations** and cross-platform `PSUseCompatibleCommands` / `PSUseCompatibleTypes`.
   - Strictly prohibited to add `[Diagnostics.CodeAnalysis.SuppressMessageAttribute(...)]`, pass `-ExcludeRule`, or weaken `PSScriptAnalyzerSettings.psd1`.
   - Eliminate all cmdlet aliases (`select`, `where`, `dir`, `echo`, `gc`), empty catch blocks, `Write-Host` calls (use `Write-Output`, `[Console]::Error.WriteLine`, or `$Host.UI.Write` for terminal spinners, noting that `PSAvoidUsingWriteHost` also forbids `[Console]::Write`), single-line brace blocks, plural function nouns, uninitialized parallel runspace variables (`$using:`), and unapproved verbs.

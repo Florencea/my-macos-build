@@ -9,15 +9,15 @@ Cross-platform workstation bootstrap, PowerShell CLI utilities, dotfiles, and An
 - `scripts/install.sh`: Idempotent macOS Zsh installer for packages, dotfiles, CLI symlinks, and Antigravity plugins.
 - `scripts/install.ps1`: Dual-version Windows PowerShell 5.1 and PowerShell 7+ installer for WinGet packages, profiles, PATH registration, and Antigravity plugins.
 - `configs/`: Browser extension exports (`ubol-config.json`, `stylus.json`, `tampermonkey.json`, `immersive-translate-config.json`), global Git hooks, and shell configs.
-- `tests/`: Repository verification entry point (`tests/verify.ps1`), zero-dependency PowerShell 7 CLI tests (`tests/cli.Tests.ps1`), and Vitest suites (`tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
+- `tests/`: Tiered PowerShell/Shell verifiers (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`, `tests/verify-shell.ps1`) backed by `tests/VerifyCommon.psm1`, zero-dependency PowerShell 7 CLI tests (`tests/cli.Tests.ps1`), and Vitest suites (`tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
 
 ## Bootstrap and Verification Commands
 
 - macOS setup: `zsh scripts/install.sh`
 - Windows setup: `powershell -ExecutionPolicy Bypass -File scripts/install.ps1`
-- Full verification gate via Vite+ (`typecheck`, `vp check`, Vitest `unit`/`contract`, PowerShell AST/PSScriptAnalyzer, shell syntax/`shfmt`, `cli.Tests.ps1`): `vpr agent:verify:gate`
-- Standalone verification gate (works without `node_modules`): `pwsh -NoLogo -NoProfile -File tests/verify.ps1`
-- Tiered TypeScript/Vitest checks: `vpr agent:verify:inner`, `vpr agent:verify:unit`, `vp test --project unit`, `vp test --project contract`
+- Full verification gate via Vite+ (Tier 1–3 DAG with caching): `vpr agent:verify:gate`
+- Tiered Vite+ checks: `vpr agent:verify:inner` (Tier 1), `vpr agent:verify:ps -- --fix --path <file>` (PowerShell Tier 1), `vpr agent:verify:unit` (Tier 2), `vp test --project unit`, `vp test --project contract`
+- Standalone verification scripts (work without `node_modules`): `pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1`, `tests/verify-shell.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`, `tests/cli.Tests.ps1`
 
 ## Extension Configs
 

@@ -4,14 +4,14 @@ This document outlines the core architecture map, git delivery invariants, and m
 
 ## 1. Quick Architecture Map
 
-| Layer                    | Path                                            | Responsibility                                                                                                                                                    |
-| :----------------------- | :---------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **CLI Tools**            | `cli/*.ps1`, `cli/helpers/`                     | Cross-platform PowerShell 7 (`pwsh`) CLI commands, shared helper module (`CliCommon.psm1`), and TypeScript helpers                                                |
-| **Dotfiles & Configs**   | `configs/bash/`, `configs/zsh/`, `configs/git/` | Shell configuration parity, completions, global Git hooks, and browser extension backups                                                                          |
-| **Antigravity Plugins**  | `plugins/`                                      | Cross-platform toolchain, platform & web stack bundles (`common-modern-tools`, `macos-modern-tools`, `windows-modern-tools`, `modern-web-stack`)                  |
-| **Installers**           | `scripts/install.sh`, `scripts/install.ps1`     | Idempotent OS environment setup (Zsh for macOS; PowerShell 5.1 & 7+ compatible for Windows 11)                                                                    |
-| **Verification & Tests** | `tests/`                                        | Unified formatting/AST/lint verifier (`verify.ps1`), PowerShell contract tests (`cli.Tests.ps1`), and Vitest suites (`webread-parser.test.ts`, `plugins.test.ts`) |
-| **Workspace Rules**      | `.agents/rules/`                                | Modular project rules triggered via file globbing                                                                                                                 |
+| Layer                    | Path                                            | Responsibility                                                                                                                                                                                                                                                         |
+| :----------------------- | :---------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CLI Tools**            | `cli/*.ps1`, `cli/helpers/`                     | Cross-platform PowerShell 7 (`pwsh`) CLI commands, shared helper module (`CliCommon.psm1`), and TypeScript helpers                                                                                                                                                     |
+| **Dotfiles & Configs**   | `configs/bash/`, `configs/zsh/`, `configs/git/` | Shell configuration parity, completions, global Git hooks, and browser extension backups                                                                                                                                                                               |
+| **Antigravity Plugins**  | `plugins/`                                      | Cross-platform toolchain, platform & web stack bundles (`common-modern-tools`, `macos-modern-tools`, `windows-modern-tools`, `modern-web-stack`)                                                                                                                       |
+| **Installers**           | `scripts/install.sh`, `scripts/install.ps1`     | Idempotent OS environment setup (Zsh for macOS; PowerShell 5.1 & 7+ compatible for Windows 11)                                                                                                                                                                         |
+| **Verification & Tests** | `tests/`                                        | Tiered PowerShell/Shell verifiers (`verify-ps-fast.ps1`, `verify-ps-lint.ps1`, `verify-ps-compat.ps1`, `verify-shell.ps1`), shared module (`VerifyCommon.psm1`), CLI contract tests (`cli.Tests.ps1`), and Vitest suites (`webread-parser.test.ts`, `plugins.test.ts`) |
+| **Workspace Rules**      | `.agents/rules/`                                | Modular project rules triggered via file globbing                                                                                                                                                                                                                      |
 
 ---
 
@@ -21,17 +21,16 @@ This document outlines the core architecture map, git delivery invariants, and m
   - The repository enforces a global Git hook (`~/.config/git/hooks/pre-commit`) that rejects direct commits by AI agents (`ANTIGRAVITY_AGENT=1`).
   - Agents must NEVER execute `git commit` or `git push`.
   - Mandatory workflow:
-    1. Apply code changes and verify syntax/AST (or run `vpr agent:verify:gate` / `pwsh -NoLogo -NoProfile -File tests/verify.ps1`).
-    2. Format modified files (`shfmt` for shell, `vpx oxfmt` for markdown/JSON/code, `Invoke-Formatter` for PowerShell).
+    1. Apply code changes and verify syntax/AST (or run `vpr agent:verify:gate`, or standalone `tests/verify-ps-*.ps1` + `tests/verify-shell.ps1` + `tests/cli.Tests.ps1` without `node_modules`).
+    2. Format modified files (`shfmt` for shell, `vpx oxfmt` for markdown/JSON/code, `verify-ps-fast.ps1 --fix` for PowerShell).
     3. Stage changes using defensive explicit paths: `git add <files>`.
     4. Output the exact `git commit -m "type(scope): concise imperative description"` command for manual execution by the user.
 - **Agent-Friendly Execution Formats**:
   - Prefer token-efficient structured flags and Vite+ verification tiers:
-    - Inner loop (Tier 1): `vpr agent:verify:inner` (`vpr typecheck && vp check`); standalone linting via `vp lint -f agent`
-    - Unit tier (Tier 2): `vpr agent:verify:unit` (Tier 1 + `vp test run --project unit --reporter=tap-flat --no-color`)
-    - Full gate (Tier 3): `vpr agent:verify:gate` (Tier 2 + `contract` tests + parallel PowerShell/Shell checks + `cli.Tests.ps1`), or `pwsh -NoLogo -NoProfile -File tests/verify.ps1` without `node_modules`
+    - Inner loop (Tier 1): `vpr agent:verify:inner` (`typecheck`, `vp check`, `ps:fast`, `lint:shell`); PowerShell single-file loop via `vpr agent:verify:ps -- --fix --path <file>`; standalone linting via `vp lint -f agent`
+    - Unit tier (Tier 2): `vpr agent:verify:unit` (Tier 1 + `ps:lint:cli`, `ps:lint:install`, Vitest `unit`)
+    - Full gate (Tier 3): `vpr agent:verify:gate` (Tier 2 + `ps:compat:cli`, `ps:compat:install`, Vitest `contract`, `cli.Tests.ps1`)
     - Vitest projects: `vp test --project unit` (`webread-parser.test.ts`), `vp test --project contract` (`plugins.test.ts`)
-    - Staged pre-check: `vp staged`
     - Dependencies: `vp pm list --json` (or `vp list --json`), `vp outdated --format json`
 - **Project Root Settings SSOT**:
   - Maintain `PSScriptAnalyzerSettings.psd1` directly in the project root (synchronized with `plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1`) for zero-configuration VS Code discovery.
