@@ -1,7 +1,36 @@
+import { Resolver } from "node:dns/promises";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import type { z } from "zod";
+
+export interface DnsQueryInput {
+  readonly domain: string;
+  readonly recordType: "A" | "AAAA";
+  readonly serverIp?: string;
+  readonly timeoutMs?: number;
+}
+
+export interface DnsPort {
+  resolve(input: DnsQueryInput): Promise<readonly string[]>;
+}
+
+export function createNodeDnsPort(): DnsPort {
+  return {
+    async resolve(input: DnsQueryInput): Promise<readonly string[]> {
+      const resolver = new Resolver({
+        timeout: input.timeoutMs ?? 2000,
+        tries: 1,
+      });
+      if (input.serverIp !== undefined && input.serverIp !== "") {
+        resolver.setServers([input.serverIp]);
+      }
+      return input.recordType === "A"
+        ? await resolver.resolve4(input.domain)
+        : await resolver.resolve6(input.domain);
+    },
+  };
+}
 
 export interface CommandExecOptions {
   readonly cwd?: string;
@@ -53,6 +82,7 @@ export interface CommandContext {
   readonly runner: CommandRunner;
   readonly fs: typeof fs;
   readonly fetch: typeof globalThis.fetch;
+  readonly dns: DnsPort;
   readonly env: Readonly<Record<string, string | undefined>>;
   readonly cwd: string;
   readonly platform: NodeJS.Platform;
@@ -146,6 +176,7 @@ export function resolveRepoRoot(fromDir = import.meta.dirname): string {
 
 export interface NodeContextOverrides {
   readonly runner: CommandRunner;
+  readonly dns?: DnsPort;
   readonly repoRoot?: string;
   readonly dryRun?: boolean;
   readonly onSignalCleanup?: (handler: () => void) => () => void;
@@ -160,6 +191,7 @@ export function createNodeCommandContext(overrides: NodeContextOverrides): Comma
     runner: overrides.runner,
     fs,
     fetch: globalThis.fetch,
+    dns: overrides.dns ?? createNodeDnsPort(),
     env: process.env,
     cwd: process.cwd(),
     platform: process.platform,

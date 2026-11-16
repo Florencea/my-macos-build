@@ -9,7 +9,7 @@ import {
   sanitizePromptInjection,
   stripHiddenElements,
   stripJunkTags,
-} from "../cli/helpers/webread-parser.ts";
+} from "../cli/src/lib/webread-parser.ts";
 
 describe("webread-parser", () => {
   it("sanitizes HTML comments and common prompt injection markers", () => {
@@ -234,7 +234,8 @@ describe("webread-parser", () => {
       import.meta.dirname,
       "..",
       "cli",
-      "helpers",
+      "src",
+      "lib",
       "webread-parser.ts",
     );
     const stdout = execFileSync(

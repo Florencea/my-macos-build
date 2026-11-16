@@ -60,14 +60,14 @@ At the start of a new conversation:
 
 ### Stage 2: Independent Commands Batch 1 (`webread`, `mdig`, `rea`, `ebk`)
 
-- [ ] Move `cli/helpers/webread-parser.ts` to `cli/src/lib/webread-parser.ts` (keep 1-line re-export at `cli/helpers/webread-parser.ts` until Stage 5)
-- [ ] Implement `cli/src/commands/webread.ts` (in-process `parseWebContent`, `--llms`, `--jina`, GitHub blob rewrite, `--raw`, `--max-chars`, `-o/--output`)
-- [ ] Implement `cli/src/commands/mdig.ts` (pure `node:dns/promises` `Resolver` parallel `A`/`AAAA` queries)
-- [ ] Implement `cli/src/commands/rea.ts` (single `.mkv` + `.ass` pairing validation, root/multi-mkv guards, `--dry-run`)
-- [ ] Implement `cli/src/commands/ebk.ts` (6 extension backup rules, native JSON formatting, dedup cleanup, Git commit/push, `--dry-run`)
-- [ ] Register all Stage 2 commands in `cli/src/registry.ts` and run `vpr cli:sync-bins`
-- [ ] Add `tests/unit/webread.test.ts`, `tests/unit/mdig.test.ts`, `tests/unit/rea.test.ts`, and `tests/unit/ebk.test.ts`
-- [ ] Verify `vpr agent:verify:gate` passes
+- [x] Move `cli/helpers/webread-parser.ts` to `cli/src/lib/webread-parser.ts` (keep 1-line re-export at `cli/helpers/webread-parser.ts` until Stage 5)
+- [x] Implement `cli/src/commands/webread.ts` (in-process `parseWebContent`, `--llms`, `--jina`, GitHub blob rewrite, `--raw`, `--max-chars`, `-o/--output`)
+- [x] Implement `cli/src/commands/mdig.ts` (pure `node:dns/promises` `Resolver` parallel `A`/`AAAA` queries)
+- [x] Implement `cli/src/commands/rea.ts` (single `.mkv` + `.ass` pairing validation, root/multi-mkv guards, `--dry-run`)
+- [x] Implement `cli/src/commands/ebk.ts` (6 extension backup rules, native JSON formatting, dedup cleanup, Git commit/push, `--dry-run`)
+- [x] Register all Stage 2 commands in `cli/src/registry.ts` and run `vpr cli:sync-bins`
+- [x] Add `tests/unit/webread.test.ts`, `tests/unit/mdig.test.ts`, `tests/unit/rea.test.ts`, and `tests/unit/ebk.test.ts`
+- [x] Verify `vpr agent:verify:gate` passes
 
 ### Stage 3: Media Pipelines and GitHub Cloner (`media.ts`, `mkclp`, `mkgif`, `clall`)
 
@@ -110,8 +110,8 @@ Every section from `tests/cli.Tests.ps1` must have an equivalent checked Vitest 
 - [x] **Sec 1 (`CliCommon.psm1`)**: `Test-RequiredCommand` (present vs missing) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
 - [ ] **Sec 2 (`Symlink Resolution`)**: Extensionless symlink `--help` exits 0 and prints usage from outside repo -> `tests/contract/cli-bins.test.ts` (`Stage 1` verified for `mmb`, remaining 11 in `Stage 4`)
 - [ ] **Sec 3 (`All cli/*.ps1 --help & unknown option`)**: All 12 commands `--help` exit 0 + usage, `--unknown-flag-test` exit non-zero + stderr -> `tests/contract/cli-commands.test.ts` (`Stage 4`)
-- [ ] **Sec 4 (`rea.ps1`)**: Reject directory with multiple `.mkv` files without deleting directory -> `tests/unit/rea.test.ts` (`Stage 2`)
-- [ ] **Sec 5 (`webread.ps1`)**: Reject non-integer `--max-chars` -> `tests/unit/webread.test.ts` (`Stage 2`)
+- [x] **Sec 4 (`rea.ps1`)**: Reject directory with multiple `.mkv` files without deleting directory -> `tests/unit/rea.test.ts` (`Stage 2`)
+- [x] **Sec 5 (`webread.ps1`)**: Reject non-integer `--max-chars` -> `tests/unit/webread.test.ts` (`Stage 2`)
 - [ ] **Sec 6 (`NodeToolchain.psm1`)**: `Resolve-PlaywrightSyncStep` (6 cases: `test:setup`, unrelated `test:setup`, `@vitest/browser-playwright`, `playwright-core`, `.cmd` shim, non-Playwright) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
 - [ ] **Sec 7 (`NodeToolchain.psm1`)**: `Resolve-ProjectVerifyStep` (4 cases: `agent:verify:gate`, fallback `unit -> build -> e2e`, unit-only, empty) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
 - [ ] **Sec 8 (`NodeToolchain.psm1`)**: `Test-WorkspaceNodeSyncTarget` (5 cases: missing `package.json`, missing lockfile, fresh clone missing `node_modules`, unchanged with `node_modules`, updated with `node_modules`) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)

@@ -1,12 +1,17 @@
 import fs from "node:fs/promises";
-import type { CommandContext, CommandRunner } from "../../cli/src/lib/context.ts";
+import type { CommandContext, CommandRunner, DnsPort } from "../../cli/src/lib/context.ts";
 
 export function createTestContext(overrides?: {
   readonly runner?: Partial<CommandRunner>;
+  readonly fetch?: typeof globalThis.fetch;
+  readonly dns?: DnsPort;
   readonly env?: Readonly<Record<string, string | undefined>>;
+  readonly cwd?: string;
+  readonly platform?: NodeJS.Platform;
   readonly isTty?: boolean;
   readonly dryRun?: boolean;
   readonly repoRoot?: string;
+  readonly now?: () => Date;
 }): {
   readonly ctx: CommandContext;
   readonly getStdout: () => string;
@@ -22,14 +27,18 @@ export function createTestContext(overrides?: {
     cleanupActiveProcesses: () => {},
     ...overrides?.runner,
   };
+  const defaultDns: DnsPort = overrides?.dns ?? {
+    resolve: async () => [],
+  };
 
   const ctx: CommandContext = {
     runner: defaultRunner,
     fs,
-    fetch: globalThis.fetch,
+    fetch: overrides?.fetch ?? globalThis.fetch,
+    dns: defaultDns,
     env: overrides?.env ?? {},
-    cwd: "/workspace",
-    platform: "darwin",
+    cwd: overrides?.cwd ?? "/workspace",
+    platform: overrides?.platform ?? "darwin",
     repoRoot: overrides?.repoRoot ?? "/workspace/my-machine-build",
     stdout: (text: string) => {
       out += text;
@@ -39,7 +48,7 @@ export function createTestContext(overrides?: {
     },
     isTty: overrides?.isTty ?? false,
     dryRun: overrides?.dryRun ?? false,
-    now: () => new Date("2026-01-01T00:00:00Z"),
+    now: overrides?.now ?? (() => new Date("2026-01-01T00:00:00Z")),
     onSignalCleanup: () => () => {},
   };
 
