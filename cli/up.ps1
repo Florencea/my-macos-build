@@ -531,7 +531,22 @@ if ($ncuRaw -and $ncuRaw.Trim() -notin @('', '{}')) {
     $ncuMap = $ncuRaw | ConvertFrom-Json -AsHashtable
 }
 
-$hasDepUpdates = ($isVitePlus -and $vpToolchainUpgraded) -or ($ncuMap.Count -gt 0)
+$hasLockfileDrift = $false
+if (Test-Path -LiteralPath 'pnpm-lock.yaml' -PathType Leaf) {
+    $prevVpLog = $env:VP_LOG
+    $env:VP_LOG = 'error'
+    try {
+        & vp install --frozen-lockfile --lockfile-only --silent >$null 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            $hasLockfileDrift = $true
+        }
+    }
+    finally {
+        $env:VP_LOG = $prevVpLog
+    }
+}
+
+$hasDepUpdates = ($isVitePlus -and $vpToolchainUpgraded) -or ($ncuMap.Count -gt 0) -or $hasLockfileDrift
 
 $isGitHubActionsRepo = Test-Path -LiteralPath 'actions' -PathType Container
 $ciFiles = $isGitHubActionsRepo ? @() : @(Find-GitHubActionFile)
@@ -622,19 +637,21 @@ $createdCommits = [System.Collections.Generic.List[string]]::new()
 try {
     if ($hasDepUpdates) {
         if ($isVitePlus) {
-            $failedStep = 'vp migrate --no-interactive'
-            Invoke-Step -Message 'Aligning Vite+ toolchain (vp migrate)' -Exe 'vp' -Arguments @('migrate', '--no-interactive')
+            if ($vpToolchainUpgraded -or ($ncuMap.Count -gt 0)) {
+                $failedStep = 'vp migrate --no-interactive'
+                Invoke-Step -Message 'Aligning Vite+ toolchain (vp migrate)' -Exe 'vp' -Arguments @('migrate', '--no-interactive')
 
-            $failedStep = 'Restore GitHub Actions workflows'
-            Restore-GitHubWorkflow -IncludeActionsDir:$isGitHubActionsRepo
+                $failedStep = 'Restore GitHub Actions workflows'
+                Restore-GitHubWorkflow -IncludeActionsDir:$isGitHubActionsRepo
 
-            if ($ncuMap.Count -gt 0) {
-                $failedStep = 'vpx npm-check-updates'
-                Invoke-Step -Message 'Updating packages (NCU)' -Exe 'vpx' -Arguments @('-s', 'npm-check-updates@latest', '-u', '-t', 'minor')
+                if ($ncuMap.Count -gt 0) {
+                    $failedStep = 'vpx npm-check-updates'
+                    Invoke-Step -Message 'Updating packages (NCU)' -Exe 'vpx' -Arguments @('-s', 'npm-check-updates@latest', '-u', '-t', 'minor')
+                }
+
+                $failedStep = 'vp pm pkg fix'
+                Invoke-Step -Message 'Normalizing manifest (vp pm pkg fix)' -Exe 'vp' -Arguments @('pm', 'pkg', 'fix')
             }
-
-            $failedStep = 'vp pm pkg fix'
-            Invoke-Step -Message 'Normalizing manifest (vp pm pkg fix)' -Exe 'vp' -Arguments @('pm', 'pkg', 'fix')
 
             $failedStep = 'vp install'
             Invoke-Step -Message 'Syncing dependencies (vp install)' -Exe 'vp' -Arguments @('install')
@@ -646,10 +663,10 @@ try {
             if ($ncuMap.Count -gt 0) {
                 $failedStep = 'vpx npm-check-updates'
                 Invoke-Step -Message 'Updating packages (NCU)' -Exe 'vpx' -Arguments @('-s', 'npm-check-updates@latest', '-u', '-t', 'minor')
-            }
 
-            $failedStep = 'vp pm pkg fix'
-            Invoke-Step -Message 'Normalizing manifest (vp pm pkg fix)' -Exe 'vp' -Arguments @('pm', 'pkg', 'fix')
+                $failedStep = 'vp pm pkg fix'
+                Invoke-Step -Message 'Normalizing manifest (vp pm pkg fix)' -Exe 'vp' -Arguments @('pm', 'pkg', 'fix')
+            }
 
             if (Test-Path -LiteralPath 'node_modules' -PathType Container) {
                 Move-Item -LiteralPath 'node_modules' -Destination '.node_modules.bak' -Force
@@ -740,8 +757,16 @@ try {
 
         $depPendingChanges = (& git status --porcelain 2>$null)
         if ($depPendingChanges) {
-            $depCommitTitle = ($depCount -eq 1) ? "chore(deps): update dependency $singlePkgSummary" : "chore(deps): update dependencies ($depCount packages)"
-            $depCommitMsg = ($depCount -eq 1) ? $depCommitTitle : ($depCommitTitle + "`n`nUpgrade details:`n" + ($depCommitBodyLines -join "`n"))
+            $depCommitTitle = if ($depCount -eq 0) {
+                'chore: sync lockfile'
+            }
+            elseif ($depCount -eq 1) {
+                "chore(deps): update dependency $singlePkgSummary"
+            }
+            else {
+                "chore(deps): update dependencies ($depCount packages)"
+            }
+            $depCommitMsg = ($depCount -le 1) ? $depCommitTitle : ($depCommitTitle + "`n`nUpgrade details:`n" + ($depCommitBodyLines -join "`n"))
 
             $failedStep = 'git commit (deps)'
             & git add -A

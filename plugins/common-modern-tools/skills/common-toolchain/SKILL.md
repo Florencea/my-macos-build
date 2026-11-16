@@ -65,9 +65,10 @@ Execute code inspection along five progressive levels to conserve context:
 Treat local helper scripts as black boxes: always run `<command> --help` or `<command> -h` before composition.
 
 - `webread`: Clean, token-efficient webpage and document reader (`webread --help`).
-- `ua`: Complete system upgrade (Homebrew/winget, Node.js LTS via Vite+, workspace git sync).
+- `ua`: Complete system upgrade (Homebrew/winget, Vite+, Node.js LTS, pnpm, workspace git sync).
 - `up`: Automated Node.js / Vite+ dependency upgrade and verification gatekeeper.
 - `unodev`: Synchronize `engines.node` in `package.json` across workspace.
+- `upnpmv`: Pin and upgrade `packageManager` (`pnpm`) in `package.json` and sync lockfile/dependencies across workspace.
 - `mkclp`: Video clipping with hardware stream copy and cookie support.
 - `mkgif`: High-quality GIF generator via `gifski` or FFmpeg palette.
 - `mdig`: Parallel multi-server DNS query and grouping.

@@ -353,6 +353,48 @@ Stop-Job -Name 'nonexistent' -Force -ErrorAction SilentlyContinue
     [System.IO.File]::WriteAllText($badContractScript, ($badScriptText.TrimEnd() + "`n"), [System.Text.UTF8Encoding]::new($false))
     $badVerifyRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $verifyScript, '--scope', 'ps', '--path', $badContractScript)
     Assert-Condition -Name 'verify.ps1 AST contract rejects invalid Stop-Job -Force and $env:Path' -Condition (($badVerifyRes.ExitCode -ne 0) -and ($badVerifyRes.Stderr -match 'invalid parameter -Force') -and ($badVerifyRes.Stderr -match 'uppercase \$env:PATH')) -Detail "stderr: $($badVerifyRes.Stderr)"
+
+    # 13. upnpmv.ps1 and pnpm helper contract tests
+    $upnpmvPath = Join-Path $cliDir 'upnpmv.ps1'
+    $upnpmvHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $upnpmvPath, '--help')
+    Assert-Condition -Name 'upnpmv.ps1 --help exits 0 and documents packageManager' -Condition (($upnpmvHelp.ExitCode -eq 0) -and ($upnpmvHelp.Stdout -match 'packageManager')) -Detail "got '$($upnpmvHelp.Stdout)'"
+
+    $upnpmvUnknown = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $upnpmvPath, '--unknown-flag')
+    Assert-Condition -Name 'upnpmv.ps1 rejects unknown flag' -Condition (($upnpmvUnknown.ExitCode -ne 0) -and ($upnpmvUnknown.Stderr -match 'Unknown option')) -Detail "got '$($upnpmvUnknown.Stderr)'"
+
+    $upnpmvPositional = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $upnpmvPath, 'extra-arg')
+    Assert-Condition -Name 'upnpmv.ps1 rejects unexpected positional arg' -Condition (($upnpmvPositional.ExitCode -ne 0) -and ($upnpmvPositional.Stderr -match 'Unexpected argument')) -Detail "got '$($upnpmvPositional.Stderr)'"
+
+    $pnpmRemoteJson = '{"package_managers":{"pnpm":[{"version":"12.20.0","latest":false,"installed":false},{"version":"12.21.0","latest":true,"installed":true}]}}'
+    $resolvedPnpm = Resolve-LatestPnpmVersionFromJson -JsonText $pnpmRemoteJson
+    Assert-Condition -Name 'Resolve-LatestPnpmVersionFromJson picks latest entry' -Condition (($null -ne $resolvedPnpm) -and ($resolvedPnpm.Version -eq '12.21.0') -and ($resolvedPnpm.Installed -eq $true))
+    Assert-Condition -Name 'Resolve-LatestPnpmVersionFromJson returns null for invalid json' -Condition ($null -eq (Resolve-LatestPnpmVersionFromJson -JsonText '{bad json'))
+
+    $specPnpm = Get-PnpmPackageManagerSpec -PackageManagerField 'pnpm@12.21.0+sha256.deadbeef'
+    Assert-Condition -Name 'Get-PnpmPackageManagerSpec parses pnpm version and strips hash' -Condition ($specPnpm.IsPnpm -and (-not $specPnpm.IsOther) -and ($specPnpm.Version -eq '12.21.0'))
+
+    $specBlank = Get-PnpmPackageManagerSpec -PackageManagerField '   '
+    Assert-Condition -Name 'Get-PnpmPackageManagerSpec treats blank as unset' -Condition ((-not $specBlank.IsPnpm) -and (-not $specBlank.IsOther))
+
+    $specNpm = Get-PnpmPackageManagerSpec -PackageManagerField 'npm@11.0.0'
+    Assert-Condition -Name 'Get-PnpmPackageManagerSpec marks non-pnpm packageManager as IsOther' -Condition ((-not $specNpm.IsPnpm) -and $specNpm.IsOther)
+
+    $pnpmRepo = Join-Path $tempTestDir 'repo_pnpm_lock'
+    New-Item -ItemType Directory -Force -Path (Join-Path $pnpmRepo '.git') | Out-Null
+    [System.IO.File]::WriteAllText((Join-Path $pnpmRepo 'package.json'), '{"name":"a"}')
+    [System.IO.File]::WriteAllText((Join-Path $pnpmRepo 'pnpm-lock.yaml'), '')
+    Assert-Condition -Name 'Test-PnpmWorkspaceProject accepts git repo with pnpm-lock.yaml' -Condition (Test-PnpmWorkspaceProject -RepoPath $pnpmRepo)
+
+    $otherPmRepo = Join-Path $tempTestDir 'repo_other_pm'
+    New-Item -ItemType Directory -Force -Path (Join-Path $otherPmRepo '.git') | Out-Null
+    [System.IO.File]::WriteAllText((Join-Path $otherPmRepo 'package.json'), '{"name":"b","packageManager":"npm@11.0.0"}')
+    [System.IO.File]::WriteAllText((Join-Path $otherPmRepo 'pnpm-lock.yaml'), '')
+    Assert-Condition -Name 'Test-PnpmWorkspaceProject rejects repo pinned to non-pnpm packageManager' -Condition (-not (Test-PnpmWorkspaceProject -RepoPath $otherPmRepo))
+
+    $noGitRepo = Join-Path $tempTestDir 'repo_no_git'
+    New-Item -ItemType Directory -Force -Path $noGitRepo | Out-Null
+    [System.IO.File]::WriteAllText((Join-Path $noGitRepo 'package.json'), '{"name":"c","packageManager":"pnpm@12.21.0"}')
+    Assert-Condition -Name 'Test-PnpmWorkspaceProject rejects directory without .git' -Condition (-not (Test-PnpmWorkspaceProject -RepoPath $noGitRepo))
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {

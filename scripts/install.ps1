@@ -573,6 +573,7 @@ else {
 if (Get-Command 'vp' -ErrorAction SilentlyContinue) {
     & vp env default lts
     & vp env install lts
+    & vp env install pnpm@latest
 
     $vpPkgJson = Join-Path $vpHome 'current\node_modules\vite-plus\package.json'
     if (-not (Test-Path -LiteralPath $vpPkgJson -PathType Leaf)) {

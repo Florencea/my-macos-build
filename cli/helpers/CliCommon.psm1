@@ -474,6 +474,135 @@ function Resolve-GitHubRepoList {
     return @($items)
 }
 
+function Resolve-LatestPnpmVersionFromJson {
+    param(
+        [AllowNull()]
+        [string]$JsonText
+    )
+
+    if ([string]::IsNullOrWhiteSpace($JsonText)) {
+        return $null
+    }
+
+    try {
+        $parsed = $JsonText | ConvertFrom-Json -AsHashtable -ErrorAction Stop
+    }
+    catch {
+        return $null
+    }
+
+    if (($parsed -isnot [hashtable]) -or (-not $parsed.ContainsKey('package_managers'))) {
+        return $null
+    }
+
+    $pmMap = $parsed['package_managers']
+    if (($pmMap -isnot [hashtable]) -or (-not $pmMap.ContainsKey('pnpm'))) {
+        return $null
+    }
+
+    $entries = @($pmMap['pnpm'])
+    foreach ($entry in $entries) {
+        if ($entry -isnot [hashtable]) {
+            continue
+        }
+        $ver = [string]($entry['version'] ?? '')
+        if ([bool]($entry['latest'] ?? $false) -and (-not [string]::IsNullOrWhiteSpace($ver))) {
+            return [PSCustomObject]@{
+                Version   = $ver.Trim()
+                Installed = [bool]($entry['installed'] ?? $false)
+            }
+        }
+    }
+
+    foreach ($entry in $entries) {
+        if ($entry -isnot [hashtable]) {
+            continue
+        }
+        $ver = [string]($entry['version'] ?? '')
+        if (-not [string]::IsNullOrWhiteSpace($ver)) {
+            return [PSCustomObject]@{
+                Version   = $ver.Trim()
+                Installed = [bool]($entry['installed'] ?? $false)
+            }
+        }
+    }
+
+    return $null
+}
+
+function Get-PnpmPackageManagerSpec {
+    param(
+        [AllowNull()]
+        [string]$PackageManagerField
+    )
+
+    if ([string]::IsNullOrWhiteSpace($PackageManagerField)) {
+        return [PSCustomObject]@{
+            IsPnpm  = $false
+            IsOther = $false
+            Raw     = ''
+            Version = ''
+        }
+    }
+
+    $trimmed = $PackageManagerField.Trim()
+    if ($trimmed -match '^pnpm@([^\s+]+)(?:\+.*)?$') {
+        return [PSCustomObject]@{
+            IsPnpm  = $true
+            IsOther = $false
+            Raw     = $trimmed
+            Version = $Matches[1]
+        }
+    }
+
+    return [PSCustomObject]@{
+        IsPnpm  = $false
+        IsOther = $true
+        Raw     = $trimmed
+        Version = ''
+    }
+}
+
+function Test-PnpmWorkspaceProject {
+    param(
+        [Parameter(Mandatory)]
+        [string]$RepoPath
+    )
+
+    if (-not (Test-Path -LiteralPath (Join-Path $RepoPath '.git'))) {
+        return $false
+    }
+
+    $pkgPath = Join-Path $RepoPath 'package.json'
+    if (-not (Test-Path -LiteralPath $pkgPath -PathType Leaf)) {
+        return $false
+    }
+
+    try {
+        $pkg = Get-Content -LiteralPath $pkgPath -Raw | ConvertFrom-Json -AsHashtable -ErrorAction Stop
+    }
+    catch {
+        return $false
+    }
+
+    if ($pkg -isnot [hashtable]) {
+        return $false
+    }
+
+    $pmSpec = Get-PnpmPackageManagerSpec -PackageManagerField ([string]($pkg['packageManager'] ?? ''))
+    if ($pmSpec.IsOther) {
+        return $false
+    }
+    if ($pmSpec.IsPnpm) {
+        return $true
+    }
+
+    return (
+        (Test-Path -LiteralPath (Join-Path $RepoPath 'pnpm-lock.yaml') -PathType Leaf) -or
+        (Test-Path -LiteralPath (Join-Path $RepoPath 'pnpm-workspace.yaml') -PathType Leaf)
+    )
+}
+
 Export-ModuleMember -Function @(
     'Resolve-CliScriptDirectory',
     'Test-RequiredCommand',
@@ -481,11 +610,14 @@ Export-ModuleMember -Function @(
     'ConvertTo-ValidatedInt',
     'Format-ByteSize',
     'Format-NativeErrorDetail',
+    'Get-PnpmPackageManagerSpec',
     'Import-WindowsMachinePath',
     'Invoke-YtDlpSegment',
     'Resolve-GitHubRepoList',
+    'Resolve-LatestPnpmVersionFromJson',
     'Resolve-PlaywrightSyncStep',
     'Resolve-ProjectVerifyStep',
     'Resolve-YtDlpBrowser',
+    'Test-PnpmWorkspaceProject',
     'Test-WorkspaceNodeSyncTarget'
 )

@@ -1,0 +1,7 @@
+#compdef upnpmv
+
+_upnpmv() {
+  _message 'no arguments'
+}
+
+_upnpmv "$@"

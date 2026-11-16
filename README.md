@@ -4,7 +4,7 @@ Cross-platform workstation bootstrap, PowerShell CLI utilities, dotfiles, and An
 
 ## Repository Overview
 
-- `cli/` (`clall.ps1`, `ebk.ps1`, `mdig.ps1`, `mkclp.ps1`, `mkgif.ps1`, `mmb.ps1`, `rea.ps1`, `ua.ps1`, `unodev.ps1`, `up.ps1`, `webread.ps1`): Cross-platform PowerShell 7 tools backed by `cli/helpers/CliCommon.psm1` and `cli/helpers/webread-parser.ts`.
+- `cli/` (`clall.ps1`, `ebk.ps1`, `mdig.ps1`, `mkclp.ps1`, `mkgif.ps1`, `mmb.ps1`, `rea.ps1`, `ua.ps1`, `unodev.ps1`, `up.ps1`, `upnpmv.ps1`, `webread.ps1`): Cross-platform PowerShell 7 tools backed by `cli/helpers/CliCommon.psm1` and `cli/helpers/webread-parser.ts`.
 - `plugins/`: Antigravity plugins synced to `~/.gemini/config/plugins/` (`common-modern-tools`, `macos-modern-tools`, `windows-modern-tools`, `modern-web-stack`).
 - `scripts/install.sh`: Idempotent macOS Zsh installer for packages, dotfiles, CLI symlinks, and Antigravity plugins.
 - `scripts/install.ps1`: Dual-version Windows PowerShell 5.1 and PowerShell 7+ installer for WinGet packages, profiles, PATH registration, and Antigravity plugins.

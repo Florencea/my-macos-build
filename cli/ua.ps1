@@ -32,7 +32,7 @@ Import-Module -Name (Join-Path $scriptDir 'helpers' 'CliCommon.psm1') -Force
 
 function Show-Help {
     Write-Output @'
-ua: Upgrade system packages (Homebrew / winget), update Node.js (Active LTS via Vite+), and sync git repositories
+ua: Upgrade system packages (Homebrew / winget), update Vite+, Node.js (Active LTS), and pnpm, and sync git repositories
 Usage: ua [options]
 Options:
   --skip-brew     Skip Homebrew upgrade (macOS)
@@ -260,10 +260,45 @@ if (-not $SkipVite) {
         $newNode = (& node -v 2>$null)
     }
 
-    if ($oldNode -and ($oldNode -ne $newNode)) {
+    $nodeUpdated = [bool]($oldNode -and ($oldNode -ne $newNode))
+    if ($nodeUpdated) {
         foreach ($line in $installOut) {
             Write-Output $line
         }
+    }
+
+    $pnpmUpdated = $false
+    $pnpmVersionLabel = ''
+    $pnpmRemoteOut = @(& vp env list-remote --json --sort desc pnpm 2>$null)
+    if ($LASTEXITCODE -eq 0) {
+        $latestPnpm = Resolve-LatestPnpmVersionFromJson -JsonText ($pnpmRemoteOut -join "`n")
+        if ($null -ne $latestPnpm) {
+            $pnpmVersionLabel = "v$($latestPnpm.Version)"
+            if (-not $latestPnpm.Installed) {
+                $pnpmInstallOut = @(& vp env install "pnpm@$($latestPnpm.Version)" 2>&1)
+                foreach ($line in $pnpmInstallOut) {
+                    Write-Output $line
+                }
+                if ($LASTEXITCODE -eq 0) {
+                    $pnpmUpdated = $true
+                }
+            }
+        }
+    }
+    if (-not $pnpmVersionLabel) {
+        $pnpmInstallOut = @(& vp env install pnpm@latest 2>&1)
+        foreach ($line in $pnpmInstallOut) {
+            Write-Output $line
+            if ([string]$line -match 'pnpm\s+(v[0-9]+\.[0-9]+\.[0-9]+(?:-[^\s.]*)?)') {
+                $pnpmVersionLabel = $Matches[1]
+            }
+        }
+        if ($LASTEXITCODE -eq 0) {
+            $pnpmUpdated = $true
+        }
+    }
+
+    if ($nodeUpdated -or $pnpmUpdated) {
         & vp env clean >$null 2>&1
     }
 
@@ -275,7 +310,13 @@ if (-not $SkipVite) {
 
     Sync-GlobalOxfmt
 
-    Write-Output "`nnode: $newNode`n"
+    Write-Output "`nnode: $newNode"
+    if ($pnpmVersionLabel) {
+        Write-Output "pnpm: $pnpmVersionLabel`n"
+    }
+    else {
+        Write-Output ''
+    }
 }
 
 # 3. Sync Git projects in workspace in parallel
@@ -333,8 +374,11 @@ if (-not $SkipGit) {
                 foreach ($target in $syncTargets) {
                     $depOut = @(& vp -C $target.Path install --frozen-lockfile --silent 2>&1)
                     if ($LASTEXITCODE -ne 0) {
-                        $depErr = ($depOut | ForEach-Object { [string]$_ } | Where-Object { $_.Trim() } | Select-Object -First 1) ?? "exit code $LASTEXITCODE"
+                        $depErr = Format-NativeErrorDetail -OutputLines $depOut -ExitCode $LASTEXITCODE
                         [Console]::Error.WriteLine("Sync $($target.Name) dependencies failed: $depErr")
+                        if ($depErr -match 'ERR_PNPM_OUTDATED_LOCKFILE|ERR_PNPM_FROZEN_LOCKFILE_WITH_OUTDATED_LOCKFILE') {
+                            [Console]::Error.WriteLine("  Hint: Run 'up' in $($target.Name) or 'upnpmv' across workspace to sync lockfile.")
+                        }
                         $failedCount++
                     }
                     else {

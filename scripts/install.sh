@@ -250,7 +250,7 @@ deploy_dotfiles() {
       chmod 644 "$dest"
     done
   else
-    local -a completions=(clall ebk mdig mkclp mkgif mmb rea ua unodev up webread)
+    local -a completions=(clall ebk mdig mkclp mkgif mmb rea ua unodev up upnpmv webread)
     local comp
     for comp in "${completions[@]}"; do
       fetch_file "$repo_dir" "configs/zsh/completions/_$comp" "$HOME/.local/share/zsh/site-functions/_$comp"
@@ -613,6 +613,7 @@ setup_vite_plus() {
   if [[ -x "$vp_bin" ]]; then
     VP_LOG=error "$vp_bin" env default lts >/dev/null 2>&1
     VP_LOG=error "$vp_bin" env install lts >/dev/null 2>&1
+    VP_LOG=error "$vp_bin" env install pnpm@latest >/dev/null 2>&1 || true
 
     local vp_pkg_json="$vp_home/current/node_modules/vite-plus/package.json"
     if [[ ! -f "$vp_pkg_json" ]]; then
