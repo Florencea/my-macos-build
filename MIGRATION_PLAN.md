@@ -71,13 +71,13 @@ At the start of a new conversation:
 
 ### Stage 3: Media Pipelines and GitHub Cloner (`media.ts`, `mkclp`, `mkgif`, `clall`)
 
-- [ ] Implement `cli/src/lib/media.ts` (`parseTimeToSeconds`, `resolveYtDlpBrowser`, `downloadYtDlpSegment` with cookie-less fallback)
-- [ ] Implement `cli/src/commands/mkclp.ts` (stream copy vs `hevc_videotoolbox` / `libx264`)
-- [ ] Implement `cli/src/commands/mkgif.ts` (`ctx.runner.pipe()` for `ffmpeg | gifski` dual exit tracking and palette fallback)
-- [ ] Implement `cli/src/commands/clall.ts` (token precedence, `op://` guard, paginated GitHub `/user/repos` Zod parse, bounded parallel `git clone`)
-- [ ] Register `mkclp`, `mkgif`, `clall` in `cli/src/registry.ts` and run `vpr cli:sync-bins`
-- [ ] Add `tests/unit/media.test.ts`, `tests/unit/mkclp.test.ts`, `tests/unit/mkgif.test.ts`, and `tests/unit/clall.test.ts`
-- [ ] Verify `vpr agent:verify:gate` passes
+- [x] Implement `cli/src/lib/media.ts` (`parseTimeToSeconds`, `resolveYtDlpBrowser`, `downloadYtDlpSegment` with cookie-less fallback)
+- [x] Implement `cli/src/commands/mkclp.ts` (stream copy vs `hevc_videotoolbox` / `libx264`)
+- [x] Implement `cli/src/commands/mkgif.ts` (`ctx.runner.pipe()` for `ffmpeg | gifski` dual exit tracking and palette fallback)
+- [x] Implement `cli/src/commands/clall.ts` (token precedence, `op://` guard, paginated GitHub `/user/repos` Zod parse, bounded parallel `git clone`)
+- [x] Register `mkclp`, `mkgif`, `clall` in `cli/src/registry.ts` and run `vpr cli:sync-bins`
+- [x] Add `tests/unit/media.test.ts`, `tests/unit/mkclp.test.ts`, `tests/unit/mkgif.test.ts`, and `tests/unit/clall.test.ts`
+- [x] Verify `vpr agent:verify:gate` passes
 
 ### Stage 4: Node/Git Toolchain Automation and Transactional Rollback (`unodev`, `upnpmv`, `ua`, `up`)
 
@@ -104,7 +104,7 @@ At the start of a new conversation:
 
 Every section from `tests/cli.Tests.ps1` must have an equivalent checked Vitest replacement before Stage 5 decommissions `tests/cli.Tests.ps1`:
 
-- [ ] **Sec 1 (`CliCommon.psm1`)**: `Convert-TimeToSecond` (HH:MM:SS.ms, MM:SS, seconds, rejects negative / >=60 / non-positive / invalid) -> `tests/unit/media.test.ts` (`Stage 3`)
+- [x] **Sec 1 (`CliCommon.psm1`)**: `Convert-TimeToSecond` (HH:MM:SS.ms, MM:SS, seconds, rejects negative / >=60 / non-positive / invalid) -> `tests/unit/media.test.ts` (`Stage 3`)
 - [x] **Sec 1 (`CliCommon.psm1`)**: `ConvertTo-ValidatedInt` (valid, non-int, out-of-range) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
 - [x] **Sec 1 (`CliCommon.psm1`)**: `Format-ByteSize` (KB, MB, GB) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
 - [x] **Sec 1 (`CliCommon.psm1`)**: `Test-RequiredCommand` (present vs missing) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
@@ -116,7 +116,7 @@ Every section from `tests/cli.Tests.ps1` must have an equivalent checked Vitest 
 - [ ] **Sec 7 (`NodeToolchain.psm1`)**: `Resolve-ProjectVerifyStep` (4 cases: `agent:verify:gate`, fallback `unit -> build -> e2e`, unit-only, empty) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
 - [ ] **Sec 8 (`NodeToolchain.psm1`)**: `Test-WorkspaceNodeSyncTarget` (5 cases: missing `package.json`, missing lockfile, fresh clone missing `node_modules`, unchanged with `node_modules`, updated with `node_modules`) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
 - [x] **Sec 9 (`Format-NativeErrorDetail` & `clall`)**: Error line joining, blank fallback (`tests/unit/cli-framework.test.ts`, `Stage 1`); git error formatting & `clall` `op://` rejection (`tests/unit/clall.test.ts`, `Stage 3`)
-- [ ] **Sec 10 (`Resolve-GitHubRepoList`)**: Empty array, null, single item, filtering missing `ssh_url` -> `tests/unit/clall.test.ts` (`Stage 3`)
+- [x] **Sec 10 (`Resolve-GitHubRepoList`)**: Empty array, null, single item, filtering missing `ssh_url` -> `tests/unit/clall.test.ts` (`Stage 3`)
 - [ ] **Sec 11 (`MediaCommon.psm1`)**: `Resolve-YtDlpBrowser` (default `chrome`, blank, `YT_DLP_BROWSER`, explicit override) + `mkclp`/`mkgif` `--help` browser doc -> `tests/unit/media.test.ts` + `tests/contract/cli-commands.test.ts` (`Stage 3` & `Stage 4`)
 - [ ] **Sec 12 (`verify-ps-fast.ps1`)**: AST contract regression checks for OS Bootstrap PowerShell -> Remains covered by `tests/verify-ps-fast.ps1` self-test or Stage 5 OS-bootstrap contract check (`Stage 5`)
 - [ ] **Sec 13 (`upnpmv` & pnpm helpers)**: `--help`, unknown flag, positional arg rejection, `Resolve-LatestPnpmVersionFromJson`, `Get-PnpmPackageManagerSpec`, `Test-PnpmWorkspaceProject`, `Format-ProjectPackageManifest` -> `tests/unit/node-toolchain.test.ts` & `tests/unit/upnpmv.test.ts` (`Stage 4`)
