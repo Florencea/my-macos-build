@@ -457,6 +457,28 @@ Stop-Job -Name 'nonexistent' -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Force -Path $noGitRepo | Out-Null
     [System.IO.File]::WriteAllText((Join-Path $noGitRepo 'package.json'), '{"name":"c","packageManager":"pnpm@12.21.0"}')
     Assert-Condition -Name 'Test-PnpmWorkspaceProject rejects directory without .git' -Condition (-not (Test-PnpmWorkspaceProject -RepoPath $noGitRepo))
+
+    $missingFmtRes = Format-ProjectPackageManifest -ProjectDir (Join-Path $tempTestDir 'missing_manifest_repo')
+    Assert-Condition -Name 'Format-ProjectPackageManifest fails when package.json is missing' -Condition ((-not $missingFmtRes.Success) -and (-not [string]::IsNullOrWhiteSpace($missingFmtRes.ErrorDetail)))
+
+    if (Test-RequiredCommand -Name 'vp' -Quiet) {
+        $fmtRepo = Join-Path $tempTestDir 'repo_fmt_pkg'
+        New-Item -ItemType Directory -Force -Path $fmtRepo | Out-Null
+        $unsortedPkgPath = Join-Path $fmtRepo 'package.json'
+        [System.IO.File]::WriteAllText($unsortedPkgPath, '{"name":"pkg-fmt-test","knip":{},"packageManager":"pnpm@12.21.0"}' + "`n", [System.Text.UTF8Encoding]::new($false))
+        $fmtOk = Format-ProjectPackageManifest -ProjectDir $fmtRepo
+        $formattedText = [System.IO.File]::ReadAllText($unsortedPkgPath)
+        $pmIdx = $formattedText.IndexOf('"packageManager"', [System.StringComparison]::Ordinal)
+        $knipIdx = $formattedText.IndexOf('"knip"', [System.StringComparison]::Ordinal)
+        Assert-Condition -Name 'Format-ProjectPackageManifest succeeds with vp fmt' -Condition $fmtOk.Success -Detail $fmtOk.ErrorDetail
+        Assert-Condition -Name 'Format-ProjectPackageManifest sorts packageManager before knip' -Condition (($pmIdx -ge 0) -and ($knipIdx -gt $pmIdx)) -Detail $formattedText
+
+        $invalidPkgRepo = Join-Path $tempTestDir 'repo_fmt_invalid_pkg'
+        New-Item -ItemType Directory -Force -Path $invalidPkgRepo | Out-Null
+        [System.IO.File]::WriteAllText((Join-Path $invalidPkgRepo 'package.json'), '{not valid json', [System.Text.UTF8Encoding]::new($false))
+        $fmtBad = Format-ProjectPackageManifest -ProjectDir $invalidPkgRepo
+        Assert-Condition -Name 'Format-ProjectPackageManifest fails on malformed package.json' -Condition ((-not $fmtBad.Success) -and (-not [string]::IsNullOrWhiteSpace($fmtBad.ErrorDetail)))
+    }
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {

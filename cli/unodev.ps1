@@ -68,6 +68,7 @@ $currentLocalVersion = ([string]$currentLocalVersion).Trim()
 Write-Output "`nnode: $currentLocalVersion`n"
 $nodeVersion = $currentLocalVersion.TrimStart('v')
 
+$commonModulePath = Join-Path $scriptDir 'helpers' 'CliCommon.psm1'
 $projectsDir = (Resolve-Path -LiteralPath (Join-Path $scriptDir '../..')).Path
 $projects = @(Get-ChildItem -Directory -LiteralPath $projectsDir | Where-Object {
         (Test-Path -LiteralPath (Join-Path $_.FullName '.git')) -and
@@ -75,6 +76,7 @@ $projects = @(Get-ChildItem -Directory -LiteralPath $projectsDir | Where-Object 
     })
 
 $results = @($projects | ForEach-Object -Parallel {
+        Import-Module -Name $using:commonModulePath -Force
         $projDir = $_.FullName
         $projName = $_.Name
         $targetVer = $using:nodeVersion
@@ -90,9 +92,28 @@ $results = @($projects | ForEach-Object -Parallel {
             return $true
         }
 
+        $dirtyOut = @(& git -C $projDir status --porcelain -- package.json 2>&1)
+        if ($LASTEXITCODE -ne 0) {
+            $errDetail = Format-NativeErrorDetail -OutputLines $dirtyOut -ExitCode $LASTEXITCODE
+            [Console]::Error.WriteLine("engines.node ${projName}: git status failed ($errDetail)")
+            return $false
+        }
+        if (@($dirtyOut | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) }).Count -gt 0) {
+            [Console]::Error.WriteLine("engines.node ${projName}: working tree has uncommitted changes in package.json")
+            return $false
+        }
+
         & vp -C $projDir pm pkg set "engines.node=$targetVer" >$null 2>&1
         if ($LASTEXITCODE -ne 0) {
+            & git -C $projDir checkout -q -- package.json 2>$null
             [Console]::Error.WriteLine("engines.node ${projName}: failed to update package.json")
+            return $false
+        }
+
+        $fmtRes = Format-ProjectPackageManifest -ProjectDir $projDir
+        if (-not $fmtRes.Success) {
+            & git -C $projDir checkout -q -- package.json 2>$null
+            [Console]::Error.WriteLine("engines.node ${projName}: failed to format package.json ($($fmtRes.ErrorDetail))")
             return $false
         }
 

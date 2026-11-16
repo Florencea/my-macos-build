@@ -162,6 +162,15 @@ function Update-ProjectPnpmVersion {
         return $false
     }
 
+    if ($needsPin) {
+        $fmtRes = Format-ProjectPackageManifest -ProjectDir $ProjectDir
+        if (-not $fmtRes.Success) {
+            Restore-ProjectManifest -ProjectDir $ProjectDir -LockTrackedBefore $lockTrackedBefore -LockExistedBefore $lockExistedBefore
+            [Console]::Error.WriteLine("packageManager ${ProjectName}: failed to format package.json ($($fmtRes.ErrorDetail))")
+            return $false
+        }
+    }
+
     $verifyOut = @(& vp -C $ProjectDir install --frozen-lockfile --lockfile-only --silent 2>&1)
     if ($LASTEXITCODE -ne 0) {
         Restore-ProjectManifest -ProjectDir $ProjectDir -LockTrackedBefore $lockTrackedBefore -LockExistedBefore $lockExistedBefore

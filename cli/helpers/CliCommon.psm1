@@ -603,6 +603,35 @@ function Test-PnpmWorkspaceProject {
     )
 }
 
+function Format-ProjectPackageManifest {
+    param(
+        [Parameter(Mandatory)]
+        [string]$ProjectDir
+    )
+
+    $manifestPath = Join-Path $ProjectDir 'package.json'
+    if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
+        return [PSCustomObject]@{
+            Success     = $false
+            ErrorDetail = "package.json not found in $ProjectDir"
+        }
+    }
+
+    $fmtOut = @(& vp -C $ProjectDir fmt --no-error-on-unmatched-pattern package.json 2>&1)
+    $exitCode = ($LASTEXITCODE ?? 0)
+    if ($exitCode -ne 0) {
+        return [PSCustomObject]@{
+            Success     = $false
+            ErrorDetail = (Format-NativeErrorDetail -OutputLines $fmtOut -ExitCode $exitCode)
+        }
+    }
+
+    return [PSCustomObject]@{
+        Success     = $true
+        ErrorDetail = ''
+    }
+}
+
 Export-ModuleMember -Function @(
     'Resolve-CliScriptDirectory',
     'Test-RequiredCommand',
@@ -610,6 +639,7 @@ Export-ModuleMember -Function @(
     'ConvertTo-ValidatedInt',
     'Format-ByteSize',
     'Format-NativeErrorDetail',
+    'Format-ProjectPackageManifest',
     'Get-PnpmPackageManagerSpec',
     'Import-WindowsMachinePath',
     'Invoke-YtDlpSegment',
