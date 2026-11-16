@@ -1,6 +1,6 @@
 ---
 name: modern-hono-drizzle
-description: Type-safe backend APIs, OpenAPI specifications with Zod, Drizzle ORM schema SSOT, fail-closed RBAC routing, and external documentation lookup gateways. Use when building or refactoring Hono servers, REST APIs, or database schemas.
+description: Type-safe Hono OpenAPI routing with Zod, Drizzle ORM schema SSOT, fail-closed RBAC routing, and llms.txt / .d.ts doc lookups. Use when building or refactoring Hono servers, REST APIs, or DB schemas.
 compatibility: Node.js (Active LTS), Hono, Drizzle ORM, Zod, Vite+
 ---
 

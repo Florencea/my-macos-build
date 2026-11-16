@@ -291,8 +291,12 @@ sync_plugin_dir() {
   else
     fetch_file "$repo_dir" "plugins/$plugin_name/plugin.json" "$dest_dir/plugin.json"
     if [[ "$plugin_name" == "modern-web-stack" ]]; then
-      fetch_file "$repo_dir" "plugins/$plugin_name/rules/modern-web-stack.md" "$dest_dir/rules/modern-web-stack.md"
-      rm -f "$dest_dir/rules/AGENTS.md"
+      local -a web_rules=(ci-workflows.md node-ts.md react-ui.md)
+      local rule_file
+      for rule_file in "${web_rules[@]}"; do
+        fetch_file "$repo_dir" "plugins/$plugin_name/rules/$rule_file" "$dest_dir/rules/$rule_file"
+      done
+      rm -f "$dest_dir/rules/AGENTS.md" "$dest_dir/rules/modern-web-stack.md"
     else
       fetch_file "$repo_dir" "plugins/$plugin_name/rules/AGENTS.md" "$dest_dir/rules/AGENTS.md"
     fi
@@ -309,6 +313,7 @@ deploy_antigravity_plugins() {
   if [[ ! -d "$repo_dir/plugins" ]]; then
     fetch_file "$repo_dir" "plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1" "$HOME/.gemini/config/plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1"
     fetch_file "$repo_dir" "plugins/common-modern-tools/skills/common-toolchain/SKILL.md" "$HOME/.gemini/config/plugins/common-modern-tools/skills/common-toolchain/SKILL.md"
+    fetch_file "$repo_dir" "plugins/common-modern-tools/skills/common-toolchain/references/docs-matrix.md" "$HOME/.gemini/config/plugins/common-modern-tools/skills/common-toolchain/references/docs-matrix.md"
     fetch_file "$repo_dir" "plugins/common-modern-tools/skills/modern-powershell/SKILL.md" "$HOME/.gemini/config/plugins/common-modern-tools/skills/modern-powershell/SKILL.md"
     fetch_file "$repo_dir" "plugins/macos-modern-tools/skills/macos-toolchain/SKILL.md" "$HOME/.gemini/config/plugins/macos-modern-tools/skills/macos-toolchain/SKILL.md"
     local -a web_skills=(modern-hono-drizzle modern-nodejs modern-react-tailwind modern-typescript modern-web-guidance node-project-architecture tanstack-router)

@@ -87,6 +87,20 @@ async function listSubdirectories(dirPath: string): Promise<string[]> {
     .toSorted();
 }
 
+async function collectFiles(dirPath: string): Promise<string[]> {
+  const entries = await readdir(dirPath, { withFileTypes: true });
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const fullPath = path.join(dirPath, entry.name);
+      if (entry.isDirectory()) {
+        return await collectFiles(fullPath);
+      }
+      return entry.isFile() && entry.name !== ".DS_Store" ? [fullPath] : [];
+    }),
+  );
+  return nested.flat();
+}
+
 function findBrokenWebreadUrls(raw: string): string[] {
   const broken: string[] = [];
   for (const match of raw.matchAll(/webread\s+(https:\/\/[^\s`)"',]+)/g)) {
@@ -255,5 +269,56 @@ describe("antigravity plugins, rules, and skills contracts", () => {
     ).replace(/\r\n/g, "\n");
 
     expect(pluginSettings).toBe(rootSettings);
+  });
+
+  it("validates skill reference/resource markdown files and install.sh fallback coverage", async () => {
+    const macosPlugins = ["common-modern-tools", "macos-modern-tools", "modern-web-stack"];
+
+    const [pluginFiles, installShRaw] = await Promise.all([
+      Promise.all(macosPlugins.map((name) => collectFiles(path.join(PLUGINS_ROOT, name)))),
+      readFile(path.join(REPO_ROOT, "scripts", "install.sh"), "utf8"),
+    ]);
+    const allFiles = pluginFiles.flat();
+
+    const markdownExtras = allFiles.filter(
+      (filePath) =>
+        filePath.endsWith(".md") &&
+        (filePath.includes(`${path.sep}references${path.sep}`) ||
+          filePath.includes(`${path.sep}resources${path.sep}`)),
+    );
+
+    const extraChecks = await Promise.all(
+      markdownExtras.map(async (filePath) => {
+        const raw = await readFile(filePath, "utf8");
+        return {
+          filePath,
+          hasCrlf: raw.includes("\r\n"),
+          brokenUrls: findBrokenWebreadUrls(raw),
+        };
+      }),
+    );
+
+    for (const item of extraChecks) {
+      expect(item.hasCrlf, `${item.filePath} must use LF line endings`).toBe(false);
+      expect(item.brokenUrls, `${item.filePath} uses known failing webread URLs`).toEqual([]);
+    }
+
+    for (const filePath of allFiles) {
+      const rel = path.relative(REPO_ROOT, filePath).replace(/\\/g, "/");
+      const fileName = path.basename(rel);
+      const isCovered =
+        installShRaw.includes(rel) ||
+        rel.endsWith("/plugin.json") ||
+        (rel.startsWith("plugins/common-modern-tools/rules/") && fileName === "AGENTS.md") ||
+        (rel.startsWith("plugins/macos-modern-tools/rules/") && fileName === "AGENTS.md") ||
+        (rel.startsWith("plugins/modern-web-stack/rules/") && installShRaw.includes(fileName)) ||
+        (rel.startsWith("plugins/modern-web-stack/skills/") &&
+          fileName === "SKILL.md" &&
+          installShRaw.includes(path.basename(path.dirname(rel)))) ||
+        (rel.startsWith("plugins/modern-web-stack/skills/node-project-architecture/resources/") &&
+          installShRaw.includes(fileName));
+
+      expect(isCovered, `${rel} is missing from scripts/install.sh fallback deployment`).toBe(true);
+    }
   });
 });

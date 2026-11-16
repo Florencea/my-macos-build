@@ -1,6 +1,6 @@
 ---
 name: modern-web-guidance
-description: Authoritative Google Chrome & Web Standards guidance engine for modern HTML5, CSS layout/animations, Web APIs, Accessibility, Core Web Vitals, and legacy web pattern detection. MANDATORY: Query externally before writing or modifying any client-side web UI, layout, animation, or browser API.
+description: Google Chrome & Web Standards guidance engine (HTML5, CSS layout/animations, Web APIs, Accessibility, Core Web Vitals, legacy pattern scan). Query before writing or modifying client-side web UI or browser APIs.
 compatibility: Node.js (Active LTS), Vite+, Modern Browsers (Baseline Widely & Newly Available)
 ---
 

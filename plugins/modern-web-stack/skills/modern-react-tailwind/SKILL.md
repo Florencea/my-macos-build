@@ -1,6 +1,6 @@
 ---
 name: modern-react-tailwind
-description: Strict architectural invariants and live external SSOT lookup gateways for modern React, Effect discipline, Tailwind CSS, and component contracts. Use when building React components, actions, forms, hooks, layout structures, and Tailwind styling.
+description: Modern React architectural invariants (Actions, Effect discipline, direct ref prop), Tailwind v4 @theme tokens, @shadcn/lint contracts, and two-stage .md doc gateways. Use when building React UI or Tailwind styles.
 compatibility: React, Tailwind CSS, Vite+, Oxlint
 ---
 
@@ -35,9 +35,9 @@ compatibility: React, Tailwind CSS, Vite+, Oxlint
 ## 3. Tailwind CSS Design Tokens & `@shadcn/lint` Contracts
 
 - **Design Token SSOT (`@theme`)**: Define CSS tokens centrally in root CSS (`@import "tailwindcss";` + `@theme { ... }`) and bind third-party UI library theme tokens to those CSS variables.
-- **Enforced Component Contracts**:
+- **Enforced Component Contracts (`vp lint`)**:
   - `shadcn/no-raw-colors`: Forbid hardcoded hex/rgb values outside `@theme`.
   - `shadcn/no-arbitrary-values`: Ban unmapped arbitrary brackets (e.g. `w-[321px]`).
   - `shadcn/no-inline-styles`: Forbid `style={{ ... }}`; bind CSS variables or variants.
   - `shadcn/no-restyle`: External callers may pass layout/positioning utilities (`allow: ["layout"]`) or declared variants only; never restyle internal typography or borders from outside.
-- **Verification**: Run `vpr lint:tailwind` to verify classes and `vpr lint:tailwind:fix` to sort utilities canonically.
+- **Verification & Sorting Split**: Run `vp fmt <files>` and `vp lint -f agent` for Oxc formatting and `@shadcn/lint` contracts; run `vpr lint:tailwind` / `vpr lint:tailwind:fix` (via `tailwindcss-language-server`) for Tailwind CSS utility diagnostics and canonical class sorting.

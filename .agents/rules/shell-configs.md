@@ -1,6 +1,6 @@
 ---
 trigger: glob
-globs: "configs/bash/*, configs/zsh/*, scripts/*.sh, scripts/*.ps1, scripts/windows/*"
+globs: "configs/bash/*, configs/zsh/*, configs/zsh/completions/*, configs/git/hooks/*, scripts/*.sh, scripts/*.ps1, scripts/windows/*, tests/verify-ps-*.ps1, tests/VerifyCommon.psm1, tests/verify-shell.ts"
 description: Rules for shell configuration parity and cross-platform installer script idempotency.
 ---
 

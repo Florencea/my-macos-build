@@ -8,7 +8,6 @@ export default defineConfig({
   run: {
     cache: {
       scripts: true,
-      tasks: true,
     },
   },
   build: {

@@ -17,58 +17,39 @@ This project uses Vite+ to manage development tools. Always use `vp` (or `vpr` s
 
 # Agent Development Guidelines
 
-Guidelines for AI agents and human contributors working on this repository.
+Project-specific architecture, verification gates, and delivery constraints. Global CLI, formatting, and communication standards are inherited from `common-modern-tools`.
 
-## 1. Quick Architecture Map
+## 1. Architecture Map
 
-| Layer               | Path                     | Responsibility                                          |
-| :------------------ | :----------------------- | :------------------------------------------------------ |
-| **Frontend UI**     | `src/client/components/` | Reusable React UI components                            |
-| **Frontend Routes** | `src/client/routes/`     | TanStack Router file routes (protected route tree)      |
-| **API Endpoints**   | `src/server/routes/`     | OpenAPI / RPC router, Zod schemas, and request handlers |
-| **Database**        | `src/server/database/`   | Drizzle / SQLite schemas and seed fixtures              |
-| **Domain Rules**    | `.agents/rules/`         | Modular glob-triggered domain rules                     |
-| **Project Skills**  | `.agents/skills/`        | On-demand repeatable workflow runbooks                  |
+- `src/client/components/`: Reusable React UI components
+- `src/client/routes/`: TanStack Router file routes (protected route tree)
+- `src/server/routes/`: OpenAPI / RPC router, Zod schemas, and request handlers
+- `src/server/database/`: Drizzle / SQLite schemas and seed fixtures
+- `.agents/rules/`: Modular glob-triggered domain rules
+- `.agents/skills/`: On-demand repeatable workflow runbooks
 
 ---
 
 ## 2. Core SSOT & Architectural Invariants
 
-- **Single Source of Truth (SSOT)**: Domain contracts and schemas are defined once (e.g. database schema or Zod DTOs) and inferred downstream. Never duplicate types manually.
-- **Zod-First Boundary Defense**: Untrusted external data (API responses, JSON inputs, environment variables) MUST be validated using Zod (`safeParse`). Never use `as unknown as Type` assertions.
-- **Zero Suppression Policy**: NEVER use `// @ts-ignore`, `// @ts-expect-error`, or `/* oxlint-disable */` to bypass errors. All type issues must be resolved through proper type narrowing or schema definitions.
-- **Configuration & Anti-Pattern Pre-Verification**: Before editing package or tool configuration files (`package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, `vite.config.*`), inspect live active rules (`vp lint --rules` / `--print-config`), local `.d.ts` declarations, and two-stage `llms.txt` → `.md` docs. Never guess syntax from memory.
-- **Dependency Version Pinning (`pnpm-workspace.yaml`)**: Always declare `saveExact: true` in `pnpm-workspace.yaml` to pin all installed dependencies to exact versions (e.g. `1.2.3` instead of `^1.2.3`), preventing upstream drift between local and CI environments.
-- **Protected Files**: Never manually edit auto-generated files (e.g. `routeTree.gen.ts`).
+- **Single Source of Truth (SSOT)**: Define domain contracts and schemas once (database schema or Zod DTOs) and infer downstream. Never duplicate entity types manually.
+- **Zod-First & Zero Suppression**: Validate untrusted external boundaries via Zod `safeParse`. Prohibit `as unknown as`, `// @ts-ignore`, `// @ts-expect-error`, and `/* oxlint-disable */`.
+- **Pre-Edit Tool Verification**: Before editing `package.json`, `pnpm-workspace.yaml`, `tsconfig*.json`, or `vite.config.*`, inspect `vp lint --rules`, `vp lint --print-config`, local `.d.ts` files, and two-stage `llms.txt` -> `.md` docs.
+- **Dependency Version Pinning**: Keep `saveExact: true` in `pnpm-workspace.yaml` to prevent upstream version drift.
+- **Protected Generated Files**: Never edit auto-generated files such as `src/routeTree.gen.ts`.
 
 ---
 
-## 3. Frictionless Execution (Whitelist-First)
+## 3. Execution & Verification Shortcuts
 
-Prioritize `vpr` and native `vp` commands matching Antigravity's pre-approved execution whitelist:
-
-- **Gate**: `vpr agent:verify:gate` (unit -> build -> e2e) or `vpr verify`
+- **Gate**: `vpr agent:verify:gate` (`unit` -> `build` -> `e2e`) or `vpr verify`
 - **Inner Loop**: `vpr agent:verify:inner` (`vpr typecheck && vp lint && vpr lint:tailwind`)
-- **Unit Tests**: `vpr agent:test:unit` (`vp test run --project unit --reporter=tap-flat --no-color`)
-- **E2E Tests**: `vpr agent:test:e2e` (`vp test run --project e2e --reporter=tap-flat --no-color`)
-- **Type Check**: `vpr typecheck` (`tsc -b --pretty false`)
-- **CI Lint**: `vpr lint:ci` (`actionlint` 0 errors/warnings)
-- **Tailwind Lint**: `vpr lint:tailwind`, `vpr lint:tailwind:fix`
-- **Build**: `vp build`
-- **Task Caching**: Scripts executed via `vpr` leverage Vite Task caching (`run.cache: { scripts: true, tasks: true }`). Unmodified steps replay in milliseconds. Use `vpr --last-details` to inspect cache hits, or `vp cache clean` / `vpr --no-cache` to force clean execution.
+- **Tests**: `vpr agent:test:unit` and `vpr agent:test:e2e` (`--reporter=tap-flat --no-color`)
+- **Diagnostics & Formatting**: `vp lint -f agent`, `vp fmt <files>`, `vpr lint:ci` (`actionlint`), `vp list --json`
+- **Task Caching**: Inspect Vite+ task cache status with `vpr --last-details`, or bypass with `vpr --no-cache` / `vp cache clean`.
 
 ---
 
 ## 4. Git Workflow & Commit Restrictions
 
-- **NEVER execute `git commit` directly**: AI direct commits are prohibited.
-- **Protocol**: Stage changes with `git add <files>` and output the exact `git commit -m "..."` command following Conventional Commits for manual execution by the user.
-
----
-
-## 5. Language & Planning Standards
-
-- **Language Invariant**: Implementation plans (`/plan`), walkthrough artifacts (`walkthrough.md`), and chat responses are written in **Traditional Chinese (繁體中文)**.
-- **Document Authoring**: Human-facing documentation must prioritize plain text (standard headings and lists), avoiding markdown tables, diagrams, platform callouts, conversational answers to queries, agent action logs, and forced trade-off boilerplate.
-- **Document Language Preservation**: In-repo documentation (e.g. `README.md`, architecture/design specs) must preserve the codebase's primary language (English by default). Never inject Traditional Chinese into English project documents.
-- **Code Artifacts**: Source code, inline comments, commit messages, and automated tests must use concise English.
+- Never execute `git commit` or `git push`. Stage verified, formatted files with `git add <files>` and output the Conventional Commit command (`git commit -m "..."`) for manual execution.

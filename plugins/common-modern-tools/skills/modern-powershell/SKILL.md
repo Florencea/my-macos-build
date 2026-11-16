@@ -1,12 +1,12 @@
 ---
 name: modern-powershell
-description: Strict cross-platform (macOS, Windows 11, Linux) and cross-version (PowerShell 7+ pwsh vs Windows PowerShell 5.1) authoring standards, pre-execution runtime introspection gate, AST and PSUseCompatibleSyntax grammar verification, VS Code Stroustrup formatting (LF, UTF-8 without BOM), and non-bypassable PSScriptAnalyzer static analysis. Use when writing, refactoring, formatting, or debugging PowerShell scripts (.ps1, .psm1, .psd1) or in-memory pwsh automation.
+description: Cross-platform (macOS, Windows, Linux) and dual-version (pwsh 7+ vs PS 5.1) PowerShell authoring, runtime introspection, 3-stage formatting/AST/lint gate, and zero-suppression rules. Use when writing, editing, or debugging .ps1, .psm1, .psd1, or pwsh commands.
 compatibility: PowerShell 7+ (pwsh), Windows PowerShell 5.1 (powershell.exe), PSScriptAnalyzer, macOS Darwin, Windows 11, Linux
 ---
 
 # Modern PowerShell Authoring & Verification Guidelines
 
-**CRITICAL:** Every PowerShell script (`.ps1`, `.psm1`, `.psd1`) and multi-line automation block must pass three mandatory gates on the first attempt: (1) `Invoke-Formatter` with LF (`\n`) and UTF-8 without BOM normalization, (2) AST parser grammar check (`[System.Management.Automation.Language.Parser]::ParseFile`) plus `PSUseCompatibleSyntax` for dual-version scripts, and (3) `Invoke-ScriptAnalyzer -IncludeSuppressed` yielding **0 ParseErrors, 0 Errors, 0 Warnings, and 0 Information violations**.
+Every PowerShell script (`.ps1`, `.psm1`, `.psd1`) and multi-line automation block must pass three mandatory gates on the first attempt: (1) `Invoke-Formatter` with LF (`\n`) and UTF-8 without BOM normalization, (2) AST parser grammar check (`[System.Management.Automation.Language.Parser]::ParseFile`) plus `PSUseCompatibleSyntax` for dual-version scripts, and (3) `Invoke-ScriptAnalyzer -IncludeSuppressed` yielding **0 ParseErrors, 0 Errors, 0 Warnings, and 0 Information violations**.
 
 ---
 
@@ -87,7 +87,7 @@ Fetch indexes first, then retrieve only the targeted `.md` section via `webread`
 
 ## 5. Three-Stage Mandatory Verification Pipeline
 
-In repositories providing tiered PowerShell verification scripts (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`), run the fast Tier 1 script during active editing and the full gate (`vpr agent:verify:gate`) before completion:
+In repositories providing tiered PowerShell verification scripts (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`), run the single-file loop during active editing (`vpr agent:verify:ps -- --fix --path <file>` or direct invocation) and `vpr agent:verify:gate` before completion:
 
 ```powershell
 pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1 --fix --path scripts/install.ps1
@@ -105,7 +105,7 @@ $absPath = (Resolve-Path -LiteralPath $targetFile).Path
 $raw = [System.IO.File]::ReadAllText($absPath)
 $formatted = Invoke-Formatter -ScriptDefinition $raw -Settings $settings
 $normalized = ($formatted -replace "`r`n", "`n").TrimEnd() + "`n"
-[System.IO.File]::WriteAllText($absPath, $normalized, [System.Text.UTF8Encoding]::new($false))
+$null = [System.IO.File]::WriteAllText($absPath, $normalized, [System.Text.UTF8Encoding]::new($false))
 
 # Stage 2: AST grammar verification (and PSUseCompatibleSyntax for Tier B)
 $parseErrors = $null

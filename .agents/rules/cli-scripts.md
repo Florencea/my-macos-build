@@ -43,4 +43,4 @@ description: Rules for authoring, registering, and verifying Vite+ TypeScript CL
 ## 4. TypeScript Hygiene & Verification Gates
 
 - Enforce `erasableSyntaxOnly`, `verbatimModuleSyntax`, `noUncheckedIndexedAccess`, `node:` protocol imports, Zod `safeParse` at boundaries, `process.exitCode` over `process.exit`, and zero lint/type suppression directives.
-- Format edited files with `vpx oxfmt <files>` and verify via `vpr agent:verify:inner` (fast loop), `vpr agent:verify:unit`, and `vpr agent:verify:gate` before staging.
+- Format edited files with `vp fmt <files>` and verify via `vpr agent:verify:inner` (fast loop), `vp lint -f agent`, `vpr agent:verify:unit`, and `vpr agent:verify:gate` before staging.

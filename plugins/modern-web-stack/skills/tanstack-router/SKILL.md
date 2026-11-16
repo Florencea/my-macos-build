@@ -1,6 +1,6 @@
 ---
 name: tanstack-router
-description: File-based routing, type-safe search parameters with Zod, routeTree protection, loaders, navigation invariants, and Markdown SSOT doc lookups for TanStack Router. Use when creating or modifying client-side routes or query parameters.
+description: File-based routing, Zod validateSearch, routeTree.gen.ts protection, loaders, and Markdown SSOT lookups for TanStack Router. Use when creating or modifying client-side routes or query parameters.
 compatibility: TanStack Router, React, Vite+, Zod
 ---
 
