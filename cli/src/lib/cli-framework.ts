@@ -131,6 +131,25 @@ export function formatCommandHelp<TSchema extends z.ZodType>(
   return `${lines.join("\n")}\n`;
 }
 
+export async function assertRequiredCommands(
+  ctx: Pick<CommandContext, "runner">,
+  commands: readonly string[],
+): Promise<void> {
+  if (commands.length === 0) {
+    return;
+  }
+  const availability = await Promise.all(
+    commands.map(async (cmdName) => ({
+      cmdName,
+      available: await ctx.runner.commandExists(cmdName),
+    })),
+  );
+  const missing = availability.find((entry) => !entry.available);
+  if (missing !== undefined) {
+    throw new MissingDependencyError(missing.cmdName);
+  }
+}
+
 export async function runCliCommand<TSchema extends z.ZodType>(
   def: CommandDefinition<TSchema>,
   argv: readonly string[],
@@ -201,16 +220,7 @@ export async function runCliCommand<TSchema extends z.ZodType>(
   const effectiveCtx: CommandContext = dryRun ? { ...ctx, dryRun: true } : ctx;
 
   if (def.requiredCommands !== undefined && def.requiredCommands.length > 0) {
-    const availability = await Promise.all(
-      def.requiredCommands.map(async (cmdName) => ({
-        cmdName,
-        available: await effectiveCtx.runner.commandExists(cmdName),
-      })),
-    );
-    const missing = availability.find((entry) => !entry.available);
-    if (missing !== undefined) {
-      throw new MissingDependencyError(missing.cmdName);
-    }
+    await assertRequiredCommands(effectiveCtx, def.requiredCommands);
   }
 
   return await def.run({

@@ -5,6 +5,10 @@ import { mkclpCommand } from "./commands/mkclp.ts";
 import { mkgifCommand } from "./commands/mkgif.ts";
 import { mmbCommand } from "./commands/mmb.ts";
 import { reaCommand } from "./commands/rea.ts";
+import { uaCommand } from "./commands/ua.ts";
+import { unodevCommand } from "./commands/unodev.ts";
+import { upCommand } from "./commands/up.ts";
+import { upnpmvCommand } from "./commands/upnpmv.ts";
 import { webreadCommand } from "./commands/webread.ts";
 import type { RegisteredCommand } from "./lib/cli-framework.ts";
 
@@ -16,6 +20,10 @@ const REGISTERED_LIST: readonly RegisteredCommand[] = [
   mkgifCommand,
   mmbCommand,
   reaCommand,
+  uaCommand,
+  unodevCommand,
+  upCommand,
+  upnpmvCommand,
   webreadCommand,
 ];
 

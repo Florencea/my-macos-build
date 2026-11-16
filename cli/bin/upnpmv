@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+set -eu
+script_path="$(realpath "$0")"
+repo_root="$(cd "$(dirname "$script_path")/../.." && pwd)"
+vpx_bin="$(command -v vpx 2>/dev/null || printf '%s\n' "${VP_HOME:-$HOME/.local/share/vite-plus}/bin/vpx")"
+if [ ! -x "$vpx_bin" ]; then
+  printf 'Error: vpx not found. Install Vite+ first.\n' >&2
+  exit 127
+fi
+if [ ! -d "$repo_root/node_modules/zod" ]; then
+  printf 'Error: node_modules missing in %s (run: vp -C "%s" install)\n' "$repo_root" "$repo_root" >&2
+  exit 1
+fi
+exec "$vpx_bin" "$repo_root/cli/src/main.ts" "upnpmv" "$@"

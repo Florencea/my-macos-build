@@ -81,12 +81,12 @@ At the start of a new conversation:
 
 ### Stage 4: Node/Git Toolchain Automation and Transactional Rollback (`unodev`, `upnpmv`, `ua`, `up`)
 
-- [ ] Implement `cli/src/lib/github-actions.ts`, `cli/src/lib/node-toolchain.ts`, and `cli/src/lib/transaction.ts`
-- [ ] Implement `cli/src/commands/unodev.ts`, `cli/src/commands/upnpmv.ts`, `cli/src/commands/ua.ts`, and `cli/src/commands/up.ts` (including `--dry-run` and Windows `PATH` adapter)
-- [ ] Register `unodev`, `upnpmv`, `ua`, `up` in `cli/src/registry.ts` and run `vpr cli:sync-bins`
-- [ ] Add `tests/unit/github-actions.test.ts`, `tests/unit/node-toolchain.test.ts`, `tests/unit/unodev.test.ts`, `tests/unit/upnpmv.test.ts`, `tests/unit/ua.test.ts`, and `tests/unit/up.test.ts`
-- [ ] Add `tests/contract/cli-commands.test.ts` verifying all 12 commands (`--help`, unknown option, unexpected positional, zsh completion parity)
-- [ ] Confirm 100% coverage of Section 4 Legacy Parity Matrix and `vpr agent:verify:gate` passes
+- [x] Implement `cli/src/lib/github-actions.ts`, `cli/src/lib/node-toolchain.ts`, and `cli/src/lib/transaction.ts`
+- [x] Implement `cli/src/commands/unodev.ts`, `cli/src/commands/upnpmv.ts`, `cli/src/commands/ua.ts`, and `cli/src/commands/up.ts` (including `--dry-run` and Windows `PATH` adapter)
+- [x] Register `unodev`, `upnpmv`, `ua`, `up` in `cli/src/registry.ts` and run `vpr cli:sync-bins`
+- [x] Add `tests/unit/github-actions.test.ts`, `tests/unit/node-toolchain.test.ts`, `tests/unit/unodev.test.ts`, `tests/unit/upnpmv.test.ts`, `tests/unit/ua.test.ts`, and `tests/unit/up.test.ts`
+- [x] Add `tests/contract/cli-commands.test.ts` verifying all 12 commands (`--help`, unknown option, unexpected positional, zsh completion parity)
+- [x] Confirm 100% coverage of Section 4 Legacy Parity Matrix and `vpr agent:verify:gate` passes
 
 ### Stage 5: Installer Cutover, Legacy Removal, Docs Update, and Self-Deletion
 
@@ -108,19 +108,19 @@ Every section from `tests/cli.Tests.ps1` must have an equivalent checked Vitest 
 - [x] **Sec 1 (`CliCommon.psm1`)**: `ConvertTo-ValidatedInt` (valid, non-int, out-of-range) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
 - [x] **Sec 1 (`CliCommon.psm1`)**: `Format-ByteSize` (KB, MB, GB) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
 - [x] **Sec 1 (`CliCommon.psm1`)**: `Test-RequiredCommand` (present vs missing) -> `tests/unit/cli-framework.test.ts` (`Stage 1`)
-- [ ] **Sec 2 (`Symlink Resolution`)**: Extensionless symlink `--help` exits 0 and prints usage from outside repo -> `tests/contract/cli-bins.test.ts` (`Stage 1` verified for `mmb`, remaining 11 in `Stage 4`)
-- [ ] **Sec 3 (`All cli/*.ps1 --help & unknown option`)**: All 12 commands `--help` exit 0 + usage, `--unknown-flag-test` exit non-zero + stderr -> `tests/contract/cli-commands.test.ts` (`Stage 4`)
+- [x] **Sec 2 (`Symlink Resolution`)**: Extensionless symlink `--help` exits 0 and prints usage from outside repo -> `tests/contract/cli-bins.test.ts` (`Stage 1` verified for `mmb`, remaining 11 in `Stage 4`)
+- [x] **Sec 3 (`All cli/*.ps1 --help & unknown option`)**: All 12 commands `--help` exit 0 + usage, `--unknown-flag-test` exit non-zero + stderr -> `tests/contract/cli-commands.test.ts` (`Stage 4`)
 - [x] **Sec 4 (`rea.ps1`)**: Reject directory with multiple `.mkv` files without deleting directory -> `tests/unit/rea.test.ts` (`Stage 2`)
 - [x] **Sec 5 (`webread.ps1`)**: Reject non-integer `--max-chars` -> `tests/unit/webread.test.ts` (`Stage 2`)
-- [ ] **Sec 6 (`NodeToolchain.psm1`)**: `Resolve-PlaywrightSyncStep` (6 cases: `test:setup`, unrelated `test:setup`, `@vitest/browser-playwright`, `playwright-core`, `.cmd` shim, non-Playwright) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
-- [ ] **Sec 7 (`NodeToolchain.psm1`)**: `Resolve-ProjectVerifyStep` (4 cases: `agent:verify:gate`, fallback `unit -> build -> e2e`, unit-only, empty) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
-- [ ] **Sec 8 (`NodeToolchain.psm1`)**: `Test-WorkspaceNodeSyncTarget` (5 cases: missing `package.json`, missing lockfile, fresh clone missing `node_modules`, unchanged with `node_modules`, updated with `node_modules`) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
+- [x] **Sec 6 (`NodeToolchain.psm1`)**: `Resolve-PlaywrightSyncStep` (6 cases: `test:setup`, unrelated `test:setup`, `@vitest/browser-playwright`, `playwright-core`, `.cmd` shim, non-Playwright) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
+- [x] **Sec 7 (`NodeToolchain.psm1`)**: `Resolve-ProjectVerifyStep` (4 cases: `agent:verify:gate`, fallback `unit -> build -> e2e`, unit-only, empty) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
+- [x] **Sec 8 (`NodeToolchain.psm1`)**: `Test-WorkspaceNodeSyncTarget` (5 cases: missing `package.json`, missing lockfile, fresh clone missing `node_modules`, unchanged with `node_modules`, updated with `node_modules`) -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
 - [x] **Sec 9 (`Format-NativeErrorDetail` & `clall`)**: Error line joining, blank fallback (`tests/unit/cli-framework.test.ts`, `Stage 1`); git error formatting & `clall` `op://` rejection (`tests/unit/clall.test.ts`, `Stage 3`)
 - [x] **Sec 10 (`Resolve-GitHubRepoList`)**: Empty array, null, single item, filtering missing `ssh_url` -> `tests/unit/clall.test.ts` (`Stage 3`)
-- [ ] **Sec 11 (`MediaCommon.psm1`)**: `Resolve-YtDlpBrowser` (default `chrome`, blank, `YT_DLP_BROWSER`, explicit override) + `mkclp`/`mkgif` `--help` browser doc -> `tests/unit/media.test.ts` + `tests/contract/cli-commands.test.ts` (`Stage 3` & `Stage 4`)
+- [x] **Sec 11 (`MediaCommon.psm1`)**: `Resolve-YtDlpBrowser` (default `chrome`, blank, `YT_DLP_BROWSER`, explicit override) + `mkclp`/`mkgif` `--help` browser doc -> `tests/unit/media.test.ts` + `tests/contract/cli-commands.test.ts` (`Stage 3` & `Stage 4`)
 - [ ] **Sec 12 (`verify-ps-fast.ps1`)**: AST contract regression checks for OS Bootstrap PowerShell -> Remains covered by `tests/verify-ps-fast.ps1` self-test or Stage 5 OS-bootstrap contract check (`Stage 5`)
-- [ ] **Sec 13 (`upnpmv` & pnpm helpers)**: `--help`, unknown flag, positional arg rejection, `Resolve-LatestPnpmVersionFromJson`, `Get-PnpmPackageManagerSpec`, `Test-PnpmWorkspaceProject`, `Format-ProjectPackageManifest` -> `tests/unit/node-toolchain.test.ts` & `tests/unit/upnpmv.test.ts` (`Stage 4`)
-- [ ] **Sec 14 (`GitHubActions.psm1`)**: `ConvertFrom-GitHubActionVersion`, `Compare-GitHubActionVersion`, `Get-GitHubActionUpdate`, `Update-GitHubActionFile` (CRLF + comment preservation, out-of-range error) -> `tests/unit/github-actions.test.ts` (`Stage 4`)
-- [ ] **Sec 15 (`NodeToolchain.psm1`)**: `Get-VitePlusOxfmtSpec` -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
+- [x] **Sec 13 (`upnpmv` & pnpm helpers)**: `--help`, unknown flag, positional arg rejection, `Resolve-LatestPnpmVersionFromJson`, `Get-PnpmPackageManagerSpec`, `Test-PnpmWorkspaceProject`, `Format-ProjectPackageManifest` -> `tests/unit/node-toolchain.test.ts` & `tests/unit/upnpmv.test.ts` (`Stage 4`)
+- [x] **Sec 14 (`GitHubActions.psm1`)**: `ConvertFrom-GitHubActionVersion`, `Compare-GitHubActionVersion`, `Get-GitHubActionUpdate`, `Update-GitHubActionFile` (CRLF + comment preservation, out-of-range error) -> `tests/unit/github-actions.test.ts` (`Stage 4`)
+- [x] **Sec 15 (`NodeToolchain.psm1`)**: `Get-VitePlusOxfmtSpec` -> `tests/unit/node-toolchain.test.ts` (`Stage 4`)
 - [ ] **Sec 16 (`Packages.psd1`)**: Windows manifest non-empty sections -> Kept in OS Bootstrap PowerShell contract check (`Stage 5`)
 - [ ] **Sec 17 (`VerifyCommon.psm1`)**: `Resolve-VerifyTargetFile` install group discovery -> Kept in OS Bootstrap PowerShell contract check (`Stage 5`)

@@ -340,3 +340,33 @@ export function createNodeCommandRunner(): CommandRunner {
     },
   };
 }
+
+/**
+ * Executes an async mapper over `items` with a bounded worker pool while preserving input order.
+ */
+export async function mapWithConcurrency<T, R>(
+  items: readonly T[],
+  concurrencyLimit: number,
+  mapper: (item: T, index: number) => Promise<R>,
+): Promise<readonly R[]> {
+  if (items.length === 0) {
+    return [];
+  }
+  const results: (R | undefined)[] = Array.from({ length: items.length });
+  let nextIndex = 0;
+
+  const runWorker = async (): Promise<void> => {
+    const index = nextIndex;
+    nextIndex += 1;
+    const item = items[index];
+    if (item === undefined) {
+      return;
+    }
+    results[index] = await mapper(item, index);
+    await runWorker();
+  };
+
+  const workerCount = Math.max(1, Math.min(concurrencyLimit, items.length));
+  await Promise.all(Array.from({ length: workerCount }, () => runWorker()));
+  return results.filter((entry): entry is R => entry !== undefined);
+}
