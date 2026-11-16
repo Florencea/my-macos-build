@@ -56,6 +56,8 @@ install_internal_cas() {
 setup_homebrew() {
   if [[ -x "/opt/homebrew/bin/brew" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
   fi
 
   if ! command -v brew >/dev/null 2>&1; then
@@ -180,6 +182,7 @@ configure_git_and_hostname() {
   git config --global user.email "bearflorencea@gmail.com"
   git config --global core.editor "nano"
   git config --global init.defaultBranch main
+  git config --global push.autoSetupRemote true
   git config --global pull.rebase false
   git config --global core.quotepath false
 
@@ -637,6 +640,7 @@ setup_vite_plus() {
     VP_LOG=error "$vp_bin" env default lts >/dev/null 2>&1
     VP_LOG=error "$vp_bin" env install lts >/dev/null 2>&1
     VP_LOG=error "$vp_bin" env install pnpm@latest >/dev/null 2>&1 || true
+    VP_LOG=error "$vp_bin" env clean >/dev/null 2>&1 || true
 
     if command -v jq >/dev/null 2>&1; then
       local target_oxfmt_ver current_oxfmt_ver

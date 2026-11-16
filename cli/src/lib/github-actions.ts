@@ -298,7 +298,7 @@ export async function getGitHubActionReferences(
  * Resolves the latest tag per major version for each unique GitHub Action repository in parallel.
  */
 export async function resolveGitHubActionLatestVersions(
-  ctx: Pick<CommandContext, "runner">,
+  ctx: Pick<CommandContext, "runner" | "signal">,
   repoSlugs: readonly string[],
 ): Promise<ReadonlyMap<string, RepoActionVersionResult>> {
   const uniqueRepos = [...new Set(repoSlugs)].toSorted((a, b) => a.localeCompare(b));
@@ -318,7 +318,7 @@ export async function resolveGitHubActionLatestVersions(
         "--refs",
         `https://github.com/${slug}.git`,
       ],
-      { env: { GIT_TERMINAL_PROMPT: "0" } },
+      { env: { GIT_TERMINAL_PROMPT: "0" }, signal: ctx.signal },
     );
 
     if (lsRes.exitCode !== 0) {

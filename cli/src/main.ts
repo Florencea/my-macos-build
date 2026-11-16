@@ -4,7 +4,9 @@ import process from "node:process";
 import { handleCliError } from "./lib/cli-framework.ts";
 import { createNodeCommandContext, type CommandRunner } from "./lib/context.ts";
 import { createNodeCommandRunner } from "./lib/process.ts";
-import { CLI_COMMANDS, COMMAND_NAMES } from "./registry.ts";
+import { COMMAND_NAMES, loadCommand } from "./registry.ts";
+
+const SIGNAL_CLEANUP_TIMEOUT_MS = 5000;
 
 export interface RunMainOptions {
   readonly runner?: CommandRunner;
@@ -31,16 +33,8 @@ export async function runMain(argv: readonly string[], options?: RunMainOptions)
     return 2;
   }
 
-  const command = CLI_COMMANDS.get(commandName);
-  if (command === undefined) {
-    writeStderr(
-      `Error: Unknown command '${commandName}'. Available: ${COMMAND_NAMES.join(", ")}\n`,
-    );
-    return 2;
-  }
-
   const runner = options?.runner ?? createNodeCommandRunner();
-  const cleanupHandlers = new Set<() => void>();
+  const cleanupHandlers = new Set<() => void | Promise<void>>();
   const abortController = new AbortController();
   let interruptedExitCode: number | null = null;
   let interruptedSignal: NodeJS.Signals | null = null;
@@ -50,15 +44,35 @@ export async function runMain(argv: readonly string[], options?: RunMainOptions)
     resolveSignalAbort = resolve;
   });
 
-  const runCleanup = (): void => {
+  const runCleanup = async (): Promise<void> => {
+    runner.cleanupActiveProcesses();
+    const pending: Promise<void>[] = [];
     for (const handler of cleanupHandlers) {
       try {
-        handler();
+        const maybePromise = handler();
+        if (maybePromise !== undefined) {
+          pending.push(Promise.resolve(maybePromise).catch(() => {}));
+        }
       } catch {
         // Continue running remaining signal cleanup handlers
       }
     }
-    runner.cleanupActiveProcesses();
+    if (pending.length === 0) {
+      return;
+    }
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([
+        Promise.allSettled(pending),
+        new Promise<void>((resolve) => {
+          timeoutId = setTimeout(resolve, SIGNAL_CLEANUP_TIMEOUT_MS);
+        }),
+      ]);
+    } finally {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+    }
   };
 
   const handleSignal = (sig: NodeJS.Signals, exitCode: number): void => {
@@ -67,10 +81,11 @@ export async function runMain(argv: readonly string[], options?: RunMainOptions)
     }
     interruptedExitCode = exitCode;
     interruptedSignal = sig;
-    runCleanup();
     abortController.abort(new Error(`Interrupted by ${sig}`));
-    resolveSignalAbort?.(exitCode);
-    options?.onSignalTerminate?.(sig, exitCode);
+    void runCleanup().finally(() => {
+      resolveSignalAbort?.(exitCode);
+      options?.onSignalTerminate?.(sig, exitCode);
+    });
   };
 
   const onSigInt = (): void => {
@@ -83,30 +98,43 @@ export async function runMain(argv: readonly string[], options?: RunMainOptions)
   process.on("SIGINT", onSigInt);
   process.on("SIGTERM", onSigTerm);
 
-  const baseCtx = createNodeCommandContext({
-    runner,
-    signal: abortController.signal,
-    onSignalCleanup: (handler: () => void) => {
-      cleanupHandlers.add(handler);
-      return () => {
-        cleanupHandlers.delete(handler);
-      };
-    },
-  });
-
-  const ctx =
-    options?.stdout !== undefined || options?.stderr !== undefined
-      ? { ...baseCtx, stdout: writeStdout, stderr: writeStderr }
-      : baseCtx;
-
+  let commandHelp = "";
   try {
+    const command = await loadCommand(commandName);
+    if (interruptedExitCode !== null) {
+      return interruptedExitCode;
+    }
+    if (command === undefined) {
+      writeStderr(
+        `Error: Unknown command '${commandName}'. Available: ${COMMAND_NAMES.join(", ")}\n`,
+      );
+      return 2;
+    }
+    commandHelp = command.formatHelp();
+
+    const baseCtx = createNodeCommandContext({
+      runner,
+      signal: abortController.signal,
+      onSignalCleanup: (handler: () => void | Promise<void>) => {
+        cleanupHandlers.add(handler);
+        return () => {
+          cleanupHandlers.delete(handler);
+        };
+      },
+    });
+
+    const ctx =
+      options?.stdout !== undefined || options?.stderr !== undefined
+        ? { ...baseCtx, stdout: writeStdout, stderr: writeStderr }
+        : baseCtx;
+
     const code = await Promise.race([command.execute(argv.slice(1), ctx), signalAbortPromise]);
     return interruptedExitCode ?? code;
   } catch (err) {
     if (interruptedExitCode !== null) {
       return interruptedExitCode;
     }
-    return handleCliError(err, command.formatHelp(), ctx.stderr);
+    return handleCliError(err, commandHelp !== "" ? commandHelp : undefined, writeStderr);
   } finally {
     process.off("SIGINT", onSigInt);
     process.off("SIGTERM", onSigTerm);

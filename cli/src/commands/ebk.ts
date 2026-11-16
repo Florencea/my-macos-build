@@ -132,8 +132,11 @@ async function commitBackupFile(
       "-q",
       "-m",
       `feat: Update ${fileName} by ebk`,
+      "--",
+      fileName,
     ]);
     if (commitRes.exitCode !== 0) {
+      await ctx.runner.exec("git", ["-C", configHome, "reset", "-q", "HEAD", "--", fileName]);
       const detail = formatNativeErrorDetail(
         [commitRes.stderr, commitRes.stdout],
         commitRes.exitCode,
@@ -248,11 +251,25 @@ export const ebkCommand = defineCommand({
     });
 
     if (needPush) {
-      const pushRes = await ctx.runner.exec("git", ["-C", configHome, "push", "-q"]);
-      if (pushRes.exitCode !== 0) {
-        const detail = formatNativeErrorDetail([pushRes.stderr, pushRes.stdout], pushRes.exitCode);
-        ctx.stderr(`Error: git push failed (${detail})\n`);
-        hasError = true;
+      const upstreamRes = await ctx.runner.exec("git", [
+        "-C",
+        configHome,
+        "rev-parse",
+        "--abbrev-ref",
+        "@{u}",
+      ]);
+      if (upstreamRes.exitCode === 0) {
+        const pushRes = await ctx.runner.exec("git", ["-C", configHome, "push", "-q"], {
+          signal: ctx.signal,
+        });
+        if (pushRes.exitCode !== 0) {
+          const detail = formatNativeErrorDetail(
+            [pushRes.stderr, pushRes.stdout],
+            pushRes.exitCode,
+          );
+          ctx.stderr(`Error: git push failed (${detail})\n`);
+          hasError = true;
+        }
       }
     }
 

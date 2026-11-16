@@ -9,6 +9,8 @@ const SHARED_IGNORE_PATTERNS = [
   ".vitest/**",
 ];
 
+const DOTNET_UNTRACKED_ENV = ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"];
+
 export default defineConfig({
   run: {
     cache: {
@@ -18,7 +20,7 @@ export default defineConfig({
       "ps:fast": {
         command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1",
         cache: {
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
+          untrackedEnv: DOTNET_UNTRACKED_ENV,
           output: [],
         },
       },
@@ -26,7 +28,7 @@ export default defineConfig({
         command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-lint.ps1 --target install",
         dependsOn: ["ps:fast"],
         cache: {
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
+          untrackedEnv: DOTNET_UNTRACKED_ENV,
           output: [],
         },
       },
@@ -34,7 +36,7 @@ export default defineConfig({
         command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-compat.ps1 --target install",
         dependsOn: ["ps:fast"],
         cache: {
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
+          untrackedEnv: DOTNET_UNTRACKED_ENV,
           output: [],
         },
       },
@@ -62,9 +64,20 @@ export default defineConfig({
         command: "vp test run --project contract --reporter=tap-flat --no-color",
         dependsOn: ["verify:unit", "ps:compat:install"],
         cache: {
-          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
+          untrackedEnv: DOTNET_UNTRACKED_ENV,
           output: [],
         },
+      },
+      "test:contract": {
+        command: "vp test run --project contract --reporter=tap-flat --no-color",
+        cache: {
+          untrackedEnv: DOTNET_UNTRACKED_ENV,
+          output: [],
+        },
+      },
+      "verify:ps": {
+        command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1",
+        cache: false,
       },
     },
   },

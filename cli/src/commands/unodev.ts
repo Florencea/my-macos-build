@@ -108,6 +108,8 @@ async function syncProjectNodeEngine(
     "-q",
     "-m",
     `chore(node): Update engines.node ${oldVer} -> ${targetVersion}`,
+    "--",
+    "package.json",
   ]);
   if (commitRes.exitCode !== 0) {
     await ctx.runner.exec("git", ["-C", project.dir, "reset", "-q", "HEAD", "--", "package.json"]);
@@ -116,10 +118,21 @@ async function syncProjectNodeEngine(
     return false;
   }
 
-  const pushRes = await ctx.runner.exec("git", ["-C", project.dir, "push", "-q"]);
-  if (pushRes.exitCode !== 0) {
-    ctx.stderr(`engines.node ${project.name}: failed to push\n`);
-    return false;
+  const upstreamRes = await ctx.runner.exec("git", [
+    "-C",
+    project.dir,
+    "rev-parse",
+    "--abbrev-ref",
+    "@{u}",
+  ]);
+  if (upstreamRes.exitCode === 0) {
+    const pushRes = await ctx.runner.exec("git", ["-C", project.dir, "push", "-q"], {
+      signal: ctx.signal,
+    });
+    if (pushRes.exitCode !== 0) {
+      ctx.stderr(`engines.node ${project.name}: failed to push\n`);
+      return false;
+    }
   }
 
   ctx.stdout(`engines.node ${project.name}: ${oldVer} -> ${targetVersion} ok\n`);

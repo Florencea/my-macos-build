@@ -151,6 +151,11 @@ describe("upnpmv command", () => {
       expect(getStderr()).toContain(
         "packageManager c-fail-install: vp install failed (install error)",
       );
+      expect(
+        calls.some(
+          (c) => c.includes(`-C ${okRepo} commit`) && c.includes("-- package.json pnpm-lock.yaml"),
+        ),
+      ).toBe(true);
       expect(calls.some((c) => c.includes(`-C ${okRepo} push -q`))).toBe(true);
       await expect(fs.stat(path.join(failInstallRepo, "pnpm-lock.yaml"))).rejects.toThrow(/ENOENT/);
     } finally {

@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "agent:test:contract": "vp test run --project contract --reporter=tap-flat --no-color",
+    "agent:test:contract": "vpr test:contract",
     "agent:test:unit": "vp test run --project unit --reporter=tap-flat --no-color",
     "agent:verify:gate": "vpr verify:gate",
     "agent:verify:inner": "vpr verify:inner",
-    "agent:verify:ps": "pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1",
+    "agent:verify:ps": "vpr verify:ps",
     "agent:verify:unit": "vpr verify:unit",
     "typecheck": "tsc --noEmit --pretty false",
     "cli:sync-bins": "vpx scripts/sync-cli-bins.ts"

@@ -84,7 +84,7 @@ async function detectNcuUpdates(ctx: CommandContext): Promise<Record<string, str
   const ncuRes = await ctx.runner.exec(
     "vpx",
     ["-s", "npm-check-updates@latest", "-t", "minor", "--install", "never", "--jsonUpgraded"],
-    { cwd: ctx.cwd },
+    { cwd: ctx.cwd, signal: ctx.signal },
   );
   if (ncuRes.exitCode !== 0) {
     return {};

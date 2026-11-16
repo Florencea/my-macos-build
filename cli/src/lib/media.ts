@@ -187,9 +187,9 @@ export async function downloadYtDlpSegment(
   const tempDir = await ctx.fs.mkdtemp(path.join(os.tmpdir(), "yt_seg_"));
   const outputTemplate = path.join(tempDir, "segment.%(ext)s");
 
-  const unregisterSignal = ctx.onSignalCleanup(() => {
-    void ctx.fs.rm(tempDir, { recursive: true, force: true }).catch(() => {});
-  });
+  const unregisterSignal = ctx.onSignalCleanup(() =>
+    ctx.fs.rm(tempDir, { recursive: true, force: true }).catch(() => {}),
+  );
 
   const commonArgs: string[] = [
     "--quiet",
@@ -280,9 +280,9 @@ export async function withMediaInputSource<T>(
     forceKeyframesAtCuts: spec.forceKeyframesAtCuts,
   });
 
-  const unregisterSignal = ctx.onSignalCleanup(() => {
-    void ctx.fs.rm(segment.tempDir, { recursive: true, force: true }).catch(() => {});
-  });
+  const unregisterSignal = ctx.onSignalCleanup(() =>
+    ctx.fs.rm(segment.tempDir, { recursive: true, force: true }).catch(() => {}),
+  );
 
   try {
     return await work({ isLocal: false, filePath: segment.filePath });

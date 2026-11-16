@@ -4,7 +4,6 @@ import { z } from "zod";
 
 import { defineCommand, parseValidatedInt } from "../lib/cli-framework.ts";
 import { ExecutionError, UsageError, type CommandContext } from "../lib/context.ts";
-import { DEFAULT_WEBREAD_MAX_CHARS, parseWebContent } from "../lib/webread-parser.ts";
 
 const JINA_TIMEOUT_MS = 15_000;
 const FETCH_TIMEOUT_MS = 20_000;
@@ -104,10 +103,11 @@ async function fetchWebreadContent(input: {
   readonly useJina: boolean;
   readonly raw: boolean;
   readonly selector: string | undefined;
-  readonly maxChars: number;
+  readonly maxChars: number | undefined;
   readonly untrustedEnclosure: boolean;
 }): Promise<string> {
   const { ctx, targetUrl, llms, useJina, raw, selector, maxChars, untrustedEnclosure } = input;
+  const { parseWebContent } = await import("../lib/webread-parser.ts");
 
   const parsePayload = async (
     payload: FetchedPayload,
@@ -262,9 +262,7 @@ export const webreadCommand = defineCommand({
   async run({ options, positionals, ctx }) {
     const rawMaxChars = options["max-chars"];
     const maxChars =
-      rawMaxChars !== undefined
-        ? parseValidatedInt(rawMaxChars, "--max-chars", 1)
-        : DEFAULT_WEBREAD_MAX_CHARS;
+      rawMaxChars !== undefined ? parseValidatedInt(rawMaxChars, "--max-chars", 1) : undefined;
 
     const targetUrl = normalizeTargetUrl(positionals[0] ?? "");
     const useJina = options.jina || options.external;

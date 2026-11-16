@@ -8,7 +8,7 @@ import { describe, expect, it } from "vite-plus/test";
 
 import { handleCliError } from "../../cli/src/lib/cli-framework.ts";
 import { UsageError } from "../../cli/src/lib/context.ts";
-import { CLI_COMMANDS, COMMAND_NAMES } from "../../cli/src/registry.ts";
+import { COMMAND_NAMES, loadAllCommands } from "../../cli/src/registry.ts";
 import { ExecErrorSchema, createTestContext } from "../unit/test-helpers.ts";
 
 const execFileAsync = promisify(execFile);
@@ -52,17 +52,31 @@ async function captureUsageError(
 }
 
 describe("all 12 CLI commands parity, completions, and symlink contract", () => {
-  it("registers all 12 expected commands in registry.ts", () => {
+  it("registers all 12 expected commands in registry.ts", async () => {
+    const commands = await loadAllCommands();
     expect([...COMMAND_NAMES].toSorted((a, b) => a.localeCompare(b))).toEqual([
       ...EXPECTED_COMMANDS,
     ]);
-    expect(CLI_COMMANDS.size).toBe(12);
+    expect(commands.size).toBe(12);
+  });
+
+  it("keeps scripts/install.sh fallback completions array aligned with COMMAND_NAMES", async () => {
+    const installSh = await fs.readFile(path.join(REPO_ROOT, "scripts", "install.sh"), "utf8");
+    const match = installSh.match(/local\s+-a\s+completions=\(([^)]+)\)/);
+    expect(match?.[1]).toBeDefined();
+    const listed = (match?.[1] ?? "")
+      .trim()
+      .split(/\s+/)
+      .filter((token) => token !== "")
+      .toSorted((a, b) => a.localeCompare(b));
+    expect(listed).toEqual([...COMMAND_NAMES].toSorted((a, b) => a.localeCompare(b)));
   });
 
   it("supports --help / -h, rejects unknown flags, and enforces positional bounds across all 12 commands", async () => {
+    const commands = await loadAllCommands();
     const results = await Promise.all(
       COMMAND_NAMES.map(async (cmdName) => {
-        const cmd = CLI_COMMANDS.get(cmdName);
+        const cmd = commands.get(cmdName);
         if (cmd === undefined) {
           throw new Error(`Missing registered command: ${cmdName}`);
         }
@@ -137,9 +151,10 @@ describe("all 12 CLI commands parity, completions, and symlink contract", () => 
   });
 
   it("maintains flag parity between command definitions and configs/zsh/completions", async () => {
+    const commands = await loadAllCommands();
     const completionEntries = await Promise.all(
       COMMAND_NAMES.map(async (cmdName) => {
-        const cmd = CLI_COMMANDS.get(cmdName);
+        const cmd = commands.get(cmdName);
         if (cmd === undefined) {
           throw new Error(`Missing registered command: ${cmdName}`);
         }
@@ -192,10 +207,11 @@ describe("all 12 CLI commands parity, completions, and symlink contract", () => 
   it.skipIf(process.platform === "win32")(
     "enforces positional rejection via extensionless symlinks outside repo for zero-positional commands",
     async () => {
+      const commands = await loadAllCommands();
       const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-cmd-contract-"));
       try {
         const zeroPositionalCommands = COMMAND_NAMES.filter(
-          (name) => (CLI_COMMANDS.get(name)?.positionals?.max ?? 0) === 0,
+          (name) => (commands.get(name)?.positionals?.max ?? 0) === 0,
         );
         const checks = await Promise.all(
           zeroPositionalCommands.map(async (name) => {

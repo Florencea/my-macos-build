@@ -123,6 +123,50 @@ function findBrokenWebreadUrls(raw: string): string[] {
   return broken;
 }
 
+function extractZshArrayTokens(rawScript: string, arrayName: string): string[] {
+  const escaped = arrayName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = rawScript.match(new RegExp(`local\\s+-a\\s+${escaped}=\\(([^)]+)\\)`));
+  if (match === null || match[1] === undefined) {
+    return [];
+  }
+  return match[1]
+    .trim()
+    .split(/\s+/)
+    .filter((token) => token !== "");
+}
+
+function collectInstallShFallbackPaths(installShRaw: string): ReadonlySet<string> {
+  const covered = new Set<string>();
+
+  for (const match of installShRaw.matchAll(/fetch_file\s+"\$repo_dir"\s+"(plugins\/[^"]+)"/g)) {
+    const relPath = match[1];
+    if (relPath !== undefined) {
+      covered.add(relPath);
+    }
+  }
+
+  for (const pluginName of ["common-modern-tools", "macos-modern-tools", "modern-web-stack"]) {
+    if (installShRaw.includes(`sync_plugin_dir "$repo_dir" "${pluginName}"`)) {
+      covered.add(`plugins/${pluginName}/plugin.json`);
+      if (pluginName !== "modern-web-stack") {
+        covered.add(`plugins/${pluginName}/rules/AGENTS.md`);
+      }
+    }
+  }
+
+  for (const ruleFile of extractZshArrayTokens(installShRaw, "web_rules")) {
+    covered.add(`plugins/modern-web-stack/rules/${ruleFile}`);
+  }
+  for (const skillName of extractZshArrayTokens(installShRaw, "web_skills")) {
+    covered.add(`plugins/modern-web-stack/skills/${skillName}/SKILL.md`);
+  }
+  for (const resFile of extractZshArrayTokens(installShRaw, "arch_resources")) {
+    covered.add(`plugins/modern-web-stack/skills/node-project-architecture/resources/${resFile}`);
+  }
+
+  return covered;
+}
+
 describe("antigravity plugins, rules, and skills contracts", () => {
   it("validates every plugin.json manifest against the Antigravity schema", async () => {
     const pluginDirs = await listSubdirectories(PLUGINS_ROOT);
@@ -303,22 +347,13 @@ describe("antigravity plugins, rules, and skills contracts", () => {
       expect(item.brokenUrls, `${item.filePath} uses known failing webread URLs`).toEqual([]);
     }
 
+    const fallbackPaths = collectInstallShFallbackPaths(installShRaw);
     for (const filePath of allFiles) {
       const rel = path.relative(REPO_ROOT, filePath).replace(/\\/g, "/");
-      const fileName = path.basename(rel);
-      const isCovered =
-        installShRaw.includes(rel) ||
-        rel.endsWith("/plugin.json") ||
-        (rel.startsWith("plugins/common-modern-tools/rules/") && fileName === "AGENTS.md") ||
-        (rel.startsWith("plugins/macos-modern-tools/rules/") && fileName === "AGENTS.md") ||
-        (rel.startsWith("plugins/modern-web-stack/rules/") && installShRaw.includes(fileName)) ||
-        (rel.startsWith("plugins/modern-web-stack/skills/") &&
-          fileName === "SKILL.md" &&
-          installShRaw.includes(path.basename(path.dirname(rel)))) ||
-        (rel.startsWith("plugins/modern-web-stack/skills/node-project-architecture/resources/") &&
-          installShRaw.includes(fileName));
-
-      expect(isCovered, `${rel} is missing from scripts/install.sh fallback deployment`).toBe(true);
+      expect(
+        fallbackPaths.has(rel),
+        `${rel} is missing from scripts/install.sh fallback deployment`,
+      ).toBe(true);
     }
   });
 });

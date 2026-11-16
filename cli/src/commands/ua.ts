@@ -272,7 +272,9 @@ async function syncWorkspaceGitRepos(ctx: CommandContext, projectsDir: string): 
     repos,
     GIT_PULL_CONCURRENCY,
     async (repo): Promise<GitPullResult> => {
-      const pullRes = await ctx.runner.exec("git", ["-C", repo.dir, "pull", "--all"]);
+      const pullRes = await ctx.runner.exec("git", ["-C", repo.dir, "pull", "--all"], {
+        signal: ctx.signal,
+      });
       const outText = [pullRes.stdout, pullRes.stderr].filter((s) => s !== "").join("\n");
       const isUpdated = /Updating |Fast-forward/.test(outText);
       return {

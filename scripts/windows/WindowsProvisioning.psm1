@@ -220,13 +220,7 @@ function Set-GlobalGitConfiguration {
     & git config --global init.defaultBranch main
     & git config --global push.autoSetupRemote true
     & git config --global pull.rebase false
-    & git config --global fetch.prune true
     & git config --global http.sslBackend schannel
-    & git config --global alias.st 'status -sb'
-    & git config --global alias.co 'checkout'
-    & git config --global alias.br 'branch'
-    & git config --global alias.ci 'commit'
-    & git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
     $gitRemoteBase = if (Test-Path -LiteralPath 'D:\') {
         'D:/Data/_GitRemote'
     }

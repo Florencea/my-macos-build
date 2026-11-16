@@ -134,10 +134,7 @@ export async function runBranchTransaction<T>(
     }
   };
 
-  const unregisterSignal =
-    options.onSignalCleanup?.(() => {
-      void rollback();
-    }) ?? (() => {});
+  const unregisterSignal = options.onSignalCleanup?.(() => rollback()) ?? (() => {});
 
   let result: T;
   try {

@@ -104,6 +104,12 @@ describe("ebk command", () => {
       expect(out).toContain("Backup ubo-config.txt ok");
       expect(out).toContain("Backup ubol-config.json ok");
       expect(out).toContain("Backup stylus.json ok (unchanged)");
+      expect(
+        gitCalls.some(
+          (args) =>
+            args.includes("commit") && args.includes("--") && args.includes("ubol-config.json"),
+        ),
+      ).toBe(true);
       expect(gitCalls.some((args) => args.includes("push"))).toBe(true);
     } finally {
       await fs.rm(tempDir, { recursive: true, force: true });
@@ -148,12 +154,14 @@ describe("ebk command", () => {
       await fs.mkdir(downloadsDir, { recursive: true });
       await fs.writeFile(path.join(downloadsDir, "tampermonkey-backup-1.zip"), "raw");
 
+      const gitCalls: Array<readonly string[]> = [];
       const { ctx, getStderr } = createTestContext({
         env: { HOME: tempDir },
         repoRoot: tempDir,
         runner: {
           commandExists: async () => true,
           exec: async (_command, args) => {
+            gitCalls.push(args);
             if (args.includes("status")) {
               return { exitCode: 0, stdout: "M tampermonkey.json", stderr: "" };
             }
@@ -167,6 +175,12 @@ describe("ebk command", () => {
 
       await expect(ebkCommand.execute([], ctx)).resolves.toBe(1);
       expect(getStderr()).toContain("git commit failed for tampermonkey.json");
+      expect(
+        gitCalls.some(
+          (args) =>
+            args.includes("reset") && args.includes("HEAD") && args.includes("tampermonkey.json"),
+        ),
+      ).toBe(true);
     } finally {
       await fs.rm(tempDir, { recursive: true, force: true });
     }

@@ -140,6 +140,7 @@ async function updateProjectPnpmVersion(
 
   const installRes = await ctx.runner.exec("vp", ["-C", project.dir, "install", "--silent"], {
     env: vpEnv,
+    signal: ctx.signal,
   });
   if (installRes.exitCode !== 0) {
     await restoreProjectManifest(ctx, project.dir, rollbackSpec);
@@ -217,6 +218,8 @@ async function updateProjectPnpmVersion(
     "-q",
     "-m",
     commitMsg,
+    "--",
+    ...filesToStage,
   ]);
   if (commitRes.exitCode !== 0) {
     await ctx.runner.exec("git", ["-C", project.dir, "reset", "-q", "HEAD", "--", ...filesToStage]);
@@ -233,7 +236,9 @@ async function updateProjectPnpmVersion(
     "@{u}",
   ]);
   if (upstreamRes.exitCode === 0) {
-    const pushRes = await ctx.runner.exec("git", ["-C", project.dir, "push", "-q"]);
+    const pushRes = await ctx.runner.exec("git", ["-C", project.dir, "push", "-q"], {
+      signal: ctx.signal,
+    });
     if (pushRes.exitCode !== 0) {
       ctx.stderr(`packageManager ${project.name}: failed to push\n`);
       return false;

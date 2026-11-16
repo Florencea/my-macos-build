@@ -41,6 +41,11 @@ describe("main entrypoint and process utilities", () => {
     let out = "";
     let err = "";
 
+    let resolveExecStarted: (() => void) | undefined;
+    const execStarted = new Promise<void>((resolve) => {
+      resolveExecStarted = resolve;
+    });
+
     const runPromise = runMain(["up"], {
       stdout: (text) => {
         out += text;
@@ -53,10 +58,12 @@ describe("main entrypoint and process utilities", () => {
       },
       runner: {
         commandExists: async () => true,
-        exec: () =>
-          new Promise(() => {
+        exec: () => {
+          resolveExecStarted?.();
+          return new Promise(() => {
             // Never resolves unless signal aborts runMain
-          }),
+          });
+        },
         pipe: async () => ({ leftExitCode: 0, rightExitCode: 0, stdout: "", stderr: "" }),
         spawnInteractive: async () => 0,
         cleanupActiveProcesses: () => {
@@ -65,9 +72,7 @@ describe("main entrypoint and process utilities", () => {
       },
     });
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 25);
-    });
+    await execStarted;
     process.emit("SIGINT");
 
     const exitCode = await runPromise;
@@ -76,6 +81,78 @@ describe("main entrypoint and process utilities", () => {
     expect(terminatedSignal).toBe("SIGINT");
     expect(out).toBe("");
     expect(err).toBe("");
+  });
+
+  it("awaits async onSignalCleanup rollback handlers before resolving on SIGINT", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-sigint-rollback-"));
+    const prevCwd = process.cwd();
+    try {
+      await fs.writeFile(
+        path.join(tempDir, "package.json"),
+        JSON.stringify({ name: "demo", devDependencies: { "vite-plus": "1.5.0" } }),
+      );
+      process.chdir(tempDir);
+
+      let resolveEntered: (() => void) | undefined;
+      const enteredTransaction = new Promise<void>((resolve) => {
+        resolveEntered = resolve;
+      });
+      let rollbackCompleted = false;
+      let terminatedBeforeRollback = false;
+
+      const runPromise = runMain(["up"], {
+        stdout: () => {},
+        stderr: () => {},
+        onSignalTerminate: () => {
+          terminatedBeforeRollback = !rollbackCompleted;
+        },
+        runner: {
+          commandExists: async () => true,
+          exec: async (cmd, args) => {
+            if (cmd === "git" && args.includes("HEAD")) {
+              return { exitCode: 0, stdout: "main\n", stderr: "" };
+            }
+            if (cmd === "git" && args.includes("@{u}")) {
+              return { exitCode: 1, stdout: "", stderr: "" };
+            }
+            if (args[0] === "--version") {
+              return { exitCode: 0, stdout: "vp v1.6.0\n", stderr: "" };
+            }
+            if (cmd === "vpx" && args.includes("--jsonUpgraded")) {
+              return { exitCode: 0, stdout: '{"zod":"4.6.7"}\n', stderr: "" };
+            }
+            if (cmd === "vp" && args[0] === "migrate") {
+              resolveEntered?.();
+              return await new Promise(() => {
+                // Simulate long-running command interrupted by SIGINT
+              });
+            }
+            if (cmd === "git" && args.includes("reset")) {
+              await new Promise((resolve) => {
+                setTimeout(resolve, 30);
+              });
+              rollbackCompleted = true;
+              return { exitCode: 0, stdout: "", stderr: "" };
+            }
+            return { exitCode: 0, stdout: "", stderr: "" };
+          },
+          pipe: async () => ({ leftExitCode: 0, rightExitCode: 0, stdout: "", stderr: "" }),
+          spawnInteractive: async () => 0,
+          cleanupActiveProcesses: () => {},
+        },
+      });
+
+      await enteredTransaction;
+
+      process.emit("SIGINT");
+      const exitCode = await runPromise;
+      expect(exitCode).toBe(130);
+      expect(rollbackCompleted).toBe(true);
+      expect(terminatedBeforeRollback).toBe(false);
+    } finally {
+      process.chdir(prevCwd);
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
   });
 
   it("ignores extensionless POSIX shims on win32 and resolves .cmd/.exe via PATHEXT", async () => {

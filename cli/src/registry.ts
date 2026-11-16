@@ -1,34 +1,32 @@
-import { clallCommand } from "./commands/clall.ts";
-import { ebkCommand } from "./commands/ebk.ts";
-import { mdigCommand } from "./commands/mdig.ts";
-import { mkclpCommand } from "./commands/mkclp.ts";
-import { mkgifCommand } from "./commands/mkgif.ts";
-import { mmbCommand } from "./commands/mmb.ts";
-import { reaCommand } from "./commands/rea.ts";
-import { uaCommand } from "./commands/ua.ts";
-import { unodevCommand } from "./commands/unodev.ts";
-import { upCommand } from "./commands/up.ts";
-import { upnpmvCommand } from "./commands/upnpmv.ts";
-import { webreadCommand } from "./commands/webread.ts";
 import type { RegisteredCommand } from "./lib/cli-framework.ts";
 
-const REGISTERED_LIST: readonly RegisteredCommand[] = [
-  clallCommand,
-  ebkCommand,
-  mdigCommand,
-  mkclpCommand,
-  mkgifCommand,
-  mmbCommand,
-  reaCommand,
-  uaCommand,
-  unodevCommand,
-  upCommand,
-  upnpmvCommand,
-  webreadCommand,
-];
+export type CommandLoader = () => Promise<RegisteredCommand>;
 
-export const CLI_COMMANDS: ReadonlyMap<string, RegisteredCommand> = new Map(
-  REGISTERED_LIST.map((cmd) => [cmd.name, cmd]),
-);
+const COMMAND_LOADERS: ReadonlyMap<string, CommandLoader> = new Map([
+  ["clall", async () => (await import("./commands/clall.ts")).clallCommand],
+  ["ebk", async () => (await import("./commands/ebk.ts")).ebkCommand],
+  ["mdig", async () => (await import("./commands/mdig.ts")).mdigCommand],
+  ["mkclp", async () => (await import("./commands/mkclp.ts")).mkclpCommand],
+  ["mkgif", async () => (await import("./commands/mkgif.ts")).mkgifCommand],
+  ["mmb", async () => (await import("./commands/mmb.ts")).mmbCommand],
+  ["rea", async () => (await import("./commands/rea.ts")).reaCommand],
+  ["ua", async () => (await import("./commands/ua.ts")).uaCommand],
+  ["unodev", async () => (await import("./commands/unodev.ts")).unodevCommand],
+  ["up", async () => (await import("./commands/up.ts")).upCommand],
+  ["upnpmv", async () => (await import("./commands/upnpmv.ts")).upnpmvCommand],
+  ["webread", async () => (await import("./commands/webread.ts")).webreadCommand],
+]);
 
-export const COMMAND_NAMES: readonly string[] = REGISTERED_LIST.map((cmd) => cmd.name);
+export const COMMAND_NAMES: readonly string[] = [...COMMAND_LOADERS.keys()];
+
+export async function loadCommand(name: string): Promise<RegisteredCommand | undefined> {
+  const loader = COMMAND_LOADERS.get(name);
+  return loader !== undefined ? await loader() : undefined;
+}
+
+export async function loadAllCommands(): Promise<ReadonlyMap<string, RegisteredCommand>> {
+  const entries = await Promise.all(
+    [...COMMAND_LOADERS.entries()].map(async ([name, loader]) => [name, await loader()] as const),
+  );
+  return new Map(entries);
+}

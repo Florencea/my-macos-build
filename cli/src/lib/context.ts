@@ -102,7 +102,7 @@ export interface CommandContext {
   readonly dryRun: boolean;
   readonly now: () => Date;
   readonly signal?: AbortSignal;
-  readonly onSignalCleanup: (handler: () => void) => () => void;
+  readonly onSignalCleanup: (handler: () => void | Promise<void>) => () => void;
 }
 
 export class CliError extends Error {
@@ -207,7 +207,7 @@ export interface NodeContextOverrides {
   readonly repoRoot?: string;
   readonly dryRun?: boolean;
   readonly signal?: AbortSignal;
-  readonly onSignalCleanup?: (handler: () => void) => () => void;
+  readonly onSignalCleanup?: (handler: () => void | Promise<void>) => () => void;
 }
 
 function noopCleanup(): () => void {

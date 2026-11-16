@@ -125,7 +125,49 @@ describe("unodev command", () => {
       expect(calls.some((c) => c.includes(`-C ${badFmtRepo} checkout -q -- package.json`))).toBe(
         true,
       );
+      expect(
+        calls.some((c) => c.includes(`-C ${repoRoot} commit`) && c.includes("-- package.json")),
+      ).toBe(true);
       expect(calls.some((c) => c.includes(`-C ${repoRoot} push -q`))).toBe(true);
+    } finally {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  it("skips git push when a project has no upstream branch", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-unodev-no-upstream-"));
+    try {
+      const repoRoot = path.join(tempDir, "local-only");
+      await fs.mkdir(path.join(repoRoot, ".git"), { recursive: true });
+      await fs.writeFile(path.join(repoRoot, "package.json"), '{"name":"local-only"}\n');
+
+      const calls: string[] = [];
+      const { ctx, getStdout } = createTestContext({
+        repoRoot,
+        runner: {
+          commandExists: async () => true,
+          exec: async (cmd, args) => {
+            calls.push(`${cmd} ${args.join(" ")}`);
+            if (cmd === "vp" && args[0] === "node") {
+              return { exitCode: 0, stdout: "v26.13.1\n", stderr: "" };
+            }
+            if (cmd === "vp" && args.includes("get")) {
+              return { exitCode: 0, stdout: '"26.11.0"\n', stderr: "" };
+            }
+            if (cmd === "git" && args.includes("--short")) {
+              return { exitCode: 0, stdout: "M  package.json\n", stderr: "" };
+            }
+            if (cmd === "git" && args.includes("@{u}")) {
+              return { exitCode: 1, stdout: "", stderr: "no upstream" };
+            }
+            return { exitCode: 0, stdout: "", stderr: "" };
+          },
+        },
+      });
+
+      await expect(unodevCommand.execute([], ctx)).resolves.toBe(0);
+      expect(getStdout()).toContain("engines.node local-only: 26.11.0 -> 26.13.1 ok");
+      expect(calls.some((c) => c.includes(" push "))).toBe(false);
     } finally {
       await fs.rm(tempDir, { recursive: true, force: true });
     }

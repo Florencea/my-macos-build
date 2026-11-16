@@ -14,7 +14,10 @@ $fixMode = $false
 $targetPaths = [System.Collections.Generic.List[string]]::new()
 for ($i = 0; $i -lt $args.Count; $i++) {
     $arg = [string]$args[$i]
-    if ($arg -eq '--fix') {
+    if ($arg -eq '--') {
+        continue
+    }
+    elseif ($arg -eq '--fix') {
         $fixMode = $true
     }
     elseif ($arg -match '^--?path=(.+)$') {

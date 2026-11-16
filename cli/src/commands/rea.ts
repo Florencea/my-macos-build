@@ -82,9 +82,9 @@ export const reaCommand = defineCommand({
       return 0;
     }
 
-    const unregisterSignal = ctx.onSignalCleanup(() => {
-      void ctx.fs.rm(tmpFile, { force: true }).catch(() => {});
-    });
+    const unregisterSignal = ctx.onSignalCleanup(() =>
+      ctx.fs.rm(tmpFile, { force: true }).catch(() => {}),
+    );
 
     try {
       const result = await ctx.runner.exec(

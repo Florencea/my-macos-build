@@ -2,8 +2,12 @@
 export SHELL_SESSIONS_DISABLE=1
 
 # Homebrew environment (only if not already initialized by login shell)
-if [[ -z "${HOMEBREW_PREFIX:-}" && -x "/opt/homebrew/bin/brew" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -z "${HOMEBREW_PREFIX:-}" ]]; then
+  if [[ -x "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
 # Ensure unique entries in PATH
