@@ -10,7 +10,8 @@
     "agent:verify:inner": "vpr verify:inner",
     "agent:verify:ps": "pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1",
     "agent:verify:unit": "vpr verify:unit",
-    "typecheck": "tsc --noEmit --pretty false"
+    "typecheck": "tsc --noEmit --pretty false",
+    "cli:sync-bins": "vpx scripts/sync-cli-bins.ts"
   },
   "dependencies": {
     "defuddle": "0.19.6",

@@ -20,6 +20,7 @@ export default defineConfig({
             "tests/verify-ps-fast.ps1",
             "PSScriptAnalyzerSettings.psd1",
           ],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },
@@ -34,6 +35,7 @@ export default defineConfig({
             "tests/**/*.psm1",
             "PSScriptAnalyzerSettings.psd1",
           ],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },
@@ -49,6 +51,7 @@ export default defineConfig({
             "tests/verify-ps-lint.ps1",
             "PSScriptAnalyzerSettings.psd1",
           ],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },
@@ -62,6 +65,7 @@ export default defineConfig({
             "tests/VerifyCommon.psm1",
             "tests/verify-ps-compat.ps1",
           ],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },
@@ -76,19 +80,21 @@ export default defineConfig({
             "tests/VerifyCommon.psm1",
             "tests/verify-ps-compat.ps1",
           ],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },
       "lint:shell": {
-        command: "pwsh -NoLogo -NoProfile -File tests/verify-shell.ps1",
+        command: "vpx tests/verify-shell.ts",
         cache: {
           input: [
             "scripts/install.sh",
             "configs/zsh/**",
             "configs/bash/**",
             "configs/git/hooks/**",
-            "tests/VerifyCommon.psm1",
-            "tests/verify-shell.ps1",
+            "cli/bin/*",
+            "cli/src/lib/process.ts",
+            "tests/verify-shell.ts",
           ],
           output: [],
         },
@@ -100,6 +106,8 @@ export default defineConfig({
           input: [
             "cli/helpers/**/*.ts",
             "cli/helpers/**/*.d.ts",
+            "cli/src/**/*.ts",
+            "scripts/**/*.ts",
             "tests/**/*.ts",
             "plugins/**",
             ".agents/**",
@@ -116,7 +124,9 @@ export default defineConfig({
         cache: {
           input: [
             "cli/helpers/webread-parser.ts",
+            "cli/src/**/*.ts",
             "tests/webread-parser.test.ts",
+            "tests/unit/**/*.test.ts",
             "package.json",
             "tsconfig.json",
             "vite.config.ts",
@@ -138,6 +148,7 @@ export default defineConfig({
             "package.json",
           ],
           env: ["YT_DLP_BROWSER"],
+          untrackedEnv: ["DOTNET_ROOT", "DOTNET_ROOT_ARM64"],
           output: [],
         },
       },
@@ -147,7 +158,11 @@ export default defineConfig({
         cache: {
           input: [
             "plugins/**",
+            "cli/bin/**",
+            "cli/src/**/*.ts",
+            "scripts/sync-cli-bins.ts",
             "tests/plugins.test.ts",
+            "tests/contract/**/*.test.ts",
             "PSScriptAnalyzerSettings.psd1",
             "package.json",
             "vite.config.ts",
@@ -159,6 +174,7 @@ export default defineConfig({
   },
   lint: {
     ignorePatterns: [
+      "cli/bin/**",
       "configs/**",
       "plugins/**/resources/**",
       "node_modules/**",
@@ -178,6 +194,7 @@ export default defineConfig({
   },
   fmt: {
     ignorePatterns: [
+      "cli/bin/**",
       "configs/**",
       "plugins/**/resources/**",
       "node_modules/**",
@@ -195,14 +212,14 @@ export default defineConfig({
         extends: true,
         test: {
           name: "unit",
-          include: ["tests/webread-parser.test.ts"],
+          include: ["tests/webread-parser.test.ts", "tests/unit/**/*.test.ts"],
         },
       },
       {
         extends: true,
         test: {
           name: "contract",
-          include: ["tests/plugins.test.ts"],
+          include: ["tests/plugins.test.ts", "tests/contract/**/*.test.ts"],
         },
       },
     ],

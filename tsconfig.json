@@ -14,5 +14,12 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["vite.config.ts", "cli/helpers/**/*.ts", "cli/helpers/**/*.d.ts", "tests/**/*.ts"]
+  "include": [
+    "vite.config.ts",
+    "cli/helpers/**/*.ts",
+    "cli/helpers/**/*.d.ts",
+    "cli/src/**/*.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.ts"
+  ]
 }
