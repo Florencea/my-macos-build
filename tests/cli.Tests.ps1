@@ -11,8 +11,14 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 $cliDir = Join-Path $repoRoot 'cli'
 $commonModule = Join-Path $cliDir 'helpers' 'CliCommon.psm1'
+$nodeToolchainModule = Join-Path $cliDir 'helpers' 'NodeToolchain.psm1'
+$mediaModule = Join-Path $cliDir 'helpers' 'MediaCommon.psm1'
+$githubActionsModule = Join-Path $cliDir 'helpers' 'GitHubActions.psm1'
 $verifyModule = Join-Path $PSScriptRoot 'VerifyCommon.psm1'
 Import-Module -Name $commonModule -Force
+Import-Module -Name $nodeToolchainModule -Force
+Import-Module -Name $mediaModule -Force
+Import-Module -Name $githubActionsModule -Force
 Import-Module -Name $verifyModule -Force
 
 $script:passed = 0
@@ -479,6 +485,78 @@ Stop-Job -Name 'nonexistent' -Force -ErrorAction SilentlyContinue
         $fmtBad = Format-ProjectPackageManifest -ProjectDir $invalidPkgRepo
         Assert-Condition -Name 'Format-ProjectPackageManifest fails on malformed package.json' -Condition ((-not $fmtBad.Success) -and (-not [string]::IsNullOrWhiteSpace($fmtBad.ErrorDetail)))
     }
+
+    # 14. GitHubActions.psm1 unit tests
+    $v4 = ConvertFrom-GitHubActionVersion -Ref 'v4'
+    $v42 = ConvertFrom-GitHubActionVersion -Ref 'v4.2'
+    $v421 = ConvertFrom-GitHubActionVersion -Ref 'v4.2.1'
+    Assert-Condition -Name 'ConvertFrom-GitHubActionVersion parses v4' -Condition (($null -ne $v4) -and ($v4.Major -eq 4) -and ($v4.Precision -eq 1))
+    Assert-Condition -Name 'ConvertFrom-GitHubActionVersion parses v4.2.1' -Condition (($null -ne $v421) -and ($v421.Major -eq 4) -and ($v421.Minor -eq 2) -and ($v421.Patch -eq 1) -and ($v421.Precision -eq 3))
+    Assert-Condition -Name 'ConvertFrom-GitHubActionVersion rejects bare integer without v prefix' -Condition ($null -eq (ConvertFrom-GitHubActionVersion -Ref '4'))
+    Assert-Condition -Name 'ConvertFrom-GitHubActionVersion rejects commit SHA' -Condition ($null -eq (ConvertFrom-GitHubActionVersion -Ref 'a81bbbf8298c0fa03ea29cdc473d45769f953675'))
+
+    Assert-Condition -Name 'Compare-GitHubActionVersion orders v4.2.1 > v4.2 > v4' -Condition (((Compare-GitHubActionVersion -Left $v421 -Right $v42) -eq 1) -and ((Compare-GitHubActionVersion -Left $v4 -Right $v42) -eq -1) -and ((Compare-GitHubActionVersion -Left $v42 -Right $v42) -eq 0))
+
+    $ghaRefs = @(
+        @{
+            FilePath       = '.github/workflows/ci.yml'
+            Line           = 12
+            OldUses        = 'actions/checkout@v4'
+            RepoSlug       = 'actions/checkout'
+            ActionTarget   = 'actions/checkout'
+            CurrentRef     = 'v4'
+            CurrentVersion = $v4
+        }
+    )
+    $ghaLatest = @{
+        'actions/checkout' = @{
+            4 = $v421
+        }
+    }
+    $ghaUpdates = @(Get-GitHubActionUpdate -References $ghaRefs -LatestByMajorByRepo $ghaLatest)
+    Assert-Condition -Name 'Get-GitHubActionUpdate computes target upgrade within same major' -Condition (($ghaUpdates.Count -eq 1) -and ($ghaUpdates[0]['NewUses'] -eq 'actions/checkout@v4.2.1'))
+
+    $wfPath = Join-Path $tempTestDir 'ci.yml'
+    $wfContent = "jobs:`r`n  test:`r`n    steps:`r`n      - uses: actions/checkout@v4 # keep comment`r`n"
+    [System.IO.File]::WriteAllText($wfPath, $wfContent, [System.Text.UTF8Encoding]::new($false))
+    $changedWf = @(Update-GitHubActionFile -Updates @(
+            @{
+                FilePath = $wfPath
+                Line     = 4
+                OldUses  = 'actions/checkout@v4'
+                NewUses  = 'actions/checkout@v4.2.1'
+            }
+        ))
+    $updatedWfText = [System.IO.File]::ReadAllText($wfPath)
+    Assert-Condition -Name 'Update-GitHubActionFile updates targeted line and preserves CRLF and comment' -Condition (($changedWf.Count -eq 1) -and ($updatedWfText -eq "jobs:`r`n  test:`r`n    steps:`r`n      - uses: actions/checkout@v4.2.1 # keep comment`r`n")) -Detail $updatedWfText
+    Assert-Throw -Name 'Update-GitHubActionFile throws on out-of-range line index' -Action {
+        Update-GitHubActionFile -Updates @(
+            @{
+                FilePath = $wfPath
+                Line     = 99
+                OldUses  = 'actions/checkout@v4.2.1'
+                NewUses  = 'actions/checkout@v4.3.0'
+            }
+        )
+    }
+
+    # 15. NodeToolchain.psm1 Get-VitePlusOxfmtSpec unit test
+    $mockVpHome = Join-Path $tempTestDir 'vp_home'
+    $mockVpPkgDir = Join-Path $mockVpHome 'current' 'node_modules' 'vite-plus'
+    New-Item -ItemType Directory -Force -Path $mockVpPkgDir | Out-Null
+    [System.IO.File]::WriteAllText((Join-Path $mockVpPkgDir 'package.json'), '{"name":"vite-plus","dependencies":{"oxfmt":"^1.2.3"}}', [System.Text.UTF8Encoding]::new($false))
+    $oxfmtSpec = Get-VitePlusOxfmtSpec -FallbackRoots @($mockVpHome)
+    Assert-Condition -Name 'Get-VitePlusOxfmtSpec resolves bundled oxfmt version from fallback root' -Condition (($null -ne $oxfmtSpec) -and ($oxfmtSpec.VpHome -eq $mockVpHome) -and ($oxfmtSpec.OxfmtVersion -eq '1.2.3'))
+
+    # 16. Windows Packages.psd1 manifest contract tests
+    $packagesPsd1 = Join-Path $repoRoot 'scripts' 'windows' 'Packages.psd1'
+    $winManifest = Import-PowerShellDataFile -LiteralPath $packagesPsd1
+    Assert-Condition -Name 'Packages.psd1 contains non-empty CliPackages and DesktopPackages' -Condition ((@($winManifest['CliPackages']).Count -gt 0) -and (@($winManifest['DesktopPackages']).Count -gt 0))
+    Assert-Condition -Name 'Packages.psd1 contains non-empty InternalRootCAs and AntigravityPlugins' -Condition ((@($winManifest['InternalRootCAs']).Count -gt 0) -and (@($winManifest['AntigravityPlugins']).Count -gt 0))
+
+    # 17. VerifyCommon.psm1 Tier B target discovery test
+    $installTargets = @(Resolve-VerifyTargetFile -RepoRoot $repoRoot -TargetGroup 'install' | ForEach-Object { $_.Name })
+    Assert-Condition -Name 'Resolve-VerifyTargetFile install group includes install.ps1 and windows helper modules' -Condition (($installTargets -contains 'install.ps1') -and ($installTargets -contains 'WinGetBootstrap.psm1') -and ($installTargets -contains 'WindowsProvisioning.psm1')) -Detail ($installTargets -join ', ')
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {

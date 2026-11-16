@@ -13,7 +13,9 @@ export default defineConfig({
           input: [
             "cli/**/*.ps1",
             "cli/**/*.psm1",
-            "scripts/install.ps1",
+            "scripts/**/*.ps1",
+            "scripts/**/*.psm1",
+            "scripts/**/*.psd1",
             "tests/VerifyCommon.psm1",
             "tests/verify-ps-fast.ps1",
             "PSScriptAnalyzerSettings.psd1",
@@ -40,7 +42,9 @@ export default defineConfig({
         dependsOn: ["ps:fast"],
         cache: {
           input: [
-            "scripts/install.ps1",
+            "scripts/**/*.ps1",
+            "scripts/**/*.psm1",
+            "scripts/**/*.psd1",
             "tests/VerifyCommon.psm1",
             "tests/verify-ps-lint.ps1",
             "PSScriptAnalyzerSettings.psd1",
@@ -65,7 +69,13 @@ export default defineConfig({
         command: "pwsh -NoLogo -NoProfile -File tests/verify-ps-compat.ps1 --target install",
         dependsOn: ["ps:fast"],
         cache: {
-          input: ["scripts/install.ps1", "tests/VerifyCommon.psm1", "tests/verify-ps-compat.ps1"],
+          input: [
+            "scripts/**/*.ps1",
+            "scripts/**/*.psm1",
+            "scripts/**/*.psd1",
+            "tests/VerifyCommon.psm1",
+            "tests/verify-ps-compat.ps1",
+          ],
           output: [],
         },
       },

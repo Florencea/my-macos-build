@@ -29,6 +29,7 @@ elseif (-not $scriptDir) {
     $scriptDir = Split-Path -Parent (($entryInfo.ResolveLinkTarget($true) ?? $entryInfo).FullName)
 }
 Import-Module -Name (Join-Path $scriptDir 'helpers' 'CliCommon.psm1') -Force
+Import-Module -Name (Join-Path $scriptDir 'helpers' 'NodeToolchain.psm1') -Force
 
 function Show-Help {
     Write-Output @'
@@ -103,139 +104,6 @@ if ($IsMacOS -and (-not $SkipBrew)) {
 elseif ($IsWindows -and (-not $SkipWinget)) {
     if (Get-Command 'winget' -ErrorAction SilentlyContinue) {
         & winget upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements
-    }
-}
-
-function Get-VitePlusOxfmtSpec {
-    param(
-        [string]$VpCommandPath,
-        [string]$VpVersion
-    )
-
-    $candidateRoots = [System.Collections.Generic.List[string]]::new()
-    if (-not [string]::IsNullOrWhiteSpace($env:VP_HOME)) {
-        $candidateRoots.Add($env:VP_HOME.Trim())
-    }
-    if (-not [string]::IsNullOrWhiteSpace($VpCommandPath)) {
-        $binDir = Split-Path -Parent $VpCommandPath
-        if ($binDir) {
-            $parentDir = Split-Path -Parent $binDir
-            if ($parentDir) {
-                $candidateRoots.Add($parentDir)
-            }
-        }
-        $vpInfo = [System.IO.FileInfo]::new($VpCommandPath)
-        $vpTarget = $vpInfo.ResolveLinkTarget($true)
-        if ($null -ne $vpTarget) {
-            $targetBinDir = Split-Path -Parent $vpTarget.FullName
-            if ($targetBinDir) {
-                $targetParentDir = Split-Path -Parent $targetBinDir
-                if ($targetParentDir) {
-                    $candidateRoots.Add($targetParentDir)
-                }
-            }
-        }
-    }
-
-    if ($IsWindows) {
-        $candidateRoots.Add('E:\vite-plus')
-        $candidateRoots.Add((Join-Path $HOME '.vite-plus'))
-    }
-    else {
-        $candidateRoots.Add((Join-Path $HOME '.local/share/vite-plus'))
-    }
-
-    $seen = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-    foreach ($root in $candidateRoots) {
-        if ([string]::IsNullOrWhiteSpace($root) -or (-not $seen.Add($root)) -or (-not (Test-Path -LiteralPath $root -PathType Container))) {
-            continue
-        }
-
-        $pkgCandidates = [System.Collections.Generic.List[string]]::new()
-        $pkgCandidates.Add((Join-Path $root 'current/node_modules/vite-plus/package.json'))
-        if ($VpVersion) {
-            $pkgCandidates.Add((Join-Path $root "$VpVersion/node_modules/vite-plus/package.json"))
-        }
-        $pkgCandidates.Add((Join-Path $root 'node_modules/vite-plus/package.json'))
-
-        foreach ($pkgPath in $pkgCandidates) {
-            if (-not (Test-Path -LiteralPath $pkgPath -PathType Leaf)) {
-                continue
-            }
-
-            $pkg = Get-Content -LiteralPath $pkgPath -Raw | ConvertFrom-Json -AsHashtable
-            $deps = $pkg['dependencies']
-            if ($deps -is [hashtable] -and $deps.ContainsKey('oxfmt')) {
-                $rawVer = ([string]$deps['oxfmt']).Trim()
-                $targetVer = $rawVer -replace '^[^0-9]*', ''
-                if ($targetVer) {
-                    $vpHomeDir = $root
-                    if ($pkgPath -eq (Join-Path $root 'node_modules/vite-plus/package.json')) {
-                        $vpHomeDir = Split-Path -Parent $root
-                    }
-                    return [PSCustomObject]@{
-                        VpHome       = $vpHomeDir
-                        OxfmtVersion = $targetVer
-                    }
-                }
-            }
-        }
-    }
-
-    return $null
-}
-
-function Sync-GlobalOxfmt {
-    $vpCmd = Get-Command 'vp' -ErrorAction SilentlyContinue
-    if ($null -eq $vpCmd) {
-        return
-    }
-
-    $vpVerOut = @(& vp --version 2>$null)
-    $vpVersion = ''
-    foreach ($line in $vpVerOut) {
-        if ([string]$line -match '^vp v([^\s]+)') {
-            $vpVersion = $Matches[1]
-            break
-        }
-    }
-
-    $spec = Get-VitePlusOxfmtSpec -VpCommandPath $vpCmd.Source -VpVersion $vpVersion
-    if ($null -eq $spec) {
-        [Console]::Error.WriteLine('Warning: Unable to determine bundled oxfmt version from global vite-plus installation.')
-        return
-    }
-
-    $targetVer = $spec.OxfmtVersion
-    $shimName = $IsWindows ? 'oxfmt.exe' : 'oxfmt'
-    $shimPath = Join-Path $spec.VpHome "bin/$shimName"
-    $currentVer = ''
-
-    if (Test-Path -LiteralPath $shimPath -PathType Leaf) {
-        $verOut = @(& $shimPath --version 2>$null)
-        foreach ($line in $verOut) {
-            if ([string]$line -match '(\d+\.\d+\.\d+(?:-[^\s]+)?)') {
-                $currentVer = $Matches[1]
-                break
-            }
-        }
-    }
-
-    if ((-not (Test-Path -LiteralPath $shimPath -PathType Leaf)) -or ($currentVer -ne $targetVer)) {
-        $installOut = @(& vp install -g "oxfmt@$targetVer" 2>&1)
-        if ($LASTEXITCODE -ne 0) {
-            foreach ($line in $installOut) {
-                [Console]::Error.WriteLine($line)
-            }
-            throw "Failed to align global oxfmt to $targetVer"
-        }
-
-        if ($currentVer) {
-            Write-Output "oxfmt: $currentVer -> $targetVer"
-        }
-        else {
-            Write-Output "oxfmt: $targetVer"
-        }
     }
 }
 

@@ -29,11 +29,11 @@ description: Rules for managing, authoring, and verifying cross-platform PowerSh
   - Parse CLI arguments directly from `$args` (`for ($i = 0; $i -lt $args.Count; $i++) { $arg = [string]$args[$i] ... }`) rather than `[CmdletBinding()] param(...)`.
   - Avoiding `[CmdletBinding()]` prevents PowerShell's `ParameterBinder` and CommonParameters (`-WarningAction`, `-OutVariable`, `-Verbose`, `-Debug`) from colliding with short POSIX flags (`-w`, `-o`, `-v`, `-d`).
   - Support both POSIX/GNU style (`--llms`, `--quality`, `-w`, `-h`, `--help`) and PowerShell style (`-Llms`, `-Quality`, `-Width`, `-Help`) via case-insensitive regex matching (`-match`).
-- **Extensionless Shebang & Symlink Path Resolution (`CliCommon.psm1`)**:
+- **Extensionless Shebang & Symlink Path Resolution (`cli/helpers/*.psm1`)**:
   - When `pwsh` executes an extensionless file via shebang on macOS/Linux (e.g., `~/.local/bin/ua`), PowerShell's engine runs it as an anonymous `ScriptBlock` and leaves `$PSScriptRoot` and `$PSCommandPath` empty (`""`).
   - Furthermore, `~/.local/bin/<cmd>` is a symlink whose parent directory is `~/.local/bin`, not `cli/`.
-  - Shared PowerShell CLI helpers (`Resolve-CliScriptDirectory`, `Test-RequiredCommand`, `Convert-TimeToSecond`, `ConvertTo-ValidatedInt`, `Format-ByteSize`, `Import-WindowsMachinePath`, `Invoke-YtDlpSegment`) live in `cli/helpers/CliCommon.psm1`.
-  - Scripts importing `CliCommon.psm1` resolve `$scriptDir` via `$PSScriptRoot` with `[Environment]::GetCommandLineArgs()` + `[System.IO.FileInfo]::new(...).ResolveLinkTarget($true)` fallback (note: `ResolveLinkTarget` returns `FileSystemInfo`, so always use `.FullName` with `Split-Path -Parent` rather than `.DirectoryName`), then run `Import-Module -Name (Join-Path $scriptDir 'helpers' 'CliCommon.psm1') -Force`.
+  - Shared PowerShell CLI helpers are organized by domain under `cli/helpers/`: `CliCommon.psm1` (symlink resolution, validation, formatting, error formatting, terminal spinner), `NodeToolchain.psm1` (Vite+, `oxfmt`, `pnpm`, Playwright, project verify resolution), `GitHubActions.psm1` (CI workflow discovery and action tag updater), and `MediaCommon.psm1` (`yt-dlp` segment helpers).
+  - Scripts importing helper modules resolve `$scriptDir` via `$PSScriptRoot` with `[Environment]::GetCommandLineArgs()` + `[System.IO.FileInfo]::new(...).ResolveLinkTarget($true)` fallback (note: `ResolveLinkTarget` returns `FileSystemInfo`, so always use `.FullName` with `Split-Path -Parent` rather than `.DirectoryName`), then run `Import-Module -Name (Join-Path $scriptDir 'helpers' '<Module>.psm1') -Force`.
 - **Strict CLI Flag Rejection**:
   - Reject unknown `-*` / `--*` options and unexpected positional arguments with a clear stderr message and non-zero exit code instead of silently ignoring them.
 - **PowerShell 7.4+ Native Byte-Stream Piping**:

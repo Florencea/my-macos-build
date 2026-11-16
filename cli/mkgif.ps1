@@ -32,6 +32,7 @@ elseif (-not $scriptDir) {
     $scriptDir = Split-Path -Parent (($entryInfo.ResolveLinkTarget($true) ?? $entryInfo).FullName)
 }
 Import-Module -Name (Join-Path $scriptDir 'helpers' 'CliCommon.psm1') -Force
+Import-Module -Name (Join-Path $scriptDir 'helpers' 'MediaCommon.psm1') -Force
 
 function Show-Help {
     Write-Output @"

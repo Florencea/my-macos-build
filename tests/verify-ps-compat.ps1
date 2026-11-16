@@ -55,7 +55,7 @@ if ($targetGroup -notin $validGroups) {
 
 $repoRoot = Get-RepoRootPath
 $cliRoot = Join-Path $repoRoot 'cli'
-$installPs1 = Join-Path $repoRoot 'scripts' 'install.ps1'
+$scriptsRoot = Join-Path $repoRoot 'scripts'
 $failures = [System.Collections.Generic.List[string]]::new()
 
 $cliCompatSettings = @{
@@ -117,12 +117,12 @@ foreach ($file in $psFiles) {
             $failures.Add("Cross-platform compatibility rules failed on $relPath")
         }
     }
-    elseif ($file.FullName -ieq $installPs1) {
+    elseif ($file.FullName.StartsWith($scriptsRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)) {
         $checkedCount++
         $installCompatViolations = @(Invoke-ScriptAnalyzerSafe -TargetPath $file.FullName -Settings $installCompatSettings)
         if ($installCompatViolations.Count -gt 0) {
             $installCompatViolations | Format-Table RuleName, Severity, Line, Message -AutoSize
-            $failures.Add('PSUseCompatible* failed on scripts/install.ps1')
+            $failures.Add("PSUseCompatible* failed on $relPath")
         }
     }
 }

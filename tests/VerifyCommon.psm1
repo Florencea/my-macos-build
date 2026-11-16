@@ -30,11 +30,17 @@ function Resolve-VerifyTargetFile {
     }
 
     $cliRoot = Join-Path $RepoRoot 'cli'
-    $installPs1 = Join-Path $RepoRoot 'scripts' 'install.ps1'
+    $scriptsRoot = Join-Path $RepoRoot 'scripts'
     $testsRoot = Join-Path $RepoRoot 'tests'
 
+    $installFiles = @(
+        Get-ChildItem -LiteralPath $scriptsRoot -Recurse -File |
+            Where-Object { $_.Extension -in @('.ps1', '.psm1') } |
+            Sort-Object FullName
+    )
+
     if ($TargetGroup -eq 'install') {
-        return @(Get-Item -LiteralPath $installPs1)
+        return @($installFiles)
     }
 
     $list = [System.Collections.Generic.List[System.IO.FileInfo]]::new()
@@ -51,7 +57,9 @@ function Resolve-VerifyTargetFile {
         $list.Add($item)
     }
     if ($TargetGroup -eq 'all') {
-        $list.Add((Get-Item -LiteralPath $installPs1))
+        foreach ($item in $installFiles) {
+            $list.Add($item)
+        }
     }
 
     return @($list)
@@ -190,7 +198,18 @@ function Test-PowerShellAstContract {
 
     $contractFailures = [System.Collections.Generic.List[string]]::new()
     $isCliScript = ($FileInfo.DirectoryName -eq $CliRoot) -and ($FileInfo.Extension -eq '.ps1')
-    $isCrossPlat = ($FileInfo.Name -ne 'install.ps1') -and ($RawContent -notmatch '(?m)^#Requires\s+-Version\s+5\.1\b')
+    $scriptsRoot = Join-Path (Split-Path -Parent $CliRoot) 'scripts'
+    $isTierB = $FileInfo.FullName.StartsWith($scriptsRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)
+    $isCrossPlat = (-not $isTierB) -and ($RawContent -notmatch '(?m)^#Requires\s+-Version\s+5\.1\b')
+
+    if ($isTierB -and ($FileInfo.Extension -in @('.ps1', '.psm1'))) {
+        if ($RawContent -notmatch '(?m)^#Requires\s+-Version\s+5\.1\b') {
+            $contractFailures.Add("${RelativePath}: missing Tier B header '#Requires -Version 5.1'")
+        }
+        if ($RawContent -notmatch '(?m)^Set-StrictMode\s+-Version\s+Latest\b') {
+            $contractFailures.Add("${RelativePath}: missing 'Set-StrictMode -Version Latest'")
+        }
+    }
 
     if ($isCliScript) {
         if (-not $RawContent.StartsWith('#!/usr/bin/env -S pwsh -NoLogo -NoProfile')) {
@@ -239,6 +258,10 @@ function Test-PowerShellAstContract {
             foreach ($el in $cmdAst.CommandElements) {
                 if ($el -is [System.Management.Automation.Language.CommandParameterAst]) {
                     $pName = $el.ParameterName
+                    # Registry provider dynamic parameter -Type is unavailable when probing on non-Windows hosts.
+                    if ((-not $IsWindows) -and $isTierB -and ($cmdName -eq 'Set-ItemProperty') -and ($pName -ieq 'Type')) {
+                        continue
+                    }
                     if (-not $paramSet.Contains($pName)) {
                         $prefixMatches = @($paramSet | Where-Object { $_.StartsWith($pName, [System.StringComparison]::OrdinalIgnoreCase) })
                         if ($prefixMatches.Count -ne 1) {

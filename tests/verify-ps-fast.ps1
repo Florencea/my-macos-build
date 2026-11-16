@@ -40,7 +40,7 @@ for ($i = 0; $i -lt $args.Count; $i++) {
 
 $repoRoot = Get-RepoRootPath
 $cliRoot = Join-Path $repoRoot 'cli'
-$installPs1 = Join-Path $repoRoot 'scripts' 'install.ps1'
+$scriptsRoot = Join-Path $repoRoot 'scripts'
 $settingsPath = Join-Path $repoRoot 'PSScriptAnalyzerSettings.psd1'
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 $formatterSettings = Get-FormatterOnlySetting -SettingsPath $settingsPath
@@ -86,11 +86,46 @@ foreach ($file in $psFiles) {
         }
     }
 
-    if ($file.FullName -ieq $installPs1) {
+    $isTierB = $file.FullName.StartsWith($scriptsRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)
+    if ($isTierB -and ($file.Extension -in @('.ps1', '.psm1'))) {
         $syntaxViolations = @(Invoke-ScriptAnalyzerSafe -TargetPath $file.FullName -Settings $installSyntaxSettings)
         if ($syntaxViolations.Count -gt 0) {
             $syntaxViolations | Format-Table RuleName, Severity, Line, Message -AutoSize
-            $failures.Add('PSUseCompatibleSyntax failed on scripts/install.ps1')
+            $failures.Add("PSUseCompatibleSyntax failed on $relPath")
+        }
+    }
+}
+
+$psd1Files = @()
+if ($targetPaths.Count -eq 0) {
+    $psd1Files = @(Get-ChildItem -LiteralPath $scriptsRoot -Recurse -Filter '*.psd1' -File | Sort-Object FullName)
+}
+foreach ($dataFile in $psd1Files) {
+    $relPath = [System.IO.Path]::GetRelativePath($repoRoot, $dataFile.FullName) -replace '\\', '/'
+    $raw = [System.IO.File]::ReadAllText($dataFile.FullName)
+    $formatted = Invoke-Formatter -ScriptDefinition $raw -Settings $formatterSettings
+    $expected = ($formatted -replace "`r`n", "`n").TrimEnd() + "`n"
+    if ($raw -cne $expected) {
+        if ($fixMode) {
+            [System.IO.File]::WriteAllText($dataFile.FullName, $expected, $utf8NoBom)
+            Write-Output "[FIXED] Format $relPath"
+        }
+        else {
+            $failures.Add("Format drift in $relPath (run with --fix)")
+        }
+    }
+
+    $parseErrors = $null
+    [void][System.Management.Automation.Language.Parser]::ParseFile($dataFile.FullName, [ref]$null, [ref]$parseErrors)
+    if ($parseErrors) {
+        $failures.Add("AST syntax errors in ${relPath}: $($parseErrors -join '; ')")
+    }
+    else {
+        try {
+            $null = Import-PowerShellDataFile -LiteralPath $dataFile.FullName -ErrorAction Stop
+        }
+        catch {
+            $failures.Add("Invalid PowerShell data file ${relPath}: $($_.Exception.Message)")
         }
     }
 }
@@ -103,4 +138,4 @@ if ($failures.Count -gt 0) {
     exit 1
 }
 
-Write-Output "PowerShell fast check passed ($($psFiles.Count) file(s))."
+Write-Output "PowerShell fast check passed ($($psFiles.Count) script/module(s), $($psd1Files.Count) data file(s))."

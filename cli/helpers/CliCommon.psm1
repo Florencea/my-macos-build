@@ -1,4 +1,4 @@
-Set-StrictMode -Version Latest
+﻿Set-StrictMode -Version Latest
 
 function Resolve-CliScriptDirectory {
     param(
@@ -169,253 +169,6 @@ function Import-WindowsMachinePath {
     $env:PATH = $entries -join ';'
 }
 
-function Resolve-YtDlpBrowser {
-    param(
-        [string]$Browser = '',
-        [string]$EnvBrowser = $env:YT_DLP_BROWSER
-    )
-
-    if (-not [string]::IsNullOrWhiteSpace($Browser)) {
-        return $Browser.Trim()
-    }
-    if (-not [string]::IsNullOrWhiteSpace($EnvBrowser)) {
-        return $EnvBrowser.Trim()
-    }
-    return 'chrome'
-}
-
-function Invoke-YtDlpSegment {
-    param(
-        [Parameter(Mandatory)]
-        [string]$InputSource,
-        [Parameter(Mandatory)]
-        [double]$StartSecond,
-        [Parameter(Mandatory)]
-        [double]$EndSecond,
-        [Parameter(Mandatory)]
-        [string]$Format,
-        [string]$Browser = '',
-        [switch]$ForceKeyframesAtCuts
-    )
-
-    $targetBrowser = Resolve-YtDlpBrowser -Browser $Browser
-    $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ('yt_seg_' + [System.Guid]::NewGuid().ToString('N'))
-    New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
-
-    $outputTemplate = Join-Path $tempDir 'segment.%(ext)s'
-    $commonArgs = @(
-        '--quiet',
-        '--no-warnings',
-        '--force-overwrites',
-        '--no-playlist',
-        '--download-sections', "*${StartSecond}-${EndSecond}"
-    )
-    if ($ForceKeyframesAtCuts) {
-        $commonArgs += '--force-keyframes-at-cuts'
-    }
-    $commonArgs += @('-f', $Format, '-o', $outputTemplate)
-
-    try {
-        # Try with browser cookies first, then fall back without cookies if unavailable.
-        & yt-dlp --cookies-from-browser $targetBrowser @commonArgs $InputSource 2>$null
-        $downloaded = @(
-            Get-ChildItem -LiteralPath $tempDir -File -ErrorAction SilentlyContinue |
-                Where-Object { $_.Extension -notin @('.part', '.ytdl') } |
-                Select-Object -First 1
-        )
-
-        if ($LASTEXITCODE -ne 0 -or $downloaded.Count -eq 0) {
-            Get-ChildItem -LiteralPath $tempDir -File -ErrorAction SilentlyContinue |
-                ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue }
-            & yt-dlp @commonArgs $InputSource
-            $downloaded = @(
-                Get-ChildItem -LiteralPath $tempDir -File -ErrorAction SilentlyContinue |
-                    Where-Object { $_.Extension -notin @('.part', '.ytdl') } |
-                    Select-Object -First 1
-            )
-            if ($LASTEXITCODE -ne 0 -or $downloaded.Count -eq 0) {
-                throw [System.InvalidOperationException]::new("Failed to download YouTube video segment for input: $InputSource")
-            }
-        }
-
-        return [PSCustomObject]@{
-            TempDir  = $tempDir
-            FilePath = $downloaded[0].FullName
-        }
-    }
-    catch {
-        if (Test-Path -LiteralPath $tempDir) {
-            Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue
-        }
-        throw
-    }
-}
-
-function Resolve-PlaywrightSyncStep {
-    param(
-        [Parameter(Mandatory)]
-        [hashtable]$PackageJson,
-        [string]$ProjectRoot = '.'
-    )
-
-    $scriptsMap = ($PackageJson['scripts'] -is [hashtable]) ? $PackageJson['scripts'] : @{}
-    $depSections = @(
-        (($PackageJson['dependencies'] -is [hashtable]) ? $PackageJson['dependencies'] : @{}),
-        (($PackageJson['devDependencies'] -is [hashtable]) ? $PackageJson['devDependencies'] : @{}),
-        (($PackageJson['optionalDependencies'] -is [hashtable]) ? $PackageJson['optionalDependencies'] : @{}),
-        (($PackageJson['peerDependencies'] -is [hashtable]) ? $PackageJson['peerDependencies'] : @{})
-    )
-
-    $hasFullPlaywrightDep = $false
-    $hasCoreOnlyDep = $false
-    foreach ($section in $depSections) {
-        foreach ($pkgName in @('playwright', '@playwright/test', '@vitest/browser-playwright')) {
-            if ($section.ContainsKey($pkgName)) {
-                $hasFullPlaywrightDep = $true
-            }
-        }
-        if ($section.ContainsKey('playwright-core')) {
-            $hasCoreOnlyDep = $true
-        }
-    }
-
-    $binDir = Join-Path $ProjectRoot 'node_modules' '.bin'
-    $hasPlaywrightBin = $false
-    foreach ($binName in @('playwright', 'playwright.cmd', 'playwright.ps1')) {
-        if (Test-Path -LiteralPath (Join-Path $binDir $binName) -PathType Leaf) {
-            $hasPlaywrightBin = $true
-            break
-        }
-    }
-
-    $hasCoreBin = $false
-    foreach ($binName in @('playwright-core', 'playwright-core.cmd', 'playwright-core.ps1')) {
-        if (Test-Path -LiteralPath (Join-Path $binDir $binName) -PathType Leaf) {
-            $hasCoreBin = $true
-            break
-        }
-    }
-
-    $hasAnyPlaywright = $hasFullPlaywrightDep -or $hasCoreOnlyDep -or $hasPlaywrightBin -or $hasCoreBin
-
-    if ($scriptsMap.ContainsKey('test:setup')) {
-        $setupCmd = [string]$scriptsMap['test:setup']
-        if ($hasAnyPlaywright -or ($setupCmd -match '\bplaywright\b')) {
-            return [PSCustomObject]@{
-                Exe       = 'vpr'
-                Arguments = @('--no-cache', 'test:setup')
-                StepLabel = 'vpr --no-cache test:setup'
-            }
-        }
-    }
-
-    if ($hasFullPlaywrightDep -or $hasPlaywrightBin) {
-        return [PSCustomObject]@{
-            Exe       = 'vp'
-            Arguments = @('exec', 'playwright', 'install', 'chromium', '--no-progress')
-            StepLabel = 'vp exec playwright install chromium'
-        }
-    }
-
-    if ($hasCoreOnlyDep -or $hasCoreBin) {
-        return [PSCustomObject]@{
-            Exe       = 'vp'
-            Arguments = @('exec', 'playwright-core', 'install', 'chromium', '--no-progress')
-            StepLabel = 'vp exec playwright-core install chromium'
-        }
-    }
-
-    return $null
-}
-
-function Resolve-ProjectVerifyStep {
-    param(
-        [Parameter(Mandatory)]
-        [hashtable]$ScriptsMap
-    )
-
-    $steps = [System.Collections.Generic.List[pscustomobject]]::new()
-    if ($ScriptsMap.ContainsKey('agent:verify:gate')) {
-        $steps.Add([PSCustomObject]@{
-                Exe       = 'vpr'
-                Arguments = @('agent:verify:gate')
-                Message   = 'Verifying gate (unit, build, e2e)'
-                StepLabel = 'vpr agent:verify:gate (gate)'
-            })
-        return @($steps)
-    }
-
-    foreach ($s in @('agent:verify:unit', 'agent:test:unit', 'test:unit')) {
-        if ($ScriptsMap.ContainsKey($s)) {
-            $steps.Add([PSCustomObject]@{
-                    Exe       = 'vpr'
-                    Arguments = @($s)
-                    Message   = 'Verifying unit tests'
-                    StepLabel = "vpr $s (unit-test)"
-                })
-            break
-        }
-    }
-
-    $e2eScript = ''
-    foreach ($s in @('agent:test:e2e', 'test:e2e')) {
-        if ($ScriptsMap.ContainsKey($s)) {
-            $e2eScript = $s
-            break
-        }
-    }
-
-    if ($e2eScript) {
-        foreach ($b in @('build:all', 'build')) {
-            if ($ScriptsMap.ContainsKey($b)) {
-                $steps.Add([PSCustomObject]@{
-                        Exe       = 'vpr'
-                        Arguments = @($b)
-                        Message   = 'Building project for E2E'
-                        StepLabel = "vpr $b (build)"
-                    })
-                break
-            }
-        }
-
-        $steps.Add([PSCustomObject]@{
-                Exe       = 'vpr'
-                Arguments = @($e2eScript)
-                Message   = 'Verifying E2E tests'
-                StepLabel = "vpr $e2eScript (e2e-test)"
-            })
-    }
-
-    return @($steps)
-}
-
-function Test-WorkspaceNodeSyncTarget {
-    param(
-        [Parameter(Mandatory)]
-        [string]$RepoPath,
-        [bool]$PullUpdated = $false
-    )
-
-    if (-not (Test-Path -LiteralPath (Join-Path $RepoPath 'package.json') -PathType Leaf)) {
-        return $false
-    }
-
-    $hasLockfile = $false
-    foreach ($lockfile in @('pnpm-lock.yaml', 'package-lock.json', 'npm-shrinkwrap.json', 'yarn.lock', 'bun.lock', 'bun.lockb')) {
-        if (Test-Path -LiteralPath (Join-Path $RepoPath $lockfile) -PathType Leaf) {
-            $hasLockfile = $true
-            break
-        }
-    }
-
-    if (-not $hasLockfile) {
-        return $false
-    }
-
-    $hasNodeModules = Test-Path -LiteralPath (Join-Path $RepoPath 'node_modules') -PathType Container
-    return ($PullUpdated -or (-not $hasNodeModules))
-}
-
 function Format-NativeErrorDetail {
     param(
         [AllowEmptyCollection()]
@@ -474,161 +227,90 @@ function Resolve-GitHubRepoList {
     return @($items)
 }
 
-function Resolve-LatestPnpmVersionFromJson {
-    param(
-        [AllowNull()]
-        [string]$JsonText
-    )
-
-    if ([string]::IsNullOrWhiteSpace($JsonText)) {
-        return $null
-    }
-
-    try {
-        $parsed = $JsonText | ConvertFrom-Json -AsHashtable -ErrorAction Stop
-    }
-    catch {
-        return $null
-    }
-
-    if (($parsed -isnot [hashtable]) -or (-not $parsed.ContainsKey('package_managers'))) {
-        return $null
-    }
-
-    $pmMap = $parsed['package_managers']
-    if (($pmMap -isnot [hashtable]) -or (-not $pmMap.ContainsKey('pnpm'))) {
-        return $null
-    }
-
-    $entries = @($pmMap['pnpm'])
-    foreach ($entry in $entries) {
-        if ($entry -isnot [hashtable]) {
-            continue
-        }
-        $ver = [string]($entry['version'] ?? '')
-        if ([bool]($entry['latest'] ?? $false) -and (-not [string]::IsNullOrWhiteSpace($ver))) {
-            return [PSCustomObject]@{
-                Version   = $ver.Trim()
-                Installed = [bool]($entry['installed'] ?? $false)
-            }
-        }
-    }
-
-    foreach ($entry in $entries) {
-        if ($entry -isnot [hashtable]) {
-            continue
-        }
-        $ver = [string]($entry['version'] ?? '')
-        if (-not [string]::IsNullOrWhiteSpace($ver)) {
-            return [PSCustomObject]@{
-                Version   = $ver.Trim()
-                Installed = [bool]($entry['installed'] ?? $false)
-            }
-        }
-    }
-
-    return $null
-}
-
-function Get-PnpmPackageManagerSpec {
-    param(
-        [AllowNull()]
-        [string]$PackageManagerField
-    )
-
-    if ([string]::IsNullOrWhiteSpace($PackageManagerField)) {
-        return [PSCustomObject]@{
-            IsPnpm  = $false
-            IsOther = $false
-            Raw     = ''
-            Version = ''
-        }
-    }
-
-    $trimmed = $PackageManagerField.Trim()
-    if ($trimmed -match '^pnpm@([^\s+]+)(?:\+.*)?$') {
-        return [PSCustomObject]@{
-            IsPnpm  = $true
-            IsOther = $false
-            Raw     = $trimmed
-            Version = $Matches[1]
-        }
-    }
-
-    return [PSCustomObject]@{
-        IsPnpm  = $false
-        IsOther = $true
-        Raw     = $trimmed
-        Version = ''
-    }
-}
-
-function Test-PnpmWorkspaceProject {
+function Invoke-SpinnerStep {
     param(
         [Parameter(Mandatory)]
-        [string]$RepoPath
+        [string]$Message,
+        [Parameter(Mandatory)]
+        [string]$Exe,
+        [string[]]$Arguments = @(),
+        [hashtable]$Environment = @{}
     )
 
-    if (-not (Test-Path -LiteralPath (Join-Path $RepoPath '.git'))) {
-        return $false
+    $Arguments = $Arguments ?? @()
+    $frames = @('⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏')
+    $frameIdx = 0
+
+    $savedEnv = @{}
+    foreach ($key in $Environment.Keys) {
+        $k = [string]$key
+        $savedEnv[$k] = [Environment]::GetEnvironmentVariable($k, 'Process')
+        [Environment]::SetEnvironmentVariable($k, [string]$Environment[$key], 'Process')
     }
 
-    $pkgPath = Join-Path $RepoPath 'package.json'
-    if (-not (Test-Path -LiteralPath $pkgPath -PathType Leaf)) {
-        return $false
-    }
+    $targetExe = $Exe
+    $targetArgs = $Arguments
+    $job = $null
 
     try {
-        $pkg = Get-Content -LiteralPath $pkgPath -Raw | ConvertFrom-Json -AsHashtable -ErrorAction Stop
-    }
-    catch {
-        return $false
-    }
+        $job = Start-ThreadJob -ScriptBlock {
+            $runExe = $using:targetExe
+            $runArgs = $using:targetArgs
+            try {
+                $output = @(& $runExe @runArgs 2>&1)
+                [PSCustomObject]@{
+                    Output   = $output
+                    ExitCode = ($LASTEXITCODE ?? 0)
+                }
+            }
+            catch {
+                [PSCustomObject]@{
+                    Output   = @($_.ToString())
+                    ExitCode = 1
+                }
+            }
+        }
 
-    if ($pkg -isnot [hashtable]) {
-        return $false
-    }
+        $Host.UI.Write("`e[?25l`r  $($frames[$frameIdx]) $Message...")
+        $frameIdx = ($frameIdx + 1) % $frames.Count
 
-    $pmSpec = Get-PnpmPackageManagerSpec -PackageManagerField ([string]($pkg['packageManager'] ?? ''))
-    if ($pmSpec.IsOther) {
-        return $false
-    }
-    if ($pmSpec.IsPnpm) {
-        return $true
-    }
+        while (-not $job.Finished.WaitOne(80)) {
+            $Host.UI.Write("`r  $($frames[$frameIdx]) $Message...")
+            $frameIdx = ($frameIdx + 1) % $frames.Count
+        }
 
-    return (
-        (Test-Path -LiteralPath (Join-Path $RepoPath 'pnpm-lock.yaml') -PathType Leaf) -or
-        (Test-Path -LiteralPath (Join-Path $RepoPath 'pnpm-workspace.yaml') -PathType Leaf)
-    )
-}
+        $res = Receive-Job -Job $job
+        $resObj = ($res -is [array]) ? $res[-1] : $res
+        $output = @()
+        $code = 0
+        if ($null -ne $resObj) {
+            $output = $resObj.Output ?? @()
+            $code = [int]($resObj.ExitCode ?? 0)
+        }
+        else {
+            $code = 1
+            $output = @("Step '$Message' terminated unexpectedly.")
+        }
 
-function Format-ProjectPackageManifest {
-    param(
-        [Parameter(Mandatory)]
-        [string]$ProjectDir
-    )
-
-    $manifestPath = Join-Path $ProjectDir 'package.json'
-    if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
-        return [PSCustomObject]@{
-            Success     = $false
-            ErrorDetail = "package.json not found in $ProjectDir"
+        $Host.UI.Write("`r`e[K")
+        if ($code -ne 0) {
+            foreach ($line in $output) {
+                [Console]::Error.WriteLine($line)
+            }
+            throw "Step failed with exit code $code"
         }
     }
-
-    $fmtOut = @(& vp -C $ProjectDir fmt --no-error-on-unmatched-pattern package.json 2>&1)
-    $exitCode = ($LASTEXITCODE ?? 0)
-    if ($exitCode -ne 0) {
-        return [PSCustomObject]@{
-            Success     = $false
-            ErrorDetail = (Format-NativeErrorDetail -OutputLines $fmtOut -ExitCode $exitCode)
+    finally {
+        $Host.UI.Write("`e[?25h")
+        if ($null -ne $job) {
+            if ($job.JobStateInfo.State -eq [System.Management.Automation.JobState]::Running) {
+                Stop-Job -Job $job -ErrorAction SilentlyContinue
+            }
+            Remove-Job -Job $job -Force -ErrorAction SilentlyContinue
         }
-    }
-
-    return [PSCustomObject]@{
-        Success     = $true
-        ErrorDetail = ''
+        foreach ($key in $savedEnv.Keys) {
+            [Environment]::SetEnvironmentVariable([string]$key, $savedEnv[$key], 'Process')
+        }
     }
 }
 
@@ -639,15 +321,7 @@ Export-ModuleMember -Function @(
     'ConvertTo-ValidatedInt',
     'Format-ByteSize',
     'Format-NativeErrorDetail',
-    'Format-ProjectPackageManifest',
-    'Get-PnpmPackageManagerSpec',
     'Import-WindowsMachinePath',
-    'Invoke-YtDlpSegment',
-    'Resolve-GitHubRepoList',
-    'Resolve-LatestPnpmVersionFromJson',
-    'Resolve-PlaywrightSyncStep',
-    'Resolve-ProjectVerifyStep',
-    'Resolve-YtDlpBrowser',
-    'Test-PnpmWorkspaceProject',
-    'Test-WorkspaceNodeSyncTarget'
+    'Invoke-SpinnerStep',
+    'Resolve-GitHubRepoList'
 )

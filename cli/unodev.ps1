@@ -29,6 +29,7 @@ elseif (-not $scriptDir) {
     $scriptDir = Split-Path -Parent (($entryInfo.ResolveLinkTarget($true) ?? $entryInfo).FullName)
 }
 Import-Module -Name (Join-Path $scriptDir 'helpers' 'CliCommon.psm1') -Force
+Import-Module -Name (Join-Path $scriptDir 'helpers' 'NodeToolchain.psm1') -Force
 
 function Show-Help {
     Write-Output @'
@@ -69,6 +70,7 @@ Write-Output "`nnode: $currentLocalVersion`n"
 $nodeVersion = $currentLocalVersion.TrimStart('v')
 
 $commonModulePath = Join-Path $scriptDir 'helpers' 'CliCommon.psm1'
+$nodeToolchainModulePath = Join-Path $scriptDir 'helpers' 'NodeToolchain.psm1'
 $projectsDir = (Resolve-Path -LiteralPath (Join-Path $scriptDir '../..')).Path
 $projects = @(Get-ChildItem -Directory -LiteralPath $projectsDir | Where-Object {
         (Test-Path -LiteralPath (Join-Path $_.FullName '.git')) -and
@@ -77,6 +79,7 @@ $projects = @(Get-ChildItem -Directory -LiteralPath $projectsDir | Where-Object 
 
 $results = @($projects | ForEach-Object -Parallel {
         Import-Module -Name $using:commonModulePath -Force
+        Import-Module -Name $using:nodeToolchainModulePath -Force
         $projDir = $_.FullName
         $projName = $_.Name
         $targetVer = $using:nodeVersion
