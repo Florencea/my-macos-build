@@ -1,5 +1,7 @@
 import { parseArgs } from "node:util";
+
 import { z } from "zod";
+
 import {
   CliError,
   MissingDependencyError,
@@ -8,14 +10,23 @@ import {
   type CommandContext,
 } from "./context.ts";
 
-export interface FlagDefinition {
+export const EmptyOptionsSchema = z.object({});
+
+const BaseIntTextSchema = z
+  .string()
+  .trim()
+  .regex(/^-?\d+$/)
+  .transform((text) => Number(text))
+  .pipe(z.int());
+
+interface FlagDefinition {
   readonly type: "boolean" | "string";
   readonly short?: string;
   readonly valueName?: string;
   readonly description: string;
 }
 
-export interface PositionalSpec {
+interface PositionalSpec {
   readonly min: number;
   readonly max: number;
   readonly label: string;
@@ -53,18 +64,44 @@ export interface RegisteredCommand {
 
 export function defineCommand<TSchema extends z.ZodType>(
   def: CommandDefinition<TSchema>,
+): RegisteredCommand;
+export function defineCommand(
+  def: Omit<CommandDefinition<typeof EmptyOptionsSchema>, "optionsSchema">,
+): RegisteredCommand;
+export function defineCommand<TSchema extends z.ZodType>(
+  def:
+    | CommandDefinition<TSchema>
+    | Omit<CommandDefinition<typeof EmptyOptionsSchema>, "optionsSchema">,
 ): RegisteredCommand {
+  if ("optionsSchema" in def) {
+    return {
+      name: def.name,
+      summary: def.summary,
+      usage: def.usage,
+      examples: def.examples,
+      flags: def.flags,
+      positionals: def.positionals,
+      requiredCommands: def.requiredCommands,
+      supportsDryRun: def.supportsDryRun,
+      formatHelp: () => formatCommandHelp(def),
+      execute: (argv, ctx) => runCliCommand(def, argv, ctx),
+    };
+  }
+  const resolvedDef: CommandDefinition<typeof EmptyOptionsSchema> = {
+    ...def,
+    optionsSchema: EmptyOptionsSchema,
+  };
   return {
-    name: def.name,
-    summary: def.summary,
-    usage: def.usage,
-    examples: def.examples,
-    flags: def.flags,
-    positionals: def.positionals,
-    requiredCommands: def.requiredCommands,
-    supportsDryRun: def.supportsDryRun,
-    formatHelp: () => formatCommandHelp(def),
-    execute: (argv, ctx) => runCliCommand(def, argv, ctx),
+    name: resolvedDef.name,
+    summary: resolvedDef.summary,
+    usage: resolvedDef.usage,
+    examples: resolvedDef.examples,
+    flags: resolvedDef.flags,
+    positionals: resolvedDef.positionals,
+    requiredCommands: resolvedDef.requiredCommands,
+    supportsDryRun: resolvedDef.supportsDryRun,
+    formatHelp: () => formatCommandHelp(resolvedDef),
+    execute: (argv, ctx) => runCliCommand(resolvedDef, argv, ctx),
   };
 }
 
@@ -74,43 +111,20 @@ export function parseValidatedInt(
   minValue = Number.MIN_SAFE_INTEGER,
   maxValue = Number.MAX_SAFE_INTEGER,
 ): number {
-  const IntArgSchema = z
-    .string()
-    .trim()
-    .regex(/^-?\d+$/, `Invalid integer for ${optionName}: '${rawValue}'`)
-    .transform((text) => Number(text))
-    .pipe(
-      z
-        .number()
-        .int(`Invalid integer for ${optionName}: '${rawValue}'`)
-        .refine(
-          (val) => Number.isSafeInteger(val),
-          `Invalid integer for ${optionName}: '${rawValue}'`,
-        )
-        .min(
-          minValue,
-          `Value for ${optionName} must be between ${minValue.toString()} and ${maxValue.toString()} (got ${rawValue.trim()}).`,
-        )
-        .max(
-          maxValue,
-          `Value for ${optionName} must be between ${minValue.toString()} and ${maxValue.toString()} (got ${rawValue.trim()}).`,
-        ),
-    );
-
-  const parsed = IntArgSchema.safeParse(rawValue);
+  const parsed = BaseIntTextSchema.safeParse(rawValue);
   if (!parsed.success) {
-    const issue = parsed.error.issues[0];
+    throw new UsageError(`Invalid integer for ${optionName}: '${rawValue}'`, false);
+  }
+  if (parsed.data < minValue || parsed.data > maxValue) {
     throw new UsageError(
-      issue !== undefined ? issue.message : `Invalid integer for ${optionName}`,
+      `Value for ${optionName} must be between ${minValue.toString()} and ${maxValue.toString()} (got ${rawValue.trim()}).`,
       false,
     );
   }
   return parsed.data;
 }
 
-export function formatCommandHelp<TSchema extends z.ZodType>(
-  def: CommandDefinition<TSchema>,
-): string {
+function formatCommandHelp<TSchema extends z.ZodType>(def: CommandDefinition<TSchema>): string {
   const lines: string[] = [`${def.name}: ${def.summary}`, `Usage: ${def.usage}`];
 
   const optionLines: string[] = [];
@@ -156,7 +170,7 @@ export async function assertRequiredCommands(
   }
 }
 
-export async function runCliCommand<TSchema extends z.ZodType>(
+async function runCliCommand<TSchema extends z.ZodType>(
   def: CommandDefinition<TSchema>,
   argv: readonly string[],
   ctx: CommandContext,

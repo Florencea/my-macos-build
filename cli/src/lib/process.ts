@@ -3,16 +3,15 @@ import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
-import { z } from "zod";
-import type {
-  CommandExecOptions,
-  CommandExecResult,
-  CommandRunner,
-  PipeCommandSpec,
-  PipeExecResult,
-} from "./context.ts";
 
-const ErrnoCodeSchema = z.object({ code: z.string() });
+import {
+  ErrnoCodeSchema,
+  type CommandExecOptions,
+  type CommandExecResult,
+  type CommandRunner,
+  type PipeCommandSpec,
+  type PipeExecResult,
+} from "./context.ts";
 
 export function buildSpawnEnv(
   baseEnv: Readonly<Record<string, string | undefined>>,
@@ -71,10 +70,7 @@ function getPathEnvValue(env: Readonly<Record<string, string | undefined>>): str
   return "";
 }
 
-export async function isExecutableFile(
-  filePath: string,
-  platform: NodeJS.Platform,
-): Promise<boolean> {
+async function isExecutableFile(filePath: string, platform: NodeJS.Platform): Promise<boolean> {
   try {
     const stats = await fs.stat(filePath);
     if (!stats.isFile()) {

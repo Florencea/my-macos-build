@@ -1,9 +1,12 @@
 import os from "node:os";
 import path from "node:path";
+
 import { z } from "zod";
+
 import {
   ExecutionError,
   UsageError,
+  formatByteSize,
   formatNativeErrorDetail,
   type CommandContext,
 } from "./context.ts";
@@ -286,5 +289,23 @@ export async function withMediaInputSource<T>(
   } finally {
     unregisterSignal();
     await ctx.fs.rm(segment.tempDir, { recursive: true, force: true }).catch(() => {});
+  }
+}
+
+/**
+ * Prints the output filename and human-readable byte size if the generated file exists.
+ */
+export async function reportOutputFileSize(
+  ctx: Pick<CommandContext, "fs" | "stdout">,
+  resolvedOutput: string,
+  displayName: string,
+): Promise<void> {
+  try {
+    const outStats = await ctx.fs.stat(resolvedOutput);
+    if (outStats.isFile()) {
+      ctx.stdout(`${displayName} ${formatByteSize(outStats.size)}\n`);
+    }
+  } catch {
+    // Output size reporting is best-effort after a zero exit code.
   }
 }

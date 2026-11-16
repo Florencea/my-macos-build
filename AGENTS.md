@@ -27,7 +27,7 @@ This document outlines the core architecture map, git delivery invariants, and m
     4. Output the exact `git commit -m "type(scope): concise imperative description"` command for manual execution by the user.
 - **Agent-Friendly Execution Formats**:
   - Prefer token-efficient structured flags and Vite+ verification tiers:
-    - Inner loop (Tier 1): `vpr agent:verify:inner` (`typecheck`, `vp check`, `ps:fast`, `lint:shell`); PowerShell single-file loop via `vpr agent:verify:ps -- --fix --path <file>`; standalone linting via `vp lint -f agent`
+    - Inner loop (Tier 1): `vpr agent:verify:inner` (`vp check`, `ps:fast`, `lint:shell`); PowerShell single-file loop via `vpr agent:verify:ps -- --fix --path <file>`; standalone linting via `vp lint -f agent`
     - Unit tier (Tier 2): `vpr agent:verify:unit` (Tier 1 + `ps:lint:install`, Vitest `unit`)
     - Full gate (Tier 3): `vpr agent:verify:gate` (Tier 2 + `ps:compat:install`, Vitest `contract`)
     - CLI shim generator: `vpr cli:sync-bins` (run whenever `cli/src/registry.ts` changes)

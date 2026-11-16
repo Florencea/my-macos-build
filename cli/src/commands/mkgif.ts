@@ -1,17 +1,19 @@
 import path from "node:path";
+
 import { z } from "zod";
+
 import { defineCommand, parseValidatedInt } from "../lib/cli-framework.ts";
 import {
   ExecutionError,
   MissingDependencyError,
   UsageError,
-  formatByteSize,
   formatNativeErrorDetail,
   type CommandContext,
 } from "../lib/context.ts";
 import {
   formatMediaTimestamp,
   parseTimeToSeconds,
+  reportOutputFileSize,
   resolveLocalMediaFile,
   resolveYtDlpBrowser,
   withMediaInputSource,
@@ -280,15 +282,7 @@ export const mkgifCommand = defineCommand({
           }
         }
 
-        try {
-          const outStats = await ctx.fs.stat(resolvedOutput);
-          if (outStats.isFile()) {
-            ctx.stdout(`${outputName} ${formatByteSize(outStats.size)}\n`);
-          }
-        } catch {
-          // Output size reporting is best-effort after a zero exit code.
-        }
-
+        await reportOutputFileSize(ctx, resolvedOutput, outputName);
         return 0;
       },
     );

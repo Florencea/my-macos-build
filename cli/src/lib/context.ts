@@ -2,9 +2,12 @@ import { Resolver } from "node:dns/promises";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
-import type { z } from "zod";
 
-export interface DnsQueryInput {
+import { z } from "zod";
+
+export const ErrnoCodeSchema = z.object({ code: z.string() });
+
+interface DnsQueryInput {
   readonly domain: string;
   readonly recordType: "A" | "AAAA";
   readonly serverIp?: string;
@@ -15,7 +18,7 @@ export interface DnsPort {
   resolve(input: DnsQueryInput): Promise<readonly string[]>;
 }
 
-export function createNodeDnsPort(): DnsPort {
+function createNodeDnsPort(): DnsPort {
   return {
     async resolve(input: DnsQueryInput): Promise<readonly string[]> {
       const resolver = new Resolver({
@@ -193,7 +196,7 @@ export function parseEnvWithSchema<TSchema extends z.ZodType>(
   return result.data;
 }
 
-export function resolveRepoRoot(fromDir = import.meta.dirname): string {
+function resolveRepoRoot(fromDir = import.meta.dirname): string {
   // cli/src/lib -> repo root
   return path.resolve(fromDir, "../../..");
 }

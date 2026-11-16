@@ -1,5 +1,5 @@
 import path from "node:path";
-import { z } from "zod";
+
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { ExecutionError, formatErrorMessage, type CommandContext } from "../lib/context.ts";
 import { isDirectory, isFile } from "../lib/fs-utils.ts";
@@ -14,6 +14,7 @@ import {
 } from "../lib/github-actions.ts";
 import {
   StringMapSchema,
+  getGlobalVitePlusVersion,
   readPackageJsonManifest,
   resolvePlaywrightSyncStep,
   resolveProjectVerifySteps,
@@ -29,7 +30,6 @@ import {
   type BranchTransactionController,
 } from "../lib/transaction.ts";
 
-const EmptyOptionsSchema = z.object({});
 const WORKFLOW_FILE_RE = /^\.github\/workflows\/[^/]+\.ya?ml$/i;
 
 interface CiDisplayEntry {
@@ -112,15 +112,7 @@ async function resolveVitePlusUpgrade(
     return { upgraded: false, oldVer: "", newVer: "" };
   }
 
-  const vpVerRes = await ctx.runner.exec("vp", ["--version"], { cwd: ctx.cwd });
-  let globalVpVer = "";
-  for (const line of vpVerRes.stdout.split(/\r?\n/)) {
-    const match = line.match(/^vp v([^\s]+)/);
-    if (match !== null && match[1] !== undefined) {
-      globalVpVer = match[1];
-      break;
-    }
-  }
+  const globalVpVer = await getGlobalVitePlusVersion(ctx, ctx.cwd);
 
   let localVpVer = deps["vite-plus"] ?? devDeps["vite-plus"] ?? "";
   if (
@@ -143,6 +135,41 @@ async function resolveVitePlusUpgrade(
   return { upgraded: false, oldVer: "", newVer: "" };
 }
 
+async function commitChangesIfDirty(input: {
+  readonly ctx: CommandContext;
+  readonly tx: BranchTransactionController;
+  readonly stepLabel: string;
+  readonly title: string;
+  readonly bodyLines: readonly string[];
+  readonly includeBody: boolean;
+  readonly actionTag: string;
+  readonly createdCommits: string[];
+}): Promise<void> {
+  const statusRes = await input.ctx.runner.exec("git", ["status", "--porcelain"], {
+    cwd: input.ctx.cwd,
+  });
+  if (statusRes.stdout.trim() === "") {
+    return;
+  }
+
+  const commitMsg = input.includeBody
+    ? `${input.title}\n\nUpgrade details:\n${input.bodyLines.join("\n")}`
+    : input.title;
+
+  input.tx.setStep(input.stepLabel);
+  const addRes = await input.ctx.runner.exec("git", ["add", "-A"], { cwd: input.ctx.cwd });
+  if (addRes.exitCode !== 0) {
+    throw new ExecutionError(`git add (${input.actionTag}) failed`, addRes.exitCode);
+  }
+  const commitRes = await input.ctx.runner.exec("git", ["commit", "-q", "-m", commitMsg], {
+    cwd: input.ctx.cwd,
+  });
+  if (commitRes.exitCode !== 0) {
+    throw new ExecutionError(`git commit (${input.actionTag}) failed`, commitRes.exitCode);
+  }
+  input.createdCommits.push(input.title);
+}
+
 /**
  * Checks and updates Node.js package dependencies and GitHub Actions exact versions
  * inside a transactional Git branch with automated verification and rollback.
@@ -154,12 +181,11 @@ export const upCommand = defineCommand({
   usage: "up [options]",
   examples: ["up", "up --dry-run"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 0, max: 0, label: "" },
   supportsDryRun: true,
   async run({ ctx }) {
     const effectiveCtx = await withWindowsMachinePath(ctx);
-    await assertRequiredCommands(effectiveCtx, ["git", "jq", "vp", "vpr", "vpx", "yq"]);
+    await assertRequiredCommands(effectiveCtx, ["git", "vp", "vpr", "vpx", "yq"]);
 
     const initialPkg = await readPackageJsonManifest(effectiveCtx.fs, effectiveCtx.cwd);
     if (initialPkg === null) {
@@ -588,42 +614,22 @@ export const upCommand = defineCommand({
                 );
               });
 
-              const depStatusRes = await effectiveCtx.runner.exec(
-                "git",
-                ["status", "--porcelain"],
-                {
-                  cwd: effectiveCtx.cwd,
-                },
-              );
-              if (depStatusRes.stdout.trim() !== "") {
-                const depCommitTitle =
-                  depCount === 0
-                    ? "chore: sync lockfile"
-                    : depCount === 1
-                      ? `chore(deps): update dependency ${singlePkgSummary}`
-                      : `chore(deps): update dependencies (${depCount.toString()} packages)`;
-                const depCommitMsg =
-                  depCount <= 1
-                    ? depCommitTitle
-                    : `${depCommitTitle}\n\nUpgrade details:\n${depCommitBodyLines.join("\n")}`;
-
-                tx.setStep("git commit (deps)");
-                const addRes = await effectiveCtx.runner.exec("git", ["add", "-A"], {
-                  cwd: effectiveCtx.cwd,
-                });
-                if (addRes.exitCode !== 0) {
-                  throw new ExecutionError("git add (deps) failed", addRes.exitCode);
-                }
-                const commitRes = await effectiveCtx.runner.exec(
-                  "git",
-                  ["commit", "-q", "-m", depCommitMsg],
-                  { cwd: effectiveCtx.cwd },
-                );
-                if (commitRes.exitCode !== 0) {
-                  throw new ExecutionError("git commit (deps) failed", commitRes.exitCode);
-                }
-                createdCommits.push(depCommitTitle);
-              }
+              const depCommitTitle =
+                depCount === 0
+                  ? "chore: sync lockfile"
+                  : depCount === 1
+                    ? `chore(deps): update dependency ${singlePkgSummary}`
+                    : `chore(deps): update dependencies (${depCount.toString()} packages)`;
+              await commitChangesIfDirty({
+                ctx: effectiveCtx,
+                tx,
+                stepLabel: "git commit (deps)",
+                title: depCommitTitle,
+                bodyLines: depCommitBodyLines,
+                includeBody: depCount > 1,
+                actionTag: "deps",
+                createdCommits,
+              });
             }
 
             if (hasCiUpdates) {
@@ -671,36 +677,20 @@ export const upCommand = defineCommand({
                 );
               }
 
-              const ciStatusRes = await effectiveCtx.runner.exec("git", ["status", "--porcelain"], {
-                cwd: effectiveCtx.cwd,
+              const ciCommitTitle =
+                ciCount === 1
+                  ? `chore(ci): update action ${singleCiSummary}`
+                  : `chore(ci): update GitHub Actions (${ciCount.toString()} actions)`;
+              await commitChangesIfDirty({
+                ctx: effectiveCtx,
+                tx,
+                stepLabel: "git commit (ci)",
+                title: ciCommitTitle,
+                bodyLines: ciCommitBodyLines,
+                includeBody: ciCount !== 1,
+                actionTag: "ci",
+                createdCommits,
               });
-              if (ciStatusRes.stdout.trim() !== "") {
-                const ciCommitTitle =
-                  ciCount === 1
-                    ? `chore(ci): update action ${singleCiSummary}`
-                    : `chore(ci): update GitHub Actions (${ciCount.toString()} actions)`;
-                const ciCommitMsg =
-                  ciCount === 1
-                    ? ciCommitTitle
-                    : `${ciCommitTitle}\n\nUpgrade details:\n${ciCommitBodyLines.join("\n")}`;
-
-                tx.setStep("git commit (ci)");
-                const addRes = await effectiveCtx.runner.exec("git", ["add", "-A"], {
-                  cwd: effectiveCtx.cwd,
-                });
-                if (addRes.exitCode !== 0) {
-                  throw new ExecutionError("git add (ci) failed", addRes.exitCode);
-                }
-                const commitRes = await effectiveCtx.runner.exec(
-                  "git",
-                  ["commit", "-q", "-m", ciCommitMsg],
-                  { cwd: effectiveCtx.cwd },
-                );
-                if (commitRes.exitCode !== 0) {
-                  throw new ExecutionError("git commit (ci) failed", commitRes.exitCode);
-                }
-                createdCommits.push(ciCommitTitle);
-              }
             }
           } catch (err) {
             if (!(err instanceof SpinnerStepError)) {

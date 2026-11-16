@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+
 import type { CommandContext } from "./context.ts";
 
 /**

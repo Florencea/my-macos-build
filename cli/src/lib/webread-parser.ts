@@ -2,36 +2,26 @@
  * Clean, safe, local-first HTML-to-Markdown extractor and prompt injection sanitizer.
  * Powered by linkedom, Defuddle, and Turndown (GFM) on Node.js (Active LTS) via Vite+ (`vp node`).
  */
-import path from "node:path";
-import process from "node:process";
-import { parseArgs } from "node:util";
 import { Defuddle } from "defuddle/node";
 import { parseHTML } from "linkedom";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
 import { z } from "zod";
 
-const DEFAULT_MAX_CHARS = 64_000; // ~16k tokens circuit breaker
+export const DEFAULT_WEBREAD_MAX_CHARS = 64_000; // ~16k tokens circuit breaker
 const MIN_DEFUDDLE_TEXT_LENGTH = 80;
 const SPA_TEXT_THRESHOLD = 120;
 
-export const ParseOptionsSchema = z.object({
+const ParseOptionsSchema = z.object({
   url: z.string().optional(),
   selector: z.string().optional(),
   contentType: z.string().optional(),
   raw: z.boolean().optional(),
-  maxLength: z.number().int().positive().optional(),
+  maxLength: z.int().positive().optional(),
   untrustedEnclosure: z.boolean().optional(),
 });
 
 export type ParseOptions = z.infer<typeof ParseOptionsSchema>;
-
-const CliMaxCharsSchema = z
-  .string()
-  .trim()
-  .regex(/^\d+$/, "must be a positive integer")
-  .transform((value) => Number(value))
-  .refine((value) => Number.isSafeInteger(value) && value > 0, "must be greater than zero");
 
 const JsonValueSchema = z.json();
 
@@ -61,6 +51,8 @@ function createTurndownService(): TurndownService {
   });
   return service;
 }
+
+const SHARED_TURNDOWN_SERVICE = createTurndownService();
 
 function removeCommentNodes(root: Node): void {
   const toRemove: Node[] = [];
@@ -263,17 +255,39 @@ export function stripJunkTags(html: string): string {
   return serializeDocumentHtml(doc);
 }
 
+function prepareCleanDom(html: string, baseUrl?: string, stripSelector?: string): Document {
+  const doc = createPreparedDocument(html, baseUrl);
+  removeCommentNodes(doc);
+  removeHiddenDomElements(doc);
+  if (stripSelector !== undefined) {
+    removeMatchingElements(doc, stripSelector);
+  }
+  resolveRelativeLinks(doc, baseUrl);
+  return doc;
+}
+
+function selectSemanticContainer(doc: Document): Element | null {
+  for (const candidateSelector of ["main", '[role="main"]', "article"]) {
+    const match = doc.querySelector(candidateSelector);
+    if (match !== null && match.innerHTML.trim() !== "") {
+      return match;
+    }
+  }
+  return doc.body !== null && doc.body.innerHTML.trim() !== "" ? doc.body : null;
+}
+
 /**
  * Extracts candidate main content block HTML from a raw HTML string.
  */
 export function extractMainContent(html: string, selector?: string, baseUrl?: string): string {
-  const doc = createPreparedDocument(html, baseUrl);
-  removeCommentNodes(doc);
-  removeHiddenDomElements(doc);
+  const hasExplicitSelector = selector !== undefined && selector.trim() !== "";
+  const doc = prepareCleanDom(
+    html,
+    baseUrl,
+    hasExplicitSelector ? HARD_STRIP_SELECTOR : JUNK_SELECTOR,
+  );
 
-  if (selector !== undefined && selector.trim() !== "") {
-    removeMatchingElements(doc, HARD_STRIP_SELECTOR);
-    resolveRelativeLinks(doc, baseUrl);
+  if (hasExplicitSelector) {
     try {
       const matches = Array.from(doc.querySelectorAll(selector.trim()));
       if (matches.length > 0) {
@@ -282,32 +296,18 @@ export function extractMainContent(html: string, selector?: string, baseUrl?: st
     } catch {
       // Ignore invalid CSS selector and fall back to semantic container extraction
     }
+    removeMatchingElements(doc, JUNK_SELECTOR);
   }
 
-  removeMatchingElements(doc, JUNK_SELECTOR);
-  resolveRelativeLinks(doc, baseUrl);
-
-  const prioritySelectors = ["main", "article", '[role="main"]'];
-  for (const candidateSelector of prioritySelectors) {
-    const match = doc.querySelector(candidateSelector);
-    if (match !== null && match.innerHTML.trim() !== "") {
-      return match.innerHTML;
-    }
-  }
-
-  if (doc.body !== null && doc.body.innerHTML.trim() !== "") {
-    return doc.body.innerHTML;
-  }
-
-  return serializeDocumentHtml(doc);
+  const targetNode = selectSemanticContainer(doc);
+  return targetNode !== null ? targetNode.innerHTML : serializeDocumentHtml(doc);
 }
 
 /**
  * Transforms clean HTML snippet into compact, readable GFM Markdown.
  */
 export function htmlToMarkdown(html: string): string {
-  const turndown = createTurndownService();
-  return normalizeMarkdown(turndown.turndown(html));
+  return normalizeMarkdown(SHARED_TURNDOWN_SERVICE.turndown(html));
 }
 
 function detectSpaShell(rawHtml: string, extractedText: string): boolean {
@@ -367,13 +367,7 @@ async function extractHtmlToMarkdown(
   options: ParseOptions,
   sourceUrl: string,
 ): Promise<string> {
-  const doc = createPreparedDocument(rawHtml, sourceUrl);
-  removeCommentNodes(doc);
-  removeHiddenDomElements(doc);
-  removeMatchingElements(doc, HARD_STRIP_SELECTOR);
-  resolveRelativeLinks(doc, sourceUrl);
-
-  const turndown = createTurndownService();
+  const doc = prepareCleanDom(rawHtml, sourceUrl, HARD_STRIP_SELECTOR);
 
   // 1. Explicit CSS selector mode via linkedom + css-select + Turndown GFM
   if (options.selector !== undefined && options.selector.trim() !== "") {
@@ -382,7 +376,7 @@ async function extractHtmlToMarkdown(
       const matched = Array.from(doc.querySelectorAll(trimmedSelector));
       if (matched.length > 0) {
         const selectedHtml = matched.map((node) => node.outerHTML).join("\n\n");
-        const converted = normalizeMarkdown(turndown.turndown(selectedHtml));
+        const converted = normalizeMarkdown(SHARED_TURNDOWN_SERVICE.turndown(selectedHtml));
         if (converted !== "") {
           return converted;
         }
@@ -415,20 +409,13 @@ async function extractHtmlToMarkdown(
   // 3. Fallback extraction for index/reference pages where article heuristics prune too aggressively
   let markdownBody = defuddleOutput;
   if (markdownBody.replace(/\s+/g, "").length < MIN_DEFUDDLE_TEXT_LENGTH) {
-    const fallbackDoc = createPreparedDocument(rawHtml, sourceUrl);
-    removeCommentNodes(fallbackDoc);
-    removeHiddenDomElements(fallbackDoc);
-    removeMatchingElements(fallbackDoc, FALLBACK_BOILERPLATE_SELECTOR);
-    resolveRelativeLinks(fallbackDoc, sourceUrl);
-
-    const targetNode =
-      fallbackDoc.querySelector("main") ??
-      fallbackDoc.querySelector('[role="main"]') ??
-      fallbackDoc.querySelector("article") ??
-      fallbackDoc.body;
+    const fallbackDoc = prepareCleanDom(rawHtml, sourceUrl, FALLBACK_BOILERPLATE_SELECTOR);
+    const targetNode = selectSemanticContainer(fallbackDoc) ?? fallbackDoc.body;
 
     if (targetNode !== null) {
-      const fallbackMarkdown = normalizeMarkdown(turndown.turndown(targetNode.innerHTML));
+      const fallbackMarkdown = normalizeMarkdown(
+        SHARED_TURNDOWN_SERVICE.turndown(targetNode.innerHTML),
+      );
       if (fallbackMarkdown.length > markdownBody.length) {
         markdownBody = fallbackMarkdown;
       }
@@ -447,7 +434,7 @@ async function extractHtmlToMarkdown(
 /**
  * Wraps content in a structured security barrier to protect LLM context against prompt injections.
  */
-export function wrapInUntrustedBarrier(content: string, sourceUrl: string): string {
+function wrapInUntrustedBarrier(content: string, sourceUrl: string): string {
   const timestamp = new Date().toISOString();
   const safeSourceUrl = sourceUrl.replace(/["<>]/g, "");
   const escapedContent = content.replace(/<(\/?UNTRUSTED_EXTERNAL_WEB_CONTENT\b[^>]*)>/gi, "[$1]");
@@ -541,7 +528,7 @@ export async function parseWebContent(input: string, options: ParseOptions = {})
   }
   const safeOptions: ParseOptions = parsedOptions.data;
   const sourceUrl = safeOptions.url ?? "unknown-source";
-  const maxLength = safeOptions.maxLength ?? DEFAULT_MAX_CHARS;
+  const maxLength = safeOptions.maxLength ?? DEFAULT_WEBREAD_MAX_CHARS;
 
   let processed: string;
 
@@ -573,50 +560,4 @@ export async function parseWebContent(input: string, options: ParseOptions = {})
   }
 
   return processed;
-}
-
-async function runCli(): Promise<void> {
-  const { values, positionals } = parseArgs({
-    options: {
-      url: { type: "string", short: "u" },
-      selector: { type: "string", short: "s" },
-      "content-type": { type: "string", short: "t" },
-      raw: { type: "boolean", short: "r", default: false },
-      "max-chars": { type: "string", default: String(DEFAULT_MAX_CHARS) },
-      "no-enclosure": { type: "boolean", default: false },
-    },
-    allowPositionals: true,
-  });
-
-  const maxCharsResult = CliMaxCharsSchema.safeParse(values["max-chars"]);
-  if (!maxCharsResult.success) {
-    process.stderr.write(
-      `Error: --max-chars must be a positive integer (got '${values["max-chars"].trim()}')\n`,
-    );
-    process.exitCode = 1;
-    return;
-  }
-
-  let input = "";
-  process.stdin.setEncoding("utf-8");
-  for await (const chunk of process.stdin) {
-    input += chunk;
-  }
-
-  const targetUrl = values.url ?? (positionals.length > 0 ? positionals[0] : "stdin");
-  const result = await parseWebContent(input, {
-    url: targetUrl,
-    selector: values.selector,
-    contentType: values["content-type"],
-    raw: values.raw,
-    maxLength: maxCharsResult.data,
-    untrustedEnclosure: !values["no-enclosure"],
-  });
-
-  process.stdout.write(`${result}\n`);
-}
-
-// CLI direct execution support via `vp node cli/src/lib/webread-parser.ts`
-if (process.argv[1] !== undefined && import.meta.filename === path.resolve(process.argv[1])) {
-  await runCli();
 }

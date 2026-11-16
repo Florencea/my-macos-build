@@ -1,49 +1,27 @@
 import path from "node:path";
-import { z } from "zod";
+
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
 import { isDirectory, isFile } from "../lib/fs-utils.ts";
 import {
+  discoverWorkspaceProjects,
   formatProjectPackageManifest,
   isPnpmWorkspaceProject,
   parsePnpmPackageManagerSpec,
   readPackageJsonManifest,
+  resolveGlobalVpExecutable,
   resolveLatestPnpmVersionFromJson,
   withWindowsMachinePath,
+  type WorkspaceProjectEntry,
 } from "../lib/node-toolchain.ts";
 import { runSequentially } from "../lib/process.ts";
 import { restoreProjectManifest } from "../lib/transaction.ts";
 
-const EmptyOptionsSchema = z.object({});
-
-interface WorkspacePnpmProject {
-  readonly name: string;
-  readonly dir: string;
-}
-
-async function discoverPnpmProjects(
-  fsPort: CommandContext["fs"],
-  projectsDir: string,
-): Promise<readonly WorkspacePnpmProject[]> {
-  const entries = await fsPort.readdir(projectsDir, { withFileTypes: true });
-  const dirs = entries
-    .filter((entry) => entry.isDirectory())
-    .toSorted((a, b) => a.name.localeCompare(b.name));
-
-  const checks = await Promise.all(
-    dirs.map(async (entry) => {
-      const dir = path.join(projectsDir, entry.name);
-      return (await isPnpmWorkspaceProject(fsPort, dir)) ? { name: entry.name, dir } : undefined;
-    }),
-  );
-
-  return checks.filter((item): item is WorkspacePnpmProject => item !== undefined);
-}
-
 async function updateProjectPnpmVersion(
   ctx: CommandContext,
-  project: WorkspacePnpmProject,
+  project: WorkspaceProjectEntry,
   targetVersion: string,
+  vpExe: string,
 ): Promise<boolean> {
   const pkg = await readPackageJsonManifest(ctx.fs, project.dir);
   if (pkg === null) {
@@ -138,7 +116,7 @@ async function updateProjectPnpmVersion(
 
   if (needsPin) {
     const pinRes = await ctx.runner.exec(
-      "vp",
+      vpExe,
       [
         "-C",
         project.dir,
@@ -280,16 +258,16 @@ export const upnpmvCommand = defineCommand({
   usage: "upnpmv [options]",
   examples: ["upnpmv", "upnpmv --dry-run"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 0, max: 0, label: "" },
   supportsDryRun: true,
   async run({ ctx }) {
     const effectiveCtx = await withWindowsMachinePath(ctx);
-    await assertRequiredCommands(effectiveCtx, ["git", "vp"]);
+    const vpExe = await resolveGlobalVpExecutable(effectiveCtx);
+    await assertRequiredCommands(effectiveCtx, ["git", vpExe]);
 
     const vpEnv = { VP_LOG: "error" };
     const remoteRes = await effectiveCtx.runner.exec(
-      "vp",
+      vpExe,
       ["env", "list-remote", "--json", "--sort", "desc", "pnpm"],
       { env: vpEnv },
     );
@@ -314,7 +292,7 @@ export const upnpmvCommand = defineCommand({
         effectiveCtx.stdout(`[dry-run] vp env install pnpm@${targetVersion}\n`);
       } else {
         const installRes = await effectiveCtx.runner.exec(
-          "vp",
+          vpExe,
           ["env", "install", `pnpm@${targetVersion}`],
           { env: vpEnv },
         );
@@ -332,14 +310,16 @@ export const upnpmvCommand = defineCommand({
     effectiveCtx.stdout(`\npnpm: v${targetVersion}\n\n`);
 
     const projectsDir = path.dirname(effectiveCtx.repoRoot);
-    const projects = await discoverPnpmProjects(effectiveCtx.fs, projectsDir);
+    const projects = await discoverWorkspaceProjects(effectiveCtx.fs, projectsDir, (dir) =>
+      isPnpmWorkspaceProject(effectiveCtx.fs, dir),
+    );
     if (projects.length === 0) {
       return 0;
     }
 
     let allSucceeded = true;
     await runSequentially(projects, async (project) => {
-      const ok = await updateProjectPnpmVersion(effectiveCtx, project, targetVersion);
+      const ok = await updateProjectPnpmVersion(effectiveCtx, project, targetVersion, vpExe);
       if (!ok) {
         allSucceeded = false;
       }

@@ -1,7 +1,8 @@
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
+
 import { z } from "zod";
+
 import { ExecutionError, formatNativeErrorDetail, type CommandContext } from "./context.ts";
 import { isDirectory, isFile, pathExists } from "./fs-utils.ts";
 import { buildSpawnEnv, resolveExecutableInPath } from "./process.ts";
@@ -29,10 +30,11 @@ const PLAYWRIGHT_CORE_BIN_NAMES = [
 ] as const;
 
 const WIN_PATH_SEPARATOR_MARKER = "---VP-WIN-PATH-SEP---";
+const NODE_MODULES_BIN_RE = /(?:^|[\\/])node_modules[\\/]\.bin(?:[\\/]?)$/i;
 
 export const StringMapSchema = z.record(z.string(), z.string());
 
-export const PackageJsonSchema = z.looseObject({
+const PackageJsonSchema = z.looseObject({
   name: z.string().optional(),
   packageManager: z.string().optional(),
   engines: z.looseObject({ node: z.string().optional() }).optional(),
@@ -57,9 +59,26 @@ const PnpmRemoteJsonSchema = z.object({
   }),
 });
 
-const VitePlusPkgJsonSchema = z.object({
-  dependencies: StringMapSchema.optional(),
+const ToolchainGraphSchema = z.object({
+  nodes: z.array(
+    z.object({
+      id: z.string(),
+      version: z.string().optional(),
+    }),
+  ),
 });
+
+const GlobalPackageListSchema = z.array(
+  z.object({
+    name: z.string(),
+    version: z.string().optional(),
+  }),
+);
+
+export interface WorkspaceProjectEntry {
+  readonly name: string;
+  readonly dir: string;
+}
 
 export interface PlaywrightSyncStep {
   readonly exe: string;
@@ -86,9 +105,107 @@ export interface PnpmPackageManagerSpec {
   readonly version: string;
 }
 
-export interface VitePlusOxfmtSpec {
-  readonly vpHome: string;
-  readonly oxfmtVersion: string;
+/**
+ * Discovers sorted direct subdirectories under `projectsDir` that satisfy `predicate`.
+ */
+export async function discoverWorkspaceProjects(
+  fsPort: CommandContext["fs"],
+  projectsDir: string,
+  predicate: (dir: string) => Promise<boolean>,
+): Promise<readonly WorkspaceProjectEntry[]> {
+  const entries = await fsPort.readdir(projectsDir, { withFileTypes: true });
+  const dirs = entries
+    .filter((entry) => entry.isDirectory())
+    .toSorted((a, b) => a.name.localeCompare(b.name));
+
+  const checks = await Promise.all(
+    dirs.map(async (entry) => {
+      const dir = path.join(projectsDir, entry.name);
+      return (await predicate(dir)) ? { name: entry.name, dir } : undefined;
+    }),
+  );
+
+  return checks.filter((item): item is WorkspaceProjectEntry => item !== undefined);
+}
+
+/**
+ * Resolves the global `vp` executable path, bypassing local `node_modules/.bin` shims injected by `vpx`.
+ */
+export async function resolveGlobalVpExecutable(
+  ctx: Pick<CommandContext, "env" | "platform">,
+): Promise<string> {
+  const pathSep = ctx.platform === "win32" ? ";" : ":";
+  const rawPath = ctx.env["PATH"] ?? ctx.env["Path"] ?? "";
+  if (rawPath !== "") {
+    const filteredPath = rawPath
+      .split(pathSep)
+      .filter((segment) => segment.trim() !== "" && !NODE_MODULES_BIN_RE.test(segment.trim()))
+      .join(pathSep);
+    if (filteredPath !== "") {
+      const resolved = await resolveExecutableInPath(
+        "vp",
+        { ...ctx.env, PATH: filteredPath },
+        ctx.platform,
+      );
+      if (resolved !== null) {
+        return resolved;
+      }
+    }
+  }
+
+  const envVpHome = ctx.env["VP_HOME"]?.trim();
+  if (envVpHome !== undefined && envVpHome !== "") {
+    const exeName = ctx.platform === "win32" ? "vp.exe" : "vp";
+    const resolved = await resolveExecutableInPath(
+      path.join(envVpHome, "bin", exeName),
+      ctx.env,
+      ctx.platform,
+    );
+    if (resolved !== null) {
+      return resolved;
+    }
+  }
+
+  return "vp";
+}
+
+/**
+ * Resolves the active Node.js version via `vp node -v` with `node -v` fallback.
+ */
+export async function resolveActiveNodeVersion(
+  ctx: Pick<CommandContext, "runner" | "env" | "platform">,
+): Promise<string> {
+  const vpExe = await resolveGlobalVpExecutable(ctx);
+  const vpNodeRes = await ctx.runner.exec(vpExe, ["node", "-v"], {
+    env: { VP_LOG: "error" },
+  });
+  if (vpNodeRes.exitCode === 0 && vpNodeRes.stdout.trim() !== "") {
+    return vpNodeRes.stdout.trim();
+  }
+  const nodeRes = await ctx.runner.exec("node", ["-v"]);
+  return nodeRes.exitCode === 0 ? nodeRes.stdout.trim() : "";
+}
+
+/**
+ * Reads the global `vp` CLI version via `vp --version`.
+ */
+export async function getGlobalVitePlusVersion(
+  ctx: Pick<CommandContext, "runner" | "env" | "platform">,
+  cwd?: string,
+): Promise<string> {
+  const vpExe = await resolveGlobalVpExecutable(ctx);
+  const vpVerRes = await ctx.runner.exec(
+    vpExe,
+    ["--version"],
+    cwd !== undefined ? { cwd } : undefined,
+  );
+  for (const line of vpVerRes.stdout.split(/\r?\n/)) {
+    const match = line.match(/^vp v([^\s]+)/);
+    if (match !== null && match[1] !== undefined) {
+      return match[1];
+    }
+  }
+  return "";
 }
 
 /**
@@ -539,178 +656,56 @@ export async function formatProjectPackageManifest(
 }
 
 /**
- * Resolves the bundled `oxfmt` version and `VP_HOME` directory from a Vite+ installation.
- */
-export async function getVitePlusOxfmtSpec(
-  ctx: Pick<CommandContext, "fs" | "env" | "platform">,
-  options?: {
-    readonly vpCommandPath?: string;
-    readonly vpVersion?: string;
-    readonly fallbackRoots?: readonly string[];
-    readonly homeDir?: string;
-  },
-): Promise<VitePlusOxfmtSpec | null> {
-  const homeDir = options?.homeDir ?? ctx.env["HOME"] ?? ctx.env["USERPROFILE"] ?? os.homedir();
-  const candidateRoots: string[] = [];
-
-  const envVpHome = ctx.env["VP_HOME"]?.trim();
-  if (envVpHome !== undefined && envVpHome !== "") {
-    candidateRoots.push(envVpHome);
-  }
-
-  const vpCommandPath = options?.vpCommandPath;
-  if (vpCommandPath !== undefined && vpCommandPath.trim() !== "") {
-    const binDir = path.dirname(vpCommandPath);
-    const parentDir = path.dirname(binDir);
-    if (parentDir !== "") {
-      candidateRoots.push(parentDir);
-    }
-    try {
-      const realPath = await ctx.fs.realpath(vpCommandPath);
-      const targetParent = path.dirname(path.dirname(realPath));
-      if (targetParent !== "") {
-        candidateRoots.push(targetParent);
-      }
-    } catch {
-      // Ignore unresolvable symlink during candidate discovery
-    }
-  }
-
-  if (options?.fallbackRoots !== undefined) {
-    for (const extraRoot of options.fallbackRoots) {
-      if (extraRoot.trim() !== "") {
-        candidateRoots.push(extraRoot);
-      }
-    }
-  }
-
-  if (ctx.platform === "win32") {
-    candidateRoots.push("E:\\vite-plus");
-    candidateRoots.push(path.join(homeDir, ".vite-plus"));
-  } else {
-    candidateRoots.push(path.join(homeDir, ".local", "share", "vite-plus"));
-  }
-
-  const seen = new Set<string>();
-  const uniqueRoots: string[] = [];
-  for (const root of candidateRoots) {
-    const trimmedRoot = root.trim();
-    const dedupKey = trimmedRoot.toLowerCase();
-    if (trimmedRoot !== "" && !seen.has(dedupKey)) {
-      seen.add(dedupKey);
-      uniqueRoots.push(trimmedRoot);
-    }
-  }
-
-  const readCandidateSpec = async (
-    trimmedRoot: string,
-    pkgPath: string,
-    directPkgPath: string,
-  ): Promise<VitePlusOxfmtSpec | null> => {
-    if (!(await isFile(pkgPath, ctx.fs))) {
-      return null;
-    }
-    try {
-      const rawText = await ctx.fs.readFile(pkgPath, "utf8");
-      const parsedJson: unknown = JSON.parse(rawText);
-      const validated = VitePlusPkgJsonSchema.safeParse(parsedJson);
-      if (!validated.success) {
-        return null;
-      }
-      const rawOxfmt = validated.data.dependencies?.["oxfmt"];
-      if (rawOxfmt === undefined) {
-        return null;
-      }
-      const targetVer = rawOxfmt.trim().replace(/^[^0-9]*/, "");
-      if (targetVer === "") {
-        return null;
-      }
-      const vpHome = pkgPath === directPkgPath ? path.dirname(trimmedRoot) : trimmedRoot;
-      return { vpHome, oxfmtVersion: targetVer };
-    } catch {
-      return null;
-    }
-  };
-
-  const perRootSpecs = await Promise.all(
-    uniqueRoots.map(async (trimmedRoot): Promise<VitePlusOxfmtSpec | null> => {
-      if (!(await isDirectory(trimmedRoot, ctx.fs))) {
-        return null;
-      }
-
-      const pkgCandidates = [
-        path.join(trimmedRoot, "current", "node_modules", "vite-plus", "package.json"),
-      ];
-      if (options?.vpVersion !== undefined && options.vpVersion !== "") {
-        pkgCandidates.push(
-          path.join(trimmedRoot, options.vpVersion, "node_modules", "vite-plus", "package.json"),
-        );
-      }
-      const directPkgPath = path.join(trimmedRoot, "node_modules", "vite-plus", "package.json");
-      pkgCandidates.push(directPkgPath);
-
-      const candidateSpecs = await Promise.all(
-        pkgCandidates.map((pkgPath) => readCandidateSpec(trimmedRoot, pkgPath, directPkgPath)),
-      );
-      return candidateSpecs.find((item) => item !== null) ?? null;
-    }),
-  );
-
-  return perRootSpecs.find((item) => item !== null) ?? null;
-}
-
-/**
- * Aligns the global `oxfmt` shim to the version bundled with the active `vite-plus` toolchain.
+ * Aligns the global `oxfmt` package to the version required by the active `vite-plus` toolchain.
  */
 export async function syncGlobalOxfmt(ctx: CommandContext): Promise<void> {
-  if (!(await ctx.runner.commandExists("vp"))) {
+  const vpExe = await resolveGlobalVpExecutable(ctx);
+  if (!(await ctx.runner.commandExists(vpExe))) {
     return;
   }
 
-  const vpCommandPath = (await resolveExecutableInPath("vp", ctx.env, ctx.platform)) ?? undefined;
-
-  const vpVerRes = await ctx.runner.exec("vp", ["--version"]);
-  let vpVersion = "";
-  for (const line of vpVerRes.stdout.split(/\r?\n/)) {
-    const match = line.match(/^vp v([^\s]+)/);
-    if (match !== null && match[1] !== undefined) {
-      vpVersion = match[1];
-      break;
+  let targetVer = "";
+  const toolchainRes = await ctx.runner.exec(vpExe, ["toolchain", "--global", "--json", "oxfmt"]);
+  if (toolchainRes.exitCode === 0 && toolchainRes.stdout.trim() !== "") {
+    try {
+      const parsedJson: unknown = JSON.parse(toolchainRes.stdout);
+      const validated = ToolchainGraphSchema.safeParse(parsedJson);
+      if (validated.success) {
+        targetVer = validated.data.nodes.find((node) => node.id === "oxfmt")?.version?.trim() ?? "";
+      }
+    } catch {
+      targetVer = "";
     }
   }
 
-  const spec = await getVitePlusOxfmtSpec(ctx, { vpCommandPath, vpVersion });
-  if (spec === null) {
+  if (targetVer === "") {
     ctx.stderr(
-      "Warning: Unable to determine bundled oxfmt version from global vite-plus installation.\n",
+      "Warning: Unable to determine bundled oxfmt version from global vite-plus toolchain.\n",
     );
     return;
   }
 
-  const targetVer = spec.oxfmtVersion;
-  const shimName = ctx.platform === "win32" ? "oxfmt.exe" : "oxfmt";
-  const shimPath = path.join(spec.vpHome, "bin", shimName);
-  const shimExists = await isFile(shimPath, ctx.fs);
   let currentVer = "";
-
-  if (shimExists) {
-    const verRes = await ctx.runner.exec(shimPath, ["--version"]);
-    for (const line of verRes.stdout.split(/\r?\n/)) {
-      const match = line.match(/(\d+\.\d+\.\d+(?:-[^\s]+)?)/);
-      if (match !== null && match[1] !== undefined) {
-        currentVer = match[1];
-        break;
+  const listRes = await ctx.runner.exec(vpExe, ["list", "-g", "--json"]);
+  if (listRes.exitCode === 0 && listRes.stdout.trim() !== "") {
+    try {
+      const parsedJson: unknown = JSON.parse(listRes.stdout);
+      const validated = GlobalPackageListSchema.safeParse(parsedJson);
+      if (validated.success) {
+        currentVer = validated.data.find((pkg) => pkg.name === "oxfmt")?.version?.trim() ?? "";
       }
+    } catch {
+      currentVer = "";
     }
   }
 
-  if (!shimExists || currentVer !== targetVer) {
+  if (currentVer !== targetVer) {
     if (ctx.dryRun) {
       ctx.stdout(`[dry-run] vp install -g oxfmt@${targetVer}\n`);
       return;
     }
 
-    const installRes = await ctx.runner.exec("vp", ["install", "-g", `oxfmt@${targetVer}`]);
+    const installRes = await ctx.runner.exec(vpExe, ["install", "-g", `oxfmt@${targetVer}`]);
     if (installRes.exitCode !== 0) {
       const detail = formatNativeErrorDetail(
         [installRes.stderr, installRes.stdout],

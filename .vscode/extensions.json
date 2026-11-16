@@ -2,7 +2,8 @@
   "recommendations": [
     "oxc.oxc-vscode",
     "VoidZero.vite-plus-extension-pack",
-    "ms-vscode.powershell"
+    "ms-vscode.powershell",
+    "typescriptteam.native-preview"
   ],
   "unwantedRecommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
 }

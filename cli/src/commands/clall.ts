@@ -1,5 +1,7 @@
 import path from "node:path";
+
 import { z } from "zod";
+
 import { defineCommand } from "../lib/cli-framework.ts";
 import {
   ExecutionError,
@@ -11,8 +13,6 @@ import {
 } from "../lib/context.ts";
 import { pathExists } from "../lib/fs-utils.ts";
 import { mapWithConcurrency } from "../lib/process.ts";
-
-const EmptyOptionsSchema = z.object({});
 
 const ClallEnvSchema = z.object({
   GITHUB_TOKEN: z.string().optional(),
@@ -221,7 +221,6 @@ export const clallCommand = defineCommand({
   usage: "clall [options] [GITHUB_ACCESS_TOKEN]",
   examples: ["clall ghp_000000000000000000000000000000000000", "GITHUB_TOKEN=... clall"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 0, max: 1, label: "GITHUB_ACCESS_TOKEN" },
   requiredCommands: ["git"],
   supportsDryRun: true,

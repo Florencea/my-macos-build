@@ -1,5 +1,13 @@
 import fs from "node:fs/promises";
+
+import { z } from "zod";
+
 import type { CommandContext, CommandRunner, DnsPort } from "../../cli/src/lib/context.ts";
+
+export const ExecErrorSchema = z.object({
+  code: z.union([z.number(), z.string()]),
+  stderr: z.string(),
+});
 
 export function createTestContext(overrides?: {
   readonly runner?: Partial<CommandRunner>;

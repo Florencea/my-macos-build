@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
+
 import { MDIG_DNS_SERVERS, mdigCommand } from "../../cli/src/commands/mdig.ts";
 import { UsageError } from "../../cli/src/lib/context.ts";
 import { createTestContext } from "./test-helpers.ts";

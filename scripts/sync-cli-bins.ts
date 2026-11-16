@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+
 import { COMMAND_NAMES } from "../cli/src/registry.ts";
 
 export function renderPosixShim(commandName: string): string {
@@ -55,7 +56,7 @@ export function renderWindowsShim(commandName: string): string {
   ].join("\n");
 }
 
-export async function syncCliBins(
+async function syncCliBins(
   repoRoot: string,
   commands: readonly string[] = COMMAND_NAMES,
 ): Promise<{ readonly written: readonly string[]; readonly removed: readonly string[] }> {

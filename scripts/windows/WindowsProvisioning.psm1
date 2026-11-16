@@ -130,43 +130,43 @@ function Initialize-VitePlusToolchain {
         & vp env install lts
         & vp env install pnpm@latest
 
-        $vpPkgJson = Join-Path $VpHome 'current\node_modules\vite-plus\package.json'
-        if (-not (Test-Path -LiteralPath $vpPkgJson -PathType Leaf)) {
-            $vpVerOut = @(& vp --version 2>$null)
-            foreach ($line in $vpVerOut) {
-                if ([string]$line -match '^vp v([^\s]+)') {
-                    $verPkgJson = Join-Path $VpHome "$($Matches[1])\node_modules\vite-plus\package.json"
-                    if (Test-Path -LiteralPath $verPkgJson -PathType Leaf) {
-                        $vpPkgJson = $verPkgJson
+        $targetOxfmtVer = ''
+        $toolchainRaw = (@(& vp toolchain --global --json oxfmt 2>$null)) -join "`n"
+        if (-not [string]::IsNullOrWhiteSpace($toolchainRaw)) {
+            try {
+                $toolchainObj = $toolchainRaw | ConvertFrom-Json
+                if ($null -ne $toolchainObj.PSObject.Properties['nodes']) {
+                    $oxfmtNode = @($toolchainObj.nodes | Where-Object { $_.id -eq 'oxfmt' } | Select-Object -First 1)
+                    if ($oxfmtNode.Count -gt 0 -and ($null -ne $oxfmtNode[0].PSObject.Properties['version'])) {
+                        $targetOxfmtVer = ([string]$oxfmtNode[0].version).Trim()
                     }
-                    break
                 }
+            }
+            catch {
+                $targetOxfmtVer = ''
             }
         }
 
-        if (Test-Path -LiteralPath $vpPkgJson -PathType Leaf) {
-            $vpPkg = Get-Content -LiteralPath $vpPkgJson -Raw | ConvertFrom-Json
-            if ($null -ne $vpPkg.dependencies -and $null -ne $vpPkg.dependencies.PSObject.Properties['oxfmt']) {
-                $targetOxfmtVer = ([string]$vpPkg.dependencies.oxfmt).Trim() -replace '^[^0-9]*', ''
-                if ($targetOxfmtVer) {
-                    $vpOxfmtShim = Join-Path $VpHome 'bin\oxfmt.exe'
-                    $currentOxfmtVer = ''
-                    if (Test-Path -LiteralPath $vpOxfmtShim -PathType Leaf) {
-                        $oxfmtVerOut = @(& $vpOxfmtShim --version 2>$null)
-                        foreach ($line in $oxfmtVerOut) {
-                            if ([string]$line -match '(\d+\.\d+\.\d+(?:-[^\s]+)?)') {
-                                $currentOxfmtVer = $Matches[1]
-                                break
-                            }
-                        }
-                    }
-
-                    if ((-not (Test-Path -LiteralPath $vpOxfmtShim -PathType Leaf)) -or ($currentOxfmtVer -ne $targetOxfmtVer)) {
-                        Write-Output "      Aligning global oxfmt to $targetOxfmtVer..."
-                        & vp install -g "oxfmt@$targetOxfmtVer"
-                        Sync-SessionPath -ExtraPaths $ExtraPaths
+        if ($targetOxfmtVer) {
+            $currentOxfmtVer = ''
+            $globalListRaw = (@(& vp list -g --json 2>$null)) -join "`n"
+            if (-not [string]::IsNullOrWhiteSpace($globalListRaw)) {
+                try {
+                    $globalPkgs = @($globalListRaw | ConvertFrom-Json)
+                    $oxfmtPkg = @($globalPkgs | Where-Object { $_.name -eq 'oxfmt' } | Select-Object -First 1)
+                    if ($oxfmtPkg.Count -gt 0 -and ($null -ne $oxfmtPkg[0].PSObject.Properties['version'])) {
+                        $currentOxfmtVer = ([string]$oxfmtPkg[0].version).Trim()
                     }
                 }
+                catch {
+                    $currentOxfmtVer = ''
+                }
+            }
+
+            if ($currentOxfmtVer -ne $targetOxfmtVer) {
+                Write-Output "      Aligning global oxfmt to $targetOxfmtVer..."
+                & vp install -g "oxfmt@$targetOxfmtVer"
+                Sync-SessionPath -ExtraPaths $ExtraPaths
             }
         }
 

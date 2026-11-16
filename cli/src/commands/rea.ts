@@ -1,10 +1,8 @@
 import path from "node:path";
 import process from "node:process";
-import { z } from "zod";
+
 import { defineCommand } from "../lib/cli-framework.ts";
 import { ExecutionError, formatByteSize, formatNativeErrorDetail } from "../lib/context.ts";
-
-const EmptyOptionsSchema = z.object({});
 
 /**
  * Combine a single .ass subtitle track into the single .mkv in a directory,
@@ -16,7 +14,6 @@ export const reaCommand = defineCommand({
   usage: "rea [options] <input_dir>",
   examples: ["rea 'input'", "rea --dry-run 'input'"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 1, max: 1, label: "input_dir" },
   requiredCommands: ["ffmpeg"],
   supportsDryRun: true,

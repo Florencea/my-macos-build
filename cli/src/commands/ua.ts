@@ -1,14 +1,20 @@
 import os from "node:os";
 import path from "node:path";
+
 import { z } from "zod";
+
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
 import { isDirectory, pathExists } from "../lib/fs-utils.ts";
 import {
+  discoverWorkspaceProjects,
   isWorkspaceNodeSyncTarget,
+  resolveActiveNodeVersion,
+  resolveGlobalVpExecutable,
   resolveLatestPnpmVersionFromJson,
   syncGlobalOxfmt,
   withWindowsMachinePath,
+  type WorkspaceProjectEntry,
 } from "../lib/node-toolchain.ts";
 import { mapWithConcurrency, runSequentially } from "../lib/process.ts";
 
@@ -25,11 +31,6 @@ const UaOptionsSchema = z.object({
   "skip-git": z.boolean().default(false),
 });
 
-interface GitRepoEntry {
-  readonly name: string;
-  readonly dir: string;
-}
-
 interface GitPullResult {
   readonly name: string;
   readonly dir: string;
@@ -43,15 +44,6 @@ function writeNonEmptyLines(write: (text: string) => void, text: string): void {
   if (trimmed !== "") {
     write(`${trimmed}\n`);
   }
-}
-
-async function readNodeVersion(ctx: CommandContext): Promise<string> {
-  const vpRes = await ctx.runner.exec("vp", ["node", "-v"]);
-  if (vpRes.exitCode === 0 && vpRes.stdout.trim() !== "") {
-    return vpRes.stdout.trim();
-  }
-  const nodeRes = await ctx.runner.exec("node", ["-v"]);
-  return nodeRes.exitCode === 0 ? nodeRes.stdout.trim() : "";
 }
 
 async function runOsPackageUpgrade(
@@ -125,7 +117,8 @@ async function runOsPackageUpgrade(
 }
 
 async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
-  await assertRequiredCommands(ctx, ["vp"]);
+  const vpExe = await resolveGlobalVpExecutable(ctx);
+  await assertRequiredCommands(ctx, [vpExe]);
   if (ctx.dryRun) {
     ctx.stdout(
       "[dry-run] vp upgrade && vp env install lts && vp env install pnpm@latest && sync global oxfmt\n",
@@ -134,7 +127,7 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
   }
 
   let hasError = false;
-  const upgradeRes = await ctx.runner.exec("vp", ["upgrade"], { signal: ctx.signal });
+  const upgradeRes = await ctx.runner.exec(vpExe, ["upgrade"], { signal: ctx.signal });
   writeNonEmptyLines(ctx.stdout, upgradeRes.stdout);
   if (upgradeRes.exitCode !== 0) {
     writeNonEmptyLines(ctx.stderr, upgradeRes.stderr);
@@ -144,11 +137,11 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
     writeNonEmptyLines(ctx.stdout, upgradeRes.stderr);
   }
 
-  const oldNode = await readNodeVersion(ctx);
-  const installLtsRes = await ctx.runner.exec("vp", ["env", "install", "lts"], {
+  const oldNode = await resolveActiveNodeVersion(ctx);
+  const installLtsRes = await ctx.runner.exec(vpExe, ["env", "install", "lts"], {
     signal: ctx.signal,
   });
-  const newNode = await readNodeVersion(ctx);
+  const newNode = await resolveActiveNodeVersion(ctx);
 
   const nodeUpdated = oldNode !== "" && oldNode !== newNode;
   if (installLtsRes.exitCode !== 0) {
@@ -166,7 +159,7 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
   let pnpmUpdated = false;
   let pnpmVersionLabel = "";
 
-  const pnpmRemoteRes = await ctx.runner.exec("vp", [
+  const pnpmRemoteRes = await ctx.runner.exec(vpExe, [
     "env",
     "list-remote",
     "--json",
@@ -179,7 +172,7 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
     if (latestPnpm !== null) {
       pnpmVersionLabel = `v${latestPnpm.version}`;
       if (!latestPnpm.installed) {
-        const pnpmInstallRes = await ctx.runner.exec("vp", [
+        const pnpmInstallRes = await ctx.runner.exec(vpExe, [
           "env",
           "install",
           `pnpm@${latestPnpm.version}`,
@@ -201,7 +194,7 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
   }
 
   if (pnpmVersionLabel === "") {
-    const pnpmFallbackRes = await ctx.runner.exec("vp", ["env", "install", "pnpm@latest"]);
+    const pnpmFallbackRes = await ctx.runner.exec(vpExe, ["env", "install", "pnpm@latest"]);
     const combined = `${pnpmFallbackRes.stdout}\n${pnpmFallbackRes.stderr}`;
     if (pnpmFallbackRes.exitCode === 0) {
       writeNonEmptyLines(ctx.stdout, pnpmFallbackRes.stdout);
@@ -222,7 +215,7 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
   }
 
   if (nodeUpdated || pnpmUpdated) {
-    const cleanRes = await ctx.runner.exec("vp", ["env", "clean"]);
+    const cleanRes = await ctx.runner.exec(vpExe, ["env", "clean"]);
     if (cleanRes.exitCode !== 0) {
       const detail = formatNativeErrorDetail([cleanRes.stderr, cleanRes.stdout], cleanRes.exitCode);
       ctx.stderr(`Warning: vp env clean failed (${detail})\n`);
@@ -257,29 +250,10 @@ async function runViteToolchainUpgrade(ctx: CommandContext): Promise<boolean> {
   return !hasError;
 }
 
-async function discoverGitRepos(
-  fsPort: CommandContext["fs"],
-  projectsDir: string,
-): Promise<readonly GitRepoEntry[]> {
-  const entries = await fsPort.readdir(projectsDir, { withFileTypes: true });
-  const dirs = entries
-    .filter((entry) => entry.isDirectory())
-    .toSorted((a, b) => a.name.localeCompare(b.name));
-
-  const checks = await Promise.all(
-    dirs.map(async (entry) => {
-      const dir = path.join(projectsDir, entry.name);
-      return (await pathExists(path.join(dir, ".git"), fsPort))
-        ? { name: entry.name, dir }
-        : undefined;
-    }),
-  );
-
-  return checks.filter((item): item is GitRepoEntry => item !== undefined);
-}
-
 async function syncWorkspaceGitRepos(ctx: CommandContext, projectsDir: string): Promise<number> {
-  const repos = await discoverGitRepos(ctx.fs, projectsDir);
+  const repos = await discoverWorkspaceProjects(ctx.fs, projectsDir, (dir) =>
+    pathExists(path.join(dir, ".git"), ctx.fs),
+  );
   const total = repos.length;
   if (total === 0) {
     return 0;
@@ -323,7 +297,7 @@ async function syncWorkspaceGitRepos(ctx: CommandContext, projectsDir: string): 
     })),
   );
 
-  const syncTargets: GitRepoEntry[] = [];
+  const syncTargets: WorkspaceProjectEntry[] = [];
   for (const { res, needsSync } of syncEligibility) {
     if (!res.success) {
       const errDetail =

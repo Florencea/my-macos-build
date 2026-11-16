@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
+
 import { mmbCommand } from "../../cli/src/commands/mmb.ts";
 import { MissingDependencyError, UsageError } from "../../cli/src/lib/context.ts";
 import { createTestContext } from "./test-helpers.ts";

@@ -1,6 +1,7 @@
 import { Buffer } from "node:buffer";
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
+
 import { describe, expect, it } from "vite-plus/test";
 import { z } from "zod";
 
@@ -8,33 +9,29 @@ const REPO_ROOT = path.resolve(import.meta.dirname, "..");
 const PLUGINS_ROOT = path.join(REPO_ROOT, "plugins");
 const MAX_RULE_BYTES = 8192;
 
-const AuthorObjectSchema = z
-  .object({
-    name: z.string().min(1),
-    email: z.string().min(1).optional(),
-    url: z.string().min(1).optional(),
-  })
-  .strict();
+const AuthorObjectSchema = z.strictObject({
+  name: z.string().min(1),
+  email: z.string().min(1).optional(),
+  url: z.string().min(1).optional(),
+});
 
-const PluginManifestSchema = z
-  .object({
-    $schema: z.literal("https://antigravity.google/schemas/v1/plugin.json").optional(),
-    name: z.string().regex(/^[a-z0-9-]+$/),
-    displayName: z.string().min(1).optional(),
-    description: z.string().min(1),
-    version: z.string().min(1).optional(),
-    disabled: z.boolean().optional(),
-    logo: z.string().min(1).optional(),
-    suggestedPrompts: z.array(z.string().regex(/\S/)).max(3).optional(),
-    skills: z.union([z.string().regex(/\S/), z.array(z.string().regex(/\S/))]).optional(),
-    author: z.union([z.string().min(1), AuthorObjectSchema]).optional(),
-    homepage: z.string().min(1).optional(),
-    repository: z.string().min(1).optional(),
-    license: z.string().min(1).optional(),
-    keywords: z.array(z.string().min(1)).optional(),
-    extensions: z.record(z.string(), z.record(z.string(), z.unknown())).optional(),
-  })
-  .strict();
+const PluginManifestSchema = z.strictObject({
+  $schema: z.literal("https://antigravity.google/schemas/v1/plugin.json").optional(),
+  name: z.string().regex(/^[a-z0-9-]+$/),
+  displayName: z.string().min(1).optional(),
+  description: z.string().min(1),
+  version: z.string().min(1).optional(),
+  disabled: z.boolean().optional(),
+  logo: z.string().min(1).optional(),
+  suggestedPrompts: z.array(z.string().regex(/\S/)).max(3).optional(),
+  skills: z.union([z.string().regex(/\S/), z.array(z.string().regex(/\S/))]).optional(),
+  author: z.union([z.string().min(1), AuthorObjectSchema]).optional(),
+  homepage: z.string().min(1).optional(),
+  repository: z.string().min(1).optional(),
+  license: z.string().min(1).optional(),
+  keywords: z.array(z.string().min(1)).optional(),
+  extensions: z.record(z.string(), z.record(z.string(), z.unknown())).optional(),
+});
 
 const NamedRuleFrontmatterSchema = z.object({
   trigger: z.enum(["glob", "model_decision", "manual"]),

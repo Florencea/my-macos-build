@@ -1,7 +1,9 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+
 import { describe, expect, it } from "vite-plus/test";
+
 import { EBK_BACKUP_RULES, ebkCommand } from "../../cli/src/commands/ebk.ts";
 import { createTestContext } from "./test-helpers.ts";
 

@@ -1,8 +1,8 @@
 import { z } from "zod";
+
 import { defineCommand } from "../lib/cli-framework.ts";
 import { UsageError, type CommandContext } from "../lib/context.ts";
 
-const EmptyOptionsSchema = z.object({});
 const DomainSchema = z
   .string()
   .trim()
@@ -160,7 +160,6 @@ export const mdigCommand = defineCommand({
   usage: "mdig <domain>",
   examples: ["mdig 'is1-ssl.mzstatic.com'"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 1, max: 1, label: "domain" },
   async run({ positionals, ctx }) {
     const parsedDomain = DomainSchema.safeParse(positionals[0] ?? "");

@@ -3,15 +3,12 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+
 import { describe, expect, it } from "vite-plus/test";
-import { z } from "zod";
+
 import { COMMAND_NAMES } from "../../cli/src/registry.ts";
 import { renderPosixShim, renderWindowsShim } from "../../scripts/sync-cli-bins.ts";
-
-const ExecErrorSchema = z.object({
-  code: z.union([z.number(), z.string()]),
-  stderr: z.string(),
-});
+import { ExecErrorSchema } from "../unit/test-helpers.ts";
 
 const execFileAsync = promisify(execFile);
 const REPO_ROOT = path.resolve(import.meta.dirname, "../..");

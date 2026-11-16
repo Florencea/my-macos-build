@@ -3,12 +3,13 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+
 import { describe, expect, it } from "vite-plus/test";
-import { z } from "zod";
+
 import { handleCliError } from "../../cli/src/lib/cli-framework.ts";
 import { UsageError } from "../../cli/src/lib/context.ts";
 import { CLI_COMMANDS, COMMAND_NAMES } from "../../cli/src/registry.ts";
-import { createTestContext } from "../unit/test-helpers.ts";
+import { ExecErrorSchema, createTestContext } from "../unit/test-helpers.ts";
 
 const execFileAsync = promisify(execFile);
 const REPO_ROOT = path.resolve(import.meta.dirname, "../..");
@@ -29,11 +30,6 @@ const EXPECTED_COMMANDS = [
   "upnpmv",
   "webread",
 ] as const;
-
-const ExecErrorSchema = z.object({
-  code: z.union([z.number(), z.string()]),
-  stderr: z.string(),
-});
 
 async function captureUsageError(
   run: () => Promise<number>,

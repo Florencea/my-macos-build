@@ -1,7 +1,9 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+
 import { describe, expect, it } from "vite-plus/test";
+
 import { upCommand } from "../../cli/src/commands/up.ts";
 import { MissingDependencyError, UsageError } from "../../cli/src/lib/context.ts";
 import {

@@ -3,23 +3,21 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+
 import { describe, expect, it } from "vite-plus/test";
 import { z } from "zod";
+
+import { ExecErrorSchema } from "../unit/test-helpers.ts";
 
 const execFileAsync = promisify(execFile);
 const REPO_ROOT = path.resolve(import.meta.dirname, "../..");
 
-const ExecErrorSchema = z.object({
-  code: z.union([z.number(), z.string()]),
-  stderr: z.string(),
-});
-
 const BootstrapInspectionSchema = z.object({
   manifestCounts: z.object({
-    CliPackages: z.number().int().positive(),
-    DesktopPackages: z.number().int().positive(),
-    InternalRootCAs: z.number().int().positive(),
-    AntigravityPlugins: z.number().int().positive(),
+    CliPackages: z.int().positive(),
+    DesktopPackages: z.int().positive(),
+    InternalRootCAs: z.int().positive(),
+    AntigravityPlugins: z.int().positive(),
   }),
   installTargets: z.array(z.string()),
   allTargets: z.array(z.string()),

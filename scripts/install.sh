@@ -468,7 +468,6 @@ install_packages() {
     fd \
     ffmpeg \
     gifski \
-    htmlq \
     hyperfine \
     jq \
     mtr \
@@ -634,24 +633,11 @@ setup_vite_plus() {
     VP_LOG=error "$vp_bin" env install lts >/dev/null 2>&1
     VP_LOG=error "$vp_bin" env install pnpm@latest >/dev/null 2>&1 || true
 
-    local vp_pkg_json="$vp_home/current/node_modules/vite-plus/package.json"
-    if [[ ! -f "$vp_pkg_json" ]]; then
-      local vp_ver
-      vp_ver="$("$vp_bin" --version 2>/dev/null | awk '/^vp v/ { sub(/^v/, "", $2); print $2; exit }')"
-      if [[ -n "$vp_ver" && -f "$vp_home/$vp_ver/node_modules/vite-plus/package.json" ]]; then
-        vp_pkg_json="$vp_home/$vp_ver/node_modules/vite-plus/package.json"
-      fi
-    fi
-
-    if [[ -f "$vp_pkg_json" ]] && command -v jq >/dev/null 2>&1; then
-      local target_oxfmt_ver
-      target_oxfmt_ver="$(jq -r '(.dependencies.oxfmt // empty) | sub("^[^0-9]*"; "")' "$vp_pkg_json")"
+    if command -v jq >/dev/null 2>&1; then
+      local target_oxfmt_ver current_oxfmt_ver
+      target_oxfmt_ver="$("$vp_bin" toolchain --global --json oxfmt 2>/dev/null | jq -r '.nodes[]? | select(.id == "oxfmt") | .version // empty' | head -n 1 || true)"
       if [[ -n "$target_oxfmt_ver" ]]; then
-        local vp_oxfmt_shim="$vp_home/bin/oxfmt"
-        local current_oxfmt_ver=""
-        if [[ -x "$vp_oxfmt_shim" ]]; then
-          current_oxfmt_ver="$("$vp_oxfmt_shim" --version 2>/dev/null | awk '{ for (i = 1; i <= NF; i++) if ($i ~ /^[0-9]+\.[0-9]+\.[0-9]+/) { print $i; exit } }')"
-        fi
+        current_oxfmt_ver="$("$vp_bin" list -g --json 2>/dev/null | jq -r '.[]? | select(.name == "oxfmt") | .version // empty' | head -n 1 || true)"
         if [[ "$current_oxfmt_ver" != "$target_oxfmt_ver" ]]; then
           VP_LOG=error "$vp_bin" install -g "oxfmt@$target_oxfmt_ver" >/dev/null 2>&1
         fi

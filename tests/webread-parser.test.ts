@@ -1,7 +1,5 @@
-import { execFileSync } from "node:child_process";
-import path from "node:path";
-import process from "node:process";
 import { describe, expect, it } from "vite-plus/test";
+
 import {
   extractMainContent,
   htmlToMarkdown,
@@ -227,40 +225,5 @@ describe("webread-parser", () => {
     });
     expect(truncated.startsWith("a".repeat(50))).toBe(true);
     expect(truncated).toMatch(/\[TRUNCATED:/);
-  });
-
-  it("supports direct CLI execution and validates --max-chars", () => {
-    const parserPath = path.resolve(
-      import.meta.dirname,
-      "..",
-      "cli",
-      "src",
-      "lib",
-      "webread-parser.ts",
-    );
-    const stdout = execFileSync(
-      process.execPath,
-      [
-        parserPath,
-        "--url",
-        "https://example.com/llms.txt",
-        "--content-type",
-        "text/plain",
-        "--no-enclosure",
-      ],
-      {
-        input: "# Line 1\n## Line 2\n",
-        encoding: "utf8",
-      },
-    );
-    expect(stdout).toBe("# Line 1\n## Line 2\n\n");
-
-    expect(() => {
-      execFileSync(process.execPath, [parserPath, "--max-chars", "abc"], {
-        input: "hello",
-        encoding: "utf8",
-        stdio: "pipe",
-      });
-    }).toThrow(/Command failed|--max-chars/);
   });
 });

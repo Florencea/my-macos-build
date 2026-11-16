@@ -1,61 +1,22 @@
 import path from "node:path";
-import { z } from "zod";
+
 import { assertRequiredCommands, defineCommand } from "../lib/cli-framework.ts";
 import { ExecutionError, formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
 import { isFile, pathExists } from "../lib/fs-utils.ts";
-import { formatProjectPackageManifest, withWindowsMachinePath } from "../lib/node-toolchain.ts";
+import {
+  discoverWorkspaceProjects,
+  formatProjectPackageManifest,
+  resolveActiveNodeVersion,
+  withWindowsMachinePath,
+  type WorkspaceProjectEntry,
+} from "../lib/node-toolchain.ts";
 import { mapWithConcurrency } from "../lib/process.ts";
 
-const EmptyOptionsSchema = z.object({});
 const PROJECT_CONCURRENCY_LIMIT = 6;
-
-interface WorkspaceNodeProject {
-  readonly name: string;
-  readonly dir: string;
-}
-
-async function resolveLocalNodeVersion(ctx: CommandContext): Promise<string> {
-  const vpNodeRes = await ctx.runner.exec("vp", ["node", "-v"], {
-    env: { VP_LOG: "error" },
-  });
-  if (vpNodeRes.exitCode === 0 && vpNodeRes.stdout.trim() !== "") {
-    return vpNodeRes.stdout.trim();
-  }
-
-  const nodeRes = await ctx.runner.exec("node", ["-v"]);
-  if (nodeRes.exitCode === 0 && nodeRes.stdout.trim() !== "") {
-    return nodeRes.stdout.trim();
-  }
-
-  throw new ExecutionError("Error: Unable to determine local Node.js version", 1);
-}
-
-async function discoverNodeProjects(
-  fsPort: CommandContext["fs"],
-  projectsDir: string,
-): Promise<readonly WorkspaceNodeProject[]> {
-  const entries = await fsPort.readdir(projectsDir, { withFileTypes: true });
-  const dirs = entries
-    .filter((entry) => entry.isDirectory())
-    .toSorted((a, b) => a.name.localeCompare(b.name));
-
-  const checks = await Promise.all(
-    dirs.map(async (entry) => {
-      const dir = path.join(projectsDir, entry.name);
-      const [hasGit, hasPkg] = await Promise.all([
-        pathExists(path.join(dir, ".git"), fsPort),
-        isFile(path.join(dir, "package.json"), fsPort),
-      ]);
-      return hasGit && hasPkg ? { name: entry.name, dir } : undefined;
-    }),
-  );
-
-  return checks.filter((item): item is WorkspaceNodeProject => item !== undefined);
-}
 
 async function syncProjectNodeEngine(
   ctx: CommandContext,
-  project: WorkspaceNodeProject,
+  project: WorkspaceProjectEntry,
   targetVersion: string,
 ): Promise<boolean> {
   const vpEnv = { VP_LOG: "error" };
@@ -175,19 +136,27 @@ export const unodevCommand = defineCommand({
   usage: "unodev [options]",
   examples: ["unodev", "unodev --dry-run"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 0, max: 0, label: "" },
   supportsDryRun: true,
   async run({ ctx }) {
     const effectiveCtx = await withWindowsMachinePath(ctx);
     await assertRequiredCommands(effectiveCtx, ["git", "vp"]);
 
-    const currentLocalVersion = await resolveLocalNodeVersion(effectiveCtx);
+    const currentLocalVersion = await resolveActiveNodeVersion(effectiveCtx);
+    if (currentLocalVersion === "") {
+      throw new ExecutionError("Error: Unable to determine local Node.js version", 1);
+    }
     effectiveCtx.stdout(`\nnode: ${currentLocalVersion}\n\n`);
     const nodeVersion = currentLocalVersion.replace(/^v+/, "");
 
     const projectsDir = path.dirname(effectiveCtx.repoRoot);
-    const projects = await discoverNodeProjects(effectiveCtx.fs, projectsDir);
+    const projects = await discoverWorkspaceProjects(effectiveCtx.fs, projectsDir, async (dir) => {
+      const [hasGit, hasPkg] = await Promise.all([
+        pathExists(path.join(dir, ".git"), effectiveCtx.fs),
+        isFile(path.join(dir, "package.json"), effectiveCtx.fs),
+      ]);
+      return hasGit && hasPkg;
+    });
     if (projects.length === 0) {
       return 0;
     }

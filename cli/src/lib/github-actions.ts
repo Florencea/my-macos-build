@@ -1,5 +1,7 @@
 import path from "node:path";
+
 import { z } from "zod";
+
 import { ExecutionError, formatNativeErrorDetail, type CommandContext } from "./context.ts";
 import { isDirectory } from "./fs-utils.ts";
 import { mapWithConcurrency } from "./process.ts";
@@ -14,7 +16,7 @@ const TAG_QUERY_CONCURRENCY = 6;
 
 const YqUsesItemSchema = z.object({
   uses: z.string(),
-  line: z.number().int().positive(),
+  line: z.int().positive(),
 });
 const YqUsesArraySchema = z.array(YqUsesItemSchema);
 

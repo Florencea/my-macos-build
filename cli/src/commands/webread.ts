@@ -1,10 +1,11 @@
 import path from "node:path";
+
 import { z } from "zod";
+
 import { defineCommand, parseValidatedInt } from "../lib/cli-framework.ts";
 import { ExecutionError, UsageError, type CommandContext } from "../lib/context.ts";
-import { parseWebContent } from "../lib/webread-parser.ts";
+import { DEFAULT_WEBREAD_MAX_CHARS, parseWebContent } from "../lib/webread-parser.ts";
 
-const DEFAULT_MAX_CHARS = 64_000;
 const JINA_TIMEOUT_MS = 15_000;
 const FETCH_TIMEOUT_MS = 20_000;
 const USER_AGENT =
@@ -263,7 +264,7 @@ export const webreadCommand = defineCommand({
     const maxChars =
       rawMaxChars !== undefined
         ? parseValidatedInt(rawMaxChars, "--max-chars", 1)
-        : DEFAULT_MAX_CHARS;
+        : DEFAULT_WEBREAD_MAX_CHARS;
 
     const targetUrl = normalizeTargetUrl(positionals[0] ?? "");
     const useJina = options.jina || options.external;

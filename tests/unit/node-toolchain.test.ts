@@ -1,14 +1,16 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+
 import { describe, expect, it } from "vite-plus/test";
+
 import {
   formatProjectPackageManifest,
-  getVitePlusOxfmtSpec,
   isPnpmWorkspaceProject,
   isWorkspaceNodeSyncTarget,
   mergeWindowsPathSegments,
   parsePnpmPackageManagerSpec,
+  resolveGlobalVpExecutable,
   resolveLatestPnpmVersionFromJson,
   resolvePlaywrightSyncStep,
   resolveProjectVerifySteps,
@@ -281,54 +283,80 @@ describe("node-toolchain utilities", () => {
     }
   });
 
-  it("resolves bundled oxfmt spec and aligns global oxfmt shim", async () => {
-    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-nt-oxfmt-"));
-    try {
-      const mockVpHome = path.join(tempDir, "vp_home");
-      const mockVpPkgDir = path.join(mockVpHome, "current", "node_modules", "vite-plus");
-      await fs.mkdir(mockVpPkgDir, { recursive: true });
-      await fs.writeFile(
-        path.join(mockVpPkgDir, "package.json"),
-        '{"name":"vite-plus","dependencies":{"oxfmt":"^1.2.3"}}',
-      );
+  it("aligns global oxfmt via vp toolchain and vp list JSON contracts", async () => {
+    const toolchainJson = JSON.stringify({
+      schemaVersion: 1,
+      nodes: [
+        { id: "vite-plus", version: "1.6.0" },
+        { id: "oxfmt", version: "1.2.3" },
+      ],
+    });
 
-      const specRun = createTestContext();
-      const spec = await getVitePlusOxfmtSpec(specRun.ctx, {
-        fallbackRoots: [mockVpHome],
-        homeDir: tempDir,
-      });
-      expect(spec).toEqual({
-        vpHome: mockVpHome,
-        oxfmtVersion: "1.2.3",
-      });
-
-      const binDir = path.join(mockVpHome, "bin");
-      await fs.mkdir(binDir, { recursive: true });
-      await fs.writeFile(path.join(binDir, "oxfmt"), "");
-
-      const syncRun = createTestContext({
-        env: { VP_HOME: mockVpHome, HOME: tempDir },
-        runner: {
-          commandExists: async () => true,
-          exec: async (cmd, args) => {
-            if (cmd === "vp" && args[0] === "--version") {
-              return { exitCode: 0, stdout: "vp v1.6.0\n", stderr: "" };
-            }
-            if (cmd.endsWith("oxfmt") && args[0] === "--version") {
-              return { exitCode: 0, stdout: "oxfmt 1.0.0\n", stderr: "" };
-            }
-            if (cmd === "vp" && args[0] === "install") {
-              return { exitCode: 0, stdout: "", stderr: "" };
-            }
+    const installedOps: string[] = [];
+    const syncRun = createTestContext({
+      runner: {
+        commandExists: async () => true,
+        exec: async (cmd, args) => {
+          if (cmd === "vp" && args[0] === "toolchain") {
+            return { exitCode: 0, stdout: toolchainJson, stderr: "" };
+          }
+          if (cmd === "vp" && args[0] === "list") {
+            return {
+              exitCode: 0,
+              stdout: JSON.stringify([{ name: "oxfmt", version: "1.0.0" }]),
+              stderr: "",
+            };
+          }
+          if (cmd === "vp" && args[0] === "install") {
+            installedOps.push(args.join(" "));
             return { exitCode: 0, stdout: "", stderr: "" };
-          },
+          }
+          return { exitCode: 0, stdout: "", stderr: "" };
         },
-      });
-      await syncGlobalOxfmt(syncRun.ctx);
-      expect(syncRun.getStdout()).toBe("oxfmt: 1.0.0 -> 1.2.3\n");
-    } finally {
-      await fs.rm(tempDir, { recursive: true, force: true });
-    }
+      },
+    });
+    await syncGlobalOxfmt(syncRun.ctx);
+    expect(installedOps).toEqual(["install -g oxfmt@1.2.3"]);
+    expect(syncRun.getStdout()).toBe("oxfmt: 1.0.0 -> 1.2.3\n");
+
+    const upToDateRun = createTestContext({
+      runner: {
+        commandExists: async () => true,
+        exec: async (cmd, args) => {
+          if (cmd === "vp" && args[0] === "toolchain") {
+            return { exitCode: 0, stdout: toolchainJson, stderr: "" };
+          }
+          if (cmd === "vp" && args[0] === "list") {
+            return {
+              exitCode: 0,
+              stdout: JSON.stringify([{ name: "oxfmt", version: "1.2.3" }]),
+              stderr: "",
+            };
+          }
+          throw new Error(`Unexpected exec: ${cmd} ${args.join(" ")}`);
+        },
+      },
+    });
+    await syncGlobalOxfmt(upToDateRun.ctx);
+    expect(upToDateRun.getStdout()).toBe("");
+
+    const dryRun = createTestContext({
+      dryRun: true,
+      runner: {
+        commandExists: async () => true,
+        exec: async (cmd, args) => {
+          if (cmd === "vp" && args[0] === "toolchain") {
+            return { exitCode: 0, stdout: toolchainJson, stderr: "" };
+          }
+          if (cmd === "vp" && args[0] === "list") {
+            return { exitCode: 0, stdout: "[]", stderr: "" };
+          }
+          throw new Error(`Unexpected exec in dry-run: ${cmd} ${args.join(" ")}`);
+        },
+      },
+    });
+    await syncGlobalOxfmt(dryRun.ctx);
+    expect(dryRun.getStdout()).toBe("[dry-run] vp install -g oxfmt@1.2.3\n");
   });
 
   it("merges Windows PATH segments case-insensitively and adapts win32 CommandContext", async () => {
@@ -361,5 +389,30 @@ describe("node-toolchain utilities", () => {
     });
     const adapted = await withWindowsMachinePath(winCtx);
     expect(adapted.env["PATH"]).toBe("C:\\Current;C:\\UserBin;C:\\MachineBin");
+  });
+
+  it("skips local node_modules/.bin when resolving the global vp executable", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-nt-global-vp-"));
+    try {
+      const localBin = path.join(tempDir, "repo", "node_modules", ".bin");
+      const globalBin = path.join(tempDir, "vp-home", "bin");
+      await fs.mkdir(localBin, { recursive: true });
+      await fs.mkdir(globalBin, { recursive: true });
+
+      const exeName = process.platform === "win32" ? "vp.cmd" : "vp";
+      const localVp = path.join(localBin, exeName);
+      const globalVp = path.join(globalBin, exeName);
+      await fs.writeFile(localVp, "#!/bin/sh\n", { mode: 0o755 });
+      await fs.writeFile(globalVp, "#!/bin/sh\n", { mode: 0o755 });
+
+      const sep = process.platform === "win32" ? ";" : ":";
+      const resolved = await resolveGlobalVpExecutable({
+        env: { PATH: `${localBin}${sep}${globalBin}` },
+        platform: process.platform,
+      });
+      expect(resolved).toBe(globalVp);
+    } finally {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
   });
 });

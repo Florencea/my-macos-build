@@ -1,14 +1,14 @@
 import os from "node:os";
 import path from "node:path";
+
 import { z } from "zod";
+
 import { defineCommand } from "../lib/cli-framework.ts";
-import { formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
+import { ErrnoCodeSchema, formatNativeErrorDetail, type CommandContext } from "../lib/context.ts";
 import { isDirectory } from "../lib/fs-utils.ts";
 import { runSequentially } from "../lib/process.ts";
 
-const EmptyOptionsSchema = z.object({});
 const JsonValueSchema = z.json();
-const ErrnoCodeSchema = z.object({ code: z.string() });
 
 interface BackupRule {
   readonly pattern: RegExp;
@@ -158,7 +158,6 @@ export const ebkCommand = defineCommand({
   usage: "ebk [options]",
   examples: ["ebk", "ebk --dry-run"],
   flags: {},
-  optionsSchema: EmptyOptionsSchema,
   positionals: { min: 0, max: 0, label: "" },
   requiredCommands: ["git"],
   supportsDryRun: true,
