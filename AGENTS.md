@@ -21,17 +21,18 @@ This document outlines the core architecture map, git delivery invariants, and m
   - The repository enforces a global Git hook (`~/.config/git/hooks/pre-commit`) that rejects direct commits by AI agents (`ANTIGRAVITY_AGENT=1`).
   - Agents must NEVER execute `git commit` or `git push`.
   - Mandatory workflow:
-    1. Apply code changes and verify syntax/AST (or run `pwsh -NoLogo -NoProfile -File tests/verify.ps1`).
+    1. Apply code changes and verify syntax/AST (or run `vpr agent:verify:gate` / `pwsh -NoLogo -NoProfile -File tests/verify.ps1`).
     2. Format modified files (`shfmt` for shell, `vpx oxfmt` for markdown/JSON/code, `Invoke-Formatter` for PowerShell).
     3. Stage changes using defensive explicit paths: `git add <files>`.
     4. Output the exact `git commit -m "type(scope): concise imperative description"` command for manual execution by the user.
 - **Agent-Friendly Execution Formats**:
-  - Prefer token-efficient structured flags during verification:
-    - Linting: `vp lint -f agent` (or `vpx oxlint -f agent`); inspect active rules via `vp lint --rules`
-    - Type check: `vpr typecheck` (or `tsc -b --pretty false`)
-    - Combined check: `vp check --quiet`
+  - Prefer token-efficient structured flags and Vite+ verification tiers:
+    - Inner loop (Tier 1): `vpr agent:verify:inner` (`vpr typecheck && vp check`); standalone linting via `vp lint -f agent`
+    - Unit tier (Tier 2): `vpr agent:verify:unit` (Tier 1 + `vp test run --project unit --reporter=tap-flat --no-color`)
+    - Full gate (Tier 3): `vpr agent:verify:gate` (Tier 2 + `contract` tests + parallel PowerShell/Shell checks + `cli.Tests.ps1`), or `pwsh -NoLogo -NoProfile -File tests/verify.ps1` without `node_modules`
+    - Vitest projects: `vp test --project unit` (`webread-parser.test.ts`), `vp test --project contract` (`plugins.test.ts`)
+    - Staged pre-check: `vp staged`
     - Dependencies: `vp pm list --json` (or `vp list --json`), `vp outdated --format json`
-    - Full repository gate: `pwsh -NoLogo -NoProfile -File tests/verify.ps1`
 - **Project Root Settings SSOT**:
   - Maintain `PSScriptAnalyzerSettings.psd1` directly in the project root (synchronized with `plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1`) for zero-configuration VS Code discovery.
 

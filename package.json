@@ -4,14 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "agent:lint:fix": "vp check --fix",
-    "agent:test:unit": "vp test run --reporter=tap-flat --no-color",
-    "agent:verify:inner": "vpr typecheck && vp lint",
+    "agent:test:unit": "vp test run --project unit --reporter=tap-flat --no-color",
+    "agent:verify:gate": "vpr agent:verify:unit && vp test run --project contract --reporter=tap-flat --no-color && vpr verify:native",
+    "agent:verify:inner": "vpr typecheck && vp check",
     "agent:verify:unit": "vpr agent:verify:inner && vpr agent:test:unit",
-    "check:fast": "vpr typecheck && vp lint && vpr agent:test:unit",
-    "test:unit": "vp test run",
-    "typecheck": "tsc --noEmit --pretty false",
-    "verify": "vp check && vpr typecheck && vp test run"
+    "typecheck": "tsc --noEmit --pretty false"
   },
   "dependencies": {
     "defuddle": "0.19.6",

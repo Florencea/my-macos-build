@@ -9,14 +9,15 @@ Cross-platform workstation bootstrap, PowerShell CLI utilities, dotfiles, and An
 - `scripts/install.sh`: Idempotent macOS Zsh installer for packages, dotfiles, CLI symlinks, and Antigravity plugins.
 - `scripts/install.ps1`: Dual-version Windows PowerShell 5.1 and PowerShell 7+ installer for WinGet packages, profiles, PATH registration, and Antigravity plugins.
 - `configs/`: Browser extension exports (`ubol-config.json`, `stylus.json`, `tampermonkey.json`, `immersive-translate-config.json`), global Git hooks, and shell configs.
-- `tests/`: Repository verification entry point (`tests/verify.ps1`), Pester tests (`tests/cli.Tests.ps1`), and Vitest suites (`tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
+- `tests/`: Repository verification entry point (`tests/verify.ps1`), zero-dependency PowerShell 7 CLI tests (`tests/cli.Tests.ps1`), and Vitest suites (`tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
 
 ## Bootstrap and Verification Commands
 
 - macOS setup: `zsh scripts/install.sh`
 - Windows setup: `powershell -ExecutionPolicy Bypass -File scripts/install.ps1`
-- Full verification gate (PowerShell AST/formatting/PSScriptAnalyzer, shell syntax/shfmt, `vp check`, `tsc`, Vitest, Pester): `pwsh -NoLogo -NoProfile -File tests/verify.ps1`
-- Fast JavaScript/TypeScript verification: `vpr verify` or `vpr check:fast`
+- Full verification gate via Vite+ (`typecheck`, `vp check`, Vitest `unit`/`contract`, PowerShell AST/PSScriptAnalyzer, shell syntax/`shfmt`, `cli.Tests.ps1`): `vpr agent:verify:gate`
+- Standalone verification gate (works without `node_modules`): `pwsh -NoLogo -NoProfile -File tests/verify.ps1`
+- Tiered TypeScript/Vitest checks: `vpr agent:verify:inner`, `vpr agent:verify:unit`, `vp test --project unit`, `vp test --project contract`
 
 ## Extension Configs
 
