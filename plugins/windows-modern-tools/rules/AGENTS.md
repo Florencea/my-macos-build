@@ -6,30 +6,15 @@
   - Strictly distinguish between legacy in-box **Windows PowerShell 5.1** (`powershell.exe`) and high-performance **PowerShell 7+** (`pwsh.exe`).
   - NEVER modify, replace, or symlink `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`.
   - Bootstrap scripts (`scripts/install.ps1`) targeting fresh machines must remain strictly compatible with Windows PowerShell 5.1.
-- **Double-Shell Invocation & Quote-Stripping Defense**:
-  - Host shell in Antigravity Windows environment is Windows PowerShell 5.1, which strips double quotes inside single quotes when launching external native processes.
-  - **Safe Invocation Patterns**:
-    - Use single-quote literals for inner string arguments: `pwsh -NoLogo -NoProfile -Command '$p = ''C:\path'''`.
-    - For multi-line logic or complex quoting, encode UTF-16LE script bytes to Base64 and execute via `pwsh -NoLogo -NoProfile -EncodedCommand <b64>` (refer to `windows-toolchain` skill for implementation recipe).
-    - Prefer composing atomic single-action tool calls over fragile multi-statement strings.
-- **Fail-Fast & Output Encoding**:
-  - Scripts executed via `pwsh -Command` or `-EncodedCommand` MUST declare fail-fast error handling:
-    `$ErrorActionPreference = 'Stop'; Set-StrictMode -Version Latest`
-  - Enforce native UTF-8 output stream: `[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)`.
-- **Array Unrolling & Indexing Guard**:
-  - PowerShell pipelines unroll single items into scalar values. Always wrap pipeline or split outputs with `@(...)` before accessing `[0]` or checking `.Count`.
+- **Double-Shell Quote Defense & Invocation**:
+  - Host shell on Windows is Windows PowerShell 5.1, which strips double quotes inside single quotes when launching `pwsh`. Use inner single quotes (`pwsh -NoLogo -NoProfile -Command '$p = ''C:\path'''`) or UTF-16LE `-EncodedCommand` (see `windows-toolchain` skill) with `$ErrorActionPreference = 'Stop'; Set-StrictMode -Version Latest` and UTF-8 `[Console]::OutputEncoding`.
+- **Array Unrolling & Indexing Guard**: Wrap pipeline outputs in `@(...)` before indexing `[0]` or checking `.Count`.
 
 ---
 
 ## 2. Cross-Version Compatibility Boundaries (PS 5.1 vs PS 7+)
 
-- **`$IsWindows` StrictMode Guard**:
-  - In dual-version scripts (`#Requires -Version 5.1`), `$IsWindows` is undefined in PS 5.1 and throws under `Set-StrictMode -Version Latest`. Guard with:
-    `$isWin = ($PSVersionTable.PSEdition -ne 'Core') -or $IsWindows`
-- **Operator Compatibility**:
-  - In scripts targeting Windows PowerShell 5.1, NEVER use PS 7-only operators (`? :`, `??`, `??=`, `?.`, `&&`, `||`), `ForEach-Object -Parallel`, or `ConvertFrom-Json -AsHashtable`.
-- **`String.Split` Overload Portability**:
-  - Never call `$str.Split('ab')` with a multi-character string. Always use PowerShell's `-split` regex operator or an explicit `[char[]]` cast.
+- Enforce `modern-powershell` Tier B constraints on `#Requires -Version 5.1` scripts (`scripts/install.ps1`): guard `$IsWindows` via `($PSVersionTable.PSEdition -ne 'Core') -or $IsWindows`, forbid PS 7 operators (`? :`, `??`, `?.`, `&&`, `||`), `-Parallel`, and `-AsHashtable`, and use `-split` or `[char[]]` for multi-char splits.
 
 ---
 

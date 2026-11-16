@@ -10,15 +10,28 @@ compatibility: PowerShell 7+ (pwsh), Windows PowerShell 5.1 (powershell.exe), PS
 
 ---
 
-## 1. Runtime Introspection First (SSOT Gate)
+## 1. Two-Layer SSOT Verification Gate (Runtime + Official Docs)
 
-`learn.microsoft.com` pages return empty anti-bot shells in `webread`; always verify cmdlets, `.NET` signatures, and analyzer rules against the live PowerShell runtime first:
+`learn.microsoft.com` pages return empty anti-bot shells in `webread`, and local `Get-Help about_*` fails if `Update-Help` has not been run. Resolve syntax and standards through two ordered layers:
 
-- **Cmdlet Syntax**: `pwsh -NoLogo -NoProfile -Command "Get-Command <CmdletName> -Syntax"`
-- **Full Cmdlet Help**: `pwsh -NoLogo -NoProfile -Command "Get-Help <CmdletName> -Full"`
+### Layer 1: Live Runtime Introspection (Zero Network Latency)
+
+- **Cmdlet & Provider Syntax**: `pwsh -NoLogo -NoProfile -Command "Get-Command <CmdletName> -Syntax"` (probe dynamic provider parameters with `-ArgumentList 'HKLM:\'` or `$PWD.ProviderPath`).
 - **.NET Method Overloads**: `pwsh -NoLogo -NoProfile -Command "[System.IO.File].GetMethods() | Where-Object Name -eq 'WriteAllText' | ForEach-Object { $_.ToString() }"`
 - **Analyzer Rule Introspection**: `pwsh -NoLogo -NoProfile -Command "Get-ScriptAnalyzerRule -Name <RuleName> | Format-List *"`
-- **External Docs Fallback**: When upstream wording is required outside runtime help, fetch raw Markdown from `https://raw.githubusercontent.com/MicrosoftDocs/PowerShell-Docs/main/...` via `webread`.
+
+### Layer 2: Two-Stage Raw GitHub Docs (Official & Style SSOT)
+
+Fetch indexes first, then retrieve only the targeted `.md` section via `webread`:
+
+- **Microsoft PowerShell Conceptual & Cross-Platform Docs**:
+  1. Index: `webread https://raw.githubusercontent.com/MicrosoftDocs/PowerShell-Docs/main/reference/docs-conceptual/toc.yml`
+  2. Targets: `dev-cross-plat/performance/script-authoring-considerations.md`, `dev-cross-plat/writing-portable-modules.md`, `whats-new/unix-support.md`, `learn/deep-dives/everything-about-null.md`, `reference/7.5/Microsoft.PowerShell.Core/About/about_Preference_Variables.md`
+- **Microsoft `PSScriptAnalyzer` Rule Docs**:
+  `webread https://raw.githubusercontent.com/MicrosoftDocs/PowerShell-Docs-Modules/main/reference/docs-conceptual/PSScriptAnalyzer/Rules/<RuleWithoutPSPrefix>.md` (e.g., `UseCompatibleCommands.md`)
+- **PowerShell Practice & Style Guide (Community Standard)**:
+  1. Index: `webread https://raw.githubusercontent.com/PoshCode/PowerShellPracticeAndStyle/master/README.md`
+  2. Targets: `Best-Practices/Error-Handling.md`, `Best-Practices/Performance.md`, `Best-Practices/Security.md`, `Style-Guide/Function-Structure.md`
 
 ---
 
@@ -64,12 +77,23 @@ compatibility: PowerShell 7+ (pwsh), Windows PowerShell 5.1 (powershell.exe), PS
   - Single pipeline outputs unroll into scalar values. Always wrap in `@(...)` before indexing `[0]` or checking `.Count`.
 - **Extensionless Shebang Symlink Resolution**:
   - When `pwsh` runs symlinks without extension in `~/.local/bin`, resolve physical paths via `[System.IO.FileInfo]::new(...).ResolveLinkTarget($true)`.
+- **Native Command Exit Codes & Encoding**:
+  - Do not set `$PSNativeCommandUseErrorActionPreference = $true` globally when calling tools with valid non-zero exit codes (`rg`, `diff`, `git status`); check `$LASTEXITCODE` explicitly or scope it to narrow `try/catch` blocks.
+  - Set `[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)` (and `$OutputEncoding` when piping UTF-8 strings into native executables).
+- **Loop Output Suppression**:
+  - Use `$null = <expr>` or `[void]<expr>` instead of `| Out-Null` inside loops to avoid pipeline overhead.
 
 ---
 
 ## 5. Three-Stage Mandatory Verification Pipeline
 
-Run all three stages whenever modifying `.ps1`, `.psm1`, or `.psd1` files:
+In repositories providing `tests/verify.ps1`, run the unified single-command gate:
+
+```powershell
+pwsh -NoLogo -NoProfile -File tests/verify.ps1 --fix --scope ps --path cli/command.ps1
+```
+
+In standalone workspaces without `tests/verify.ps1`, execute all three stages directly:
 
 ```powershell
 $targetFile = 'cli/command.ps1'

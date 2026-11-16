@@ -158,7 +158,7 @@ function Invoke-Step {
         $Host.UI.Write("`e[?25h")
         if ($null -ne $job) {
             if ($job.JobStateInfo.State -eq [System.Management.Automation.JobState]::Running) {
-                Stop-Job -Job $job -Force -ErrorAction SilentlyContinue
+                Stop-Job -Job $job -ErrorAction SilentlyContinue
             }
             Remove-Job -Job $job -Force -ErrorAction SilentlyContinue
         }

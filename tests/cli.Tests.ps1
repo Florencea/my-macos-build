@@ -336,6 +336,23 @@ try {
         $mediaHelp = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', (Join-Path $cliDir $mediaScript), '--help')
         Assert-Condition -Name "$mediaScript --help documents default browser as chrome" -Condition ($mediaHelp.Stdout -match 'default:\s*chrome') -Detail "got '$($mediaHelp.Stdout)'"
     }
+
+    # 12. verify.ps1 --path target mode and AST contract regression tests
+    $verifyScript = Join-Path $repoRoot 'tests' 'verify.ps1'
+    $upVerifyRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $verifyScript, '--scope', 'ps', '--path', (Join-Path $cliDir 'up.ps1'))
+    Assert-Condition -Name 'verify.ps1 --scope ps --path cli/up.ps1 passes' -Condition ($upVerifyRes.ExitCode -eq 0) -Detail "exit $($upVerifyRes.ExitCode): $($upVerifyRes.Stderr)"
+
+    $badContractScript = Join-Path $tempTestDir 'bad_contract.ps1'
+    $badScriptText = @'
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+$p = $env:Path
+Write-Output $p
+Stop-Job -Name 'nonexistent' -Force -ErrorAction SilentlyContinue
+'@ -replace "`r`n", "`n"
+    [System.IO.File]::WriteAllText($badContractScript, ($badScriptText.TrimEnd() + "`n"), [System.Text.UTF8Encoding]::new($false))
+    $badVerifyRes = Invoke-PwshCaptured -PwshArgs @('-NoLogo', '-NoProfile', '-File', $verifyScript, '--scope', 'ps', '--path', $badContractScript)
+    Assert-Condition -Name 'verify.ps1 AST contract rejects invalid Stop-Job -Force and $env:Path' -Condition (($badVerifyRes.ExitCode -ne 0) -and ($badVerifyRes.Stderr -match 'invalid parameter -Force') -and ($badVerifyRes.Stderr -match 'uppercase \$env:PATH')) -Detail "stderr: $($badVerifyRes.Stderr)"
 }
 finally {
     if (Test-Path -LiteralPath $tempTestDir) {

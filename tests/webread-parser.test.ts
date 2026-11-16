@@ -196,6 +196,20 @@ describe("webread-parser", () => {
       untrustedEnclosure: false,
     });
     expect(mdResult).toBe(mdPayload);
+
+    const yamlPayload = "items:\n  - name: Overview\n    href: overview.md";
+    const yamlUrlResult = await parseWebContent(yamlPayload, {
+      url: "https://raw.githubusercontent.com/MicrosoftDocs/PowerShell-Docs/main/reference/docs-conceptual/toc.yml",
+      untrustedEnclosure: false,
+    });
+    expect(yamlUrlResult).toBe(yamlPayload);
+
+    const yamlMimeResult = await parseWebContent(yamlPayload, {
+      url: "https://docs.example.com/index",
+      contentType: "text/yaml; charset=utf-8",
+      untrustedEnclosure: false,
+    });
+    expect(yamlMimeResult).toBe(yamlPayload);
   });
 
   it("preserves newlines for llms.txt and applies maxLength truncation", async () => {

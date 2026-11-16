@@ -465,6 +465,16 @@ export function wrapInUntrustedBarrier(content: string, sourceUrl: string): stri
   ].join("\n");
 }
 
+const PLAIN_TEXT_MIMES = new Set([
+  "text/markdown",
+  "text/x-markdown",
+  "text/plain",
+  "text/yaml",
+  "text/x-yaml",
+  "application/yaml",
+  "application/x-yaml",
+]);
+
 function classifyInputKind(
   input: string,
   url?: string,
@@ -472,7 +482,7 @@ function classifyInputKind(
 ): "plain" | "json" | "html" {
   const mime = (contentType ?? "").split(";")[0]?.trim().toLowerCase() ?? "";
 
-  if (mime === "text/markdown" || mime === "text/x-markdown" || mime === "text/plain") {
+  if (PLAIN_TEXT_MIMES.has(mime)) {
     return "plain";
   }
 
@@ -492,7 +502,8 @@ function classifyInputKind(
 
   if (
     url !== undefined &&
-    (/\.(?:txt|md)(?:$|\?)/i.test(url) || /\/llms(?:-full)?\.txt(?:$|\?)/i.test(url))
+    (/\.(?:txt|md|ya?ml|ps1|psm1|psd1)(?:$|\?)/i.test(url) ||
+      /\/llms(?:-full)?\.txt(?:$|\?)/i.test(url))
   ) {
     return "plain";
   }
