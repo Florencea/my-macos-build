@@ -23,8 +23,11 @@
   "devDependencies": {
     "@types/node": "26.6.6",
     "@types/turndown": "5.0.6",
+    "@vitest/browser-playwright": "catalog:",
+    "playwright": "*",
     "typescript": "7.0.2",
-    "vite-plus": "1.6.0"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   },
   "engines": {
     "node": "26.13.1"
