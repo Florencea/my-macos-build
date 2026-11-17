@@ -410,7 +410,9 @@ describe("node-toolchain utilities", () => {
         env: { PATH: `${localBin}${sep}${globalBin}` },
         platform: process.platform,
       });
-      expect(resolved).toBe(globalVp);
+      expect(process.platform === "win32" ? resolved.toLowerCase() : resolved).toBe(
+        process.platform === "win32" ? globalVp.toLowerCase() : globalVp,
+      );
     } finally {
       await fs.rm(tempDir, { recursive: true, force: true });
     }

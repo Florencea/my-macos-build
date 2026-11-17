@@ -57,13 +57,17 @@ export function buildSpawnEnv(
   return merged;
 }
 
-function getPathEnvValue(env: Readonly<Record<string, string | undefined>>): string {
-  const direct = env["PATH"];
+function getCaseInsensitiveEnvValue(
+  env: Readonly<Record<string, string | undefined>>,
+  targetKey: string,
+): string {
+  const direct = env[targetKey];
   if (direct !== undefined && direct !== "") {
     return direct;
   }
+  const upperTarget = targetKey.toUpperCase();
   for (const [key, value] of Object.entries(env)) {
-    if (key.toUpperCase() === "PATH" && value !== undefined && value !== "") {
+    if (key.toUpperCase() === upperTarget && value !== undefined && value !== "") {
       return value;
     }
   }
@@ -100,7 +104,7 @@ export async function resolveExecutableInPath(
     return (await isExecutableFile(name, platform)) ? path.resolve(name) : null;
   }
 
-  const pathVar = getPathEnvValue(env);
+  const pathVar = getCaseInsensitiveEnvValue(env, "PATH");
   if (pathVar === "") {
     return null;
   }
@@ -108,9 +112,13 @@ export async function resolveExecutableInPath(
   const delimiter = platform === "win32" ? ";" : ":";
   const pathDirs = pathVar.split(delimiter).filter((entry) => entry.trim() !== "");
 
+  const pathExtRaw =
+    platform === "win32"
+      ? getCaseInsensitiveEnvValue(env, "PATHEXT") || ".COM;.EXE;.BAT;.CMD;.PS1"
+      : "";
   const extensions =
     platform === "win32"
-      ? (env["PATHEXT"] ?? ".COM;.EXE;.BAT;.CMD;.PS1")
+      ? pathExtRaw
           .split(";")
           .map((ext) => ext.trim())
           .filter((ext) => ext !== "")
