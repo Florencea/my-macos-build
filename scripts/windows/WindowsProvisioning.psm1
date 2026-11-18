@@ -92,6 +92,304 @@ function Install-InternalRootCA {
     }
 }
 
+function ConvertFrom-VpJsonText {
+    param(
+        [string]$JsonText
+    )
+
+    if ([string]::IsNullOrWhiteSpace($JsonText)) {
+        return $null
+    }
+    try {
+        return ($JsonText | ConvertFrom-Json)
+    }
+    catch {
+        return $null
+    }
+}
+
+function Get-VpPropertyString {
+    param(
+        [object]$InputObject,
+        [Parameter(Mandatory)]
+        [string]$PropertyName
+    )
+
+    if ($null -eq $InputObject) {
+        return ''
+    }
+    $prop = $InputObject.PSObject.Properties[$PropertyName]
+    if ($null -eq $prop -or $null -eq $prop.Value) {
+        return ''
+    }
+    return ([string]$prop.Value).Trim()
+}
+
+function Test-VpPropertyTrue {
+    param(
+        [object]$InputObject,
+        [Parameter(Mandatory)]
+        [string]$PropertyName
+    )
+
+    if ($null -eq $InputObject) {
+        return $false
+    }
+    $prop = $InputObject.PSObject.Properties[$PropertyName]
+    if ($null -eq $prop -or $null -eq $prop.Value) {
+        return $false
+    }
+    return ([bool]$prop.Value)
+}
+
+function Test-VpDefaultNodeLtsMode {
+    param(
+        [Parameter(Mandatory)]
+        [string]$VpHome
+    )
+
+    $vpConfigPath = Join-Path $VpHome 'config.json'
+    if (Test-Path -LiteralPath $vpConfigPath -PathType Leaf) {
+        try {
+            $cfgRaw = Get-Content -LiteralPath $vpConfigPath -Raw -Encoding UTF8
+            $cfgObj = ConvertFrom-VpJsonText -JsonText $cfgRaw
+            if ((Get-VpPropertyString -InputObject $cfgObj -PropertyName 'defaultNodeVersion') -eq 'lts') {
+                return $true
+            }
+        }
+        catch {
+            $null = $_
+        }
+    }
+
+    $defaultRaw = (@(& vp env default 2>$null)) -join "`n"
+    return ($defaultRaw -match '(?m)^Default Node\.js version:\s*lts\b')
+}
+
+function Get-VpLocalEnvironment {
+    $localRaw = (@(& vp env list --json 2>$null)) -join "`n"
+    return (ConvertFrom-VpJsonText -JsonText $localRaw)
+}
+
+function Get-VpNodeLtsState {
+    $remoteRaw = (@(& vp env list-remote --lts --json --sort desc 2>$null)) -join "`n"
+    $remoteObj = ConvertFrom-VpJsonText -JsonText $remoteRaw
+    if ($null -ne $remoteObj -and ($null -ne $remoteObj.PSObject.Properties['node']) -and ($null -ne $remoteObj.node)) {
+        $nodes = @($remoteObj.node)
+        if ($nodes.Count -gt 0) {
+            $ltsEntry = @($nodes | Where-Object { Test-VpPropertyTrue -InputObject $_ -PropertyName 'latest_lts' } | Select-Object -First 1)
+            $selected = $null
+            if ($ltsEntry.Count -gt 0) {
+                $selected = $ltsEntry[0]
+            }
+            else {
+                $selected = $nodes[0]
+            }
+            return [PSCustomObject]@{
+                Version   = Get-VpPropertyString -InputObject $selected -PropertyName 'version'
+                Installed = Test-VpPropertyTrue -InputObject $selected -PropertyName 'installed'
+            }
+        }
+    }
+
+    $localObj = Get-VpLocalEnvironment
+    if ($null -ne $localObj -and ($null -ne $localObj.PSObject.Properties['node']) -and ($null -ne $localObj.node)) {
+        $localNodes = @($localObj.node)
+        if ($localNodes.Count -gt 0) {
+            $currentNode = @($localNodes | Where-Object { Test-VpPropertyTrue -InputObject $_ -PropertyName 'current' } | Select-Object -First 1)
+            $picked = $null
+            if ($currentNode.Count -gt 0) {
+                $picked = $currentNode[0]
+            }
+            else {
+                $picked = $localNodes[0]
+            }
+            return [PSCustomObject]@{
+                Version   = Get-VpPropertyString -InputObject $picked -PropertyName 'version'
+                Installed = $true
+            }
+        }
+    }
+
+    return [PSCustomObject]@{
+        Version   = ''
+        Installed = $false
+    }
+}
+
+function Get-VpPnpmState {
+    $remoteRaw = (@(& vp env list-remote --json --sort desc pnpm 2>$null)) -join "`n"
+    $remoteObj = ConvertFrom-VpJsonText -JsonText $remoteRaw
+    if ($null -ne $remoteObj -and ($null -ne $remoteObj.PSObject.Properties['package_managers']) -and ($null -ne $remoteObj.package_managers)) {
+        $pmObj = $remoteObj.package_managers
+        if (($null -ne $pmObj.PSObject.Properties['pnpm']) -and ($null -ne $pmObj.pnpm)) {
+            $pnpmEntries = @($pmObj.pnpm)
+            if ($pnpmEntries.Count -gt 0) {
+                $latestEntry = @($pnpmEntries | Where-Object { Test-VpPropertyTrue -InputObject $_ -PropertyName 'latest' } | Select-Object -First 1)
+                $selected = $null
+                if ($latestEntry.Count -gt 0) {
+                    $selected = $latestEntry[0]
+                }
+                else {
+                    $selected = $pnpmEntries[0]
+                }
+                return [PSCustomObject]@{
+                    Version   = Get-VpPropertyString -InputObject $selected -PropertyName 'version'
+                    Installed = Test-VpPropertyTrue -InputObject $selected -PropertyName 'installed'
+                }
+            }
+        }
+    }
+
+    $localObj = Get-VpLocalEnvironment
+    if ($null -ne $localObj -and ($null -ne $localObj.PSObject.Properties['package_managers']) -and ($null -ne $localObj.package_managers)) {
+        $localPm = $localObj.package_managers
+        if (($null -ne $localPm.PSObject.Properties['pnpm']) -and ($null -ne $localPm.pnpm)) {
+            $localPnpms = @($localPm.pnpm)
+            if ($localPnpms.Count -gt 0) {
+                $currentPnpm = @($localPnpms | Where-Object { Test-VpPropertyTrue -InputObject $_ -PropertyName 'current' } | Select-Object -First 1)
+                $picked = $null
+                if ($currentPnpm.Count -gt 0) {
+                    $picked = $currentPnpm[0]
+                }
+                else {
+                    $picked = $localPnpms[0]
+                }
+                return [PSCustomObject]@{
+                    Version   = Get-VpPropertyString -InputObject $picked -PropertyName 'version'
+                    Installed = $true
+                }
+            }
+        }
+    }
+
+    return [PSCustomObject]@{
+        Version   = ''
+        Installed = $false
+    }
+}
+
+function Get-VpOxfmtState {
+    $targetOxfmtVer = ''
+    $toolchainRaw = (@(& vp toolchain --global --json oxfmt 2>$null)) -join "`n"
+    $toolchainObj = ConvertFrom-VpJsonText -JsonText $toolchainRaw
+    if ($null -ne $toolchainObj -and ($null -ne $toolchainObj.PSObject.Properties['nodes']) -and ($null -ne $toolchainObj.nodes)) {
+        $oxfmtNode = @($toolchainObj.nodes | Where-Object { (Get-VpPropertyString -InputObject $_ -PropertyName 'id') -eq 'oxfmt' } | Select-Object -First 1)
+        if ($oxfmtNode.Count -gt 0) {
+            $targetOxfmtVer = Get-VpPropertyString -InputObject $oxfmtNode[0] -PropertyName 'version'
+        }
+    }
+
+    $currentOxfmtVer = ''
+    $globalListRaw = (@(& vp list -g --json 2>$null)) -join "`n"
+    $parsedGlobalPkgs = ConvertFrom-VpJsonText -JsonText $globalListRaw
+    if ($null -ne $parsedGlobalPkgs) {
+        # PS 5.1 ConvertFrom-Json emits top-level JSON arrays as a single Object[]; @($parsed) unwraps cleanly in both PS 5.1 and 7+.
+        $globalPkgs = @($parsedGlobalPkgs)
+        $oxfmtPkg = @($globalPkgs | Where-Object { (Get-VpPropertyString -InputObject $_ -PropertyName 'name') -eq 'oxfmt' } | Select-Object -First 1)
+        if ($oxfmtPkg.Count -gt 0) {
+            $currentOxfmtVer = Get-VpPropertyString -InputObject $oxfmtPkg[0] -PropertyName 'version'
+        }
+    }
+
+    return [PSCustomObject]@{
+        TargetVersion  = $targetOxfmtVer
+        CurrentVersion = $currentOxfmtVer
+    }
+}
+
+function Sync-VpToolchainState {
+    param(
+        [Parameter(Mandatory)]
+        [string]$VpHome,
+        [Parameter(Mandatory)]
+        [string]$RepoRoot,
+        [string[]]$ExtraPaths = @(),
+        [switch]$VpInstalledNow
+    )
+
+    $needsDefaultLts = -not (Test-VpDefaultNodeLtsMode -VpHome $VpHome)
+    $nodeState = Get-VpNodeLtsState
+    $pnpmState = Get-VpPnpmState
+    $oxfmtState = Get-VpOxfmtState
+
+    $needNodeInstall = (-not $nodeState.Installed)
+    $needPnpmInstall = (-not $pnpmState.Installed)
+    $needOxfmtInstall = (-not [string]::IsNullOrWhiteSpace($oxfmtState.TargetVersion)) -and ($oxfmtState.CurrentVersion -ne $oxfmtState.TargetVersion)
+    $anyUpdate = $needsDefaultLts -or $needNodeInstall -or $needPnpmInstall -or $needOxfmtInstall
+
+    if (-not $VpInstalledNow) {
+        if (-not $anyUpdate) {
+            $summaryParts = [System.Collections.Generic.List[string]]::new()
+            if (-not [string]::IsNullOrWhiteSpace($nodeState.Version)) {
+                $summaryParts.Add("Node v$($nodeState.Version)")
+            }
+            if (-not [string]::IsNullOrWhiteSpace($pnpmState.Version)) {
+                $summaryParts.Add("pnpm v$($pnpmState.Version)")
+            }
+            $displayOxfmtVer = $oxfmtState.TargetVersion
+            if ([string]::IsNullOrWhiteSpace($displayOxfmtVer)) {
+                $displayOxfmtVer = $oxfmtState.CurrentVersion
+            }
+            if (-not [string]::IsNullOrWhiteSpace($displayOxfmtVer)) {
+                $summaryParts.Add("oxfmt $displayOxfmtVer")
+            }
+
+            if ($summaryParts.Count -gt 0) {
+                Write-Output "[3/9] Vite+ toolchain is up to date ($($summaryParts -join ', '))."
+            }
+            else {
+                Write-Output '[3/9] Vite+ toolchain is up to date.'
+            }
+        }
+        else {
+            Write-Output '[3/9] Updating Vite+ toolchain...'
+        }
+    }
+
+    if ($needsDefaultLts) {
+        & vp env default lts
+    }
+
+    $envUpdated = $false
+    if ($needNodeInstall) {
+        & vp env install lts
+        $envUpdated = $true
+    }
+
+    if ($needPnpmInstall) {
+        if (-not [string]::IsNullOrWhiteSpace($pnpmState.Version)) {
+            $global:LASTEXITCODE = 0
+            & vp env install "pnpm@$($pnpmState.Version)"
+            if ($global:LASTEXITCODE -ne 0) {
+                & vp env install pnpm@latest
+            }
+        }
+        else {
+            & vp env install pnpm@latest
+        }
+        $envUpdated = $true
+    }
+
+    if ($envUpdated) {
+        & vp env clean
+        Sync-SessionPath -ExtraPaths $ExtraPaths
+    }
+
+    if ($needOxfmtInstall) {
+        Write-Output "      Aligning global oxfmt to $($oxfmtState.TargetVersion)..."
+        & vp install -g "oxfmt@$($oxfmtState.TargetVersion)"
+        Sync-SessionPath -ExtraPaths $ExtraPaths
+    }
+
+    $repoPkgJson = Join-Path $RepoRoot 'package.json'
+    $repoLockFile = Join-Path $RepoRoot 'pnpm-lock.yaml'
+    if ((Test-Path -LiteralPath $repoPkgJson -PathType Leaf) -and (Test-Path -LiteralPath $repoLockFile -PathType Leaf)) {
+        Write-Output '      Installing repository Node.js dependencies via Vite+...'
+        & vp -C $RepoRoot install --frozen-lockfile
+    }
+}
+
 function Initialize-VitePlusToolchain {
     param(
         [Parameter(Mandatory)]
@@ -109,8 +407,10 @@ function Initialize-VitePlusToolchain {
     $env:VP_NODE_MANAGER = 'yes'
     $env:VP_PM_MANAGER = 'yes'
     Sync-SessionPath -ExtraPaths $ExtraPaths
+
+    $vpInstalledNow = $false
     if (-not (Get-Command 'vp' -ErrorAction SilentlyContinue)) {
-        Write-Output '      Installing Vite+ toolchain...'
+        Write-Output '[3/9] Installing Vite+ toolchain...'
         $vpBootstrapScript = Join-Path $env:TEMP "vp-install-$(Get-Random).ps1"
         Save-FileSecure -Uri 'https://vite.plus/ps1' -OutFile $vpBootstrapScript
         try {
@@ -120,62 +420,11 @@ function Initialize-VitePlusToolchain {
             Remove-Item -LiteralPath $vpBootstrapScript -Force -ErrorAction SilentlyContinue
         }
         Sync-SessionPath -ExtraPaths $ExtraPaths
-    }
-    else {
-        Write-Output '[3/9] Vite+ toolchain is ready.'
+        $vpInstalledNow = $true
     }
 
     if (Get-Command 'vp' -ErrorAction SilentlyContinue) {
-        & vp env default lts
-        & vp env install lts
-        & vp env install pnpm@latest
-
-        $targetOxfmtVer = ''
-        $toolchainRaw = (@(& vp toolchain --global --json oxfmt 2>$null)) -join "`n"
-        if (-not [string]::IsNullOrWhiteSpace($toolchainRaw)) {
-            try {
-                $toolchainObj = $toolchainRaw | ConvertFrom-Json
-                if ($null -ne $toolchainObj.PSObject.Properties['nodes']) {
-                    $oxfmtNode = @($toolchainObj.nodes | Where-Object { $_.id -eq 'oxfmt' } | Select-Object -First 1)
-                    if ($oxfmtNode.Count -gt 0 -and ($null -ne $oxfmtNode[0].PSObject.Properties['version'])) {
-                        $targetOxfmtVer = ([string]$oxfmtNode[0].version).Trim()
-                    }
-                }
-            }
-            catch {
-                $targetOxfmtVer = ''
-            }
-        }
-
-        if ($targetOxfmtVer) {
-            $currentOxfmtVer = ''
-            $globalListRaw = (@(& vp list -g --json 2>$null)) -join "`n"
-            if (-not [string]::IsNullOrWhiteSpace($globalListRaw)) {
-                try {
-                    $globalPkgs = @($globalListRaw | ConvertFrom-Json)
-                    $oxfmtPkg = @($globalPkgs | Where-Object { $_.name -eq 'oxfmt' } | Select-Object -First 1)
-                    if ($oxfmtPkg.Count -gt 0 -and ($null -ne $oxfmtPkg[0].PSObject.Properties['version'])) {
-                        $currentOxfmtVer = ([string]$oxfmtPkg[0].version).Trim()
-                    }
-                }
-                catch {
-                    $currentOxfmtVer = ''
-                }
-            }
-
-            if ($currentOxfmtVer -ne $targetOxfmtVer) {
-                Write-Output "      Aligning global oxfmt to $targetOxfmtVer..."
-                & vp install -g "oxfmt@$targetOxfmtVer"
-                Sync-SessionPath -ExtraPaths $ExtraPaths
-            }
-        }
-
-        $repoPkgJson = Join-Path $RepoRoot 'package.json'
-        $repoLockFile = Join-Path $RepoRoot 'pnpm-lock.yaml'
-        if ((Test-Path -LiteralPath $repoPkgJson -PathType Leaf) -and (Test-Path -LiteralPath $repoLockFile -PathType Leaf)) {
-            Write-Output '      Installing repository Node.js dependencies via Vite+...'
-            & vp -C $RepoRoot install --frozen-lockfile
-        }
+        Sync-VpToolchainState -VpHome $VpHome -RepoRoot $RepoRoot -ExtraPaths $ExtraPaths -VpInstalledNow:$vpInstalledNow
     }
 }
 

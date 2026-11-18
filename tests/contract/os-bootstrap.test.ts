@@ -226,4 +226,120 @@ describe("OS bootstrap PowerShell and installer contracts", () => {
       await fs.rm(tempDir, { recursive: true, force: true });
     }
   });
+
+  it("executes WindowsProvisioning.psm1 Vite+ state checks idempotently across PS 7+ and PS 5.1", async () => {
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mmb-win-vp-"));
+    try {
+      const vpHomeUpToDate = path.join(tempDir, "vp-up-to-date");
+      const vpHomeOutdated = path.join(tempDir, "vp-outdated");
+      const repoDir = path.join(tempDir, "repo");
+      await fs.mkdir(vpHomeUpToDate, { recursive: true });
+      await fs.mkdir(vpHomeOutdated, { recursive: true });
+      await fs.mkdir(repoDir, { recursive: true });
+      await fs.writeFile(
+        path.join(vpHomeUpToDate, "config.json"),
+        '{"defaultNodeVersion":"lts"}\n',
+        "utf8",
+      );
+      await fs.writeFile(path.join(repoDir, "package.json"), '{"name":"demo"}\n', "utf8");
+      await fs.writeFile(path.join(repoDir, "pnpm-lock.yaml"), "lockfileVersion: '9.0'\n", "utf8");
+
+      const provPath = path.join(REPO_ROOT, "scripts", "windows", "WindowsProvisioning.psm1");
+      const psScript = [
+        "$ErrorActionPreference = 'Stop'",
+        `Import-Module -Name '${provPath.replace(/'/g, "''")}' -Force`,
+        "& (Get-Module WindowsProvisioning) {",
+        `  param($upHome, $oldHome, $repo)`,
+        "  $script:vpCalls = [System.Collections.Generic.List[string]]::new()",
+        "  $script:mockInstalled = $true",
+        '  $script:mockGlobalPkgsJson = \'[{"name":"oxfmt","version":"0.79.0"}]\'',
+        "  function Sync-SessionPath { param([string[]]$ExtraPaths = @()) }",
+        "  function vp {",
+        "    $global:LASTEXITCODE = 0",
+        "    $joined = $args -join ' '",
+        "    $script:vpCalls.Add($joined)",
+        "    if ($joined -eq 'env list-remote --lts --json --sort desc') {",
+        '      return (\'{"node":[{"version":"26.13.1","latest_lts":true,"installed":\' + $script:mockInstalled.ToString().ToLowerInvariant() + \'}]}\')',
+        "    }",
+        "    if ($joined -eq 'env list-remote --json --sort desc pnpm') {",
+        '      return (\'{"package_managers":{"pnpm":[{"version":"12.22.0","latest":true,"installed":\' + $script:mockInstalled.ToString().ToLowerInvariant() + \'}]}}\')',
+        "    }",
+        "    if ($joined -eq 'toolchain --global --json oxfmt') {",
+        '      return \'{"nodes":[{"id":"oxfmt","version":"0.79.0"}]}\'',
+        "    }",
+        "    if ($joined -eq 'list -g --json') {",
+        "      return $script:mockGlobalPkgsJson",
+        "    }",
+        "    return ''",
+        "  }",
+        "  $oxfmtState = Get-VpOxfmtState",
+        "  $upToDateOut = @(Sync-VpToolchainState -VpHome $upHome -RepoRoot $repo)",
+        "  $upToDateCalls = @($script:vpCalls)",
+        "  $script:vpCalls.Clear()",
+        "  $script:mockInstalled = $false",
+        "  $script:mockGlobalPkgsJson = '[]'",
+        "  $outdatedOut = @(Sync-VpToolchainState -VpHome $oldHome -RepoRoot $repo)",
+        "  $outdatedCalls = @($script:vpCalls)",
+        "  $payload = @{",
+        "    oxfmtTarget = $oxfmtState.TargetVersion",
+        "    oxfmtCurrent = $oxfmtState.CurrentVersion",
+        "    upToDateOut = $upToDateOut",
+        "    upToDateCalls = $upToDateCalls",
+        "    outdatedOut = $outdatedOut",
+        "    outdatedCalls = $outdatedCalls",
+        "  }",
+        "  $payload | ConvertTo-Json -Depth 4 -Compress",
+        `} '${vpHomeUpToDate.replace(/'/g, "''")}' '${vpHomeOutdated.replace(/'/g, "''")}' '${repoDir.replace(/'/g, "''")}'`,
+      ].join("\n");
+
+      const shells = process.platform === "win32" ? ["pwsh", "powershell"] : ["pwsh"];
+      const PayloadSchema = z.object({
+        oxfmtTarget: z.string(),
+        oxfmtCurrent: z.string(),
+        upToDateOut: z.array(z.string()),
+        upToDateCalls: z.array(z.string()),
+        outdatedOut: z.array(z.string()),
+        outdatedCalls: z.array(z.string()),
+      });
+
+      const shellResults = await Promise.all(
+        shells.map((shellExe) =>
+          execFileAsync(shellExe, ["-NoLogo", "-NoProfile", "-Command", psScript]),
+        ),
+      );
+
+      for (const { stdout } of shellResults) {
+        const parsedJson: unknown = JSON.parse(stdout.trim());
+        const validated = PayloadSchema.safeParse(parsedJson);
+        expect(validated.success).toBe(true);
+        if (!validated.success) {
+          return;
+        }
+        const res = validated.data;
+
+        expect(res.oxfmtTarget).toBe("0.79.0");
+        expect(res.oxfmtCurrent).toBe("0.79.0");
+
+        expect(res.upToDateOut).toContain(
+          "[3/9] Vite+ toolchain is up to date (Node v26.13.1, pnpm v12.22.0, oxfmt 0.79.0).",
+        );
+        expect(res.upToDateCalls).not.toContain("env default lts");
+        expect(res.upToDateCalls).not.toContain("env install lts");
+        expect(res.upToDateCalls.some((c) => c.startsWith("env install pnpm"))).toBe(false);
+        expect(res.upToDateCalls).not.toContain("env clean");
+        expect(res.upToDateCalls.some((c) => c.startsWith("install -g"))).toBe(false);
+        expect(res.upToDateCalls).toContain(`-C ${repoDir} install --frozen-lockfile`);
+
+        expect(res.outdatedOut).toContain("[3/9] Updating Vite+ toolchain...");
+        expect(res.outdatedCalls).toContain("env default lts");
+        expect(res.outdatedCalls).toContain("env install lts");
+        expect(res.outdatedCalls).toContain("env install pnpm@12.22.0");
+        expect(res.outdatedCalls).toContain("env clean");
+        expect(res.outdatedCalls).toContain("install -g oxfmt@0.79.0");
+        expect(res.outdatedCalls).toContain(`-C ${repoDir} install --frozen-lockfile`);
+      }
+    } finally {
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
+  });
 });
