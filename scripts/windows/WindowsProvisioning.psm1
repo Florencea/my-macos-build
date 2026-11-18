@@ -221,7 +221,17 @@ function Set-GlobalGitConfiguration {
     & git config --global push.autoSetupRemote true
     & git config --global pull.rebase false
     & git config --global http.sslBackend schannel
-    $gitRemoteBase = if (Test-Path -LiteralPath 'D:\') {
+    $oneDriveRoot = if (-not [string]::IsNullOrWhiteSpace($env:OneDrive)) {
+        $env:OneDrive
+    }
+    else {
+        Join-Path $HOME 'OneDrive'
+    }
+    $oneDriveRemoteDir = Join-Path $oneDriveRoot 'Data\_GitRemote'
+    $gitRemoteBase = if (Test-Path -LiteralPath $oneDriveRemoteDir) {
+        $oneDriveRemoteDir -replace '\\', '/'
+    }
+    elseif (Test-Path -LiteralPath 'D:\Data\_GitRemote') {
         'D:/Data/_GitRemote'
     }
     else {
