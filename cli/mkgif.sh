@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # High-quality GIF maker via ffmpeg and gifski
-# Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [-b chrome] [-o out.gif] <input_file_or_url> <from> <duration>
+# Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [-b edge] [-o out.gif] <input_file_or_url> <from> <duration>
 set -euo pipefail
 
 WIDTH=720
 FPS=10
 QUALITY=70
 LOSSY=false
-BROWSER="${YT_DLP_BROWSER:-chrome}"
+BROWSER="${YT_DLP_BROWSER:-edge}"
 OUTPUT_FILE=""
 POS_ARGS=()
 

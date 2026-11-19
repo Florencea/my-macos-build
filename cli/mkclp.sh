@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Clip Maker (local files and YouTube videos, Apple Silicon HEVC)
-# Usage: mkclp [-q 50] [-c] [-b chrome] [-o out.mp4] <input_file_or_url> <from> <duration>
+# Usage: mkclp [-q 50] [-c] [-b edge] [-o out.mp4] <input_file_or_url> <from> <duration>
 set -euo pipefail
 
 QUALITY=50
 QUALITY_SET=false
 FORCE_COPY=false
-BROWSER="${YT_DLP_BROWSER:-chrome}"
+BROWSER="${YT_DLP_BROWSER:-edge}"
 OUTPUT_FILE=""
 POS_ARGS=()
 
