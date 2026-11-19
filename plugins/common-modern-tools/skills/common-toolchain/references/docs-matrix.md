@@ -4,7 +4,8 @@ Verify CLI flags locally (`<tool> --help`) before fetching external documentatio
 
 ## Tool & Framework Lookup Endpoints
 
-- **Oxc (`oxlint` / `oxfmt`)**: `npx oxlint --rules` / `npx oxlint --help` | `curl -fsSL https://oxc.rs/llms.txt` -> `/docs/guide/usage/linter/rules/...md`
+- **ESLint / typescript-eslint**: `npx eslint --help` / `npx eslint --print-config <file>` | `https://eslint.org/docs/latest/rules/` / `https://typescript-eslint.io/rules/`
+- **Prettier**: `npx prettier --help` | `curl -fsSL https://prettier.io/llms.txt` -> `https://prettier.io/docs/options`
 - **Antigravity**: — | `curl -fsSL https://antigravity.google/llms.txt` -> `/docs/<topic>`
 - **ast-grep**: `ast-grep --help` / `sg --help` | `curl -fsSL https://ast-grep.github.io/llms.txt` -> targeted doc page
 - **yt-dlp**: `yt-dlp --help` | `https://github.com/yt-dlp/yt-dlp#usage-and-options`

@@ -2,7 +2,7 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "modern-web-stack",
   "displayName": "Modern Web Stack",
-  "description": "Modern web development bundle: Node.js (Active LTS via fnm), npm with strict .npmrc policies, TypeScript, React, Tailwind CSS, Google Chrome Modern Web Guidance, Hono, Drizzle ORM, TanStack Router, Vite, Vitest, Oxlint/Oxfmt, and GitHub Actions CI rules and skills.",
+  "description": "Modern web development bundle: Node.js (Active LTS via fnm), npm with strict .npmrc policies, TypeScript, React, Tailwind CSS, Google Chrome Modern Web Guidance, Hono, Drizzle ORM, TanStack Router, Vite, Vitest, ESLint/Prettier, and GitHub Actions CI rules and skills.",
   "version": "1.0.0",
   "author": {
     "name": "Florencea",
@@ -21,12 +21,12 @@
     "tanstack-router",
     "vite",
     "vitest",
-    "oxlint",
-    "oxfmt"
+    "eslint",
+    "prettier"
   ],
   "suggestedPrompts": [
     "Scaffold a Node.js TypeScript workspace using node-project-architecture standards",
     "Build a fail-closed Hono OpenAPI + Drizzle route backed by Zod validation",
-    "Audit this React + Tailwind codebase against Oxlint rules and modern-web-guidance"
+    "Audit this React + Tailwind codebase against ESLint rules and modern-web-guidance"
   ]
 }

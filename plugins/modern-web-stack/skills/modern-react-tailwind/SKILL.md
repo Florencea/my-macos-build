@@ -1,7 +1,7 @@
 ---
 name: modern-react-tailwind
-description: Modern React architectural invariants (Actions, Effect discipline, direct ref prop), Tailwind v4 @theme tokens, @shadcn/lint contracts, and two-stage .md doc gateways. Use when building React UI or Tailwind styles.
-compatibility: React, Tailwind CSS, Oxlint
+description: Modern React architectural invariants (Actions, Effect discipline, direct ref prop), Tailwind v4 @theme tokens, ESLint/Prettier workflows, and two-stage .md doc gateways. Use when building React UI or Tailwind styles.
+compatibility: React, Tailwind CSS, ESLint, Prettier
 ---
 
 # Modern React & Tailwind CSS Guidelines
@@ -13,9 +13,9 @@ compatibility: React, Tailwind CSS, Oxlint
 - **React Core & API Reference** (Two-Stage `.md`):
   - Stage 1: `curl -fsSL https://react.dev/llms.txt | head -n 120`
   - Stage 2: `curl -fsSL https://react.dev/<path>.md` (e.g. `https://react.dev/reference/react.md`, `https://react.dev/learn/you-might-not-need-an-effect.md`)
-- **React & Accessibility Oxlint Rules**:
-  - Inspect enabled rules: `npx oxlint --rules` (filter `react`, `react_perf`, `jsx_a11y`).
-  - Rule details & examples: `curl -fsSL https://oxc.rs/docs/guide/usage/linter/rules/react/<rule>.md` (e.g. `set-state-in-effect.md`, `exhaustive-deps.md`, `forward-ref-uses-ref.md`).
+- **React & Accessibility ESLint Rules**:
+  - Inspect enabled rules: `npx eslint --print-config <file>` (`eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`).
+  - Rule details & examples: `https://eslint.org/docs/latest/rules/` and `https://react.dev/reference/eslint-plugin-react-hooks`.
 - **Tailwind CSS Documentation**:
   - Fetch `https://tailwindcss.com/docs/theme` (or `/docs/<topic>`) and inspect local CSS `@theme` definitions.
 - **Web Platform Capabilities (Delegate Strictly to MWG)**:
@@ -32,12 +32,12 @@ compatibility: React, Tailwind CSS, Oxlint
 
 ---
 
-## 3. Tailwind CSS Design Tokens & `@shadcn/lint` Contracts
+## 3. Tailwind CSS Design Tokens & Component Contracts
 
 - **Design Token SSOT (`@theme`)**: Define CSS tokens centrally in root CSS (`@import "tailwindcss";` + `@theme { ... }`) and bind third-party UI library theme tokens to those CSS variables.
-- **Enforced Component Contracts (`npx oxlint`)**:
-  - `shadcn/no-raw-colors`: Forbid hardcoded hex/rgb values outside `@theme`.
-  - `shadcn/no-arbitrary-values`: Ban unmapped arbitrary brackets (e.g. `w-[321px]`).
-  - `shadcn/no-inline-styles`: Forbid `style={{ ... }}`; bind CSS variables or variants.
-  - `shadcn/no-restyle`: External callers may pass layout/positioning utilities (`allow: ["layout"]`) or declared variants only; never restyle internal typography or borders from outside.
-- **Verification & Sorting Split**: Run `npx oxfmt <files>` and `npx oxlint -f agent` for Oxc formatting and `@shadcn/lint` contracts; run `npm run lint:tailwind` / `npm run lint:tailwind:fix` (via `tailwindcss-language-server`) for Tailwind CSS utility diagnostics and canonical class sorting.
+- **Component Styling Contracts**:
+  - Forbid hardcoded hex/rgb values outside `@theme`.
+  - Avoid unmapped arbitrary bracket dimensions (e.g. `w-[321px]`) where design tokens apply.
+  - Forbid inline `style={{ ... }}` for theme colors or static styles; bind CSS variables or variants.
+  - External callers may pass layout/positioning utilities or declared variants only; never restyle internal typography or borders from outside.
+- **Verification & Sorting Split**: Run `npx prettier --write <files>` and `npx eslint --format compact` for formatting and lint checks; run `npm run lint:tailwind` / `npm run lint:tailwind:fix` (via `tailwindcss-language-server`) for Tailwind CSS utility diagnostics and canonical class sorting.

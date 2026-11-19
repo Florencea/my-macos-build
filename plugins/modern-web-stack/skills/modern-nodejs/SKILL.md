@@ -1,7 +1,7 @@
 ---
 name: modern-nodejs
 description: Modern Node.js pure ESM rules, strict .npmrc policies, two-stage llms.txt doc lookups, fnm/npm commands (npm pkg, npm ci, npx), and Zod validation. Use when writing Node.js scripts, CLIs, or managing packages.
-compatibility: Node.js (Active LTS), fnm, npm, Zod, Oxlint
+compatibility: Node.js (Active LTS), fnm, npm, Zod, ESLint, Prettier
 ---
 
 # Modern Node.js Guidelines
@@ -15,11 +15,11 @@ Verify live Node.js APIs and active linter anti-patterns before authoring script
   - Stage 2 (Module Markdown): `curl -fsSL https://nodejs.org/docs/latest/api/<module>.md` (e.g. `sqlite.md`, `util.md`, `test.md`, `fs.md`)
 - **Package Inspection & Verification (`npm` / `npx`)**:
   - Dependency checks: `npm ls --json`, `npm outdated --json`.
-  - Formatting & verification: `npx oxfmt <files>`, `npx oxlint -f agent`, `npm test`.
+  - Formatting & verification: `npx prettier --write <files>`, `npx eslint --format compact`, `npm test`.
   - Runner roles: `npm run <script>` runs `package.json` scripts; `npx <pkg>` executes local or remote binaries; `node <file.ts|mjs>` runs ESM and native erasable TypeScript directly.
-- **Oxlint Node & ESM Anti-Patterns**:
-  - Inspect enabled rules locally: `npx oxlint --rules` (filter `unicorn`, `node`, `import`, `promise`, `oxc`) and `npx oxlint --print-config`.
-  - Retrieve exact anti-pattern rationale and examples: `curl -fsSL https://oxc.rs/docs/guide/usage/linter/rules/<plugin>/<rule>.md` (e.g. `unicorn/prefer-node-protocol.md`, `unicorn/no-process-exit.md`, `node/no-path-concat.md`, `node/no-new-require.md`).
+- **ESLint Node & ESM Anti-Patterns**:
+  - Inspect enabled rules locally: `npx eslint --print-config <file>` and `eslint.config.*`.
+  - Retrieve exact rule rationale and examples: `https://eslint.org/docs/latest/rules/` and `https://typescript-eslint.io/rules/`.
 
 ---
 

@@ -21,7 +21,7 @@ Prioritize native file tools (`read_file` with bounded line ranges, `edit_file`,
 
 - Never write ephemeral scripts (`temp.py`, `scratch.js`, `query.sh`). Run ad-hoc JSON, date, or text logic in memory via `node -e '...'` or shell pipes.
 - Manage Node.js Active LTS via `fnm` and dependencies via `npm` (`npm ci`, `npm run <script>`, `npm pkg get/set/delete/fix`) respecting strict `.npmrc` policies (`ignore-scripts=true`, `save-exact=true`, `install-strategy=linked`, `strict-peer-deps=true`).
-- Inside projects with Oxc configured, run `npx oxlint`, `npx oxfmt <files>`, and `npx vitest run`.
+- Inside Node.js projects, run `npx eslint`, `npx prettier --write <files>`, and `npx vitest run`.
 
 ### Tier 3: Heavy Compute (Python)
 
@@ -61,7 +61,8 @@ Fetch documentation in two stages to avoid truncating large hubs:
 
 High-frequency verified endpoints:
 
-- `Oxc`: `npx oxlint --rules` -> `curl -fsSL https://oxc.rs/llms.txt` -> `/docs/guide/usage/linter/rules/...md`
+- `ESLint`: `npx eslint --print-config <file>` -> `https://eslint.org/docs/latest/rules/<rule>` / `https://typescript-eslint.io/rules/<rule>`
+- `Prettier`: `npx prettier --help` -> `curl -fsSL https://prettier.io/llms.txt` -> `https://prettier.io/docs/options`
 - `Antigravity`: `curl -fsSL https://antigravity.google/llms.txt` -> `/docs/<topic>`
 
 For remaining CLI tool docs (`ast-grep`, `yt-dlp`, `ffmpeg`, `rg`, `fd`, `jq`, `yq`, `shfmt`, `actionlint`), read [docs-matrix.md](./references/docs-matrix.md).

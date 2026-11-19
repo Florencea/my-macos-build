@@ -27,8 +27,8 @@
 - **Immediate Post-Edit Formatting**:
   - Shell (`*.sh`, `*.zsh`, `*.bash`): run `shfmt -i 2 -ci -w <files>`.
   - Fish (`*.fish`): run `fish_indent -w <files>`.
-  - JS/TS/CSS/HTML/Markdown/JSON inside Node.js projects: run `npx oxfmt <files>` (or `npm run format` when configured); format standalone JSON with `jq .`.
-- **Zero Suppression**: Prohibit `@ts-ignore`, `@ts-expect-error`, `oxlint-disable`, and `eslint-disable`.
+  - JS/TS/CSS/HTML/Markdown/JSON inside Node.js projects: run `npx prettier --write <files>` (or `npm run format` when configured); format standalone JSON with `jq .`.
+- **Zero Suppression**: Prohibit `@ts-ignore`, `@ts-expect-error`, and `eslint-disable`.
 
 ---
 

@@ -15,12 +15,12 @@ description: Modern React, Tailwind CSS, TanStack Router, Playwright browser tes
 ## 2. React, Tailwind CSS & Routing Invariants
 
 - **React Paradigms**: Compute derived state during render; never synchronize local state via `useEffect` without external subscriptions. Pass `ref` directly as a prop; strictly prohibit `React.forwardRef` and `React.FC`. Prefer `<form action={...}>` with `useActionState` / `useFormStatus` / `useOptimistic`.
-- **Tailwind Design Tokens & Contracts**: Define tokens in root CSS via `@import "tailwindcss";` and `@theme { ... }`. Enforce `shadcn/no-raw-colors`, `shadcn/no-arbitrary-values`, and `shadcn/no-inline-styles`; external callers may pass layout utilities or declared variants only.
+- **Tailwind Design Tokens & Contracts**: Define tokens in root CSS via `@import "tailwindcss";` and `@theme { ... }`. Forbid hardcoded hex/rgb colors outside `@theme`, unmapped arbitrary brackets, and inline `style={{ ... }}`; external callers may pass layout utilities or declared variants only.
 - **TanStack Router**: Place route files under `src/routes/`. NEVER edit generated `src/routeTree.gen.ts`. Validate search parameters with `validateSearch` and Zod schemas.
 
 ---
 
 ## 3. Verification & Docs Gateways
 
-- **Testing & Formatting**: Use `vitest` and `@vitest/browser-playwright` (`headless: true`, `chromium`) for E2E tests. Run `npx oxfmt <files>`, `npx oxlint -f agent`, and `npm run lint:tailwind` (when configured).
+- **Testing & Formatting**: Use `vitest` and `@vitest/browser-playwright` (`headless: true`, `chromium`) for E2E tests. Run `npx prettier --write <files>`, `npx eslint --format compact`, and `npm run lint:tailwind` (when configured).
 - **Two-Stage Docs**: `react.dev` and `tanstack.com` HTML routes return empty shells; always fetch `/llms.txt` -> targeted `.md` pages via `curl -fsSL` (or inspect `node_modules/**/*.d.ts`).

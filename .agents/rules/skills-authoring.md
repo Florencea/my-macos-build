@@ -41,6 +41,6 @@ All Antigravity customizations are packaged under `plugins/<plugin-name>/` and d
 ## 3. Authoring & Sync Invariants
 
 - **External SSOT Gateway Design**: Delegate fast-changing syntax to `<tool> --help`, `node_modules/**/*.d.ts`, or two-stage `curl -fsSL` (`llms.txt` -> `.md`).
-- **Zero Suppression & Zod-First**: Never recommend `@ts-ignore`, `@ts-expect-error`, `oxlint-disable`, or `eslint-disable`; validate external boundaries with Zod `safeParse`.
+- **Zero Suppression & Zod-First**: Never recommend `@ts-ignore`, `@ts-expect-error`, or `eslint-disable`; validate external boundaries with Zod `safeParse`.
 - **No Fragile Version Pinning**: Cite major generations or LTS tracks (`Node.js (Active LTS)`, `TypeScript (Current)`, `fnm`, `npm`).
 - **Installer & Formatting Sync**: Whenever files are added, renamed, or deleted under `plugins/`, update the remote fallback fetch list in `scripts/install.sh` (`sync_plugin_dir` / `deploy_antigravity_plugins`). Validate JSON files via `jq empty` and enforce LF line endings.
