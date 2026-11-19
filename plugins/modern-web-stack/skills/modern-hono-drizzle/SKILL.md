@@ -1,21 +1,21 @@
 ---
 name: modern-hono-drizzle
 description: Type-safe Hono OpenAPI routing with Zod, Drizzle ORM schema SSOT, fail-closed RBAC routing, and llms.txt / .d.ts doc lookups. Use when building or refactoring Hono servers, REST APIs, or DB schemas.
-compatibility: Node.js (Active LTS), Hono, Drizzle ORM, Zod, Vite+
+compatibility: Node.js (Active LTS), Hono, Drizzle ORM, Zod
 ---
 
 # Modern Hono & Drizzle ORM Guidelines
 
 ## 1. External SSOT & Local Declaration Gateways
 
-`hono.dev/docs/*` HTML pages return empty shells in `webread` and `llms-full.txt` (~134 KB) truncates under default caps. Verify Hono and Drizzle APIs using these verified channels:
+`hono.dev/docs/*` HTML pages return empty shells and `llms-full.txt` (~134 KB) is large. Verify Hono and Drizzle APIs using these channels:
 
 - **Hono Reference**:
-  - `webread https://hono.dev/llms.txt` or compact summary `webread https://hono.dev/llms-small.txt` (pass `--max-chars 140000` only if fetching `https://hono.dev/llms-full.txt` deliberately).
+  - `curl -fsSL https://hono.dev/llms.txt | head -n 120` or compact summary `curl -fsSL https://hono.dev/llms-small.txt`
   - Local type declarations (SSOT for exact signatures): inspect `node_modules/hono/**/*.d.ts` and `node_modules/@hono/zod-openapi/**/*.d.ts`.
-- **Drizzle ORM Reference** (Two-Stage `webread`):
-  - Stage 1: `webread https://orm.drizzle.team/llms.txt`
-  - Stage 2: `webread https://orm.drizzle.team/docs/<topic>` (e.g. `relations-v2`, `drizzle-kit-push`) + inspect `node_modules/drizzle-orm/**/*.d.ts`.
+- **Drizzle ORM Reference** (Two-Stage `curl -fsSL`):
+  - Stage 1: `curl -fsSL https://orm.drizzle.team/llms.txt | head -n 120`
+  - Stage 2: `curl -fsSL https://orm.drizzle.team/docs/<topic>` (e.g. `relations-v2`, `drizzle-kit-push`) + inspect `node_modules/drizzle-orm/**/*.d.ts`.
 
 ---
 
@@ -30,7 +30,7 @@ compatibility: Node.js (Active LTS), Hono, Drizzle ORM, Zod, Vite+
 ## 3. Drizzle ORM Schema SSOT & Code-First Push
 
 - **Single Schema Source**: Define tables centrally in `src/server/database/schema.ts` and infer row/insert types directly via `typeof table.$inferSelect` and `typeof table.$inferInsert`. Never duplicate entity interfaces by hand.
-- **Schema Sync**: Configure `"db:push": "drizzle-kit push"` in `package.json` and run `vpr db:push`.
+- **Schema Sync**: Configure `"db:push": "drizzle-kit push"` in `package.json` and run `npm run db:push`.
 
 ---
 

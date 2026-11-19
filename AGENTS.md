@@ -1,14 +1,13 @@
 # Agent Guidelines & Repository Workflow Rules
 
-Repository-specific layout, verification tiers, and delivery constraints for `my-machine-build` (macOS + Windows 11 / 10 IoT LTSC). Global CLI, formatting, and communication rules come from `common-modern-tools`.
+Repository-specific layout, verification checks, and delivery constraints for `my-machine-build` (macOS Bash 3.2 + Fish + fnm + npm). Global CLI, formatting, and communication rules come from `common-modern-tools`.
 
 ## 1. Repository Architecture
 
-- `cli/src/` & `cli/bin/`: Vite+ TypeScript CLI commands (`commands/*.ts`), `registry.ts`, `main.ts`, hexagonal `CommandContext` ports (`lib/*.ts`), and generated shims (`cli/bin/*`, `*.cmd` via `vpr cli:sync-bins`).
-- `configs/`: Shell parity (`bash/`, `zsh/`, `zsh/completions/`), global Git hooks (`git/hooks/`), and browser extension backups.
-- `plugins/`: Antigravity plugin bundles (`common-modern-tools`, `macos-modern-tools`, `windows-modern-tools`, `modern-web-stack`).
-- `scripts/`: Idempotent OS installers (`install.sh` Zsh for macOS; `install.ps1` + `windows/` PS 5.1 & 7+ modules for Windows) and `sync-cli-bins.ts`.
-- `tests/`: Tiered PowerShell verifiers (`verify-ps-fast.ps1`, `verify-ps-lint.ps1`, `verify-ps-compat.ps1`, `VerifyCommon.psm1`), shell verifier (`verify-shell.ts`), and Vitest suites (`unit/`, `contract/`, `webread-parser.test.ts`, `plugins.test.ts`).
+- `cli/*.sh`: Single-file macOS Bash 3.2 CLI scripts (`clall`, `ebk`, `mkclp`, `mkgif`, `mmb`, `rea`, `ua`), symlinked to `~/.local/bin/<cmd>`.
+- `configs/`: Fish primary shell configs (`fish/`), minimal `zsh/` and `bash/` fallback profiles, global Git hooks (`git/hooks/pre-commit.sh`), and browser extension backups.
+- `plugins/`: Antigravity plugin bundles (`common-modern-tools`, `macos-modern-tools`, `modern-web-stack`), deployed to `~/.gemini/config/plugins/`.
+- `scripts/install.sh`: Idempotent macOS Bash 3.2 installer for Homebrew casks/core formulas, Fish default shell, fnm + Node.js Active LTS + strict `.npmrc`, dotfiles, CLI symlinks, and Antigravity plugins.
 - `.agents/rules/`: Glob-triggered domain rules.
 
 ---
@@ -16,19 +15,18 @@ Repository-specific layout, verification tiers, and delivery constraints for `my
 ## 2. Git Delivery & Verification Protocol
 
 - **No AI Commits**: `~/.config/git/hooks/pre-commit` rejects commits when `ANTIGRAVITY_AGENT=1`. Never run `git commit` or `git push`. After verification and formatting, run `git add <files>` and output the exact `git commit -m "type(scope): summary"` command for manual execution.
-- **Verification & Tooling Shortcuts**:
-  - Tier 1 (Inner loop): `vpr agent:verify:inner` (`vp check`, `ps:fast`, `lint:shell`); single PowerShell file via `vpr agent:verify:ps -- --fix --path <file>`; structured lint via `vp lint -f agent`.
-  - Tier 2 (Unit): `vpr agent:verify:unit` (Tier 1 + `ps:lint:install` + Vitest `unit`).
-  - Tier 3 (Full gate): `vpr agent:verify:gate` (Tier 2 + `ps:compat:install` + Vitest `contract`).
-  - CLI shims: `vpr cli:sync-bins` whenever `cli/src/registry.ts` changes.
-  - Vitest projects: `vp test --project unit` and `vp test --project contract`.
-  - Dependencies: `vp list --json` and `vp outdated --format json`.
-- **Root Settings SSOT**: Keep root `PSScriptAnalyzerSettings.psd1` identical to `plugins/common-modern-tools/PSScriptAnalyzerSettings.psd1`.
+- **Verification & Formatting Shortcuts**:
+  - Bash 3.2 syntax: `bash -n scripts/install.sh cli/*.sh configs/bash/bash_profile configs/bash/bashrc configs/git/hooks/pre-commit.sh`
+  - Zsh syntax: `zsh -n configs/zsh/zshenv configs/zsh/zprofile configs/zsh/zshrc`
+  - Static check: `shellcheck scripts/install.sh cli/*.sh configs/git/hooks/pre-commit.sh`
+  - Shell format: `shfmt -i 2 -ci -w <files>` (verify with `shfmt -i 2 -ci -d <files>`)
+  - Fish syntax & format: `fish -n configs/fish/**/*.fish` and `fish_indent -w configs/fish/**/*.fish`
+  - JSON validation: `jq empty <file.json>`
 
 ---
 
 ## 3. Domain Rules (`.agents/rules/`)
 
-- [`.agents/rules/cli-scripts.md`](./.agents/rules/cli-scripts.md): `cli/src/**, scripts/sync-cli-bins.ts`
-- [`.agents/rules/shell-configs.md`](./.agents/rules/shell-configs.md): `configs/bash/*, configs/zsh/*, configs/zsh/completions/*, configs/git/hooks/*, scripts/*.sh, scripts/*.ps1, scripts/windows/*, tests/verify-ps-*.ps1, tests/VerifyCommon.psm1, tests/verify-shell.ts`
+- [`.agents/rules/cli-scripts.md`](./.agents/rules/cli-scripts.md): `cli/*.sh`
+- [`.agents/rules/shell-configs.md`](./.agents/rules/shell-configs.md): `configs/fish/**, configs/bash/*, configs/zsh/*, configs/git/hooks/*, scripts/install.sh`
 - [`.agents/rules/skills-authoring.md`](./.agents/rules/skills-authoring.md): `plugins/**, .agents/rules/**`

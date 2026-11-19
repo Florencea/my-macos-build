@@ -1,20 +1,20 @@
 ---
 name: tanstack-router
 description: File-based routing, Zod validateSearch, routeTree.gen.ts protection, loaders, and Markdown SSOT lookups for TanStack Router. Use when creating or modifying client-side routes or query parameters.
-compatibility: TanStack Router, React, Vite+, Zod
+compatibility: TanStack Router, React, Zod
 ---
 
 # TanStack Router Guidelines
 
 ## 1. External SSOT & Local Declaration Gateways
 
-`tanstack.com` HTML pages return empty anti-bot pages in `webread`; always read `.md` endpoints listed in `llms.txt` or local `.d.ts` declarations:
+`tanstack.com` HTML pages return empty anti-bot pages; always read `.md` endpoints listed in `llms.txt` or local `.d.ts` declarations:
 
-- **Two-Stage `webread` (`.md` Mandatory)**:
-  - Stage 1 (Index): `webread https://tanstack.com/router/latest/llms.txt`
-  - Stage 2 (Targeted Markdown): `webread https://tanstack.com/router/latest/docs/<path>.md` (e.g. `https://tanstack.com/router/latest/docs/guide/search-params.md`, `.../docs/guide/data-loading.md`, `.../docs/framework/react/overview.md`).
+- **Two-Stage `curl -fsSL` (`.md` Mandatory)**:
+  - Stage 1 (Index): `curl -fsSL https://tanstack.com/router/latest/llms.txt | head -n 120`
+  - Stage 2 (Targeted Markdown): `curl -fsSL https://tanstack.com/router/latest/docs/<path>.md` (e.g. `https://tanstack.com/router/latest/docs/guide/search-params.md`, `.../docs/guide/data-loading.md`, `.../docs/framework/react/overview.md`).
 - **Local Declarations**: Inspect `node_modules/@tanstack/react-router/**/*.d.ts` for exact hook, `createFileRoute`, and `validateSearch` options.
-- **Zod Verification**: Verify search parameter schema helpers against `https://zod.dev/llms.txt` → `https://zod.dev/api` (or `node_modules/zod/**/*.d.ts`).
+- **Zod Verification**: Verify search parameter schema helpers against `https://zod.dev/llms.txt` -> `https://zod.dev/api` (or `node_modules/zod/**/*.d.ts`).
 
 ---
 

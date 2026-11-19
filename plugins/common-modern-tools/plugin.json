@@ -2,17 +2,17 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "common-modern-tools",
   "displayName": "Common Modern Tools",
-  "description": "Cross-platform modern CLI toolchain (rg, fd, ast-grep, tokei, bat, sd, jq, yq, duckdb, sqlite3, xsv, xh, dust, pdftotext, shfmt, actionlint, hyperfine, pwsh, Vite+), token discipline, two-stage webread documentation gateway, PowerShell authoring standards, and git commit safety.",
+  "description": "Core modern CLI toolchain (rg, fd, ast-grep, jq, yq, shfmt, actionlint, fnm, npm), token discipline, two-stage llms.txt documentation lookups, and git commit safety.",
   "version": "1.0.0",
   "author": {
     "name": "Florencea",
     "url": "https://github.com/Florencea"
   },
   "repository": "https://github.com/Florencea/my-machine-build",
-  "keywords": ["cli", "toolchain", "powershell", "pwsh", "webread", "viteplus"],
+  "keywords": ["cli", "toolchain", "fnm", "npm", "shell", "fish"],
   "suggestedPrompts": [
-    "Audit this repository toolchain and inspect source metrics with tokei and rg",
-    "Format and analyze PowerShell scripts against PSScriptAnalyzerSettings.psd1",
-    "Retrieve upstream documentation via two-stage webread llms.txt index lookup"
+    "Audit this repository codebase using rg, fd, and ast-grep",
+    "Validate and format shell scripts with shfmt and shellcheck",
+    "Retrieve upstream documentation via two-stage curl llms.txt index lookup"
   ]
 }

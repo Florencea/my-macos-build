@@ -1,109 +1,28 @@
-# ==============================================================================
-# Native Zsh Configuration (Fish-like Interactive & Prompt Experience)
-# ==============================================================================
-
-# ------------------------------------------------------------------------------
-# 1. Custom Completions & FPATH Setup
-# ------------------------------------------------------------------------------
-typeset -U fpath FPATH
-[[ -d "$HOME/.local/share/zsh/site-functions" ]] && fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
-[[ -d "$HOME/.config/zsh/functions" ]] && fpath=("$HOME/.config/zsh/functions" $fpath)
-
-# ------------------------------------------------------------------------------
-# 2. Fast Completion System Initialization (Cached compinit)
-# ------------------------------------------------------------------------------
-autoload -Uz compinit
-setopt extendedglob
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) || ! -f ${ZDOTDIR:-$HOME}/.zcompdump ]]; then
-  compinit
-else
-  compinit -C
+# Homebrew environment (if not already set by zshenv/zprofile)
+if [[ -z "${HOMEBREW_PREFIX:-}" ]]; then
+  if [[ -x "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
-# ------------------------------------------------------------------------------
-# 3. Fish-like Tab Menu & Completion Behavior
-# ------------------------------------------------------------------------------
-zmodload -i zsh/complist
+# Ensure unique entries in PATH
+typeset -U path PATH
 
-# Enable arrow-key menu selection
-zstyle ':completion:*' menu select
+# PATH configuration
+path=(
+  "$HOME/.local/bin"
+  $path
+)
+export PATH
 
-# Case-insensitive + smart substring matching
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+# fnm (Fast Node Manager)
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
 
-# Grouping & descriptions
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format '%B%F{blue}%d%f%b'
-zstyle ':completion:*:messages' format '%F{purple}%d%f'
-zstyle ':completion:*:warnings' format '%F{red}No matches for: %d%f'
-
-# Completion cache
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
-
-# ------------------------------------------------------------------------------
-# 4. Keybindings (Fish Menu Navigation & History Completion)
-# ------------------------------------------------------------------------------
-bindkey -e
-
-# Menu selection navigation with Tab / Shift-Tab / hjkl
-bindkey -M menuselect '^[[Z' reverse-menu-complete
-bindkey -M menuselect 'h' backward-char
-bindkey -M menuselect 'k' up-line-or-history
-bindkey -M menuselect 'l' forward-char
-bindkey -M menuselect 'j' down-line-or-history
-
-# Bind Right Arrow and Ctrl+F to accept autosuggestion
-bindkey '^[[C' forward-char
-bindkey '^F' forward-char
-
-# ------------------------------------------------------------------------------
-# 5. History Settings (Autosuggestions Source)
-# ------------------------------------------------------------------------------
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=50000
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt SHARE_HISTORY
-
-# ------------------------------------------------------------------------------
-# 6. Prompt: Exact Match of Original fish_prompt
-# ------------------------------------------------------------------------------
-autoload -Uz add-zsh-hook vcs_info
-setopt PROMPT_SUBST
-
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git*' formats ' %F{cyan}(%b)%f'
-zstyle ':vcs_info:git*' actionformats ' %F{cyan}(%b|%a)%f'
-
-add-zsh-hook precmd vcs_info
-
-PROMPT='%F{green}%~%f$vcs_info_msg_0_ '
-
-# ------------------------------------------------------------------------------
-# 7. Common Aliases
-# ------------------------------------------------------------------------------
+# Aliases (consistent with configs/fish/config.fish)
 alias nr="npm run"
 alias la="ls -lah"
 alias ll="ls -lh"
-
-# ------------------------------------------------------------------------------
-# 8. Interactive Plugins (Loaded last)
-# ------------------------------------------------------------------------------
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
-
-[[ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
-  source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
-[[ -f "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
-  source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-# ------------------------------------------------------------------------------
-# 9. Vite+ Environment & Shell Completions
-# ------------------------------------------------------------------------------
-[[ -f "$HOME/.config/vite-plus/env" ]] && . "$HOME/.config/vite-plus/env"

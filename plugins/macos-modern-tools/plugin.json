@@ -2,17 +2,17 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "macos-modern-tools",
   "displayName": "macOS Modern Tools",
-  "description": "macOS Darwin platform execution rules, Zsh glob nomatch guardrails, APFS Copy-on-Write cloning, BSD compatibility recipes, Apple system defaults, and extensionless pwsh symlink resolution.",
+  "description": "macOS Darwin platform execution rules, Bash 3.2 portability, Fish and Zsh guardrails, APFS Copy-on-Write cloning, BSD compatibility recipes, and Apple system defaults.",
   "version": "1.0.0",
   "author": {
     "name": "Florencea",
     "url": "https://github.com/Florencea"
   },
   "repository": "https://github.com/Florencea/my-machine-build",
-  "keywords": ["macos", "darwin", "zsh", "apfs", "bsd", "pwsh"],
+  "keywords": ["macos", "darwin", "bash", "fish", "zsh", "apfs", "bsd"],
   "suggestedPrompts": [
     "Inspect listening TCP ports and Darwin hardware telemetry without Linux /proc tools",
-    "Backup a build directory on APFS using zero-byte Copy-on-Write cloning",
-    "Debug Zsh glob nomatch or extensionless pwsh symlink resolution in ~/.local/bin"
+    "Verify macOS Bash 3.2 compatibility and format shell scripts with shfmt",
+    "Format Fish configs and completions with fish_indent"
   ]
 }

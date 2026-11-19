@@ -1,9 +1,0 @@
-#compdef up
-
-_up() {
-  _arguments -s \
-    '--dry-run[Preview planned actions without applying changes]' \
-    '(-h --help)'{-h,--help}'[Show help message]'
-}
-
-_up "$@"

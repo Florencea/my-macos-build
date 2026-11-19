@@ -1,8 +1,0 @@
-#compdef mmb
-
-_mmb() {
-  _arguments -s \
-    '(-h --help)'{-h,--help}'[Show help message]'
-}
-
-_mmb "$@"

@@ -1,30 +1,48 @@
 ---
 name: modern-nodejs
-description: Modern Node.js pure ESM rules, two-stage external SSOT doc lookups, Vite+ commands (vp pm pkg, vp fmt, vp list --json, vpr/vpx/vp dlx), and Zod validation. Use when writing Node.js scripts, CLIs, or managing packages.
-compatibility: Node.js (Active LTS), Vite+, Zod, Oxlint
+description: Modern Node.js pure ESM rules, strict .npmrc policies, two-stage llms.txt doc lookups, fnm/npm commands (npm pkg, npm ci, npx), and Zod validation. Use when writing Node.js scripts, CLIs, or managing packages.
+compatibility: Node.js (Active LTS), fnm, npm, Zod, Oxlint
 ---
 
 # Modern Node.js Guidelines
 
 ## 1. External SSOT & Anti-Pattern Gateways
 
-Verify live Node.js APIs, Vite+ options, and active linter anti-patterns before authoring scripts or configurations:
+Verify live Node.js APIs and active linter anti-patterns before authoring scripts or configurations:
 
-- **Node.js Official API (Two-Stage `webread`)**:
-  - Stage 1 (Index): `webread https://nodejs.org/llms.txt`
-  - Stage 2 (Module Markdown): `webread https://nodejs.org/docs/latest/api/<module>.md` (e.g. `sqlite.md`, `util.md`, `test.md`, `fs.md`)
-- **Vite+ Reference & Diagnostics**:
-  - Stage 1: `webread https://viteplus.dev/llms.txt` -> Stage 2: `webread https://viteplus.dev/guide/<topic>.md` (plus `vp --help` and `vp toolchain`).
-  - Dependency JSON checks: `vp list --json`, `vp outdated --format json`.
-  - Formatting & verification: `vp fmt <files>`, `vp check` (add `--fix` for auto-fix).
-  - Runner roles: `vpr <script>` runs `package.json` scripts/tasks; `vpx <file.ts|pkg>` executes TypeScript files or local/remote binaries; `vp dlx <pkg>` runs remote binaries without installing.
+- **Node.js Official API (Two-Stage `curl -fsSL`)**:
+  - Stage 1 (Index): `curl -fsSL https://nodejs.org/llms.txt | head -n 120`
+  - Stage 2 (Module Markdown): `curl -fsSL https://nodejs.org/docs/latest/api/<module>.md` (e.g. `sqlite.md`, `util.md`, `test.md`, `fs.md`)
+- **Package Inspection & Verification (`npm` / `npx`)**:
+  - Dependency checks: `npm ls --json`, `npm outdated --json`.
+  - Formatting & verification: `npx oxfmt <files>`, `npx oxlint -f agent`, `npm test`.
+  - Runner roles: `npm run <script>` runs `package.json` scripts; `npx <pkg>` executes local or remote binaries; `node <file.ts|mjs>` runs ESM and native erasable TypeScript directly.
 - **Oxlint Node & ESM Anti-Patterns**:
-  - Inspect enabled rules locally: `vp lint --rules` (filter `unicorn`, `node`, `import`, `promise`, `oxc`) and `vp lint --print-config`.
-  - Retrieve exact anti-pattern rationale and examples: `webread https://oxc.rs/docs/guide/usage/linter/rules/<plugin>/<rule>.md` (e.g. `unicorn/prefer-node-protocol.md`, `unicorn/no-process-exit.md`, `node/no-path-concat.md`, `node/no-new-require.md`).
+  - Inspect enabled rules locally: `npx oxlint --rules` (filter `unicorn`, `node`, `import`, `promise`, `oxc`) and `npx oxlint --print-config`.
+  - Retrieve exact anti-pattern rationale and examples: `curl -fsSL https://oxc.rs/docs/guide/usage/linter/rules/<plugin>/<rule>.md` (e.g. `unicorn/prefer-node-protocol.md`, `unicorn/no-process-exit.md`, `node/no-path-concat.md`, `node/no-new-require.md`).
 
 ---
 
-## 2. Zero-Dependency Native Selection Tree
+## 2. Strict `.npmrc` Security & Supply-Chain Policy
+
+Global and project `.npmrc` configurations enforce deterministic, supply-chain-safe installs:
+
+```ini
+audit=false
+engine-strict=true
+fund=false
+ignore-scripts=true
+install-strategy=linked
+save-exact=true
+strict-peer-deps=true
+```
+
+- Always use `npm ci` in CI and clean syncs; update `package.json` + `package-lock.json` cleanly via `npm install`.
+- Because `ignore-scripts=true` blocks arbitrary postinstall scripts, execute required binary setup (such as Playwright Chromium download) through explicit scripts like `npm run test:setup`.
+
+---
+
+## 3. Zero-Dependency Native Selection Tree
 
 Prioritize Node.js built-ins over third-party dependencies, verifying exact exports in `nodejs.org/docs/latest/api/<module>.md` before use:
 
@@ -32,25 +50,25 @@ Prioritize Node.js built-ins over third-party dependencies, verifying exact expo
 - File system globbing and async I/O -> `node:fs/promises`
 - Embedded SQLite storage -> `node:sqlite`
 - Standard Web Globals -> `fetch`, `FormData`, `Request`, `Response`, `crypto.randomUUID()`, `structuredClone()`, `URL`
-- Unit testing and assertions -> `node:test` and `node:assert/strict` (or `vite-plus/test`)
+- Unit testing and assertions -> `node:test` and `node:assert/strict` (or `vitest`)
 - Environment loading -> `process.loadEnvFile()`
 
 ---
 
-## 3. Native Manifest Operations (`vp pm pkg`)
+## 4. Native Manifest Operations (`npm pkg`)
 
-Manage `package.json` exclusively through native Vite+ manifest commands:
+Manage `package.json` through native `npm pkg` commands:
 
-- Inspect: `vp pm pkg get <key>`
-- Mutate: `vp pm pkg set <key>=<value>` (pass `--json` for arrays/objects/booleans)
-- Remove: `vp pm pkg delete <key>`
-- Standardize & normalize: `vp pm pkg fix`
+- Inspect: `npm pkg get <key>`
+- Mutate: `npm pkg set <key>=<value>` (pass `--json` for arrays/objects/booleans)
+- Remove: `npm pkg delete <key>`
+- Standardize & normalize: `npm pkg fix`
 
 STRICTLY FORBIDDEN to rewrite `package.json` with raw regex replacements or `jq` file swaps.
 
 ---
 
-## 4. Cross-Platform Portability & Process Safety Invariants
+## 5. Cross-Platform Portability & Process Safety Invariants
 
 - **Pure ESM & `node:` Protocol**: Require `"type": "module"`, prohibit CommonJS (`require`, `module.exports`, `__dirname`), prefix all built-ins with `node:`, and resolve paths relative to `import.meta.dirname` or `fileURLToPath(import.meta.url)`.
 - **Path & Glob Composition**: Use `node:path` (`path.join()`, `path.resolve()`, `path.relative()`). Never concatenate paths with `+ '/' +`. Enforce POSIX `/` in glob strings (`pattern.replace(/\\/g, "/")`).

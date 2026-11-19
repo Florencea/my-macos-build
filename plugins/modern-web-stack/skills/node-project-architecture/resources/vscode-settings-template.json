@@ -39,7 +39,6 @@
   "js/ts.experimental.useTsgo": true,
   "js/ts.preferences.preferTypeOnlyAutoImports": true,
   "js/ts.tsdk.path": "./node_modules/typescript/lib",
-  "npm.scriptRunner": "vp",
   "oxc.disableNestedConfig": true,
   "oxc.fmt.disableNestedConfig": true,
   "prettier.enable": false,

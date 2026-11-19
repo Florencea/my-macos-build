@@ -8,7 +8,7 @@ description: Modern React, Tailwind CSS, TanStack Router, Playwright browser tes
 
 ## 1. Web Platform SSOT (`modern-web-guidance`)
 
-- Query `vpx modern-web-guidance search "<query>"` and `retrieve "<id>"` before implementing overlays (`<dialog>`, `[popover]`), anchor positioning, view transitions, scroll-driven animations, form validation states, or ARIA patterns. Prefer native Baseline APIs over third-party polyfills.
+- Query `npx modern-web-guidance search "<query>"` and `retrieve "<id>"` before implementing overlays (`<dialog>`, `[popover]`), anchor positioning, view transitions, scroll-driven animations, form validation states, or ARIA patterns. Prefer native Baseline APIs over third-party polyfills.
 
 ---
 
@@ -22,5 +22,5 @@ description: Modern React, Tailwind CSS, TanStack Router, Playwright browser tes
 
 ## 3. Verification & Docs Gateways
 
-- **Testing & Formatting**: Use `vite-plus/test` and `vite-plus/test/browser-playwright` (`headless: true`, `chromium`) for E2E tests. Run `vp fmt <files>`, `vp check`, and `vpr lint:tailwind` (when configured).
-- **Two-Stage Docs**: `react.dev` and `tanstack.com` HTML routes return empty shells; always fetch `/llms.txt` -> targeted `.md` pages (or inspect `node_modules/**/*.d.ts`).
+- **Testing & Formatting**: Use `vitest` and `@vitest/browser-playwright` (`headless: true`, `chromium`) for E2E tests. Run `npx oxfmt <files>`, `npx oxlint -f agent`, and `npm run lint:tailwind` (when configured).
+- **Two-Stage Docs**: `react.dev` and `tanstack.com` HTML routes return empty shells; always fetch `/llms.txt` -> targeted `.md` pages via `curl -fsSL` (or inspect `node_modules/**/*.d.ts`).

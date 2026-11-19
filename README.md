@@ -1,24 +1,5 @@
 # My Machine Build
 
-Cross-platform workstation bootstrap, Vite+ TypeScript CLI utilities, dotfiles, and Antigravity plugins for macOS Darwin, Windows 11, and Windows 10 IoT LTSC.
-
-## Repository Overview
-
-- `cli/`: Vite+ (`vpx`) TypeScript CLI suite (`clall`, `ebk`, `mdig`, `mkclp`, `mkgif`, `mmb`, `rea`, `ua`, `unodev`, `up`, `upnpmv`, `webread`) under `cli/src/` with generated cross-platform shims in `cli/bin/` (`vpr cli:sync-bins`).
-- `plugins/`: Antigravity plugins synced to `~/.gemini/config/plugins/` (`common-modern-tools`, `macos-modern-tools`, `windows-modern-tools`, `modern-web-stack`).
-- `scripts/install.sh`: Idempotent macOS Zsh installer for packages, dotfiles, `cli/bin/*` symlinks, Vite+, and Antigravity plugins.
-- `scripts/install.ps1`: Dual-version Windows PowerShell 5.1 and PowerShell 7+ installer for WinGet packages, profiles, `cli\bin` User `PATH` registration, Vite+, and Antigravity plugins.
-- `configs/`: Browser extension exports (`ubol-config.json`, `stylus.json`, `tampermonkey.json`, `immersive-translate-config.json`), global Git hooks, and shell configs.
-- `tests/`: Tiered OS-bootstrap PowerShell verifiers (`tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`) backed by `tests/VerifyCommon.psm1`, Vite+ shell verifier (`tests/verify-shell.ts`), and Vitest suites (`tests/unit/`, `tests/contract/`, `tests/webread-parser.test.ts`, `tests/plugins.test.ts`).
-
-## Bootstrap and Verification Commands
-
-- macOS setup: `zsh scripts/install.sh`
-- Windows setup: `powershell -ExecutionPolicy Bypass -File scripts/install.ps1`
-- Full verification gate via Vite+ (Tier 1–3 DAG with caching): `vpr agent:verify:gate`
-- Tiered Vite+ checks: `vpr agent:verify:inner` (Tier 1), `vpr agent:verify:ps -- --fix --path <file>` (PowerShell Tier 1), `vpr agent:verify:unit` (Tier 2), `vpr cli:sync-bins` (regenerate `cli/bin/`), `vp test --project unit`, `vp test --project contract`
-- Standalone OS-bootstrap & shell checks: `pwsh -NoLogo -NoProfile -File tests/verify-ps-fast.ps1`, `tests/verify-ps-lint.ps1`, `tests/verify-ps-compat.ps1`, and `vpx tests/verify-shell.ts`
-
 ## Extension Configs
 
 - [UBoL Configs](https://github.com/Florencea/my-machine-build/raw/main/configs/ubol-config.json)
@@ -28,8 +9,6 @@ Cross-platform workstation bootstrap, Vite+ TypeScript CLI utilities, dotfiles, 
 
 ## Table of Contents
 
-- [Repository Overview](#repository-overview)
-- [Bootstrap and Verification Commands](#bootstrap-and-verification-commands)
 - [Extension Configs](#extension-configs)
 - [Browser & DevTools Note](#browser--devtools-note)
   - [Pagetual Rules](#pagetual-rules)
@@ -444,24 +423,13 @@ pbs.twimg.com -> CNAME pbs.twimg.com.cdn.cloudflare.net (Fast, at Taiwan)
 
 ### Fresh Machine Bootstrap (Windows 11 / Windows 10 IoT LTSC)
 
-#### 1. Unblock PowerShell Execution Policy
+#### Unblock PowerShell Execution Policy
 
 Windows PowerShell 5.1 defaults to `Restricted` execution policy on clean Windows installations. Run this one-liner in PowerShell to allow script execution:
 
 ```powershell
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 ```
-
-#### 2. Run Setup Script
-
-Right-click `scripts\install.ps1` in File Explorer and select **Run with PowerShell**, or execute directly in terminal:
-
-```powershell
-powershell.exe -ExecutionPolicy Bypass -File .\scripts\install.ps1
-```
-
-> [!NOTE]
-> The script automatically requests Administrator elevation via UAC if not already elevated. On Windows 10 IoT Enterprise LTSC, it automatically bootstraps `winget` prerequisites, installs Windows Terminal, enables OS long paths support, and falls back gracefully to `$HOME\_Workspace` and `$HOME\.vite-plus` if drive `E:\` is absent.
 
 ### Dev Drive (ReFS)
 

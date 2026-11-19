@@ -2,27 +2,26 @@
 [[ $- != *i* ]] && return
 
 # Homebrew environment
-if [ -x "/opt/homebrew/bin/brew" ]; then
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ -x "/usr/local/bin/brew" ]; then
+elif [[ -x "/usr/local/bin/brew" ]]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # PATH configuration
-for p in "$HOME/.local/bin" "$HOME/.local/share/vite-plus/bin"; do
+for p in "$HOME/.local/bin"; do
   if [[ -d "$p" && ":$PATH:" != *":$p:"* ]]; then
     PATH="$p:$PATH"
   fi
 done
 export PATH
 
-# Vite+ environment setup
-export VP_LOG=error
-if [ -f "$HOME/.config/vite-plus/env" ]; then
-  . "$HOME/.config/vite-plus/env"
+# fnm (Fast Node Manager)
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell bash)"
 fi
 
-# Aliases
+# Aliases (consistent with configs/fish/config.fish)
 alias nr="npm run"
 alias la="ls -lah"
 alias ll="ls -lh"

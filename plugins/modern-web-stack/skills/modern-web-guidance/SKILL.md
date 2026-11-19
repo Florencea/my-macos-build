@@ -1,12 +1,12 @@
 ---
 name: modern-web-guidance
 description: Google Chrome & Web Standards guidance engine (HTML5, CSS layout/animations, Web APIs, Accessibility, Core Web Vitals, legacy pattern scan). Query before writing or modifying client-side web UI or browser APIs.
-compatibility: Node.js (Active LTS), Vite+, Modern Browsers (Baseline Widely & Newly Available)
+compatibility: Node.js (Active LTS), npm, Modern Browsers (Baseline Widely & Newly Available)
 ---
 
 # Google Chrome Modern Web Guidance (External SSOT Gateway)
 
-Query and retrieve authoritative modern web best practices directly from the official `GoogleChrome/modern-web-guidance` knowledge engine using Vite+ (`vpx`).
+Query and retrieve modern web practices directly from the official `GoogleChrome/modern-web-guidance` knowledge engine using `npx`.
 
 This repository maintains zero static specifications or cheat sheets for web platform capabilities. All HTML5 semantics, modern CSS, Web APIs, form validation, accessibility patterns, and browser Baseline compatibility are resolved on-demand through live CLI queries.
 
@@ -21,7 +21,7 @@ This repository maintains zero static specifications or cheat sheets for web pla
   - Modern Browser APIs: WebMCP, Sanitizer API, Temporal/dates, WebAssembly, on-device AI (Prompt API).
 - **DO NOT Trigger**:
   - Backend logic (Node.js APIs, Hono routes, Drizzle ORM, SQL schemas).
-  - Infrastructure & automation (GitHub Actions CI, Docker, CLI tools `cli/src/**`, OS installers `scripts/install.*`).
+  - Infrastructure & automation (GitHub Actions CI, Docker, shell scripts).
   - Framework-only state logic (React state hooks, route definitions in TanStack Router).
 
 ---
@@ -33,7 +33,7 @@ This repository maintains zero static specifications or cheat sheets for web pla
 Execute a focused 2-4 word query describing the capability (`<verb> + <UI/platform object>`):
 
 ```sh
-vpx modern-web-guidance search "<query>"
+npx modern-web-guidance search "<query>"
 ```
 
 - **Query Conventions**:
@@ -45,13 +45,13 @@ vpx modern-web-guidance search "<query>"
 
 ### Stage 2: Retrieve Full Best-Practice Specification
 
-Retrieve the authoritative implementation guide using the matched ID:
+Retrieve the implementation guide using the matched ID:
 
 ```sh
-vpx modern-web-guidance retrieve "<id>"
+npx modern-web-guidance retrieve "<id>"
 ```
 
-- **Large Output Protocol**: When output exceeds 9.5 KB, the CLI automatically writes the guide to a local temporary file (e.g. `C:\Users\<user>\AppData\Local\Temp\mwg-guide-*.md` on Windows or `/tmp/mwg-guide-*.md` on Unix). Read the target file in full using the native file-reading tool.
+- **Large Output Protocol**: When output exceeds 9.5 KB, the CLI automatically writes the guide to a local temporary file (e.g. `/tmp/mwg-guide-*.md`). Read the target file in full using the native file-reading tool.
 
 ### Stage 3: Baseline Compliance & Polyfill Governance
 
@@ -71,9 +71,9 @@ vpx modern-web-guidance retrieve "<id>"
 When explicitly tasked with auditing or modernizing an existing codebase for legacy web patterns (not during routine single-feature development):
 
 ```sh
-vpx modern-web-guidance legacy-scan [path] --json
+npx modern-web-guidance legacy-scan [path] --json
 ```
 
 1. **Scan**: Analyze target directory for deprecated or legacy browser patterns.
 2. **Verify**: Evaluate each finding against the guide's `keepWhen` / `dropWhen` criteria to filter intentional fallbacks.
-3. **Remediate**: Retrieve the target replacement guide via `vpx modern-web-guidance retrieve "<guide-id>"` and refactor code to native standards.
+3. **Remediate**: Retrieve the target replacement guide via `npx modern-web-guidance retrieve "<guide-id>"` and refactor code to native standards.

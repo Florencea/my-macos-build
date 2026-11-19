@@ -1,25 +1,25 @@
 ---
 name: modern-react-tailwind
 description: Modern React architectural invariants (Actions, Effect discipline, direct ref prop), Tailwind v4 @theme tokens, @shadcn/lint contracts, and two-stage .md doc gateways. Use when building React UI or Tailwind styles.
-compatibility: React, Tailwind CSS, Vite+, Oxlint
+compatibility: React, Tailwind CSS, Oxlint
 ---
 
 # Modern React & Tailwind CSS Guidelines
 
 ## 1. External SSOT Lookup Gateways (Required Before Coding)
 
-`react.dev` HTML routes return empty anti-bot pages in `webread`; always resolve React docs via `.md` endpoints from `llms.txt`:
+`react.dev` HTML routes return empty anti-bot pages; always resolve React docs via `.md` endpoints from `llms.txt`:
 
 - **React Core & API Reference** (Two-Stage `.md`):
-  - Stage 1: `webread https://react.dev/llms.txt`
-  - Stage 2: `webread https://react.dev/<path>.md` (e.g. `https://react.dev/reference/react.md`, `https://react.dev/learn/you-might-not-need-an-effect.md`)
+  - Stage 1: `curl -fsSL https://react.dev/llms.txt | head -n 120`
+  - Stage 2: `curl -fsSL https://react.dev/<path>.md` (e.g. `https://react.dev/reference/react.md`, `https://react.dev/learn/you-might-not-need-an-effect.md`)
 - **React & Accessibility Oxlint Rules**:
-  - Inspect enabled rules: `vp lint --rules` (filter `react`, `react_perf`, `jsx_a11y`).
-  - Rule details & examples: `webread https://oxc.rs/docs/guide/usage/linter/rules/react/<rule>.md` (e.g. `set-state-in-effect.md`, `exhaustive-deps.md`, `forward-ref-uses-ref.md`).
-- **Tailwind CSS Documentation** (`/llms.txt` returns 404; HTML routes succeed directly):
-  - `webread https://tailwindcss.com/docs/theme` (or `/docs/<topic>`) + inspect local CSS `@theme` definitions.
+  - Inspect enabled rules: `npx oxlint --rules` (filter `react`, `react_perf`, `jsx_a11y`).
+  - Rule details & examples: `curl -fsSL https://oxc.rs/docs/guide/usage/linter/rules/react/<rule>.md` (e.g. `set-state-in-effect.md`, `exhaustive-deps.md`, `forward-ref-uses-ref.md`).
+- **Tailwind CSS Documentation**:
+  - Fetch `https://tailwindcss.com/docs/theme` (or `/docs/<topic>`) and inspect local CSS `@theme` definitions.
 - **Web Platform Capabilities (Delegate Strictly to MWG)**:
-  - Before implementing `<dialog>`, `[popover]`, anchor positioning, View Transitions, Container Queries, `:user-invalid`, or ARIA behaviors, query `vpx modern-web-guidance search "<query>"` and `retrieve "<id>"`.
+  - Before implementing `<dialog>`, `[popover]`, anchor positioning, View Transitions, Container Queries, `:user-invalid`, or ARIA behaviors, query `npx modern-web-guidance search "<query>"` and `retrieve "<id>"`.
 
 ---
 
@@ -35,9 +35,9 @@ compatibility: React, Tailwind CSS, Vite+, Oxlint
 ## 3. Tailwind CSS Design Tokens & `@shadcn/lint` Contracts
 
 - **Design Token SSOT (`@theme`)**: Define CSS tokens centrally in root CSS (`@import "tailwindcss";` + `@theme { ... }`) and bind third-party UI library theme tokens to those CSS variables.
-- **Enforced Component Contracts (`vp lint`)**:
+- **Enforced Component Contracts (`npx oxlint`)**:
   - `shadcn/no-raw-colors`: Forbid hardcoded hex/rgb values outside `@theme`.
   - `shadcn/no-arbitrary-values`: Ban unmapped arbitrary brackets (e.g. `w-[321px]`).
   - `shadcn/no-inline-styles`: Forbid `style={{ ... }}`; bind CSS variables or variants.
   - `shadcn/no-restyle`: External callers may pass layout/positioning utilities (`allow: ["layout"]`) or declared variants only; never restyle internal typography or borders from outside.
-- **Verification & Sorting Split**: Run `vp fmt <files>` and `vp lint -f agent` for Oxc formatting and `@shadcn/lint` contracts; run `vpr lint:tailwind` / `vpr lint:tailwind:fix` (via `tailwindcss-language-server`) for Tailwind CSS utility diagnostics and canonical class sorting.
+- **Verification & Sorting Split**: Run `npx oxfmt <files>` and `npx oxlint -f agent` for Oxc formatting and `@shadcn/lint` contracts; run `npm run lint:tailwind` / `npm run lint:tailwind:fix` (via `tailwindcss-language-server`) for Tailwind CSS utility diagnostics and canonical class sorting.

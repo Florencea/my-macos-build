@@ -1,29 +1,29 @@
 ---
 name: macos-toolchain
-description: macOS Darwin recipes for Zsh *(N) nullglob, shfmt verification, APFS cp -R -c cloning, Gatekeeper xattr, Darwin telemetry, defaults/PlistBuddy, and pwsh ResolveLinkTarget. Use when authoring macOS scripts or configuring Darwin settings.
-compatibility: macOS Darwin, Zsh, PowerShell 7+
+description: macOS Darwin recipes for Bash 3.2 portability, Fish fish_indent/fish_add_path, Zsh *(N) nullglob, shfmt verification, APFS cp -R -c cloning, Gatekeeper xattr, Darwin telemetry, and defaults/PlistBuddy. Use when authoring macOS scripts or configuring Darwin settings.
+compatibility: macOS Darwin, Bash 3.2+, Fish, Zsh
 ---
 
 # macOS Darwin Toolchain & System Administration Recipes
 
-For universal CLI binaries (`rg`, `fd`, `sd`, `jq`, `yq`, `duckdb`, `xsv`, `xh`, Vite+), use the `common-toolchain` skill. For PowerShell standards, use the `modern-powershell` skill.
+For universal CLI binaries (`rg`, `fd`, `ast-grep`, `jq`, `yq`, `fnm`, `npm`), use the `common-toolchain` skill.
 
 ---
 
-## 1. Zsh Patterns & Shell Formatting
+## 1. Bash 3.2, Fish & Zsh Patterns
 
-- **Nomatch Nullglob (`*(N)`)**: Append `*(N)` when globs may match zero files:
+- **macOS Bash 3.2 Safety**:
+  - Avoid `readarray`/`mapfile` (use `while IFS= read -r line; do ...; done`), `declare -A`, `${var,,}`, and `|&`.
+  - Check array length before expanding under `set -euo pipefail`: `if [[ ${#items[@]} -gt 0 ]]; then cmd "${items[@]}"; fi`.
+  - Verify syntax and format via `bash -n <file>`, `shellcheck <file>`, and `shfmt -i 2 -ci -w <file>`.
+- **Fish Shell**:
+  - Prepend paths idempotently with `fish_add_path -g --prepend --move "$HOME/.local/bin"`.
+  - Verify and format via `fish -n <file>` and `fish_indent -w <file>`.
+- **Zsh Nullglob (`*(N)`)**:
   ```zsh
   rm -f *.tmp(N)
-  vp fmt docs/*.md(N)
+  shfmt -i 2 -ci -w configs/zsh/*
   ```
-- **Array Iteration**:
-  ```zsh
-  local -a files=(file1.txt file2.txt)
-  for f in "${files[@]}"; do ...; done
-  for f in ${(s: :)files_str}; do ...; done
-  ```
-- **Syntax & Format Verification**: Run `zsh -n <file>` and `shfmt -i 2 -ci -w <file>` (or `vpx tests/verify-shell.ts` in `my-machine-build`).
 
 ---
 
@@ -37,12 +37,12 @@ sw_vers -productVersion
 lsof -nP -iTCP:3000 -sTCP:LISTEN
 
 # BSD metadata & temp files
-realpath <file>                       # Or Zsh ${file:A}
+realpath <file>
 mktemp -t script.XXXXXX               # Or mktemp -d -t dir.XXXXXX
 stat -f "%z %m" <file>                # Bytes and epoch mtime
 ```
 
-For relative date math, run `node -e "..."` or `pwsh -NoLogo -NoProfile -Command "..."` instead of `date`.
+For relative date math, run `node -e "..."` instead of GNU `date -d`.
 
 ---
 
@@ -65,16 +65,4 @@ For relative date math, run `node -e "..."` or `pwsh -NoLogo -NoProfile -Command
 defaults read com.apple.finder AppleShowAllFiles 2>/dev/null || true
 defaults write com.apple.finder AppleShowAllFiles -bool true
 /usr/libexec/PlistBuddy -c "Print :AppleSymbolicHotKeys:64:enabled" ~/Library/Preferences/com.apple.symbolichotkeys.plist
-```
-
----
-
-## 5. Extensionless `pwsh` Symlink Resolution (`~/.local/bin/*`)
-
-When `pwsh` executes extensionless symlinks via `#!/usr/bin/env -S pwsh -NoLogo -NoProfile`, `$PSScriptRoot` is empty. Resolve the target path via `ResolveLinkTarget($true)`:
-
-```powershell
-$fileInfo = [System.IO.FileInfo]::new((Resolve-Path -LiteralPath $scriptPath).Path)
-$targetInfo = $fileInfo.ResolveLinkTarget($true)
-$realPath = $targetInfo ? $targetInfo.FullName : $fileInfo.FullName
 ```

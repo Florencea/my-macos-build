@@ -16,14 +16,75 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  CI: "true"
+  NO_COLOR: "1"
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  ci:
-    name: Gatekeeper
-    uses: Florencea/vp-actions/.github/workflows/vp-web-ci.yml@v3.0.0
-    # with:
-    #   Optional: Command to run before tests (e.g. vp run db:seed for fullstack apps)
-    #   pre-test-command: ""
-    #   Optional: Custom build command (default: vp build)
-    #   build-command: vp build
-    #   Optional: Toggle E2E browser tests (default: true)
-    #   enable-e2e: true
+  gatekeeper:
+    name: Gatekeeper (Linux)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: package.json
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v6.1.0
+        id: playwright-cache
+        with:
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
+          key: ${{ runner.os }}-${{ runner.arch }}-playwright-${{ steps.playwright-version.outputs.version }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-playwright-
+
+      - name: Setup test environment (install browser)
+        run: npm run test:setup
+
+      - name: Install Playwright system dependencies on Linux
+        run: npx playwright install-deps chromium
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint & Format Check
+        run: npx oxlint && npx oxfmt --check .
+
+      - name: Run unit & integration tests
+        run: npm run agent:test:unit
+
+      - name: Build production targets
+        run: npm run build
+
+      - name: Run E2E browser tests
+        run: npm run agent:test:e2e
+
+      - name: Upload Test Results Artifacts on Failure
+        if: failure()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: e2e-artifacts-${{ runner.os }}-${{ runner.arch }}
+          retention-days: 7
+          if-no-files-found: ignore
+          path: |
+            test-results/
+            playwright-report/
+            blob-report/

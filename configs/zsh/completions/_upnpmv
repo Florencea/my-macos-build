@@ -1,9 +1,0 @@
-#compdef upnpmv
-
-_upnpmv() {
-  _arguments -s \
-    '--dry-run[Preview planned actions without applying changes]' \
-    '(-h --help)'{-h,--help}'[Show help message]'
-}
-
-_upnpmv "$@"
