@@ -1,32 +1,11 @@
 #!/usr/bin/env bash
+# Combine .ass subtitle into .mkv as default track and remove source directory
+# Usage: rea <input_dir>
 set -euo pipefail
 
-usage() {
-  cat <<'EOF'
-rea: Combine .ass subtitle into .mkv as default track and remove source directory
-Usage: rea <input_dir>
-EOF
-}
-
-if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  usage
-  exit 0
-fi
-
-INPUT_DIR="${1:-}"
-if [[ -z "$INPUT_DIR" ]]; then
-  usage >&2
-  exit 1
-fi
-
-if [[ ! -d "$INPUT_DIR" ]]; then
-  echo "Error: Directory $INPUT_DIR does not exist" >&2
-  exit 1
-fi
-
-ABS_INPUT_DIR="$(cd "$INPUT_DIR" && pwd)"
-if [[ -z "$ABS_INPUT_DIR" || "$ABS_INPUT_DIR" == "/" ]]; then
-  echo "Error: Input directory cannot be root or empty" >&2
+ABS_INPUT_DIR="$(cd "$1" && pwd)"
+if [[ "$ABS_INPUT_DIR" == "/" ]]; then
+  echo "Error: Input directory cannot be root" >&2
   exit 1
 fi
 
@@ -39,23 +18,17 @@ ASS_FILES=("$ABS_INPUT_DIR"/*.ass)
 shopt -u nullglob
 
 if [[ ${#MKV_FILES[@]} -ne 1 ]]; then
-  echo "Error: Expected exactly 1 .mkv file in $INPUT_DIR (found ${#MKV_FILES[@]})" >&2
+  echo "Error: Expected exactly 1 .mkv file (found ${#MKV_FILES[@]})" >&2
   exit 1
 fi
 
-if [[ ${#ASS_FILES[@]} -eq 0 ]]; then
-  echo "Error: No .ass subtitle file found in $INPUT_DIR" >&2
-  exit 1
-fi
-
-SELECTED_ASS=""
+SELECTED_ASS="${ASS_FILES[0]}"
 for ass in "${ASS_FILES[@]}"; do
   if printf '%s' "$(basename "$ass")" | grep -iqE '(cht|tc|zh-tw)'; then
     SELECTED_ASS="$ass"
     break
   fi
 done
-[[ -n "$SELECTED_ASS" ]] || SELECTED_ASS="${ASS_FILES[0]}"
 
 TMPFILE="${PARENT_DIR}/.tmp_rea_$$.mkv"
 OUTPUT_FILE="${PARENT_DIR}/${INPUT_BASE}.mkv"

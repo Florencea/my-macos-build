@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
+# Upgrade Homebrew, Node.js LTS via fnm, and sync workspace git repositories
+# Usage: ua
 set -euo pipefail
-
-if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  echo "ua: Upgrade Homebrew, Node.js LTS via fnm, and sync workspace git repositories"
-  exit 0
-fi
 
 cd "$HOME"
 HOMEBREW_NO_ENV_HINTS=1 \

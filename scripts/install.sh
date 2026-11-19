@@ -511,129 +511,6 @@ configure_fish_shell() {
 configure_apps() {
   # iStat Menus 6 License
   defaults write com.bjango.istatmenus license6 -dict email "982092332@qq.com" serial "GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA"
-
-  # Keka configuration
-  defaults write com.aone.keka SetAsDefaultApp -bool true 2>/dev/null || true
-  defaults write com.aone.keka UseGrowl -bool false 2>/dev/null || true
-  defaults write com.aone.keka SelectedTab -string "TAR" 2>/dev/null || true
-
-  # IINA configuration
-  defaults write com.colliderli.iina actionAfterLaunch -int 2
-  defaults write com.colliderli.iina quitWhenNoOpenedWindow -bool true
-  defaults write com.colliderli.iina recordPlaybackHistory -bool false
-  defaults write com.colliderli.iina recordRecentFiles -bool false
-  defaults write com.colliderli.iina resumeLastPosition -int 0
-  defaults write com.colliderli.iina arrowBtnAction -int 1
-  defaults write com.colliderli.iina displayInLetterBox -bool false
-  defaults write com.colliderli.iina horizontalScrollAction -int 2
-  defaults write com.colliderli.iina verticalScrollAction -int 2
-  defaults write com.colliderli.iina pinchAction -int 2
-
-  # IINA toolbar buttons array using PlistBuddy for strict integer types
-  local iina_pref="$HOME/Library/Preferences/com.colliderli.iina.plist"
-  if [[ "$(/usr/libexec/PlistBuddy -c "Print :controlBarToolbarButtons" "$iina_pref" 2>/dev/null | awk '/^[[:space:]]+[0-9]+$/ {printf "%s ", $1}')" != "2 1 5 0 " ]]; then
-    /usr/libexec/PlistBuddy -c "Delete :controlBarToolbarButtons" "$iina_pref" 2>/dev/null || true
-    /usr/libexec/PlistBuddy -c "Add :controlBarToolbarButtons array" "$iina_pref" 2>/dev/null || true
-    local btn_val
-    for btn_val in 2 1 5 0; do
-      /usr/libexec/PlistBuddy -c "Add :controlBarToolbarButtons: integer $btn_val" "$iina_pref" 2>/dev/null || true
-    done
-  fi
-
-  # Transmission configuration
-  defaults write org.m0k.transmission BindPort -int 51247
-  defaults write org.m0k.transmission PeersTorrent -int 200
-  defaults write org.m0k.transmission PeersTotal -int 1000
-  defaults write org.m0k.transmission LocalPeerDiscoveryGlobal -bool true
-  defaults write org.m0k.transmission DownloadAsk -bool false
-  defaults write org.m0k.transmission MagnetOpenAsk -bool false
-  defaults write org.m0k.transmission DownloadLocationConstant -bool true
-  defaults write org.m0k.transmission DisplayPeerProgressBarNumber -bool true
-  defaults write org.m0k.transmission FilterSearchType -string "Name"
-  defaults write org.m0k.transmission AutoSize -bool true
-}
-
-has_ls_uti() {
-  local dump="$1" uti="$2" role="$3"
-  awk -v uti="$uti" -v role="$role" '
-    /^    Dict \{/ { in_dict=1; has_uti=0; has_role=0 }
-    in_dict && $1 == "LSHandlerContentType" && $3 == uti { has_uti=1 }
-    in_dict && $1 == "LSHandlerRoleAll" && $3 == role { has_role=1 }
-    in_dict && /^    \}/ { if (has_uti && has_role) { found=1; exit 0 }; in_dict=0 }
-    END { exit !found }
-  ' <<<"$dump"
-}
-
-has_ls_ext() {
-  local dump="$1" ext="$2" role="$3"
-  awk -v ext="$ext" -v role="$role" '
-    /^    Dict \{/ { in_dict=1; has_ext=0; has_class=0; has_role=0 }
-    in_dict && $1 == "LSHandlerContentTag" && $3 == ext { has_ext=1 }
-    in_dict && $1 == "LSHandlerContentTagClass" && $3 == "public.filename-extension" { has_class=1 }
-    in_dict && $1 == "LSHandlerRoleAll" && $3 == role { has_role=1 }
-    in_dict && /^    \}/ { if (has_ext && has_class && has_role) { found=1; exit 0 }; in_dict=0 }
-    END { exit !found }
-  ' <<<"$dump"
-}
-
-register_ls_uti() {
-  local plist="$1" dump="$2" role="$3"
-  shift 3
-  local uti
-  for uti in "$@"; do
-    if ! has_ls_uti "$dump" "$uti" "$role"; then
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$plist" 2>/dev/null || true
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentType string $uti" "$plist" 2>/dev/null || true
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string $role" "$plist" 2>/dev/null || true
-    fi
-  done
-}
-
-register_ls_ext() {
-  local plist="$1" dump="$2" role="$3"
-  shift 3
-  local ext
-  for ext in "$@"; do
-    if ! has_ls_ext "$dump" "$ext" "$role"; then
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0 dict" "$plist" 2>/dev/null || true
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTag string $ext" "$plist" 2>/dev/null || true
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerContentTagClass string public.filename-extension" "$plist" 2>/dev/null || true
-      /usr/libexec/PlistBuddy -c "Add :LSHandlers:0:LSHandlerRoleAll string $role" "$plist" 2>/dev/null || true
-    fi
-  done
-}
-
-configure_launch_services() {
-  local ls_plist="$HOME/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist"
-  mkdir -p "$(dirname "$ls_plist")"
-  if ! /usr/libexec/PlistBuddy -c "Print :LSHandlers" "$ls_plist" >/dev/null 2>&1; then
-    /usr/libexec/PlistBuddy -c "Add :LSHandlers array" "$ls_plist" 2>/dev/null || true
-  fi
-  local ls_dump
-  ls_dump="$(/usr/libexec/PlistBuddy -c "Print :LSHandlers" "$ls_plist" 2>/dev/null || true)"
-
-  local -a keka_utis=(
-    "public.zip-archive" "public.tar-archive" "public.tar-bzip2-archive"
-    "public.bzip2-archive" "public.cpio-archive" "public.z-archive"
-    "org.7-zip.7-zip-archive" "org.gnu.gnu-zip-archive" "org.gnu.gnu-zip-tar-archive"
-    "org.tukaani.xz-archive" "org.tukaani.tar-xz-archive" "com.apple.archive"
-    "com.apple.bom-compressed-cpio" "com.microsoft.cab"
-  )
-  local -a keka_exts=(7z rar zip tar gz tgz bz2 tbz2 xz txz iso dmg)
-  register_ls_uti "$ls_plist" "$ls_dump" "com.aone.keka" "${keka_utis[@]}"
-  register_ls_ext "$ls_plist" "$ls_dump" "com.aone.keka" "${keka_exts[@]}"
-
-  local -a iina_utis=(
-    "public.mpeg-4" "public.avi" "public.mpeg" "public.mpeg-2-video"
-    "public.dv-movie" "com.apple.quicktime-movie" "com.apple.m4v-video"
-    "public.3gpp" "public.3gpp2" "public.mp3" "public.mp2"
-    "public.mpeg-4-audio" "public.aac-audio" "public.aiff-audio"
-    "public.ac3-audio" "com.microsoft.waveform-audio" "com.apple.m4a-audio"
-    "com.apple.music.mp2" "com.apple.music.m3u-playlist" "public.m3u-playlist"
-  )
-  local -a iina_exts=(mkv flv webm wmv rmvb vob mov ts m4v avi mp4 mp3 flac wav aac ogg ape opus)
-  register_ls_uti "$ls_plist" "$ls_dump" "com.colliderli.iina" "${iina_utis[@]}"
-  register_ls_ext "$ls_plist" "$ls_dump" "com.colliderli.iina" "${iina_exts[@]}"
 }
 
 setup_node_fnm() {
@@ -694,7 +571,6 @@ main() {
   install_packages
   configure_fish_shell
   configure_apps
-  configure_launch_services
   setup_node_fnm
   restart_input_services
 }

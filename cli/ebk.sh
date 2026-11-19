@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
+# Backup and sync browser extension configs from ~/Downloads
+# Usage: ebk
 set -euo pipefail
-
-usage() {
-  cat <<'EOF'
-ebk: Backup and sync browser extension configuration files
-Usage: ebk
-EOF
-}
-
-if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  usage
-  exit 0
-fi
 
 DOWNLOADS_DIR="$HOME/Downloads"
 if [[ ! -d "$DOWNLOADS_DIR" ]]; then

@@ -1,29 +1,9 @@
 #!/usr/bin/env bash
+# Clone all GitHub repositories for the authenticated user
+# Usage: clall [GITHUB_ACCESS_TOKEN] (or GITHUB_TOKEN / GH_TOKEN)
 set -euo pipefail
 
-usage() {
-  cat <<'EOF'
-clall: Clone all GitHub repositories for the authenticated user
-Usage: clall [GITHUB_ACCESS_TOKEN]
-       GITHUB_TOKEN=... clall
-EOF
-}
-
-if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  usage
-  exit 0
-fi
-
-TOKEN="${1:-${GITHUB_TOKEN:-${GH_TOKEN:-}}}"
-if [[ -z "$TOKEN" ]]; then
-  usage >&2
-  exit 1
-fi
-
-if printf '%s' "$TOKEN" | grep -iq '^op://'; then
-  echo "Error: Unresolved 1Password reference; run via 'op run'" >&2
-  exit 1
-fi
+TOKEN="${1:-${GITHUB_TOKEN:-$GH_TOKEN}}"
 
 REPOS=()
 PAGE=1

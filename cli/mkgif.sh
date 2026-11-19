@@ -1,20 +1,7 @@
 #!/usr/bin/env bash
+# High-quality GIF maker via ffmpeg and gifski
+# Usage: mkgif [-w 720] [--fps 10] [-q 70] [-l] [-b chrome] [-o out.gif] <input_file_or_url> <from> <duration>
 set -euo pipefail
-
-usage() {
-  cat <<'EOF'
-mkgif: High-quality GIF maker via ffmpeg and gifski
-Usage: mkgif [options] <input_file_or_url> <from> <duration>
-Options:
-  -w, --width <num>      Output width in px (default: 720)
-      --fps <num>        Frame rate per second (default: 10)
-  -q, --quality <num>    Gifski quality 1-100 (default: 70)
-  -l, --lossy            Enable lossy optimization
-  -b, --browser <name>   Browser for YouTube cookies (default: chrome)
-  -o, --output <file>    Custom output file path
-  -h, --help             Show this help message
-EOF
-}
 
 WIDTH=720
 FPS=10
@@ -26,20 +13,16 @@ POS_ARGS=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -h | --help)
-      usage
-      exit 0
-      ;;
     -w | --width)
-      WIDTH="${2:?Error: --width requires a value}"
+      WIDTH="$2"
       shift 2
       ;;
     --fps)
-      FPS="${2:?Error: --fps requires a value}"
+      FPS="$2"
       shift 2
       ;;
     -q | --quality)
-      QUALITY="${2:?Error: --quality requires a value}"
+      QUALITY="$2"
       shift 2
       ;;
     -l | --lossy)
@@ -47,11 +30,11 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     -b | --browser)
-      BROWSER="${2:?Error: --browser requires a value}"
+      BROWSER="$2"
       shift 2
       ;;
     -o | --output)
-      OUTPUT_FILE="${2:?Error: --output requires a value}"
+      OUTPUT_FILE="$2"
       shift 2
       ;;
     --)
@@ -61,21 +44,12 @@ while [[ $# -gt 0 ]]; do
         shift
       done
       ;;
-    -*)
-      echo "Error: Unknown option $1" >&2
-      exit 1
-      ;;
     *)
       POS_ARGS+=("$1")
       shift
       ;;
   esac
 done
-
-if [[ ${#POS_ARGS[@]} -ne 3 ]]; then
-  usage >&2
-  exit 1
-fi
 
 INPUT_FILE="${POS_ARGS[0]}"
 START="${POS_ARGS[1]}"

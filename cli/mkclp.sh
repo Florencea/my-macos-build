@@ -1,18 +1,7 @@
 #!/usr/bin/env bash
+# Clip Maker (local files and YouTube videos, Apple Silicon HEVC)
+# Usage: mkclp [-q 50] [-c] [-b chrome] [-o out.mp4] <input_file_or_url> <from> <duration>
 set -euo pipefail
-
-usage() {
-  cat <<'EOF'
-mkclp: Clip Maker (local files and YouTube videos, Apple Silicon HEVC)
-Usage: mkclp [options] <input_file_or_url> <from> <duration>
-Options:
-  -q, --quality <num>    VideoToolbox quality 0-100 (default: 50)
-  -c, --copy             Force lossless stream copy
-  -b, --browser <name>   Browser for YouTube cookies (default: chrome)
-  -o, --output <file>    Custom output file path
-  -h, --help             Show this help message
-EOF
-}
 
 QUALITY=50
 QUALITY_SET=false
@@ -23,12 +12,8 @@ POS_ARGS=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -h | --help)
-      usage
-      exit 0
-      ;;
     -q | --quality)
-      QUALITY="${2:?Error: --quality requires a value}"
+      QUALITY="$2"
       QUALITY_SET=true
       shift 2
       ;;
@@ -37,11 +22,11 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     -b | --browser)
-      BROWSER="${2:?Error: --browser requires a value}"
+      BROWSER="$2"
       shift 2
       ;;
     -o | --output)
-      OUTPUT_FILE="${2:?Error: --output requires a value}"
+      OUTPUT_FILE="$2"
       shift 2
       ;;
     --)
@@ -51,21 +36,12 @@ while [[ $# -gt 0 ]]; do
         shift
       done
       ;;
-    -*)
-      echo "Error: Unknown option $1" >&2
-      exit 1
-      ;;
     *)
       POS_ARGS+=("$1")
       shift
       ;;
   esac
 done
-
-if [[ ${#POS_ARGS[@]} -ne 3 ]]; then
-  usage >&2
-  exit 1
-fi
 
 INPUT_FILE="${POS_ARGS[0]}"
 START="${POS_ARGS[1]}"

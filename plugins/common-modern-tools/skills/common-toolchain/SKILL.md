@@ -40,7 +40,7 @@ Prioritize native file tools (`read_file` with bounded line ranges, `edit_file`,
 
 ## 3. Custom Local CLI Helpers (`cli/*.sh`)
 
-All 7 helpers are linked to `~/.local/bin/<cmd>` without `.sh` and support `--help`:
+All 7 helpers are linked to `~/.local/bin/<cmd>` without `.sh` (inspect top header comments in `cli/<cmd>.sh` for usage):
 
 - `clall`: Clone all GitHub repositories owned by the authenticated user.
 - `ebk`: Backup and sync browser extension configuration files from `~/Downloads`.
