@@ -8,7 +8,7 @@
     "name": "Florencea",
     "url": "https://github.com/Florencea"
   },
-  "repository": "https://github.com/Florencea/my-machine-build",
+  "repository": "https://github.com/Florencea/my-macos-build",
   "keywords": ["macos", "darwin", "bash", "fish", "zsh", "apfs", "bsd"],
   "suggestedPrompts": [
     "Inspect listening TCP ports and Darwin hardware telemetry without Linux /proc tools",

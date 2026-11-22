@@ -203,8 +203,8 @@ resolve_repo_dir() {
     repo_dir="$(dirname "$script_dir")"
   fi
   if [[ ! -d "${repo_dir:-}/configs" ]]; then
-    if [[ -d "$HOME/Developer/my-machine-build/configs" ]]; then
-      repo_dir="$HOME/Developer/my-machine-build"
+    if [[ -d "$HOME/Developer/my-macos-build/configs" ]]; then
+      repo_dir="$HOME/Developer/my-macos-build"
     else
       repo_dir=""
     fi
@@ -231,7 +231,7 @@ fetch_file() {
     local encoded_path="${rel_path// /%20}"
     local tmp_file
     tmp_file="$(mktemp -t mmb_fetch.XXXXXX)"
-    if curl -fsSL "https://raw.githubusercontent.com/Florencea/my-machine-build/main/$encoded_path" -o "$tmp_file"; then
+    if curl -fsSL "https://raw.githubusercontent.com/Florencea/my-macos-build/main/$encoded_path" -o "$tmp_file"; then
       if [[ -L "$dest_path" ]]; then
         rm -f "$dest_path"
       fi
@@ -372,11 +372,6 @@ deploy_antigravity_plugins() {
     done
   fi
 
-  local win_plugin_dir="$HOME/.gemini/config/plugins/windows-modern-tools"
-  if [[ -n "$win_plugin_dir" && -d "$win_plugin_dir" ]]; then
-    rm -rf "${win_plugin_dir:?}"
-  fi
-
   # Clean up legacy standalone rules and skills migrated into plugins
   local -a legacy_rules=(ci-workflows macos-execution modern-nodejs modern-react-tailwind modern-testing modern-typescript)
   local rule
@@ -402,8 +397,8 @@ link_cli_scripts() {
 
   if [[ -n "${repo_dir:-}" && -d "$repo_dir/cli" ]]; then
     cli_dir="$repo_dir/cli"
-  elif [[ -d "$HOME/Developer/my-machine-build/cli" ]]; then
-    cli_dir="$HOME/Developer/my-machine-build/cli"
+  elif [[ -d "$HOME/Developer/my-macos-build/cli" ]]; then
+    cli_dir="$HOME/Developer/my-macos-build/cli"
   fi
 
   if [[ -z "$cli_dir" ]]; then

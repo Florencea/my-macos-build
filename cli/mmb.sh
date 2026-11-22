@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Open my-machine-build workspace in Visual Studio Code
+# Open my-macos-build workspace in Visual Studio Code
 # Usage: mmb
 set -euo pipefail
 

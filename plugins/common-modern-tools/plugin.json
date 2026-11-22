@@ -8,7 +8,7 @@
     "name": "Florencea",
     "url": "https://github.com/Florencea"
   },
-  "repository": "https://github.com/Florencea/my-machine-build",
+  "repository": "https://github.com/Florencea/my-macos-build",
   "keywords": ["architecture", "cli", "ci", "go", "fnm", "npm", "shell", "fish"],
   "suggestedPrompts": [
     "Evaluate technology choices against stability, UX-first, minimal-tooling, and no-black-box principles",

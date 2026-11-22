@@ -45,7 +45,7 @@ All 7 helpers are linked to `~/.local/bin/<cmd>` without `.sh` (inspect top head
 - `ebk`: Backup and sync browser extension configuration files from `~/Downloads`.
 - `mkclp`: Clip local video (`mp4` stream copy) or YouTube URLs (Apple Silicon `hevc_videotoolbox`).
 - `mkgif`: Generate GIF via `ffmpeg | gifski` from local files or YouTube URLs.
-- `mmb`: Open `my-machine-build` workspace in VS Code.
+- `mmb`: Open `my-macos-build` workspace in VS Code.
 - `rea`: Combine `.ass` subtitle into single `.mkv` as default track and remove source folder.
 - `ua`: Upgrade Homebrew formulas (including `go`), update Node.js Active LTS via `fnm`, display runtime versions, and pull workspace git repositories.
 

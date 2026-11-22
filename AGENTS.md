@@ -1,6 +1,6 @@
 # Agent Guidelines & Repository Workflow Rules
 
-Repository-specific layout, verification checks, and delivery constraints for `my-machine-build` (macOS Bash 3.2 + Fish + Go + fnm + npm). Global principles, CLI, formatting, and communication rules come from `common-modern-tools`.
+Repository-specific layout, verification checks, and delivery constraints for `my-macos-build` (macOS Bash 3.2 + Fish + Go + fnm + npm). Global principles, CLI, formatting, and communication rules come from `common-modern-tools`.
 
 ## 1. Repository Architecture
 
