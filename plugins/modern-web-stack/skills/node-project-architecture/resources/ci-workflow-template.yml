@@ -37,7 +37,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7.1.0
         with:
-          node-version-file: package.json
+          node-version: "lts/*"
           cache: npm
 
       - name: Install dependencies
@@ -68,14 +68,14 @@ jobs:
       - name: Lint & Format Check
         run: npm run lint && npm run format:check
 
-      - name: Run unit & integration tests
-        run: npm run agent:test:unit
+      - name: Run unit tests
+        run: npm run test:unit
 
       - name: Build production targets
         run: npm run build
 
       - name: Run E2E browser tests
-        run: npm run agent:test:e2e
+        run: npm run test:e2e
 
       - name: Upload Test Results Artifacts on Failure
         if: failure()

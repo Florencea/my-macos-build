@@ -18,6 +18,9 @@ path=(
   "$HOME/.local/bin"
   $path
 )
+if [[ -d "$HOME/go/bin" ]]; then
+  path+=("$HOME/go/bin")
+fi
 export PATH
 
 # fnm (Fast Node Manager)

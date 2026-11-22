@@ -28,7 +28,8 @@ else
   NPM_VERSION="$(npm -v 2>/dev/null || echo "n/a")"
 fi
 
-printf "\nnode: %s, npm: %s\n\n" "${CURRENT_VERSION:-none}" "$NPM_VERSION"
+GO_VERSION="$(go env GOVERSION 2>/dev/null || echo "n/a")"
+printf "\nnode: %s, npm: %s, go: %s\n\n" "${CURRENT_VERSION:-none}" "$NPM_VERSION" "$GO_VERSION"
 
 PROJECTS_DIR="$(cd "$(dirname "$(realpath "$0")")/../.." && pwd)"
 if cd "$PROJECTS_DIR"; then

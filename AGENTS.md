@@ -1,13 +1,13 @@
 # Agent Guidelines & Repository Workflow Rules
 
-Repository-specific layout, verification checks, and delivery constraints for `my-machine-build` (macOS Bash 3.2 + Fish + fnm + npm). Global CLI, formatting, and communication rules come from `common-modern-tools`.
+Repository-specific layout, verification checks, and delivery constraints for `my-machine-build` (macOS Bash 3.2 + Fish + Go + fnm + npm). Global principles, CLI, formatting, and communication rules come from `common-modern-tools`.
 
 ## 1. Repository Architecture
 
 - `cli/*.sh`: Single-file macOS Bash 3.2 CLI scripts (`clall`, `ebk`, `mkclp`, `mkgif`, `mmb`, `rea`, `ua`), symlinked to `~/.local/bin/<cmd>`.
 - `configs/`: Fish primary shell configs (`fish/`), minimal `zsh/` and `bash/` fallback profiles, global Git hooks (`git/hooks/pre-commit.sh`), and browser extension backups.
 - `plugins/`: Antigravity plugin bundles (`common-modern-tools`, `macos-modern-tools`, `modern-web-stack`), deployed to `~/.gemini/config/plugins/`.
-- `scripts/install.sh`: Idempotent macOS Bash 3.2 installer for Homebrew casks/core formulas, Fish default shell, fnm + Node.js Active LTS + strict `.npmrc`, dotfiles, CLI symlinks, and Antigravity plugins.
+- `scripts/install.sh`: Idempotent macOS Bash 3.2 installer for Homebrew casks/core formulas (including `go` and `shellcheck`), Fish default shell, fnm + Node.js Active LTS + strict `.npmrc`, dotfiles, CLI symlinks, and Antigravity plugins.
 - `.agents/rules/`: Glob-triggered domain rules.
 
 ---

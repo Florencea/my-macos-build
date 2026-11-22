@@ -10,14 +10,14 @@ description: Rules for Fish primary shell, minimal Bash/Zsh profiles, and macOS 
 
 - **Fish Primary Shell (`configs/fish/`)**:
   - `config.fish` (interactive guard, greeting disabled, `nr`/`la`/`ll` abbreviations)
-  - `conf.d/00-paths.fish` (Homebrew `shellenv`, `fish_add_path -g --prepend --move "$HOME/.local/bin"`)
+  - `conf.d/00-paths.fish` (Homebrew `shellenv`, `fish_add_path -g --prepend --move "$HOME/.local/bin"`, conditional `fish_add_path -g --append "$HOME/go/bin"`)
   - `conf.d/fnm.fish` (`fnm env --use-on-cd --shell fish`)
   - `functions/fish_prompt.fish` and `completions/*.fish`
 - **Minimal Non-Interactive Fallbacks (`configs/bash/`, `configs/zsh/`)**:
-  - Keep `bash_profile`, `bashrc`, `zshenv`, `zprofile`, `zshrc` lean without third-party Zsh plugins or completion frameworks so non-interactive `/bin/zsh` and `/bin/bash` subshells locate Homebrew, `~/.local/bin`, and `fnm`.
+  - Keep `bash_profile`, `bashrc`, `zshenv`, `zprofile`, `zshrc` lean without third-party Zsh plugins or completion frameworks so non-interactive `/bin/zsh` and `/bin/bash` subshells locate Homebrew, `~/.local/bin`, `~/go/bin` (when present), and `fnm`.
 - **macOS Installer (`scripts/install.sh`)**:
   - Written in macOS Bash 3.2 (`#!/usr/bin/env bash`, `set -euo pipefail`).
-  - Bootstraps Homebrew, installs 11 Casks and 13 core CLI formulas, sets `fish` as default `UserShell`, deploys dotfiles, links `cli/*.sh` to `~/.local/bin/<cmd>`, provisions Node.js Active LTS via `fnm` with strict `.npmrc` policies, and deploys `common-modern-tools`, `macos-modern-tools`, and `modern-web-stack` plugins to `~/.gemini/config/plugins/`.
+  - Bootstraps Homebrew, installs 11 Casks and 15 core CLI formulas (including `go` and `shellcheck`), sets `fish` as default `UserShell`, deploys dotfiles, links `cli/*.sh` to `~/.local/bin/<cmd>`, provisions Node.js Active LTS via `fnm` with strict `.npmrc` policies, and deploys `common-modern-tools`, `macos-modern-tools`, and `modern-web-stack` plugins to `~/.gemini/config/plugins/`.
 
 ---
 

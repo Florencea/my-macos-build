@@ -2,8 +2,8 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "modern-web-stack",
   "displayName": "Modern Web Stack",
-  "description": "Modern web development bundle: Node.js (Active LTS via fnm), npm with strict .npmrc policies, TypeScript, React, Tailwind CSS, Google Chrome Modern Web Guidance, Hono, Drizzle ORM, TanStack Router, Vite, Vitest, ESLint/Prettier, and GitHub Actions CI rules and skills.",
-  "version": "1.0.0",
+  "description": "Lean, direct JS/TS and Web UI guardrails: strict .npmrc and dependency cooldown governance, standard TypeScript/ESLint/Prettier/Vite/Vitest without black-box wrappers, Google Chrome Modern Web Guidance, and human-agent shared workspace conventions.",
+  "version": "2.0.0",
   "author": {
     "name": "Florencea",
     "url": "https://github.com/Florencea"
@@ -14,19 +14,16 @@
     "npm",
     "nodejs",
     "typescript",
-    "react",
-    "tailwind",
-    "hono",
-    "drizzle",
-    "tanstack-router",
     "vite",
     "vitest",
     "eslint",
-    "prettier"
+    "prettier",
+    "tailwind",
+    "web-platform"
   ],
   "suggestedPrompts": [
-    "Scaffold a Node.js TypeScript workspace using node-project-architecture standards",
-    "Build a fail-closed Hono OpenAPI + Drizzle route backed by Zod validation",
-    "Audit this React + Tailwind codebase against ESLint rules and modern-web-guidance"
+    "Audit this JS/TS repository for supply-chain .npmrc rules, black-box build tools, and redundant scripts",
+    "Query modern-web-guidance for native Baseline HTML/CSS/Web API patterns before adding dependencies",
+    "Scaffold a lean Node.js/Web workspace with shared npm scripts and modular .agents/rules"
   ]
 }

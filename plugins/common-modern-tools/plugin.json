@@ -2,17 +2,17 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "common-modern-tools",
   "displayName": "Common Modern Tools",
-  "description": "Core modern CLI toolchain (rg, fd, ast-grep, jq, yq, shfmt, actionlint, fnm, npm), token discipline, two-stage llms.txt documentation lookups, and git commit safety.",
-  "version": "1.0.0",
+  "description": "Core technology selection principles, human-agent interaction guardrails, modern CLI toolchain (rg, fd, ast-grep, jq, yq, shfmt, actionlint, go, fnm, npm), cross-language GitHub Actions CI rules, and two-stage documentation lookup.",
+  "version": "2.0.0",
   "author": {
     "name": "Florencea",
     "url": "https://github.com/Florencea"
   },
   "repository": "https://github.com/Florencea/my-machine-build",
-  "keywords": ["cli", "toolchain", "fnm", "npm", "shell", "fish"],
+  "keywords": ["architecture", "cli", "ci", "go", "fnm", "npm", "shell", "fish"],
   "suggestedPrompts": [
+    "Evaluate technology choices against stability, UX-first, minimal-tooling, and no-black-box principles",
     "Audit this repository codebase using rg, fd, and ast-grep",
-    "Validate and format shell scripts with shfmt and shellcheck",
-    "Retrieve upstream documentation via two-stage curl llms.txt index lookup"
+    "Validate GitHub Actions workflows with actionlint and format shell scripts with shfmt"
   ]
 }

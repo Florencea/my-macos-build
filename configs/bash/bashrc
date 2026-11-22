@@ -9,11 +9,12 @@ elif [[ -x "/usr/local/bin/brew" ]]; then
 fi
 
 # PATH configuration
-for p in "$HOME/.local/bin"; do
-  if [[ -d "$p" && ":$PATH:" != *":$p:"* ]]; then
-    PATH="$p:$PATH"
-  fi
-done
+if [[ -d "$HOME/.local/bin" && ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+if [[ -d "$HOME/go/bin" && ":$PATH:" != *":$HOME/go/bin:"* ]]; then
+  PATH="$PATH:$HOME/go/bin"
+fi
 export PATH
 
 # fnm (Fast Node Manager)

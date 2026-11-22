@@ -41,7 +41,6 @@
 - [Windows 11 & Windows 10 IoT LTSC Note](#windows-11--windows-10-iot-ltsc-note)
   - [Fresh Machine Bootstrap (Windows 11 / Windows 10 IoT LTSC)](#fresh-machine-bootstrap-windows-11--windows-10-iot-ltsc)
   - [Dev Drive (ReFS)](#dev-drive-refs)
-  - [Vite+ & Cache Relocation (`E:\vite-plus`)](#vite--cache-relocation-evite-plus)
   - [Inspect & Prune User PATH](#inspect--prune-user-path)
   - [Microsoft Edge DNS over HTTPS on Domain-Managed PC](#microsoft-edge-dns-over-https-on-domain-managed-pc)
 
@@ -434,7 +433,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 ### Dev Drive (ReFS)
 
 > [!NOTE]
-> Dev Drive (ReFS) is supported exclusively on Windows 11 (Build 22621+). On Windows 10 IoT LTSC, Dev Drive is not supported; standard NTFS volumes (`$HOME\_Workspace` and `$HOME\.vite-plus`) are used automatically.
+> Dev Drive (ReFS) is supported exclusively on Windows 11 (Build 22621+). On Windows 10 IoT LTSC, Dev Drive is not supported; standard NTFS volumes (`$HOME\_Workspace`) are used automatically.
 
 1. Open **Settings** $\rightarrow$ **System** $\rightarrow$ **Storage** $\rightarrow$ **Advanced storage settings** $\rightarrow$ **Disks & volumes**.
 2. Click **Create Dev Drive** $\rightarrow$ **Resize an existing volume** (`50 GB–120 GB`), Label `Developer`, Drive Letter `E:`.
@@ -443,13 +442,6 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 ```powershell
 Get-Volume | Select-Object DriveLetter, FileSystemLabel, FileSystemType, Size, SizeRemaining | Format-Table -AutoSize
 fsutil devdrv query E:
-```
-
-### Vite+ & Cache Relocation (`E:\vite-plus`)
-
-```powershell
-# Relocate existing ~/.vite-plus & cache to E:\vite-plus
-if (Test-Path "$HOME\.vite-plus") { Move-Item -Force "$HOME\.vite-plus" "E:\vite-plus" }; [Environment]::SetEnvironmentVariable("VP_HOME", "E:\vite-plus", "User"); $env:VP_HOME = "E:\vite-plus"; $cleanPath = ([Environment]::GetEnvironmentVariable("Path", "User") -split ';' | Where-Object { $_ -and $_ -notlike "*\.vite-plus*" }) -join ';'; [Environment]::SetEnvironmentVariable("Path", $cleanPath, "User"); irm https://vite.plus/ps1 | iex; Remove-Item "$env:LOCALAPPDATA\pnpm-store" -Recurse -Force -ErrorAction SilentlyContinue
 ```
 
 ### Inspect & Prune User PATH

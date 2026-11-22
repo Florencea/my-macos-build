@@ -20,9 +20,9 @@ This repository maintains zero static specifications or cheat sheets for web pla
   - Accessibility & Performance: Semantic HTML vs ARIA, focus trapping, roving tabindex, Core Web Vitals (LCP, INP, CLS), `content-visibility`, `fetchpriority`.
   - Modern Browser APIs: WebMCP, Sanitizer API, Temporal/dates, WebAssembly, on-device AI (Prompt API).
 - **DO NOT Trigger**:
-  - Backend logic (Node.js APIs, Hono routes, Drizzle ORM, SQL schemas).
+  - Backend logic (Go or Node.js server APIs, SQL schemas, migrations).
   - Infrastructure & automation (GitHub Actions CI, Docker, shell scripts).
-  - Framework-only state logic (React state hooks, route definitions in TanStack Router).
+  - Framework-only state or routing logic (React state hooks, explicit client route definitions).
 
 ---
 

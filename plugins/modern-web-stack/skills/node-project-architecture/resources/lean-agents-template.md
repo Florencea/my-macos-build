@@ -1,37 +1,37 @@
 # Agent Development Guidelines
 
-Project-specific architecture, verification gates, and delivery constraints. Global CLI, formatting, and communication standards are inherited from `common-modern-tools`.
+Project-specific architecture, domain invariants, and verification commands. Universal principles, CLI rules, and communication standards are inherited from `common-modern-tools` and `modern-web-stack`.
 
 ## 1. Architecture Map
 
-- `src/client/components/`: Reusable React UI components
-- `src/client/routes/`: TanStack Router file routes (protected route tree)
-- `src/server/routes/`: OpenAPI / RPC router, Zod schemas, and request handlers
-- `src/server/database/`: Drizzle / SQLite schemas and seed fixtures
-- `.agents/rules/`: Modular glob-triggered domain rules
-- `.agents/skills/`: On-demand repeatable workflow runbooks
+- `src/`: Application source modules (list concrete subdirectories and responsibilities here)
+- `test/`: Unit and browser E2E test suites
+- `.agents/rules/`: Glob-triggered domain rules specific to this repository
+- `.agents/skills/`: On-demand repository runbooks (if needed)
 
 ---
 
-## 2. Core SSOT & Architectural Invariants
+## 2. Project Domain Invariants
 
-- **Single Source of Truth (SSOT)**: Define domain contracts and schemas once (database schema or Zod DTOs) and infer downstream. Never duplicate entity types manually.
-- **Zod-First & Zero Suppression**: Validate untrusted external boundaries via Zod `safeParse`. Prohibit `as unknown as`, `// @ts-ignore`, `// @ts-expect-error`, and `/* eslint-disable */`.
-- **Pre-Edit Tool Verification**: Before editing `package.json`, `tsconfig*.json`, or `vite.config.*`, inspect `npx eslint --print-config <file>`, local `.d.ts` files, and two-stage `llms.txt` -> `.md` docs via `curl -fsSL`.
-- **Strict `.npmrc` Policy**: Keep `ignore-scripts=true`, `save-exact=true`, `install-strategy=linked`, `strict-peer-deps=true`, and `engine-strict=true` in `.npmrc` to prevent upstream drift and postinstall script execution.
-- **Protected Generated Files**: Never edit auto-generated files such as `src/routeTree.gen.ts`.
+- **Single Source of Truth (SSOT)**: State concrete data, schema, and styling token owners for this repository.
+- **Explicit Architecture**: No experimental compiler previews, wrapper CLIs, or auto-generated black-box files.
+- **Supply-Chain & Cooldown Governance**: Maintain strict `.npmrc` settings; batch toolchain updates quarterly/semi-annually with a 7-14 day cooldown and prioritize runtime CVEs (`npm audit --omit=dev`). Run `npx knip` on demand.
 
 ---
 
-## 3. Execution & Verification Shortcuts
+## 3. Shared Verification & Workflow Commands
 
-- **Gate**: `npm run agent:verify:gate` (`unit` -> `build` -> `e2e`) or `npm run verify`
-- **Inner Loop**: `npm run agent:verify:inner` (`typecheck` -> `lint` -> `lint:tailwind`)
-- **Tests**: `npm run agent:test:unit` and `npm run agent:test:e2e` (`--reporter=tap-flat --no-color`)
-- **Diagnostics & Formatting**: `npx eslint --format compact`, `npx prettier --write <files>`, `npm run lint:ci` (`actionlint`), `npm ls --json`
+Humans and agents share the same standard `npm run` scripts:
+
+- **Inner-Loop Static Checks**: `npm run typecheck && npm run lint && npm run format:check`
+- **Auto-Fix**: `npm run lint:fix && npm run format`
+- **Tests**: `npm run test:unit` / `npm run test:e2e` (append `-- --reporter=tap-flat --no-color` for compact output)
+- **Production Build**: `npm run build`
+- **Full Verification Gate (DoD)**: `npm run verify`
+- **CI Workflow Lint**: `actionlint` (run locally after editing `.github/workflows/*.yml`)
 
 ---
 
-## 4. Git Workflow & Commit Restrictions
+## 4. Git Workflow Restrictions
 
-- Never execute `git commit` or `git push`. Stage verified, formatted files with `git add <files>` and output the Conventional Commit command (`git commit -m "..."`) for manual execution.
+- Never execute `git commit` or `git push` directly (local commits use interactive signing). Stage verified files with `git add <files>` and output the `git commit -m "..."` command in English for manual execution.

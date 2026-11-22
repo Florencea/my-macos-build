@@ -307,12 +307,15 @@ sync_plugin_dir() {
   else
     fetch_file "$repo_dir" "plugins/$plugin_name/plugin.json" "$dest_dir/plugin.json"
     if [[ "$plugin_name" == "modern-web-stack" ]]; then
-      local -a web_rules=(ci-workflows.md node-ts.md react-ui.md)
+      local -a web_rules=(node-ts.md web-ui.md)
       local rule_file
       for rule_file in "${web_rules[@]}"; do
         fetch_file "$repo_dir" "plugins/$plugin_name/rules/$rule_file" "$dest_dir/rules/$rule_file"
       done
-      rm -f "$dest_dir/rules/AGENTS.md" "$dest_dir/rules/modern-web-stack.md"
+      rm -f "$dest_dir/rules/AGENTS.md" "$dest_dir/rules/modern-web-stack.md" "$dest_dir/rules/ci-workflows.md" "$dest_dir/rules/react-ui.md"
+    elif [[ "$plugin_name" == "common-modern-tools" ]]; then
+      fetch_file "$repo_dir" "plugins/$plugin_name/rules/AGENTS.md" "$dest_dir/rules/AGENTS.md"
+      fetch_file "$repo_dir" "plugins/$plugin_name/rules/ci-workflows.md" "$dest_dir/rules/ci-workflows.md"
     else
       fetch_file "$repo_dir" "plugins/$plugin_name/rules/AGENTS.md" "$dest_dir/rules/AGENTS.md"
     fi
@@ -330,25 +333,42 @@ deploy_antigravity_plugins() {
     fetch_file "$repo_dir" "plugins/common-modern-tools/skills/common-toolchain/SKILL.md" "$HOME/.gemini/config/plugins/common-modern-tools/skills/common-toolchain/SKILL.md"
     fetch_file "$repo_dir" "plugins/common-modern-tools/skills/common-toolchain/references/docs-matrix.md" "$HOME/.gemini/config/plugins/common-modern-tools/skills/common-toolchain/references/docs-matrix.md"
     fetch_file "$repo_dir" "plugins/macos-modern-tools/skills/macos-toolchain/SKILL.md" "$HOME/.gemini/config/plugins/macos-modern-tools/skills/macos-toolchain/SKILL.md"
-    local -a web_skills=(modern-hono-drizzle modern-nodejs modern-react-tailwind modern-typescript modern-web-guidance node-project-architecture tanstack-router)
+
+    local -a web_skills=(modern-web-guidance node-project-architecture)
     local skill
     for skill in "${web_skills[@]}"; do
       fetch_file "$repo_dir" "plugins/modern-web-stack/skills/$skill/SKILL.md" "$HOME/.gemini/config/plugins/modern-web-stack/skills/$skill/SKILL.md"
     done
+
+    local -a removed_web_skills=(modern-hono-drizzle modern-nodejs modern-react-tailwind modern-typescript tanstack-router)
+    local removed_skill_dir
+    for skill in "${removed_web_skills[@]}"; do
+      removed_skill_dir="$HOME/.gemini/config/plugins/modern-web-stack/skills/$skill"
+      if [[ -n "$removed_skill_dir" && -d "$removed_skill_dir" ]]; then
+        rm -rf "${removed_skill_dir:?}"
+      fi
+    done
+
     local -a arch_resources=(
       ci-workflow-template.yml
-      ci-workflows-rule-template.md
       lean-agents-template.md
-      lint-tailwind-template.ts
       npmrc-template
+    )
+    local res
+    for res in "${arch_resources[@]}"; do
+      fetch_file "$repo_dir" "plugins/modern-web-stack/skills/node-project-architecture/resources/$res" "$HOME/.gemini/config/plugins/modern-web-stack/skills/node-project-architecture/resources/$res"
+    done
+
+    local -a removed_arch_resources=(
+      ci-workflows-rule-template.md
+      lint-tailwind-template.ts
       package-json-template.json
       vite-config-template.ts
       vscode-extensions-template.json
       vscode-settings-template.json
     )
-    local res
-    for res in "${arch_resources[@]}"; do
-      fetch_file "$repo_dir" "plugins/modern-web-stack/skills/node-project-architecture/resources/$res" "$HOME/.gemini/config/plugins/modern-web-stack/skills/node-project-architecture/resources/$res"
+    for res in "${removed_arch_resources[@]}"; do
+      rm -f "$HOME/.gemini/config/plugins/modern-web-stack/skills/node-project-architecture/resources/$res"
     done
   fi
 
@@ -483,9 +503,11 @@ install_packages() {
     fish \
     fnm \
     gifski \
+    go \
     jq \
     mtr \
     ripgrep \
+    shellcheck \
     shfmt \
     yq \
     yt-dlp

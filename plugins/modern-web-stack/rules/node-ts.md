@@ -1,28 +1,30 @@
 ---
 trigger: glob
 globs: "**/*.ts, **/*.mts, **/*.cts, **/*.js, **/*.mjs, **/*.cjs, **/package.json, **/tsconfig*.json, **/vite.config.*, **/.npmrc"
-description: Modern Node.js pure ESM, strict .npmrc, TypeScript, ESLint/Prettier, and Vitest invariants.
+description: Supply-chain .npmrc and cooldown governance, direct transparent JS/TS toolchain, pure ESM, and zero-suppression invariants.
 ---
 
-# Modern Node.js, TypeScript & npm Rules
+# Node.js, TypeScript & npm Guardrails
 
-## 1. Node.js, npm & Strict `.npmrc` Invariants
+## 1. Supply-Chain & Cooldown Governance
 
-- **Strict `.npmrc` Policy**: Enforce `audit=false`, `engine-strict=true`, `fund=false`, `ignore-scripts=true`, `install-strategy=linked`, `save-exact=true`, and `strict-peer-deps=true`. Because `ignore-scripts=true` disables postinstall lifecycle hooks, install browser binaries or native artifacts via explicit scripts (such as `npm run test:setup`).
-- **Manifest & Runner**: Inspect and edit `package.json` through `npm pkg get/set/delete/fix` (never raw regex or `jq` rewrites). Install from lockfiles using `npm ci`; invoke scripts via `npm run <script>` and binaries via `npx`.
-- **Pure ESM & Built-Ins**: Require `"type": "module"`, forbid CommonJS (`require`, `module.exports`, `__dirname`), prefix built-ins with `node:`, and use `import.meta.dirname`.
-- **Built-In APIs & Process Safety**: Prefer `fetch`, `crypto.randomUUID()`, `structuredClone()`, `node:sqlite`, and `node:test`. Invoke child processes via `execFileSync` / `spawnSync` with argument arrays (`{ shell: false }`) and prefer `process.exitCode = 1` over `process.exit(1)`. Match exact on-disk casing in import specifiers.
-
----
-
-## 2. Strict TypeScript & ESLint Gateways
-
-- **Zero Suppression & Type Safety**: Prohibit `@ts-ignore`, `@ts-expect-error`, `eslint-disable`, double casts (`as unknown as T`), and raw unsafe casts. Narrow types via discriminated unions, `typeof`/`instanceof`/`in`, `satisfies`, or Zod `safeParse`.
-- **Control Flow & Lookups**: Require explicit boolean checks (`str !== ""`, `arr.length > 0`). Perform single Map lookup (`const v = map.get(k); if (v !== undefined)`). Interpolate only primitives in template literals. Await or return every promise, prefer `??` over `||`, and enforce `import type` (`verbatimModuleSyntax`).
-- **Verification & Diagnostics**: Run `npx eslint --print-config <file>` and `npx eslint --format compact` for concise diagnostics; inspect rules at `https://eslint.org/docs/latest/rules/<rule>` and `https://typescript-eslint.io/rules/<rule>`. Run `npx prettier --write <files>`, `npm run typecheck` (or `npx tsc -b --pretty false`), and `npx vitest run` before finalizing.
+- **Strict `.npmrc` Policy**: Default to `audit=false`, `engine-strict=true`, `fund=false`, `ignore-scripts=true`, `install-strategy=linked`, `save-exact=true`, and `strict-peer-deps=true`. Install browser binaries via explicit scripts (such as `npm run test:setup`).
+- **Native Module Exception (`allowScripts`)**: Only when a project requires specific native build scripts (e.g. desktop packaging), switch the project `.npmrc` to `ignore-scripts=false` and enforce a default-deny allowlist in `package.json` `"allowScripts"` permitting only audited exact package versions.
+- **UX-First Dependency Cooldown**: Batch toolchain dependency upgrades quarterly or semi-annually with a 7-14 day cooldown window. Patch immediately only for confirmed runtime CVEs (`npm audit --omit=dev`) or build security vulnerabilities. Keep `knip` out of `devDependencies` and invoke `npx knip` on demand.
+- **Node Engine Floor**: Omit root `engines.node` in `package.json` by default so `.npmrc` `engine-strict=true` enforces installed packages' declared `engines` ranges directly. Set a minimal floor (e.g. `>=22.18.0`) only when project scripts rely on unflagged native `.ts` execution.
 
 ---
 
-## 3. External SSOT Lookups
+## 2. Direct Transparent Toolchain (Zero Black Boxes)
 
-- Query two-stage `llms.txt` -> `.md` docs (`nodejs.org/llms.txt`, `prettier.io/llms.txt`, `vite.dev/llms.txt`, `vitest.dev/llms.txt`, `zod.dev/llms.txt`, `hono.dev/llms.txt`, `orm.drizzle.team/llms.txt`) via `curl -fsSL` or inspect local `node_modules/**/*.d.ts` instead of relying on memory.
+- **Direct Proven Tools**: Use `npm` (`npm ci`, `npm run`, `npm pkg get/set/delete/fix`), standard TypeScript (`tsc -b --pretty false`), Vite, Vitest, ESLint (`strictTypeChecked`, `stylisticTypeChecked`, `noInlineConfig: true`, `--max-warnings 0`), and Prettier directly.
+- **Forbid Experimental Wrappers & Previews**: Do not introduce meta-wrapper CLIs (`vite-plus`), experimental preview compilers (`tsgo`), or hidden AST rewrites. Prefer native `eslint.config.js` (`// @ts-check`) over TypeScript config loaders (`jiti`) when simple.
+- **Shared Human-Agent Scripts**: Maintain one standard set of `npm run` scripts (`typecheck`, `lint`, `format:check`, `build`, `test`, `verify`) shared by humans and agents. Forbid duplicate `agent:*` script tracks; append `-- --reporter=tap-flat --no-color` ad hoc when compact test output is needed.
+
+---
+
+## 3. Pure ESM, Native APIs & Boundary Safety
+
+- **Pure ESM & Built-Ins**: Require `"type": "module"`, forbid CommonJS (`require`, `module.exports`, `__dirname`), prefix built-ins with `node:`, and use `import.meta.dirname`. Prefer Node.js built-ins (`fetch`, `node:util`, `node:sqlite`, `node:test`, `crypto.randomUUID()`, `structuredClone()`) over utility packages.
+- **Zero Suppression & Zod Boundaries**: Prohibit `@ts-ignore`, `@ts-expect-error`, `@ts-nocheck`, `eslint-disable`, and double casts (`as unknown as T`). Validate untrusted external data (`JSON.parse`, API responses, configs, `process.env`) via Zod `safeParse` and `z.infer<typeof Schema>`. Invoke subprocesses via `execFileSync`/`spawnSync` with argument arrays (`{ shell: false }`).
+- **Evidence Gate**: Verify upstream APIs via `node_modules/<pkg>/**/*.d.ts`, `npx eslint --print-config <file>`, or two-stage `llms.txt` lookups listed in `common-toolchain/references/docs-matrix.md`.
