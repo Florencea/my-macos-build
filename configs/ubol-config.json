@@ -1,5 +1,20 @@
 {
-  "version": "2026.1116.1650",
+  "version": "2026.1122.1948",
+  "showBlockedCount": false,
+  "rulesets": [
+    "+adguard-mobile",
+    "+block-lan",
+    "+adguard-spyware-url",
+    "+annoyances-ai",
+    "+annoyances-cookies",
+    "+annoyances-overlays",
+    "+annoyances-social",
+    "+annoyances-widgets",
+    "+annoyances-notifications",
+    "+ublock-experimental",
+    "+ubol-tests",
+    "+jpn-1"
+  ],
   "filteringModes": {
     "none": [],
     "basic": [],
