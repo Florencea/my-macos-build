@@ -445,18 +445,43 @@ link_cli_scripts() {
   fi
 }
 
+refresh_font_cache() {
+  if ! command -v atsutil >/dev/null 2>&1; then
+    return 0
+  fi
+
+  atsutil databases -removeUser >/dev/null 2>&1 || true
+  killall -9 fontd 2>/dev/null || true
+  # Trigger Mach-demand respawn of com.apple.fonts so fontregistry.user rebuilds immediately
+  atsutil fonts -list >/dev/null 2>&1 || true
+}
+
 install_casks() {
   local installed
   installed="$(brew list --cask -1 2>/dev/null || true)"
   local -a to_install=()
+  local -a font_casks=()
   local cask
   for cask in "$@"; do
     if ! grep -Fxq "$cask" <<<"$installed"; then
       to_install+=("$cask")
+      if [[ "$cask" == font-* ]]; then
+        font_casks+=("$cask")
+      fi
     fi
   done
   if [[ ${#to_install[@]} -gt 0 ]]; then
     brew install --cask "${to_install[@]}" || true
+    if [[ ${#font_casks[@]} -gt 0 ]]; then
+      local after_installed
+      after_installed="$(brew list --cask -1 2>/dev/null || true)"
+      for cask in "${font_casks[@]}"; do
+        if grep -Fxq "$cask" <<<"$after_installed"; then
+          refresh_font_cache
+          break
+        fi
+      done
+    fi
   fi
 }
 
