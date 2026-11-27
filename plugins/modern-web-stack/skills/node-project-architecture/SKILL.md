@@ -41,8 +41,8 @@ Avoid pinning `knip` or `wrangler` in `devDependencies`; invoke on demand via `n
 
 ## 3. Supply-Chain, Cooldown & Zero-Black-Box Checklist
 
-- Enforce `.npmrc` defaults (`ignore-scripts=true`, `save-exact=true`, `install-strategy=linked`, `strict-peer-deps=true`, `engine-strict=true`); use project-level `ignore-scripts=false` + `allowScripts` allowlist only when audited native builds are required.
+- Enforce `.npmrc` defaults (`audit=false`, `engine-strict=true`, `fund=false`, `ignore-scripts=true`, `install-strategy=linked`, `min-release-age=7`, `save-exact=true`, `strict-peer-deps=true`); use project-level `ignore-scripts=false` + `allowScripts` allowlist only when audited native builds are required.
 - Omit root `engines.node` unless project scripts require unflagged native `.ts` execution (`>=22.18.0`).
-- Batch toolchain updates quarterly or semi-annually with a 7-14 day cooldown; prioritize runtime CVEs via `npm audit --omit=dev`.
+- Batch toolchain updates quarterly or semi-annually with a 7-14 day cooldown (enforced at the 7-day floor by `min-release-age=7`); prioritize runtime CVEs via `npm audit --omit=dev`, overriding selectively with `--min-release-age-exclude=<pkg>` or `--min-release-age=0` for newly published fixes.
 - Keep Vite, Vitest, ESLint, Prettier, and TypeScript configured directly without wrapper CLIs, experimental compiler previews, custom LSP scripts, or generated route trees.
 - Validate `.github/workflows/*.yml` locally with `actionlint` (`0` errors/warnings) before staging.

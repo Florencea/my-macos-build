@@ -568,6 +568,7 @@ setup_node_fnm() {
       fund false \
       ignore-scripts true \
       install-strategy linked \
+      min-release-age 7 \
       save-exact true \
       strict-peer-deps true
   fi

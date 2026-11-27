@@ -8,9 +8,9 @@ description: Supply-chain .npmrc and cooldown governance, direct transparent JS/
 
 ## 1. Supply-Chain & Cooldown Governance
 
-- **Strict `.npmrc` Policy**: Default to `audit=false`, `engine-strict=true`, `fund=false`, `ignore-scripts=true`, `install-strategy=linked`, `save-exact=true`, and `strict-peer-deps=true`. Install browser binaries via explicit scripts (such as `npm run test:setup`).
+- **Strict `.npmrc` Policy**: Default to `audit=false`, `engine-strict=true`, `fund=false`, `ignore-scripts=true`, `install-strategy=linked`, `min-release-age=7`, `save-exact=true`, and `strict-peer-deps=true`. Install browser binaries via explicit scripts (such as `npm run test:setup`).
 - **Native Module Exception (`allowScripts`)**: Only when a project requires specific native build scripts (e.g. desktop packaging), switch the project `.npmrc` to `ignore-scripts=false` and enforce a default-deny allowlist in `package.json` `"allowScripts"` permitting only audited exact package versions.
-- **UX-First Dependency Cooldown**: Batch toolchain dependency upgrades quarterly or semi-annually with a 7-14 day cooldown window. Patch immediately only for confirmed runtime CVEs (`npm audit --omit=dev`) or build security vulnerabilities. Keep `knip` out of `devDependencies` and invoke `npx knip` on demand.
+- **UX-First Dependency Cooldown**: Enforce a 7-day release floor in `.npmrc` (`min-release-age=7`) and batch toolchain dependency upgrades quarterly or semi-annually with a 7-14 day cooldown window. Patch immediately only for confirmed runtime CVEs (`npm audit --omit=dev`) or build security vulnerabilities; when a fix was published within 7 days, override selectively via `--min-release-age-exclude=<pkg>` or `--min-release-age=0` (or exempt audited first-party scopes via `min-release-age-exclude[]=@scope/*`) instead of removing `min-release-age=7`. Keep `knip` out of `devDependencies` and invoke `npx knip` on demand.
 - **Node Engine Floor**: Omit root `engines.node` in `package.json` by default so `.npmrc` `engine-strict=true` enforces installed packages' declared `engines` ranges directly. Set a minimal floor (e.g. `>=22.18.0`) only when project scripts rely on unflagged native `.ts` execution.
 
 ---

@@ -15,7 +15,7 @@ Project-specific architecture, domain invariants, and verification commands. Uni
 
 - **Single Source of Truth (SSOT)**: State concrete data, schema, and styling token owners for this repository.
 - **Explicit Architecture**: No experimental compiler previews, wrapper CLIs, or auto-generated black-box files.
-- **Supply-Chain & Cooldown Governance**: Maintain strict `.npmrc` settings; batch toolchain updates quarterly/semi-annually with a 7-14 day cooldown and prioritize runtime CVEs (`npm audit --omit=dev`). Run `npx knip` on demand.
+- **Supply-Chain & Cooldown Governance**: Maintain strict `.npmrc` settings (including `min-release-age=7`); batch toolchain updates quarterly/semi-annually with a 7-14 day cooldown and prioritize runtime CVEs (`npm audit --omit=dev`, overriding selectively with `--min-release-age-exclude=<pkg>` or `--min-release-age=0` for newly published fixes). Run `npx knip` on demand.
 
 ---
 
