@@ -509,7 +509,7 @@ install_packages() {
     istat-menus@6 \
     logi-options+ \
     1password \
-    microsoft-edge \
+    google-chrome \
     keka \
     iina \
     visual-studio-code \
